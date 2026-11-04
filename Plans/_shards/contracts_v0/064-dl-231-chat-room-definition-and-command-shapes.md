@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L23953-L24805
 
-Source SHA256: `2adfb711b1e788f5dcfdfb5f8bd900ebe3a2cb846cda7e8a5d6d6be7ea0ceddc`
+Source SHA256: `47cf02682b84754a25107c520d219d4f59871907302ee71ee9fe4f48848c02ef`
 
 ---
 
@@ -581,9 +581,9 @@ The selected app request union accepts only an authenticated user actor. A malfo
 {
   "plan_unit_id": "CV-661",
   "unit_type": "contract",
-  "status": "accepted",
+  "status": "superseded",
   "owner_doc": "Plans/Contracts_V0.md",
-  "canonical_text": "tool.custom_headless.skipped closed payload.\nExact schema pm.ds15.tool_custom_headless_skipped.payload.v1 at Plans/ds15_tool_custom_headless_skipped.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_tool_custom_headless_skipped_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-218, with Plans/storage-plan.md#SP-641. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.",
+  "canonical_text": "tool.custom_headless.skipped is STOPPED; DS15 withdraws its unsupported draft. DT owns the first-Doctor-run eligibility/reset/restore question at origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. No DS15 producer, eligibility, identity, schema, checkpoint or prepared outcome is bound for this family. N2-066 remains the behavior source; no ruling is inferred. This unit id is retired from drafting and must not be reused.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -591,7 +591,7 @@ The selected app request union accepts only an authenticated user actor. A malfo
   ],
   "unblocks": [],
   "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+    "No DS15 draft remains; DT question stays unresolved."
   ],
   "validation_surfaces": [
     "python3 scripts/pm-ds15-event-contracts.py"

@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L6715-L7566
 
-Source SHA256: `a25a9533eea844bb865a65f97288c163fbb20464b01bb7f753d2c3bdf0e4e911`
+Source SHA256: `e864f3a599f3b2bcf887e265e496e9a920eb913e15f02c461db6c5f46728fd01`
 
 ---
 
@@ -534,7 +534,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/Automated_Testing_System.md",
-  "canonical_text": "doctor.custom_headless.checked positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-217 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "canonical_text": "doctor.custom_headless.checked positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-217 remain NOT_RUN. Successful static checks never admit this family or settle retention.\nRound 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -580,9 +580,9 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
 {
   "plan_unit_id": "ATS-321",
   "unit_type": "contract",
-  "status": "accepted",
+  "status": "superseded",
   "owner_doc": "Plans/Automated_Testing_System.md",
-  "canonical_text": "tool.custom_headless.skipped positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-218 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "canonical_text": "tool.custom_headless.skipped is STOPPED; DS15 withdraws its unsupported draft. DT owns the first-Doctor-run eligibility/reset/restore question at origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. No DS15 producer, eligibility, identity, schema, checkpoint or prepared outcome is bound for this family. N2-066 remains the behavior source; no ruling is inferred. This unit id is retired from drafting and must not be reused.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -590,7 +590,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   ],
   "unblocks": [],
   "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+    "No DS15 draft remains; DT question stays unresolved."
   ],
   "validation_surfaces": [
     "python3 scripts/pm-ds15-event-contracts.py"
@@ -630,7 +630,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/Automated_Testing_System.md",
-  "canonical_text": "live.session.started positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-219 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "canonical_text": "live.session.started positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-219 remain NOT_RUN. Successful static checks never admit this family or settle retention.\nRound 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -678,7 +678,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/Automated_Testing_System.md",
-  "canonical_text": "live.step.updated positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-220 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "canonical_text": "live.step.updated positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-220 remain NOT_RUN. Successful static checks never admit this family or settle retention.\nRound 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -726,7 +726,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/Automated_Testing_System.md",
-  "canonical_text": "live.artifact.created positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-221 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "canonical_text": "live.artifact.created positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-221 remain NOT_RUN. Successful static checks never admit this family or settle retention.\nRound 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -774,7 +774,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/Automated_Testing_System.md",
-  "canonical_text": "live.session.completed positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-222 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "canonical_text": "live.session.completed positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-222 remain NOT_RUN. Successful static checks never admit this family or settle retention.\nRound 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
@@ -822,7 +822,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/Automated_Testing_System.md",
-  "canonical_text": "live.session.degraded positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-223 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "canonical_text": "live.session.degraded positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-223 remain NOT_RUN. Successful static checks never admit this family or settle retention.\nRound 1 semantic oracles: execute the exact-family cases in Plans/ds15_event_contract_fixtures.json through scripts/pm-ds15-event-contracts.py: original outcome and full receipt joins, recovery before/after append without repeat effect, changed-byte refusal, producer transition rejection, read-time deletion/permission changes, complete filtered coverage, full prior-value CAS, live snapshot/source/token changes, rebuild missing prefix, writer cutoff/drain and reader withdrawal/reinstallation. Fixtures contain concrete closed checkpoint values; each negative mutates an otherwise valid family-specific case. Static reference-model proof only; native execution NOT_RUN.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [

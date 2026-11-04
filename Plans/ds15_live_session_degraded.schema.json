@@ -44,7 +44,8 @@
     "effective_visual_mode": {
       "enum": [
         "visible",
-        "headless"
+        "headless",
+        null
       ]
     },
     "fallback_reason": {
@@ -78,5 +79,55 @@
     "session_class": [
       "browser_session_id"
     ]
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "requested_visual_mode": {
+            "const": "auto"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effective_visual_mode": {
+            "const": "headless"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "requested_visual_mode": {
+            "const": "forced_visible"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effective_visual_mode": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "requested_visual_mode": {
+            "const": "forced_headless"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effective_visual_mode": {
+            "const": "headless"
+          }
+        }
+      }
+    }
+  ]
 }
