@@ -423,6 +423,14 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkname { font: 500 10px/1 var(--mono-font); letter-spacing: .22em; text-transform: uppercase; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph svg { width: 13px; height: 13px; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-talk .o55-talkname { display: none; }
+/* FO-52: between the narrow layout and a header wide enough for every word, the header folds the talk name and Close's
+   word to their marks (both keep their names: aria-label, title), as the narrow layout does: the step rail sits centred
+   in what the brand and the controls leave it, and where its chapters were wider than that it spilt onto both (at 860
+   wide, Retro 4 px over the look button and Friendly 1 px; NieR's wider words fold sooner, 11-window-nier.css) */
+#pm-o55-onboarding .o55-head { container: o55head / inline-size; }
+@container o55head (max-width: 850px) {
+  #pm-o55-onboarding .o55-talk .o55-talkname, #pm-o55-onboarding .o55-close span { display: none; }
+}
 #pm-o55-onboarding[data-o55-layout="narrow"] { --o55-pad: 22px; }
 /* at phone width Back is its chevron alone (its name stays for screen readers), so the primary keeps one line */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-foot { padding-inline: 14px; gap: 8px; }
