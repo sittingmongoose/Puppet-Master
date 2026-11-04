@@ -118,7 +118,15 @@ export default async function(t) {
     await t.check('Start enabled', await btn.isEnabled());
     if(await btn.isEnabled()) {
      await f.evaluate(()=>{window.__tokenStyleReads=0;window.__nativeStyle=window.getComputedStyle;window.getComputedStyle=function(...args){if(new Error().stack.includes('tokRaw'))window.__tokenStyleReads++;return window.__nativeStyle.apply(this,args);};});
-     try { await sample('crew-start-'+i,()=>btn.click(),2000); }
+     await f.evaluate(()=>{
+      window.__crewCommitPhases=[];
+      if(!window.__crewPhaseHook){window.__crewPhaseHook=true;PM56_EXT.slot('afterRender',(ctx,info)=>{const stack=new Error().stack;if(stack.includes('onAppClick'))window.__crewCommitPhases.push(info.phase);});}
+     });
+     try { await sample('crew-start-'+i,()=>btn.click(),2000);
+      const phases=await f.evaluate(()=>window.__crewCommitPhases);
+      await t.check('Crew commit projects its conversation scope',phases.includes('scope')&&!phases.includes('app'),JSON.stringify(phases));
+      await t.check('Crew commit closes its configure sheet',await f.locator('[data-action="collab-modal-commit"]').count()===0);
+     }
      finally {const n=await f.evaluate(()=>{window.getComputedStyle=window.__nativeStyle;return window.__tokenStyleReads;}); await t.check('commit uses cached timing tokens',n===0,String(n));}
    }
    }
