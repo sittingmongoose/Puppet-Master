@@ -22,17 +22,19 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-debug-20261104",
-    "commit": "1ace7c32935eee55e147a98a05bbca8091707b0c",
+    "commit": "d77cc98f8f7ae9594efd876bc7e02f733319a085",
     "normative_files_sha256": {
-      "Plans/Contracts_V0.md": "d43fa49dc74cec03b3663fe9818f9b03469872fbcfa18a44ff5b0dcf55d59626",
+      "Plans/Contracts_V0.md": "1d62cf52688ed1af9548210d2d7ee64f0b53ad92bd220f0486fba747881215d3",
       "Plans/storage-plan.md": "d55f579fbb47e86733ec6f3bbc965675172e4ec1397d294213d2ba1df3a39fea",
-      "Plans/Automated_Testing_System.md": "4a8fe73f7e677d425be578c9eb3692b612a54ad9233bdbd9dd2d72872b31d096",
-      "Plans/debug_investigation_event_payloads.schema.json": "a92bb8f9323c834d27806b28fd000791858c47ef2b4548a5dc1d5a2897bb1f47",
-      "Plans/debug_investigation_event_fixtures.json": "15be8e7fa30aab97ea6112447ee93aa316a8e0708d19113eb56ddb713c2cbabc"
+      "Plans/Automated_Testing_System.md": "98e9f34dcf3178258a980a4ce371555ccc878ad0595d0ee586cd87843e63b650",
+      "Plans/debug_investigation_event_payloads.schema.json": "a7d0e6156bc33fe1a34f9b6ce11c2aa34efab7ec23daf7bab7639fff07f016aa",
+      "Plans/debug_investigation_event_fixtures.json": "5d26221dd3df8e9963d75dd2dddfc5934cb337b855f5b067aa9df17226e8d6d1"
     },
     "review_round_1_fix_commit": "5271b83e9e65347d1b0e22e9a719837a006b7919",
-    "checker_sha256": "6a40688a6a295479bf1a81b8a95ae6e37e89ea043a8643ff08685e0200e43ae4",
-    "review_round_2_fix_commit": "1ace7c32935eee55e147a98a05bbca8091707b0c"
+    "checker_sha256": "be4d7a59cbb65cefc1be2b741b68e92dfff782bb4151133453b3f1cfb620a00c",
+    "review_round_2_fix_commit": "1ace7c32935eee55e147a98a05bbca8091707b0c",
+    "review_round_3_fix_commit": "d77cc98f8f7ae9594efd876bc7e02f733319a085",
+    "standing_checker_sha256": "71615b9a30da601ac2b053357552a25bc42539163bc85e76e2bb3077f8b9833e"
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -82,9 +84,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -99,9 +104,12 @@
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.context_item_added@1.0.0,"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -116,9 +124,12 @@
               "quote": "Producer binding: owner.debug.investigation.context_item_added@1.0.0 is the exact emitting handler above."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -140,9 +151,12 @@
               "quote": "\"$id\": \"pm.debug_investigation.context_item_added.schema.v1\""
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -157,9 +171,12 @@
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.context_item_added\","
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -181,9 +198,12 @@
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -198,9 +218,12 @@
               "quote": "family or retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -215,9 +238,12 @@
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -232,9 +258,12 @@
               "quote": "decision are frozen. item_id is fresh within investigation_id; an existing item is not added again."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -249,9 +278,12 @@
               "quote": "Consumer binding: reader.debug.investigation.context_item_added@1.0.0 is the direct transient history"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -266,14 +298,17 @@
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -281,11 +316,21 @@
               "line_start": 1643,
               "line_end": 1643,
               "quote": "history or sibling records. Positive/negative oracles are the context_item_added cases in Plans/debug_investigation_event_fixtures.json"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-285",
+              "line_start": 7254,
+              "line_end": 7254,
+              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         }
       },
       "pass_count": 10,
@@ -296,7 +341,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "Plans/debug_investigation_event_fixtures.json",
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
       "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
@@ -347,9 +393,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -364,9 +413,12 @@
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.context_item_state_changed@1.0.0,"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -381,9 +433,12 @@
               "quote": "Producer binding: owner.debug.investigation.context_item_state_changed@1.0.0 is the exact emitting handler"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -405,9 +460,12 @@
               "quote": "\"$id\": \"pm.debug_investigation.context_item_state_changed.schema.v1\""
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -422,9 +480,12 @@
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.context_item_state_changed\","
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -446,9 +507,12 @@
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -463,9 +527,12 @@
               "quote": "family or retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -480,9 +547,12 @@
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -497,9 +567,12 @@
               "quote": "previous_state to its latest accepted state. An equal state is a no-op, not a new transition. Revocation"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -514,9 +587,12 @@
               "quote": "Consumer binding: reader.debug.investigation.context_item_state_changed@1.0.0 is the direct transient"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -531,14 +607,17 @@
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: active-to-revoked positive; equal-state active/active is structurally valid but returns no_op and zero modeled appends. Disabling the semantic rule fails the full checker. Native NOT_RUN.",
+          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -550,14 +629,24 @@
             {
               "path": "Plans/debug_investigation_event_fixtures.json",
               "unit": "context_item_state_changed no-op",
-              "line_start": 182,
-              "line_end": 182,
+              "line_start": 421,
+              "line_end": 421,
               "quote": "\"case\": \"equal-state active no-op\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-285",
+              "line_start": 7254,
+              "line_end": 7254,
+              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "improved",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         }
       },
       "pass_count": 10,
@@ -568,7 +657,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "Plans/debug_investigation_event_fixtures.json",
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
       "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
@@ -619,9 +709,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -636,9 +729,12 @@
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.exported@1.0.0,"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -653,9 +749,12 @@
               "quote": "Producer binding: owner.debug.investigation.exported@1.0.0 is the exact emitting handler above. Under"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -677,9 +776,12 @@
               "quote": "\"$id\": \"pm.debug_investigation.exported.schema.v1\""
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -694,9 +796,12 @@
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.exported\","
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -718,9 +823,12 @@
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -735,9 +843,12 @@
               "quote": "retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -752,9 +863,12 @@
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -769,9 +883,12 @@
               "quote": "commit and counts are verified against that exact manifest. bundle_id and schema_id must match it. Omitted/redacted/revoked/blocked/expired"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -786,9 +903,12 @@
               "quote": "Consumer binding: reader.debug.investigation.exported@1.0.0 is the direct transient history reader for"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -803,14 +923,17 @@
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -818,11 +941,21 @@
               "line_start": 1891,
               "line_end": 1891,
               "quote": "history or sibling records. Positive/negative oracles are the exported cases in Plans/debug_investigation_event_fixtures.json"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-285",
+              "line_start": 7254,
+              "line_end": 7254,
+              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         }
       },
       "pass_count": 10,
@@ -833,7 +966,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "Plans/debug_investigation_event_fixtures.json",
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
       "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
@@ -884,9 +1018,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -901,9 +1038,12 @@
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.imported@1.0.0,"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -918,9 +1058,12 @@
               "quote": "Producer binding: owner.debug.investigation.imported@1.0.0 is the exact emitting handler above. Under"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -942,9 +1085,12 @@
               "quote": "\"$id\": \"pm.debug_investigation.imported.schema.v1\""
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -959,9 +1105,12 @@
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.imported\","
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -983,9 +1132,12 @@
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1000,9 +1152,12 @@
               "quote": "retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1017,9 +1172,12 @@
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -1034,9 +1192,12 @@
               "quote": "publishing the imported investigation. bundle_id/schema_id match the admitted manifest and imported_target_kind"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1051,9 +1212,12 @@
               "quote": "Consumer binding: reader.debug.investigation.imported@1.0.0 is the direct transient history reader for"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1068,14 +1232,17 @@
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1083,11 +1250,21 @@
               "line_start": 2015,
               "line_end": 2015,
               "quote": "history or sibling records. Positive/negative oracles are the imported cases in Plans/debug_investigation_event_fixtures.json"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-285",
+              "line_start": 7254,
+              "line_end": 7254,
+              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         }
       },
       "pass_count": 10,
@@ -1098,7 +1275,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "Plans/debug_investigation_event_fixtures.json",
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
       "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
@@ -1149,9 +1327,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1173,9 +1354,12 @@
               "quote": "HELD_FOR_JARED: this family has no authorized transition mapping and is not prepared."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "producer": {
           "status": "PASS",
@@ -1190,9 +1374,12 @@
               "quote": "Producer binding: owner.debug.investigation.instrumentation_state_changed@1.0.0 is the exact emitting"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1214,9 +1401,12 @@
               "quote": "\"$id\": \"pm.debug_investigation.instrumentation_state_changed.schema.v1\""
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1231,9 +1421,12 @@
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.instrumentation_state_changed\","
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1255,9 +1448,12 @@
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1272,9 +1468,12 @@
               "quote": "family or retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1289,9 +1488,12 @@
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -1306,9 +1508,12 @@
               "quote": "HELD_FOR_JARED: this family has no authorized transition mapping and is not prepared."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1323,9 +1528,12 @@
               "quote": "Consumer binding: reader.debug.investigation.instrumentation_state_changed@1.0.0 is the direct transient"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1340,9 +1548,12 @@
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
@@ -1359,14 +1570,17 @@
             {
               "path": "Plans/debug_investigation_event_fixtures.json",
               "unit": "instrumentation hold",
-              "line_start": 449,
-              "line_end": 449,
+              "line_start": 1366,
+              "line_end": 1366,
               "quote": "\"case\": \"round-1 scrubbed labels cannot establish a transition\","
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         }
       },
       "pass_count": 8,
@@ -1429,9 +1643,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1446,9 +1663,12 @@
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.started@1.0.0,"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -1458,19 +1678,22 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2234,
-              "line_end": 2234,
+              "line_start": 2241,
+              "line_end": 2241,
               "quote": "Producer binding: owner.debug.investigation.started@1.0.0 is the exact emitting handler above. Under"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete closed normalized overlay/runtime matrix from Assistant Chat 1.0A/B/C and enum closure, plus Run_Modes normalized equality/legal overlays; all 196 tuples checked.",
+          "finding": "CV-575 closes enums and only owner-supported Debug and effective planning constraints; Crew from plan is accepted. No universal equality or automatic post-approval overlay clearing.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1482,8 +1705,8 @@
             {
               "path": "Plans/debug_investigation_event_payloads.schema.json",
               "unit": "#/$defs/started",
-              "line_start": 563,
-              "line_end": 563,
+              "line_start": 454,
+              "line_end": 454,
               "quote": "\"$id\": \"pm.debug_investigation.started.schema.v1\""
             },
             {
@@ -1501,9 +1724,12 @@
               "quote": "The resolved mode tuple obeys assistant-chat-design sections 1.0A, 1.0B, 1.0C"
             }
           ],
-          "prior": "PARTIAL",
-          "change": "improved",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "CONFLICT"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1513,21 +1739,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2244,
-              "line_end": 2244,
+              "line_start": 2251,
+              "line_end": 2251,
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.started\","
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2225,
-              "line_end": 2225,
+              "line_start": 2232,
+              "line_end": 2232,
               "quote": "A payload-only Project mismatch refuses before any append or receipt."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1537,21 +1766,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2248,
-              "line_end": 2248,
+              "line_start": 2255,
+              "line_end": 2255,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2228,
-              "line_end": 2228,
+              "line_start": 2235,
+              "line_end": 2235,
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1561,14 +1793,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2241,
-              "line_end": 2241,
+              "line_start": 2248,
+              "line_end": 2248,
               "quote": "retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1578,19 +1813,22 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2271,
-              "line_end": 2271,
+              "line_start": 2278,
+              "line_end": 2278,
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Chat 1.0A-C/15/29.1 own read-only planning/Crew, debug/debug, explicit YOLO, explicit invocation and approved plan/TODO handoff. Scope-specific run.started restrictions are not imported.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1598,11 +1836,28 @@
               "line_start": 2212,
               "line_end": 2212,
               "quote": "The existing Debug investigation launch handler emits once after target selection and requested/effective"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2221,
+              "line_end": 2221,
+              "quote": "Crew launched from plan remains read-only with runtime"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2225,
+              "line_end": 2225,
+              "quote": "Approval alone does not specify overlay clearing."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "CONFLICT"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1612,14 +1867,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2253,
-              "line_end": 2253,
+              "line_start": 2260,
+              "line_end": 2260,
               "quote": "Consumer binding: reader.debug.investigation.started@1.0.0 is the direct transient history reader for"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1629,25 +1887,28 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2285,
-              "line_end": 2285,
+              "line_start": 2292,
+              "line_end": 2292,
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: forbidden Plan/Deep Plan execution tuples, specialized/read-only tuples, exact payload-only Project mismatch with unchanged expected identity, envelope/owner joins, replay-only refusal and all prior oracles. Native NOT_RUN.",
+          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2291,
-              "line_end": 2291,
+              "line_start": 2298,
+              "line_end": 2298,
               "quote": "history or sibling records. Positive/negative oracles are the started cases in Plans/debug_investigation_event_fixtures.json"
             },
             {
@@ -1660,14 +1921,24 @@
             {
               "path": "Plans/debug_investigation_event_fixtures.json",
               "unit": "started Project mismatch",
-              "line_start": 578,
-              "line_end": 578,
+              "line_start": 1501,
+              "line_end": 1501,
               "quote": "\"case\": \"payload Project only mismatch\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-285",
+              "line_start": 7254,
+              "line_end": 7254,
+              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "improved",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         }
       },
       "pass_count": 10,
@@ -1678,7 +1949,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "Plans/debug_investigation_event_fixtures.json",
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
       "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
@@ -1694,8 +1966,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-576",
-          "line_start": 2335,
-          "line_end": 2335,
+          "line_start": 2342,
+          "line_end": 2342,
           "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.target_bound@1.0.0,"
         }
       ],
@@ -1717,8 +1989,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2336,
-              "line_end": 2336,
+              "line_start": 2343,
+              "line_end": 2343,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
             },
             {
@@ -1729,9 +2001,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1741,14 +2016,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2335,
-              "line_end": 2335,
+              "line_start": 2342,
+              "line_end": 2342,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.target_bound@1.0.0,"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -1758,38 +2036,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2361,
-              "line_end": 2361,
+              "line_start": 2368,
+              "line_end": 2368,
               "quote": "Producer binding: owner.debug.investigation.target_bound@1.0.0 is the exact emitting handler above."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "CV-576 closes target bindings; source_sha256 requires exactly 64 lowercase hex characters. LF, uppercase, short and nonhex fixtures are refused.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2337,
-              "line_end": 2337,
+              "line_start": 2344,
+              "line_end": 2344,
               "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/target_bound; operation_id"
             },
             {
               "path": "Plans/debug_investigation_event_payloads.schema.json",
               "unit": "#/$defs/target_bound",
-              "line_start": 635,
-              "line_end": 635,
+              "line_start": 528,
+              "line_end": 528,
               "quote": "\"$id\": \"pm.debug_investigation.target_bound.schema.v1\""
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1799,14 +2083,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2371,
-              "line_end": 2371,
+              "line_start": 2378,
+              "line_end": 2378,
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.target_bound\","
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1816,21 +2103,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2375,
-              "line_end": 2375,
+              "line_start": 2382,
+              "line_end": 2382,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2355,
-              "line_end": 2355,
+              "line_start": 2362,
+              "line_end": 2362,
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1840,14 +2130,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2368,
-              "line_end": 2368,
+              "line_start": 2375,
+              "line_end": 2375,
               "quote": "family or retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1857,14 +2150,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2398,
-              "line_end": 2398,
+              "line_start": 2405,
+              "line_end": 2405,
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -1874,14 +2170,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2347,
-              "line_end": 2347,
+              "line_start": 2354,
+              "line_end": 2354,
               "quote": "and binding revision. target_bindings is a newly authored closed ref-only join, not a replacement target"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1891,14 +2190,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2380,
-              "line_end": 2380,
+              "line_start": 2387,
+              "line_end": 2387,
               "quote": "Consumer binding: reader.debug.investigation.target_bound@1.0.0 is the direct transient history reader"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1908,31 +2210,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2412,
-              "line_end": 2412,
+              "line_start": 2419,
+              "line_end": 2419,
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2418,
-              "line_end": 2418,
+              "line_start": 2425,
+              "line_end": 2425,
               "quote": "history or sibling records. Positive/negative oracles are the target_bound cases in Plans/debug_investigation_event_fixtures.json"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-285",
+              "line_start": 7254,
+              "line_end": 7254,
+              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         }
       },
       "pass_count": 10,
@@ -1943,7 +2258,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "Plans/debug_investigation_event_fixtures.json",
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
       "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
@@ -1959,8 +2275,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-577",
-          "line_start": 2462,
-          "line_end": 2462,
+          "line_start": 2469,
+          "line_end": 2469,
           "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.verification_recorded@1.0.0,"
         }
       ],
@@ -1982,8 +2298,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2463,
-              "line_end": 2463,
+              "line_start": 2470,
+              "line_end": 2470,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
             },
             {
@@ -1994,9 +2310,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2006,14 +2325,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2462,
-              "line_end": 2462,
+              "line_start": 2469,
+              "line_end": 2469,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.verification_recorded@1.0.0,"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -2023,14 +2345,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2486,
-              "line_end": 2486,
+              "line_start": 2493,
+              "line_end": 2493,
               "quote": "Producer binding: owner.debug.investigation.verification_recorded@1.0.0 is the exact emitting handler"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2040,21 +2365,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2464,
-              "line_end": 2464,
+              "line_start": 2471,
+              "line_end": 2471,
               "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/verification_recorded; operation_id"
             },
             {
               "path": "Plans/debug_investigation_event_payloads.schema.json",
               "unit": "#/$defs/verification_recorded",
-              "line_start": 683,
-              "line_end": 683,
+              "line_start": 576,
+              "line_end": 576,
               "quote": "\"$id\": \"pm.debug_investigation.verification_recorded.schema.v1\""
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2064,14 +2392,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2496,
-              "line_end": 2496,
+              "line_start": 2503,
+              "line_end": 2503,
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.verification_recorded\","
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2081,21 +2412,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2500,
-              "line_end": 2500,
+              "line_start": 2507,
+              "line_end": 2507,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2480,
-              "line_end": 2480,
+              "line_start": 2487,
+              "line_end": 2487,
               "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2105,14 +2439,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2493,
-              "line_end": 2493,
+              "line_start": 2500,
+              "line_end": 2500,
               "quote": "family or retention remains PENDING_RETENTION_DECISION."
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2122,14 +2459,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2523,
-              "line_end": 2523,
+              "line_start": 2530,
+              "line_end": 2530,
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -2139,14 +2479,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2473,
-              "line_end": 2473,
+              "line_start": 2480,
+              "line_end": 2480,
               "quote": "The investigation verifier emits after the evidence artifacts and bounded verification summary commit."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2156,14 +2499,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2505,
-              "line_end": 2505,
+              "line_start": 2512,
+              "line_end": 2512,
               "quote": "Consumer binding: reader.debug.investigation.verification_recorded@1.0.0 is the direct transient history"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2173,31 +2519,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2537,
-              "line_end": 2537,
+              "line_start": 2544,
+              "line_end": 2544,
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2543,
-              "line_end": 2543,
+              "line_start": 2550,
+              "line_end": 2550,
               "quote": "history or sibling records. Positive/negative oracles are the verification_recorded cases in Plans/debug_investigation_event_fixtures.json"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-285",
+              "line_start": 7254,
+              "line_end": 7254,
+              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
             }
           ],
-          "prior": "PASS",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
         }
       },
       "pass_count": 10,
@@ -2208,7 +2567,8 @@
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "Plans/debug_investigation_event_fixtures.json",
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
       "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
@@ -2224,8 +2584,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-578",
-          "line_start": 2587,
-          "line_end": 2587,
+          "line_start": 2594,
+          "line_end": 2594,
           "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
         }
       ],
@@ -2241,8 +2601,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             },
             {
@@ -2253,9 +2613,12 @@
               "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "owner_doc": {
           "status": "CONFLICT",
@@ -2277,9 +2640,12 @@
               "quote": "- `failed` pairs with `stop_reason_code = investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.t"
             }
           ],
-          "prior": "CONFLICT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "CONFLICT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "producer": {
           "status": "ABSENT",
@@ -2289,14 +2655,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -2306,14 +2675,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "scope_identity": {
           "status": "ABSENT",
@@ -2323,14 +2695,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -2340,14 +2715,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2357,14 +2735,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -2374,14 +2755,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "PARTIAL",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "transitions": {
           "status": "CONFLICT",
@@ -2403,9 +2787,12 @@
               "quote": "- `failed` pairs with `stop_reason_code = investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.t"
             }
           ],
-          "prior": "CONFLICT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "CONFLICT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -2415,14 +2802,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -2432,14 +2822,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -2449,14 +2842,17 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2587,
-              "line_end": 2587,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
             }
           ],
-          "prior": "ABSENT",
-          "change": "unchanged",
-          "change_reason": "Round 2 re-grade against the Astra final review; current normative text and static oracle inspected; native execution NOT_RUN."
+          "prior": {
+            "source": "REVIEW-astra-2.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
         }
       },
       "pass_count": 0,
@@ -2620,5 +3016,158 @@
       "CONFLICT": 2
     },
     "evidence_quotes_validated": 152
+  },
+  "review_round_3": {
+    "review_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DDBG-sol/REVIEW-astra-2.md",
+    "review_sha256": "d0316bf6e8cc9c554c0aca422a239da3e4c27cf93daf859140707576d223e7a8",
+    "reviewed_head": "6c3ab9856f65eb95682aee4d6736d0c4776c02cf",
+    "reviewer_statuses_before": {
+      "debug.investigation.context_item_added": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.context_item_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.exported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.imported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.instrumentation_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PARTIAL",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.started": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "CONFLICT",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "CONFLICT",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.target_bound": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PARTIAL",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.verification_recorded": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "CONFLICT",
+        "producer": "ABSENT",
+        "closed_payload_schema": "ABSENT",
+        "scope_identity": "ABSENT",
+        "replay_idempotency": "ABSENT",
+        "retention": "PARTIAL",
+        "redaction_custody": "PARTIAL",
+        "transitions": "CONFLICT",
+        "consumers_checkpoints": "ABSENT",
+        "compatibility_withdrawal": "ABSENT",
+        "positive_negative_oracles": "ABSENT"
+      }
+    },
+    "counts_before": {
+      "ABSENT": 16,
+      "PASS": 68,
+      "PARTIAL": 20,
+      "CONFLICT": 4
+    },
+    "counts_after": {
+      "ABSENT": 16,
+      "PASS": 78,
+      "PARTIAL": 12,
+      "CONFLICT": 2
+    },
+    "prepared_families_before": 0,
+    "prepared_families_after": 7,
+    "held_families": [
+      "debug.investigation.instrumentation_state_changed",
+      "debug.investigation.state_changed"
+    ],
+    "native_execution": "NOT_RUN",
+    "evidence_quotes_validated": 161
   }
 }
