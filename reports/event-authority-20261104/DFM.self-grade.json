@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_kind": "self_grade_round3_prepared_without_admission",
+  "assessment_kind": "self_grade_round4_prepared_without_admission",
   "assessed_tree": {
     "branch": "plans/ea-w2-filemanager-20261104",
-    "commit": "d4f735beff84c4516c163cad55a3a283b41348a0",
-    "read_method": "Revalidated all current-source citations and unchanged normative owner/schema blobs against Astra\u2019s reviewed head; regraded all twelve oracle cells using the repaired checker and independent mutation evidence. The following commit changes reports only."
+    "commit": "826a9428073212675cbb6833f6feb841684740dc",
+    "read_method": "Current exact citations checked; canonical owner/schema blobs unchanged from reviewed cd4ca77856; exhaustive checker-refusal deletion, lexical/schema deletion, harness assertions and regression evidence in fix4. Report-only commit follows."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -92,11 +92,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -126,11 +126,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -146,11 +146,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -166,11 +166,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -207,11 +207,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -227,11 +227,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -268,11 +268,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -288,11 +288,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -315,11 +315,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -356,16 +356,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-150 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-150 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -377,8 +377,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -391,38 +391,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/0",
-              "line_start": 6583,
-              "line_end": 6583,
+              "line_start": 8206,
+              "line_end": 8206,
               "quote": "\"name\": \"file.copied:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/0",
-              "line_start": 6998,
-              "line_end": 6998,
+              "line_start": 8621,
+              "line_end": 8621,
               "quote": "\"name\": \"file.copied:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/0",
-              "line_start": 6247,
-              "line_end": 6247,
+              "line_start": 7870,
+              "line_end": 7870,
               "quote": "\"name\": \"file.copied:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -477,11 +477,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -497,11 +497,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -531,11 +531,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -551,11 +551,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -571,11 +571,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -612,11 +612,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -632,11 +632,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -673,11 +673,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -693,11 +693,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -720,11 +720,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -761,16 +761,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-151 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-151 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -782,8 +782,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -796,38 +796,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/1",
-              "line_start": 13132,
-              "line_end": 13132,
+              "line_start": 33593,
+              "line_end": 33593,
               "quote": "\"name\": \"file.created:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/1",
-              "line_start": 13529,
-              "line_end": 13529,
+              "line_start": 33990,
+              "line_end": 33990,
               "quote": "\"name\": \"file.created:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/1",
-              "line_start": 12796,
-              "line_end": 12796,
+              "line_start": 33257,
+              "line_end": 33257,
               "quote": "\"name\": \"file.created:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -882,11 +882,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -902,11 +902,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -936,11 +936,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -956,11 +956,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -976,11 +976,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1017,11 +1017,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1037,11 +1037,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1078,11 +1078,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -1098,11 +1098,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1125,11 +1125,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1166,16 +1166,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-152 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-152 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1187,8 +1187,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -1201,38 +1201,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/2",
-              "line_start": 19543,
-              "line_end": 19543,
+              "line_start": 59209,
+              "line_end": 59209,
               "quote": "\"name\": \"file.deleted:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/2",
-              "line_start": 19904,
-              "line_end": 19904,
+              "line_start": 59570,
+              "line_end": 59570,
               "quote": "\"name\": \"file.deleted:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/2",
-              "line_start": 19207,
-              "line_end": 19207,
+              "line_start": 58873,
+              "line_end": 58873,
               "quote": "\"name\": \"file.deleted:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -1287,11 +1287,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1307,11 +1307,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -1341,11 +1341,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1361,11 +1361,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1381,11 +1381,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1422,11 +1422,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1442,11 +1442,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1483,11 +1483,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -1503,11 +1503,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1530,11 +1530,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1571,16 +1571,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-153 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-153 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1592,8 +1592,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -1606,38 +1606,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/3",
-              "line_start": 26621,
-              "line_end": 26621,
+              "line_start": 83139,
+              "line_end": 83139,
               "quote": "\"name\": \"file.exported:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/3",
-              "line_start": 27026,
-              "line_end": 27026,
+              "line_start": 83544,
+              "line_end": 83544,
               "quote": "\"name\": \"file.exported:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/3",
-              "line_start": 26285,
-              "line_end": 26285,
+              "line_start": 82803,
+              "line_end": 82803,
               "quote": "\"name\": \"file.exported:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -1692,11 +1692,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1712,11 +1712,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -1746,11 +1746,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1766,11 +1766,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1786,11 +1786,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1827,11 +1827,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1847,11 +1847,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1888,11 +1888,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -1908,11 +1908,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1935,11 +1935,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1976,16 +1976,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-154 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-154 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1997,8 +1997,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -2011,38 +2011,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/4",
-              "line_start": 33743,
-              "line_end": 33743,
+              "line_start": 108858,
+              "line_end": 108858,
               "quote": "\"name\": \"file.moved:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/4",
-              "line_start": 34158,
-              "line_end": 34158,
+              "line_start": 109273,
+              "line_end": 109273,
               "quote": "\"name\": \"file.moved:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/4",
-              "line_start": 33407,
-              "line_end": 33407,
+              "line_start": 108522,
+              "line_end": 108522,
               "quote": "\"name\": \"file.moved:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -2097,11 +2097,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2117,11 +2117,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -2151,11 +2151,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2171,11 +2171,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2191,11 +2191,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2232,11 +2232,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2252,11 +2252,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2293,11 +2293,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -2313,11 +2313,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2340,11 +2340,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2381,16 +2381,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-155 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-155 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -2402,8 +2402,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -2416,38 +2416,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/5",
-              "line_start": 40875,
-              "line_end": 40875,
+              "line_start": 137049,
+              "line_end": 137049,
               "quote": "\"name\": \"file.renamed:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/5",
-              "line_start": 41326,
-              "line_end": 41326,
+              "line_start": 137500,
+              "line_end": 137500,
               "quote": "\"name\": \"file.renamed:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/5",
-              "line_start": 40539,
-              "line_end": 40539,
+              "line_start": 136713,
+              "line_end": 136713,
               "quote": "\"name\": \"file.renamed:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -2502,11 +2502,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2522,11 +2522,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -2556,11 +2556,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2576,11 +2576,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2596,11 +2596,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2637,11 +2637,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2657,11 +2657,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2698,11 +2698,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -2718,11 +2718,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2745,11 +2745,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2786,16 +2786,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-156 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-156 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -2807,8 +2807,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -2821,38 +2821,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/6",
-              "line_start": 48111,
-              "line_end": 48111,
+              "line_start": 163075,
+              "line_end": 163075,
               "quote": "\"name\": \"folder.copied:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/6",
-              "line_start": 48560,
-              "line_end": 48560,
+              "line_start": 163524,
+              "line_end": 163524,
               "quote": "\"name\": \"folder.copied:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/6",
-              "line_start": 47775,
-              "line_end": 47775,
+              "line_start": 162739,
+              "line_end": 162739,
               "quote": "\"name\": \"folder.copied:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -2907,11 +2907,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2927,11 +2927,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -2961,11 +2961,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2981,11 +2981,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3001,11 +3001,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3042,11 +3042,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3062,11 +3062,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3103,11 +3103,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -3123,11 +3123,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3150,11 +3150,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3191,16 +3191,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-157 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-157 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -3212,8 +3212,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -3226,38 +3226,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/7",
-              "line_start": 54694,
-              "line_end": 54694,
+              "line_start": 188810,
+              "line_end": 188810,
               "quote": "\"name\": \"folder.created:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/7",
-              "line_start": 55091,
-              "line_end": 55091,
+              "line_start": 189207,
+              "line_end": 189207,
               "quote": "\"name\": \"folder.created:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/7",
-              "line_start": 54358,
-              "line_end": 54358,
+              "line_start": 188474,
+              "line_end": 188474,
               "quote": "\"name\": \"folder.created:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -3312,11 +3312,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3332,11 +3332,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -3366,11 +3366,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3386,11 +3386,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3406,11 +3406,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3447,11 +3447,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3467,11 +3467,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3508,11 +3508,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -3528,11 +3528,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3555,11 +3555,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3596,16 +3596,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-158 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-158 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -3617,8 +3617,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -3631,38 +3631,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/8",
-              "line_start": 61179,
-              "line_end": 61179,
+              "line_start": 214506,
+              "line_end": 214506,
               "quote": "\"name\": \"folder.deleted:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/8",
-              "line_start": 61574,
-              "line_end": 61574,
+              "line_start": 214901,
+              "line_end": 214901,
               "quote": "\"name\": \"folder.deleted:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/8",
-              "line_start": 60843,
-              "line_end": 60843,
+              "line_start": 214170,
+              "line_end": 214170,
               "quote": "\"name\": \"folder.deleted:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -3717,11 +3717,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3737,11 +3737,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -3771,11 +3771,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3791,11 +3791,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3811,11 +3811,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3852,11 +3852,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3872,11 +3872,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3913,11 +3913,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -3933,11 +3933,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3960,11 +3960,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4001,16 +4001,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-159 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-159 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4022,8 +4022,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -4036,38 +4036,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/9",
-              "line_start": 68365,
-              "line_end": 68365,
+              "line_start": 238864,
+              "line_end": 238864,
               "quote": "\"name\": \"folder.exported:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/9",
-              "line_start": 68804,
-              "line_end": 68804,
+              "line_start": 239303,
+              "line_end": 239303,
               "quote": "\"name\": \"folder.exported:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/9",
-              "line_start": 68029,
-              "line_end": 68029,
+              "line_start": 238528,
+              "line_end": 238528,
               "quote": "\"name\": \"folder.exported:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -4122,11 +4122,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4142,11 +4142,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -4176,11 +4176,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4196,11 +4196,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4216,11 +4216,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4257,11 +4257,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4277,11 +4277,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4318,11 +4318,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -4338,11 +4338,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4365,11 +4365,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4406,16 +4406,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-160 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-160 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4427,8 +4427,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -4441,38 +4441,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/10",
-              "line_start": 75562,
-              "line_end": 75562,
+              "line_start": 264975,
+              "line_end": 264975,
               "quote": "\"name\": \"folder.moved:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/10",
-              "line_start": 75977,
-              "line_end": 75977,
+              "line_start": 265390,
+              "line_end": 265390,
               "quote": "\"name\": \"folder.moved:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/10",
-              "line_start": 75226,
-              "line_end": 75226,
+              "line_start": 264639,
+              "line_end": 264639,
               "quote": "\"name\": \"folder.moved:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -4527,11 +4527,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4547,11 +4547,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "producer": {
           "status": "PASS",
@@ -4581,11 +4581,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4601,11 +4601,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4621,11 +4621,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4662,11 +4662,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4682,11 +4682,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4723,11 +4723,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "transitions": {
           "status": "PASS",
@@ -4743,11 +4743,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4770,11 +4770,11 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4811,16 +4811,16 @@
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current normative owner/schema sources are unchanged from Astra\u2019s inspected head and their exact citations/adoptions still hold; membership and event retention remain open."
+          "change_reason": "Current canonical owner/schema text and exact citations remain unchanged; retention stays pending and membership absent."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-161 has coherent snapshot counterexamples, complete schema-reference preflight, isolated LF/malformed-identifier schema cases, exact negative reasons, and historical-reader cases; all guard mutations and earlier review probes detect the defects. Native NOT_RUN.",
+          "finding": "F-161 has passing full-checker oracles and coherent guard-removal proofs; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4832,8 +4832,8 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "validate_snapshot_subjects",
-              "line_start": 474,
-              "line_end": 474,
+              "line_start": 568,
+              "line_end": 568,
               "quote": "def validate_snapshot_subjects(event_type, payload, operation):"
             },
             {
@@ -4846,38 +4846,38 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "check_negative_reason",
-              "line_start": 819,
-              "line_end": 819,
+              "line_start": 933,
+              "line_end": 933,
               "quote": "def check_negative_reason(case, error):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/11",
-              "line_start": 82735,
-              "line_end": 82735,
+              "line_start": 293399,
+              "line_end": 293399,
               "quote": "\"name\": \"folder.renamed:snapshot-selected-root\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/11",
-              "line_start": 83186,
-              "line_end": 83186,
+              "line_start": 293850,
+              "line_end": 293850,
               "quote": "\"name\": \"folder.renamed:unexercised-$defs-pointer\""
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "rows/11",
-              "line_start": 82399,
-              "line_end": 82399,
+              "line_start": 293063,
+              "line_end": 293063,
               "quote": "\"name\": \"folder.renamed:identifier-lf-receipt_ref\""
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-astra.md at 04af7f14ef84e1ac0390202292ba502f8522a4e6",
+            "source": "DFM-sol/REVIEW-cycle4.md at cd4ca77856a3feda4efb00efa342d1aceb96cca6",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 3 closes snapshot joins, unvisited reference resolution and masked lexical oracles; isolated guard weakening and the complete checker pass."
+          "change_reason": "Rebuilt coherent one-invariant negatives; all 82 checker guards, all 39 identifier patterns, 55 other exercised schema sites and 14 harness guards have accepting deletion counterexamples with zero residual rejections."
         }
       },
       "remaining_gaps": [
@@ -4891,12 +4891,12 @@
       ]
     }
   ],
-  "review_round": 3,
+  "review_round": 4,
   "review_before_counts": {
     "PASS": 108,
     "PARTIAL": 24,
     "ABSENT": 12
   },
   "prepared_families": 12,
-  "review_cap_note": "Round 3 explicitly requested. Author self-grade only; no new review delegate, admission, retention decision or native certification."
+  "review_cap_note": "Extra targeted round 4 explicitly authorized by Jared after the three-round cap; independent review still required."
 }
