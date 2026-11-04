@@ -1,130 +1,134 @@
 {
-  "baseline-dt.json": {
-    "top_level_status": "pass",
-    "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/baseline-dt.json",
-    "sha256": "77337de174fd0f8f44671a69751cc3aaf003f7e93b6c83fcea5433ed3e4b8f51"
-  },
-  "f7-dt.json": {
-    "top_level_status": "pass",
-    "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-dt.json",
-    "sha256": "2c91fd43c1330a87eeb9718ff2e700d6cb9135d8ac1d62696d0f4c3a0441d1b2"
-  },
-  "f8-dt.json": {
-    "top_level_status": "pass",
-    "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f8-dt.json",
-    "sha256": "09709628f3f4772014d5c6a82949a7cadc625c65dc16d45f746c58b1b6ceed48"
-  },
   "dt.json": {
-    "top_level_status": "pass",
+    "command": "python3 scripts/pm-dt-event-contracts.py",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/dt.json",
-    "sha256": "4da40907bf34b4181ef2f7392e0fe10630219828a698a352c100c38c3937b6ca"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/dt.json",
+    "sha256": "5bbaea12dbc7219958182065a26fba54e0525678ff4c30fd9752e3c13da38ab2"
   },
   "standing-negative-runs.json": {
-    "top_level_status": "pass",
+    "command": "python3 scripts/pm-dt-standing-checks.py --family <name> (six disjoint groups covering all 17 families)",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/standing-negative-runs.json",
-    "sha256": "ecc367444369331192625c7e33d6a05cc1c93104304a2b1edbcc14802b4071b2"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-negative-runs.json",
+    "sha256": "25f26a1ecdb992157cb1bdaaa15aef282c2669d7ff7cc66fa20e688e0f61c344"
   },
-  "success-exit-negative.json": {
-    "top_level_status": "pass",
+  "earlier-regression-summary.json": {
+    "command": "review-probes.py + review-retention-probes.py + explicit result assertions",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/success-exit-negative.json",
-    "sha256": "afa70e2a286de74b7a09c381f2165abc1285b48f48609571d573821cac9a36ff"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/earlier-regression-summary.json",
+    "sha256": "9af59b81bc29739a546dbac81a99c36eebe2752ce08eff6693705cdc103a86ad"
   },
-  "f7-regression-rejection.json": {
-    "top_level_status": "fail",
-    "exit_code": 1,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-regression-rejection.json",
-    "sha256": "894266aa3bb446849e6a846e778c9a353cd72d6954e682baa95815898be2b346",
-    "interpretation": "Expected refusal: restoring original schemas/mirrors makes all 17 families fail; 899 failures."
-  },
-  "schema-mirrors.json": {
-    "top_level_status": "pass",
+  "historical-readers.json": {
+    "command": "all 17 check-10 expected results compared with dt.json",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/schema-mirrors.json",
-    "sha256": "a9f7291ced72da61b75ba68e7c28da974efb43345ad8d428e85ec0eb4ec1b1e0"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/historical-readers.json",
+    "sha256": "c0ba66352917cbc693ed93f99ffddb26cdfe8201587ec84b4232c086152556d8"
   },
-  "storage-recovery.json": {
-    "top_level_status": "pass",
+  "retention-mutation-exits.json": {
+    "command": "review-retention-probes.py; seven child checker failures expected",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/storage-recovery.json",
-    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/retention-mutation-exits.json",
+    "sha256": "916ebf1d40d905935a10eb9c317ae48868c294fa869b0b618340663f5ffd69c4"
   },
-  "storage-profile.json": {
-    "top_level_status": "fail",
-    "exit_code": 1,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/storage-profile.json",
-    "sha256": "2ae3547ccf844ed510908987ec26a179e199a54365b8d75a0301b6cc392723c3",
-    "baseline_comparison": "Same 41 errors as reviewed head; zero additions/removals."
-  },
-  "profile-baseline-comparison.json": {
-    "top_level_status": "pass",
+  "reference-branch-mutations.json": {
+    "command": "review-reference-branch-probes.py; seventeen child checker failures expected",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/profile-baseline-comparison.json",
-    "sha256": "59877f935e4afecd5cbea5096dd2bf1c553d12737c3e6176f1f5ec78604d0ec9"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/reference-branch-mutations.json",
+    "sha256": "ed8dbeb2c43e937070f250d922f945bca83339d42033ec893993b5d30f55d23c"
+  },
+  "reference-mutations.json": {
+    "command": "review-probes.py; seventeen optional-reference child checker failures expected",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/reference-mutations.json",
+    "sha256": "4d6f95f05beb5f986e7764be4b37d44c02e949074b2541b84e9a7e50e083fc73"
   },
   "shard-generate.json": {
-    "top_level_status": "pass",
+    "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/shard-generate.json",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/shard-generate.json",
     "sha256": "85c6c93ed2b05ff29fad6e910bc8942aad45040b97ffced72464d9606b6db6af"
   },
-  "index-generate.json": {
-    "top_level_status": "pass",
-    "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/index-generate.json",
-    "sha256": "db1e2431167e5113b766b19245cfc3bb80f0bbb3051cec79ac4bb4e2b66bf769"
-  },
   "shard-check.json": {
-    "top_level_status": "pass",
+    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/shard-check.json",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/shard-check.json",
     "sha256": "d25ff82f6254b4ad8b65d081477d59b90378b722d9e0ae71ce382012e59baa06"
   },
   "index-validate.json": {
-    "top_level_status": "pass",
+    "command": "python3 scripts/pm-plan-index.py validate",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/index-validate.json",
-    "sha256": "a953ff4d97d3a1b230d9d70f6728715c0137d0da5e37ede417abaa41b90af156"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/index-validate.json",
+    "sha256": "5fc5bbf1651080bf8458ab0317479c4a3c61e42b08b395bc529adae357ef69b4"
   },
-  "committed-shards-check.json": {
-    "top_level_status": "pass",
+  "storage-recovery.json": {
+    "command": "python3 scripts/pm-storage-recovery-contracts.py --self-test",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/committed-shards-check.json",
-    "sha256": "0ccab6628a30ceb82cd306f6b2de8e68a9e8c0bc0c83e3e7ca45383a2a550f1a"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/storage-recovery.json",
+    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
   },
-  "derived-regeneration.json": {
-    "top_level_status": "pass",
+  "currentness-copy.json": {
+    "command": "copy ignored currentness edition; compare all fifteen SHA-256 hashes",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/derived-regeneration.json",
-    "sha256": "8bd352a09a5d5dbec2fa8ba9aab372343f50e8f8e428ebb97981632ddbbb37b2"
-  },
-  "grade-evidence-check.json": {
-    "top_level_status": "pass",
-    "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/grade-evidence-check.json",
-    "sha256": "8bb83aaca3532dc4418069eae5468c40bf0d7e8c401725921172fe69a52eec4e"
-  },
-  "current-premises.json": {
-    "top_level_status": "pass",
-    "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/current-premises.json",
-    "sha256": "2beaeac9f828f5ef53cf07ea765dfe74a929c240e78ed816cb909af899db6be8"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/currentness-copy.json",
+    "sha256": "890a70623d25bfdb35da132b298b94bd67a08af260a9721e7bf37412724354a2"
   },
   "scope-audit.json": {
-    "top_level_status": "pass",
+    "command": "compare round-3 changed paths and unchanged owner/schema/registry hashes",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/scope-audit.json",
-    "sha256": "50a1e353f94c0c5efdaaec2b87d07e61701c73ca4e0457e02ccc87bf340e27cf"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/scope-audit.json",
+    "sha256": "b9712f430ec3034265f937cfb0a8f5c3af0414433ea9f8cecd4d52c3095bb8b4"
   },
-  "check7-before-after.json": {
-    "top_level_status": "pass",
+  "grade-evidence-check.json": {
+    "command": "verify 216 cells and 328 current quote records",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/check7-before-after.json",
-    "sha256": "fc2d83e3ee29fea25a96ed75e9586c368dbe3cad89b30f53bb396bc689a3d5e1"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/grade-evidence-check.json",
+    "sha256": "97d87b2ecb23162d7896b3e78f2a2cf503cd30e901fa24efa37e27812bfd01ab"
+  },
+  "standing-group1.json": {
+    "command": "python3 scripts/pm-dt-standing-checks.py --family approval.requested --family approval.granted --family approval.denied",
+    "exit_code": 0,
+    "status": "pass",
+    "full_checker_runs": 46,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-group1.json",
+    "sha256": "7c07c54b03986dbc4ad3b0ec853225da69c2536159a3792d3b67fe1fe239414a"
+  },
+  "standing-group2.json": {
+    "command": "python3 scripts/pm-dt-standing-checks.py --family approval.timeout --family config.migrated --family gate.evaluation_started",
+    "exit_code": 0,
+    "status": "pass",
+    "full_checker_runs": 46,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-group2.json",
+    "sha256": "6ea6d906178d0ec1c2200c3e99ffc7247a05ce24cdd03bbfddac0f5ca4fe3989"
+  },
+  "standing-group3.json": {
+    "command": "python3 scripts/pm-dt-standing-checks.py --family gate.failed --family gate.passed --family requirements.clarification_requested",
+    "exit_code": 0,
+    "status": "pass",
+    "full_checker_runs": 46,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-group3.json",
+    "sha256": "477d1970782a295cb2d3cb91ba252a1c4b2e3ac6cb6f85736aa1e24dcaf29f5d"
+  },
+  "standing-group4.json": {
+    "command": "python3 scripts/pm-dt-standing-checks.py --family run.background_enqueued --family tool.denied --family tool.execution_completed",
+    "exit_code": 0,
+    "status": "pass",
+    "full_checker_runs": 46,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-group4.json",
+    "sha256": "73a9705bdef910bfd5512b4d225a0c9a6447107d3b6039e09169d41130edfb6a"
+  },
+  "standing-group5.json": {
+    "command": "python3 scripts/pm-dt-standing-checks.py --family tool.execution_started --family tool.invoked --family usage.event",
+    "exit_code": 0,
+    "status": "pass",
+    "full_checker_runs": 46,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-group5.json",
+    "sha256": "73e4c6ba6f2efdffdc8110cd479c365270a02d139b12b7bfe6a0270d8c70ca16"
+  },
+  "standing-group6.json": {
+    "command": "python3 scripts/pm-dt-standing-checks.py --family worktree.created --family worktree.deleted",
+    "exit_code": 0,
+    "status": "pass",
+    "full_checker_runs": 31,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix3/standing-group6.json",
+    "sha256": "78354935ba0d643b3cac0db82fec15966c925adb06ce01c323f795bc58bd70ea"
   }
 }
