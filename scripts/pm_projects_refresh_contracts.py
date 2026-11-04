@@ -715,6 +715,31 @@ def semantic_outcome(predicate, record, corpus, pack, case):
         return record['outcome']
     if predicate == 'automation.final_dispatch':
         return publication_outcome(record)
+    if predicate == 'starter.source_currentness':
+        source = pack.get('starter_owner_sources', {}).get(case.get('owner_source_id'))
+        content = record['payload']['content']
+        if source is None or source['scan_disposition'] != 'secret_free' or content != source['content']:
+            return 'refuse'
+        if record['payload']['expected_content_sha256'] != content['content_sha256']:
+            return 'refuse'
+        destination = record['payload'].get('destination')
+        if destination and destination['destination_collision_plan_ref'] != source['collision_plan_ref']:
+            return 'refuse'
+        return 'accept'
+    if predicate == 'contexts.settings_target':
+        target, context = record['destination_target'], record['context']
+        origin = context['origin']
+        if origin['kind'] == 'thread':
+            thread = origin['thread_context']
+            if thread['scope'] != context['scope'] or thread['storage_instance_id'] != context['storage_instance_id']:
+                return 'refuse'
+        if target['level'] == 'device':
+            if origin['kind'] == 'thread' or target['client_id'] != origin['initiating_client_id']:
+                return 'refuse'
+        if target['level'] == 'computer' and target['computer_key']['kind'] == 'server':
+            if target['computer_key']['id'] != context['scope']['server_id']:
+                return 'refuse'
+        return 'accept'
     if predicate == 'scope.app_only_schema':
         schema = corpus.resolve(record['schema_ref'])
         scope = schema['properties']['scope']

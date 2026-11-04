@@ -306,6 +306,172 @@
     },
     "AttachmentSave_To_ProjectResultV2": {
       "$ref": "https://puppetmaster.local/schemas/assistant_attachment_contracts/1.0.0/assistant_attachment_contracts.schema.json#/$defs/AttachmentSave_To_ProjectResult"
+    },
+    "AttachmentIntakeRequestV3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "source_kind",
+        "source_ref",
+        "source_sha256",
+        "captured_revision",
+        "source_host_id",
+        "read_grant_evidence",
+        "create_chat_folder_if_needed",
+        "schema_id"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.chat.attachment.add"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentOwnerContextV1"
+        },
+        "source_kind": {
+          "enum": [
+            "file",
+            "folder_manifest",
+            "frozen_reference"
+          ]
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "captured_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "read_grant_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "create_chat_folder_if_needed": {
+          "type": "boolean"
+        },
+        "schema_id": {
+          "const": "pm.attachment.add.request.v3"
+        }
+      }
+    },
+    "AttachmentAddRequestV3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentIntakeRequestV3"
+        }
+      ]
+    },
+    "AttachmentIntakeResultV3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attachment_id",
+        "status",
+        "frozen_manifest_ref",
+        "captured_version_ref",
+        "owner_receipt_ref",
+        "chat_folder_ref",
+        "return_context_ref",
+        "schema_id",
+        "owner_context"
+      ],
+      "properties": {
+        "attachment_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "added",
+            "refused",
+            "failed"
+          ]
+        },
+        "frozen_manifest_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "captured_version_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "chat_folder_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_id": {
+          "const": "pm.attachment.add.result.v3"
+        },
+        "owner_context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentOwnerContextV1"
+        }
+      }
+    },
+    "AttachmentAddResultV3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentIntakeResultV3"
+        }
+      ]
     }
   }
 }

@@ -6248,6 +6248,603 @@
           }
         }
       ]
+    },
+    "StarterCreateDestinationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "draft_id",
+        "draft_revision",
+        "draft_sha256",
+        "registration_plan_ref",
+        "registration_plan_sha256",
+        "destination_host_id",
+        "destination_root_ref",
+        "destination_collision_plan_ref",
+        "permission_evidence"
+      ],
+      "properties": {
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "registration_plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "registration_plan_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_root_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_collision_plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "ProjectTemplateOperationPayloadV3": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "content",
+            "display_name",
+            "expected_content_sha256"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.save"
+            },
+            "content": {
+              "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/project_composition_payload_v2"
+            },
+            "display_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_content_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "content": {
+                    "properties": {
+                      "template_kind": {
+                        "const": "configuration"
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "content": {
+                    "properties": {
+                      "exact_payload": {
+                        "properties": {
+                          "action": {
+                            "const": "cmd.project_template.save"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "content",
+            "display_name",
+            "expected_content_sha256",
+            "destination"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.create_project"
+            },
+            "content": {
+              "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/project_composition_payload_v2"
+            },
+            "display_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_content_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "destination": {
+              "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/StarterCreateDestinationV1"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "content": {
+                    "properties": {
+                      "template_kind": {
+                        "const": "configuration"
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "content": {
+                    "properties": {
+                      "exact_payload": {
+                        "properties": {
+                          "action": {
+                            "const": "cmd.project_template.create_project"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "template_kind",
+            "item_id",
+            "version",
+            "content_sha256",
+            "new_display_name",
+            "stable_identity_preserved"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.rename"
+            },
+            "template_kind": {
+              "enum": [
+                "starter_file_set",
+                "configuration"
+              ]
+            },
+            "item_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "content_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "new_display_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "stable_identity_preserved": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "action",
+            "template_kind",
+            "item_id",
+            "version",
+            "content_sha256",
+            "dependency_check_ref",
+            "hold_check_ref",
+            "data_disposition_ref",
+            "destructive_confirmation_ref"
+          ],
+          "properties": {
+            "action": {
+              "const": "cmd.project_template.delete"
+            },
+            "template_kind": {
+              "enum": [
+                "starter_file_set",
+                "configuration"
+              ]
+            },
+            "item_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "content_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "dependency_check_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "hold_check_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "data_disposition_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "destructive_confirmation_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      ]
+    },
+    "ProjectTemplateCommandRequestV3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "context",
+        "template_id",
+        "expected_registry_generation",
+        "expected_template_generation",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_template.command_request.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.project_template.save",
+            "cmd.project_template.create_project",
+            "cmd.project_template.rename",
+            "cmd.project_template.delete"
+          ]
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/StarterCatalogContextV1"
+        },
+        "template_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_registry_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_template_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "payload": {
+          "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/ProjectTemplateOperationPayloadV3"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.save"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.save"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.create_project"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.create_project"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.rename"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.rename"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.delete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "properties": {
+                  "action": {
+                    "const": "cmd.project_template.delete"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectTemplateCommandResultV3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "operation_id",
+        "template_kind",
+        "item_id",
+        "version",
+        "content_sha256",
+        "status",
+        "project_id",
+        "owner_receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project_template.command_result.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.project_template.save",
+            "cmd.project_template.create_project",
+            "cmd.project_template.rename",
+            "cmd.project_template.delete"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "template_kind": {
+          "enum": [
+            "starter_file_set",
+            "configuration"
+          ]
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "saved",
+            "project_created",
+            "renamed",
+            "deleted",
+            "refused",
+            "stale",
+            "conflict",
+            "failed"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "saved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.save"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "project_created"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.create_project"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "renamed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.rename"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "deleted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project_template.delete"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProjectCompositionCommandRequestV3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/ProjectTemplateCommandRequestV3"
+        }
+      ]
+    },
+    "ProjectCompositionCommandResultV3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/project_system_contracts.schema.json#/$defs/ProjectTemplateCommandResultV3"
+        }
+      ]
     }
   },
   "x-server-gap-command-contracts": {

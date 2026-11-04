@@ -11445,6 +11445,520 @@
           "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_rollback_request_v1"
         }
       ]
+    },
+    "settings_layered_preview_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "context",
+        "operation",
+        "source_target",
+        "destination_target",
+        "copy_basis",
+        "selectors",
+        "picked_setting_ids",
+        "include_project_only",
+        "proposed_values",
+        "expected_setting_revisions",
+        "owner_thing_previews",
+        "command_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings.layered.preview.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/SettingsOperationContextV1"
+        },
+        "operation": {
+          "enum": [
+            "copy",
+            "edit",
+            "reset",
+            "import",
+            "join",
+            "promote"
+          ]
+        },
+        "source_target": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "destination_target": {
+          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+        },
+        "copy_basis": {
+          "enum": [
+            "own_values",
+            "effective_values"
+          ]
+        },
+        "selectors": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "appearance_workspace",
+              "assistant_chat",
+              "providers_accounts_models_routing",
+              "planning_goal",
+              "orchestrator_automation",
+              "tools_integrations",
+              "testing_browser_devices",
+              "permissions_security",
+              "memory_retention_history",
+              "notifications_usage_budgets",
+              "project_only_rows"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "picked_setting_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "include_project_only": {
+          "type": "boolean"
+        },
+        "proposed_values": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+          },
+          "additionalProperties": {
+            "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/setting_value"
+          }
+        },
+        "expected_setting_revisions": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "owner_thing_previews": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/owner_thing_copy_contribution_v1"
+          }
+        },
+        "command_id": {
+          "const": "cmd.settings.transaction.preview"
+        }
+      }
+    },
+    "settings_transaction_preview_request_v3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_preview_request_v2"
+        }
+      ]
+    },
+    "settings_layered_apply_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "context",
+        "preview_id",
+        "preview_sha256",
+        "expected_generation",
+        "expected_setting_revisions",
+        "owner_receipt_refs",
+        "destination_target"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings.layered.apply.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.settings.transaction.apply"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/SettingsOperationContextV1"
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_setting_revisions": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "owner_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "destination_target": {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+        }
+      }
+    },
+    "settings_transaction_apply_request_v3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_apply_request_v2"
+        }
+      ]
+    },
+    "settings_layered_rollback_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "context",
+        "preview_id",
+        "preview_sha256",
+        "expected_generation",
+        "expected_setting_revisions",
+        "owner_receipt_refs",
+        "destination_target"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings.layered.rollback.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.settings.transaction.rollback"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/SettingsOperationContextV1"
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_setting_revisions": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "owner_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "destination_target": {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+        }
+      }
+    },
+    "settings_transaction_rollback_request_v3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_rollback_request_v2"
+        }
+      ]
+    },
+    "settings_layered_preview_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request",
+        "preview_id",
+        "preview_sha256",
+        "generation",
+        "expires_at_utc",
+        "selector_sets",
+        "resolved_setting_ids",
+        "account_resolution",
+        "exclusions",
+        "blockers",
+        "owner_validation_refs",
+        "confirmation_required"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings.layered.preview.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_preview_request_v2"
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "selector_sets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "appearance_workspace",
+            "assistant_chat",
+            "providers_accounts_models_routing",
+            "planning_goal",
+            "orchestrator_automation",
+            "tools_integrations",
+            "testing_browser_devices",
+            "permissions_security",
+            "memory_retention_history",
+            "notifications_usage_budgets",
+            "project_only_rows"
+          ],
+          "properties": {
+            "appearance_workspace": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "assistant_chat": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "providers_accounts_models_routing": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "planning_goal": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "orchestrator_automation": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "tools_integrations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "testing_browser_devices": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "permissions_security": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "memory_retention_history": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "notifications_usage_budgets": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "project_only_rows": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "resolved_setting_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "account_resolution": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1"
+          }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "reason_ref"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "owner_validation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "confirmation_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "settings_transaction_preview_v3": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_preview_v2"
+        }
+      ]
     }
   },
   "x-server-gap-alias-normalization": {
