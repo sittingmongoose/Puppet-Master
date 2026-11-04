@@ -1,0 +1,3358 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_kind": "self_grade_prepared_without_admission",
+  "assessed_tree": {
+    "branch": "plans/ea-w2-filemanager-20261104",
+    "commit": "5278ed755b1ad1aa765a6f3807387f9e20f338e2",
+    "read_method": "current canonical owner/schema/fixture content; following assessment commit changes reports only"
+  },
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "status_counts": {
+    "PASS": 120,
+    "PARTIAL": 12,
+    "ABSENT": 12
+  },
+  "native_execution": "NOT_RUN",
+  "rows": [
+    {
+      "event_type": "file.copied",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-150",
+          "line_start": 5494,
+          "line_end": 5494,
+          "quote": "Newly authored owner contract under DL-045 for **file.copied@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-150",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5496,
+              "line_end": 5496,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5494,
+              "line_end": 5494,
+              "quote": "Newly authored owner contract under DL-045 for **file.copied@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5511,
+              "line_end": 5511,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/file_copied.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5528,
+              "line_end": 5528,
+              "quote": "event_id is \"evt_file_copied_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5544,
+              "line_end": 5544,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5558,
+              "line_end": 5558,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5553,
+              "line_end": 5553,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5498,
+              "line_end": 5498,
+              "quote": "**Semantics and transitions.** Clipboard Copy alone produces no event. A completed paste duplicates the source into a distinct result node; source identity and bytes remain unchanged. Confli"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5537,
+              "line_end": 5537,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-150 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5567,
+              "line_end": 5567,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-150",
+              "line_start": 5575,
+              "line_end": 5575,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "file.created",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-151",
+          "line_start": 5617,
+          "line_end": 5617,
+          "quote": "Newly authored owner contract under DL-045 for **file.created@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-151",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5619,
+              "line_end": 5619,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5617,
+              "line_end": 5617,
+              "quote": "Newly authored owner contract under DL-045 for **file.created@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5634,
+              "line_end": 5634,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/file_created.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5651,
+              "line_end": 5651,
+              "quote": "event_id is \"evt_file_created_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5667,
+              "line_end": 5667,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5681,
+              "line_end": 5681,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5676,
+              "line_end": 5676,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5621,
+              "line_end": 5621,
+              "quote": "**Semantics and transitions.** Creation requires a single valid parent and validated name; empty names, dot/dot-dot, separators and platform-reserved names are refused before mutation. The r"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5660,
+              "line_end": 5660,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-151 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5690,
+              "line_end": 5690,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-151",
+              "line_start": 5698,
+              "line_end": 5698,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "file.deleted",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-152",
+          "line_start": 5740,
+          "line_end": 5740,
+          "quote": "Newly authored owner contract under DL-045 for **file.deleted@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-152",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5742,
+              "line_end": 5742,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5740,
+              "line_end": 5740,
+              "quote": "Newly authored owner contract under DL-045 for **file.deleted@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5757,
+              "line_end": 5757,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/file_deleted.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "CONFLICT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5774,
+              "line_end": 5774,
+              "quote": "event_id is \"evt_file_deleted_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5790,
+              "line_end": 5790,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5804,
+              "line_end": 5804,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5799,
+              "line_end": 5799,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5744,
+              "line_end": 5744,
+              "quote": "**Semantics and transitions.** F2-205 is adopted unchanged: default OS trash, explicitly confirmed permanent deletion for Shift+Delete or trash-unavailable, and separate FileSafe journaled s"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5783,
+              "line_end": 5783,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-152 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5813,
+              "line_end": 5813,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-152",
+              "line_start": 5821,
+              "line_end": 5821,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "file.exported",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-153",
+          "line_start": 5863,
+          "line_end": 5863,
+          "quote": "Newly authored owner contract under DL-045 for **file.exported@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-153",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5865,
+              "line_end": 5865,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5863,
+              "line_end": 5863,
+              "quote": "Newly authored owner contract under DL-045 for **file.exported@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5880,
+              "line_end": 5880,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/file_exported.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5897,
+              "line_end": 5897,
+              "quote": "event_id is \"evt_file_exported_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5913,
+              "line_end": 5913,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5927,
+              "line_end": 5927,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5922,
+              "line_end": 5922,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5867,
+              "line_end": 5867,
+              "quote": "**Semantics and transitions.** Save Local Copy requires a verified readable source and an explicitly chosen authorized local destination. A committed copy-out preserves the source Project-re"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5906,
+              "line_end": 5906,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-153 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5936,
+              "line_end": 5936,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-153",
+              "line_start": 5944,
+              "line_end": 5944,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "file.moved",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-154",
+          "line_start": 5986,
+          "line_end": 5986,
+          "quote": "Newly authored owner contract under DL-045 for **file.moved@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-154",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 5988,
+              "line_end": 5988,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 5986,
+              "line_end": 5986,
+              "quote": "Newly authored owner contract under DL-045 for **file.moved@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6003,
+              "line_end": 6003,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/file_moved.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6020,
+              "line_end": 6020,
+              "quote": "event_id is \"evt_file_moved_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6036,
+              "line_end": 6036,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6050,
+              "line_end": 6050,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6045,
+              "line_end": 6045,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 5990,
+              "line_end": 5990,
+              "quote": "**Semantics and transitions.** Cut alone produces no event. Completed paste in move mode requires destination commit and successful source removal. Copy success with source removal failure l"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6029,
+              "line_end": 6029,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-154 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6059,
+              "line_end": 6059,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-154",
+              "line_start": 6067,
+              "line_end": 6067,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "file.renamed",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-155",
+          "line_start": 6109,
+          "line_end": 6109,
+          "quote": "Newly authored owner contract under DL-045 for **file.renamed@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-155",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6111,
+              "line_end": 6111,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6109,
+              "line_end": 6109,
+              "quote": "Newly authored owner contract under DL-045 for **file.renamed@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6126,
+              "line_end": 6126,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/file_renamed.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6143,
+              "line_end": 6143,
+              "quote": "event_id is \"evt_file_renamed_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6159,
+              "line_end": 6159,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6173,
+              "line_end": 6173,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6168,
+              "line_end": 6168,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6113,
+              "line_end": 6113,
+              "quote": "**Semantics and transitions.** Rename changes the basename of one exact node after name validation and FileSafe commit, preserves its node identity, and binds old and new path snapshots. It "
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6152,
+              "line_end": 6152,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-155 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6182,
+              "line_end": 6182,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-155",
+              "line_start": 6190,
+              "line_end": 6190,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "folder.copied",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-156",
+          "line_start": 6232,
+          "line_end": 6232,
+          "quote": "Newly authored owner contract under DL-045 for **folder.copied@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-156",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6234,
+              "line_end": 6234,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6232,
+              "line_end": 6232,
+              "quote": "Newly authored owner contract under DL-045 for **folder.copied@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6249,
+              "line_end": 6249,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/folder_copied.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6266,
+              "line_end": 6266,
+              "quote": "event_id is \"evt_folder_copied_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6282,
+              "line_end": 6282,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6296,
+              "line_end": 6296,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6291,
+              "line_end": 6291,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6236,
+              "line_end": 6236,
+              "quote": "**Semantics and transitions.** Clipboard Copy alone produces no event. A completed paste duplicates the source into a distinct result node; source identity and bytes remain unchanged. Confli"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6275,
+              "line_end": 6275,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-156 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6305,
+              "line_end": 6305,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-156",
+              "line_start": 6313,
+              "line_end": 6313,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "folder.created",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-157",
+          "line_start": 6355,
+          "line_end": 6355,
+          "quote": "Newly authored owner contract under DL-045 for **folder.created@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-157",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6357,
+              "line_end": 6357,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6355,
+              "line_end": 6355,
+              "quote": "Newly authored owner contract under DL-045 for **folder.created@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6372,
+              "line_end": 6372,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/folder_created.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6389,
+              "line_end": 6389,
+              "quote": "event_id is \"evt_folder_created_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6405,
+              "line_end": 6405,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6419,
+              "line_end": 6419,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6414,
+              "line_end": 6414,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6359,
+              "line_end": 6359,
+              "quote": "**Semantics and transitions.** Creation requires a single valid parent and validated name; empty names, dot/dot-dot, separators and platform-reserved names are refused before mutation. The r"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6398,
+              "line_end": 6398,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-157 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6428,
+              "line_end": 6428,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-157",
+              "line_start": 6436,
+              "line_end": 6436,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "folder.deleted",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-158",
+          "line_start": 6478,
+          "line_end": 6478,
+          "quote": "Newly authored owner contract under DL-045 for **folder.deleted@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-158",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6480,
+              "line_end": 6480,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6478,
+              "line_end": 6478,
+              "quote": "Newly authored owner contract under DL-045 for **folder.deleted@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6495,
+              "line_end": 6495,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/folder_deleted.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "CONFLICT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6512,
+              "line_end": 6512,
+              "quote": "event_id is \"evt_folder_deleted_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6528,
+              "line_end": 6528,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6542,
+              "line_end": 6542,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6537,
+              "line_end": 6537,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6482,
+              "line_end": 6482,
+              "quote": "**Semantics and transitions.** F2-205 is adopted unchanged: default OS trash, explicitly confirmed permanent deletion for Shift+Delete or trash-unavailable, and separate FileSafe journaled s"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6521,
+              "line_end": 6521,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-158 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6551,
+              "line_end": 6551,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-158",
+              "line_start": 6559,
+              "line_end": 6559,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "folder.exported",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-159",
+          "line_start": 6601,
+          "line_end": 6601,
+          "quote": "Newly authored owner contract under DL-045 for **folder.exported@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-159",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6603,
+              "line_end": 6603,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6601,
+              "line_end": 6601,
+              "quote": "Newly authored owner contract under DL-045 for **folder.exported@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6618,
+              "line_end": 6618,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/folder_exported.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6635,
+              "line_end": 6635,
+              "quote": "event_id is \"evt_folder_exported_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6651,
+              "line_end": 6651,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6665,
+              "line_end": 6665,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6660,
+              "line_end": 6660,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6605,
+              "line_end": 6605,
+              "quote": "**Semantics and transitions.** Save Local Copy requires a verified readable source and an explicitly chosen authorized local destination. A committed copy-out preserves the source Project-re"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6644,
+              "line_end": 6644,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-159 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6674,
+              "line_end": 6674,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-159",
+              "line_start": 6682,
+              "line_end": 6682,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "folder.moved",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-160",
+          "line_start": 6724,
+          "line_end": 6724,
+          "quote": "Newly authored owner contract under DL-045 for **folder.moved@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-160",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6726,
+              "line_end": 6726,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6724,
+              "line_end": 6724,
+              "quote": "Newly authored owner contract under DL-045 for **folder.moved@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6741,
+              "line_end": 6741,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/folder_moved.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6758,
+              "line_end": 6758,
+              "quote": "event_id is \"evt_folder_moved_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6774,
+              "line_end": 6774,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6788,
+              "line_end": 6788,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6783,
+              "line_end": 6783,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6728,
+              "line_end": 6728,
+              "quote": "**Semantics and transitions.** Cut alone produces no event. Completed paste in move mode requires destination commit and successful source removal. Copy success with source removal failure l"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6767,
+              "line_end": 6767,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-160 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6797,
+              "line_end": 6797,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-160",
+              "line_start": 6805,
+              "line_end": 6805,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    },
+    {
+      "event_type": "folder.renamed",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "disposition": "CURRENT_WRITER",
+      "disposition_note": "Planned producer contract only; current writes remain quarantined pending retention, review and admission.",
+      "disposition_evidence": [
+        {
+          "path": "Plans/FileManager.md",
+          "unit": "F-161",
+          "line_start": 6847,
+          "line_end": 6847,
+          "quote": "Newly authored owner contract under DL-045 for **folder.renamed@1.0.0** only; prepared without admission."
+        }
+      ],
+      "current_owner_units": [
+        "F-161",
+        "SP-560",
+        "CV-560",
+        "ATS-280",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact family remains absent from the unchanged central registry; no admission is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6849,
+              "line_end": 6849,
+              "quote": "No append is permitted until this exact family/version is admitted and native gates pass."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Registry absence remains intentional before admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 governs this exact family/version independently and CV-560 routes its own schema.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6847,
+              "line_end": 6847,
+              "quote": "Newly authored owner contract under DL-045 for **folder.renamed@1.0.0** only; prepared without admission."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 names the exact handler/command and original effect, receipt, append, first acknowledgement and terminal-publication ordering with explicit SP-286/CV-339 adoption.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6864,
+              "line_end": 6864,
+              "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own closed root and exact schema ID/version adopted by the semantic owner; referenced typed IDs and payload fields remain closed.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/file_manager/folder_renamed.schema.json",
+              "unit": "#/additionalProperties",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"additionalProperties\": false,"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 binds real Project scope and an exact six-string RFC8785 identity tuple with subject selection and family-prefixed digest.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6881,
+              "line_end": 6881,
+              "quote": "event_id is \"evt_folder_renamed_\" plus lowercase SHA-256(UTF8(T)); the scoped idempotency_key is"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 freezes operation/epoch/subject identity, rejects unequal retries and resolves original custody without repeating filesystem effects or appending twice.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6897,
+              "line_end": 6897,
+              "quote": "clipboard, tree refresh mutation, network transfer, toast or new event. Lost acknowledgement resolves"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6911,
+              "line_end": 6911,
+              "quote": "retention_policy_ref: PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 binds original-owner opaque ref resolution, no raw path/body/secret admission, current access/deletion checks and coherent event/receipt restore.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6906,
+              "line_end": 6906,
+              "quote": "receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 defines the exact successful boundary and refused/partial operation behavior for this family, with completion fenced on missing original custody.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6851,
+              "line_end": 6851,
+              "quote": "**Semantics and transitions.** Rename changes the basename of one exact node after name validation and FileSafe commit, preserves its node identity, and binds old and new path snapshots. It "
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 names its own operating history reader and explicitly adopts SP-278 current source and generic checkpoint, live/nine-field token, CAS and rebuild. No family-specific durable consumer state exists.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6890,
+              "line_end": 6890,
+              "quote": "adopts SP-278 reader.storage.event_record_index@1.0.0 and its generic EventRecord-index checkpoint:"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "F-161 defines exact version dispatch, per-family writer cutoff, in-flight reconciliation, retained readers and reader replacement/retirement fences.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6920,
+              "line_end": 6920,
+              "quote": "Storage records this exact family's writer cutoff at its last admitted sequence, fences new"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Own positive closed payload and negative scope, kind, identity, original receipt, ordering, replay, semantic-boundary, access, restore, version and withdrawal oracle cases pass. Native obligations authored and NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/FileManager.md",
+              "unit": "F-161",
+              "line_start": 6928,
+              "line_end": 6928,
+              "quote": "**Oracles.** Plans/filemanager_event_contract_fixtures.json and"
+            }
+          ],
+          "prior": {
+            "source": "surveys/L5/ROWS.jsonl",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Current independently authored family contract now binds the stated normative facet."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry membership and separate family admission remain absent.",
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
+      ],
+      "static_checks_seen": [
+        "scripts/pm-filemanager-event-contracts.py: pass, 279 oracle cases across twelve families"
+      ]
+    }
+  ]
+}

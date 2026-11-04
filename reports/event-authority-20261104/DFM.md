@@ -84,3 +84,5 @@ Question for Jared, routed through RT/CC-L5-1: should file/folder operation hist
 - No main push, landing lock, reseal, event-registry append, admission/Decision Log record, frozen validator edit, pm-mail or subagent.
 
 Checks and report copies: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DFM. Leave this local worktree for the lead; it has not landed.
+
+Self-grade assessed canonical content commit: 5278ed755b1ad1aa765a6f3807387f9e20f338e2. DFM.self-grade.json carries all twelve criteria and mechanically checked exact citations for each family; the following report-only commit preserves that assessed canonical content.
