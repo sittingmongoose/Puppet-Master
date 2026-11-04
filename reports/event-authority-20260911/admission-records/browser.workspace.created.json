@@ -1,39 +1,39 @@
 {
- "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
- "event_type": "browser.workspace.created",
- "family_id": "event-family-browser-workspace-created",
- "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-046",
- "decision_section_sha256": "94f3705169bf73f8c61d491e1a74ac643d0dc5afd31334358997757770b264a0",
- "registry_before": {
-  "revision": "2026-09-11.1",
-  "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
-  "family_count": 40
- },
- "registry_after": {
-  "revision": "2026-09-11.2",
-  "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
-  "family_count": 41
- },
- "registry_row_sha256": "41a79eb9484860b8176893fca50173dab58f8cc068cb491b3fdc92db3e08cb06",
- "depth_assessment": {
-  "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
-  "sha256": "4100651156a977284fcf73aca33cede5b4477aef6943d098bd316a004f1a4050"
- },
- "admission_landing": {
-  "commit": "69553720f1c55528ed423a8c723bc97ec9cc4281",
-  "record": "reports/packet-gap-closure-20260910/browser-workspace-created-root-review-20260911.json"
- },
- "criteria_not_passing_at_recording": [
-  "producer",
-  "consumers_checkpoints",
-  "positive_negative_oracles"
- ],
- "status_at_recording": "incomplete_depth",
- "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
- "recorded_at_utc": "2026-09-24T23:39:35Z",
- "notes": [
-  "Verification record: reports/packet-gap-closure-20260910/browser-workspace-created-verification-20260911.json (f359b6aed3).",
-  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+  "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+  "event_type": "browser.workspace.created",
+  "family_id": "event-family-browser-workspace-created",
+  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
+  "decision_ref": "Plans/Decision_Log.md#DL-046",
+  "decision_section_sha256": "94f3705169bf73f8c61d491e1a74ac643d0dc5afd31334358997757770b264a0",
+  "registry_before": {
+    "revision": "2026-09-11.1",
+    "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+    "family_count": 40
+  },
+  "registry_after": {
+    "revision": "2026-09-11.2",
+    "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
+    "family_count": 41
+  },
+  "registry_row_sha256": "41a79eb9484860b8176893fca50173dab58f8cc068cb491b3fdc92db3e08cb06",
+  "depth_assessment": {
+    "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
+    "sha256": "116bc685e4f1cf62f7acae66dded955bf6ab0dbb233de670950791e5ee7f70b5"
+  },
+  "admission_landing": {
+    "commit": "69553720f1c55528ed423a8c723bc97ec9cc4281",
+    "record": "reports/packet-gap-closure-20260910/browser-workspace-created-root-review-20260911.json"
+  },
+  "criteria_not_passing_at_recording": [
+    "producer",
+    "consumers_checkpoints",
+    "positive_negative_oracles"
+  ],
+  "status_at_recording": "incomplete_depth",
+  "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
+  "recorded_at_utc": "2026-09-24T23:39:35Z",
+  "notes": [
+    "Verification record: reports/packet-gap-closure-20260910/browser-workspace-created-verification-20260911.json (f359b6aed3).",
+    "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+  ]
 }
