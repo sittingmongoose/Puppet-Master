@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7477
+Source lines: L6715-L7507
 
-Source SHA256: `88ef1d61ac97c1a4a36444add5b06fa6afdfbc051e62049532d26e199ece456a`
+Source SHA256: `207d76b13096a08d22d2d1b34ced17689656c1bc8870c41fe9dc17f2b1203446`
 
 ---
 
@@ -575,6 +575,12 @@ negative_constraints:
 - `filesafe.command_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
 - `filesafe.destructive_override_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
 
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.command_denied`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `filesafe.destructive_override_denied`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+
 ### ATS-276 - filesafe.destructive_override_granted, filesafe.destructive_override_requested oracles
 
 ```yaml
@@ -624,6 +630,12 @@ negative_constraints:
 
 - `filesafe.destructive_override_granted`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
 - `filesafe.destructive_override_requested`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.destructive_override_granted`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `filesafe.destructive_override_requested`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
 
 ### ATS-277 - filesafe.guard_init_failed, filesafe.path_denied oracles
 
@@ -675,6 +687,12 @@ negative_constraints:
 - `filesafe.guard_init_failed`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
 - `filesafe.path_denied`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
 
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.guard_init_failed`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `filesafe.path_denied`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+
 ### ATS-278 - filesafe.policy_degraded oracles
 
 ```yaml
@@ -721,6 +739,11 @@ negative_constraints:
 **Review round 1 mandatory regressions.**
 
 - `filesafe.policy_degraded`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
+
+
+**Review round 2 mandatory regressions.**
+
+- `filesafe.policy_degraded`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
 
 ### ATS-279 - safe_point.created, safe_point.restored oracles
 
@@ -771,3 +794,10 @@ negative_constraints:
 - `safe_point.created` application originals: decode closed complete original request/record/manifest/blob compositions and, for restoration, full journal/pre/post manifests/equality. Rehash independently altered genuine synthetic originals, then refuse subject/count/blob/SCM/cursor/lease/hold/outcome mismatches, opaque bodies and wrong payload-store selections. Native authenticity, payload addressing, filesystem equality, durable publication and CAS remain NOT_RUN.
 - `safe_point.restored`: independent Project and application traces remove issued rows and custody before crash, require persisted recovery refusal, refuse terminal publication and cached retries, refuse changed first receipts, and prove retained retries/rebuilds work without disposed original controls. Own pre-prepare owner-commit withdrawal must reconcile before reader cutoff; loss before rebuild/cutoff and a caller-reduced boundary refuse, while source-generation or reader-generation CAS races retain the reader fence. Every regression runs through the full authority checker, preserving all earlier positives/negatives.
 - `safe_point.restored` application originals: decode closed complete original request/record/manifest/blob compositions and, for restoration, full journal/pre/post manifests/equality. Rehash independently altered genuine synthetic originals, then refuse subject/count/blob/SCM/cursor/lease/hold/outcome mismatches, opaque bodies and wrong payload-store selections. Native authenticity, payload addressing, filesystem equality, durable publication and CAS remain NOT_RUN.
+
+
+**Review round 2 mandatory regressions.**
+
+- `safe_point.created`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `safe_point.restored`: in each Project/application scope, full-checker negatives refuse `projector_replay_only` for current-writer acceptance and retries before and after original controls are disposed; refusal is `replay_only_not_appendable`. Metadata-only retry changes return the exact original EventRecord and first receipt. Own identifier patterns have exact length/full-match guards and trailing-LF refusal cases.
+- `safe_point.restored` application originals: independently re-encode and rehash each inconsistent result-event pointer and operation-kind/before/target/stage/tombstone composition in the genuine synthetic source bank, then require full-checker refusal. Positive create/delete/metadata journals and the original pre-append null result-event phase remain supported. No journal deletion or hold release follows from replay; native original journal custody remains NOT_RUN.
