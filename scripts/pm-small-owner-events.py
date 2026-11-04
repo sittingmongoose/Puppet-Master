@@ -518,7 +518,9 @@ def current_retry(row, incoming, authority):
     expected_schema = json.loads((ROOT / row['schema']).read_text())['$id']
     if incoming.get('payload_schema_id') != expected_schema:
         return ('identity_conflict_without_effect', None, 0)
-    if not current_producer_numbers(incoming):
+    # Retry resolves an already issued original under its protected recipe;
+    # the current append encoder's exact-integer range cannot retire history.
+    if not integer_tree({k: incoming[k] for k in PRODUCER_FIELDS}):
         return ('identity_conflict_without_effect', None, 0)
     result = resolve_original(row, incoming, authority)
     return ('return_original_without_effect', result, 0) if result is not None else ('identity_conflict_without_effect', None, 0)
@@ -710,7 +712,7 @@ def run_numeric_family(row):
         safe = number <= MAX_SAFE_JSON_INTEGER
         check(valid_event(row, event, state['original_operation']) == safe, 'integer writer ' + str(number))
         check(publication(row, state)['terminal'] == safe, 'integer publication ' + str(number))
-        check(current_retry(row, event, authority)[0] == ('return_original_without_effect' if safe else 'identity_conflict_without_effect'), 'integer retry ' + str(number))
+        check(current_retry(row, event, authority)[0] == 'return_original_without_effect', 'original integer retry ' + str(number))
         check(resolve_full_value(row, event, authority) == expected, 'original retained integer recipe ' + str(number))
         for mode in ('reader', 'rebuild'):
             historical = copy.deepcopy(row[mode + '_positive'])

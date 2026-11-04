@@ -514,9 +514,6 @@ def numeric_catalogue(m, fixtures, add, change):
         add('numeric.current_exact_range', family + ':numeric:writer_unsafe_integer', 'valid_event',
             (row,normal['event'],normal['original_operation']), (row,large['event'],large['original_operation']),
             [('if not retained and type(value) is int and abs(value) > MAX_SAFE_JSON_INTEGER:', 'if False:')])
-        add('numeric.current_exact_range', family + ':numeric:retry_unsafe_integer', 'current_retry',
-            (row,normal['event'],normal['committed_authority']), (row,large['event'],large['committed_authority']),
-            [('if not retained and type(value) is int and abs(value) > MAX_SAFE_JSON_INTEGER:', 'if False:')], lambda x:x[0]=='return_original_without_effect')
         for token in row['numeric_representation_cases']['current_json_negatives']:
             if token == '-0':
                 guard='numeric.raw_negative_zero'
