@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L15183-L15320
+Source lines: L15183-L15319
 
-Source SHA256: `2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2`
+Source SHA256: `31555f1af75d84e5bedebd87d6ec3206b0b074d6381a09c1d8ee10f3931eeb97`
 
 ---
 
@@ -100,9 +100,8 @@ acceptance_criteria:
   Hosts.
 - Conversion/Undo never transplants overrides or clears root/integrity/recovery holds.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L12985-L13354
 
-Source SHA256: `ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67`
+Source SHA256: `07c3efdee44347cb503ca642e0262e7639be178b30c1b1b9d3cf95a042005569`
 
 ---
 
@@ -62,8 +62,8 @@ acceptance_criteria:
 - Every retained read and result preserves source/Computer/version/range provenance through scrub and
   outward-effect policy.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope
@@ -158,8 +158,8 @@ acceptance_criteria:
 - Stop and double Esc fence queued input immediately for the exact owner session while unrelated work
   remains intact.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope
@@ -332,8 +332,8 @@ acceptance_criteria:
 - Conversion preserves original events/usage/process identity, revalidates new work and reports unsupported/missing
   roots honestly.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope

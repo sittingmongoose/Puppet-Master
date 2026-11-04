@@ -530,7 +530,7 @@
         "wiring_matrix_rule_two_coverage",
         "worktree_source_control_runtime_visibility"
       ],
-      "sha256": "480fac0bed813d64ffbc35f54515ef098785f04fd1b0893cdf132bba61a93e2b",
+      "sha256": "d48461a5189f0540f72edec82e53ffffd9a421fcdd39f7ec884aa1a81e22e254",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 69
@@ -541,11 +541,11 @@
         "requirement": 68
       },
       "validation_surfaces": [
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "targeted Case L token and owner-reference checks"
       ]
     },
@@ -1491,7 +1491,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d",
+      "sha256": "dcab438f728b4ce5508085a47c122ce4ad2bce6d9f626904292a1bfc4a5b9fd0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 492,
@@ -1521,9 +1521,6 @@
         "Future DL-036 positive, negative, replay and resume acceptance; no runtime result implied",
         "Future hidden-by-policy mention autocomplete no-leak test.",
         "Future permission prompt not suppressed by chat visibility setting test.",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
@@ -1592,6 +1589,8 @@
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "rg newfeatures.md Plans/assistant-chat-design.md",
         "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "server-first Chat owner audit"
       ]
     },
@@ -1726,7 +1725,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "f0493b3f44b352436041e7d206c70d7638402625d9ebba5acf3993556991abd2",
+      "sha256": "0ac24d47058681d382a613bafe4b88d171044b5cb01c12938830f21d0d7ea2f0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 54
@@ -1744,18 +1743,18 @@
         "Memory consolidation failures are typed, retryable or surfaced, and never silently drop required memories.",
         "Memory search timeout returns degraded result, not hung turn.",
         "Model responses that use memories can surface citations or evidence receipts.",
-        "Phase 2 F companion/schema and semantic fixtures (not run in phase 1).",
         "Plans/working_notebook_contract_fixtures.json",
-        "Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "Project ledger facts are not injected as personal memory.",
         "Superseded/stale memory cannot silently override current Plan canon.",
         "User can list/get/update/delete memory stores and individual memories with version history, provenance, redaction, and rollback.",
+        "future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -1832,7 +1831,7 @@
         "wrong_version_or_duplicate_scheduled_build",
         "wrong_version_or_hidden_build_state"
       ],
-      "sha256": "7c779797fea1f080a064873c1d0bd2bc0c43e815a5fdf320e2bc875aead57eba",
+      "sha256": "10c3eaf881604c06a1a25b60feab59c9873270d0179c5bf8fb5657aa54e2af8f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -1845,9 +1844,6 @@
         "schema_contract": 2
       },
       "validation_surfaces": [
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/assistant_plan_cancel_contracts/methods.json",
         "Plans/assistant_plan_cancel_contracts/owner-field-map.json",
         "Plans/assistant_plan_cancel_contracts/semantic-obligations.json",
@@ -1865,6 +1861,9 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "revision lineage and immutability fixtures",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "strategy enumeration and rejected-combination fixtures"
       ]
     },
@@ -2137,7 +2136,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "38e77a608403e7e75070518a84d65993800f9cbba88822387e2f4f888cb925b2",
+      "sha256": "9dae397812bf129b84259fa7d61109fed8337d71124c1251b597dc66bc0087ac",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
@@ -2298,6 +2297,7 @@
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-integration-packet-audit-work.py",
         "scripts/pm-integration-packet-audit.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
         "tests/test_pm_finalgui_tour_v3.py static shared-owner references and causal presentation mutations only",
@@ -2657,7 +2657,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+      "sha256": "1dc090a22a5ad04fa65b754d3e2dd2f7f41257454df4a4cf7441243468a6a14f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 33
@@ -2677,7 +2677,6 @@
         "validation_requirement": 1
       },
       "validation_surfaces": [
-        "F companion positive/negative semantic fixtures; not_run in phase 1",
         "Plans/Automated_Testing_System.md",
         "Plans/Goal_Runtime_System.md#GRS-077",
         "Plans/Plan_To_Node_Compilation.md#PNC-025",
@@ -2748,6 +2747,7 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm_backup_verify_depth.py",
         "scripts/pm_restore_semantics.py",
         "tests/test_pm_restore_phase_contracts.py"
@@ -3777,7 +3777,7 @@
         "wonderer_converges_or_contaminates_blind_phase",
         "wonderer_or_grill_me_misrepresented"
       ],
-      "sha256": "2846e86ee1436880c76996366efea7b2c13c7eb7678ad953b58f9ae2086681f8",
+      "sha256": "a373f8c0c86ff8bfcea166e46c76231e4a4802fc4bc193f71ec2aea3d1affa68",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 45
@@ -3788,15 +3788,15 @@
         "requirement": 44
       },
       "validation_surfaces": [
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/working_notebook_contract_fixtures.json",
         "node tests/activity-detail-verify.mjs",
         "node tests/collaboration-verify.mjs",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -4208,7 +4208,7 @@
         "future RuntimeHostFamilyProfile and Kubernetes capability probes",
         "future RuntimeHostFamilyProfile capability and governor consumers"
       ],
-      "line_count": 6952,
+      "line_count": 6951,
       "path": "Plans/Containers_Registry_and_Unraid.md",
       "plan_unit_count": 104,
       "plan_unit_ids": [
@@ -4422,7 +4422,7 @@
         "unsafe_url_guess",
         "xml_shape_drift"
       ],
-      "sha256": "59a4c2b0660d4aa97906cf4d78c8b00897430199477dbbbe7a7d9b5189051be7",
+      "sha256": "75d9a47bd5c989f47381a983d2a252c904be9c6e7e432031824a3d198644870c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 104
@@ -4436,9 +4436,6 @@
         "validation": 1
       },
       "validation_surfaces": [
-        "Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.",
-        "Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).",
         "Plans/wsl_execution_contracts.schema.json plus Plans/wsl_execution_contract_fixtures.json WSL acquisition, probe, and ownership checks (static)",
         "future Docker Manager runtime-family preflight fixtures",
         "future Docker Manager tab-fit and expander consumption fixtures",
@@ -4460,7 +4457,9 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -5298,7 +5297,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08",
+      "sha256": "0f2d2d1469f93b242e80b786460bf717b505699b4f48b3d4b40b869eff5f9c39",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 361
@@ -5327,8 +5326,6 @@
         "Future owner-qualified request/result, stale identity, denied, cancellation, partial and unknown-effect fixtures",
         "Native exact-family historical-read and scheduling action-spy oracles remain NOT_RUN.",
         "Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.",
-        "Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/Automated_Testing_System.md#ATS-058",
@@ -5467,6 +5464,8 @@
         "reports/event-authority-20260911/step-08-goal-update-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - python3 scripts/pm-implementation-readiness.py validate - python3 scripts/pm-plan-index.py validate - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "secret-bearing receipt rejection fixtures",
         "security receipts are visible and redacted.",
         "seglog replay tests",
@@ -7059,7 +7058,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca",
+      "sha256": "25e1a7941289d3f647a8a0d558b6ffea5d143be8cea1d7595d75fdfeb108a31b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 129
@@ -7084,9 +7083,6 @@
         "No partial stream fragment is replayed as a full assistant turn.",
         "OpenCode remains HTTP/SSE unless upstream contract changes.",
         "Partial-stream failure routing fixtures",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/Goal_Runtime_System.md#GRS-077",
         "Plans/event_family_registry.json",
         "Plans/event_index_consumer_adoption.schema.json",
@@ -7149,6 +7145,9 @@
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "zero-usage aborted turn is not model replay content."
       ]
     },
@@ -7500,7 +7499,7 @@
         "future image source resolver",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 15320,
+      "line_count": 15319,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 213,
       "plan_unit_ids": [
@@ -7753,7 +7752,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "2d6da9a9eae44820501a3ab3b65d326476249c557a85e7d584e03761f54f7ce2",
+      "sha256": "31555f1af75d84e5bedebd87d6ec3206b0b074d6381a09c1d8ee10f3931eeb97",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -7774,9 +7773,6 @@
         "Future File Manager blocked-episode rendering and no-leak tests.",
         "Future trash-first delete, undo-toast, and trash-impossible disclosure tests.",
         "Permission/FileSafe test matrix",
-        "Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.",
-        "Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).",
         "Privilege metadata logs actor/target/realm/transport without command secrets.",
         "RSP-ATOMIC-001",
         "RSP-ATOMIC-002",
@@ -7814,7 +7810,9 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
-        "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy"
+        "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -7924,7 +7922,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 50563,
+      "line_count": 50561,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 662,
       "plan_unit_ids": [
@@ -8735,7 +8733,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "5219317d3f6de37616de475f8713f24e8d655c778fdc8df3544ad7e22bd18a4d",
+      "sha256": "edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 654,
@@ -8786,8 +8784,6 @@
         "Global hotkey handler stall cannot freeze system input.",
         "Inline visualizer v2 GUI state fixtures",
         "Notifications and Sounds settings GUI fixtures",
-        "Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
         "Plans/Automated_Testing_System.md ATS-030 through ATS-035 future executable matrices",
         "Plans/Automated_Testing_System.md#ATS-047",
         "Plans/Test_Capture_and_Motion_Evidence.md#TCME-007",
@@ -8800,7 +8796,6 @@
         "Plans/final_gui_interaction_contract_fixtures.json",
         "Plans/final_gui_interaction_contracts.schema.json",
         "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)",
-        "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)",
         "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)",
         "Plans/final_gui_interaction_contracts.schema.json#/$defs/human_step_up_dialog",
         "Plans/final_gui_interaction_contracts.schema.json#/$defs/post_integration_dry_component_reconciliation",
@@ -8810,7 +8805,8 @@
         "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)",
         "Plans/plugin_contract_fixtures.json",
         "Plans/plugin_contracts.schema.json",
-        "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)",
+        "Plans/product_onboarding_contract_fixtures.json",
+        "Plans/product_onboarding_contracts.schema.json",
         "Plans/remote_access_system_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
@@ -8821,7 +8817,6 @@
         "Top-10 override disclosure fixtures",
         "User can disable terminal/global hotkey path from safe mode.",
         "User-defined gates for visual QA, local artifact delivery, screenshot/video proof, and output modality compile into RuntimeHardGate predicates.",
-        "Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior.",
         "Verify F3-525's Plugins manager owner projections, geometry, accessibility and motion across its required states; concept simulation does not establish native runtime acceptance.",
         "Verify F3-526's Doctor census, owner feeds, detach/rejoin, stale-return rejection and accessible presentation; concept evidence remains non-production.",
         "Verify F3-531's accepted menu inventory, owner projections, Context Lens placement and selector behavior; concept fixtures do not prove native execution.",
@@ -8886,6 +8881,7 @@
         "future protected-handoff/no-capture and immutable-snapshot exact-return fixtures",
         "future responsive and overflow checks for compact provider rows",
         "future ten-theme, Reduced Motion, interruption, reversal, and short-window film review",
+        "future verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior.",
         "git diff --check",
         "manual FinalGUISpec heading review",
         "manual markdown anchor/cross-reference review",
@@ -8913,6 +8909,8 @@
         "python3 scripts/pm-shared-runtime-command-contracts.py validate",
         "python3 scripts/pm-validate-pm7-gui-fixtures.py validate",
         "python3 scripts/pm7-build-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "settings inventory schema validation",
         "settings lifecycle positive and negative fixtures",
         "tests/test_pm_onboarding_phases.py",
@@ -8957,7 +8955,7 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 2094,
+      "line_count": 2106,
       "path": "Plans/Forge_Integrations.md",
       "plan_unit_count": 24,
       "plan_unit_ids": [
@@ -9014,7 +9012,7 @@
         "stale_review_evidence_or_agent_publication",
         "unbindable_vote_promise"
       ],
-      "sha256": "1793bbf2d5c7367450ed60d17bc3909e8e9a16ace4a6b74759cf0d021d5a97ec",
+      "sha256": "b2ce314bdbfa1559bad4ff72cba99b2228c7f8ea92e01e4d39875cb60b5968bf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 24
@@ -9032,7 +9030,6 @@
         "API compatibility fixtures",
         "CLI JSON version gate tests",
         "Draft/Mark Ready policy tests",
-        "F companion positive/negative semantic fixtures; not_run in phase 1",
         "MirrorTopology fixtures",
         "Plans/Wiring_Matrix.production.json",
         "Plans/forge_integration_contract_fixtures.json",
@@ -9078,6 +9075,7 @@
         "replay/dedupe/redelivery tests",
         "retry/cancel idempotency tests",
         "review revision/thread fixtures",
+        "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm_forge_command_followup.py",
         "secret scans",
         "shell migration and one-occupant fixtures",
@@ -9355,7 +9353,7 @@
         "future GitLab review adapter",
         "future Source Control review UI"
       ],
-      "line_count": 230,
+      "line_count": 233,
       "path": "Plans/GitLab_Integration.md",
       "plan_unit_count": 5,
       "plan_unit_ids": [
@@ -9375,7 +9373,7 @@
         "gitlab_stale_mr_evidence_or_publication",
         "gitlab_variant_or_tool_identity_conflation"
       ],
-      "sha256": "cb8bad8ab1339a7dafd8f92fb1b2cbc1ad08037aeb8dea2e27e824bc3e791beb",
+      "sha256": "90174785adbaf5b057fa2795c9b3847eb0de6738d4a02d725c8fa98f9dfa283c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 5
@@ -9395,12 +9393,12 @@
         "Plans/gitlab_integration_fixtures.json",
         "approval and stale-head tests",
         "command/wiring census",
+        "future provider/variant negative scans",
+        "future signed catalog fixtures",
         "migration negatives",
         "missing scope/tier/version/rate tests",
         "pipeline/job tests",
-        "provider/variant negative scans",
         "secret scans",
-        "signed catalog fixtures",
         "webhook replay/dedupe tests"
       ]
     },
@@ -9738,7 +9736,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "340679f1e0852d0ad5ef0345415686be14f53b12677402812d37989477a39c34",
+      "sha256": "ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
@@ -9776,9 +9774,6 @@
         "Orphan helpers/processes are reaped on session close/crash/restart.",
         "Parent cannot certify complete until all required child results are settled or explicitly waived.",
         "Parent sees child terminal errors as typed failed outcomes, never empty successful completion.",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/Backup_Restore_System.md#BRS-026",
         "Plans/Goal_Runtime_System.md#GRS-078",
@@ -9927,7 +9922,10 @@
         "reports/event-authority-20260911/step-08-goal-reader-validation.md",
         "reports/event-authority-20260911/step-08-goal-start-validation.md",
         "reports/event-authority-20260911/step-08-goal-update-checks.json",
-        "reports/event-authority-20260911/step-08-goal-update-validation.md"
+        "reports/event-authority-20260911/step-08-goal-update-validation.md",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -10042,7 +10040,7 @@
         "Plans/Progression_Gates.md",
         "Plans/human-in-the-loop.md"
       ],
-      "line_count": 2804,
+      "line_count": 2803,
       "path": "Plans/human-in-the-loop.md",
       "plan_unit_count": 38,
       "plan_unit_ids": [
@@ -10097,7 +10095,7 @@
         "implementation_readiness",
         "migration_lineage"
       ],
-      "sha256": "01873d61989908279c600d475affad68d2793cba0a774bb8d20a7af2f249a457",
+      "sha256": "e83477fb5445aacd63eb29a0513ee20fb69444fe64add25776c30616f3de13a0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 38
@@ -10108,14 +10106,13 @@
         "requirement": 37
       },
       "validation_surfaces": [
-        "Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.",
-        "Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).",
         "future HITL checkpoint review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -10264,7 +10261,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "0ff30ce1574ae537aceba75c8a573de5d6e26873d02f83842897f07143789a94",
+      "sha256": "7e80821630ab49cfd7cd5c1c6069e43bed3047b78c2fc32dde2cee97272f1252",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -10279,7 +10276,6 @@
         "validation": 1
       },
       "validation_surfaces": [
-        "F companion positive/negative semantic fixtures; not_run in phase 1",
         "FileSafe complement tests",
         "Four relations here are not expressible in JSON Schema and are enforced by the `jujutsu_integration_contracts` branch of `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`, with one authored negative fixture each: the pointer chain a layout implies is resolved in full with no gap in a kind's hops, the operation-head set after a read-only verification equals the set before it, dependency objects are materialized before any referring head with activation markers last, and every recovery action identifier comes from the canonical inventory or a declared owner route. Regression coverage is `tests/test_pm_jujutsu_closure_semantics.py`.",
         "Git compatibility preflight fixtures",
@@ -10324,6 +10320,7 @@
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "scripts/pm-projects-refresh-contracts.py",
         "stale operation tests",
         "undo/op restore fixtures"
       ]
@@ -10592,7 +10589,7 @@
         "p1_terminal_runtime_hardening",
         "scope_authority_or_custody_drift"
       ],
-      "sha256": "0a52a091b49079c0b61bdf412f30e374054b3af1276ea66acf479067b9c236b5",
+      "sha256": "8828c2151d68074096ab61a89e2b2a83e705b3dbcacbc10fb1e0dafaa221b6aa",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 44
@@ -10617,13 +10614,12 @@
         "Many-MCP-server context budget test",
         "Number 3 arrives as number 3, not string",
         "Permission-filtered catalog entries show omitted/deferred/materialized receipts",
-        "Phase 2 F companion/schema and semantic fixtures (not run in phase 1).",
-        "Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "Relative command cwd is project-root only when explicitly resolved and shown.",
         "Resolved Authorization header never appears in catalog/debug/log/model context",
         "Slow init reports unavailable/configurable timeout",
         "descriptor cache is provider/model/plugin scoped.",
         "future MCP host-context projection fixture",
+        "future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "lazy-selected rich outputs normalize identically to eager invocation",
         "provider schema subset tests",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
@@ -10633,7 +10629,8 @@
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
-        "python3 scripts/pm-shared-runtime-storage-materialize.py check"
+        "python3 scripts/pm-shared-runtime-storage-materialize.py check",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -11495,7 +11492,7 @@
         "future provider account/profile and credential-reference contracts",
         "future shared Rust interface model and sole owner services; no implementation claimed"
       ],
-      "line_count": 5853,
+      "line_count": 5854,
       "path": "Plans/Multi-Account.md",
       "plan_unit_count": 74,
       "plan_unit_ids": [
@@ -11654,7 +11651,7 @@
         "usage_pressure_owner",
         "usage_runtime_visibility"
       ],
-      "sha256": "c1f742b7ab190c2a0017706d121f6618049464b99258d0c9aec504c33a154b8a",
+      "sha256": "20bc6cdaf237934560a847048ee0b4cd0bec2fca90152d0fb6a88a474bceb2af",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 74
@@ -11669,12 +11666,10 @@
         "Credential refresh changes epoch and invalidates cached route claims",
         "Free Models bounded fallback attempt fixtures",
         "Free Models setup delegation fixtures",
-        "Future native owner/command/writer/readback/security evidence; not_run",
         "Multi-Account credential custody fixtures",
         "Plan/quota mismatch does not masquerade as model unsupported",
         "Plans/multi_account_contract_fixtures.json",
         "Plans/multi_account_contracts.schema.json",
-        "Plans/multi_account_contracts.schema.json and owner companion fixtures (lane F; pending adoption)",
         "Plans/settings_inventory.json (provider scope on the four ai.accounts rows, and global and project scopes on ai.accounts.cooldown-policy)",
         "Provider model capable but route denied is surfaced accurately",
         "Shared pressure and cooldown fixtures",
@@ -11685,6 +11680,7 @@
         "future WSL/container/Kubernetes identity-isolation fixtures",
         "future account readiness label mapping fixtures",
         "future first-run provider setup return-context fixtures",
+        "future native owner/command/writer/readback/security evidence; not_run",
         "future per-provider auto-switch resolution and eligibility fixtures",
         "future provider settings Usage fixture suite",
         "future shared-installation/multiple-account revalidation fixtures",
@@ -11696,7 +11692,7 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
-        "python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)"
+        "scripts/pm-settings-layering-check.py"
       ]
     },
     {
@@ -11717,7 +11713,7 @@
         "Plans/touch_closure.json",
         "future shared Rust interface model and sole owner services; no implementation claimed"
       ],
-      "line_count": 451,
+      "line_count": 452,
       "path": "Plans/Multi-Account_Connection_Spec.md",
       "plan_unit_count": 6,
       "plan_unit_ids": [
@@ -11739,7 +11735,7 @@
         "protected_auth_content_or_authority_escape",
         "protected_auth_handoff_phantom_handler_or_content_escape"
       ],
-      "sha256": "df4bd1e76367ae8f1fc330dd4fe45847f0f533fa05829c3ecff02a75ef899668",
+      "sha256": "a27b8853d8df46ca0d9ac19253b3440d1d818662242ddbf2f51342c0fe391f9e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 6
@@ -11752,20 +11748,19 @@
         "security_contract": 1
       },
       "validation_surfaces": [
-        "Future native owner/command/writer/readback/security evidence; not_run",
         "Plans/Wiring_Matrix.production.json",
         "Plans/multi_account_contract_fixtures.json",
         "Plans/multi_account_contracts.schema.json",
-        "Plans/multi_account_contracts.schema.json and owner companion fixtures (lane F; pending adoption)",
         "Plans/protected_auth_browser_contract_fixtures.json",
         "Plans/touch_closure.json",
         "future central catalog/wiring and native handler fixtures",
         "future native owner issuance, first-time broker, cancellation, restart, exact-Client and protected-session security tests; not_run",
+        "future native owner/command/writer/readback/security evidence; not_run",
         "future protected-session runtime tests",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
-        "python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "scripts/pm-settings-layering-check.py",
         "tests/test_pm_onboarding_phases.py"
       ]
     },
@@ -13467,7 +13462,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "d07e09bc0879a8662e29cc47c8fd3ef1b8d0520f0501c34823aa00caedf610b1",
+      "sha256": "50897a3ae37c1829176411dbf7276fc7da1b8fc4b02ee4556631e7154378e0d7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 440,
@@ -13484,9 +13479,6 @@
         "Future ambient trigger/skip rule tests.",
         "Future orchestrated no-path bug-fix test.",
         "Orchestrator DRY consumer conformance fixtures",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/Automated_Testing_System.md#ATS-058",
         "Plans/coordination_event_contract_fixtures.json",
         "Plans/coordination_event_payloads.schema.json",
@@ -13504,6 +13496,9 @@
         "python3 scripts/pm_coordination_events.py",
         "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
         "restart and duplicate-request fixtures",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "thread operation contract fixtures"
       ]
     },
@@ -13625,7 +13620,7 @@
         "source_control_boundary_drift",
         "untruthful_projection"
       ],
-      "sha256": "3f0bd0e3fa8398a8ea4ed1b9d08656f9a51c268a9326c2bf4cf027986172829e",
+      "sha256": "8e52e94127f5b4f633ce1318ba4657387074733a183c7ef1e6d7809e1f7f09f2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -13640,9 +13635,6 @@
       },
       "validation_surfaces": [
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
@@ -13665,7 +13657,10 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -13717,7 +13712,7 @@
         "future notification credential custody",
         "future permission settings"
       ],
-      "line_count": 11102,
+      "line_count": 11097,
       "path": "Plans/Permissions_System.md",
       "plan_unit_count": 148,
       "plan_unit_ids": [
@@ -13908,7 +13903,7 @@
         "visualizer_sandbox_escape",
         "wholesale_browser_state_or_auth_export"
       ],
-      "sha256": "f2390c30383160c10085e8e037d332c605cc838256a825363b0d5562478ffa86",
+      "sha256": "94a82f002370bd3365925c564c67776da00a4c62f4f54750910c316356dca0bc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 148
@@ -13934,9 +13929,6 @@
         "Inline visualizer sandbox and library-denial fixtures",
         "Live probe authority and redaction fixtures",
         "Notification secret custody and live-send permission fixtures",
-        "Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.",
-        "Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contracts.schema.json",
         "Plans/protected_auth_browser_contract_fixtures.json",
@@ -13975,7 +13967,9 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -14132,7 +14126,7 @@
         "team_persona_identity_drift",
         "wonderer_persona_converges"
       ],
-      "sha256": "70539854a90f660a87becb50e6d5940880345e97cd12c4860fa3388c25e1ad23",
+      "sha256": "6e20b9857a059ca745d3b054d8d065d918b4841da17cd074ccb85644120e5361",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59,
@@ -14147,15 +14141,15 @@
       },
       "validation_surfaces": [
         "Persona scope and thread-locality fixtures",
-        "Phase 2 F companion/schema and semantic fixtures (not run in phase 1).",
-        "Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
+        "future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -14259,7 +14253,7 @@
         "stale_reference_drift",
         "user_visible_settings"
       ],
-      "sha256": "4fbd21cbfcd673bd63bcc2ca3802d6fb78545764dd8bd13a7fb6060e78926cf1",
+      "sha256": "a126780160c5f7c8a881571fecfd1b66934eb6826a0c6c1c48046691e905f957",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -14283,9 +14277,6 @@
         "Migration inventory coverage map.",
         "Node-readiness report generator.",
         "Owner map review.",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Pilot conversion report.",
         "Pilot conversion validation.",
         "PlanUnit index field coverage.",
@@ -14308,7 +14299,10 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
-        "python3 scripts/pm-shard-plans.py --check"
+        "python3 scripts/pm-shard-plans.py --check",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -14568,7 +14562,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "ea3396b615c786f56c2d4703fe14fd76f7963eb5964e596a02fdfe015da3c5a9",
+      "sha256": "69d0137f54c7f3b67e2419917297e7ae3670050443d4336bf7bf7cc0eee1bbc5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 24
@@ -14597,9 +14591,6 @@
         "Manual compile review.",
         "Native Ledger Service runtime contract validation.",
         "No auto-close without evidence/triage schema",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "PlanUnit coverage review.",
         "PlanUnit source_lineage and owner_hints.",
         "Plan_To_Node_Compilation boundary checks.",
@@ -14620,7 +14611,10 @@
         "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         "python3 scripts/pm-shard-plans.py --check",
-        "reopen conditions"
+        "reopen conditions",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -14672,7 +14666,7 @@
         "future Product Onboarding native controller",
         "future existing owner handlers; handler_unavailable until native evidence"
       ],
-      "line_count": 4059,
+      "line_count": 4056,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 32,
       "plan_unit_ids": [
@@ -14734,7 +14728,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "cf42e4927a229ccf6cb92a3e5dc034396c6b106366b4099bfc22a0fb450c88f6",
+      "sha256": "2d88d29787dfa5cc76b33cde9939c7af8c73895289775539102fdf9dcac683ca",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 31,
@@ -14749,7 +14743,6 @@
         "source_lineage_disposition": 1
       },
       "validation_surfaces": [
-        "F companion positive/negative semantic fixtures; not_run in phase 1",
         "Future Planning Wizard source pick local/SSH tests.",
         "Future policy-hidden source no-leak tests.",
         "Future research decision review integration, replay and accessible presentation receipts; not_run",
@@ -14761,10 +14754,7 @@
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/remote_access_system_contracts.schema.json",
-        "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1",
-        "Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1",
-        "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1",
-        "Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1",
+        "Plans/server_system_contracts.schema.json",
         "Reduced Motion traces",
         "Skip-restore",
         "and completion-layout fixtures",
@@ -14796,6 +14786,7 @@
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "real-application action observation",
+        "scripts/pm-projects-refresh-contracts.py",
         "tests/test_pm_onboarding_phases.py",
         "tests/test_pm_settings_draft_transfer.py"
       ]
@@ -14910,7 +14901,7 @@
         "residual_bridge_overreach",
         "scope_authority_or_custody_drift"
       ],
-      "sha256": "d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809",
+      "sha256": "d97e5d98cdecbb61b4f04cff8e324766d07e19dd554894e5316581c065c247fb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 71
@@ -14932,13 +14923,11 @@
         "CS-071",
         "Hook writes trigger permission re-evaluation",
         "OpenAI/Codex and Claude Code target conformance",
-        "Phase 2 F companion/schema and semantic fixtures (not run in phase 1).",
         "Plans/plugin_contract_fixtures.json",
         "Plans/plugin_contracts.schema.json",
         "Plans/plugin_package_contract_fixtures.json",
         "Plans/plugin_package_contracts.schema.json",
         "Plugin can add MCP row badge through typed slot only",
-        "Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "Private store monkey-patch rejected on privileged surfaces",
         "UCC-149",
         "WM-048",
@@ -14954,6 +14943,7 @@
         "current handler-unavailable results",
         "dual-manifest resolution",
         "future Plugins list virtualization",
+        "future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "legacy-migration preview",
         "low-resource",
         "mismatch",
@@ -14966,6 +14956,7 @@
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "redaction",
         "scripts/pm-new-contracts-verify.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "signature-change",
         "stale-routine",
         "typed update-diff relation fixtures",
@@ -15389,7 +15380,7 @@
         "sync_bundle_custody_loss",
         "sync_time_misattributed_as_provider_usage"
       ],
-      "sha256": "bcb3c4f1f9df52590f3f82752b3ae27e005ef154abc8bc71ca192a3ee6750eb5",
+      "sha256": "d43b6e02c5c199cb28beff1bbf2712a772fae5fa7d0ca3cb43c9d39cb0a13337",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 7
@@ -15400,9 +15391,6 @@
         "requirement": 6
       },
       "validation_surfaces": [
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/project_sync_backbone_contract_fixtures.json",
         "Plans/project_sync_backbone_contracts.schema.json",
         "Project identity contract fixtures",
@@ -15415,6 +15403,9 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "restart recovery fixtures",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "secret/path negative fixtures",
         "sync fixture validation"
       ]
@@ -15442,7 +15433,7 @@
         "scripts/pm_project_forge_contract.py",
         "scripts/pm_ui_command_response.py"
       ],
-      "line_count": 981,
+      "line_count": 983,
       "path": "Plans/Project_System.md",
       "plan_unit_count": 12,
       "plan_unit_ids": [
@@ -15474,7 +15465,7 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "168e18f86b9f7e038b09da06904d68c8264e3d228796170ccbbffd636c3694ef",
+      "sha256": "3fb9242425d9999643f7da288fa7801a80860a69b9cdd3e540f52991eba1583f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 12
@@ -15486,7 +15477,6 @@
         "requirement": 4
       },
       "validation_surfaces": [
-        "F companion positive/negative semantic fixtures; not_run in phase 1",
         "Plans/Backup_Restore_System.md",
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/github_project_event_fixtures.json",
@@ -15501,6 +15491,7 @@
         "persistence and migration fixtures",
         "python3 scripts/pm-plans-verify.py run-gates",
         "scripts/pm-github-project-integration.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm_project_unarchive_contract.py",
         "tests/test_pm_github_project_integration.py",
         "tests/test_pm_onboarding_phases.py",
@@ -16170,7 +16161,7 @@
         "future proxy configuration service",
         "future sole Server SSH owner and shared protected-auth broker; no implementation claimed"
       ],
-      "line_count": 1427,
+      "line_count": 1428,
       "path": "Plans/Remote_Access_System.md",
       "plan_unit_count": 17,
       "plan_unit_ids": [
@@ -16214,7 +16205,7 @@
         "static_remote_contract_promoted_to_wan_readiness",
         "tailscale_identity_or_product_claim_drift"
       ],
-      "sha256": "f3d4663252f79b52cd667a770118e17bee8c510b9c49d10852500db9ae77fd60",
+      "sha256": "d8b8af4e4ece810fa877c45eb2b5053b9889db5ff22cedfd7254f807df60fb2b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 17
@@ -16232,16 +16223,16 @@
         "validation_requirement": 1
       },
       "validation_surfaces": [
-        "Future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run",
         "Plans/Automated_Testing_System.md",
         "Plans/Remote_Access_System.md",
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
-        "Plans/projects_refresh_command_bindings.json and central wiring/Touch contracts; F-b adoption required",
+        "Plans/projects_refresh_command_bindings.json",
         "Plans/protected_auth_browser_contract_fixtures.json",
         "Plans/remote_access_system_contract_fixtures.json",
         "Plans/remote_access_system_contracts.schema.json",
-        "Plans/server_system_contracts.schema.json and Plans/server_system_contract_fixtures.json; F-d adoption required",
+        "Plans/server_system_contract_fixtures.json",
+        "Plans/server_system_contracts.schema.json",
         "focused Server owner-bundle-A validator",
         "future Headscale Serve/Funnel negative and future-support admission tests",
         "future Kubernetes runner-loss tests",
@@ -16251,6 +16242,7 @@
         "future callback tunnel tests",
         "future direct relay outage and E2E tests",
         "future hosted-Tailscale Serve tests",
+        "future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run",
         "future native web parity tests",
         "future permanent web parity tests",
         "future production wiring reverse coverage",
@@ -16494,7 +16486,7 @@
         "Plans/usage-feature.md",
         "future run-mode resolver"
       ],
-      "line_count": 1984,
+      "line_count": 1983,
       "path": "Plans/Run_Modes.md",
       "plan_unit_count": 53,
       "plan_unit_ids": [
@@ -16608,7 +16600,7 @@
         "worktree_binding_drift",
         "worktree_gui_affordance_drift"
       ],
-      "sha256": "b075a6bdaa47c419844faffa96ddcd921297c0cbdeb48300758aa14fb43d2948",
+      "sha256": "d02f612daafb7aaf32e8f8113d22d32a51d780c289c1a2f15dd906be4412617d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52,
@@ -16620,9 +16612,6 @@
         "requirement": 52
       },
       "validation_surfaces": [
-        "Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.",
-        "Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).",
         "future BSD mode-resolution and authority fixtures",
         "future blocked != failed host outcome fixtures",
         "future run-mode Usage settlement fixture suite",
@@ -16630,7 +16619,9 @@
         "future sustainable-concurrency and reserve-pressure fixtures",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -16965,7 +16956,7 @@
         "unsafe_pause_or_dst_double_fire",
         "wrong_plan_version_built_or_duplicate_nightly_build"
       ],
-      "sha256": "112570138bb0ed692acc5219038c207c8701bdfd6b3c4752d2d0f2ad816496c9",
+      "sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -16977,16 +16968,16 @@
         "schema_contract": 1
       },
       "validation_surfaces": [
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/assistant_plan_cancel_contracts/owner-field-map.json",
         "Plans/assistant_plan_cancel_contracts/semantic-obligations.json",
         "Plans/assistant_plan_cancel_custody.schema.json",
         "node tests/scheduling-verify.mjs",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -17514,7 +17505,7 @@
         "future sole Server SSH owner and shared protected-auth broker; no implementation claimed",
         "future trust and session services"
       ],
-      "line_count": 1495,
+      "line_count": 1526,
       "path": "Plans/Server_System.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -17560,7 +17551,7 @@
         "static_evidence_promoted_to_server_readiness",
         "visible_server_action_without_owner_wiring"
       ],
-      "sha256": "a1a8c7375fbc46a15d0a75852b5b4b0771831f971273f1191def39056e28bea3",
+      "sha256": "5d6e1cf161bdb5f30da6a3b33ae4b3bb4e679f6b9d0d4aaf863167154529ba91",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -17577,19 +17568,15 @@
         "validation_requirement": 1
       },
       "validation_surfaces": [
-        "Future native owner/command/writer/readback/security evidence; not_run",
-        "Future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run",
         "Future version-mismatch/reconnect/duplicate-shell/lifetime/WSL2 evaluation fixtures",
         "Independent ownership/evidence review of the bounded evaluation report",
         "Plans/Automated_Testing_System.md",
         "Plans/backup_restore_system_contract_fixtures.json",
         "Plans/backup_restore_system_contracts.schema.json",
-        "Plans/projects_refresh_command_bindings.json and central wiring/Touch contracts; F-b adoption required",
+        "Plans/projects_refresh_command_bindings.json",
         "Plans/remote_access_system_contracts.schema.json",
         "Plans/server_system_contract_fixtures.json",
         "Plans/server_system_contracts.schema.json",
-        "Plans/server_system_contracts.schema.json and Plans/server_system_contract_fixtures.json; F-d adoption required",
-        "Plans/server_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)",
         "focused Server owner-bundle-A validator",
         "future GUI-close continuation tests",
         "future LAN VLAN IPv4 IPv6 mDNS tests",
@@ -17599,6 +17586,8 @@
         "future identity collision and deduplication tests",
         "future migration idempotency tests",
         "future multi-Client cursor convergence tests",
+        "future native owner/command/writer/readback/security evidence; not_run",
+        "future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run",
         "future native web focus and keyboard tests",
         "future native web parity tests",
         "future occurrence/DST/restart/Project-Move one-writer fixtures",
@@ -17614,8 +17603,8 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
-        "python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)",
-        "python3 scripts/pm-touch-closure-verify.py --json"
+        "python3 scripts/pm-touch-closure-verify.py --json",
+        "scripts/pm-settings-layering-check.py"
       ]
     },
     {
@@ -17672,7 +17661,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5609,
+      "line_count": 5632,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 60,
       "plan_unit_ids": [
@@ -17793,7 +17782,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf",
+      "sha256": "f2d96e4232bed880083c791d5b80e0caf4fe4ad6550dcb9e80f4abefd41c9727",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 60
@@ -17811,7 +17800,6 @@
       },
       "validation_surfaces": [
         "Docker Manager redirect fixtures",
-        "Future native owner/command/writer/readback/security evidence; not_run",
         "Plans/Automated_Testing_System.md#ATS-047",
         "Plans/Wiring_Matrix.production.json",
         "Plans/backup_restore_system_contracts.schema.json",
@@ -17826,7 +17814,6 @@
         "Plans/settings_inventory.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/settings_system_contracts.schema.json",
-        "Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)",
         "Plans/settings_system_contracts.schema.json preview request validation (typed scope and provider id)",
         "Plans/touch_closure.json",
         "SSYS-035 placement acceptance: each live setting once, exact manager and tab home, Details and search return, and inline refresh.",
@@ -17859,6 +17846,7 @@
         "future manager registry and owner-projection parity tests",
         "future manager-state matrix",
         "future native Settings restore/readback/rollback receipts; not_run",
+        "future native owner/command/writer/readback/security evidence; not_run",
         "future native restore/readback/rollback and restart tests; not_run",
         "future navigation and focus tests",
         "future navigation and stale-return fixtures",
@@ -17888,11 +17876,11 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
-        "python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)",
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm7-build-check.py",
         "python3 scripts/pm7-canon-check.py",
+        "scripts/pm-settings-layering-check.py",
         "tests/test_pm_installation_update_preferences.py",
         "tests/test_pm_onboarding_phases.py",
         "tests/test_pm_settings_draft_transfer.py"
@@ -18075,7 +18063,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "0eb674f95b083572d08fa10b6506de4fb7e33e53dd80f2683155ea8f8e451cd1",
+      "sha256": "6f2c5e2b19702e2dad7fad0f6cb29e5c74e38cc226edcd3352c644be601e0d9e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 54
@@ -18099,9 +18087,6 @@
         "BSD timeout/quota tests",
         "DAP event races",
         "Eval persistence tests",
-        "Phase 2: python3 scripts/pm-assistant-contract-check.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
-        "Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)",
         "Plans/Backup_Restore_System.md#BRS-026",
         "Plans/Commands_System.md",
         "Plans/Goal_Runtime_System.md#GRS-078",
@@ -18253,6 +18238,9 @@
         "rollback tests",
         "rule determinism tests",
         "runtime integration disposition validation",
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm_full_thread_semantics.py",
         "secret scans",
         "server claim schema fixtures",
@@ -18348,7 +18336,7 @@
         "skills_system_drift",
         "wonderer_drift_or_premature_convergence"
       ],
-      "sha256": "3991b8ab1648e297aa22614fd680256e74b0f67915ae13cde762545eb44e50d8",
+      "sha256": "00b7117cc361f317a2ee0f87f70f6157a97b841c02bef53c090b206497929c7b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 38,
@@ -18360,12 +18348,12 @@
         "requirement": 38
       },
       "validation_surfaces": [
-        "Phase 2 F companion/schema and semantic fixtures (not run in phase 1).",
-        "Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
+        "future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py lint-contractrefs"
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -18475,7 +18463,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "69ee8969aff7cac5c1baa2b04bc62842129085c965e744a1f53d38867f64c3df",
+      "sha256": "b0032c1f12fe8d8157ad00580da078fb6d54be457de897828e2d346edea21b83",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25
@@ -18489,7 +18477,6 @@
         "validation": 1
       },
       "validation_surfaces": [
-        "F companion positive/negative semantic fixtures; not_run in phase 1",
         "Git/JJ parity",
         "Plans/Wiring_Matrix.production.json",
         "Plans/backup_restore_system_contract_fixtures.json",
@@ -18552,6 +18539,7 @@
         "remote fan-out",
         "repository_context schema fixtures",
         "routing",
+        "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm_git_adapter_commands.py",
         "setup state fixtures",
         "signed catalog currentness tests",
@@ -19131,7 +19119,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db",
+      "sha256": "08c39c72f98768992991a9f2a13e53aa687f16812ce1ba5b984daa3764a5ea0a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 337,
@@ -19179,8 +19167,6 @@
         "Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.",
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Notification settings and sound asset storage fixtures",
-        "Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py",
-        "Phase 2: python3 scripts/pm-plan-index.py validate",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/Automated_Testing_System.md#ATS-058",
         "Plans/Automated_Testing_System.md#storage-boot-integrity-and-recovery-owner-oracles",
@@ -19445,6 +19431,8 @@
         "reports/event-authority-20260911/step-08-wire-validation.md - future Case L seglog durability recovery fixture suite - python3 scripts/pm-plan-index.py validate",
         "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
         "scripts/pm-new-contracts-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-projects-refresh-contracts.py",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_workspace_created.py",
@@ -19907,7 +19895,7 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "ede2a7942ae8c531e17d141bb5f9b2c6f0a9e43c259bfe1fa9f102f70e9d0a67",
+      "sha256": "07c3efdee44347cb503ca642e0262e7639be178b30c1b1b9d3cf95a042005569",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 186,
@@ -19938,15 +19926,14 @@
         "Missing image does not become fake caption",
         "Partial streamed JSON/tool XML never becomes replayable assistant history.",
         "Permission changes invalidate catalog slice.",
-        "Phase 2 F companion/schema and semantic fixtures (not run in phase 1).",
         "Plans/working_notebook_contract_fixtures.json",
-        "Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "PowerShell wrapper execution requires inspected-wrapper receipts and one-shot approval when configured.",
         "Replayed history never includes malformed or duplicate tool_call IDs.",
         "Token budget reports catalog materialization cost.",
         "Tool mentions, UI chips, and model-visible tool schemas are reconciled from the same session namespace snapshot.",
         "Tool search can materialize a selected tool without losing rich-result parser path.",
         "finish_reason=length with tool call is classified partial_truncated.",
+        "future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "future tool capability discovery tests",
         "future tool invocation and HostCapabilityCommand policy fixtures",
         "git diff --check",
@@ -19964,6 +19951,7 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "retention failure returns ToolFailure/runtime blocker",
+        "scripts/pm-projects-refresh-contracts.py",
         "secrets are never cached"
       ]
     },
@@ -21313,7 +21301,7 @@
         "tool_surface_ambiguity",
         "unbounded_injection"
       ],
-      "sha256": "e5c5424965d999d4785ddae7859129763b7a9f601352488ac2e868eba956a0dc",
+      "sha256": "eade77149e06a85abffef4d57c813c3d6b4d6547ef3ae82d440f480fa71f98f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -21323,14 +21311,14 @@
         "requirement": 21
       },
       "validation_surfaces": [
-        "Phase 2 F companion/schema and semantic fixtures (not run in phase 1).",
         "Plans/working_notebook_contract_fixtures.json",
         "Plans/working_notebook_contracts.schema.json",
-        "Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
+        "future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.",
         "python3 scripts/pm-plans-verify.py json-syntax",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
-        "python3 scripts/pm-working-notebook-contracts.py validate"
+        "python3 scripts/pm-working-notebook-contracts.py validate",
+        "scripts/pm-projects-refresh-contracts.py"
       ]
     },
     {
@@ -21506,7 +21494,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T07:47:51Z",
+  "generated_at_utc": "2026-11-04T16:52:59Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

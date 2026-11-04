@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L8132-L8355
 
-Source SHA256: `340679f1e0852d0ad5ef0345415686be14f53b12677402812d37989477a39c34`
+Source SHA256: `ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e`
 
 ---
 
@@ -128,9 +128,9 @@ acceptance_criteria:
 - No fifth state, child Goals, Goal budget/role fields, fake Plan, silent objective edit or fake Workflow certification
   appears.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -200,9 +200,9 @@ acceptance_criteria:
   two live owners.
 - Explicit rebind is typed unavailable until complete owner transaction/version and all graph edges are admitted.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

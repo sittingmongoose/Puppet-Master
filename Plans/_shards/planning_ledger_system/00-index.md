@@ -1,25 +1,25 @@
 # Shard Index: Plans/Planning_Ledger_System.md
 
-Generated: 2026-11-03T22:13:31Z
+Generated: 2026-11-04T16:52:04Z
 
-Source SHA256: `ea3396b615c786f56c2d4703fe14fd76f7963eb5964e596a02fdfe015da3c5a9`
+Source SHA256: `69d0137f54c7f3b67e2419917297e7ae3670050443d4336bf7bf7cc0eee1bbc5`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `9b93fa91351fb49e95553464aa27c030c6137e42d223b2352170c9a739fbf51e`
-- [002 - 0. Scope](002-0.-scope.md) L5-L11 `2162b5a9cfeb29408a3c842f77e955a615948d91050f74c7d557f2899449a86a`
-- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L25 `d993c5e6c6384b91bed45fcdaa943b1a8e6159f138e837a3ca86829e23f9df00`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L27-L419 `ea07d291ae1eab07b094bcbaa1e794ff11207bec1fb190601349e686fe7e45dd`
-- [005 - Ledger Compile Addendum - pldg-20260616-002](005-ledger-compile-addendum-pldg-20260616-002.md) L421-L511 `6fe55fe0160dda7d08ddc1112e718bafa78c841ab3ecb78848426951d5b3ea0e`
-- [006 - Semantic Audit Closure Addendum - 2026-06-17](006-semantic-audit-closure-addendum-2026-06-17.md) L513-L672 `5a45463397870fcfb0300b69fee4e6c2074f78ff2caf08ebe4febcde63b2dd31`
-- [007 - 3. Compilation Coverage](007-3.-compilation-coverage.md) L674-L698 `7adffb95b8f4d780f47b040f6fa733d242b3cd5e7440ca51219a51e2d06f317e`
-- [008 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](008-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L700-L757 `ec8b43d4b1c9f8cf404211a1312f54af325e620b86f90531e780b7f90e7b63e2`
-- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L760-L956 `473821135f6c5153809fa4bf770f9d47f7769a9130b92b67775d72538df71371`
-- [010 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L958-L1031 `02a5b7426eaa2d2f86168b74e798960ef6a502b0b44987c6d4e9f820d2988dd4`
-- [011 - FABLE Residual Planning Ledger Service Cleanup Addendum - 2026-07-07](011-fable-residual-planning-ledger-service-cleanup-addendum-2026-07-.md) L1033-L1228 `ce57d3eb80efb4c3e1e5cbd0f364e22ad460698b161c3faa18e347a3db1c3fc5`
-- [012 - 4. Assistant Deep Plan Ledger Profile](012-4.-assistant-deep-plan-ledger-profile.md) L1230-L1378 `fd2f3a6527bb91f4a06345d846da762db0d094bf230b52fb6cbfb956bda2fa23`
-- [013 - Additive Correction v4 — One Question Registry Per Run (2026-09-03)](013-additive-correction-v4-one-question-registry-per-run-2026-09-03.md) L1380-L1397 `8e34ee75041ac46d07cbd48f6555bf8134e87abc86d4e94616cc460d591362d4`
-- [014 - Working Notebook Boundary Addendum (2026-09-05)](014-working-notebook-boundary-addendum-2026-09-05.md) L1399-L1433 `057f96e3392f3d314bcce031686480a0df2c4da0915cb72e84274b277f0c57ef`
-- [015 - External Research Landing Boundary Addendum (2026-09-17)](015-external-research-landing-boundary-addendum-2026-09-17.md) L1435-L1538 `16cdd787ef87649b80d28d6f748aeda0353194ff20c6421b5b31913c7524660d`
+- [001 - Preamble](001-preamble.md) L1-L3 `1255cef7ff46f033e20f5b17dbf6981184198e4f3c461fca0a584c9e384e8601`
+- [002 - 0. Scope](002-0.-scope.md) L5-L11 `941cc3316bf052fdc29b0982e2eebfb99e0deecccd20cf30be1e70bd3397ea0d`
+- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L25 `f72be65ab2cebee98c657b8ed04c50dffd347fdae2dfe5ea34c22f3723a9f505`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L27-L419 `24ef48a56cb03b77528729bc85ba5ea345cc4dd163015b92115fc3413fec3720`
+- [005 - Ledger Compile Addendum - pldg-20260616-002](005-ledger-compile-addendum-pldg-20260616-002.md) L421-L511 `e47b8e39fa38b3dd19c28c4c693cac83f0f1b33e049206efd000763ef3acee18`
+- [006 - Semantic Audit Closure Addendum - 2026-06-17](006-semantic-audit-closure-addendum-2026-06-17.md) L513-L672 `d293744b3dab03994ce1092dbc94a33355016bb019827595521f877268f0c88f`
+- [007 - 3. Compilation Coverage](007-3.-compilation-coverage.md) L674-L698 `75a24860f83caa7dc7ef05fe536ef0d5a0e151c067ca4e3b3d97b9c2d363ec9b`
+- [008 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](008-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L700-L757 `80da2b35c6e15ee396f14e38ed1eb1c1a6e7c6a87a15b95cb2ffa6f3e27fcfa1`
+- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L760-L956 `2d6b9610bc7d2785b903a94f92a86b219d1ea8c56b604a1deb1f639024686d06`
+- [010 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L958-L1031 `b70bd794844bd6ebce129eef14bed467a5af0a06ab71d61a8de71cd29dd52b82`
+- [011 - FABLE Residual Planning Ledger Service Cleanup Addendum - 2026-07-07](011-fable-residual-planning-ledger-service-cleanup-addendum-2026-07-.md) L1033-L1228 `d7fc5133601c8d1c556dd905be7475165ca582a7be15dfc49ffb1e35d6610296`
+- [012 - 4. Assistant Deep Plan Ledger Profile](012-4.-assistant-deep-plan-ledger-profile.md) L1230-L1378 `aa485ea175b1cab512043232588200e45505a360f09f09e36dd1f4bcff65a644`
+- [013 - Additive Correction v4 — One Question Registry Per Run (2026-09-03)](013-additive-correction-v4-one-question-registry-per-run-2026-09-03.md) L1380-L1397 `b28b4d3af1a855e6bec44475a30564d315f0a1ec73db24da121ec7dc53b6847d`
+- [014 - Working Notebook Boundary Addendum (2026-09-05)](014-working-notebook-boundary-addendum-2026-09-05.md) L1399-L1433 `c7343b9e1e29b85738d678eb94863a64fafd92be10d8b34c11d3e8ec3cab1c2f`
+- [015 - External Research Landing Boundary Addendum (2026-09-17)](015-external-research-landing-boundary-addendum-2026-09-17.md) L1435-L1538 `48f2ad5a21a768f9082d34f95bf0eb34068060c36541ed010227a410b0cd96bc`

@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L10025-L11102
+Source lines: L10025-L11097
 
-Source SHA256: `f2390c30383160c10085e8e037d332c605cc838256a825363b0d5562478ffa86`
+Source SHA256: `94a82f002370bd3365925c564c67776da00a4c62f4f54750910c316356dca0bc`
 
 ---
 
@@ -305,9 +305,8 @@ acceptance_criteria:
 - Profile/rule whole-copy descriptors retain declared switches and owner readback/rollback without copying
   trust, installation, protected built-ins or child/plugin/receiver authority.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation
@@ -580,9 +579,8 @@ acceptance_criteria:
 - Closed T-186 tools refuse wrong app/window/controller/observation, unsupported namespace or protected capture/input;
   Stop/double Esc fences only the admitted session.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation
@@ -734,9 +732,8 @@ acceptance_criteria:
   authority.'
 - Mode receipts record no fabricated human confirmation; unknown remote outcomes reconcile before retry.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation
@@ -884,9 +881,8 @@ acceptance_criteria:
 - Unknown create/push is reconciled before retry; action projection includes actual target/authority and no
   unsafe invented Undo.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation
@@ -1026,9 +1022,8 @@ acceptance_criteria:
 - Delayed-work checks reject stale source/root/permission, saved Ask me first, missing pause, Stop and receiver/parent
   widening; direct-user exceptions preserve authentic pause and every other guard.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

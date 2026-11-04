@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47318-L50563
+Source lines: L47316-L50561
 
-Source SHA256: `5219317d3f6de37616de475f8713f24e8d655c778fdc8df3544ad7e22bd18a4d`
+Source SHA256: `edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9`
 
 ---
 
@@ -2756,8 +2756,8 @@ acceptance_criteria:
 - Open/Details/More are keyboard accessible with full-path access and truthful backup facts.
 - Remove, archive, rename and Delete data retain distinct effects.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -2826,8 +2826,8 @@ acceptance_criteria:
 - Backup/copy/recovery/Later are truthful and preserve current PM7 admission and auth fences.
 - SSH setup uses SRV-018 preview and protected human apply, retaining the exact draft and owner result on refusal or return.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -2905,8 +2905,8 @@ acceptance_criteria:
 - Panel keyboard/narrow-host/Close/focus/Undo and masked outcomes are truthful.
 - Five Settings primaries and all 38 manager owners are preserved.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -2992,8 +2992,8 @@ acceptance_criteria:
 - Both conversions/paused recovery/report/Undo account for every CV-367 family and preserve one writer.
 - Screen use remains off until admitted; the strip Stop and double Esc fence only the named session, with unavailable joins and protected prompts refused before capture/input.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -3082,8 +3082,8 @@ acceptance_criteria:
 - Same-path/different-Host and different-thread board/notebook content remains isolated.
 - Conversion keeps historical binding and exact new destination admission.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -3147,8 +3147,8 @@ acceptance_criteria:
 - No agent self-issuance or same-name cleanup; changed target/Stop/revoke blocks final dispatch.
 - Remote outcomes remain truthful and link existing owner receipts.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -3213,8 +3213,8 @@ acceptance_criteria:
 - App pause is visibly separate, user-only and missing-custody fail-closed.
 - Conversion/Stop/timer races have explicit paused or refused outcomes without duplicate dispatch.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows

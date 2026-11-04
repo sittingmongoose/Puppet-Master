@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L28302-L29076
 
-Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
+Source SHA256: `dcab438f728b4ce5508085a47c122ce4ad2bce6d9f626904292a1bfc4a5b9fd0`
 
 ---
 
@@ -504,9 +504,9 @@ acceptance_criteria:
 - Empty/filtered Here lists state coverage and offer All chats; narrow labels remain text, with the shared container-width
   rules.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -553,7 +553,7 @@ canonical_text: Every chat may explicitly read permitted Projects and request wo
   list/status exposes only information the person may open and honors source-project Off; content reads use a named
   set or all, source-Computer checks on every read and provider exposure/secret scrub. Regular offers This time
   / For this chat / Always on this computer / No; a named reference grants only its explicit subject. YOLO uses
-  D's explicit task-scoped mode authority and invents no human consent or Always rule. Every read appears in Activity.
+  Plans/Permissions_System.md's explicit task-scoped mode authority and invents no human consent or Always rule. Every read appears in Activity.
   One coverage formatter records requested, looked_in, not_looked_in with reasons and partial with missing ranges;
   empty/partial replies and empty/filtered UI always disclose coverage, with a quiet expandable line. Archived Projects
   are skipped unless named. Notebooks, private memory, credentials, safe copies and denied files remain excluded.
@@ -564,7 +564,7 @@ canonical_text: Every chat may explicitly read permitted Projects and request wo
   results/replies are idempotent and route by stable thread after conversion. From another chat uses chat_message_in,
   names sender and recipient, and never impersonates user input. At most three automatic round trips occur; extending
   that budget requires the person. Offline delivery waits and expires after one day with a truthful result. The
-  has-read provenance mark survives; N19 outward actions use D's mode-aware disclosure/actual-effect rules, including
+  has-read provenance mark survives; N19 outward actions use Plans/Permissions_System.md's mode-aware disclosure/actual-effect rules, including
   ordinary YOLO publication, and never hide coverage. CV-365 freezes preview as ui.thread.request.preview or ui.thread.spawn.preview,
   a typed local redacted draft projection without persistence, outbox commit, EventRecord or authority. Send uses
   the existing cmd.thread.request and cmd.thread.spawn sole handlers with the explicit ThreadRequestFacadeRequestV2/ResultV2
@@ -586,9 +586,9 @@ acceptance_criteria:
 - Reply after conversion follows thread identity with current destination checks; repeated delivery produces no
   duplicate turn or billing.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -667,9 +667,9 @@ acceptance_criteria:
   effect.
 - Regular person and YOLO guarded route share one owner transaction; YOLO never defaults to main or publication.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows
@@ -751,9 +751,9 @@ acceptance_criteria:
 - Expiry purges only eligible source-chat content, retaining separately required canonical task/audit bodies and
   references.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

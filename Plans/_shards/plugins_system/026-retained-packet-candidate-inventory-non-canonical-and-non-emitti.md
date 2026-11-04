@@ -4,7 +4,7 @@ Source: `Plans/Plugins_System.md`
 
 Source lines: L4596-L4696
 
-Source SHA256: `d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809`
+Source SHA256: `d97e5d98cdecbb61b4f04cff8e324766d07e19dd554894e5316581c065c247fb`
 
 ---
 
@@ -62,8 +62,8 @@ acceptance_criteria:
 - Owner rollback restores previewed enablement/reach/configuration without undoing unrelated installation
   or source changes.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope

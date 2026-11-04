@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L2682-L2804
+Source lines: L2682-L2803
 
-Source SHA256: `01873d61989908279c600d475affad68d2793cba0a774bb8d20a7af2f249a457`
+Source SHA256: `e83477fb5445aacd63eb29a0513ee20fb69444fe64add25776c30616f3de13a0`
 
 ---
 
@@ -83,9 +83,8 @@ acceptance_criteria:
 - App and Project blocked approvals use their correct typed identities and share canonical action semantics.
 - Headless retained ask, missing disclosure, Stop and stale decision all refuse without invented approval.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

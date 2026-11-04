@@ -4,7 +4,7 @@ Source: `Plans/Personas.md`
 
 Source lines: L3668-L3813
 
-Source SHA256: `70539854a90f660a87becb50e6d5940880345e97cd12c4860fa3388c25e1ad23`
+Source SHA256: `6e20b9857a059ca745d3b054d8d065d918b4841da17cd074ccb85644120e5361`
 
 ---
 
@@ -105,8 +105,8 @@ acceptance_criteria:
 - No-project selection includes only permitted library reach; conversion records a fresh resolution without
   changing earlier turns.
 validation_surfaces:
-- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
-- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+- scripts/pm-projects-refresh-contracts.py
+- future post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
 risk_class: scope_authority_or_custody_drift
 reasoning_tier: high
 context_scope: project_and_application_scope
