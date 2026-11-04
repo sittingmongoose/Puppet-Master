@@ -219,6 +219,10 @@ CHECKS = ("run-gates", "audit-governance", "plan-migration-validate")
 # reports them. Two keep only 50 entries of a list nested inside one row (`gui_asset_policy_failed`,
 # `audit_closure_reopened_rows_present`), which changes what that row says, never how many rows there
 # are. A command that is not listed here, such as one added later, has no export until someone reads it.
+# Read 2026-11-04 for the projects refresh (lane F-d, 102a7e99e8): validate-settings-layering and
+# validate-projects-refresh-contracts run like validate-new-contracts (`_projects_refresh_subcheck`:
+# run_validator_subprocess, then parse_validator_json of the validator's whole JSON report), and neither
+# pm-settings-layering-check.py nor pm-projects-refresh-contracts.py truncates its failure list.
 EXPORT_COMMANDS = frozenset({
     "check-project-artifacts", "check-shards", "json-syntax", "lint-banned-phrases", "lint-contractrefs",
     "lint-path-refs", "validate-audit-status-index", "validate-auto-decisions", "validate-browser-event-admission",
@@ -227,7 +231,8 @@ EXPORT_COMMANDS = frozenset({
     "validate-gui-asset-policy", "validate-implementation-readiness", "validate-new-contracts",
     "validate-plan-graph", "validate-plan-migration", "validate-plans-to-code-handoff-schema",
     "validate-pm7-gui-fixtures", "validate-prd-planning-runtime-contracts", "validate-project-output-fixtures",
-    "validate-runtime-artifact-schemas", "validate-server-command-gap", "validate-testing-session-event-admission",
+    "validate-projects-refresh-contracts", "validate-runtime-artifact-schemas", "validate-server-command-gap",
+    "validate-settings-layering", "validate-testing-session-event-admission",
     "validate-touch-closure", "validate-ui-command-response", "validate-usage-contract-drift",
     "validate-usage-gui-fixtures", "validate-web-capability-contracts", "validate-wiring-matrix",
     "validate-working-notebook-contracts", "verify-spec-lock",
