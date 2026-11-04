@@ -1,0 +1,1380 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_history_reader_outputs/1.0.0/schema.json",
+  "title": "Historical Goal reader answers",
+  "description": "Closed ephemeral answers of the seven historical Goal readers (SP-271, SP-277, SP-280, SP-300, SP-301, SP-302, SP-303). Newly authored owner contract under DL-045, 2026-11-04. Each $def belongs to one family only. An answer is internal and ephemeral: never persisted, never an event, receipt or command result.",
+  "schema_version": "1.0.0",
+  "$defs": {
+    "goal_child_status_history_answer": {
+      "$comment": "Closed ephemeral answer of storage.goal_child_status_history_read.v1@1.0.0 (SP-271), adopting SP-420 for original admission. Equality joins between selector and original_event, and payload validity under pm.goal_runtime_event.goal_child_status_changed.schema.v2, are checked by scripts/pm_goal_history_reader_fixtures.py.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reader_binding",
+        "selector",
+        "original_event",
+        "original_validation",
+        "unresolved_obligations",
+        "read_token",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_historical",
+            "unresolved_historical_validation",
+            "unavailable"
+          ]
+        },
+        "reader_binding": {
+          "const": "storage.goal_child_status_history_read.v1@1.0.0"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "event_id",
+            "sequence_id"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "original_event": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                },
+                {
+                  "properties": {
+                    "event_type": {
+                      "const": "goal.child_status_changed"
+                    },
+                    "payload_schema_id": {
+                      "const": "pm.goal_runtime_event.goal_child_status_changed.schema.v2"
+                    },
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_validation": {
+          "enum": [
+            "verified",
+            "unresolved",
+            "unavailable"
+          ]
+        },
+        "unresolved_obligations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original_producer_authority",
+              "original_revision_cas",
+              "original_child_identity",
+              "original_child_transition",
+              "original_completion_receipt",
+              "original_result_or_receipt",
+              "original_runtime_identity",
+              "original_idempotency",
+              "original_referenced_record",
+              "original_row_predicate"
+            ]
+          }
+        },
+        "read_token": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "verified"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unresolved_historical_validation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unresolved"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unavailable"
+              },
+              "original_event": {
+                "type": "null"
+              },
+              "read_token": {
+                "type": "null"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "goal_degraded_history_answer": {
+      "$comment": "Closed ephemeral answer of storage.goal_degraded_history_read.v1@1.0.0 (SP-277), adopting SP-420 for original admission. Equality joins between selector and original_event, and payload validity under pm.goal_runtime_event.goal_degraded.schema.v2, are checked by scripts/pm_goal_history_reader_fixtures.py.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reader_binding",
+        "selector",
+        "original_event",
+        "original_validation",
+        "unresolved_obligations",
+        "read_token",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_historical",
+            "unresolved_historical_validation",
+            "unavailable"
+          ]
+        },
+        "reader_binding": {
+          "const": "storage.goal_degraded_history_read.v1@1.0.0"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "goal_id",
+            "event_id",
+            "sequence_id"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "original_event": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                },
+                {
+                  "properties": {
+                    "event_type": {
+                      "const": "goal.degraded"
+                    },
+                    "payload_schema_id": {
+                      "const": "pm.goal_runtime_event.goal_degraded.schema.v2"
+                    },
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_validation": {
+          "enum": [
+            "verified",
+            "unresolved",
+            "unavailable"
+          ]
+        },
+        "unresolved_obligations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original_producer_authority",
+              "original_revision_cas",
+              "original_predecessor_state",
+              "original_tier_predicate",
+              "original_exception_evidence",
+              "original_approval_evidence",
+              "original_runtime_identity",
+              "original_idempotency",
+              "original_referenced_record",
+              "original_row_predicate"
+            ]
+          }
+        },
+        "read_token": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "verified"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unresolved_historical_validation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unresolved"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unavailable"
+              },
+              "original_event": {
+                "type": "null"
+              },
+              "read_token": {
+                "type": "null"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "goal_scheduled_history_answer": {
+      "$comment": "Closed ephemeral answer of storage.goal_scheduled_history_read.v1@1.0.0 (SP-280), adopting SP-420 for original admission. Equality joins between selector and original_event, and payload validity under pm.goal_runtime_event.goal_scheduled.schema.v2, are checked by scripts/pm_goal_history_reader_fixtures.py.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reader_binding",
+        "selector",
+        "original_event",
+        "original_validation",
+        "unresolved_obligations",
+        "read_token",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_historical",
+            "unresolved_historical_validation",
+            "unavailable"
+          ]
+        },
+        "reader_binding": {
+          "const": "storage.goal_scheduled_history_read.v1@1.0.0"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "goal_id",
+            "event_id",
+            "sequence_id"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "original_event": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                },
+                {
+                  "properties": {
+                    "event_type": {
+                      "const": "goal.scheduled"
+                    },
+                    "payload_schema_id": {
+                      "const": "pm.goal_runtime_event.goal_scheduled.schema.v2"
+                    },
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_validation": {
+          "enum": [
+            "verified",
+            "unresolved",
+            "unavailable"
+          ]
+        },
+        "unresolved_obligations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original_producer_authority",
+              "original_revision_cas",
+              "original_predecessor_state",
+              "original_queue_admission",
+              "original_budget_snapshot",
+              "original_permission_evidence",
+              "original_recovery_truth",
+              "original_runtime_identity",
+              "original_idempotency",
+              "original_referenced_record",
+              "original_row_predicate"
+            ]
+          }
+        },
+        "read_token": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "verified"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unresolved_historical_validation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unresolved"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unavailable"
+              },
+              "original_event": {
+                "type": "null"
+              },
+              "read_token": {
+                "type": "null"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "goal_progressed_history_answer": {
+      "$comment": "Closed ephemeral answer of storage.goal_progressed_history_read.v1@1.0.0 (SP-300), adopting SP-420 for original admission. Equality joins between selector and original_event, and payload validity under pm.goal_runtime_event.goal_progressed.schema.v2, are checked by scripts/pm_goal_history_reader_fixtures.py.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reader_binding",
+        "selector",
+        "original_event",
+        "original_validation",
+        "unresolved_obligations",
+        "read_token",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_historical",
+            "unresolved_historical_validation",
+            "unavailable"
+          ]
+        },
+        "reader_binding": {
+          "const": "storage.goal_progressed_history_read.v1@1.0.0"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "goal_id",
+            "event_id",
+            "sequence_id"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "original_event": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                },
+                {
+                  "properties": {
+                    "event_type": {
+                      "const": "goal.progressed"
+                    },
+                    "payload_schema_id": {
+                      "const": "pm.goal_runtime_event.goal_progressed.schema.v2"
+                    },
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_validation": {
+          "enum": [
+            "verified",
+            "unresolved",
+            "unavailable"
+          ]
+        },
+        "unresolved_obligations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original_admission",
+              "original_producer_authority",
+              "original_revision_cas",
+              "original_predecessor_state",
+              "original_runtime_identity",
+              "original_idempotency",
+              "original_referenced_record",
+              "original_decision",
+              "original_row_predicate"
+            ]
+          }
+        },
+        "read_token": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "verified"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unresolved_historical_validation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unresolved"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unavailable"
+              },
+              "original_event": {
+                "type": "null"
+              },
+              "read_token": {
+                "type": "null"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "goal_replanned_history_answer": {
+      "$comment": "Closed ephemeral answer of storage.goal_replanned_history_read.v1@1.0.0 (SP-301), adopting SP-420 for original admission. Equality joins between selector and original_event, and payload validity under pm.goal_runtime_event.goal_replanned.schema.v2, are checked by scripts/pm_goal_history_reader_fixtures.py.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reader_binding",
+        "selector",
+        "original_event",
+        "original_validation",
+        "unresolved_obligations",
+        "read_token",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_historical",
+            "unresolved_historical_validation",
+            "unavailable"
+          ]
+        },
+        "reader_binding": {
+          "const": "storage.goal_replanned_history_read.v1@1.0.0"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "goal_id",
+            "event_id",
+            "sequence_id"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "original_event": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                },
+                {
+                  "properties": {
+                    "event_type": {
+                      "const": "goal.replanned"
+                    },
+                    "payload_schema_id": {
+                      "const": "pm.goal_runtime_event.goal_replanned.schema.v2"
+                    },
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_validation": {
+          "enum": [
+            "verified",
+            "unresolved",
+            "unavailable"
+          ]
+        },
+        "unresolved_obligations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original_admission",
+              "original_producer_authority",
+              "original_revision_cas",
+              "original_predecessor_state",
+              "original_runtime_identity",
+              "original_idempotency",
+              "original_referenced_record",
+              "original_decision",
+              "original_row_predicate"
+            ]
+          }
+        },
+        "read_token": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "verified"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unresolved_historical_validation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unresolved"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unavailable"
+              },
+              "original_event": {
+                "type": "null"
+              },
+              "read_token": {
+                "type": "null"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "goal_stopped_history_answer": {
+      "$comment": "Closed ephemeral answer of storage.goal_stopped_history_read.v1@1.0.0 (SP-302), adopting SP-420 for original admission. Equality joins between selector and original_event, and payload validity under pm.goal_runtime_event.goal_stopped.schema.v2, are checked by scripts/pm_goal_history_reader_fixtures.py.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reader_binding",
+        "selector",
+        "original_event",
+        "original_validation",
+        "unresolved_obligations",
+        "read_token",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_historical",
+            "unresolved_historical_validation",
+            "unavailable"
+          ]
+        },
+        "reader_binding": {
+          "const": "storage.goal_stopped_history_read.v1@1.0.0"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "goal_id",
+            "event_id",
+            "sequence_id"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "original_event": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                },
+                {
+                  "properties": {
+                    "event_type": {
+                      "const": "goal.stopped"
+                    },
+                    "payload_schema_id": {
+                      "const": "pm.goal_runtime_event.goal_stopped.schema.v2"
+                    },
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_validation": {
+          "enum": [
+            "verified",
+            "unresolved",
+            "unavailable"
+          ]
+        },
+        "unresolved_obligations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original_admission",
+              "original_producer_authority",
+              "original_revision_cas",
+              "original_predecessor_state",
+              "original_runtime_identity",
+              "original_idempotency",
+              "original_referenced_record",
+              "original_decision",
+              "original_row_predicate"
+            ]
+          }
+        },
+        "read_token": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "verified"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unresolved_historical_validation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unresolved"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unavailable"
+              },
+              "original_event": {
+                "type": "null"
+              },
+              "read_token": {
+                "type": "null"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "goal_verification_decided_history_answer": {
+      "$comment": "Closed ephemeral answer of storage.goal_verification_decided_history_read.v1@1.0.0 (SP-303), adopting SP-420 for original admission. Equality joins between selector and original_event, and payload validity under pm.goal_runtime_event.goal_verification_decided.schema.v2, are checked by scripts/pm_goal_history_reader_fixtures.py.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reader_binding",
+        "selector",
+        "original_event",
+        "original_validation",
+        "unresolved_obligations",
+        "read_token",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_historical",
+            "unresolved_historical_validation",
+            "unavailable"
+          ]
+        },
+        "reader_binding": {
+          "const": "storage.goal_verification_decided_history_read.v1@1.0.0"
+        },
+        "selector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "goal_id",
+            "event_id",
+            "sequence_id"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "original_event": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                },
+                {
+                  "properties": {
+                    "event_type": {
+                      "const": "goal.verification_decided"
+                    },
+                    "payload_schema_id": {
+                      "const": "pm.goal_runtime_event.goal_verification_decided.schema.v2"
+                    },
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_validation": {
+          "enum": [
+            "verified",
+            "unresolved",
+            "unavailable"
+          ]
+        },
+        "unresolved_obligations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "original_admission",
+              "original_producer_authority",
+              "original_revision_cas",
+              "original_predecessor_state",
+              "original_runtime_identity",
+              "original_idempotency",
+              "original_referenced_record",
+              "original_decision",
+              "original_row_predicate"
+            ]
+          }
+        },
+        "read_token": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "verified"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unresolved_historical_validation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unresolved"
+              },
+              "original_event": {
+                "type": "object"
+              },
+              "read_token": {
+                "type": "object"
+              },
+              "unresolved_obligations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_validation": {
+                "const": "unavailable"
+              },
+              "original_event": {
+                "type": "null"
+              },
+              "read_token": {
+                "type": "null"
+              },
+              "unresolved_obligations": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
