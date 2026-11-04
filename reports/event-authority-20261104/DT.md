@@ -1,46 +1,93 @@
-# DT-FIX1 — Event Authority review round 1
+# DT-FIX2 — Event Authority review round 2
 
-Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `f4dcd88acc501f57c340c0475a31e126f0740df1`. Assessed implementation head: `63759b5b631505d09e0349cfdd0d409892a8e4a3`. The following publication changes reports only. Worktree `/home/sittingmongoose/pm-worktrees/DT-fix1` is removed after the push.
+Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `66b49694f95aabf8d167c16ca8c55535ecc3dfaf`. Assessed implementation head: `6c7135af06e1703ec83780495d6e13d1f0d20d32`. The following publication changes reports only. Worktree `/home/sittingmongoose/pm-worktrees/DT-fix2` is removed after publication is pushed.
 
-**16/18 families pass as prepared**, with membership ABSENT throughout. `tool.denied` retains producer/transition CONFLICT for the FileSafe emission facet; its specified policy/user path is prepared. `tool.custom_headless.skipped` remains stopped. Usage retains a technical setting-driven retention adapter dependency, and requirements/worktree retention retain only the three narrow product residuals below. No recommendation is adopted. Native execution remains NOT_RUN; original-owner and SP-278 authentication remain assumed adapters in these static models.
+**All eight standing checks pass across all 17 drafted families.** The complete checker passes **5,191 assertions**. Its fault-injection companion performs **137 complete checker runs**: one clean baseline plus 136 separately targeted family/check faults; all 136 faults report `fail` and return checker exit code 1. Checks 1..7 use 119 in-process calls to the complete main; check 8 uses 17 real failing subprocesses. Every run checks all 17 families and all 5,191 assertions. The clean baseline is one additional in-process run. A separate full-main probe returning success despite reported failures is refused by the actual harness predicate for every family.
 
-## Review round 1: findings and responses
+**Preparation: 0/18 at the independent review → 16/18 after repair**, under WAVE2's explicit retention exception. All 17 drafted policy populations pass the standing checks; the whole `tool.denied` family retains its FileSafe producer/transition conflicts, and `tool.custom_headless.skipped` stays undrafted and stopped. Membership remains ABSENT throughout. Native execution remains NOT_RUN; original-owner, payload-pack and SP-278 authentication remain assumed adapters, never native proof.
 
-- **F1 — stopped for Jared; permitted path fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24863`, SP-590, ATS-295, route-map `tool.denied.transition` and `stopped_facets`. Cause: the draft silently selected FileSafe emission despite competing owners. Fix: independently prepare only specified policy/user refusal, with positive policy/user/headless cases and explicit non-emission for allow/schema/already-dispatched boundaries. FileSafe is `owner_conflict_stopped` with no append from the unresolved facet; that fence is not an answer about eventual product emission. Exact owner question: **Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?** Producer and transitions stay CONFLICT. Verify the full DT checker and `tool.denied.non_emission_cases`/`source_join_negatives`.
-- **F2 — fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24863`, `$defs/tool_denied`, both source editions and both registry mirrors. Cause: mapping fields and original blocked episode were not preserved. Fix: closed top-level canonical blocked reason, failure class, ordered actions, headless flag, effective permission snapshot and executed-at-all flag join immutable original before together with blocked_sequence/approval_scope_key. This specified pre-dispatch population has no classified attempt outcome, so failure_class is typed null and executed_at_all is false; no transient failure is invented. Full mapped policy/user/headless positives pass. Transplanted episodes, changed/reordered/expanded actions, permission snapshot, headless flag and non-applicable transient class refuse through the full checker.
-- **F3 — fixed independently for all three gates (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24672`, CV-606/607, SP-585/586/587 and ATS-293. Cause: bare scores had no original dispatch context. Fix: reuse Executor's exact five-field tuple; source before freezes the original dispatch ref/tuple and threshold, and the authentic completed outcome supplies the numeric score. Each scalar exposure requires tuple/ref and matching node. Ref/tuple/result/threshold joins are checked separately. Positive scored cases and missing/wrong-context/bare-score regressions pass through the full checker. Gate scoring and ranking policies are unchanged.
-- **F4 — fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:25021`, both Usage source definitions and registry mirrors. Cause: optional identity absence could not survive the required closed before record. Fix: required nullable account_id/billing_entity_id/provider_account_ref source slots prove absence; payload omits absent identities and real identities join exactly. Project/app absent-account and unknown/no-provider-evidence/local/CLI cases pass, while fabricated and changed account identities refuse. Existing cost/quota/lineage/accounting coverage remains.
-- **F5 — fixed (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: `Plans/Contracts_V0.md:24979`, SP-593, ATS-296 and all embedded payload/source schema copies. Cause: closed web meta omitted canonical map/source/body variants and did not exercise batch lineage. Fix: preserve edges_count, sources_ref/map_ref/content_ref and current operation-specific counters/refs, source IDs, enums and required context. Original normalized structured operation_input resolves by ref; previews cannot replace it. before.web_request joins frozen request and parent/URL identity; owner_result.meta joins actual redacted result metadata. Complete map/read/extract/research and one-parent/two-URL-child positives pass. Wrong operation/tier, missing context/provider attempt, changed outcome/URL/parent, missing or duplicate child and incorrect aggregate regressions refuse. No new event family or inline full body is introduced.
-- **F6 — fixed as an adjudication/binding repair (`b20c80659d413cfe9344fdc5365beddf693b72e8`); residuals remain explicit.** Where: `Plans/storage-plan.md:29645`, SP-588/590/593/594/595/596, CV-614, route map and source registry rows. Cause: blanket retention paragraphs mislabeled technical omissions as new policy choices. Fix: bind existing operational/runtime assignments and SP-349 app counterparts; bind Usage's decided setting and permanent totals, with its remaining structured adapter explicitly technical and deletion/admission fenced. Replace the copied class menu with the review's exact per-family residuals. No duration or deletion recommendation is selected. Verify `retention_binding`, `retention_binding_oracle`, retention vectors and the source registry mirrors.
+## Review round 2: findings and responses
+
+- **F1 — stopped for Jared; round-1 fence carried (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-610 / SP-590 / ATS-295 and the `tool.denied` source/non-emission oracles. Cause: Tools and FileSafe disagree about emission. Fix already carried: only policy/user denial is prepared; FileSafe returns `owner_conflict_stopped` with no append. Exact question remains: **Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?** No product answer is adopted.
+- **F2 — fixed in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-610 and both source/schema editions. Cause: original denial mapping/episode joins were missing. Carried fix: canonical reason, ordered actions, nullable failure class, permission snapshot, headless flag, executed-at-all and episode/scope joins. Full positive and negative source oracles still run.
+- **F3 — fixed independently for all three gates in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-605..607 / SP-585..587. Cause: unbound numeric scores. Carried fix: exact original Executor dispatch tuple/ref, threshold and actual numeric-result joins. Each family's scored positives and source negatives still run.
+- **F4 — fixed in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-614 and both Usage source definitions/mirrors. Cause: absent account identities could not survive the required before record. Carried fix: required nullable source slots, payload omission of proven absence and exact known-identity joins. Project/application absence and fabrication oracles still run.
+- **F5 — fixed in round 1, reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`).** Where: CV-613 / SP-593 / ATS-296. Cause: omitted web variants and batch lineage. Carried fix: typed operation context, refs/counters, actual owner result, parent/URL-child identity and aggregate joins. All source and batch oracles still run; no new family is authored.
+- **F6 — binding repair carried and reverified (`b20c80659d413cfe9344fdc5365beddf693b72e8`); residual stops unchanged.** Where: the exact retention table below, route-map bindings, fixture binding oracles and 24 source rows. Cause: prior blanket policy questions. Existing operational/runtime assignments, SP-349 counterparts and decided Usage setting/totals remain bound. Exactly three narrow runless product questions plus Usage's technical adapter remain fenced. No new duration, anchor or deletion policy is chosen.
+- **F7 — fixed (A: `4148c3d2cbb57b0d71542e4ccaa7011ff4bf568a`).** Where: `Plans/dt_event_contracts.schema.json:156` (checkpoint hash), `:1292` (config hash), `:6170` (Usage hash), all 58 definitions and 41 Storage mirrors; `scripts/pm-dt-event-contracts.py:113`. Cause: Python `$` accepts a trailing LF. Fix: 217 hashes and 17 generation IDs gain exact lengths; seven variable Project-partition patterns gain a portable full-string end guard. Every populated patterned identifier in every base/variant source/payload/checkpoint gets a trailing-LF negative. Coherent current-token/prefix changes and coherent config/Usage payload-source joins refuse. Restoring the reviewed schemas/mirrors yields 899 failures across all 17 families in the full checker; exit 1. Verify `f7-regression-rejection.json`, `schema-mirrors.json`, normal DT main and standing fault 5.
+- **F8 — fixed (B: `ea4a395b9e703a2bae3541d097f16a892be603c2`).** Where: `scripts/pm-dt-event-contracts.py:79` and `:652`; every family's `retry_oracle`. Cause: `sha(event)` included Storage-assigned metadata in the semantic comparison. Fix: RFC 8785 canonical JSON over exactly the 21 CV-EventRecord caller fields. All 51 independent sequence/observed/persisted changes return the complete original event and receipt, with one stored entry. All 357 caller-field mutations change the digest and conflict when compared under the original stored model key, without append; these isolate digest sensitivity, while normal admission/identity joins are tested separately. Pinned semantic bytes/digests are separate from the unchanged full-value receipt and exact-u64 source commitments. Verify DT main and standing fault 6; the checker requires `jsonschema` and `rfc8785`.
+
+## Standing-check 7 follow-up
+
+**Fixed (C: `6c7135af06e1703ec83780495d6e13d1f0d20d32`).** Where: `scripts/pm-dt-event-contracts.py:444` and each checkpoint case's `context.source_storage_instance_id`. Cause: the existing three one-field mismatch checks passed, but coherently replacing all three checkpoint/token/source-selection storage IDs and refs could still publish. Fix: compare to the original event source's Storage identity supplied by the already-assumed adapter. This is an existing owner join from SP-580..596/SP-278, not a new storage authority, product feature or authentication claim. All 17 such coherent mutations returned `published` before the repair and now return `source_changed`; all 51 single-field mismatches still refuse. `check7-before-after.json` records both revisions. No owner prose or PlanUnit ID was added.
+
+## Per-family standing checks
+
+A = F7 commit `4148c3d2cb`; B = F8 commit `ea4a395b9e`; C = storage-identity/oracle commit `6c7135af06`. Each cell is a verified full-checker negative run, as recorded individually in `fix2/standing-negative-runs.json`. No standing-check cell remains open.
+
+| Family | 1 replay | 2 app key | 3 partition | 4 payload | 5 LF | 6 retry | 7 storage | 8 exit |
+|---|---|---|---|---|---|---|---|---|
+| `approval.requested` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `approval.granted` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `approval.denied` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `approval.timeout` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `config.migrated` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
+| `gate.evaluation_started` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `gate.failed` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `gate.passed` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `requirements.clarification_requested` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `run.background_enqueued` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
+| `tool.denied` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
+| `tool.execution_completed` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
+| `tool.execution_started` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
+| `tool.invoked` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
+| `usage.event` | pass | pass | pass | pass | fixed A | fixed B | fixed C | pass |
+| `worktree.created` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+| `worktree.deleted` | pass | pass* | pass | pass | fixed A | fixed B | fixed C | pass |
+
+*Project-only family: CV-366 app-key construction is inapplicable; the negative instead proves application-scope append is refused. All seven app-capable families and all eight app positives exercise exact CV-366 keys and coherent literal-ID/wrong-server/wrong-prefix refusals.*
+
+## Negative cases and full-checker rejection
+
+| Check | Authored negative per family | Full checker result |
+|---|---|---|
+| 1 | Current writer accepts `projector_replay_only`; separate writer/retry refusal cases and zero-effect retry expectations remain in main. | Each targeted false acceptance fails and exits 1. |
+| 2 | Accept wrong `application:` prefix on an authentic app source; Project-only writer accepts forbidden app scope. Normal oracles also cover literal IDs and wrong server hex. | Each targeted bypass fails and exits 1. |
+| 3 | Accept raw Project ID after coherently recomputing prepared-source commitment. Project base and variant positives must use encoded `project~`. | Each targeted bypass fails and exits 1. |
+| 4 | Accept an inline body above 16 KiB. Normal cases also cover verified reference success and unverified/changed resolved-body refusal. | Each targeted bypass fails and exits 1. |
+| 5 | Publish a trailing-LF anchor hash with coherent current-token and verified-prefix copies; all actual patterned-value LF cases also run. | Each targeted bypass fails and exits 1; restoring old schemas also fails all families. |
+| 6 | Restore full-event hashing, which falsely conflicts on Storage metadata changes. Each caller-owned field independently changes the digest/conflicts. | Each targeted regression fails and exits 1. |
+| 7 | Publish a coherent foreign-storage token; normal cases also change checkpoint/token/source-selection identity independently. | Each targeted bypass fails and exits 1. |
+| 8 | Corrupt the family's pinned identity oracle in a real subprocess. Also simulate reported failures with a success return code and apply the actual harness guard. | All 17 real subprocesses report fail/exit 1; all 17 zero-exit substitutions are refused. |
 
 ## Per-family grades before and after
 
-Before uses the independent review's six-family re-grade; unsampled rows use its carried dispositions and prior exact cells. Counts are PASS cells out of twelve, not admission or native execution grades.
+Before is the complete independent cycle-2 re-grade. Values are PASS cells out of twelve, not admission/native-execution grades. The 36 distinct F7/F8 cells return PARTIAL → PASS; every other status is carried. Totals: **146 PASS / 43 PARTIAL / 25 ABSENT / 2 CONFLICT → 182 PASS / 7 PARTIAL / 25 ABSENT / 2 CONFLICT**. All 216 cells and 294 quote records resolve against current files.
 
 | Family | Before | After | Remaining non-PASS cells |
 |---|---:|---:|---|
-| `approval.requested` | 11 | 11 | membership_version ABSENT |
-| `approval.granted` | 11 | 11 | membership_version ABSENT |
-| `approval.denied` | 11 | 11 | membership_version ABSENT |
-| `approval.timeout` | 11 | 11 | membership_version ABSENT |
-| `config.migrated` | 10 | 11 | membership_version ABSENT |
+| `approval.requested` | 9 | 11 | membership_version ABSENT |
+| `approval.granted` | 9 | 11 | membership_version ABSENT |
+| `approval.denied` | 9 | 11 | membership_version ABSENT |
+| `approval.timeout` | 9 | 11 | membership_version ABSENT |
+| `config.migrated` | 8 | 11 | membership_version ABSENT |
 | `gate.evaluation_started` | 9 | 11 | membership_version ABSENT |
 | `gate.failed` | 9 | 11 | membership_version ABSENT |
 | `gate.passed` | 9 | 11 | membership_version ABSENT |
-| `requirements.clarification_requested` | 10 | 10 | membership_version ABSENT, retention PARTIAL |
-| `run.background_enqueued` | 11 | 11 | membership_version ABSENT |
-| `tool.denied` | 5 | 9 | membership_version ABSENT, producer CONFLICT, transitions CONFLICT |
-| `tool.execution_completed` | 11 | 11 | membership_version ABSENT |
-| `tool.execution_started` | 11 | 11 | membership_version ABSENT |
-| `tool.invoked` | 8 | 11 | membership_version ABSENT |
-| `usage.event` | 8 | 10 | membership_version ABSENT, retention PARTIAL |
-| `worktree.created` | 10 | 10 | membership_version ABSENT, retention PARTIAL |
-| `worktree.deleted` | 10 | 10 | membership_version ABSENT, retention PARTIAL |
-| `tool.custom_headless.skipped` | 1 | 1 | membership_version ABSENT, producer PARTIAL, closed_payload_schema ABSENT, scope_identity ABSENT, replay_idempotency PARTIAL, retention ABSENT, redaction_custody ABSENT, transitions PARTIAL, consumers_checkpoints ABSENT, compatibility_withdrawal ABSENT, positive_negative_oracles ABSENT |
-
-After counts: {'ABSENT': 25, 'PASS': 182, 'PARTIAL': 7, 'CONFLICT': 2}. All 216 current quote/line references are mechanically revalidated. Every drafted family has its own writer/retry negative for `projector_replay_only`, preserves encoded `project~` positives and CV-366 application key formatting, and refuses inline bodies over SP-337's 16 KiB boundary while retaining verified/refused payload-reference cases. The stopped Doctor family receives no invented writer/oracle.
+| `requirements.clarification_requested` | 8 | 10 | membership_version ABSENT; retention PARTIAL |
+| `run.background_enqueued` | 9 | 11 | membership_version ABSENT |
+| `tool.denied` | 7 | 9 | membership_version ABSENT; producer CONFLICT; transitions CONFLICT |
+| `tool.execution_completed` | 9 | 11 | membership_version ABSENT |
+| `tool.execution_started` | 9 | 11 | membership_version ABSENT |
+| `tool.invoked` | 9 | 11 | membership_version ABSENT |
+| `usage.event` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
+| `worktree.created` | 8 | 10 | membership_version ABSENT; retention PARTIAL |
+| `worktree.deleted` | 8 | 10 | membership_version ABSENT; retention PARTIAL |
+| `tool.custom_headless.skipped` | 1 | 1 | membership_version ABSENT; producer PARTIAL; closed_payload_schema ABSENT; scope_identity ABSENT; replay_idempotency PARTIAL; retention ABSENT; redaction_custody ABSENT; transitions PARTIAL; consumers_checkpoints ABSENT; compatibility_withdrawal ABSENT; positive_negative_oracles ABSENT |
 
 ## Retention adjudication — exact populations
+
+
 
 | Family | Existing binding / remaining work |
 |---|---|
@@ -54,37 +101,51 @@ After counts: {'ABSENT': 25, 'PASS': 182, 'PARTIAL': 7, 'CONFLICT': 2}. All 216 
 
 All pending facets preserve source/receipt/reference closure and existing holds. Retention bindings grant no family admission.
 
-## Doctor question and unadopted recommendation
+
+
+## Doctor question
 
 **Exact question:** Is skipped eligible only on a Project's first-ever Doctor invocation, or on the first invocation that observes `tools.custom_headless` absent? If the first invocation has the key, may a later absence emit? What resets eligibility across a configuration revision, key removal/re-addition, Project import/clone or older restore?
 
-**Recommendation to Jared, requiring a new decision:** emit on the **first invocation that observes absence for the actual stable Project identity**. A present-key first invocation leaves eligibility unused. After one issued skipped event, ordinary configuration revisions and key removal/re-addition do not reset it; later Doctor checks still record their actual outcome through `doctor.custom_headless.checked`. A clone/import is eligible only if the Project owner actually creates a new Project identity. Same-identity restore preserves original issuance/eligibility coherently; missing post-backup issuance evidence fences a repeat rather than guessing that no event occurred. This is proposed behavior, explicitly **not inferred from canon**.
+**Disposition: STOPPED.** No DT writer, schema, reset rule or duplicate Doctor contract is authored. The prior recommendation remains unadopted; this fix round makes no recommendation or decision.
 
-**Disposition:** STOPPED. The question and recommendation above are copied from the review. Neither is a recorded Jared decision. This branch changes no first-run/eligibility/reset behavior and creates no duplicate DT Doctor contract.
+## Premises, bindings, IDs and scope
 
-## Searches, premise checks and newly authored bindings
+Current CV-EventRecord defines exactly the caller-field digest and compatibility-only replay policy used by this repair; both owner passages match fetched origin/main. Ten relevant semantic owner documents are byte-identical to the reviewed head. `current-premises.json` records hashes. Round-1 owner searches and separately authored per-family bindings remain in `DT-binding-search.json`; none is replaced with sibling inference. No old owner answer is extended. The failed assumptions repaired here were LF-safe `$` matching, whole-EventRecord retry comparison and sufficient pairwise Storage identity equality.
 
-`DT-binding-search.json` preserves first/pass-2 lineage and adds a separate round-1 search for each affected family. Scope: current live top-level owner documents before the DT units, existing schemas and current cited owner passages; generated/lineage/DT companion bindings are excluded as recovered authority. Each search records exact terms, current matches and negative evidence for the missing exact-family source join. The gates each get their own original dispatch-context binding; tool.denied gets its original runtime mapping/blocked-episode join; tool.invoked gets web request/result and batch parent/URL-child bindings; Usage gets nullable optional identity custody. These are newly authored technical bindings under DL-045 for already specified behavior, not recovered definitions or sibling inference.
+No owner prose is edited. The checkpoint adapter now exposes the already-required source Storage identity explicitly; its authenticity remains assumed. Newly authored runtime/native bindings: none. **New IDs used: none. Existing IDs remain CV-600..616, SP-580..596, ATS-290..298; allocated unused tails remain unused.**
 
-Sixteen cited canonical source spans match current origin/main, including Tools/FileSafe, Executor scoring, Contracts runtime mapping, Case L-3/SP-349, UF-085/UF-108, GATE-012 and runless worktree operations. The earlier blanket retention premise and FileSafe-emission premise failed and were removed. Approval identity remains distinct from app chat approvals under current CV-355/CV-366, PS-145 and DL-300. No older answer is extended, no recommendation is adopted, and no other owner decision is taken. RT coordination is a report dependency only; no pm-mail or subagent was used.
+Only DT schema/fixtures/checkers, their 41 existing Storage registry schema mirrors, the generated `storage_value_registry` shard group, index timestamps and DT reports change in round 2. Existing policies/profiles and all non-DT registry row values are unchanged. No admission, event-family registry append, Decision Log change, governance reseal, protected artifact, .gitignore or test-file change, landing lock, main push, subagent, mailbox registration or message. The source clone was briefly checked out/sparsified by an initial wrong-directory command, then restored to its exact original main ref/full-checkout state with its pre-existing untracked directory preserved; all task work is in the assigned detached worktree.
 
-## Validation and scope
+## Validation
 
-| Check | Exit | Result |
+| Command/check | Exit | Result |
 |---|---:|---|
-| `python3 scripts/pm-dt-event-contracts.py` | 0 | 3,231 assertions / 17 drafted families PASS; original-owner/SP-278 authentication assumed; native NOT_RUN |
-| DT schema + Storage registry schema + 24 exact source-schema mirrors | 0 | PASS |
-| `python3 scripts/pm-storage-recovery-contracts.py --self-test` | 0 | 22 checks PASS |
-| `python3 scripts/pm-storage-profile-check.py` | 1 | Same 41 errors as review baseline; zero new errors |
-| Currentness copy SHA-256 | 0 | All 15 files match the required shared edition |
-| Shard generation/check | 0 | Only automated_testing_system, contracts_v0, storage-plan, storage_value_registry groups change |
-| Plan index generation/validation | 0 | Top-level PASS |
-| DT PlanUnit YAML and self-grade evidence | 0 | 43 blocks parse; all 216 cell quotes/lines match |
-| Cited canonical source-span premise comparison | 0 | All 16 spans match current origin/main |
-| `git diff --check` | 0 | PASS |
+| `python3 scripts/pm-dt-event-contracts.py` | 0 | 5,191 assertions / 17 families; all standing observations match. |
+| `python3 scripts/pm-dt-standing-checks.py` | 0 | 137 complete runs; 136 individual faults refused with status fail/exit 1; 17 actual failing subprocesses. |
+| Full checker with reviewed schemas/mirrors restored in memory | 1 | Expected refusal, all 17 families, 899 assertions fail. |
+| Full checker forced to return zero despite failure + actual harness predicate | 0 (probe) | All 17 standing-exit cases fail; actual harness rejects the success code for each. |
+| DT meta-schema + Storage registry schema + exact mirrors | 0 | 58 definitions / 41 mirrors; unrelated rows/policies/profiles unchanged. |
+| `python3 scripts/pm-storage-recovery-contracts.py --self-test` | 0 | 22 checks pass. |
+| `python3 scripts/pm-storage-profile-check.py` | 1 | Same 41 baseline errors; exact baseline/current report equality, zero additions/removals. |
+| Required currentness edition copy | 0 | All 15 SHA-256 hashes match shared edition. |
+| Shard generation/check | 0 | First generation changes only Storage registry shards; final regeneration is byte-identical. |
+| Committed shard tree | 0 | Every manifest, index and referenced shard exists at the implementation head with its exact SHA-256. |
+| Index generation/validation | 0 | Top-level pass; final generation differs from prior generated index only by four timestamps. |
+| Grade/source evidence | 0 | All 216 cells / 294 quote records match; reviewed owner prose unchanged. |
+| Scope audit and `git diff --check` | 0 | Protected files unchanged; no new IDs, owner prose or admission. |
 
-The first index generation caught indentation in nine appended ATS canonical-text blocks (exit 1). Those blocks were corrected, all 43 DT blocks parsed, and generation/validation reran successfully. The initial and corrected logs are retained in `fix1/`; no check was weakened. No aggregate governance or native execution pass is claimed. The first staging list omitted 38 newly generated Storage shards; they are committed in 63759b5b631505d09e0349cfdd0d409892a8e4a3. A final committed-tree audit verifies all 3,463 manifest/index/shard blobs and their SHA-256 values, with no missing, changed or untracked paths.
+Every command result and code is indexed in `DT-checks.json`; retained check artifacts have exact paths and SHA-256 in `DT-evidence-sha256.json`. Copies of this report and self-grade overwrite `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/DT.md` and `DT-self-grade.json`. Round-2 evidence is under that directory's `fix2/`. No aggregate governance or native-runtime pass is claimed.
 
-Shared-file hunks remain entirely in CV-600..616, SP-580..596, ATS-290..298 and the existing DT source registry rows. Existing non-DT registry rows/policy objects and all profile objects are unchanged. Derived shards/indexes are regenerated, never hand-merged. No PlanUnit IDs were minted: **SP-580..596, CV-600..616, ATS-290..298 remain the IDs used**; unused tails remain unused.
+## Retained evidence
 
-No main push, landing lock, reseal, admission, registry append, Decision Log entry, protected governance/frozen-validator edit, .gitignore change or test-file edit. Branch push and literal-path worktree removal follow FIX-ROUND.md. Full report/self-grade copies and cited check outputs are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/`; round-1 logs/premise/currentness records are in its `fix1/` directory. `DT-evidence-sha256.json` records each retained check's exact path and SHA-256.
+| Exact artifact path | SHA-256 |
+|---|---|
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/dt.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/dt.json) | `4da40907bf34b4181ef2f7392e0fe10630219828a698a352c100c38c3937b6ca` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/standing-negative-runs.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/standing-negative-runs.json) | `ecc367444369331192625c7e33d6a05cc1c93104304a2b1edbcc14802b4071b2` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/success-exit-negative.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/success-exit-negative.json) | `afa70e2a286de74b7a09c381f2165abc1285b48f48609571d573821cac9a36ff` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-regression-rejection.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-regression-rejection.json) | `894266aa3bb446849e6a846e778c9a353cd72d6954e682baa95815898be2b346` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/check7-before-after.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/check7-before-after.json) | `fc2d83e3ee29fea25a96ed75e9586c368dbe3cad89b30f53bb396bc689a3d5e1` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/schema-mirrors.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/schema-mirrors.json) | `a9f7291ced72da61b75ba68e7c28da974efb43345ad8d428e85ec0eb4ec1b1e0` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/grade-evidence-check.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/grade-evidence-check.json) | `8bb83aaca3532dc4418069eae5468c40bf0d7e8c401725921172fe69a52eec4e` |
+| [/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/committed-shards-check.json](/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/committed-shards-check.json) | `0ccab6628a30ceb82cd306f6b2de8e68a9e8c0bc0c83e3e7ca45383a2a550f1a` |
