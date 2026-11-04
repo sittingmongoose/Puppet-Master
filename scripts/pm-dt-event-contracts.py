@@ -20,6 +20,7 @@ from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
+_BOUNDARY_INPUTS = {}
 PRODUCER_FIELDS = (
     'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
     'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
@@ -134,6 +135,8 @@ def canonical(value):
 
 
 def decode_source(raw):
+    if len(raw) > 1048576:
+        raise ValueError('source stage exceeds 1048576 encoded bytes')
     def unique(pairs):
         result = {}
         for key, value in pairs:
@@ -262,7 +265,11 @@ def source_bytes(value):
 
 
 def identity(contract, payload, partition='project~cHJvamVjdC0x', application=None):
-    subjects = [str(payload[k]) if isinstance(payload[k], int) else payload[k] for k in contract['identity_fields']]
+    # JSON Schema's integer domain includes 1.0. The exact source codec already
+    # gives it the same spelling as 1; use that spelling in every identity too.
+    # Never convert an exact u64 through binary64.
+    subjects = [canonical(payload[k]).decode('utf-8') if k == 'blocked_sequence' else payload[k]
+                for k in contract['identity_fields']]
     if partition == 'app':
         if application is None:
             raise ValueError('missing original application identity')
@@ -407,8 +414,8 @@ def accounting_totals(p):
     return {'input': incoming, 'output': outgoing, 'provider_total': p['provider_total'], 'cost_microdollars': p['cost_microdollars']}
 
 
-def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False):
-    if event['replay_policy'] != 'dedupe_by_idempotency_key':
+def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False, *, historical=False):
+    if event['replay_policy'] != 'dedupe_by_idempotency_key' and not (historical and event['replay_policy'] == 'projector_replay_only'):
         return 'replay_only_not_appendable' if event['replay_policy'] == 'projector_replay_only' else 'join_refused'
     if event['payload_ref'] is None:
         try:
@@ -424,6 +431,10 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     validator = Draft202012Validator(schemas[source_definition], format_checker=FormatChecker())
     if list(validator.iter_errors(prepared)) or list(validator.iter_errors(completed)):
         return 'schema_refused'
+    if len(source_bytes(prepared)) > 1048576:
+        return 'source_stage_too_large'
+    if len(source_bytes(completed)) > 1048576:
+        return 'source_stage_too_large'
     if prepared['stage'] != 'prepared' or completed['stage'] != 'completed' or completed['prepared_sha256'] != hashlib.sha256(source_bytes(prepared)).hexdigest():
         return 'original_source_refused'
     immutable = (['application_scope', 'original_owner_operation_id', 'owner_operation_id'] if source_is_app else []) + ['storage_instance_id', 'scope_partition', 'event_type', 'event_id', 'idempotency_key', 'producer', 'owner_ref', 'owner_revision', 'subject', 'before', 'captured_at_utc', 'runtime_context']
@@ -490,7 +501,7 @@ def batch_join(parent, children):
     return p['success'] == all(v['event']['payload']['success'] for v in children)
 
 
-def recovery(c, f, case):
+def recovery(c, f, case, schemas=None):
     """Original-owner/receipt adapters are supplied witnesses, not native authentication."""
     if case.get('replay_policy', f['event_record']['replay_policy']) == 'projector_replay_only':
         return {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}
@@ -500,6 +511,19 @@ def recovery(c, f, case):
         return {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}
     if not case['outcome_committed']:
         return {'result': 'fenced', 'external_effects': 0, 'append_count': 0, 'value': None}
+    unavailable = {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}
+    schemas = load('Plans/dt_event_contracts.schema.json')['$defs'] if schemas is None else schemas
+    prepared, completed, event = (f[key] for key in ['prepared_source', 'completed_source', 'event_record'])
+    original = f['recovery_original']  # Frozen owner/Storage adapter observations.
+    if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
+        return unavailable
+    if source_valid(c, prepared, completed, event, schemas,
+                    case.get('resolved_payload'), case.get('payload_ref_verified', False)) != 'accepted':
+        return unavailable
+    if prepared != original['prepared'] or completed != original['completed']:
+        return unavailable
+    if event != original['event']:
+        return unavailable
     if not case['completed_present']:
         # Only finalize from the authenticated original outcome; never rerun it.
         return {'result': 'finalize_original', 'external_effects': 0, 'append_count': 0, 'value': f['completed_source']}
@@ -507,6 +531,11 @@ def recovery(c, f, case):
         return {'result': 'append_original', 'external_effects': 0, 'append_count': 1, 'value': f['event_record']}
     if not case['receipt_custody'] or not case['full_flush']:
         return {'result': 'fenced', 'external_effects': 0, 'append_count': 0, 'value': None}
+    receipt = f['first_append_receipt']
+    if receipt['event_id'] != event['event_id'] or receipt['sequence_id'] != event['sequence_id']:
+        return unavailable
+    if receipt != original['receipt']:
+        return unavailable
     return {'result': 'original', 'external_effects': 0, 'append_count': 0, 'value': {'event': f['event_record'], 'receipt': f['first_append_receipt']}}
 
 
@@ -566,7 +595,7 @@ def historical_read(c, prepared, completed, event, schemas, context):
     if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
         return unavailable
     if source_valid(c, prepared, completed, event, schemas,
-                    context.get('resolved_payload'), context.get('payload_ref_verified', False)) != 'accepted':
+                    context.get('resolved_payload'), context.get('payload_ref_verified', False), historical=True) != 'accepted':
         return unavailable
     return {'result': 'retained', 'value': event, 'external_effects': 0, 'append_count': 0}
 
@@ -596,6 +625,10 @@ def historical_results(c, f, schemas):
     results['verified_payload_ref'] = read(e=ref_event, ctx=ref_context)
     results['unverified_payload_ref'] = read(e=ref_event, ctx=dict(ref_context, payload_ref_verified=False))
     results['changed_payload_ref'] = read(e=ref_event, ctx=dict(ref_context, resolved_payload={}))
+    replay_event = dict(event, replay_policy='projector_replay_only')
+    replay_context = dict(context, authenticated_original={'prepared': prepared, 'completed': completed, 'event': replay_event})
+    results['replay_only_changed_live_state'] = read(e=replay_event, ctx=replay_context)
+    results['replay_only_live_state_unavailable'] = read(e=replay_event, ctx=dict(replay_context, live_before=None))
     # Also cover all Project/application/operation positives with frozen originals.
     results['variants'] = []
     for variant in f['positive_variants']:
@@ -603,6 +636,183 @@ def historical_results(c, f, schemas):
         ctx = dict(context, authenticated_original={'prepared': a, 'completed': b, 'event': e})
         results['variants'].append({'case': variant['case'], **read(a, b, e, ctx)})
     return results
+
+
+def recommit(c, values):
+    """Update observational identity copies after one semantic fixture change."""
+    a, b, e = values
+    if b['scope_partition'] == 'app':
+        subjects = [canonical(b['payload'][k]).decode() if k == 'blocked_sequence' else b['payload'][k]
+                    for k in c['identity_fields']]
+        operation = sha([c['event_type'], b['original_owner_operation_id']] + subjects)
+        a['owner_operation_id'] = b['owner_operation_id'] = operation
+    key, eid = identity(c, b['payload'], b['scope_partition'], b if b['scope_partition'] == 'app' else None)
+    for value in [a, b, e]:
+        value['idempotency_key'] = key; value['event_id'] = eid
+    if c['event_type'] == 'usage.event':
+        b['payload']['usage_event_ref'] = eid
+        if e['payload_ref'] is None:
+            e['payload']['usage_event_ref'] = eid
+    b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+    return a, b, e
+
+
+def source_stage_boundary(c, variant, stage):
+    """Schema-valid exact 1 MiB and 1 MiB+1 closures, with SP-337 pack routing.
+
+    A prepared occurrence witness may precede the completed occurrence. For a
+    completed stage, extend equal RFC 3339 fractional-zero witnesses together;
+    the opaque outcome ref fills the final few codec bytes. No large fixture
+    or arbitrary schema property is stored in the repository.
+    """
+    cache_key = (c['event_type'], stage, sha([variant[k] for k in ['prepared', 'completed', 'event']]))
+    if cache_key in _BOUNDARY_INPUTS:
+        return copy.deepcopy(_BOUNDARY_INPUTS[cache_key])
+    original = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']])
+    field = 'observed_at_utc' if c['event_type'] == 'usage.event' else 'ts'
+    timestamp = original[1]['payload'][field]
+    def extended(count):
+        return timestamp[:-1] + ('' if '.' in timestamp else '.') + '0' * count + 'Z'
+    def build(count):
+        if stage == 'prepared':
+            values = copy.deepcopy(original)
+            values[0]['envelope_context']['occurred_at_utc'] = extended(count)
+        else:
+            def replace(value):
+                if isinstance(value, dict):
+                    return {k: replace(v) for k, v in value.items()}
+                if isinstance(value, list):
+                    return [replace(v) for v in value]
+                return extended(count) if value == timestamp else value
+            values = replace(original)
+        a, b, e = recommit(c, values)
+        e['payload'] = {}; e['payload_ref'] = 'payload:fixture-verified-pack-body'
+        return a, b, e
+    index = 0 if stage == 'prepared' else 1
+    base = build(0); small = len(source_bytes(base[index]))
+    slope = len(source_bytes(build(1)[index])) - small
+    count = (1048576 - small) // slope
+    good = build(count)
+    while len(source_bytes(good[index])) > 1048576:
+        count -= 1; good = build(count)
+    gap = 1048576 - len(source_bytes(good[index]))
+    if stage == 'prepared':
+        good = build(count + gap)
+    else:
+        # MessagePack may change a string header at this boundary. Move the
+        # timestamp back one unit so the filler never straddles that header.
+        good = build(count - 1)
+        prefix = good[1]['owner_outcome_ref']
+        padding = 1048576 - len(source_bytes(good[index]))
+        for _ in range(4):
+            good[1]['owner_outcome_ref'] = prefix + 'x' * padding
+            delta = 1048576 - len(source_bytes(good[index]))
+            if not delta:
+                break
+            padding += delta
+    assert len(source_bytes(good[index])) == 1048576
+    bad = copy.deepcopy(good)
+    if stage == 'prepared':
+        bad[0]['envelope_context']['occurred_at_utc'] = bad[0]['envelope_context']['occurred_at_utc'][:-1] + '0Z'
+        bad[1]['prepared_sha256'] = hashlib.sha256(source_bytes(bad[0])).hexdigest()
+    else:
+        bad[1]['owner_outcome_ref'] += 'x'
+    assert len(source_bytes(bad[index])) == 1048577
+    _BOUNDARY_INPUTS[cache_key] = good, bad  # Inputs only; never validation results.
+    return good, bad
+
+
+def recovery_mutations(c, f):
+    """One-defect custody controls; adapter copies stay coherent when testing a join."""
+    stages = [v for v in f['recovery_cases'] if v['expected']['result'] in ['original', 'append_original', 'finalize_original']]
+    for stage in stages:
+        for field, value in [('event_type', 'foreign.event'), ('event_id', 'evt_dt_forged')]:
+            bad = copy.deepcopy(f); bad['event_record'][field] = value
+            bad['recovery_original']['event'] = copy.deepcopy(bad['event_record'])
+            if field == 'event_id':
+                bad['first_append_receipt']['event_id'] = value
+                bad['recovery_original']['receipt'] = copy.deepcopy(bad['first_append_receipt'])
+            yield stage['case'] + '/' + field, bad, stage['input']
+        bad = copy.deepcopy(f); bad['completed_source']['prepared_sha256'] = 'f' * 64
+        bad['recovery_original']['completed'] = copy.deepcopy(bad['completed_source'])
+        yield stage['case'] + '/prepare_commitment', bad, stage['input']
+        bad = copy.deepcopy(f); bad['completed_source']['owner_outcome_ref'] += '-forged'
+        yield stage['case'] + '/authenticated_owner', bad, stage['input']
+        for field, value in [('sequence_id', f['event_record']['sequence_id'] + 1),
+                             ('observed_at_utc', '2026-11-05T00:00:00Z'),
+                             ('persisted_at_utc', '2026-11-05T00:00:00Z')]:
+            bad = copy.deepcopy(f); bad['event_record'][field] = value
+            # The receipt agrees with the candidate event. Only comparison
+            # with Storage's frozen event is supposed to detect this forgery.
+            bad['first_append_receipt']['sequence_id'] = bad['event_record']['sequence_id']
+            bad['recovery_original']['receipt'] = copy.deepcopy(bad['first_append_receipt'])
+            yield stage['case'] + '/storage_' + field, bad, stage['input']
+        bad = copy.deepcopy(f); bad['event_record']['sequence_id'] = 'invalid-sequence'
+        bad['recovery_original']['event'] = copy.deepcopy(bad['event_record'])
+        bad['first_append_receipt']['sequence_id'] = 'invalid-sequence'
+        bad['recovery_original']['receipt'] = copy.deepcopy(bad['first_append_receipt'])
+        yield stage['case'] + '/envelope_schema', bad, stage['input']
+        if stage['input']['append_issued']:
+            for field, value in [('event_id', 'evt_dt_wrong_receipt'), ('sequence_id', f['first_append_receipt']['sequence_id'] + 1)]:
+                bad = copy.deepcopy(f); bad['first_append_receipt'][field] = value
+                bad['recovery_original']['receipt'] = copy.deepcopy(bad['first_append_receipt'])
+                yield stage['case'] + '/receipt_' + field, bad, stage['input']
+            for field in ['manifest_generation', 'byte_offset', 'durable_end_offset']:
+                bad = copy.deepcopy(f); bad['first_append_receipt'][field] += 1
+                yield stage['case'] + '/first_receipt_' + field, bad, stage['input']
+
+
+def technical_checks(c, f, schemas, check):
+    """Cycle-5 regressions run inside the complete checker, never an acceptance stub."""
+    name = c['event_type']; slug = name.replace('.', '_')
+    variants = [dict(prepared=f['prepared_source'], completed=f['completed_source'], event=f['event_record'])]
+    variants += [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application'][:1]
+    for variant in variants:
+        scope = variant['event']['scope_kind']
+        for stage in ['prepared', 'completed']:
+            good, bad = source_stage_boundary(c, variant, stage)
+            check(source_valid(c, *good, schemas, good[1]['payload'], True) == 'accepted', name + ': exact source-stage boundary ' + scope + '/' + stage)
+            check(source_valid(c, *bad, schemas, bad[1]['payload'], True) == 'source_stage_too_large', name + ': oversized source stage ' + scope + '/' + stage)
+            if scope == 'project':
+                raw = canonical(good[0 if stage == 'prepared' else 1])
+                check(decode_source(raw) == good[0 if stage == 'prepared' else 1], name + ': exact source decode boundary ' + stage)
+                try:
+                    decode_source(canonical(bad[0 if stage == 'prepared' else 1])); refused = False
+                except ValueError:
+                    refused = True
+                check(refused, name + ': oversized source decode ' + stage)
+        # Historical reader accepts every supported original replay policy in
+        # both scopes, including after all live state has disappeared.
+        for policy in ['dedupe_by_idempotency_key', 'projector_replay_only']:
+            a, b, e = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']]); e['replay_policy'] = policy
+            ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
+                       authenticated_original={'prepared': a, 'completed': b, 'event': e})
+            check(historical_read(c, a, b, e, schemas, ctx)['result'] == 'retained', name + ': historical policy ' + scope + '/' + policy)
+    for label, bad, case in recovery_mutations(c, f):
+        check(recovery(c, bad, case, schemas) == {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': recovery custody ' + label)
+    if name.startswith('approval.'):
+        for integer in [1, 9007199254740993, 18446744073709551615]:
+            values = copy.deepcopy([f[k] for k in ['prepared_source', 'completed_source', 'event_record']])
+            def replace_sequence(value, number):
+                if isinstance(value, dict):
+                    return {k: number if k == 'blocked_sequence' else replace_sequence(v, number) for k, v in value.items()}
+                if isinstance(value, list):
+                    return [replace_sequence(v, number) for v in value]
+                return value
+            a, b, e = recommit(c, replace_sequence(values, integer))
+            check(source_valid(c, a, b, e, schemas) == 'accepted', name + ': exact u64 identity ' + str(integer))
+            decoded = [decode_source(canonical(v)) for v in [a, b, e]]
+            check(source_valid(c, *decoded, schemas) == 'accepted', name + ': exact u64 round trip ' + str(integer))
+            if integer == 1:
+                aa, bb, ee = recommit(c, replace_sequence(values, 1.0))
+                check(source_valid(c, aa, bb, ee, schemas) == 'accepted', name + ': schema-valid float integer source')
+                check(identity(c, b['payload']) == identity(c, bb['payload']), name + ': equal integer representations have one identity')
+                seen = {}; result = {'event': e, 'receipt': f['first_append_receipt']}
+                append_model(seen, e['idempotency_key'], producer_semantic_digest(e), result)
+                check(append_model(seen, ee['idempotency_key'], producer_semantic_digest(ee), None) == ('original', result) and len(seen) == 1,
+                      name + ': equal integer retry returns original')
+                check(source_valid(c, *[decode_source(canonical(v)) for v in [aa, bb, ee]], schemas) == 'accepted', name + ': float integer canonical round trip')
+                check(not Draft202012Validator(schemas[slug], format_checker=FormatChecker()).is_valid(replace_sequence(e['payload'], 1.25)), name + ': fractional identity refused')
 
 
 def checker_exit_code(failures):
@@ -683,7 +893,7 @@ def standing_results(c, f, schemas):
     a, b, e = (copy.deepcopy(f[k]) for k in ['prepared_source', 'completed_source', 'event_record'])
     replay = dict(e, replay_policy='projector_replay_only')
     results = {'1': {'writer': source_valid(c, a, b, replay, schemas),
-                     'retry': recovery(c, f, dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only'))}}
+                     'retry': recovery(c, f, dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only'), schemas)}}
     app = [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application']
     app_results = []
     for variant in app:
@@ -794,6 +1004,7 @@ def main():
                 ref = 'Plans/dt_event_contracts.schema.json#/$defs/' + definition
                 check(storage_schemas[ref]['value_schema'] == schemas[definition], name + ': exact Storage schema mirror ' + definition)
         identifier_checks(c, f, schemas, check)
+        technical_checks(c, f, schemas, check)
         standing[name] = standing_results(c, f, schemas)
         for number in map(str, range(1, 11)):
             check(standing[name][number] == f['standing_check_oracles'][number], name + ': standing check ' + number)
@@ -845,7 +1056,7 @@ def main():
         replay = copy.deepcopy(event); replay['replay_policy'] = 'projector_replay_only'
         check(source_valid(c, prep, done, replay, schemas) == 'replay_only_not_appendable', name + ': current writer refuses compatibility-only replay policy')
         retry = dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only')
-        check(recovery(c, f, retry) == {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': retry refuses compatibility-only replay policy')
+        check(recovery(c, f, retry, schemas) == {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': retry refuses compatibility-only replay policy')
         large = oversized_inline(c, f)
         check(validator.is_valid(large[2]['payload']) and event_validator.is_valid(large[2]), name + ': oversized closure retains valid payload/envelope schemas')
         check(source_valid(c, *large, schemas) == 'payload_ref_required', name + ': inline body over SP-337 limit requires payload ref')
@@ -894,7 +1105,7 @@ def main():
                   name + ': changed producer field conflicts ' + case['field'])
         check(append_model(seen, key, 'different', None) == ('idempotency_conflict', None), name + ': semantic conflict')
         for case in f['recovery_cases']:
-            got = recovery(c, f, case['input'])
+            got = recovery(c, f, case['input'], schemas)
             check(got == case['expected'], name + ': ' + case['case'])
         cp = schemas[slug + '_checkpoint']; Draft202012Validator.check_schema(cp); cv = Draft202012Validator(cp, format_checker=FormatChecker())
         check(len(cp['properties']['index_read_token']['required']) == 9, name + ': nine stored token fields')

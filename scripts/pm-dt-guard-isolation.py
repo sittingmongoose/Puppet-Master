@@ -18,12 +18,14 @@ def function_mutants(dt):
     """Discover rejecting predicates rather than maintaining a line-number list."""
     functions = ['source_valid', 'checkpoint_result', 'recovery', 'historical_read',
                  'transition', 'gate_score_join', 'tool_request_join',
-                 'usage_values_valid', 'batch_join', 'denial_emission', 'append_model', 'identity']
+                 'usage_values_valid', 'batch_join', 'denial_emission', 'append_model', 'identity', 'decode_source']
     for name in functions:
         tree = ast.parse(inspect.getsource(getattr(dt, name)))
         function = tree.body[0]
         edits = []
         for node in ast.walk(function):
+            if name == 'decode_source' and isinstance(node, ast.If) and ast.unparse(node.test) == 'len(raw) > 1048576':
+                edits.append((node.test, False))
             if (name == 'identity' and isinstance(node, ast.If) and "operation != application['owner_operation_id']" == ast.unparse(node.test)):
                 edits.append((node.test, False))
             if isinstance(node, ast.If) and node.body and isinstance(node.body[0], ast.Return):
@@ -32,7 +34,7 @@ def function_mutants(dt):
                 refusal = ((isinstance(value, ast.Constant) and (value.value is False or
                             value.value in ['schema_refused', 'original_source_refused', 'scope_refused',
                                             'payload_unavailable', 'join_refused', 'identity_refused',
-                                            'transition_refused', 'payload_ref_required', 'unavailable',
+                                            'transition_refused', 'payload_ref_required', 'source_stage_too_large', 'unavailable',
                                             'cas_lost', 'source_changed', 'coverage_refused', 'no_emission']))
                            or isinstance(value, ast.IfExp) and name == 'source_valid'
                            or isinstance(value, ast.Name) and value.id == 'unavailable'
@@ -184,6 +186,22 @@ def source_corpus(dt, c, f, schemas):
     ref = dict(e, payload={}, payload_ref='payload:fixture-verified-pack-body')
     add('payload_ref/unverified', [a, b, ref], resolved_payload=b['payload'], payload_ref_verified=False)
     add('payload_ref/changed', [a, b, ref], resolved_payload={}, payload_ref_verified=True)
+    variants = [dict(prepared=a, completed=b, event=e)]
+    variants += [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application'][:1]
+    for variant in variants:
+        for stage in ['prepared', 'completed']:
+            good, bad = dt.source_stage_boundary(c, variant, stage)
+            add('source_size/' + variant['event']['scope_kind'] + '/' + stage, bad, good,
+                resolved_payload=good[1]['payload'], payload_ref_verified=True)
+            if variant['event']['scope_kind'] == 'project':
+                raw = dt.canonical(bad[0 if stage == 'prepared' else 1])
+                def decode(raw=raw):
+                    try:
+                        dt.decode_source(raw)
+                        return True
+                    except ValueError:
+                        return False
+                result.append(('source_decode_size/' + stage, decode, True))
     return result
 
 
@@ -230,12 +248,16 @@ def checkpoint_corpus(dt, c, f, schemas):
 
 def other_corpus(dt, c, f, schemas):
     result = []
+    for label, bad, case in dt.recovery_mutations(c, f):
+        result.append(('recovery_custody/' + label,
+                       lambda bad=bad, case=case: dt.recovery(c, bad, case, schemas)['result'],
+                       {'original', 'append_original', 'finalize_original'}))
     for case in f['recovery_cases']:
         if case['expected']['result'] in ['fenced', 'unavailable', 'admission_refused']:
-            result.append(('recovery/' + case['case'], lambda case=case: dt.recovery(c, f, case['input'])['result'],
+            result.append(('recovery/' + case['case'], lambda case=case: dt.recovery(c, f, case['input'], schemas)['result'],
                            {'original', 'append_original', 'finalize_original'}))
     case = dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only')
-    result.append(('recovery/replay_only', lambda case=case: dt.recovery(c, f, case)['result'], {'original', 'append_original', 'finalize_original'}))
+    result.append(('recovery/replay_only', lambda case=case: dt.recovery(c, f, case, schemas)['result'], {'original', 'append_original', 'finalize_original'}))
     a, b, e = closure(dt, f)
     ctx = dict(f['historical_reader_oracle']['context'], authenticated_original={'prepared': a, 'completed': b, 'event': e}, live_before=None)
     for key in ['withdrawn', 'permission', 'deleted', 'source_present', 'owner_proven', 'reader_installed', 'versions_supported']:
@@ -415,6 +437,16 @@ def safe_call(call):
         return {'exception': type(exc).__name__, 'message': str(exc)}
 
 
+def equivalent_path(path):
+    """Name the two deliberate source-payload copies, preserving every rule below."""
+    path = tuple(path)
+    if path[:3] == ('allOf', 0, 'else'):
+        path = path[3:]  # The completed-stage observational schema.
+    if len(path) >= 4 and path[0] == 'properties' and path[2:4] == ('anyOf', 0):
+        path = path[:2] + path[4:]  # The non-null observational schema.
+    return path
+
+
 def schema_table(dt, c, f, schemas):
     """Use the actual validator boundary for missing fields/closedness/grammar."""
     slug = c['event_type'].replace('.', '_')
@@ -474,7 +506,12 @@ def schema_table(dt, c, f, schemas):
         for error in errors:
             for leaf in leaf_errors(error):
                 missing = next((key for key in leaf.schema.get('required', []) if key not in leaf.instance), None) if leaf.validator == 'required' else None
-                guard = (definition, tuple(leaf.absolute_path), leaf.validator, missing)
+                # The same instance path may have unrelated conditional rules.
+                # Only the nullable payload and completed-stage payload are
+                # observational copies of the same schema location.
+                rule_path = equivalent_path(tuple(leaf.absolute_schema_path))
+                rule_value = json.dumps(leaf.schema[leaf.validator], sort_keys=True)
+                guard = (definition, tuple(leaf.absolute_path), leaf.validator, missing, rule_path, rule_value)
                 guards.setdefault(guard, [])
     def matching_rules(schema, instance_path, keyword, data_path=(), rule_path=()):
         if not isinstance(schema, dict):
@@ -495,9 +532,11 @@ def schema_table(dt, c, f, schemas):
                 yield from matching_rules(schema[kind], instance_path, keyword, data_path, rule_path + (kind,))
     rows = []
     covered = set()
-    for definition, instance_path, keyword, missing in guards:
+    for definition, instance_path, keyword, missing, logical_path, rule_value in guards:
         weakened = copy.deepcopy(schemas[definition]); paths = []
         for target, path in matching_rules(weakened, instance_path, keyword):
+            if equivalent_path(path) != logical_path or json.dumps(target[keyword], sort_keys=True) != rule_value:
+                continue
             if keyword == 'required':
                 if missing not in target['required']:
                     continue
@@ -518,7 +557,9 @@ def schema_table(dt, c, f, schemas):
         # Alternatives contain type-dispatch diagnostics as well as the actual
         # failed grammar. Only a rule with an accepting witness is a guard row.
         if flips:
-            rows.append({'guard': definition + '/' + '/'.join(map(str, instance_path)) + '/' + keyword + (('/' + missing) if missing else ''),
+            rows.append({'guard': definition + '/' + '/'.join(map(str, logical_path)) + (('/' + missing) if missing else ''),
+                         'rule_value': json.loads(rule_value),
+                         'duplicate_set': 'equivalent nullable/stage payload schema copies' if len(paths) > 1 else None,
                          'rule_paths': paths, 'negatives_that_flip': flips, 'negatives_that_stay_rejected': stayed})
     # The numeric-gate context is one conditional required rule with three
     # fields, repeated in the nullable/stage payload copies. Remove only that

@@ -5328,15 +5328,36 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "query_preview"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "results_count"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "query_preview"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "results_count"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5353,10 +5374,31 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "url"
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "url"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5374,35 +5416,56 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "final_url"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "status"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "formats_returned"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "page_representation_ref"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "browser_session_id"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "cache_state"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "final_url"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "status"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "formats_returned"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "page_representation_ref"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "browser_session_id"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "cache_state"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5419,20 +5482,41 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "content_ref"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "read_receipt_refs"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "citation_refs"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "content_ref"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "read_receipt_refs"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "citation_refs"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5451,20 +5535,41 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "content_format"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "content_length_hint"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "extract_receipt_ref"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "content_format"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "content_length_hint"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "extract_receipt_ref"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5481,35 +5586,56 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "task_preview"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "research_run_ref"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "sources_used_count"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "subagent_refs"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "closure_state"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "answer_summary_ref"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "task_preview"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "research_run_ref"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "sources_used_count"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "subagent_refs"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "closure_state"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "answer_summary_ref"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5526,30 +5652,51 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "root_url"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "max_pages"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "max_depth"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "dedup_skipped"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "scope_summary"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "root_url"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "max_pages"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "max_depth"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "dedup_skipped"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "scope_summary"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5567,15 +5714,36 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "pages_visited_count"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "pages_returned_count"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "pages_visited_count"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "pages_returned_count"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -5592,25 +5760,46 @@
             },
             {
               "if": {
-                "anyOf": [
+                "allOf": [
                   {
                     "required": [
-                      "nodes_count"
-                    ]
+                      "web_operation"
+                    ],
+                    "properties": {
+                      "web_operation": {
+                        "enum": [
+                          "search",
+                          "read",
+                          "extract",
+                          "research",
+                          "crawl",
+                          "map"
+                        ]
+                      }
+                    }
                   },
                   {
-                    "required": [
-                      "edges_count"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "map_ref"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "sitemap_used"
+                    "anyOf": [
+                      {
+                        "required": [
+                          "nodes_count"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "edges_count"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "map_ref"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "sitemap_used"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -16889,15 +17078,36 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "query_preview"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "results_count"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "query_preview"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "results_count"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -16914,10 +17124,31 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "url"
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "url"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -16935,35 +17166,56 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "final_url"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "status"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "formats_returned"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "page_representation_ref"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "browser_session_id"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "cache_state"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "final_url"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "status"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "formats_returned"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "page_representation_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "browser_session_id"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "cache_state"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -16980,20 +17232,41 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "content_ref"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "read_receipt_refs"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "citation_refs"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "content_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "read_receipt_refs"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "citation_refs"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -17012,20 +17285,41 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "content_format"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "content_length_hint"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "extract_receipt_ref"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "content_format"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "content_length_hint"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "extract_receipt_ref"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -17042,35 +17336,56 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "task_preview"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "research_run_ref"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "sources_used_count"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "subagent_refs"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "closure_state"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "answer_summary_ref"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "task_preview"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "research_run_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "sources_used_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "subagent_refs"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "closure_state"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "answer_summary_ref"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -17087,30 +17402,51 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "root_url"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "max_pages"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "max_depth"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "dedup_skipped"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "scope_summary"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "root_url"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "max_pages"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "max_depth"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "dedup_skipped"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "scope_summary"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -17128,15 +17464,36 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "pages_visited_count"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "pages_returned_count"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "pages_visited_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "pages_returned_count"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -17153,25 +17510,46 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "nodes_count"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "edges_count"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "map_ref"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "sitemap_used"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "nodes_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "edges_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "map_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "sitemap_used"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -18161,15 +18539,36 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "query_preview"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "results_count"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "query_preview"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "results_count"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18186,10 +18585,31 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "url"
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "url"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18207,35 +18627,56 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "final_url"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "status"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "formats_returned"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "page_representation_ref"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "browser_session_id"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "cache_state"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "final_url"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "status"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "formats_returned"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "page_representation_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "browser_session_id"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "cache_state"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18252,20 +18693,41 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "content_ref"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "read_receipt_refs"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "citation_refs"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "content_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "read_receipt_refs"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "citation_refs"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18284,20 +18746,41 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "content_format"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "content_length_hint"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "extract_receipt_ref"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "content_format"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "content_length_hint"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "extract_receipt_ref"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18314,35 +18797,56 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "task_preview"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "research_run_ref"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "sources_used_count"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "subagent_refs"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "closure_state"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "answer_summary_ref"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "task_preview"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "research_run_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "sources_used_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "subagent_refs"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "closure_state"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "answer_summary_ref"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18359,30 +18863,51 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "root_url"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "max_pages"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "max_depth"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "dedup_skipped"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "scope_summary"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "root_url"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "max_pages"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "max_depth"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "dedup_skipped"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "scope_summary"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18400,15 +18925,36 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "pages_visited_count"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "pages_returned_count"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "pages_visited_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "pages_returned_count"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -18425,25 +18971,46 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "nodes_count"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "edges_count"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "map_ref"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "sitemap_used"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "nodes_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "edges_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "map_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "sitemap_used"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -19236,15 +19803,36 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "query_preview"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "results_count"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "query_preview"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "results_count"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19261,10 +19849,31 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "url"
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "url"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19282,35 +19891,56 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "final_url"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "status"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "formats_returned"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "page_representation_ref"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "browser_session_id"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "cache_state"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "final_url"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "status"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "formats_returned"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "page_representation_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "browser_session_id"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "cache_state"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19327,20 +19957,41 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "content_ref"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "read_receipt_refs"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "citation_refs"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "content_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "read_receipt_refs"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "citation_refs"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19359,20 +20010,41 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "content_format"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "content_length_hint"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "extract_receipt_ref"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "content_format"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "content_length_hint"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "extract_receipt_ref"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19389,35 +20061,56 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "task_preview"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "research_run_ref"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "sources_used_count"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "subagent_refs"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "closure_state"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "answer_summary_ref"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "task_preview"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "research_run_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "sources_used_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "subagent_refs"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "closure_state"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "answer_summary_ref"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19434,30 +20127,51 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "root_url"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "max_pages"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "max_depth"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "dedup_skipped"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "scope_summary"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "root_url"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "max_pages"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "max_depth"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "dedup_skipped"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "scope_summary"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19475,15 +20189,36 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "pages_visited_count"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "pages_returned_count"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "pages_visited_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "pages_returned_count"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -19500,25 +20235,46 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "nodes_count"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "edges_count"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "map_ref"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "sitemap_used"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "nodes_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "edges_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "map_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "sitemap_used"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -20238,15 +20994,36 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "query_preview"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "results_count"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "query_preview"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "results_count"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20263,10 +21040,31 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "url"
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
+                                },
+                                {
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "url"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20284,35 +21082,56 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "final_url"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "status"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "formats_returned"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "page_representation_ref"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "browser_session_id"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "cache_state"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "final_url"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "status"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "formats_returned"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "page_representation_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "browser_session_id"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "cache_state"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20329,20 +21148,41 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "content_ref"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "read_receipt_refs"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "citation_refs"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "content_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "read_receipt_refs"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "citation_refs"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20361,20 +21201,41 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "content_format"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "content_length_hint"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "extract_receipt_ref"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "content_format"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "content_length_hint"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "extract_receipt_ref"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20391,35 +21252,56 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "task_preview"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "research_run_ref"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "sources_used_count"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "subagent_refs"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "closure_state"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "answer_summary_ref"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "task_preview"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "research_run_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "sources_used_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "subagent_refs"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "closure_state"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "answer_summary_ref"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20436,30 +21318,51 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "root_url"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "max_pages"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "max_depth"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "dedup_skipped"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "scope_summary"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "root_url"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "max_pages"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "max_depth"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "dedup_skipped"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "scope_summary"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20477,15 +21380,36 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "pages_visited_count"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "pages_returned_count"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "pages_visited_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "pages_returned_count"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -20502,25 +21426,46 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "nodes_count"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "edges_count"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "map_ref"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "sitemap_used"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "nodes_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "edges_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "map_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "sitemap_used"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -28890,15 +29835,36 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "query_preview"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "results_count"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "query_preview"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "results_count"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -28915,10 +29881,31 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "url"
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "url"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -28936,35 +29923,56 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "final_url"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "status"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "formats_returned"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "page_representation_ref"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "browser_session_id"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "cache_state"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "final_url"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "status"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "formats_returned"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "page_representation_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "browser_session_id"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "cache_state"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -28981,20 +29989,41 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "content_ref"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "read_receipt_refs"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "citation_refs"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "content_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "read_receipt_refs"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "citation_refs"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -29013,20 +30042,41 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "content_format"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "content_length_hint"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "extract_receipt_ref"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "content_format"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "content_length_hint"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "extract_receipt_ref"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -29043,35 +30093,56 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "task_preview"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "research_run_ref"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "sources_used_count"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "subagent_refs"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "closure_state"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "answer_summary_ref"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "task_preview"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "research_run_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "sources_used_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "subagent_refs"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "closure_state"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "answer_summary_ref"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -29088,30 +30159,51 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "root_url"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "max_pages"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "max_depth"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "dedup_skipped"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "scope_summary"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "root_url"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "max_pages"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "max_depth"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "dedup_skipped"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "scope_summary"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -29129,15 +30221,36 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "pages_visited_count"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "pages_returned_count"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "pages_visited_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "pages_returned_count"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -29154,25 +30267,46 @@
                     },
                     {
                       "if": {
-                        "anyOf": [
+                        "allOf": [
                           {
                             "required": [
-                              "nodes_count"
-                            ]
+                              "web_operation"
+                            ],
+                            "properties": {
+                              "web_operation": {
+                                "enum": [
+                                  "search",
+                                  "read",
+                                  "extract",
+                                  "research",
+                                  "crawl",
+                                  "map"
+                                ]
+                              }
+                            }
                           },
                           {
-                            "required": [
-                              "edges_count"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "map_ref"
-                            ]
-                          },
-                          {
-                            "required": [
-                              "sitemap_used"
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "nodes_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "edges_count"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "map_ref"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "sitemap_used"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -30288,15 +31422,36 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "query_preview"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "results_count"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "query_preview"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "results_count"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30313,10 +31468,31 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "url"
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "url"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30334,35 +31510,56 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "final_url"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "status"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "formats_returned"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "page_representation_ref"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "browser_session_id"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "cache_state"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "final_url"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "status"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "formats_returned"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "page_representation_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "browser_session_id"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "cache_state"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30379,20 +31576,41 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "content_ref"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "read_receipt_refs"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "citation_refs"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "content_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "read_receipt_refs"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "citation_refs"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30411,20 +31629,41 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "content_format"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "content_length_hint"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "extract_receipt_ref"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "content_format"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "content_length_hint"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "extract_receipt_ref"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30441,35 +31680,56 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "task_preview"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "research_run_ref"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "sources_used_count"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "subagent_refs"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "closure_state"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "answer_summary_ref"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "task_preview"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "research_run_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "sources_used_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "subagent_refs"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "closure_state"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "answer_summary_ref"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30486,30 +31746,51 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "root_url"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "max_pages"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "max_depth"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "dedup_skipped"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "scope_summary"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "root_url"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "max_pages"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "max_depth"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "dedup_skipped"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "scope_summary"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30527,15 +31808,36 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "pages_visited_count"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "pages_returned_count"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "pages_visited_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "pages_returned_count"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -30552,25 +31854,46 @@
                         },
                         {
                           "if": {
-                            "anyOf": [
+                            "allOf": [
                               {
                                 "required": [
-                                  "nodes_count"
-                                ]
+                                  "web_operation"
+                                ],
+                                "properties": {
+                                  "web_operation": {
+                                    "enum": [
+                                      "search",
+                                      "read",
+                                      "extract",
+                                      "research",
+                                      "crawl",
+                                      "map"
+                                    ]
+                                  }
+                                }
                               },
                               {
-                                "required": [
-                                  "edges_count"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "map_ref"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "sitemap_used"
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "nodes_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "edges_count"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "map_ref"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "sitemap_used"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -31363,15 +32686,36 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "query_preview"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "results_count"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "query_preview"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "results_count"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31388,10 +32732,31 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "url"
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "url"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31409,35 +32774,56 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "final_url"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "status"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "formats_returned"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "page_representation_ref"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "browser_session_id"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "cache_state"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "final_url"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "status"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "formats_returned"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "page_representation_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "browser_session_id"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "cache_state"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31454,20 +32840,41 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "content_ref"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "read_receipt_refs"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "citation_refs"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "content_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "read_receipt_refs"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "citation_refs"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31486,20 +32893,41 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "content_format"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "content_length_hint"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "extract_receipt_ref"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "content_format"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "content_length_hint"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "extract_receipt_ref"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31516,35 +32944,56 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "task_preview"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "research_run_ref"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "sources_used_count"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "subagent_refs"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "closure_state"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "answer_summary_ref"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "task_preview"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "research_run_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "sources_used_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "subagent_refs"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "closure_state"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "answer_summary_ref"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31561,30 +33010,51 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "root_url"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "max_pages"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "max_depth"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "dedup_skipped"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "scope_summary"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "root_url"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "max_pages"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "max_depth"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "dedup_skipped"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "scope_summary"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31602,15 +33072,36 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "pages_visited_count"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "pages_returned_count"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "pages_visited_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "pages_returned_count"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -31627,25 +33118,46 @@
                       },
                       {
                         "if": {
-                          "anyOf": [
+                          "allOf": [
                             {
                               "required": [
-                                "nodes_count"
-                              ]
+                                "web_operation"
+                              ],
+                              "properties": {
+                                "web_operation": {
+                                  "enum": [
+                                    "search",
+                                    "read",
+                                    "extract",
+                                    "research",
+                                    "crawl",
+                                    "map"
+                                  ]
+                                }
+                              }
                             },
                             {
-                              "required": [
-                                "edges_count"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "map_ref"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "sitemap_used"
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "nodes_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "edges_count"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "map_ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "sitemap_used"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -32365,15 +33877,36 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "query_preview"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "results_count"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "query_preview"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "results_count"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32390,10 +33923,31 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "url"
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
+                                },
+                                {
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "url"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32411,35 +33965,56 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "final_url"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "status"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "formats_returned"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "page_representation_ref"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "browser_session_id"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "cache_state"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "final_url"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "status"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "formats_returned"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "page_representation_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "browser_session_id"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "cache_state"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32456,20 +34031,41 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "content_ref"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "read_receipt_refs"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "citation_refs"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "content_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "read_receipt_refs"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "citation_refs"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32488,20 +34084,41 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "content_format"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "content_length_hint"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "extract_receipt_ref"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "content_format"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "content_length_hint"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "extract_receipt_ref"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32518,35 +34135,56 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "task_preview"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "research_run_ref"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "sources_used_count"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "subagent_refs"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "closure_state"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "answer_summary_ref"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "task_preview"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "research_run_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "sources_used_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "subagent_refs"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "closure_state"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "answer_summary_ref"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32563,30 +34201,51 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "root_url"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "max_pages"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "max_depth"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "dedup_skipped"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "scope_summary"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "root_url"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "max_pages"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "max_depth"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "dedup_skipped"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "scope_summary"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32604,15 +34263,36 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "pages_visited_count"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "pages_returned_count"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "pages_visited_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "pages_returned_count"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]
@@ -32629,25 +34309,46 @@
                           },
                           {
                             "if": {
-                              "anyOf": [
+                              "allOf": [
                                 {
                                   "required": [
-                                    "nodes_count"
-                                  ]
+                                    "web_operation"
+                                  ],
+                                  "properties": {
+                                    "web_operation": {
+                                      "enum": [
+                                        "search",
+                                        "read",
+                                        "extract",
+                                        "research",
+                                        "crawl",
+                                        "map"
+                                      ]
+                                    }
+                                  }
                                 },
                                 {
-                                  "required": [
-                                    "edges_count"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "map_ref"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "sitemap_used"
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "nodes_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "edges_count"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "map_ref"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "sitemap_used"
+                                      ]
+                                    }
                                   ]
                                 }
                               ]

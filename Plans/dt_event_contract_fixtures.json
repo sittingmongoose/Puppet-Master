@@ -8522,6 +8522,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -8543,6 +8555,178 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_approval_requested_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.requested",
+          "event_id": "evt_dt_acccbf50e92331e6c4509c3fe6ad08ea8814511805f5b6fe23f54bd862738925",
+          "idempotency_key": "dt:c47a859bab3eaaa6c422158f07921a9504bf53eb585b436fc33219c24c9e3ed5",
+          "producer": "HITLBlockedEpisodeOwner.requested",
+          "owner_ref": "owner:approval_requested:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "blocked",
+            "request_kind": "tool",
+            "allowed_action_ids": [
+              "approve",
+              "deny"
+            ],
+            "tool_use_id": "tool-1"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.requested",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 1
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_approval_requested_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.requested",
+          "event_id": "evt_dt_acccbf50e92331e6c4509c3fe6ad08ea8814511805f5b6fe23f54bd862738925",
+          "idempotency_key": "dt:c47a859bab3eaaa6c422158f07921a9504bf53eb585b436fc33219c24c9e3ed5",
+          "producer": "HITLBlockedEpisodeOwner.requested",
+          "owner_ref": "owner:approval_requested:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "blocked",
+            "request_kind": "tool",
+            "allowed_action_ids": [
+              "approve",
+              "deny"
+            ],
+            "tool_use_id": "tool-1"
+          },
+          "prepared_sha256": "f2f76b74ee1a7feec1e2a19849ba72d154c85ad65dec9504972c814e3e04ffaa",
+          "owner_outcome_ref": "outcome:approval_requested:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_requested.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "allowed_action_ids": [
+              "approve",
+              "deny"
+            ],
+            "tool_use_id": "tool-1"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.requested",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 1
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "approval.requested"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_acccbf50e92331e6c4509c3fe6ad08ea8814511805f5b6fe23f54bd862738925",
+          "event_type": "approval.requested",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": "node-1",
+          "attempt_id": null,
+          "actor_ref": "owner:HITLBlockedEpisodeOwner.requested",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 1,
+          "producer_sequence_id": 1,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:c47a859bab3eaaa6c422158f07921a9504bf53eb585b436fc33219c24c9e3ed5",
+          "payload_schema_id": "pm.event_payload.approval_requested.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_requested.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "allowed_action_ids": [
+              "approve",
+              "deny"
+            ],
+            "tool_use_id": "tool-1"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_acccbf50e92331e6c4509c3fe6ad08ea8814511805f5b6fe23f54bd862738925",
+          "sequence_id": 1,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -17109,6 +17293,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -17134,6 +17330,184 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_approval_granted_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.granted",
+          "event_id": "evt_dt_c444012c45b7356f1de4e3285503a686c20de5ff48a686840001f1c59ad0acac",
+          "idempotency_key": "dt:4ca99f8af637da14292d181b2aaee3bdf8e016a2b143d43906304ed92e507e0e",
+          "producer": "HITLBlockedEpisodeOwner.granted",
+          "owner_ref": "owner:approval_granted:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "requested",
+            "request_event_id": "request-1",
+            "request_kind": "tool",
+            "allowed_action_ids": [
+              "approve",
+              "deny"
+            ],
+            "tool_use_id": "tool-1",
+            "human_authenticated": true,
+            "paused": false,
+            "revoked": false
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.granted",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 2
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_approval_granted_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.granted",
+          "event_id": "evt_dt_c444012c45b7356f1de4e3285503a686c20de5ff48a686840001f1c59ad0acac",
+          "idempotency_key": "dt:4ca99f8af637da14292d181b2aaee3bdf8e016a2b143d43906304ed92e507e0e",
+          "producer": "HITLBlockedEpisodeOwner.granted",
+          "owner_ref": "owner:approval_granted:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "requested",
+            "request_event_id": "request-1",
+            "request_kind": "tool",
+            "allowed_action_ids": [
+              "approve",
+              "deny"
+            ],
+            "tool_use_id": "tool-1",
+            "human_authenticated": true,
+            "paused": false,
+            "revoked": false
+          },
+          "prepared_sha256": "703d3bb7dbed4cabb4237489ef9fd8df96b53168be9125e0e70e453f1b888c41",
+          "owner_outcome_ref": "outcome:approval_granted:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_granted.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "approver_identity": "human-1",
+            "allowed_action_id": "approve",
+            "rationale_ref": "fixture-id",
+            "tool_use_id": "tool-1"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.granted",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 2
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "approval.granted"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_c444012c45b7356f1de4e3285503a686c20de5ff48a686840001f1c59ad0acac",
+          "event_type": "approval.granted",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": "node-1",
+          "attempt_id": null,
+          "actor_ref": "owner:HITLBlockedEpisodeOwner.granted",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 2,
+          "producer_sequence_id": 2,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:4ca99f8af637da14292d181b2aaee3bdf8e016a2b143d43906304ed92e507e0e",
+          "payload_schema_id": "pm.event_payload.approval_granted.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_granted.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "approver_identity": "human-1",
+            "allowed_action_id": "approve",
+            "rationale_ref": "fixture-id",
+            "tool_use_id": "tool-1"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_c444012c45b7356f1de4e3285503a686c20de5ff48a686840001f1c59ad0acac",
+          "sequence_id": 2,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -25607,6 +25981,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -25625,6 +26011,166 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_approval_denied_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.denied",
+          "event_id": "evt_dt_953b33707efbf1761acf63584b61f1a14f51269ccafd48556f39cc9ab085bb39",
+          "idempotency_key": "dt:abe9219f39bacff2223ae70578bd8f9e7652d4ce05cc852a6802fce48714972c",
+          "producer": "HITLBlockedEpisodeOwner.denied",
+          "owner_ref": "owner:approval_denied:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "requested",
+            "request_event_id": "request-1",
+            "request_kind": "tool",
+            "tool_use_id": "tool-1"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.denied",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 3
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_approval_denied_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.denied",
+          "event_id": "evt_dt_953b33707efbf1761acf63584b61f1a14f51269ccafd48556f39cc9ab085bb39",
+          "idempotency_key": "dt:abe9219f39bacff2223ae70578bd8f9e7652d4ce05cc852a6802fce48714972c",
+          "producer": "HITLBlockedEpisodeOwner.denied",
+          "owner_ref": "owner:approval_denied:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "requested",
+            "request_event_id": "request-1",
+            "request_kind": "tool",
+            "tool_use_id": "tool-1"
+          },
+          "prepared_sha256": "91fd4ba80e5c98d13edc2ab6ed374189a600d2927c95518cd3f05fa4406d9aad",
+          "owner_outcome_ref": "outcome:approval_denied:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_denied.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "denial_reason": "fixture-id",
+            "tool_use_id": "tool-1"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.denied",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 3
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "approval.denied"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_953b33707efbf1761acf63584b61f1a14f51269ccafd48556f39cc9ab085bb39",
+          "event_type": "approval.denied",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": "node-1",
+          "attempt_id": null,
+          "actor_ref": "owner:HITLBlockedEpisodeOwner.denied",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 3,
+          "producer_sequence_id": 3,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:abe9219f39bacff2223ae70578bd8f9e7652d4ce05cc852a6802fce48714972c",
+          "payload_schema_id": "pm.event_payload.approval_denied.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_denied.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "denial_reason": "fixture-id",
+            "tool_use_id": "tool-1"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_953b33707efbf1761acf63584b61f1a14f51269ccafd48556f39cc9ab085bb39",
+          "sequence_id": 3,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -34102,6 +34648,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -34121,6 +34679,166 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_approval_timeout_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.timeout",
+          "event_id": "evt_dt_10dcf061cd5a6ae4a9dff09eee417ae1e24d80bc4fa1d0e5b267257ef1eaa2a2",
+          "idempotency_key": "dt:39fbcfb491bc52f93a0bed5bb594ec40c4b2c4b15953be82e3581b84f8d482ff",
+          "producer": "HITLBlockedEpisodeOwner.timeout",
+          "owner_ref": "owner:approval_timeout:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "requested",
+            "request_event_id": "request-1",
+            "request_kind": "tool",
+            "tool_use_id": "tool-1",
+            "deadline_at_utc": "2026-11-03T23:59:00Z"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.timeout",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 4
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_approval_timeout_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "approval.timeout",
+          "event_id": "evt_dt_10dcf061cd5a6ae4a9dff09eee417ae1e24d80bc4fa1d0e5b267257ef1eaa2a2",
+          "idempotency_key": "dt:39fbcfb491bc52f93a0bed5bb594ec40c4b2c4b15953be82e3581b84f8d482ff",
+          "producer": "HITLBlockedEpisodeOwner.timeout",
+          "owner_ref": "owner:approval_timeout:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "episode_state": "requested",
+            "request_event_id": "request-1",
+            "request_kind": "tool",
+            "tool_use_id": "tool-1",
+            "deadline_at_utc": "2026-11-03T23:59:00Z"
+          },
+          "prepared_sha256": "6a26e30ac4f0b2d4b53d4194808be76782d7f46ffa3b003286f27971c1d5271a",
+          "owner_outcome_ref": "outcome:approval_timeout:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_timeout.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "tool_use_id": "tool-1"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "attempt_id": null,
+            "actor_ref": "owner:HITLBlockedEpisodeOwner.timeout",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 4
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "approval.timeout"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_10dcf061cd5a6ae4a9dff09eee417ae1e24d80bc4fa1d0e5b267257ef1eaa2a2",
+          "event_type": "approval.timeout",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": "node-1",
+          "attempt_id": null,
+          "actor_ref": "owner:HITLBlockedEpisodeOwner.timeout",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 4,
+          "producer_sequence_id": 4,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:39fbcfb491bc52f93a0bed5bb594ec40c4b2c4b15953be82e3581b84f8d482ff",
+          "payload_schema_id": "pm.event_payload.approval_timeout.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.approval_timeout.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "node_id": "node-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "scope-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "tool_use_id": "tool-1"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_10dcf061cd5a6ae4a9dff09eee417ae1e24d80bc4fa1d0e5b267257ef1eaa2a2",
+          "sequence_id": 4,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -42977,6 +43695,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -42995,6 +43725,160 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_config_migrated_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "config.migrated",
+          "event_id": "evt_dt_84bcff53752177590feae78acaf1030ba7f595dd16db39e9cb3dd0157a883caf",
+          "idempotency_key": "dt:2c3d5eb7f9f87acfa312a258551c251f18c17d4cd3ffab69b6e942e16220cada",
+          "producer": "SettingsMigrationCoordinator.branch_granularity",
+          "owner_ref": "owner:config_migrated:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "source_ref": "legacy-config-1",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "first_load": true,
+            "source_ref": "legacy-config-1",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "legacy_value": "single"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:SettingsMigrationCoordinator.branch_granularity",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 5
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_config_migrated_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "config.migrated",
+          "event_id": "evt_dt_84bcff53752177590feae78acaf1030ba7f595dd16db39e9cb3dd0157a883caf",
+          "idempotency_key": "dt:2c3d5eb7f9f87acfa312a258551c251f18c17d4cd3ffab69b6e942e16220cada",
+          "producer": "SettingsMigrationCoordinator.branch_granularity",
+          "owner_ref": "owner:config_migrated:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "source_ref": "legacy-config-1",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "first_load": true,
+            "source_ref": "legacy-config-1",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "legacy_value": "single"
+          },
+          "prepared_sha256": "9f171a860ad47d0c8b85c60011e6ea515cb3e966deff075021afeb88711400f7",
+          "owner_outcome_ref": "outcome:config_migrated:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.config_migrated.v1",
+            "schema_version": "1.0.0",
+            "source_ref": "legacy-config-1",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "legacy_value": "single",
+            "enum_value": "None",
+            "result_ref": "settings-revision-2",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:SettingsMigrationCoordinator.branch_granularity",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 5
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "committed_settings_ref": "settings-revision-2"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_84bcff53752177590feae78acaf1030ba7f595dd16db39e9cb3dd0157a883caf",
+          "event_type": "config.migrated",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:SettingsMigrationCoordinator.branch_granularity",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 5,
+          "producer_sequence_id": 5,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:2c3d5eb7f9f87acfa312a258551c251f18c17d4cd3ffab69b6e942e16220cada",
+          "payload_schema_id": "pm.event_payload.config_migrated.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.config_migrated.v1",
+            "schema_version": "1.0.0",
+            "source_ref": "legacy-config-1",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "legacy_value": "single",
+            "enum_value": "None",
+            "result_ref": "settings-revision-2",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_84bcff53752177590feae78acaf1030ba7f595dd16db39e9cb3dd0157a883caf",
+          "sequence_id": 5,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -52917,6 +53801,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -52937,6 +53833,163 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_gate_evaluation_started_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "gate.evaluation_started",
+          "event_id": "evt_dt_65c488bc863fb0451daf38faa4d0be91f11c9104db248ccf390b9bc250346bef",
+          "idempotency_key": "dt:6df765c9c4d3fe7580b72550664da378e966e3d6b30b5ec6a1ab8353e5101eee",
+          "producer": "ProgressionGateRunner.evaluation_started",
+          "owner_ref": "owner:gate_evaluation_started:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "evaluation_state": "allocated",
+            "inputs_ref": "gate-inputs-1",
+            "evaluation_id": "evaluation-1",
+            "score_threshold": null,
+            "dispatch_score_ref": null,
+            "dispatch_score_tuple": null
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ProgressionGateRunner.evaluation_started",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 6
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_gate_evaluation_started_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "gate.evaluation_started",
+          "event_id": "evt_dt_65c488bc863fb0451daf38faa4d0be91f11c9104db248ccf390b9bc250346bef",
+          "idempotency_key": "dt:6df765c9c4d3fe7580b72550664da378e966e3d6b30b5ec6a1ab8353e5101eee",
+          "producer": "ProgressionGateRunner.evaluation_started",
+          "owner_ref": "owner:gate_evaluation_started:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "evaluation_state": "allocated",
+            "inputs_ref": "gate-inputs-1",
+            "evaluation_id": "evaluation-1",
+            "score_threshold": null,
+            "dispatch_score_ref": null,
+            "dispatch_score_tuple": null
+          },
+          "prepared_sha256": "4f75f53bc32b85e6fb8bd9f51d2b3150976cbac2ef1329c87beefcf0362af5a6",
+          "owner_outcome_ref": "outcome:gate_evaluation_started:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.gate_evaluation_started.v1",
+            "schema_version": "1.0.0",
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ProgressionGateRunner.evaluation_started",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 6
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "gate.evaluation_started",
+            "score": null
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_65c488bc863fb0451daf38faa4d0be91f11c9104db248ccf390b9bc250346bef",
+          "event_type": "gate.evaluation_started",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:ProgressionGateRunner.evaluation_started",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 6,
+          "producer_sequence_id": 6,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:6df765c9c4d3fe7580b72550664da378e966e3d6b30b5ec6a1ab8353e5101eee",
+          "payload_schema_id": "pm.event_payload.gate_evaluation_started.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.gate_evaluation_started.v1",
+            "schema_version": "1.0.0",
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_65c488bc863fb0451daf38faa4d0be91f11c9104db248ccf390b9bc250346bef",
+          "sequence_id": 6,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -63025,6 +64078,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -63045,6 +64110,176 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_gate_failed_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "gate.failed",
+          "event_id": "evt_dt_989ccf55763fabf1dd3c7f8811ffa9b651813081c9d3b956fbcecbe088bc8bd7",
+          "idempotency_key": "dt:a8b58b5158ed2ad1dd3489927766ef383a15aafb42d2217359ae2c5a753e8cdb",
+          "producer": "ProgressionGateRunner.failed",
+          "owner_ref": "owner:gate_failed:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "evaluation_state": "started",
+            "evaluation_id": "evaluation-1",
+            "gate_id": "GATE-012",
+            "score_threshold": null,
+            "dispatch_score_ref": null,
+            "dispatch_score_tuple": null
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ProgressionGateRunner.failed",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 7
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_gate_failed_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "gate.failed",
+          "event_id": "evt_dt_989ccf55763fabf1dd3c7f8811ffa9b651813081c9d3b956fbcecbe088bc8bd7",
+          "idempotency_key": "dt:a8b58b5158ed2ad1dd3489927766ef383a15aafb42d2217359ae2c5a753e8cdb",
+          "producer": "ProgressionGateRunner.failed",
+          "owner_ref": "owner:gate_failed:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "evaluation_state": "started",
+            "evaluation_id": "evaluation-1",
+            "gate_id": "GATE-012",
+            "score_threshold": null,
+            "dispatch_score_ref": null,
+            "dispatch_score_tuple": null
+          },
+          "prepared_sha256": "99e6780be67bed6468f6fc755b15270c5aef2a79ff05d8b03bb9bbc3390dc45c",
+          "owner_outcome_ref": "outcome:gate_failed:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.gate_failed.v1",
+            "schema_version": "1.0.0",
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "evidence_refs": [
+              "report-1"
+            ],
+            "failure_reason_code": "predicate_failed"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ProgressionGateRunner.failed",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 7
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "report_status": "FAIL",
+            "question_ids": [],
+            "evidence_refs": [
+              "report-1"
+            ],
+            "failure_reason_code": "predicate_failed",
+            "score": null
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_989ccf55763fabf1dd3c7f8811ffa9b651813081c9d3b956fbcecbe088bc8bd7",
+          "event_type": "gate.failed",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:ProgressionGateRunner.failed",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 7,
+          "producer_sequence_id": 7,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:a8b58b5158ed2ad1dd3489927766ef383a15aafb42d2217359ae2c5a753e8cdb",
+          "payload_schema_id": "pm.event_payload.gate_failed.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.gate_failed.v1",
+            "schema_version": "1.0.0",
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "evidence_refs": [
+              "report-1"
+            ],
+            "failure_reason_code": "predicate_failed"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_989ccf55763fabf1dd3c7f8811ffa9b651813081c9d3b956fbcecbe088bc8bd7",
+          "sequence_id": 7,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -73118,6 +74353,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -73138,6 +74385,174 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_gate_passed_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "gate.passed",
+          "event_id": "evt_dt_6736f5138b770e94cd64de7f3175895d34d0e79d878ee07fb16c5c75da84d07f",
+          "idempotency_key": "dt:e77698b97d162809dcecccb37e0bcbe36732c4decb3f55a8b36ddcb5b106a0c4",
+          "producer": "ProgressionGateRunner.passed",
+          "owner_ref": "owner:gate_passed:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "evaluation_state": "started",
+            "evaluation_id": "evaluation-1",
+            "gate_id": "GATE-012",
+            "score_threshold": null,
+            "dispatch_score_ref": null,
+            "dispatch_score_tuple": null
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ProgressionGateRunner.passed",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 8
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_gate_passed_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "gate.passed",
+          "event_id": "evt_dt_6736f5138b770e94cd64de7f3175895d34d0e79d878ee07fb16c5c75da84d07f",
+          "idempotency_key": "dt:e77698b97d162809dcecccb37e0bcbe36732c4decb3f55a8b36ddcb5b106a0c4",
+          "producer": "ProgressionGateRunner.passed",
+          "owner_ref": "owner:gate_passed:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "evaluation_state": "started",
+            "evaluation_id": "evaluation-1",
+            "gate_id": "GATE-012",
+            "score_threshold": null,
+            "dispatch_score_ref": null,
+            "dispatch_score_tuple": null
+          },
+          "prepared_sha256": "e2b3d13fb51750c8c1c75a7836635053c4cf654dc8f8068c345f2df90a941d4e",
+          "owner_outcome_ref": "outcome:gate_passed:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.gate_passed.v1",
+            "schema_version": "1.0.0",
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "evidence_refs": [
+              "report-1"
+            ]
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ProgressionGateRunner.passed",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 8
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "report_status": "PASS",
+            "question_ids": [],
+            "evidence_refs": [
+              "report-1"
+            ],
+            "all_predicates_pass": true,
+            "score": null
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_6736f5138b770e94cd64de7f3175895d34d0e79d878ee07fb16c5c75da84d07f",
+          "event_type": "gate.passed",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:ProgressionGateRunner.passed",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 8,
+          "producer_sequence_id": 8,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:e77698b97d162809dcecccb37e0bcbe36732c4decb3f55a8b36ddcb5b106a0c4",
+          "payload_schema_id": "pm.event_payload.gate_passed.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.gate_passed.v1",
+            "schema_version": "1.0.0",
+            "gate_id": "GATE-012",
+            "run_id": "run-1",
+            "evaluation_id": "evaluation-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "evidence_refs": [
+              "report-1"
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_6736f5138b770e94cd64de7f3175895d34d0e79d878ee07fb16c5c75da84d07f",
+          "sequence_id": 8,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -81491,6 +82906,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -81510,6 +82937,174 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_requirements_clarification_requested_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "requirements.clarification_requested",
+          "event_id": "evt_dt_b26fe70a07bcf4fb7d60211a7828b493a5fe1424787608a86c7efb55342ae0b6",
+          "idempotency_key": "dt:bbf2e79f824c4925c30c695e8cebaa5b285507e7089d12226651c60b0f4efd35",
+          "producer": "RequirementsQualityGate.request_clarification",
+          "owner_ref": "owner:requirements_clarification_requested:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "wizard_id": "wizard-1",
+            "thread_id": "thread-1",
+            "report_ref": "report-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "report_status": "BLOCKED",
+            "report_ref": "report-1",
+            "question_ids": [
+              "q-1",
+              "q-2"
+            ],
+            "wizard_id": "wizard-1",
+            "thread_id": "thread-1"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": "thread-1",
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:RequirementsQualityGate.request_clarification",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 9
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_requirements_clarification_requested_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "requirements.clarification_requested",
+          "event_id": "evt_dt_b26fe70a07bcf4fb7d60211a7828b493a5fe1424787608a86c7efb55342ae0b6",
+          "idempotency_key": "dt:bbf2e79f824c4925c30c695e8cebaa5b285507e7089d12226651c60b0f4efd35",
+          "producer": "RequirementsQualityGate.request_clarification",
+          "owner_ref": "owner:requirements_clarification_requested:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "wizard_id": "wizard-1",
+            "thread_id": "thread-1",
+            "report_ref": "report-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "report_status": "BLOCKED",
+            "report_ref": "report-1",
+            "question_ids": [
+              "q-1",
+              "q-2"
+            ],
+            "wizard_id": "wizard-1",
+            "thread_id": "thread-1"
+          },
+          "prepared_sha256": "2580aed30c8d2a9421e2622921a8c998824fc793f6c2caf4306f9c83191d1b58",
+          "owner_outcome_ref": "outcome:requirements_clarification_requested:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.requirements_clarification_requested.v1",
+            "schema_version": "1.0.0",
+            "wizard_id": "wizard-1",
+            "thread_id": "thread-1",
+            "report_ref": "report-1",
+            "question_ids": [
+              "q-1",
+              "q-2"
+            ],
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": "thread-1",
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:RequirementsQualityGate.request_clarification",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 9
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "requirements.clarification_requested"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_b26fe70a07bcf4fb7d60211a7828b493a5fe1424787608a86c7efb55342ae0b6",
+          "event_type": "requirements.clarification_requested",
+          "project_id": "project-1",
+          "thread_id": "thread-1",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:RequirementsQualityGate.request_clarification",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 9,
+          "producer_sequence_id": 9,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:bbf2e79f824c4925c30c695e8cebaa5b285507e7089d12226651c60b0f4efd35",
+          "payload_schema_id": "pm.event_payload.requirements_clarification_requested.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.requirements_clarification_requested.v1",
+            "schema_version": "1.0.0",
+            "wizard_id": "wizard-1",
+            "thread_id": "thread-1",
+            "report_ref": "report-1",
+            "question_ids": [
+              "q-1",
+              "q-2"
+            ],
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_b26fe70a07bcf4fb7d60211a7828b493a5fe1424787608a86c7efb55342ae0b6",
+          "sequence_id": 9,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -90080,6 +91675,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -90100,6 +91707,166 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_run_background_enqueued_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "run.background_enqueued",
+          "event_id": "evt_dt_1eae005113e16bbe5514442bb85929677e586570f2cec4d93f66e2ce40a962d5",
+          "idempotency_key": "dt:7af878e6162760a48f2a70875da04c43e626745cb1aa36a212ffcd4c1b116d0a",
+          "producer": "BackgroundRunQueue.enqueue",
+          "owner_ref": "owner:run_background_enqueued:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "enqueue_id": "enqueue-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "queue_state": "committed",
+            "enqueue_id": "enqueue-1",
+            "queue_record_ref": "queue-1",
+            "scope_ref": "scope-1",
+            "host_ref": "host-1",
+            "root_ref": "root-1"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:BackgroundRunQueue.enqueue",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 10
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_run_background_enqueued_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "run.background_enqueued",
+          "event_id": "evt_dt_1eae005113e16bbe5514442bb85929677e586570f2cec4d93f66e2ce40a962d5",
+          "idempotency_key": "dt:7af878e6162760a48f2a70875da04c43e626745cb1aa36a212ffcd4c1b116d0a",
+          "producer": "BackgroundRunQueue.enqueue",
+          "owner_ref": "owner:run_background_enqueued:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "enqueue_id": "enqueue-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "queue_state": "committed",
+            "enqueue_id": "enqueue-1",
+            "queue_record_ref": "queue-1",
+            "scope_ref": "scope-1",
+            "host_ref": "host-1",
+            "root_ref": "root-1"
+          },
+          "prepared_sha256": "8f036496c872f5872a8f47dab878c862c2ce1b3c1e0fc166140a06a781a78852",
+          "owner_outcome_ref": "outcome:run_background_enqueued:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.run_background_enqueued.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "enqueue_id": "enqueue-1",
+            "scope_ref": "scope-1",
+            "host_ref": "host-1",
+            "root_ref": "root-1",
+            "queue_record_ref": "queue-1",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:BackgroundRunQueue.enqueue",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 10
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "run.background_enqueued"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_1eae005113e16bbe5514442bb85929677e586570f2cec4d93f66e2ce40a962d5",
+          "event_type": "run.background_enqueued",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:BackgroundRunQueue.enqueue",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 10,
+          "producer_sequence_id": 10,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:7af878e6162760a48f2a70875da04c43e626745cb1aa36a212ffcd4c1b116d0a",
+          "payload_schema_id": "pm.event_payload.run_background_enqueued.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.run_background_enqueued.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "enqueue_id": "enqueue-1",
+            "scope_ref": "scope-1",
+            "host_ref": "host-1",
+            "root_ref": "root-1",
+            "queue_record_ref": "queue-1",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_1eae005113e16bbe5514442bb85929677e586570f2cec4d93f66e2ce40a962d5",
+          "sequence_id": 10,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -102270,6 +104037,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -102299,6 +104078,232 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_tool_denied_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.denied",
+          "event_id": "evt_dt_a6edf52de60bb0552f2ff3c394c7e8d5c151c261653188a4d1b38789fbdd8d49",
+          "idempotency_key": "dt:f923077e884b3431bf1cddd7c82c0ce5afdfeb5274131df265f015b4f344aae7",
+          "producer": "ToolDispatcher.denied",
+          "owner_ref": "owner:tool_denied:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "attempt_id": "attempt-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "policy_decision": "deny",
+            "dispatch_state": "not_dispatched",
+            "denial_reason_code": "policy_denied",
+            "blocked_reason_code": "permission_denied",
+            "failure_class": null,
+            "allowed_action_ids": [
+              "open_details",
+              "abort_run"
+            ],
+            "headless_denied": false,
+            "permission_snapshot_id": "permission-snapshot-1",
+            "executed_at_all": false,
+            "blocked_sequence": 1,
+            "approval_scope_key": "fixture-id",
+            "denial_origin": "policy"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": "attempt-1",
+            "actor_ref": "owner:ToolDispatcher.denied",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 11
+          },
+          "runtime_context": {
+            "lane_id": null,
+            "package_id": null,
+            "execution_role": null,
+            "effective_account_id": null,
+            "operational_identity": null,
+            "provider_attempt_ref": null,
+            "actor_kind": null,
+            "actor_ref": null,
+            "requested_account_id": null,
+            "requested_account_binding": null
+          },
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_tool_denied_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.denied",
+          "event_id": "evt_dt_a6edf52de60bb0552f2ff3c394c7e8d5c151c261653188a4d1b38789fbdd8d49",
+          "idempotency_key": "dt:f923077e884b3431bf1cddd7c82c0ce5afdfeb5274131df265f015b4f344aae7",
+          "producer": "ToolDispatcher.denied",
+          "owner_ref": "owner:tool_denied:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "attempt_id": "attempt-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "policy_decision": "deny",
+            "dispatch_state": "not_dispatched",
+            "denial_reason_code": "policy_denied",
+            "blocked_reason_code": "permission_denied",
+            "failure_class": null,
+            "allowed_action_ids": [
+              "open_details",
+              "abort_run"
+            ],
+            "headless_denied": false,
+            "permission_snapshot_id": "permission-snapshot-1",
+            "executed_at_all": false,
+            "blocked_sequence": 1,
+            "approval_scope_key": "fixture-id",
+            "denial_origin": "policy"
+          },
+          "prepared_sha256": "1b8b38ff2fff78fea3aa431c54ac4f78f95abbbc0290dd9e81c52819d0e2065f",
+          "owner_outcome_ref": "outcome:tool_denied:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_denied.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "attempt_id": "attempt-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "fixture-id",
+            "action_available": true,
+            "escalation_level": "info",
+            "denial_reason_code": "policy_denied",
+            "ts": "2026-11-04T00:00:00Z",
+            "blocked_reason_code": "permission_denied",
+            "failure_class": null,
+            "allowed_action_ids": [
+              "open_details",
+              "abort_run"
+            ],
+            "headless_denied": false,
+            "permission_snapshot_id": "permission-snapshot-1",
+            "executed_at_all": false
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": "attempt-1",
+            "actor_ref": "owner:ToolDispatcher.denied",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 11
+          },
+          "runtime_context": {
+            "lane_id": null,
+            "package_id": null,
+            "execution_role": null,
+            "effective_account_id": null,
+            "operational_identity": null,
+            "provider_attempt_ref": null,
+            "actor_kind": null,
+            "actor_ref": null,
+            "requested_account_id": null,
+            "requested_account_binding": null
+          },
+          "owner_result": {
+            "event_type": "tool.denied"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_a6edf52de60bb0552f2ff3c394c7e8d5c151c261653188a4d1b38789fbdd8d49",
+          "event_type": "tool.denied",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": "attempt-1",
+          "actor_ref": "owner:ToolDispatcher.denied",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 11,
+          "producer_sequence_id": 11,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:f923077e884b3431bf1cddd7c82c0ce5afdfeb5274131df265f015b4f344aae7",
+          "payload_schema_id": "pm.event_payload.tool_denied.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_denied.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "attempt_id": "attempt-1",
+            "blocked_sequence": 1,
+            "approval_scope_key": "fixture-id",
+            "action_available": true,
+            "escalation_level": "info",
+            "denial_reason_code": "policy_denied",
+            "ts": "2026-11-04T00:00:00Z",
+            "blocked_reason_code": "permission_denied",
+            "failure_class": null,
+            "allowed_action_ids": [
+              "open_details",
+              "abort_run"
+            ],
+            "headless_denied": false,
+            "permission_snapshot_id": "permission-snapshot-1",
+            "executed_at_all": false
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_a6edf52de60bb0552f2ff3c394c7e8d5c151c261653188a4d1b38789fbdd8d49",
+          "sequence_id": 11,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -111300,6 +113305,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -111316,6 +113333,160 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_tool_execution_completed_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.execution_completed",
+          "event_id": "evt_dt_b598a6bd9a86a09292e8966d119fc5638f520721d0c30e86fc89e8541b4ca4a3",
+          "idempotency_key": "dt:b8055ac130923842401b9f9781e99ec0616759578c36eef501f20b0ea6ddbe77",
+          "producer": "ToolRunner.execution_completed",
+          "owner_ref": "owner:tool_execution_completed:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "execution_state": "started",
+            "start_event_id": "start-1"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ToolRunner.execution_completed",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 12
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_tool_execution_completed_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.execution_completed",
+          "event_id": "evt_dt_b598a6bd9a86a09292e8966d119fc5638f520721d0c30e86fc89e8541b4ca4a3",
+          "idempotency_key": "dt:b8055ac130923842401b9f9781e99ec0616759578c36eef501f20b0ea6ddbe77",
+          "producer": "ToolRunner.execution_completed",
+          "owner_ref": "owner:tool_execution_completed:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "execution_state": "started",
+            "start_event_id": "start-1"
+          },
+          "prepared_sha256": "04aacf7d36cb9c83a826505078e11457ba6bdb3bb7509f585b6ebf39255b76d3",
+          "owner_outcome_ref": "outcome:tool_execution_completed:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_execution_completed.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "ts": "2026-11-04T00:00:00Z",
+            "outcome": "success",
+            "result_ref": "result-1",
+            "duration_ms": 42
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ToolRunner.execution_completed",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 12
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "result_ref": "result-1",
+            "outcome": "success",
+            "duration_ms": 42
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_b598a6bd9a86a09292e8966d119fc5638f520721d0c30e86fc89e8541b4ca4a3",
+          "event_type": "tool.execution_completed",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:ToolRunner.execution_completed",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 12,
+          "producer_sequence_id": 12,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:b8055ac130923842401b9f9781e99ec0616759578c36eef501f20b0ea6ddbe77",
+          "payload_schema_id": "pm.event_payload.tool_execution_completed.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_execution_completed.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "ts": "2026-11-04T00:00:00Z",
+            "outcome": "success",
+            "result_ref": "result-1",
+            "duration_ms": 42
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_b598a6bd9a86a09292e8966d119fc5638f520721d0c30e86fc89e8541b4ca4a3",
+          "sequence_id": 12,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -119855,6 +122026,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -119873,6 +122056,156 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_tool_execution_started_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.execution_started",
+          "event_id": "evt_dt_826dee25ad1106ac74c0e2481f728d0054bb19050adb38322ad79cf56b68450d",
+          "idempotency_key": "dt:ba84ed6e2fc66dbea2c3089151f5edaf4ac611f6404a3d514287bd555748ea32",
+          "producer": "ToolRunner.execution_started",
+          "owner_ref": "owner:tool_execution_started:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "execution_state": "admitted",
+            "policy_decision": "allow",
+            "schema_valid": true,
+            "hooks_pass": true
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ToolRunner.execution_started",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 13
+          },
+          "runtime_context": {},
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_tool_execution_started_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.execution_started",
+          "event_id": "evt_dt_826dee25ad1106ac74c0e2481f728d0054bb19050adb38322ad79cf56b68450d",
+          "idempotency_key": "dt:ba84ed6e2fc66dbea2c3089151f5edaf4ac611f6404a3d514287bd555748ea32",
+          "producer": "ToolRunner.execution_started",
+          "owner_ref": "owner:tool_execution_started:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "execution_state": "admitted",
+            "policy_decision": "allow",
+            "schema_valid": true,
+            "hooks_pass": true
+          },
+          "prepared_sha256": "337879e72add3ef2dd0ef27b82b22c3adb9138d6df8228771ee45748b8c78263",
+          "owner_outcome_ref": "outcome:tool_execution_started:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_execution_started.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:ToolRunner.execution_started",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 13
+          },
+          "runtime_context": {},
+          "owner_result": {
+            "event_type": "tool.execution_started"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_826dee25ad1106ac74c0e2481f728d0054bb19050adb38322ad79cf56b68450d",
+          "event_type": "tool.execution_started",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:ToolRunner.execution_started",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 13,
+          "producer_sequence_id": 13,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:ba84ed6e2fc66dbea2c3089151f5edaf4ac611f6404a3d514287bd555748ea32",
+          "payload_schema_id": "pm.event_payload.tool_execution_started.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_execution_started.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "ts": "2026-11-04T00:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_826dee25ad1106ac74c0e2481f728d0054bb19050adb38322ad79cf56b68450d",
+          "sequence_id": 13,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -134128,6 +136461,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -134144,6 +136489,188 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_tool_invoked_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.invoked",
+          "event_id": "evt_dt_d0df2cec42bd53a294c4766238363b3e44365c3ef1c646985b8be015bc5d1818",
+          "idempotency_key": "dt:d55a77ad4280a78f15c8da7eccd3746ddfbce8bd9b8ce43f2830bdd389c5f2aa",
+          "producer": "ToolDispatcher.completed_invocation",
+          "owner_ref": "owner:tool_invoked:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "attempt_id": "attempt-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "dispatch_state": "started",
+            "web_request": null
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": "attempt-1",
+            "actor_ref": "owner:ToolDispatcher.completed_invocation",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 14
+          },
+          "runtime_context": {
+            "lane_id": null,
+            "package_id": null,
+            "execution_role": null,
+            "effective_account_id": null,
+            "operational_identity": null,
+            "provider_attempt_ref": null,
+            "actor_kind": null,
+            "actor_ref": null,
+            "requested_account_id": null,
+            "requested_account_binding": null
+          },
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_tool_invoked_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "tool.invoked",
+          "event_id": "evt_dt_d0df2cec42bd53a294c4766238363b3e44365c3ef1c646985b8be015bc5d1818",
+          "idempotency_key": "dt:d55a77ad4280a78f15c8da7eccd3746ddfbce8bd9b8ce43f2830bdd389c5f2aa",
+          "producer": "ToolDispatcher.completed_invocation",
+          "owner_ref": "owner:tool_invoked:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "attempt_id": "attempt-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "dispatch_state": "started",
+            "web_request": null
+          },
+          "prepared_sha256": "a2a587b2bdc1dec7b2c8f7dc48daede5f878f4dccdd21778f7f1fdaeca80da65",
+          "owner_outcome_ref": "outcome:tool_invoked:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_invoked.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "attempt_id": "attempt-1",
+            "success": true,
+            "latency_ms": 42,
+            "ts": "2026-11-04T00:00:00Z",
+            "index_used": false
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": "attempt-1",
+            "actor_ref": "owner:ToolDispatcher.completed_invocation",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 14
+          },
+          "runtime_context": {
+            "lane_id": null,
+            "package_id": null,
+            "execution_role": null,
+            "effective_account_id": null,
+            "operational_identity": null,
+            "provider_attempt_ref": null,
+            "actor_kind": null,
+            "actor_ref": null,
+            "requested_account_id": null,
+            "requested_account_binding": null
+          },
+          "owner_result": {
+            "success": true,
+            "latency_ms": 42,
+            "index_used": false,
+            "dispatch_state": "attempted_completed",
+            "meta": null
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_d0df2cec42bd53a294c4766238363b3e44365c3ef1c646985b8be015bc5d1818",
+          "event_type": "tool.invoked",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": "attempt-1",
+          "actor_ref": "owner:ToolDispatcher.completed_invocation",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 14,
+          "producer_sequence_id": 14,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:d55a77ad4280a78f15c8da7eccd3746ddfbce8bd9b8ce43f2830bdd389c5f2aa",
+          "payload_schema_id": "pm.event_payload.tool_invoked.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.tool_invoked.v1",
+            "schema_version": "1.0.0",
+            "run_id": "run-1",
+            "tool_use_id": "tool-use-1",
+            "tool_name": "fixture-id",
+            "attempt_id": "attempt-1",
+            "success": true,
+            "latency_ms": 42,
+            "ts": "2026-11-04T00:00:00Z",
+            "index_used": false
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_d0df2cec42bd53a294c4766238363b3e44365c3ef1c646985b8be015bc5d1818",
+          "sequence_id": 14,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -155509,6 +158036,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -155536,6 +158075,332 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_usage_event_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "usage.event",
+          "event_id": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+          "idempotency_key": "dt:24d2c60d532e3d65626b8f6734e2f09434ae31bdf0ebe35f714d42a4365a4ecb",
+          "producer": "UsageTracker.normalize_finish_step",
+          "owner_ref": "owner:usage_event:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "usage_record_id": "usage-1",
+            "dedupe_key": "provider-response-1",
+            "settlement_status": "observed",
+            "observed_at_utc": "2026-11-04T00:00:00Z"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "observation_ref": "provider-observation-1",
+            "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "usage_record_id": "usage-1",
+            "dedupe_key": "provider-response-1",
+            "provider_attempt_ref": "provider-attempt-1",
+            "parent_usage_record_id": null,
+            "prior_settlement_status": null,
+            "prior_usage_event_ref": null,
+            "account_id": "account-1",
+            "billing_entity_id": "billing-1",
+            "provider_account_ref": "provider-account-1",
+            "accepted_partial": false,
+            "parent_run_id": null
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": "attempt-1",
+            "actor_ref": "owner:UsageTracker.normalize_finish_step",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 15
+          },
+          "runtime_context": {
+            "provider_attempt_ref": "provider-attempt-1",
+            "parent_run_id": null
+          },
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_usage_event_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "usage.event",
+          "event_id": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+          "idempotency_key": "dt:24d2c60d532e3d65626b8f6734e2f09434ae31bdf0ebe35f714d42a4365a4ecb",
+          "producer": "UsageTracker.normalize_finish_step",
+          "owner_ref": "owner:usage_event:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "usage_record_id": "usage-1",
+            "dedupe_key": "provider-response-1",
+            "settlement_status": "observed",
+            "observed_at_utc": "2026-11-04T00:00:00Z"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "observation_ref": "provider-observation-1",
+            "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "usage_record_id": "usage-1",
+            "dedupe_key": "provider-response-1",
+            "provider_attempt_ref": "provider-attempt-1",
+            "parent_usage_record_id": null,
+            "prior_settlement_status": null,
+            "prior_usage_event_ref": null,
+            "account_id": "account-1",
+            "billing_entity_id": "billing-1",
+            "provider_account_ref": "provider-account-1",
+            "accepted_partial": false,
+            "parent_run_id": null
+          },
+          "prepared_sha256": "9154055273ae5159270471d60d62392bd06aacb727d57247519a69dcad7abe8a",
+          "owner_outcome_ref": "outcome:usage_event:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.usage_event.v1",
+            "schema_version": "1.0.0",
+            "usage_record_id": "usage-1",
+            "usage_event_ref": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+            "dedupe_key": "provider-response-1",
+            "run_id": "run-1",
+            "attempt_id": "attempt-1",
+            "provider_id": "provider-1",
+            "provider_route_kind": "fixture-id",
+            "model_id": "model-1",
+            "source_class": "provider_reported",
+            "source_confidence": "high",
+            "source_authority": "provider-response",
+            "settlement_status": "observed",
+            "observed_at_utc": "2026-11-04T00:00:00Z",
+            "redaction_status": "redacted",
+            "provider_payload_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "counting_semantics": {
+              "cache_is_input_subset": true,
+              "reasoning_is_output_subset": true
+            },
+            "input_total": 100,
+            "input_non_cached": 60,
+            "cache_read": 30,
+            "cache_write": 10,
+            "cache_write_1h": 0,
+            "output_total": 50,
+            "output_visible": 40,
+            "reasoning": 10,
+            "provider_total": 150,
+            "context_estimate": null,
+            "cost_microdollars": 1000,
+            "provider_attempt_ref": "provider-attempt-1",
+            "account_id": "account-1",
+            "billing_entity_id": "billing-1",
+            "provider_account_ref": "provider-account-1",
+            "raw_payload_ref": "provider-observation-1",
+            "display_cost_policy": "show",
+            "cost": {
+              "cost_status": "provider_reported",
+              "cost_microdollars": 1000,
+              "cost_minor_units": {
+                "amount": 1,
+                "currency": "USD",
+                "minor_unit_exponent": 2
+              },
+              "currency": "USD",
+              "pricing_snapshot_id": "price-1",
+              "pricing_source": "provider",
+              "pricing_effective_at": "2026-11-01T00:00:00Z",
+              "pricing_version": "price-v1",
+              "bucket_costs_microdollars": {
+                "input_non_cached": 600,
+                "cache_read": 0,
+                "cache_write": 0,
+                "cache_write_1h": 0,
+                "output_visible": 300,
+                "reasoning": 100
+              },
+              "custom_provider_price_row_ref": null
+            },
+            "quota": {
+              "window_kind": "rolling",
+              "window_scope": "account-1",
+              "quota_status": "reported",
+              "evidence_source": "provider_api",
+              "reset_at": null,
+              "cooldown_until": null,
+              "quota_remaining": 80,
+              "quota_used": 20,
+              "quota_limit": 100,
+              "credits_remaining": null,
+              "credits_status": "not_exposed"
+            },
+            "currency": "USD",
+            "cost_status": "provider_reported",
+            "pricing_snapshot_id": "price-1",
+            "pricing_source": "provider",
+            "pricing_effective_at": "2026-11-01T00:00:00Z",
+            "pricing_version": "price-v1"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": "attempt-1",
+            "actor_ref": "owner:UsageTracker.normalize_finish_step",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 15
+          },
+          "runtime_context": {
+            "provider_attempt_ref": "provider-attempt-1",
+            "parent_run_id": null
+          },
+          "owner_result": {
+            "event_type": "usage.event"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+          "event_type": "usage.event",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": "attempt-1",
+          "actor_ref": "owner:UsageTracker.normalize_finish_step",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 15,
+          "producer_sequence_id": 15,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:24d2c60d532e3d65626b8f6734e2f09434ae31bdf0ebe35f714d42a4365a4ecb",
+          "payload_schema_id": "pm.event_payload.usage_event.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.usage_event.v1",
+            "schema_version": "1.0.0",
+            "usage_record_id": "usage-1",
+            "usage_event_ref": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+            "dedupe_key": "provider-response-1",
+            "run_id": "run-1",
+            "attempt_id": "attempt-1",
+            "provider_id": "provider-1",
+            "provider_route_kind": "fixture-id",
+            "model_id": "model-1",
+            "source_class": "provider_reported",
+            "source_confidence": "high",
+            "source_authority": "provider-response",
+            "settlement_status": "observed",
+            "observed_at_utc": "2026-11-04T00:00:00Z",
+            "redaction_status": "redacted",
+            "provider_payload_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "counting_semantics": {
+              "cache_is_input_subset": true,
+              "reasoning_is_output_subset": true
+            },
+            "input_total": 100,
+            "input_non_cached": 60,
+            "cache_read": 30,
+            "cache_write": 10,
+            "cache_write_1h": 0,
+            "output_total": 50,
+            "output_visible": 40,
+            "reasoning": 10,
+            "provider_total": 150,
+            "context_estimate": null,
+            "cost_microdollars": 1000,
+            "provider_attempt_ref": "provider-attempt-1",
+            "account_id": "account-1",
+            "billing_entity_id": "billing-1",
+            "provider_account_ref": "provider-account-1",
+            "raw_payload_ref": "provider-observation-1",
+            "display_cost_policy": "show",
+            "cost": {
+              "cost_status": "provider_reported",
+              "cost_microdollars": 1000,
+              "cost_minor_units": {
+                "amount": 1,
+                "currency": "USD",
+                "minor_unit_exponent": 2
+              },
+              "currency": "USD",
+              "pricing_snapshot_id": "price-1",
+              "pricing_source": "provider",
+              "pricing_effective_at": "2026-11-01T00:00:00Z",
+              "pricing_version": "price-v1",
+              "bucket_costs_microdollars": {
+                "input_non_cached": 600,
+                "cache_read": 0,
+                "cache_write": 0,
+                "cache_write_1h": 0,
+                "output_visible": 300,
+                "reasoning": 100
+              },
+              "custom_provider_price_row_ref": null
+            },
+            "quota": {
+              "window_kind": "rolling",
+              "window_scope": "account-1",
+              "quota_status": "reported",
+              "evidence_source": "provider_api",
+              "reset_at": null,
+              "cooldown_until": null,
+              "quota_remaining": 80,
+              "quota_used": 20,
+              "quota_limit": 100,
+              "credits_remaining": null,
+              "credits_status": "not_exposed"
+            },
+            "currency": "USD",
+            "cost_status": "provider_reported",
+            "pricing_snapshot_id": "price-1",
+            "pricing_source": "provider",
+            "pricing_effective_at": "2026-11-01T00:00:00Z",
+            "pricing_version": "price-v1"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+          "sequence_id": 15,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -163900,6 +166765,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -163922,6 +166799,180 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_worktree_created_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "worktree.created",
+          "event_id": "evt_dt_071dc3981eef51da1730171256e6803ecf6f43f56459b43c8753c6865aa0ff83",
+          "idempotency_key": "dt:717a299874fa0455e320b557e521e359a5d57a3f9877da6f767e9c57de82e286",
+          "producer": "WorktreeLifecycleOwner.created",
+          "owner_ref": "owner:worktree_created:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "project_id": "project-1",
+            "worktree_id": "worktree-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "allocation_state": "allocated",
+            "allocation_ref": "allocation-1",
+            "branch_name": "work/fixture",
+            "worktree_path": "worktrees/fixture",
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:WorktreeLifecycleOwner.created",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 16
+          },
+          "runtime_context": {
+            "lane_id": "lane-1",
+            "package_id": "package-1"
+          },
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_worktree_created_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "worktree.created",
+          "event_id": "evt_dt_071dc3981eef51da1730171256e6803ecf6f43f56459b43c8753c6865aa0ff83",
+          "idempotency_key": "dt:717a299874fa0455e320b557e521e359a5d57a3f9877da6f767e9c57de82e286",
+          "producer": "WorktreeLifecycleOwner.created",
+          "owner_ref": "owner:worktree_created:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "project_id": "project-1",
+            "worktree_id": "worktree-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "allocation_state": "allocated",
+            "allocation_ref": "allocation-1",
+            "branch_name": "work/fixture",
+            "worktree_path": "worktrees/fixture",
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1"
+          },
+          "prepared_sha256": "5037c45291e195d17cceda6f677acf78c0a1672ec64d7be6edf26807d16aa274",
+          "owner_outcome_ref": "outcome:worktree_created:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.worktree_created.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project-1",
+            "worktree_id": "worktree-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "branch_name": "work/fixture",
+            "worktree_path": "worktrees/fixture",
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1"
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:WorktreeLifecycleOwner.created",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 16
+          },
+          "runtime_context": {
+            "lane_id": "lane-1",
+            "package_id": "package-1"
+          },
+          "owner_result": {
+            "allocation_state": "created"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_071dc3981eef51da1730171256e6803ecf6f43f56459b43c8753c6865aa0ff83",
+          "event_type": "worktree.created",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:WorktreeLifecycleOwner.created",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 16,
+          "producer_sequence_id": 16,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:717a299874fa0455e320b557e521e359a5d57a3f9877da6f767e9c57de82e286",
+          "payload_schema_id": "pm.event_payload.worktree_created.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.worktree_created.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project-1",
+            "worktree_id": "worktree-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "branch_name": "work/fixture",
+            "worktree_path": "worktrees/fixture",
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_071dc3981eef51da1730171256e6803ecf6f43f56459b43c8753c6865aa0ff83",
+          "sequence_id": 16,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     },
@@ -172378,6 +175429,18 @@
             "exact_value": true,
             "external_effects": 0,
             "append_count": 0
+          },
+          "replay_only_changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "replay_only_live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
           }
         }
       },
@@ -172407,6 +175470,196 @@
           "source_present": true,
           "owner_proven": true,
           "versions_supported": true
+        }
+      },
+      "recovery_original": {
+        "prepared": {
+          "schema_id": "pm.storage_value.dt_worktree_deleted_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "prepared",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "worktree.deleted",
+          "event_id": "evt_dt_fa0db3b9363b317e24a504ebd9e3c12e35111c5c9735c82767460ad2ab46ee31",
+          "idempotency_key": "dt:06f303fb03233fa15383027790b9fd5461bb391ca07e99851325772d65955eab",
+          "producer": "WorktreeLifecycleOwner.deleted",
+          "owner_ref": "owner:worktree_deleted:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "project_id": "project-1",
+            "worktree_id": "worktree-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "allocation_state": "cleanup_eligible",
+            "allocation_ref": "allocation-1",
+            "elapsed_grace_ms": 30000,
+            "active_lock_refs": [],
+            "safe_point_refs": [],
+            "terminal_session_refs": [],
+            "editor_session_refs": [],
+            "blocked_recovery_refs": [],
+            "file_lock_checked": true,
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1"
+          },
+          "prepared_sha256": null,
+          "owner_outcome_ref": null,
+          "payload": null,
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:WorktreeLifecycleOwner.deleted",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": null,
+            "producer_sequence_id": 17
+          },
+          "runtime_context": {
+            "lane_id": "lane-1",
+            "package_id": "package-1"
+          },
+          "owner_result": null
+        },
+        "completed": {
+          "schema_id": "pm.storage_value.dt_worktree_deleted_source.v1",
+          "schema_version": "1.0.0",
+          "stage": "completed",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "scope_partition": "project~cHJvamVjdC0x",
+          "event_type": "worktree.deleted",
+          "event_id": "evt_dt_fa0db3b9363b317e24a504ebd9e3c12e35111c5c9735c82767460ad2ab46ee31",
+          "idempotency_key": "dt:06f303fb03233fa15383027790b9fd5461bb391ca07e99851325772d65955eab",
+          "producer": "WorktreeLifecycleOwner.deleted",
+          "owner_ref": "owner:worktree_deleted:revision-1",
+          "owner_revision": 1,
+          "subject": {
+            "project_id": "project-1",
+            "worktree_id": "worktree-1"
+          },
+          "captured_at_utc": "2026-11-04T00:00:00Z",
+          "before": {
+            "allocation_state": "cleanup_eligible",
+            "allocation_ref": "allocation-1",
+            "elapsed_grace_ms": 30000,
+            "active_lock_refs": [],
+            "safe_point_refs": [],
+            "terminal_session_refs": [],
+            "editor_session_refs": [],
+            "blocked_recovery_refs": [],
+            "file_lock_checked": true,
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1"
+          },
+          "prepared_sha256": "de42f84529da4e79b634923258be6b8a8097f7cb2a2c4cf565d902265d0b6b62",
+          "owner_outcome_ref": "outcome:worktree_deleted:revision-2",
+          "payload": {
+            "schema_id": "pm.event_payload.worktree_deleted.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project-1",
+            "worktree_id": "worktree-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "cleanup_reason": "completed",
+            "grace_period_ms": 30000,
+            "file_lock_checked": true,
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1",
+            "active_lock_refs": [],
+            "safe_point_refs": []
+          },
+          "envelope_context": {
+            "scope_kind": "project",
+            "project_id": "project-1",
+            "thread_id": null,
+            "run_id": "run-1",
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "owner:WorktreeLifecycleOwner.deleted",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-11-04T00:00:00Z",
+            "producer_sequence_id": 17
+          },
+          "runtime_context": {
+            "lane_id": "lane-1",
+            "package_id": "package-1"
+          },
+          "owner_result": {
+            "allocation_state": "deleted"
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_dt_fa0db3b9363b317e24a504ebd9e3c12e35111c5c9735c82767460ad2ab46ee31",
+          "event_type": "worktree.deleted",
+          "project_id": "project-1",
+          "thread_id": null,
+          "run_id": "run-1",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "owner:WorktreeLifecycleOwner.deleted",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-11-04T00:00:00Z",
+          "observed_at_utc": "2026-11-04T00:00:01Z",
+          "persisted_at_utc": "2026-11-04T00:00:01Z",
+          "sequence_id": 17,
+          "producer_sequence_id": 17,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "dt:06f303fb03233fa15383027790b9fd5461bb391ca07e99851325772d65955eab",
+          "payload_schema_id": "pm.event_payload.worktree_deleted.v1",
+          "payload": {
+            "schema_id": "pm.event_payload.worktree_deleted.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project-1",
+            "worktree_id": "worktree-1",
+            "ts": "2026-11-04T00:00:00Z",
+            "cleanup_reason": "completed",
+            "grace_period_ms": 30000,
+            "file_lock_checked": true,
+            "repo_id": "repo-1",
+            "lane_id": "lane-1",
+            "package_id": "package-1",
+            "run_id": "run-1",
+            "active_lock_refs": [],
+            "safe_point_refs": []
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "receipt": {
+          "event_id": "evt_dt_fa0db3b9363b317e24a504ebd9e3c12e35111c5c9735c82767460ad2ab46ee31",
+          "sequence_id": 17,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-11-04T00:00:01Z"
         }
       }
     }
