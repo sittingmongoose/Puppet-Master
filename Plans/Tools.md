@@ -87,7 +87,7 @@ Full definitions: `Plans/Permissions_System.md` §2.
 
 Permissions_System §2.4 alone owns rule precedence. The summary is Mode > Session > Persona > optional Project > Computer > Everywhere > Defaults, with owner-defined specificity/deny and retained guards unchanged. Ordinary Settings layering never creates execution authority or reverses agent-instruction precedence.
 
-Permissions_System §9 owns the Everywhere library, Computer-local and optional Project rule sources. Existing `~/.config/puppet-master/permissions.toml` and `<project_root>/.puppet-master/permissions.toml` remain recognized; the first may be a read-only library mirror. `tool_permissions` in redb `config:v1` is only the merged compatibility projection. D/F define the exact Computer key/path and sole writer together.
+Permissions_System §9 owns the Everywhere library, Computer-local and optional Project rule sources. Existing `~/.config/puppet-master/permissions.toml` and `<project_root>/.puppet-master/permissions.toml` remain recognized; the first may be a read-only library mirror. `tool_permissions` in redb `config:v1` is only the merged compatibility projection. PS-144 and SP-353 define the exact Computer key and sole writer together.
 
 ### 2.3 Session vs run; subagents
 
@@ -7566,8 +7566,8 @@ canonical_text: >-
   Durable permissions consume the Everywhere library rules, Computer-local rules and optional Project
   TOML rules from Permissions_System. Existing global ~/.config/puppet-master/permissions.toml and
   Project .puppet-master/permissions.toml are owner-managed sources/projections; Computer rules use
-  D's exact admitted key/path. redb tool_permissions in config:v1 remains a derived compatibility
-  view, never a second writer. That projection preserves backward compatibility.
+  the PS-144/SP-353 exact admitted key and sole writer. redb tool_permissions in config:v1 remains a derived
+  compatibility view, never a second writer. That projection preserves backward compatibility.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -13199,8 +13199,10 @@ drivers, provider APIs or desktop-control executables are not aliases or availab
 
 The six definitions have logical IDs `pm.computer_use.{screen|pointer|keys}.{request|result}.v1`,
 version `1.0.0`. Each definition is closed; pointer and keys use a discriminated operation union,
-with no arbitrary action string, script, provider argument bag or additional properties. F-d owns
-their schema/fixture materialization; F-b owns registry/binding/touch joins. The agent-tool census
+with no arbitrary action string, script, provider argument bag or additional properties.
+`Plans/computer_use_contracts.schema.json` and `Plans/computer_use_contract_fixtures.json` define and
+exercise these contracts; `Plans/projects_refresh_command_bindings.json` and `Plans/touch_closure.json`
+supply their registry/binding/touch joins. The agent-tool census
 is three screen tools plus T-185's six read tools. `computer.*` is only a family selector. No
 `computer.stop` tool or `cmd.computer.*` primary is admitted.
 
@@ -13281,8 +13283,8 @@ canonical_text: Every app tool call uses explicit application scope, project_id=
   and Eval roots use the selected CV-366 graph in Plans/application_workflow_contracts.schema.json, Plans/application_workflow_sources.schema.json
   and Plans/application_workflow_source_graph.json, with SP-349 physical keys and counterpart quotas.
   Original Project sources remain exact. A missing actual source/handler/retention/backup join is unavailable
-  rather than an app-capable alias. C-B01 conversion re-resolves these destinations through the one owner
-  manifest; it neither transfers a live process/controller nor reuses source permissions.
+  rather than an app-capable alias. Conversion under CV-367/PSB-007 and ACD-510/511 re-resolves these destinations
+  through the one owner manifest; it neither transfers a live process/controller nor reuses source permissions.
 gui_related: false
 gui_classification_reason: Defines runtime scope, data identity and custody without owning visual presentation.
 depends_on:

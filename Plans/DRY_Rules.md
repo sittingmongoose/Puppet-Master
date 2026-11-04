@@ -4910,7 +4910,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -4959,7 +4960,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -5013,7 +5015,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -5062,7 +5065,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -5117,7 +5121,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -5168,7 +5173,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -5226,7 +5232,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -5280,7 +5287,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -5337,7 +5345,8 @@ acceptance_criteria:
 - Every named consumer references the sole owner and selected edition rather than recreating its engine.
 - Positive app/Project behavior and wrong-scope/currentness/owner negatives are specified together.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: duplicate_owner_or_scope_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
