@@ -6029,6 +6029,354 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-move-result-connects-cutover",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyResultScopeV2",
+      "record": {
+        "schema_id": "pm.chat.move_create_apply.result.v2",
+        "operation_id": "move-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "completed",
+        "destination_project_id": "real-project-a",
+        "creation_operation_ref": "creation-operation-a",
+        "cutover_manifest": {
+          "schema_id": "pm.chat.move_cutover_manifest.v2",
+          "draft_preview_manifest_ref": "preview-manifest-a",
+          "draft_preview_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "draft_id": "draft-a",
+          "draft_revision": 1,
+          "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "reviewed_visible_effects_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bound_visible_effects_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "project_reservation_receipt": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "project_listing_readback_receipt": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "cutover_manifest": {
+            "schema_id": "pm.chat.move_manifest.v1",
+            "schema_version": "1.0.0",
+            "operation_id": "move-a",
+            "source_scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "source_thread_id": "thread-a",
+            "destination_kind": "new_project",
+            "destination_scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "scope_partition": "project~cmVhbC1wcm9qZWN0LWE",
+              "project_id": "real-project-a",
+              "project_home_server_id": "server-a",
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "destination_folder_ref": "real-folder-a",
+            "destination_native_change_ref": "real-change-a",
+            "direct_main_explicit": false,
+            "family_dispositions": {
+              "thread_message_title_pin_todo_composer": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-thread_message_title_pin_todo_composer",
+                "source_refs": [],
+                "reason_ref": "plan-thread_message_title_pin_todo_composer",
+                "destination_refs": []
+              },
+              "chat_place_folder_files_attachments": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-chat_place_folder_files_attachments",
+                "source_refs": [],
+                "reason_ref": "plan-chat_place_folder_files_attachments",
+                "destination_refs": []
+              },
+              "events_receipts_usage_payloads": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-events_receipts_usage_payloads",
+                "source_refs": [],
+                "reason_ref": "plan-events_receipts_usage_payloads",
+                "destination_refs": []
+              },
+              "restore_revert_safe_point_attention_handoff_lens": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-restore_revert_safe_point_attention_handoff_lens",
+                "source_refs": [],
+                "reason_ref": "plan-restore_revert_safe_point_attention_handoff_lens",
+                "destination_refs": []
+              },
+              "goals_body_control_history_association": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-goals_body_control_history_association",
+                "source_refs": [],
+                "reason_ref": "plan-goals_body_control_history_association",
+                "destination_refs": []
+              },
+              "crew_definition_run_participants_board": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-crew_definition_run_participants_board",
+                "source_refs": [],
+                "reason_ref": "plan-crew_definition_run_participants_board",
+                "destination_refs": []
+              },
+              "coordination_claims_checkpoints": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-coordination_claims_checkpoints",
+                "source_refs": [],
+                "reason_ref": "plan-coordination_claims_checkpoints",
+                "destination_refs": []
+              },
+              "assistant_plan_revisions_run_adherence_todos": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-assistant_plan_revisions_run_adherence_todos",
+                "source_refs": [],
+                "reason_ref": "plan-assistant_plan_revisions_run_adherence_todos",
+                "destination_refs": []
+              },
+              "schedules_messages_windows_consents_occurrences": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-schedules_messages_windows_consents_occurrences",
+                "source_refs": [],
+                "reason_ref": "plan-schedules_messages_windows_consents_occurrences",
+                "destination_refs": []
+              },
+              "project_only_wizard_prd_orchestrator": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-project_only_wizard_prd_orchestrator",
+                "source_refs": [],
+                "reason_ref": "plan-project_only_wizard_prd_orchestrator",
+                "destination_refs": []
+              },
+              "scm_history_forge_conflicts": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-scm_history_forge_conflicts",
+                "source_refs": [],
+                "reason_ref": "plan-scm_history_forge_conflicts",
+                "destination_refs": []
+              },
+              "artifacts_shared_refs": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-artifacts_shared_refs",
+                "source_refs": [],
+                "reason_ref": "plan-artifacts_shared_refs",
+                "destination_refs": []
+              },
+              "terminals_live_processes_profiles": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-terminals_live_processes_profiles",
+                "source_refs": [],
+                "reason_ref": "plan-terminals_live_processes_profiles",
+                "destination_refs": []
+              },
+              "debug_testing_preview_eval": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-debug_testing_preview_eval",
+                "source_refs": [],
+                "reason_ref": "plan-debug_testing_preview_eval",
+                "destination_refs": []
+              },
+              "editor_buffers_absolute_links": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-editor_buffers_absolute_links",
+                "source_refs": [],
+                "reason_ref": "plan-editor_buffers_absolute_links",
+                "destination_refs": []
+              },
+              "search_indexes_publication": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-search_indexes_publication",
+                "source_refs": [],
+                "reason_ref": "plan-search_indexes_publication",
+                "destination_refs": []
+              },
+              "layout_home_boards_panels": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-layout_home_boards_panels",
+                "source_refs": [],
+                "reason_ref": "plan-layout_home_boards_panels",
+                "destination_refs": []
+              },
+              "memory_capsule_teach_notebook_persona": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-memory_capsule_teach_notebook_persona",
+                "source_refs": [],
+                "reason_ref": "plan-memory_capsule_teach_notebook_persona",
+                "destination_refs": []
+              },
+              "tools_skills_plugins_commands_accounts": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-tools_skills_plugins_commands_accounts",
+                "source_refs": [],
+                "reason_ref": "plan-tools_skills_plugins_commands_accounts",
+                "destination_refs": []
+              },
+              "permissions_approvals_filesafe_trust": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-permissions_approvals_filesafe_trust",
+                "source_refs": [],
+                "reason_ref": "plan-permissions_approvals_filesafe_trust",
+                "destination_refs": []
+              },
+              "server_vault_routes_ws_fairness": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-server_vault_routes_ws_fairness",
+                "source_refs": [],
+                "reason_ref": "plan-server_vault_routes_ws_fairness",
+                "destination_refs": []
+              },
+              "automation_stop_pause_history": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-automation_stop_pause_history",
+                "source_refs": [],
+                "reason_ref": "plan-automation_stop_pause_history",
+                "destination_refs": []
+              },
+              "backup_deletion_retention_quotas": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-backup_deletion_retention_quotas",
+                "source_refs": [],
+                "reason_ref": "plan-backup_deletion_retention_quotas",
+                "destination_refs": []
+              },
+              "undo_inverse": {
+                "disposition": "retained_source",
+                "owner_ref": "owner-undo_inverse",
+                "source_refs": [],
+                "reason_ref": "plan-undo_inverse",
+                "destination_refs": []
+              }
+            },
+            "file_manifest_ref": "file-manifest-a",
+            "settings_preview_ref": null,
+            "associations": [],
+            "source_writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "destination_writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "source_stop_epoch": 1,
+            "destination_stop_epoch": 1,
+            "scope_cutover_generation": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "expires_at_utc": "2026-11-04T23:00:00Z"
+          }
+        },
+        "report_ref": "report-a",
+        "owner_receipt_refs": [
+          "listing-a",
+          "cutover-a"
+        ],
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.move.apply",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-move-no-success-without-cutover",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyResultScopeV2",
+      "record": {
+        "schema_id": "pm.chat.move_create_apply.result.v2",
+        "operation_id": "move-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "completed",
+        "destination_project_id": "real-project-a",
+        "creation_operation_ref": "creation-operation-a",
+        "cutover_manifest": null,
+        "report_ref": "report-a",
+        "owner_receipt_refs": [
+          "listing-a",
+          "cutover-a"
+        ],
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.move.apply",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-move-preview-refusal-has-no-project",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyResultScopeV2",
+      "record": {
+        "schema_id": "pm.chat.move_create_apply.result.v2",
+        "operation_id": "move-a",
+        "draft_id": "draft-a",
+        "draft_revision": 1,
+        "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "preview_refused",
+        "destination_project_id": null,
+        "creation_operation_ref": null,
+        "cutover_manifest": null,
+        "report_ref": "report-a",
+        "owner_receipt_refs": [],
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.move.apply",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ],
   "move_draft_owner_source": {
