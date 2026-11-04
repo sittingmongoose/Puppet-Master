@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L21366-L22155
 
-Source SHA256: `5b5b2eb291562397fd1fb812e7cefdd840f33a12a4a33c5ca916e59e9f734b10`
+Source SHA256: `51bf01550d1d71b1920b0b10a7b69bf96503598c899e44d2850083683ffa7c13`
 
 ---
 
@@ -597,7 +597,7 @@ An ordinary source/authority/layout/receipt refresh keeps schema_id, schema_vers
 Existing RP-PROJECTION-3GEN remains three generations and seven days after actual terminal state, with existing hold/live-reference eligibility. For a retired wrapper use its first actual retirement timestamp; for current withdrawal use first terminal_at_utc. This is exact storage of the existing anchor, not a new duration or sliding TTL. Retained core history is derived metadata only and grants no extra Home/source-body retention. Remove only an eligible oldest retired tail after seven days and after actual hold/ref/source-maintenance checks under serialized cleanup/publication/hold admission. Do not remove an intervening successor needed by a retained older node. All three protected slots blocks replacement and requires existing rebuild/recovery disclosure; never evict held history or exceed cap. Current authoritative Home layout and canonical receipts remain independently governed. Checkpoint loss rebuilds disposable state only from actual admitted sources.
 
 
-Exact byte-capture closure: the pending slot retains the actual prior and candidate layout source bytes as binary fields (or a BLAKE3 payload-store reference when over 16 KiB) alongside decoded layouts and their exact byte hashes. No base64 text field is stored (SP-337, SP-339); the prior_layout_source_bytes_base64 and candidate_layout_source_bytes_base64 field names are retired with the JSON slot encoding (Amended 2026-10-31, DL-270). Empty-slot release clears both bytes and both snapshots atomically. Rollback restores and verifies exact original Home bytes; equal-looking reserialization is insufficient. The terminal receipt retains only the new content-free identity capture bytes and typed original values, never full Home request args or layout bodies. Native source adapters and authenticated owner-value capture remain separate proof obligations.
+Exact byte-capture closure: the pending slot retains the actual prior and candidate layout source bytes as binary fields (or a BLAKE3 payload-store reference when over 16 KiB) alongside decoded layouts and their exact byte hashes. No base64 text field is stored (SP-337, SP-339); the prior_layout_source_bytes_base64 and candidate_layout_source_bytes_base64 field names are retired with the JSON slot encoding (Amended 2026-10-31, DL-270). Empty-slot release clears both bytes and both snapshots atomically. Rollback restores and verifies exact original Home bytes; equal-looking reserialization is insufficient. Amended 2026-11-04 (DL-045, SP-400): for Home4 values SP-340's limit bounds the complete slot or receipt value, never one field; a Home4 value over its family's limit is stored as SP-400's reference to its exact canonical bytes in the payload store, with its decoded layouts and source bytes inside the referenced value. The terminal receipt retains only the new content-free identity capture bytes and typed original values, never full Home request args or layout bodies. Native source adapters and authenticated owner-value capture remain separate proof obligations.
 
 ### Retained original publication v1 admission and current relocation
 

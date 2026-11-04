@@ -1,0 +1,120 @@
+DS-FIX1 search before authoring SP-400's complete-value reference form (2026-11-04, review DS-SOL-01)
+Revision searched: a6665ac36c8239c1907ee34eb881b23d6a8be79b (branch plans/ea-b1-seal-blockers-20261104), trees Plans/ scripts/ tests/ (sparse worktree; Concepts not checked out).
+
+== grep -rnF "store it by reference" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/storage-plan.md:28446:  DL-270 card 6. Every redb family declares a maximum value size, at most 16 KiB; larger values go to the payload store (SP-337). Canonical, non-rebuildable families and derived, rebuildable families live in two separate redb files,
+Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not 
+Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not 
+Plans/.plan_migration/pds-20261104-004-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660349, "byte_start": 2654834, "contractrefs": [], "gui_classification_reason": "Span does not 
+Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:12380:{"anchors": [], "body_line_end": 28478, "body_line_start": 28427, "byte_end": 2660185, "byte_start": 2654670, "contractrefs": [], "gui_classification_reason": "Span does not 
+(hits: 5)
+
+== grep -rnF "stored by reference" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/storage-plan.md:27558:  The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0 (Plans/home_workspace_layout_v2.schema.json), under home_workspace_layout.v2:{project_id}:{workspace_tab_id} in family home_workspace_
+Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot/span_map.jsonl:12366:{"anchors": [], "body_line_end": 27687, "body_line_start": 27539, "byte_end": 2577137, "byte_start": 2557813, "contractrefs": ["ContractRef: ContractName:Plans/Decision_Log.m
+Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot/span_map.jsonl:12366:{"anchors": [], "body_line_end": 27687, "body_line_start": 27539, "byte_end": 2577137, "byte_start": 2557813, "contractrefs": ["ContractRef: ContractName:Plans/Decision_Log.m
+Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:12366:{"anchors": [], "body_line_end": 27687, "body_line_start": 27539, "byte_end": 2577137, "byte_start": 2557813, "contractrefs": ["ContractRef: ContractName:Plans/Decision_Log.m
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:153:{"all_mechanical_classifications":["compatibility_or_source_lineage"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"chat.history","occurrence_co
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:178:{"all_mechanical_classifications":["compatibility_or_source_lineage"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"chat.width","occurrence_coun
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:1531:{"all_mechanical_classifications":["non_event_command"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"cmd.workspace_layout.resize_surface","occ
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:1533:{"all_mechanical_classifications":["non_event_command"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"cmd.workspace_layout.save_named","occurre
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:1926:{"all_mechanical_classifications":["schema_or_fixture_event_example","compatibility_or_source_lineage"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_t
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:2173:{"all_mechanical_classifications":["schema_or_identifier_non_event"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"pm.home.panels","occurrence_
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:2180:{"all_mechanical_classifications":["schema_or_identifier_non_event"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"pm.home_workspace_layout.v2"
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:3456:{"all_mechanical_classifications":["compatibility_or_source_lineage","ambiguous_event_like_token"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token"
+(hits: 15)
+
+== grep -rnF "by reference, as the storage registry records" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/storage-plan.md:27558:  The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0 (Plans/home_workspace_layout_v2.schema.json), under home_workspace_layout.v2:{project_id}:{workspace_tab_id} in family home_workspace_
+Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:12366:{"anchors": [], "body_line_end": 27687, "body_line_start": 27539, "byte_end": 2577137, "byte_start": 2557813, "contractrefs": ["ContractRef: ContractName:Plans/Decision_Log.m
+Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot/span_map.jsonl:12366:{"anchors": [], "body_line_end": 27687, "body_line_start": 27539, "byte_end": 2577137, "byte_start": 2557813, "contractrefs": ["ContractRef: ContractName:Plans/Decision_Log.m
+Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot/span_map.jsonl:12366:{"anchors": [], "body_line_end": 27687, "body_line_start": 27539, "byte_end": 2577137, "byte_start": 2557813, "contractrefs": ["ContractRef: ContractName:Plans/Decision_Log.m
+Plans/.plan_migration/pds-20261104-004-current-planunit-snapshot/span_map.jsonl:12366:{"anchors": [], "body_line_end": 27687, "body_line_start": 27539, "byte_end": 2577137, "byte_start": 2557813, "contractrefs": ["ContractRef: ContractName:Plans/Decision_Log.m
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:153:{"all_mechanical_classifications":["compatibility_or_source_lineage"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"chat.history","occurrence_co
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:178:{"all_mechanical_classifications":["compatibility_or_source_lineage"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"chat.width","occurrence_coun
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:1531:{"all_mechanical_classifications":["non_event_command"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"cmd.workspace_layout.resize_surface","occ
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:1533:{"all_mechanical_classifications":["non_event_command"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"cmd.workspace_layout.save_named","occurre
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:1926:{"all_mechanical_classifications":["schema_or_fixture_event_example","compatibility_or_source_lineage"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_t
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:2173:{"all_mechanical_classifications":["schema_or_identifier_non_event"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"pm.home.panels","occurrence_
+Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl:2180:{"all_mechanical_classifications":["schema_or_identifier_non_event"],"authority_boundary":"discovery_only_owner_adjudication_required","exact_token":"pm.home_workspace_layout.v2"
+(hits: 15)
+
+== grep -rnF "overflow envelope" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/storage-plan.md:17308:The payload is one canonical MessagePack map of the complete closed EventRecord `2.0.0`, including every required-present null, not merely the event-specific `payload`, the header tuple, JSON text, or a digest. Existing payload and 
+Plans/.plan_migration/pds-20261012-001-current-planunit-snapshot/span_map.jsonl:10913:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261016-003-current-planunit-snapshot/span_map.jsonl:10961:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261011-004-current-planunit-snapshot/span_map.jsonl:10913:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261026-001-current-planunit-snapshot/span_map.jsonl:11790:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261101-001-current-planunit-snapshot/span_map.jsonl:11800:{"anchors": [], "body_line_end": 17266, "body_line_start": 17238, "byte_end": 924167, "byte_start": 920155, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:11971:{"anchors": [], "body_line_end": 17309, "body_line_start": 17281, "byte_end": 964982, "byte_start": 960970, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261016-002-current-planunit-snapshot/span_map.jsonl:10961:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261011-001-current-planunit-snapshot/span_map.jsonl:10913:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261007-001-current-planunit-snapshot/span_map.jsonl:10702:{"anchors": [], "body_line_end": 17168, "body_line_start": 17140, "byte_end": 894753, "byte_start": 891404, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261009-004-current-planunit-snapshot/span_map.jsonl:10734:{"anchors": [], "body_line_end": 17168, "body_line_start": 17140, "byte_end": 894753, "byte_start": 891404, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+Plans/.plan_migration/pds-20261023-002-current-planunit-snapshot/span_map.jsonl:11012:{"anchors": [], "body_line_end": 17226, "body_line_start": 17198, "byte_end": 903897, "byte_start": 900548, "contractrefs": [], "gui_classification_reason": "Span mentions GU
+(hits: 53)
+
+== grep -rnF "redb wrappers retain larger payloads by reference" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/Widget_System.md:1919:  Both variants use the same Usage board engine, built-in/custom board lifecycle, catalog, defaults, safe subfilters, semantic size IDs, transaction/CAS, reset/Start from/eligible Undo, reopen rules and 64 KB named-layout board snap
+Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot/span_map.jsonl:13560:{"anchors": [], "body_line_end": 1967, "body_line_start": 1910, "byte_end": 167697, "byte_start": 163703, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.md#SP
+Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:13560:{"anchors": [], "body_line_end": 1967, "body_line_start": 1910, "byte_end": 167697, "byte_start": 163703, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.md#SP
+Plans/.plan_migration/pds-20261104-004-current-planunit-snapshot/span_map.jsonl:13560:{"anchors": [], "body_line_end": 1967, "body_line_start": 1910, "byte_end": 167697, "byte_start": 163703, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.md#SP
+Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot/span_map.jsonl:13560:{"anchors": [], "body_line_end": 1967, "body_line_start": 1910, "byte_end": 167697, "byte_start": 163703, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.md#SP
+(hits: 5)
+
+== grep -rnF "payload refs within 16 KiB" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/storage-plan.md:29151:  CV-367 owns the exhaustive semantic manifest; this unit owns its durable operation and writer custody. Canonical family chat_move_operation uses chat_move_operation.v1:{hex(storage_instance_id)}:{hex(source_server_id)}:{hex(conver
+Plans/.plan_migration/pds-20261104-002-current-planunit-snapshot/span_map.jsonl:12390:{"anchors": [], "body_line_end": 29198, "body_line_start": 29130, "byte_end": 2721681, "byte_start": 2714945, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.m
+Plans/.plan_migration/pds-20261104-001-current-planunit-snapshot/span_map.jsonl:12390:{"anchors": [], "body_line_end": 29198, "body_line_start": 29130, "byte_end": 2721681, "byte_start": 2714945, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.m
+Plans/.plan_migration/pds-20261104-003-current-planunit-snapshot/span_map.jsonl:12390:{"anchors": [], "body_line_end": 29198, "body_line_start": 29130, "byte_end": 2721681, "byte_start": 2714945, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.m
+Plans/.plan_migration/pds-20261104-004-current-planunit-snapshot/span_map.jsonl:12390:{"anchors": [], "body_line_end": 29200, "body_line_start": 29132, "byte_end": 2722848, "byte_start": 2716112, "contractrefs": ["ContractRef: ContractName:Plans/storage-plan.m
+(hits: 5)
+
+== grep -rnF "whole_document_keys" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/storage_value_registry.schema.json:985:        "whole_document_keys",
+Plans/storage_value_registry.schema.json:1211:        "whole_document_keys": {
+Plans/FinalGUISpec.md:3561:| `settings:v1` | Durable app settings and preferences. Amended 2026-11-01 (DL-270), SP-340: stored as one row per setting at its next schema version (storage registry `storage_profile.whole_document_keys`) | On save |
+Plans/FinalGUISpec.md:3564:| `config:v1` | Full app config struct subordinate to `settings:v1`, not a competing global config key (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior). Amended
+Plans/storage_value_registry.json:125336:    "whole_document_keys": [
+scripts/pm-storage-profile-check.py:50:    for wk in prof["whole_document_keys"]:
+(hits: 6)
+
+== grep -rnF "stored_form" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+(hits: 0)
+
+== grep -rnF "value_ref" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/shared_runtime_contracts.schema.json:304:        "source_event_refs", "source_value_refs", "project_id", "host_id", "environment_id", "state",
+Plans/shared_runtime_contracts.schema.json:317:        "source_value_refs": { "$ref": "#/$defs/ref_list" },
+Plans/shared_runtime_contracts.schema.json:342:            { "properties": { "source_value_refs": { "minItems": 1 } } }
+Plans/shared_runtime_contracts.schema.json:381:        "source_value_refs",
+Plans/shared_runtime_contracts.schema.json:413:        "source_value_refs": {
+Plans/settings_system_contracts.schema.json:9328:              "value_ref"
+Plans/settings_system_contracts.schema.json:9338:              "value_ref": {
+Plans/section15_browser_program_contracts.schema.json:991:        "value_ref": {
+Plans/section15_browser_program_contract_fixtures.json:200:            "value_ref": "artifact:program-workspace-spill:1"
+Plans/storage_value_registry.json:24061:        "source_value_refs",
+Plans/storage_value_registry.json:24152:          "source_value_refs",
+Plans/storage_value_registry.json:24192:          "source_value_refs": {
+(hits: 22)
+
+== grep -rnF "value_sha256" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+Plans/goal_created_reader_contracts.schema.json:1:{"$defs":{"BudgetV1":{"additionalProperties":false,"properties":{"max_decoded_value_bytes":{"maximum":67108864,"minimum":1,"type":"integer"},"max_examined_frames":{"maximum":4096,"minimum":1,"type":"integer"},"
+Plans/storage_retention_hold_evidence.schema.json:604:        "source_value_sha256",
+Plans/storage_retention_hold_evidence.schema.json:616:        "source_value_sha256": {
+Plans/storage_retention_hold_evidence.schema.json:943:        "original_value_sha256",
+Plans/storage_retention_hold_evidence.schema.json:962:        "original_value_sha256": {
+Plans/storage_retention_hold_evidence.schema.json:1080:        "after_value_sha256",
+Plans/storage_retention_hold_evidence.schema.json:1112:        "after_value_sha256": {
+Plans/home_layout_event_contract_fixtures.json:366:          "source_value_sha256": "6f278e9156e083bd341fd1899ae61261eecb532daa9fa7343889d9d7c7fea28b",
+Plans/home_layout_event_contract_fixtures.json:585:          "backup_entry_value_sha256": "81596827cc19a17cdfa78851db3f026d02c8d1b5083a53741c2da97cdb14bf93"
+Plans/home_layout_event_contract_fixtures.json:687:          "backup_entry_value_sha256": "ecaa06e2980fac0a221645f05bbcd81ca297ee8e29aa556b40ab0193a6244fdf"
+Plans/home_layout_event_contract_fixtures.json:1040:          "source_value_sha256": "6f278e9156e083bd341fd1899ae61261eecb532daa9fa7343889d9d7c7fea28b",
+Plans/home_layout_event_contract_fixtures.json:1262:          "backup_entry_value_sha256": "81596827cc19a17cdfa78851db3f026d02c8d1b5083a53741c2da97cdb14bf93"
+(hits: 4633)
+
+== grep -rnF "home_layout_value_ref" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+(hits: 0)
+
+== grep -rnF "stored_value_ref" Plans scripts tests (excluding Plans/_shards, Plans/.plan_index and the Home4 files this round edits)
+(hits: 0)
+
