@@ -6,8 +6,8 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to dashboard.widget_added. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-11-04T18:50:00Z (lane DS, stream E batch 1), with today's owner evidence (Plans/UI_Command_Catalog.md:16977; Plans/UI_Command_Catalog.md:8589; Plans/Wiring_Matrix.md:7286): dashboard.widget_added is withdrawn: cmd.dashboard.add_widget is an alias of cmd.widget.add, whose rows emit no event, and UCC-202 says no event named dashboard.widget_added is emitted (amended 2026-10-09 under Jared's DL-180). The stale effect cell in UCC's command table (Plans/UI_Command_Catalog.md:8586) is amended in place by the line that follows it. This records the exclusion of this exact token from the persisted-family campaign under DL-039's J248 outcome \"excluded with cited evidence\" (UCC-202 and DL-180); it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20261104/ds-step7-exclusions-application.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed. Previous rationale: Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to dashboard.widget_added. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
   "evidence": {
     "membership_version": {
       "status": "OWNER_REQUIRED",
@@ -85,6 +85,21 @@
       "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:245-247",
       "status": "ok",
       "notes": "Immutable cohort map assigns dashboard.widget_added to july248; retained independently of working bucket."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:16977",
+      "status": "ok",
+      "notes": "exact quote at ade1ee3d6c: \"No event named dashboard.widget_added is emitted.\""
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8589",
+      "status": "ok",
+      "notes": "exact quote at ade1ee3d6c: its `dashboard.widget_added` effect is withdrawn (UCC-202)"
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:7286",
+      "status": "ok",
+      "notes": "exact quote at ade1ee3d6c: No entry declares terminal.workgroup_moved or dashboard.widget_added."
     }
   ],
   "owner_veto": null,
