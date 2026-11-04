@@ -16,7 +16,7 @@ export const tests = {
      const start=e.timeStamp;
      const probe=()=>{
       const panel=document.querySelector('#pmRoot .activity-panel.cover');
-      if(panel&&panel.getBoundingClientRect().width>0)requestAnimationFrame(()=>{window.__activityPaint=performance.now()-start;});
+      if(panel&&panel.getBoundingClientRect().width>0&&Number(getComputedStyle(panel).opacity)>0)requestAnimationFrame(()=>{window.__activityPaint=performance.now()-start;});
       else if(performance.now()-start<2000)requestAnimationFrame(probe);
       else window.__activityPaint=2000;
      };requestAnimationFrame(probe);

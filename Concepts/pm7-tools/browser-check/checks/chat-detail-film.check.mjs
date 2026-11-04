@@ -10,7 +10,7 @@ export default async function(t){
    if(type==='click'&&e.isTrusted&&b?.dataset.action==='open-activity'){
     const probe=()=>{
      const p=document.querySelector('#pmRoot .activity-panel.cover');
-     if(p&&p.getBoundingClientRect().width>0)requestAnimationFrame(()=>{record.coverFrameMs=performance.now()-e.timeStamp;});
+     if(p&&p.getBoundingClientRect().width>0&&Number(getComputedStyle(p).opacity)>0)requestAnimationFrame(()=>{record.coverFrameMs=performance.now()-e.timeStamp;});
      else if(performance.now()-e.timeStamp<2000)requestAnimationFrame(probe);
     };requestAnimationFrame(probe);
    }
