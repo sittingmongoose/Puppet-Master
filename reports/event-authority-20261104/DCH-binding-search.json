@@ -398,6 +398,182 @@
         "CV-630",
         "SP-610"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            3,
+            60,
+            256,
+            343,
+            382,
+            469,
+            556,
+            643,
+            730,
+            817,
+            904,
+            991,
+            1078,
+            1165,
+            1252,
+            1339,
+            1426,
+            1513,
+            1600,
+            1710,
+            1882,
+            1940,
+            2044,
+            2131,
+            2170,
+            2257,
+            2344,
+            2431,
+            2518,
+            2605,
+            2692,
+            2779,
+            2866,
+            2953,
+            3040,
+            3127,
+            3214,
+            3301,
+            3388,
+            3498
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            24472,
+            24474,
+            24485,
+            24488,
+            24495,
+            24497,
+            24499,
+            24571
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29079,
+            29081,
+            29088,
+            29091,
+            29094,
+            29096,
+            29138
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            123117,
+            123197,
+            123404
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "lines": [
+            441
+          ],
+          "sha256": "14fd3cdb089efc95ee176d37639d858cfb4ec7bfd71652645985dad5bde7233b"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            3,
+            10,
+            105,
+            159,
+            415,
+            455
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            5
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1173,
+            8652,
+            29481,
+            29483,
+            29487,
+            29502,
+            29505,
+            29538,
+            29651
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_bundle_selection_forward_blocked_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "be3bb0a1e3bdc5b9690bc3bb9c532b11abd3927e7b910963eba4cb738b46e3a5"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-610",
+          "line": 29481,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "f8653fc2b470655a8ae7ffced30d4390f1f9eaa471112477dad3c2d19f8cba79"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-630",
+          "line": 24472,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "1ec9daf65a058e05b2b794aaed92b40151e65fa5a8aa1c5b6f51b90b90cc1b99"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-610",
+          "line": 29079,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "862699385228ff488548b3c683fe2ca841573aa6a22e51cbda30b75537afe161"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "bundle.selection_sent_to_chat": {
@@ -903,6 +1079,202 @@
         "CV-631",
         "SP-611"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            3670,
+            3733,
+            3933,
+            4024,
+            4063,
+            4154,
+            4245,
+            4336,
+            4427,
+            4518,
+            4609,
+            4700,
+            4791,
+            4882,
+            4973,
+            5064,
+            5155,
+            5246,
+            5337,
+            5455,
+            5584,
+            5738,
+            5867,
+            6021,
+            6150,
+            6304,
+            6480,
+            6544,
+            6652,
+            6743,
+            6782,
+            6873,
+            6964,
+            7055,
+            7146,
+            7237,
+            7328,
+            7419,
+            7510,
+            7601,
+            7692,
+            7783,
+            7874,
+            7965,
+            8056,
+            8174,
+            8303,
+            8457,
+            8586,
+            8740,
+            8869,
+            9023
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            907,
+            952,
+            6975,
+            6985,
+            7005,
+            7011,
+            7236,
+            7257,
+            24581,
+            24583,
+            24594,
+            24597,
+            24604,
+            24606,
+            24608,
+            24680
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29146,
+            29148,
+            29155,
+            29158,
+            29162,
+            29164,
+            29206
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            123615,
+            123695,
+            123902
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "lines": [
+            441
+          ],
+          "sha256": "14fd3cdb089efc95ee176d37639d858cfb4ec7bfd71652645985dad5bde7233b"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            495,
+            502,
+            597,
+            655,
+            911,
+            951
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            29
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1172,
+            8649,
+            29662,
+            29664,
+            29668,
+            29683,
+            29686,
+            29719,
+            29832
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_bundle_selection_sent_to_chat_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "d825e6517a87fa058c79bd092504827246d243a7934442addd88b8ddda5c5219"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-611",
+          "line": 29662,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "347dc5a94f87ee2ec68831d53cb6b2b462294e48aa42914bf4e2f0bdac8a8509"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-631",
+          "line": 24581,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "b9edaaf38ac58c5e0ba24e3a75482ab693cc64b1839e447170e66124808c3844"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-611",
+          "line": 29146,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "763bfd8baa1a60b6edbf759285da414857e64fa1f70eaec8c9a8f9275c665bcf"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.message": {
@@ -2154,6 +2526,318 @@
         "CV-632",
         "SP-612"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "lines": [
+            242,
+            552,
+            560,
+            700,
+            2087,
+            3098,
+            3127,
+            3135,
+            3819,
+            3849
+          ],
+          "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+        },
+        {
+          "path": "Plans/touch_closure.json",
+          "lines": [
+            35215,
+            47638
+          ],
+          "sha256": "ce5ea327531aec6be291958213b20223edfd2549904283a567d527a7e1f9c8fa"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "lines": [
+            8580,
+            14594
+          ],
+          "sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            9199,
+            9256,
+            9452,
+            9539,
+            9578,
+            9665,
+            9752,
+            9839,
+            9926,
+            10013,
+            10100,
+            10187,
+            10274,
+            10361,
+            10448,
+            10535,
+            10622,
+            10709,
+            10796,
+            10906,
+            11001,
+            11121,
+            11216,
+            11336,
+            11431,
+            11551,
+            11723,
+            11781,
+            11885,
+            11972,
+            12011,
+            12098,
+            12185,
+            12272,
+            12359,
+            12446,
+            12533,
+            12620,
+            12707,
+            12794,
+            12881,
+            12968,
+            13055,
+            13142,
+            13229,
+            13339,
+            13434,
+            13554,
+            13649,
+            13769,
+            13864,
+            13984
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            24690,
+            24692,
+            24703,
+            24706,
+            24712,
+            24715,
+            24716,
+            24788
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29214,
+            29216,
+            29223,
+            29226,
+            29230,
+            29231,
+            29273
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/Plugins_System.md",
+          "lines": [
+            271,
+            531,
+            1904,
+            1932
+          ],
+          "sha256": "d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            124113,
+            124193,
+            124400
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/Commands_System.md",
+          "lines": [
+            58,
+            281,
+            682,
+            1042,
+            1068,
+            1483,
+            2957,
+            2981
+          ],
+          "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+        },
+        {
+          "path": "Plans/projects_refresh_command_bindings.json",
+          "lines": [
+            24512
+          ],
+          "sha256": "6ff5290dd5008a6e399c0ab92bba1c55fe198076b0ecb380271d8417981d3d20"
+        },
+        {
+          "path": "Plans/Wiring_Matrix.production.json",
+          "lines": [
+            22284,
+            22308,
+            22341,
+            22360,
+            87043,
+            87055,
+            87063,
+            87065,
+            87088,
+            87098,
+            87113,
+            87117
+          ],
+          "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            991,
+            998,
+            1093,
+            1147,
+            1403,
+            1443
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            53
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/projects_refresh_command_bindings.fixtures.json",
+          "lines": [
+            24788,
+            52429
+          ],
+          "sha256": "5a69ddce5a0ff2fdcfbf124736c008e19088e6e16efd139b2d2c769509faefd8"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1663,
+            2048,
+            2139,
+            10968,
+            13447,
+            29487,
+            29551,
+            29668,
+            29732,
+            29843,
+            29845,
+            29849,
+            29864,
+            29867,
+            29905,
+            29917,
+            30017,
+            30034,
+            30098,
+            30215,
+            30280,
+            30397,
+            30461,
+            30578,
+            30642,
+            30759,
+            30823,
+            30940,
+            31004,
+            31121,
+            31185,
+            31302,
+            31366,
+            31483,
+            31548,
+            31665,
+            31730,
+            31847,
+            31912,
+            32029,
+            32093,
+            32210,
+            32274
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "dfefd08bd872f776224f511d521fba85a3292b1c9324cd7922cb25c199b925ef"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_message.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "272086687897b6e5e9d99349940e238db96703e595e7b40d2651ce26b2be794d"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-612",
+          "line": 29843,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "0452c8238ed420e1e637cf724b498372cbef364b7dccd42feba21f1d76f79df2"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-632",
+          "line": 24690,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "7dcf3f38a39be2608696f6db7f582f764f8a8fee80f0b042a1fd651658d68483"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-612",
+          "line": 29214,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "85410b1afd833b66ca21bfe02e784c177228b3f0d203c8bc803c31d74ac5b92a"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_archived": {
@@ -2429,6 +3113,194 @@
         "CV-633",
         "SP-613"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            14156,
+            14217,
+            14614,
+            14703,
+            14742,
+            14831,
+            14920,
+            15009,
+            15098,
+            15187,
+            15276,
+            15365,
+            15454,
+            15543,
+            15632,
+            15721,
+            15810,
+            15899,
+            15988,
+            16102,
+            16276,
+            16338,
+            16643,
+            16732,
+            16771,
+            16860,
+            16949,
+            17038,
+            17127,
+            17216,
+            17305,
+            17394,
+            17483,
+            17572,
+            17661,
+            17750,
+            17839,
+            17928,
+            18017,
+            18131
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            977,
+            7406,
+            26213,
+            26215,
+            26228,
+            26231,
+            26237,
+            26240,
+            26242,
+            26322
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            30183,
+            30185,
+            30192,
+            30195,
+            30205,
+            30207,
+            30254
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "lines": [
+            7237,
+            7268
+          ],
+          "sha256": "52b8c961dbb21bcb37e42364fe249eccc6cf32041b68ad7beaa39e16ed5ddc16"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            131085,
+            131165,
+            131372
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            1483,
+            1490,
+            1585,
+            1641,
+            1897,
+            1937
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            78
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            10778,
+            32385,
+            32387,
+            32391,
+            32406,
+            32409,
+            32442,
+            32454,
+            32557
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "4b26682ad81a9fdf372a450bbd3b45d80ded2d4c65e2e9416ee8c17aa9ad9eea"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_archived.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "54075fed4b44336867b4dfcc19f0ed4e0c7296bbdb12954957d4d336473cd86b"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-613",
+          "line": 32385,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "b20720432b1be4aed8793e02f88aeedb37af08e616fd641872c2bc963b921455"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-633",
+          "line": 26213,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "040e84ae7ea618324ab4da3163efca848a0fa61991279a5d12c16859d8a8d92b"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-613",
+          "line": 30183,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "bcfa6cf865e02497ef23b9606306f8bdc20466c564f88498d903a6f98bce2d10"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_created": {
@@ -2998,6 +3870,206 @@
         "CV-634",
         "SP-614"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            18305,
+            18356,
+            18549,
+            18633,
+            18672,
+            18756,
+            18840,
+            18924,
+            19008,
+            19092,
+            19176,
+            19260,
+            19344,
+            19428,
+            19512,
+            19596,
+            19680,
+            19764,
+            19848,
+            19952,
+            20121,
+            20173,
+            20274,
+            20358,
+            20397,
+            20481,
+            20565,
+            20649,
+            20733,
+            20817,
+            20901,
+            20985,
+            21069,
+            21153,
+            21237,
+            21321,
+            21405,
+            21489,
+            21573,
+            21677
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            977,
+            7405,
+            24798,
+            24800,
+            24811,
+            24814,
+            24820,
+            24823,
+            24825,
+            24896
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/Document_Packaging_Policy.md",
+          "lines": [
+            90,
+            649,
+            674
+          ],
+          "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29281,
+            29283,
+            29290,
+            29293,
+            29296,
+            29298,
+            29340
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            124611,
+            124691,
+            124898
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/Commands_System.md",
+          "lines": [
+            281,
+            1482
+          ],
+          "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            1977,
+            1984,
+            2079,
+            2130,
+            2386,
+            2426
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            111
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            1663,
+            2048,
+            10777,
+            10969,
+            13448,
+            30028,
+            30030,
+            30034,
+            30049,
+            30052,
+            30085,
+            30198
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "190b20b6b3ad234eeedf60194d5006dcb0c075cb38ed7de3eaccb6a848bc5324"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_created.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "23148a6cc095ad63995bcb244a6bf2e61879628cb3d5d8b93f0d5dd80cdc3b4d"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-614",
+          "line": 30028,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "2422caaa42f781c409128ea84cf6a69c5629d6a452b48dfa90fa6fa68cf5bb39"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-634",
+          "line": 24798,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "7fe5e6cfb4908e1deda8c7889bc2754359ec244ef533b571776b4b779cfaee74"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-614",
+          "line": 29281,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "fefdea99c5dd349f0cfd22b6954faf0fa43b7dfb2a75ef62b73b0e63163bde3f"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_deleted": {
@@ -3438,6 +4510,185 @@
         "CV-635",
         "SP-615"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            21846,
+            21897,
+            22090,
+            22174,
+            22213,
+            22297,
+            22381,
+            22465,
+            22549,
+            22633,
+            22717,
+            22801,
+            22885,
+            22969,
+            23053,
+            23137,
+            23221,
+            23305,
+            23389,
+            23493,
+            23662,
+            23714,
+            23815,
+            23899,
+            23938,
+            24022,
+            24106,
+            24190,
+            24274,
+            24358,
+            24442,
+            24526,
+            24610,
+            24694,
+            24778,
+            24862,
+            24946,
+            25030,
+            25114,
+            25218
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            977,
+            7407,
+            24906,
+            24908,
+            24919,
+            24922,
+            24928,
+            24931,
+            24933,
+            25004
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29348,
+            29350,
+            29357,
+            29360,
+            29364,
+            29365,
+            29408
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            125109,
+            125189,
+            125396
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            2466,
+            2473,
+            2568,
+            2619,
+            2875,
+            2915
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            135
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            10779,
+            30209,
+            30211,
+            30215,
+            30230,
+            30233,
+            30267,
+            30380
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_deleted_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "0874692e54551c0e6de85a6c34b0b07da1838f4464e615d173aacadd20a55cc3"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_deleted.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "2a255678b4177621dc58025b76803514e2f6c57e59f28d214df2c316233be986"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-615",
+          "line": 30209,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "817fce8f1ac687f321ea672930862aa7dd1851a8b2c75172235d0a31dd28f828"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-635",
+          "line": 24906,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "e0f0111ac4bff0f6c727c0a654a52bee782abd075467541de9565192b3b25560"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-615",
+          "line": 29348,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "c120efd305c216897c6afbb07dfcaeda5ee0ee69b074d9a5e0d9afab6119522c"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_bound": {
@@ -4021,6 +5272,196 @@
         "CV-636",
         "SP-616"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            25387,
+            25442,
+            25637,
+            25723,
+            25762,
+            25848,
+            25934,
+            26020,
+            26106,
+            26192,
+            26278,
+            26364,
+            26450,
+            26536,
+            26622,
+            26708,
+            26794,
+            26880,
+            26966,
+            27074,
+            27245,
+            27301,
+            27404,
+            27490,
+            27529,
+            27615,
+            27701,
+            27787,
+            27873,
+            27959,
+            28045,
+            28131,
+            28217,
+            28303,
+            28389,
+            28475,
+            28561,
+            28647,
+            28733,
+            28841
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            983,
+            7456,
+            25014,
+            25016,
+            25027,
+            25030,
+            25037,
+            25039,
+            25041,
+            25113
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            2990,
+            3033,
+            3365,
+            18921,
+            18949,
+            19110,
+            19138,
+            21189,
+            29416,
+            29418,
+            29425,
+            29428,
+            29431,
+            29433,
+            29475
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            125607,
+            125687,
+            125894
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            2955,
+            2962,
+            3057,
+            3110,
+            3366,
+            3406
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            159
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            1638,
+            1642,
+            10781,
+            10836,
+            30391,
+            30393,
+            30397,
+            30412,
+            30415,
+            30448,
+            30561
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_bound_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "074185ad088d4ca3689fbd286c4bcf59a88468c4894f25a6b4893a96d0fc6977"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_bound.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "e289c31ad0dd52dc8b5d408faf53c39324ceb4651ea435c34e62a65bc4543743"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-616",
+          "line": 30391,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "60f96b4eb8397aa4c42e4d2f0b008c15ec3859f84dd936c0ea6409ab4322ce6c"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-636",
+          "line": 25014,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "52365c796a801c5aa60a16b91b0780224f5c68be0133757b3537deb359a70ee5"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-616",
+          "line": 29416,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "c0caee3ade09ccfd91d3725e7da39d7b48c8a37ed771bec25ae81e573b13fdfe"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_create_failed": {
@@ -4455,6 +5896,179 @@
         "CV-637",
         "SP-617"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            29012,
+            29063,
+            29256,
+            29340,
+            29379,
+            29463,
+            29547,
+            29631,
+            29715,
+            29799,
+            29883,
+            29967,
+            30051,
+            30135,
+            30219,
+            30303,
+            30387,
+            30471,
+            30555,
+            30659,
+            30828,
+            30880,
+            30981,
+            31065,
+            31104,
+            31188,
+            31272,
+            31356,
+            31440,
+            31524,
+            31608,
+            31692,
+            31776,
+            31860,
+            31944,
+            32028,
+            32112,
+            32196,
+            32280,
+            32384
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            986,
+            7459,
+            25123,
+            25125,
+            25136,
+            25139,
+            25146,
+            25148,
+            25150,
+            25222
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3368,
+            21192,
+            29483,
+            29485,
+            29492,
+            29495,
+            29498,
+            29500,
+            29542
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            126105,
+            126185,
+            126392
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            3446,
+            3453,
+            3548,
+            3599,
+            3855,
+            3895
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            183
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1645,
+            10839,
+            30572,
+            30574,
+            30578,
+            30593,
+            30596,
+            30629,
+            30742
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_create_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "fca2634601070fb6280bcced24a6b11c879837add991cb56b0429dbc946caa2b"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-617",
+          "line": 30572,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "84441960d8b8d683015abca6a197a0804295d8bc826019a1966a7b38df1f9ece"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-637",
+          "line": 25123,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "c11f80fa5032b78302826b754398b6de44bdbbede42b305dfbb0a9b0be3f9536"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-617",
+          "line": 29483,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "086bce64b2992ec4d26fc9ff4619d1eda410b6e55794da96cb4022f71f63b734"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_merge_failed": {
@@ -4889,6 +6503,179 @@
         "CV-638",
         "SP-618"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            32553,
+            32612,
+            32809,
+            32897,
+            32936,
+            33024,
+            33112,
+            33200,
+            33288,
+            33376,
+            33464,
+            33552,
+            33640,
+            33728,
+            33816,
+            33904,
+            33992,
+            34080,
+            34168,
+            34280,
+            34453,
+            34513,
+            34618,
+            34706,
+            34745,
+            34833,
+            34921,
+            35009,
+            35097,
+            35185,
+            35273,
+            35361,
+            35449,
+            35537,
+            35625,
+            35713,
+            35801,
+            35889,
+            35977,
+            36089
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            988,
+            7461,
+            25232,
+            25234,
+            25245,
+            25248,
+            25255,
+            25257,
+            25259,
+            25331
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3370,
+            21231,
+            29550,
+            29552,
+            29559,
+            29562,
+            29565,
+            29567,
+            29609
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            126603,
+            126683,
+            126890
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            3935,
+            3942,
+            4037,
+            4092,
+            4348,
+            4388
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            207
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1647,
+            10841,
+            30753,
+            30755,
+            30759,
+            30774,
+            30777,
+            30810,
+            30923
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merge_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "f5822e3912c029bc4a26942de557881c299a88924aaf8d32b9bf6b66ea972dd6"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-618",
+          "line": 30753,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "6243799ed146fb5828fcaa50af8d12440b1e743489770d1cd68f98b0a315a48a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-638",
+          "line": 25232,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "743698c272d335687fa894ad00cb454dfe2628616b13d89b9015ae961dea526e"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-618",
+          "line": 29550,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "6dbc6dab3ea4d4880befff80494cb32b3fccc780b4a96bfd2d1020e741506a8f"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_merged": {
@@ -5323,6 +7110,179 @@
         "CV-639",
         "SP-619"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            36262,
+            36319,
+            36515,
+            36602,
+            36641,
+            36728,
+            36815,
+            36902,
+            36989,
+            37076,
+            37163,
+            37250,
+            37337,
+            37424,
+            37511,
+            37598,
+            37685,
+            37772,
+            37859,
+            37969,
+            38141,
+            38199,
+            38303,
+            38390,
+            38429,
+            38516,
+            38603,
+            38690,
+            38777,
+            38864,
+            38951,
+            39038,
+            39125,
+            39212,
+            39299,
+            39386,
+            39473,
+            39560,
+            39647,
+            39757
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            987,
+            7460,
+            25341,
+            25343,
+            25354,
+            25357,
+            25364,
+            25366,
+            25368,
+            25440
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3369,
+            21230,
+            29617,
+            29619,
+            29626,
+            29629,
+            29632,
+            29634,
+            29676
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            127101,
+            127181,
+            127388
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            4428,
+            4435,
+            4530,
+            4584,
+            4840,
+            4880
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            231
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1646,
+            10840,
+            30934,
+            30936,
+            30940,
+            30955,
+            30958,
+            30991,
+            31104
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merged_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "7d38c74089af5ada8dcfa000991e4005c3df268ec5f53604f539601750987926"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-619",
+          "line": 30934,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "f936ac9e2c8fc7c6ff1dadf21b299263003f4602df38c4e0365cb6cbbd7bae13"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-639",
+          "line": 25341,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "7e21d6a094330c973766e2412527840321e08d28e7f86a9fc40ef5c8b68c54c3"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-619",
+          "line": 29617,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "5f854317114ab2ed56d63e6119408eb67b174b698146b65785c88101474ca23d"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_pr_created": {
@@ -5757,6 +7717,179 @@
         "CV-640",
         "SP-620"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            39929,
+            39986,
+            40182,
+            40269,
+            40308,
+            40395,
+            40482,
+            40569,
+            40656,
+            40743,
+            40830,
+            40917,
+            41004,
+            41091,
+            41178,
+            41265,
+            41352,
+            41439,
+            41526,
+            41636,
+            41808,
+            41866,
+            41970,
+            42057,
+            42096,
+            42183,
+            42270,
+            42357,
+            42444,
+            42531,
+            42618,
+            42705,
+            42792,
+            42879,
+            42966,
+            43053,
+            43140,
+            43227,
+            43314,
+            43424
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            989,
+            7462,
+            25450,
+            25452,
+            25463,
+            25466,
+            25473,
+            25475,
+            25477,
+            25549
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3371,
+            21232,
+            29684,
+            29686,
+            29693,
+            29696,
+            29698,
+            29700,
+            29742
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            127599,
+            127679,
+            127886
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            4920,
+            4927,
+            5022,
+            5076,
+            5332,
+            5372
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            255
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1648,
+            10842,
+            31115,
+            31117,
+            31121,
+            31136,
+            31139,
+            31172,
+            31285
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_created_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "319a2f47f91b60bbf369fc40c5a3c4d4d09cdc9b0b650d3a2fa53fbb0c5f4ac9"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-620",
+          "line": 31115,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "d6e18f696bdd694a6925093603196254b311322b368c9260e8a624ab0cad6151"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-640",
+          "line": 25450,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "7ad2b5dea2dd9000330d6d7c194af5131bbccd7a0eeacfaeafcbb5cb76979ec9"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-620",
+          "line": 29684,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "8520091c24fcf850ebddbbea8d570bc5df8fec1aa649b774bd1bb5df4c20a4b7"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_pr_failed": {
@@ -6327,6 +8460,195 @@
         "CV-641",
         "SP-621"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            43596,
+            43651,
+            43846,
+            43932,
+            43971,
+            44057,
+            44143,
+            44229,
+            44315,
+            44401,
+            44487,
+            44573,
+            44659,
+            44745,
+            44831,
+            44917,
+            45003,
+            45089,
+            45175,
+            45283,
+            45454,
+            45510,
+            45613,
+            45699,
+            45738,
+            45824,
+            45910,
+            45996,
+            46082,
+            46168,
+            46254,
+            46340,
+            46426,
+            46512,
+            46598,
+            46684,
+            46770,
+            46856,
+            46942,
+            47050
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            990,
+            995,
+            7429,
+            7439,
+            7463,
+            25559,
+            25561,
+            25572,
+            25575,
+            25582,
+            25584,
+            25586,
+            25658
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3268,
+            3272,
+            3372,
+            20521,
+            20547,
+            21233,
+            29750,
+            29752,
+            29759,
+            29762,
+            29765,
+            29767,
+            29809
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            128097,
+            128177,
+            128384
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            5412,
+            5419,
+            5514,
+            5567,
+            5823,
+            5863
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            279
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1649,
+            1654,
+            10843,
+            31296,
+            31298,
+            31302,
+            31317,
+            31320,
+            31353,
+            31466
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "019a5ebdf2f4d4520743fc45eb3b8ca33a948ee7f9ab5677ee4773bca16049dc"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_pr_failed.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "790a2b401a5a7a00fbfef8a48d3f62905b213a228f9d8aca4ac68eb70efa42c3"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-621",
+          "line": 31296,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "b17076ac8201c29f1c57002fc36ab8b299d27e750fb48abcebc2ad03e8565c85"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-641",
+          "line": 25559,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "62f03a946945b6361b1d129b46230a1e569612936588d0fc74dad707aed32b68"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-621",
+          "line": 29750,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "aea312cbb7ca877e559844e7441e4552b1ea9060b8d656b0a8fd77282d07c0a4"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_pre_merge_test_failed": {
@@ -6788,6 +9110,181 @@
         "CV-642",
         "SP-622"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            47221,
+            47286,
+            47785,
+            47876,
+            47915,
+            48006,
+            48097,
+            48188,
+            48279,
+            48370,
+            48461,
+            48552,
+            48643,
+            48734,
+            48825,
+            48916,
+            49007,
+            49098,
+            49189,
+            49307,
+            49483,
+            49549,
+            49956,
+            50047,
+            50086,
+            50177,
+            50268,
+            50359,
+            50450,
+            50541,
+            50632,
+            50723,
+            50814,
+            50905,
+            50996,
+            51087,
+            51178,
+            51269,
+            51360,
+            51478
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            993,
+            7466,
+            25668,
+            25670,
+            25681,
+            25684,
+            25691,
+            25693,
+            25695,
+            25767
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3375,
+            21274,
+            29817,
+            29819,
+            29828,
+            29831,
+            29834,
+            29836,
+            29893
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            128595,
+            128675,
+            128882
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            5903,
+            5910,
+            6005,
+            6063,
+            6319,
+            6359
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            303
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1652,
+            1654,
+            10846,
+            10862,
+            31477,
+            31479,
+            31483,
+            31498,
+            31501,
+            31535,
+            31648
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "b14c37930d1e3890c607e2ba361b19fecb7780554399e2ad89aa5340c8cfccd9"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-622",
+          "line": 31477,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "b3082b740d72c6b1e854aa0343d27753b36248820f107550706d3a2e5d6be327"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-642",
+          "line": 25668,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "98a849801722c0d17ea4f5bd53cd22e548b3b2dedebb516b06066b844d7fb5a6"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-622",
+          "line": 29817,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "61691c570c6669bdd75baf2b8d69e3955a953ed1432e750f38be473cbe866ab4"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_pre_merge_test_passed": {
@@ -7249,6 +9746,181 @@
         "CV-643",
         "SP-623"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            51654,
+            51711,
+            52129,
+            52216,
+            52255,
+            52342,
+            52429,
+            52516,
+            52603,
+            52690,
+            52777,
+            52864,
+            52951,
+            53038,
+            53125,
+            53212,
+            53299,
+            53386,
+            53473,
+            53583,
+            53755,
+            53813,
+            54139,
+            54226,
+            54265,
+            54352,
+            54439,
+            54526,
+            54613,
+            54700,
+            54787,
+            54874,
+            54961,
+            55048,
+            55135,
+            55222,
+            55309,
+            55396,
+            55483,
+            55593
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            992,
+            7465,
+            25777,
+            25779,
+            25790,
+            25793,
+            25800,
+            25802,
+            25804,
+            25876
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3374,
+            21273,
+            29901,
+            29903,
+            29912,
+            29915,
+            29918,
+            29920,
+            29972
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            129093,
+            129173,
+            129380
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            6399,
+            6406,
+            6501,
+            6555,
+            6811,
+            6851
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            327
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1651,
+            1654,
+            10845,
+            10862,
+            31659,
+            31661,
+            31665,
+            31680,
+            31683,
+            31717,
+            31830
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "03f5c8442ae49e32340cd5037d73c022764198c29d6abd8a6787458917909f3b"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-623",
+          "line": 31659,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "d7082e75a27b609e97718d0aa95feffbdaaab1c0317984c151cdc661d1f86cf1"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-643",
+          "line": 25777,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "50b1dc6e8fa877bf15a3c76ddacfd0bc40e0f6f4d7729e1020aca6ec166fe6e4"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-623",
+          "line": 29901,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "c0acf1702a759176bca5e56fdc685caa5e08c6b5b5b91ed289eac7c7701693eb"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_pre_merge_test_started": {
@@ -7722,6 +10394,188 @@
         "CV-644",
         "SP-624"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            47484,
+            49655,
+            51905,
+            53915,
+            55765,
+            55820,
+            56015,
+            56101,
+            56140,
+            56226,
+            56312,
+            56398,
+            56484,
+            56570,
+            56656,
+            56742,
+            56828,
+            56914,
+            57000,
+            57086,
+            57172,
+            57258,
+            57344,
+            57452,
+            57623,
+            57679,
+            57782,
+            57868,
+            57907,
+            57993,
+            58079,
+            58165,
+            58251,
+            58337,
+            58423,
+            58509,
+            58595,
+            58681,
+            58767,
+            58853,
+            58939,
+            59025,
+            59111,
+            59219
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            991,
+            7464,
+            25886,
+            25888,
+            25899,
+            25902,
+            25909,
+            25912,
+            25914,
+            25985
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3373,
+            21272,
+            29821,
+            29858,
+            29980,
+            29982,
+            29989,
+            29992,
+            29996,
+            29997,
+            30040
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            129591,
+            129671,
+            129878
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            6891,
+            6898,
+            6993,
+            7046,
+            7302,
+            7342
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            351
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1650,
+            1654,
+            10844,
+            10860,
+            10862,
+            31841,
+            31843,
+            31847,
+            31862,
+            31865,
+            31899,
+            32012
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_started_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "45b61132358a8ae7ceebbef3e700a6e971b553ff13eb957ea87cf5962c90deaf"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-624",
+          "line": 31841,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "c4cfda9f1fe08dafb5b5ef42c5ca4ff37567d219704c0215c0bb2a8d29a7d919"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-644",
+          "line": 25886,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "819f24b661147ebc163de12c81230d87db369beb073b766af5c4287f0b4ffa0c"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-624",
+          "line": 29980,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "681cff719f04ce268fa9f18e60a8dc57cd494fae6a09af8db7f0cd013dc234c2"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_renamed": {
@@ -8240,6 +11094,191 @@
         "CV-645",
         "SP-625"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            59390,
+            59443,
+            59637,
+            59722,
+            59761,
+            59846,
+            59931,
+            60016,
+            60101,
+            60186,
+            60271,
+            60356,
+            60441,
+            60526,
+            60611,
+            60696,
+            60781,
+            60866,
+            60951,
+            61057,
+            61227,
+            61281,
+            61383,
+            61468,
+            61507,
+            61592,
+            61677,
+            61762,
+            61847,
+            61932,
+            62017,
+            62102,
+            62187,
+            62272,
+            62357,
+            62442,
+            62527,
+            62612,
+            62697,
+            62803
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            985,
+            7458,
+            25995,
+            25997,
+            26008,
+            26011,
+            26018,
+            26020,
+            26022,
+            26094
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3061,
+            3367,
+            19285,
+            19294,
+            19315,
+            21191,
+            30048,
+            30050,
+            30057,
+            30060,
+            30063,
+            30065,
+            30107
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            130089,
+            130169,
+            130376
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            7382,
+            7389,
+            7484,
+            7536,
+            7792,
+            7832
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            375
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1644,
+            10838,
+            32023,
+            32025,
+            32029,
+            32044,
+            32047,
+            32080,
+            32193
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_renamed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "820644ded23e3f20e87e27d4775d13dfb3ed115de93bc13692e25c30ae70caba"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_renamed.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "58f30892f7a24a6f4d912b256459ffc2e3cf1a01d8d6b3cd0907fb3192454568"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-625",
+          "line": 32023,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "547a337d12e36e28619e55afd5b12ffd0f6d59697e12439ef43f1036b136686b"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-645",
+          "line": 25995,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "26b7894ec7c662e4ffe2d10a94b6b27fe46b4198234c1649b5b0e10ae9c16a1d"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-625",
+          "line": 30048,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "7d563a36e26a01af0440f04ebfff95645dbf1c784def887377b76e7201504c26"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   },
   "chat.thread_worktree_unbound": {
@@ -8810,6 +11849,195 @@
         "CV-646",
         "SP-626"
       ]
+    },
+    "review_round_3": {
+      "base_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+      "scope": "Live non-hidden Plans owner Markdown, schemas and registries; excludes generated shards, ledgers and bootstrap. Search this exact family independently; its existing own ACD/CV/SP units and SP-278/SP-337 govern.",
+      "searched_files": 930,
+      "hits": [
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            62973,
+            63024,
+            63217,
+            63301,
+            63340,
+            63424,
+            63508,
+            63592,
+            63676,
+            63760,
+            63844,
+            63928,
+            64012,
+            64096,
+            64180,
+            64264,
+            64348,
+            64432,
+            64516,
+            64620,
+            64789,
+            64841,
+            64942,
+            65026,
+            65065,
+            65149,
+            65233,
+            65317,
+            65401,
+            65485,
+            65569,
+            65653,
+            65737,
+            65821,
+            65905,
+            65989,
+            66073,
+            66157,
+            66241,
+            66345
+          ],
+          "sha256": "ee023dcd9113306fb2de1b8e9f70f06ae9dde28e6b1a61d68784e6ad7bc8ac3a"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            984,
+            7457,
+            26104,
+            26106,
+            26117,
+            26120,
+            26127,
+            26129,
+            26131,
+            26203
+          ],
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            2990,
+            2996,
+            3127,
+            3158,
+            3366,
+            18922,
+            18950,
+            19637,
+            21190,
+            30115,
+            30117,
+            30124,
+            30127,
+            30131,
+            30132,
+            30175
+          ],
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            130587,
+            130667,
+            130874
+          ],
+          "sha256": "031967f76dafdd323d012d8ed47836c00990df7cbf6631ee67687c85526a77c1"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            7872,
+            7879,
+            7974,
+            8025,
+            8281,
+            8321
+          ],
+          "sha256": "a7470cb152902ed9d5e88dab97cfa93bdecdf12bb26d929606211c96e9eef63c"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            399
+          ],
+          "sha256": "351e51683d176a405247e36914981180e48ae79a5a16d43ece637f7f31ca5c36"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1638,
+            1643,
+            10837,
+            32204,
+            32206,
+            32210,
+            32225,
+            32228,
+            32261,
+            32374
+          ],
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_unbound_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "b71b556b3dc3b9b11a0c04c28489c864c9f2ccd3a1ace3a2e15d4ac49f053a33"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_unbound.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "9b30b19c91f92f20caf99480daf6e55fee44736033c4804adcebd3f6a19bc2b4"
+        }
+      ],
+      "owner_citations": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-626",
+          "line": 32204,
+          "sha256": "5edd6fc87b28a06ace0a3dd0c3c5770de1ca64f67d66267024f29ef6bc1a7fe8",
+          "original_body_sha256": "7c0c112385dd3a0b074cf90f0b13753b392f3a145c8b99f179015da484754d72"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-646",
+          "line": 26104,
+          "sha256": "21c282b33c517d0d822db8486c1c0cc58c3da1d6585e6843fcab7016c57219ff",
+          "original_body_sha256": "935b3bae6c47476c866868cbc54f58a5cfaad17f2077c951847ef62c6cdf043b"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-626",
+          "line": 30115,
+          "sha256": "8b69203da615628a43a25ce979f60c1162e7a7b136943d978112e0218f62c1fa",
+          "original_body_sha256": "f8bfaf155e87bdc3bfc2bc9fd17d9194c129badc782032586d69e47e03a6be03"
+        }
+      ],
+      "existing_bindings_reused": [
+        "SP-278 durable source token and original source commitment",
+        "SP-337 original body/access/readback",
+        "own SP retained original-version historical lookup/current permissions and canonical live-state separation",
+        "own CV original edition/identity and current append/retry policy"
+      ],
+      "negative_evidence": "No missing persisted binding is authored in this round. The defects are divergent embedded copies and missing complete reference-closure/retained-history oracle coverage. Test witnesses model already specified original-source and access checks; they are not new records, authoritative receipts or admission.",
+      "newly_authored_product_bindings": []
     }
   }
 }

@@ -123836,11 +123836,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -123849,7 +123849,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -123883,7 +123883,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -123895,7 +123895,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -123909,23 +123909,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -124043,11 +124043,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -124056,7 +124056,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -124090,7 +124090,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -124102,7 +124102,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -124116,23 +124116,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -124154,7 +124154,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -124334,11 +124334,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -124347,7 +124347,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -124381,7 +124381,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -124393,7 +124393,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -124407,23 +124407,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -124541,11 +124541,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -124554,7 +124554,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -124588,7 +124588,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -124600,7 +124600,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -124614,23 +124614,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -124652,7 +124652,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -124832,11 +124832,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -124845,7 +124845,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -124879,7 +124879,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -124891,7 +124891,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -124905,23 +124905,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -125039,11 +125039,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -125052,7 +125052,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -125086,7 +125086,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -125098,7 +125098,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -125112,23 +125112,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -125150,7 +125150,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -125330,11 +125330,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -125343,7 +125343,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -125377,7 +125377,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -125389,7 +125389,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -125403,23 +125403,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -125537,11 +125537,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -125550,7 +125550,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -125584,7 +125584,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -125596,7 +125596,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -125610,23 +125610,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -125648,7 +125648,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -125828,11 +125828,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -125841,7 +125841,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -125875,7 +125875,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -125887,7 +125887,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -125901,23 +125901,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -126035,11 +126035,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -126048,7 +126048,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -126082,7 +126082,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -126094,7 +126094,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -126108,23 +126108,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -126146,7 +126146,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -126326,11 +126326,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -126339,7 +126339,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -126373,7 +126373,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -126385,7 +126385,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -126399,23 +126399,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -126533,11 +126533,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -126546,7 +126546,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -126580,7 +126580,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -126592,7 +126592,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -126606,23 +126606,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -126644,7 +126644,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -126824,11 +126824,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -126837,7 +126837,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -126871,7 +126871,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -126883,7 +126883,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -126897,23 +126897,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -127031,11 +127031,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -127044,7 +127044,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -127078,7 +127078,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -127090,7 +127090,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -127104,23 +127104,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -127142,7 +127142,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -127322,11 +127322,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -127335,7 +127335,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -127369,7 +127369,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -127381,7 +127381,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -127395,23 +127395,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -127529,11 +127529,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -127542,7 +127542,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -127576,7 +127576,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -127588,7 +127588,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -127602,23 +127602,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -127640,7 +127640,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -127820,11 +127820,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -127833,7 +127833,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -127867,7 +127867,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -127879,7 +127879,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -127893,23 +127893,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -128027,11 +128027,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -128040,7 +128040,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -128074,7 +128074,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -128086,7 +128086,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -128100,23 +128100,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -128138,7 +128138,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -128318,11 +128318,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -128331,7 +128331,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -128365,7 +128365,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -128377,7 +128377,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -128391,23 +128391,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -128525,11 +128525,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -128538,7 +128538,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -128572,7 +128572,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -128584,7 +128584,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -128598,23 +128598,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -128636,7 +128636,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -128816,11 +128816,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -128829,7 +128829,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -128863,7 +128863,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -128875,7 +128875,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -128889,23 +128889,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -129023,11 +129023,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -129036,7 +129036,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -129070,7 +129070,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -129082,7 +129082,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -129096,23 +129096,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -129134,7 +129134,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -129314,11 +129314,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -129327,7 +129327,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -129361,7 +129361,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -129373,7 +129373,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -129387,23 +129387,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -129521,11 +129521,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -129534,7 +129534,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -129568,7 +129568,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -129580,7 +129580,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -129594,23 +129594,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -129632,7 +129632,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -129812,11 +129812,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -129825,7 +129825,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -129859,7 +129859,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -129871,7 +129871,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -129885,23 +129885,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -130019,11 +130019,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -130032,7 +130032,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -130066,7 +130066,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -130078,7 +130078,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -130092,23 +130092,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -130130,7 +130130,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -130310,11 +130310,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -130323,7 +130323,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -130357,7 +130357,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -130369,7 +130369,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -130383,23 +130383,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -130517,11 +130517,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -130530,7 +130530,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -130564,7 +130564,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -130576,7 +130576,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -130590,23 +130590,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -130628,7 +130628,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -130808,11 +130808,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -130821,7 +130821,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -130855,7 +130855,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -130867,7 +130867,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -130881,23 +130881,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -131015,11 +131015,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -131028,7 +131028,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -131062,7 +131062,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -131074,7 +131074,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -131088,23 +131088,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -131126,7 +131126,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -131306,11 +131306,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -131319,7 +131319,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -131353,7 +131353,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -131365,7 +131365,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -131379,23 +131379,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -131513,11 +131513,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -131526,7 +131526,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -131560,7 +131560,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -131572,7 +131572,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -131586,23 +131586,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -131624,7 +131624,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
@@ -131804,11 +131804,11 @@
               },
               "generation_id": {
                 "type": "string",
-                "pattern": "^eig_[0-9a-f]{64}$"
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
               },
               "generation_anchor_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "frontier_revision": {
                 "type": "integer",
@@ -131817,7 +131817,7 @@
               },
               "frontier_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
               },
               "index_dataset_name": {
                 "type": "string",
@@ -131851,7 +131851,7 @@
                   },
                   "current_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "selected_segment_generation": {
                     "type": "integer",
@@ -131863,7 +131863,7 @@
                   },
                   "manifest_bytes_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "manifest_generation": {
                     "type": "integer",
@@ -131877,23 +131877,23 @@
                   },
                   "manifest_survivor_prefix_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retained_inventory_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "durable_watermarks_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "excluded_ranges_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   },
                   "retired_inputs_sha256": {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                   }
                 }
               }
@@ -132011,11 +132011,11 @@
                     },
                     "generation_id": {
                       "type": "string",
-                      "pattern": "^eig_[0-9a-f]{64}$"
+                      "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "generation_anchor_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "frontier_revision": {
                       "type": "integer",
@@ -132024,7 +132024,7 @@
                     },
                     "frontier_sha256": {
                       "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
+                      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                     },
                     "index_dataset_name": {
                       "type": "string",
@@ -132058,7 +132058,7 @@
                         },
                         "current_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "selected_segment_generation": {
                           "type": "integer",
@@ -132070,7 +132070,7 @@
                         },
                         "manifest_bytes_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "manifest_generation": {
                           "type": "integer",
@@ -132084,23 +132084,23 @@
                         },
                         "manifest_survivor_prefix_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retained_inventory_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "durable_watermarks_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "excluded_ranges_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         },
                         "retired_inputs_sha256": {
                           "type": "string",
-                          "pattern": "^[0-9a-f]{64}$"
+                          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
                         }
                       }
                     }
@@ -132122,7 +132122,7 @@
                 "retired_at_utc": {
                   "type": "string",
                   "format": "date-time",
-                  "pattern": "Z$"
+                  "pattern": "Z$(?![\\s\\S])"
                 }
               }
             }
