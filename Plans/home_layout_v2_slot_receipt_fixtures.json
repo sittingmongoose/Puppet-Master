@@ -1,0 +1,1917 @@
+{
+  "schema_id": "pm.home_layout_v2_slot_receipt.contract_fixtures.v1",
+  "status": "STATIC_CONTRACT_SHAPES_AND_JOINED_VALUES_ONLY",
+  "native_execution": "NOT_RUN",
+  "schema_ref": "Plans/home_layout_v2_slot_receipt.schema.json",
+  "checker": "python3 scripts/pm_home_layout_v2_slot_receipt.py",
+  "owner_refs": [
+    "Plans/storage-plan.md#SP-400",
+    "Plans/storage-plan.md#SP-330",
+    "Plans/storage-plan.md#SP-273",
+    "Plans/Contracts_V0.md#CV-361"
+  ],
+  "source_lineage": [
+    "Plans/home_layout_full_value_contract_fixtures.json (current_v3_empty_slot, current_v3_terminal_receipt, current_v3_original_sir_custody)",
+    "Plans/home_workspace_layout_v2_fixtures.json (valid record focus)"
+  ],
+  "notes": "Layout source bytes are a synthetic adapter capture (compact sorted UTF-8 JSON); SP-273 says these digests bind the bytes the Home source adapter actually supplies and do not make the fixture encoder the canonical Home serializer. Identity capture and migration-core bytes use canonical MessagePack (DL-270). Each invalid case applies its ops to the named valid case; rejected_by names the schema or the invariant (I1-I9 in the schema's $comment) that refuses it.",
+  "valid": [
+    {
+      "id": "home4_empty_slot",
+      "definition": "transaction_slot",
+      "value": {
+        "schema_id": "pm.storage_value.home_layout_transaction_slot.v1",
+        "schema_version": "4.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "project_id": "project-fixture",
+        "workspace_tab_id": "workspace-fixture",
+        "producer_id": "home.workspace_layout_commit.v1",
+        "producer_version": "4.0.0",
+        "installation_receipt_ref": "migration_receipt.v1:synthetic-home-pending-v3-install",
+        "slot_generation": 6,
+        "state": "empty",
+        "binding": null,
+        "prior_layout": null,
+        "candidate_layout": null,
+        "prior_layout_sha256": null,
+        "candidate_layout_sha256": null,
+        "readback": null,
+        "event_semantics": null,
+        "last_terminal_operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+        "updated_at_utc": "2026-09-12T08:00:06Z",
+        "migration_generation": {
+          "generation_id": "home-migration:synthetic-home-pending-v3-install",
+          "migration_id": "synthetic-home-pending-v3-install",
+          "migration_completed_at_utc": "2026-01-01T00:01:00Z",
+          "migration_receipt_key": "migration_receipt.v1:synthetic-home-pending-v3-install",
+          "migration_receipt_sha256": "7a47caccfe28e70f36be6dc4c5077dd427e62a4cfb52f55a78aed8d3e58d5c95",
+          "backup_ref": "backup:home-pending-v3-install",
+          "store_transition": {
+            "store_or_family_id": "synthetic-home-redb",
+            "from_version": "900000",
+            "to_version": "900001"
+          },
+          "family_transition": {
+            "store_or_family_id": "home_layout_transaction_slot",
+            "from_version": "0.0.0",
+            "to_version": "3.0.0"
+          }
+        },
+        "prior_migration_generation": null,
+        "pending_sir_custody": null,
+        "pending_append_origin": null,
+        "prior_layout_source_bytes": null,
+        "candidate_layout_source_bytes": null
+      },
+      "why": "Empty Home4 slot: no binding, layouts, bytes, readback, event or pending custody."
+    },
+    {
+      "id": "home4_empty_slot_after_home3_migration",
+      "definition": "transaction_slot",
+      "value": {
+        "schema_id": "pm.storage_value.home_layout_transaction_slot.v1",
+        "schema_version": "4.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "project_id": "project-fixture",
+        "workspace_tab_id": "workspace-fixture",
+        "producer_id": "home.workspace_layout_commit.v1",
+        "producer_version": "4.0.0",
+        "installation_receipt_ref": "migration_receipt.v1:synthetic-home-pending-v3-install",
+        "slot_generation": 6,
+        "state": "empty",
+        "binding": null,
+        "prior_layout": null,
+        "candidate_layout": null,
+        "prior_layout_sha256": null,
+        "candidate_layout_sha256": null,
+        "readback": null,
+        "event_semantics": null,
+        "last_terminal_operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+        "updated_at_utc": "2026-11-04T00:01:00Z",
+        "migration_generation": {
+          "generation_id": "home-migration:synthetic-home4:1",
+          "migration_id": "synthetic-home4:1",
+          "migration_completed_at_utc": "2026-11-04T00:01:00Z",
+          "migration_receipt_key": "migration_receipt.v1:synthetic-home4:1",
+          "migration_receipt_sha256": "b9fc07607ec4907cfed750de2e053d8f2809b3f622f0c5ce1ac75f2177dba535",
+          "backup_ref": "backup:synthetic-home4:1",
+          "store_transition": {
+            "store_or_family_id": "synthetic-home-redb",
+            "from_version": "900000",
+            "to_version": "900001"
+          },
+          "family_transition": {
+            "store_or_family_id": "home_layout_transaction_slot",
+            "from_version": "3.0.0",
+            "to_version": "4.0.0"
+          }
+        },
+        "prior_migration_generation": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "logical_key": "home_layout_transaction_slot.v1:project-fixture:workspace-fixture",
+          "core": {
+            "schema_id": "pm.storage_value.home_layout_transaction_slot.v1",
+            "schema_version": "3.0.0",
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "project_id": "project-fixture",
+            "workspace_tab_id": "workspace-fixture",
+            "producer_id": "home.workspace_layout_commit.v1",
+            "producer_version": "3.0.0",
+            "installation_receipt_ref": "migration_receipt.v1:synthetic-home-pending-v3-install",
+            "slot_generation": 6,
+            "state": "empty",
+            "binding": null,
+            "prior_layout": null,
+            "candidate_layout": null,
+            "prior_layout_sha256": null,
+            "candidate_layout_sha256": null,
+            "readback": null,
+            "event_semantics": null,
+            "last_terminal_operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+            "updated_at_utc": "2026-09-12T08:00:06Z",
+            "prior_layout_source_bytes_base64": null,
+            "candidate_layout_source_bytes_base64": null,
+            "migration_generation": {
+              "generation_id": "home-migration:synthetic-home-pending-v3-install",
+              "migration_id": "synthetic-home-pending-v3-install",
+              "migration_completed_at_utc": "2026-01-01T00:01:00Z",
+              "migration_receipt_key": "migration_receipt.v1:synthetic-home-pending-v3-install",
+              "migration_receipt_sha256": "7a47caccfe28e70f36be6dc4c5077dd427e62a4cfb52f55a78aed8d3e58d5c95",
+              "backup_ref": "backup:home-pending-v3-install",
+              "store_transition": {
+                "store_or_family_id": "synthetic-home-redb",
+                "from_version": "900000",
+                "to_version": "900001"
+              },
+              "family_transition": {
+                "store_or_family_id": "home_layout_transaction_slot",
+                "from_version": "0.0.0",
+                "to_version": "3.0.0"
+              }
+            },
+            "pending_sir_custody": null,
+            "pending_append_origin": null
+          },
+          "core_bytes": "3gAYp2JpbmRpbmfAsGNhbmRpZGF0ZV9sYXlvdXTAt2NhbmRpZGF0ZV9sYXlvdXRfc2hhMjU2wNkkY2FuZGlkYXRlX2xheW91dF9zb3VyY2VfYnl0ZXNfYmFzZTY0wK9ldmVudF9zZW1hbnRpY3PAuGluc3RhbGxhdGlvbl9yZWNlaXB0X3JlZtk2bWlncmF0aW9uX3JlY2VpcHQudjE6c3ludGhldGljLWhvbWUtcGVuZGluZy12My1pbnN0YWxsu2xhc3RfdGVybWluYWxfb3BlcmF0aW9uX3JlZtlWaG9tZV9sYXlvdXRfb3BlcmF0aW9uOjk0NWY4NTIzYjA3MjBhOGQ4NDhiMjczMjFkOWE3YjIwOTYxM2FmNTkwZmQ2YzY0NWUzYjA2MzYyOGYyNjU1NmK0bWlncmF0aW9uX2dlbmVyYXRpb26IqmJhY2t1cF9yZWa+YmFja3VwOmhvbWUtcGVuZGluZy12My1pbnN0YWxssWZhbWlseV90cmFuc2l0aW9ug6xmcm9tX3ZlcnNpb26lMC4wLjCyc3RvcmVfb3JfZmFtaWx5X2lkvGhvbWVfbGF5b3V0X3RyYW5zYWN0aW9uX3Nsb3SqdG9fdmVyc2lvbqUzLjAuMK1nZW5lcmF0aW9uX2lk2TBob21lLW1pZ3JhdGlvbjpzeW50aGV0aWMtaG9tZS1wZW5kaW5nLXYzLWluc3RhbGy6bWlncmF0aW9uX2NvbXBsZXRlZF9hdF91dGO0MjAyNi0wMS0wMVQwMDowMTowMFqsbWlncmF0aW9uX2lk2SFzeW50aGV0aWMtaG9tZS1wZW5kaW5nLXYzLWluc3RhbGy1bWlncmF0aW9uX3JlY2VpcHRfa2V52TZtaWdyYXRpb25fcmVjZWlwdC52MTpzeW50aGV0aWMtaG9tZS1wZW5kaW5nLXYzLWluc3RhbGy4bWlncmF0aW9uX3JlY2VpcHRfc2hhMjU22UA3YTQ3Y2FjY2ZlMjhlNzBmMzZiZTZkYzRjNTA3N2RkNDI3ZTYyYTRjZmI1MmY1NWE3OGFlZDhkM2U1OGQ1Yzk1sHN0b3JlX3RyYW5zaXRpb26DrGZyb21fdmVyc2lvbqY5MDAwMDCyc3RvcmVfb3JfZmFtaWx5X2lks3N5bnRoZXRpYy1ob21lLXJlZGKqdG9fdmVyc2lvbqY5MDAwMDG1cGVuZGluZ19hcHBlbmRfb3JpZ2luwLNwZW5kaW5nX3Npcl9jdXN0b2R5wKxwcmlvcl9sYXlvdXTAs3ByaW9yX2xheW91dF9zaGEyNTbA2SBwcmlvcl9sYXlvdXRfc291cmNlX2J5dGVzX2Jhc2U2NMCrcHJvZHVjZXJfaWS/aG9tZS53b3Jrc3BhY2VfbGF5b3V0X2NvbW1pdC52MbBwcm9kdWNlcl92ZXJzaW9upTMuMC4wqnByb2plY3RfaWSvcHJvamVjdC1maXh0dXJlqHJlYWRiYWNrwKlzY2hlbWFfaWTZMHBtLnN0b3JhZ2VfdmFsdWUuaG9tZV9sYXlvdXRfdHJhbnNhY3Rpb25fc2xvdC52Ma5zY2hlbWFfdmVyc2lvbqUzLjAuMK9zbG90X2dlbmVyYXRpb24GpXN0YXRlpWVtcHR5s3N0b3JhZ2VfaW5zdGFuY2VfaWTZJDExMTExMTExLTExMTEtNDExMS04MTExLTExMTExMTExMTExMa51cGRhdGVkX2F0X3V0Y7QyMDI2LTA5LTEyVDA4OjAwOjA2WrB3b3Jrc3BhY2VfdGFiX2lksXdvcmtzcGFjZS1maXh0dXJl",
+          "core_sha256": "4338693b8473c5231e7a91fc67f311ace5176b27109248503642d9b28cb35d92",
+          "successor_generation_id": "home-migration:synthetic-home4:1",
+          "successor_migration_id": "synthetic-home4:1",
+          "successor_migration_completed_at_utc": "2026-11-04T00:01:00Z",
+          "successor_migration_receipt_key": "migration_receipt.v1:synthetic-home4:1",
+          "successor_migration_receipt_sha256": "b9fc07607ec4907cfed750de2e053d8f2809b3f622f0c5ce1ac75f2177dba535",
+          "backup_ref": "backup:synthetic-home4:1",
+          "backup_entry_key": "backup_entry:backup:synthetic-home4:1:home_layout_transaction_slot.v1:project-fixture:workspace-fixture",
+          "backup_entry_value_sha256": "ee4e160e551bae19c93dfa05c3073d9ea67f3cd7b7a3698e69133425ceda34d2",
+          "core_bytes_encoding": "home_slot_migration_core_canonical_msgpack.v1"
+        },
+        "pending_sir_custody": null,
+        "pending_append_origin": null,
+        "prior_layout_source_bytes": null,
+        "candidate_layout_source_bytes": null
+      },
+      "why": "First Home4 generation keeps the final empty Home3 core as its one prior migration core, re-encoded in canonical MessagePack (DL-270)."
+    },
+    {
+      "id": "home4_prepared_slot",
+      "definition": "transaction_slot",
+      "value": {
+        "schema_id": "pm.storage_value.home_layout_transaction_slot.v1",
+        "schema_version": "4.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "project_id": "project-fixture",
+        "workspace_tab_id": "workspace-fixture",
+        "producer_id": "home.workspace_layout_commit.v1",
+        "producer_version": "4.0.0",
+        "installation_receipt_ref": "migration_receipt.v1:synthetic-home-pending-v3-install",
+        "slot_generation": 7,
+        "state": "prepared",
+        "binding": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-fixture",
+          "workspace_tab_id": "workspace-fixture",
+          "operation_digest": "945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "command_id": "cmd.workspace_layout.move_surface",
+          "command_instance_id": "command-instance-fixture",
+          "command_idempotency_key": "request-idempotency-fixture",
+          "request_ref": "request:fixture",
+          "request_sha256": "4d0bfd205ee49cc7a0843257373d406cf16bf26a0137dbb783dec49be3b3f904",
+          "interaction_transaction_id": "interaction:fixture",
+          "correlation_id": "correlation:fixture",
+          "actor_ref": "actor:fixture",
+          "causal_event_ref": null,
+          "dispatch_ref": "dispatch:fixture",
+          "command_outcome_ref": "command-outcome:fixture",
+          "owner_operation_id": "owner-operation:fixture",
+          "expected_layout_revision": 7,
+          "normalized_command_payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+          "request_source_bytes_sha256": "09e1abb74a61fcf6679ea9686ab0595c013f6d40809cf6a66047033a8698ee6a"
+        },
+        "prior_layout": {
+          "schema_id": "pm.home_workspace_layout.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project-fixture",
+          "workspace_tab_id": "workspace-fixture",
+          "revision": 7,
+          "updated_at": "2026-10-09T12:00:00Z",
+          "root": {
+            "node": "panel",
+            "id": "panel-all",
+            "tab_ids": [
+              "dashboard:home",
+              "dashboard:agents",
+              "file:src/main.rs",
+              "file:src/routes/recipes.rs",
+              "plan:ap-index",
+              "terminal:t1",
+              "terminal:t2",
+              "output"
+            ],
+            "active_tab_id": "file:src/main.rs",
+            "preview_tab_id": null,
+            "pinned_count": 1,
+            "collapsed": false,
+            "locked": false
+          },
+          "tabs": {
+            "dashboard:home": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": true,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "home"
+              }
+            },
+            "dashboard:agents": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "agents"
+              }
+            },
+            "file:src/main.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/main.rs"
+              }
+            },
+            "file:src/routes/recipes.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/routes/recipes.rs"
+              }
+            },
+            "plan:ap-index": {
+              "kind": "plan",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "plan_id": "ap-index"
+              }
+            },
+            "terminal:t1": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t1"
+              }
+            },
+            "terminal:t2": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t2"
+              }
+            },
+            "output": {
+              "kind": "output",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "channel": "build"
+              },
+              "ref": {}
+            }
+          },
+          "view_state": {
+            "focused_panel_id": "panel-all",
+            "maximized_panel_id": null,
+            "recent_tab_ids": [
+              "file:src/main.rs"
+            ]
+          },
+          "chat_column": {
+            "width_px": null,
+            "history_pinned": false,
+            "shown": true
+          },
+          "named_layouts": [],
+          "closed_tabs": [],
+          "migration": {
+            "origin": "created_default",
+            "source_key": null,
+            "source_schema_id": null,
+            "source_revision": null,
+            "migrated_at": null
+          }
+        },
+        "candidate_layout": {
+          "schema_id": "pm.home_workspace_layout.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project-fixture",
+          "workspace_tab_id": "workspace-fixture",
+          "revision": 8,
+          "updated_at": "2026-11-04T00:02:00Z",
+          "root": {
+            "node": "panel",
+            "id": "panel-all",
+            "tab_ids": [
+              "output",
+              "dashboard:home",
+              "dashboard:agents",
+              "file:src/main.rs",
+              "file:src/routes/recipes.rs",
+              "plan:ap-index",
+              "terminal:t1",
+              "terminal:t2"
+            ],
+            "active_tab_id": "file:src/main.rs",
+            "preview_tab_id": null,
+            "pinned_count": 1,
+            "collapsed": false,
+            "locked": false
+          },
+          "tabs": {
+            "dashboard:home": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": true,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "home"
+              }
+            },
+            "dashboard:agents": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "agents"
+              }
+            },
+            "file:src/main.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/main.rs"
+              }
+            },
+            "file:src/routes/recipes.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/routes/recipes.rs"
+              }
+            },
+            "plan:ap-index": {
+              "kind": "plan",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "plan_id": "ap-index"
+              }
+            },
+            "terminal:t1": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t1"
+              }
+            },
+            "terminal:t2": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t2"
+              }
+            },
+            "output": {
+              "kind": "output",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "channel": "build"
+              },
+              "ref": {}
+            }
+          },
+          "view_state": {
+            "focused_panel_id": "panel-all",
+            "maximized_panel_id": null,
+            "recent_tab_ids": [
+              "file:src/main.rs"
+            ]
+          },
+          "chat_column": {
+            "width_px": null,
+            "history_pinned": false,
+            "shown": true
+          },
+          "named_layouts": [],
+          "closed_tabs": [],
+          "migration": {
+            "origin": "created_default",
+            "source_key": null,
+            "source_schema_id": null,
+            "source_revision": null,
+            "migrated_at": null
+          }
+        },
+        "prior_layout_sha256": "907aa513afb34c1b8382192b383a5093d823cf027e357d13dc140043b0b54379",
+        "candidate_layout_sha256": "402a447c6652a77b939e0d2c50a0be2647a92d5f076ec3a7ad464e5c12dd1f7e",
+        "readback": null,
+        "event_semantics": null,
+        "last_terminal_operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+        "updated_at_utc": "2026-11-04T00:02:00Z",
+        "migration_generation": {
+          "generation_id": "home-migration:synthetic-home-pending-v3-install",
+          "migration_id": "synthetic-home-pending-v3-install",
+          "migration_completed_at_utc": "2026-01-01T00:01:00Z",
+          "migration_receipt_key": "migration_receipt.v1:synthetic-home-pending-v3-install",
+          "migration_receipt_sha256": "7a47caccfe28e70f36be6dc4c5077dd427e62a4cfb52f55a78aed8d3e58d5c95",
+          "backup_ref": "backup:home-pending-v3-install",
+          "store_transition": {
+            "store_or_family_id": "synthetic-home-redb",
+            "from_version": "900000",
+            "to_version": "900001"
+          },
+          "family_transition": {
+            "store_or_family_id": "home_layout_transaction_slot",
+            "from_version": "0.0.0",
+            "to_version": "3.0.0"
+          }
+        },
+        "prior_migration_generation": null,
+        "pending_sir_custody": {
+          "schema_id": "pm.home_layout_pending_sir_custody.v1",
+          "schema_version": "1.0.0",
+          "owner_binding": "owner.sir.home_layout_pending_custody@1.0.0",
+          "admission_transaction_id": "fixture:home-tx:1",
+          "target_identity_sha256": "22884c873946fcc3373f07cfe70a276365e2302eb37935a2a62d2576fcf19e29",
+          "original_source": {
+            "normalized_request": {
+              "request_ref": "request:fixture",
+              "command_id": "cmd.workspace_layout.move_surface",
+              "command_instance_id": "command-instance-fixture",
+              "operation_id": "owner-operation:fixture",
+              "owner_identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "dispatch_frame_id": "home-dispatch-frame:original"
+            },
+            "dispatch_id": "dispatch:fixture",
+            "command_outcome_ref": "command-outcome:fixture",
+            "actor_ref": "actor:fixture",
+            "correlation_id": "correlation:fixture",
+            "causal_event_ref": null,
+            "request_source_bytes_sha256": "09e1abb74a61fcf6679ea9686ab0595c013f6d40809cf6a66047033a8698ee6a",
+            "home_request_sha256": "4d0bfd205ee49cc7a0843257373d406cf16bf26a0137dbb783dec49be3b3f904",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "command_id": "cmd.workspace_layout.move_surface",
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "outcome": "accepted",
+              "dispatch_frame_id": "home-dispatch-frame:original",
+              "acknowledgement_frame_id": null,
+              "acknowledgement_frame_offset": null,
+              "same_frame_acknowledged": false,
+              "acknowledgement_receipt_ref": null,
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-11T21:01:00Z"
+            },
+            "capture_authority_ref": "sir:home:source:original",
+            "captured_at_utc": "2026-09-11T21:01:00Z"
+          },
+          "current_source": {
+            "normalized_request": {
+              "request_ref": "request:fixture",
+              "command_id": "cmd.workspace_layout.move_surface",
+              "command_instance_id": "command-instance-fixture",
+              "operation_id": "owner-operation:fixture",
+              "owner_identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "dispatch_frame_id": "home-dispatch-frame:original"
+            },
+            "dispatch_id": "dispatch:fixture",
+            "command_outcome_ref": "command-outcome:fixture",
+            "actor_ref": "actor:fixture",
+            "correlation_id": "correlation:fixture",
+            "causal_event_ref": null,
+            "request_source_bytes_sha256": "09e1abb74a61fcf6679ea9686ab0595c013f6d40809cf6a66047033a8698ee6a",
+            "home_request_sha256": "4d0bfd205ee49cc7a0843257373d406cf16bf26a0137dbb783dec49be3b3f904",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "command_id": "cmd.workspace_layout.move_surface",
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "outcome": "executing",
+              "dispatch_frame_id": "home-dispatch-frame:original",
+              "acknowledgement_frame_id": "home-dispatch-frame:original",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "sir:home:ack:1",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-11T21:01:01Z"
+            },
+            "capture_authority_ref": "sir:home:source:1",
+            "captured_at_utc": "2026-09-11T21:01:01Z"
+          },
+          "original_source_sha256": "15a78febd84872e91adfa80bd0ea115c2f8e11b7277e9860e000ce0c3f596e25",
+          "current_source_sha256": "6b524b67334cd8e1cf5ce08540baee5a3e9cd1e38ded3cb0d5613b2508c18427"
+        },
+        "pending_append_origin": null,
+        "prior_layout_source_bytes": {
+          "form": "inline",
+          "bytes": "eyJjaGF0X2NvbHVtbiI6eyJoaXN0b3J5X3Bpbm5lZCI6ZmFsc2UsInNob3duIjp0cnVlLCJ3aWR0aF9weCI6bnVsbH0sImNsb3NlZF90YWJzIjpbXSwibWlncmF0aW9uIjp7Im1pZ3JhdGVkX2F0IjpudWxsLCJvcmlnaW4iOiJjcmVhdGVkX2RlZmF1bHQiLCJzb3VyY2Vfa2V5IjpudWxsLCJzb3VyY2VfcmV2aXNpb24iOm51bGwsInNvdXJjZV9zY2hlbWFfaWQiOm51bGx9LCJuYW1lZF9sYXlvdXRzIjpbXSwicHJvamVjdF9pZCI6InByb2plY3QtZml4dHVyZSIsInJldmlzaW9uIjo3LCJyb290Ijp7ImFjdGl2ZV90YWJfaWQiOiJmaWxlOnNyYy9tYWluLnJzIiwiY29sbGFwc2VkIjpmYWxzZSwiaWQiOiJwYW5lbC1hbGwiLCJsb2NrZWQiOmZhbHNlLCJub2RlIjoicGFuZWwiLCJwaW5uZWRfY291bnQiOjEsInByZXZpZXdfdGFiX2lkIjpudWxsLCJ0YWJfaWRzIjpbImRhc2hib2FyZDpob21lIiwiZGFzaGJvYXJkOmFnZW50cyIsImZpbGU6c3JjL21haW4ucnMiLCJmaWxlOnNyYy9yb3V0ZXMvcmVjaXBlcy5ycyIsInBsYW46YXAtaW5kZXgiLCJ0ZXJtaW5hbDp0MSIsInRlcm1pbmFsOnQyIiwib3V0cHV0Il19LCJzY2hlbWFfaWQiOiJwbS5ob21lX3dvcmtzcGFjZV9sYXlvdXQudjIiLCJzY2hlbWFfdmVyc2lvbiI6IjIuMC4wIiwidGFicyI6eyJkYXNoYm9hcmQ6YWdlbnRzIjp7ImtpbmQiOiJkYXNoYm9hcmQiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsiYm9hcmRfaWQiOiJhZ2VudHMifSwic3RhdGUiOnt9fSwiZGFzaGJvYXJkOmhvbWUiOnsia2luZCI6ImRhc2hib2FyZCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6dHJ1ZSwicmVmIjp7ImJvYXJkX2lkIjoiaG9tZSJ9LCJzdGF0ZSI6e319LCJmaWxlOnNyYy9tYWluLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9tYWluLnJzIn0sInN0YXRlIjp7fX0sImZpbGU6c3JjL3JvdXRlcy9yZWNpcGVzLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9yb3V0ZXMvcmVjaXBlcy5ycyJ9LCJzdGF0ZSI6e319LCJvdXRwdXQiOnsia2luZCI6Im91dHB1dCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6e30sInN0YXRlIjp7ImNoYW5uZWwiOiJidWlsZCJ9fSwicGxhbjphcC1pbmRleCI6eyJraW5kIjoicGxhbiIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6eyJwbGFuX2lkIjoiYXAtaW5kZXgifSwic3RhdGUiOnt9fSwidGVybWluYWw6dDEiOnsia2luZCI6InRlcm1pbmFsIiwibGFiZWwiOm51bGwsIm1vZGUiOiJrZXB0IiwicGlubmVkIjpmYWxzZSwicmVmIjp7InRlcm1pbmFsX3Nlc3Npb25faWQiOiJ0MSJ9LCJzdGF0ZSI6eyJjd2QiOiJ+L3Rhc3RlYm9vay9hcGkiLCJwcm9maWxlIjoienNoIn19LCJ0ZXJtaW5hbDp0MiI6eyJraW5kIjoidGVybWluYWwiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsidGVybWluYWxfc2Vzc2lvbl9pZCI6InQyIn0sInN0YXRlIjp7ImN3ZCI6In4vdGFzdGVib29rL2FwaSIsInByb2ZpbGUiOiJ6c2gifX19LCJ1cGRhdGVkX2F0IjoiMjAyNi0xMC0wOVQxMjowMDowMFoiLCJ2aWV3X3N0YXRlIjp7ImZvY3VzZWRfcGFuZWxfaWQiOiJwYW5lbC1hbGwiLCJtYXhpbWl6ZWRfcGFuZWxfaWQiOm51bGwsInJlY2VudF90YWJfaWRzIjpbImZpbGU6c3JjL21haW4ucnMiXX0sIndvcmtzcGFjZV90YWJfaWQiOiJ3b3Jrc3BhY2UtZml4dHVyZSJ9"
+        },
+        "candidate_layout_source_bytes": {
+          "form": "inline",
+          "bytes": "eyJjaGF0X2NvbHVtbiI6eyJoaXN0b3J5X3Bpbm5lZCI6ZmFsc2UsInNob3duIjp0cnVlLCJ3aWR0aF9weCI6bnVsbH0sImNsb3NlZF90YWJzIjpbXSwibWlncmF0aW9uIjp7Im1pZ3JhdGVkX2F0IjpudWxsLCJvcmlnaW4iOiJjcmVhdGVkX2RlZmF1bHQiLCJzb3VyY2Vfa2V5IjpudWxsLCJzb3VyY2VfcmV2aXNpb24iOm51bGwsInNvdXJjZV9zY2hlbWFfaWQiOm51bGx9LCJuYW1lZF9sYXlvdXRzIjpbXSwicHJvamVjdF9pZCI6InByb2plY3QtZml4dHVyZSIsInJldmlzaW9uIjo4LCJyb290Ijp7ImFjdGl2ZV90YWJfaWQiOiJmaWxlOnNyYy9tYWluLnJzIiwiY29sbGFwc2VkIjpmYWxzZSwiaWQiOiJwYW5lbC1hbGwiLCJsb2NrZWQiOmZhbHNlLCJub2RlIjoicGFuZWwiLCJwaW5uZWRfY291bnQiOjEsInByZXZpZXdfdGFiX2lkIjpudWxsLCJ0YWJfaWRzIjpbIm91dHB1dCIsImRhc2hib2FyZDpob21lIiwiZGFzaGJvYXJkOmFnZW50cyIsImZpbGU6c3JjL21haW4ucnMiLCJmaWxlOnNyYy9yb3V0ZXMvcmVjaXBlcy5ycyIsInBsYW46YXAtaW5kZXgiLCJ0ZXJtaW5hbDp0MSIsInRlcm1pbmFsOnQyIl19LCJzY2hlbWFfaWQiOiJwbS5ob21lX3dvcmtzcGFjZV9sYXlvdXQudjIiLCJzY2hlbWFfdmVyc2lvbiI6IjIuMC4wIiwidGFicyI6eyJkYXNoYm9hcmQ6YWdlbnRzIjp7ImtpbmQiOiJkYXNoYm9hcmQiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsiYm9hcmRfaWQiOiJhZ2VudHMifSwic3RhdGUiOnt9fSwiZGFzaGJvYXJkOmhvbWUiOnsia2luZCI6ImRhc2hib2FyZCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6dHJ1ZSwicmVmIjp7ImJvYXJkX2lkIjoiaG9tZSJ9LCJzdGF0ZSI6e319LCJmaWxlOnNyYy9tYWluLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9tYWluLnJzIn0sInN0YXRlIjp7fX0sImZpbGU6c3JjL3JvdXRlcy9yZWNpcGVzLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9yb3V0ZXMvcmVjaXBlcy5ycyJ9LCJzdGF0ZSI6e319LCJvdXRwdXQiOnsia2luZCI6Im91dHB1dCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6e30sInN0YXRlIjp7ImNoYW5uZWwiOiJidWlsZCJ9fSwicGxhbjphcC1pbmRleCI6eyJraW5kIjoicGxhbiIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6eyJwbGFuX2lkIjoiYXAtaW5kZXgifSwic3RhdGUiOnt9fSwidGVybWluYWw6dDEiOnsia2luZCI6InRlcm1pbmFsIiwibGFiZWwiOm51bGwsIm1vZGUiOiJrZXB0IiwicGlubmVkIjpmYWxzZSwicmVmIjp7InRlcm1pbmFsX3Nlc3Npb25faWQiOiJ0MSJ9LCJzdGF0ZSI6eyJjd2QiOiJ+L3Rhc3RlYm9vay9hcGkiLCJwcm9maWxlIjoienNoIn19LCJ0ZXJtaW5hbDp0MiI6eyJraW5kIjoidGVybWluYWwiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsidGVybWluYWxfc2Vzc2lvbl9pZCI6InQyIn0sInN0YXRlIjp7ImN3ZCI6In4vdGFzdGVib29rL2FwaSIsInByb2ZpbGUiOiJ6c2gifX19LCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0wNFQwMDowMjowMFoiLCJ2aWV3X3N0YXRlIjp7ImZvY3VzZWRfcGFuZWxfaWQiOiJwYW5lbC1hbGwiLCJtYXhpbWl6ZWRfcGFuZWxfaWQiOm51bGwsInJlY2VudF90YWJfaWRzIjpbImZpbGU6c3JjL21haW4ucnMiXX0sIndvcmtzcGFjZV90YWJfaWQiOiJ3b3Jrc3BhY2UtZml4dHVyZSJ9"
+        }
+      },
+      "why": "Prepared v2 write: v2 prior and candidate records, their exact source bytes as binary fields, pending SIR custody; no readback or event yet."
+    },
+    {
+      "id": "home4_readback_verified_slot",
+      "definition": "transaction_slot",
+      "value": {
+        "schema_id": "pm.storage_value.home_layout_transaction_slot.v1",
+        "schema_version": "4.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "project_id": "project-fixture",
+        "workspace_tab_id": "workspace-fixture",
+        "producer_id": "home.workspace_layout_commit.v1",
+        "producer_version": "4.0.0",
+        "installation_receipt_ref": "migration_receipt.v1:synthetic-home-pending-v3-install",
+        "slot_generation": 7,
+        "state": "readback_verified",
+        "binding": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-fixture",
+          "workspace_tab_id": "workspace-fixture",
+          "operation_digest": "945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "command_id": "cmd.workspace_layout.move_surface",
+          "command_instance_id": "command-instance-fixture",
+          "command_idempotency_key": "request-idempotency-fixture",
+          "request_ref": "request:fixture",
+          "request_sha256": "4d0bfd205ee49cc7a0843257373d406cf16bf26a0137dbb783dec49be3b3f904",
+          "interaction_transaction_id": "interaction:fixture",
+          "correlation_id": "correlation:fixture",
+          "actor_ref": "actor:fixture",
+          "causal_event_ref": null,
+          "dispatch_ref": "dispatch:fixture",
+          "command_outcome_ref": "command-outcome:fixture",
+          "owner_operation_id": "owner-operation:fixture",
+          "expected_layout_revision": 7,
+          "normalized_command_payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+          "request_source_bytes_sha256": "09e1abb74a61fcf6679ea9686ab0595c013f6d40809cf6a66047033a8698ee6a"
+        },
+        "prior_layout": {
+          "schema_id": "pm.home_workspace_layout.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project-fixture",
+          "workspace_tab_id": "workspace-fixture",
+          "revision": 7,
+          "updated_at": "2026-10-09T12:00:00Z",
+          "root": {
+            "node": "panel",
+            "id": "panel-all",
+            "tab_ids": [
+              "dashboard:home",
+              "dashboard:agents",
+              "file:src/main.rs",
+              "file:src/routes/recipes.rs",
+              "plan:ap-index",
+              "terminal:t1",
+              "terminal:t2",
+              "output"
+            ],
+            "active_tab_id": "file:src/main.rs",
+            "preview_tab_id": null,
+            "pinned_count": 1,
+            "collapsed": false,
+            "locked": false
+          },
+          "tabs": {
+            "dashboard:home": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": true,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "home"
+              }
+            },
+            "dashboard:agents": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "agents"
+              }
+            },
+            "file:src/main.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/main.rs"
+              }
+            },
+            "file:src/routes/recipes.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/routes/recipes.rs"
+              }
+            },
+            "plan:ap-index": {
+              "kind": "plan",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "plan_id": "ap-index"
+              }
+            },
+            "terminal:t1": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t1"
+              }
+            },
+            "terminal:t2": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t2"
+              }
+            },
+            "output": {
+              "kind": "output",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "channel": "build"
+              },
+              "ref": {}
+            }
+          },
+          "view_state": {
+            "focused_panel_id": "panel-all",
+            "maximized_panel_id": null,
+            "recent_tab_ids": [
+              "file:src/main.rs"
+            ]
+          },
+          "chat_column": {
+            "width_px": null,
+            "history_pinned": false,
+            "shown": true
+          },
+          "named_layouts": [],
+          "closed_tabs": [],
+          "migration": {
+            "origin": "created_default",
+            "source_key": null,
+            "source_schema_id": null,
+            "source_revision": null,
+            "migrated_at": null
+          }
+        },
+        "candidate_layout": {
+          "schema_id": "pm.home_workspace_layout.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project-fixture",
+          "workspace_tab_id": "workspace-fixture",
+          "revision": 8,
+          "updated_at": "2026-11-04T00:02:00Z",
+          "root": {
+            "node": "panel",
+            "id": "panel-all",
+            "tab_ids": [
+              "output",
+              "dashboard:home",
+              "dashboard:agents",
+              "file:src/main.rs",
+              "file:src/routes/recipes.rs",
+              "plan:ap-index",
+              "terminal:t1",
+              "terminal:t2"
+            ],
+            "active_tab_id": "file:src/main.rs",
+            "preview_tab_id": null,
+            "pinned_count": 1,
+            "collapsed": false,
+            "locked": false
+          },
+          "tabs": {
+            "dashboard:home": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": true,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "home"
+              }
+            },
+            "dashboard:agents": {
+              "kind": "dashboard",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "board_id": "agents"
+              }
+            },
+            "file:src/main.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/main.rs"
+              }
+            },
+            "file:src/routes/recipes.rs": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "src/routes/recipes.rs"
+              }
+            },
+            "plan:ap-index": {
+              "kind": "plan",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "plan_id": "ap-index"
+              }
+            },
+            "terminal:t1": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t1"
+              }
+            },
+            "terminal:t2": {
+              "kind": "terminal",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "profile": "zsh",
+                "cwd": "~/tastebook/api"
+              },
+              "ref": {
+                "terminal_session_id": "t2"
+              }
+            },
+            "output": {
+              "kind": "output",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {
+                "channel": "build"
+              },
+              "ref": {}
+            }
+          },
+          "view_state": {
+            "focused_panel_id": "panel-all",
+            "maximized_panel_id": null,
+            "recent_tab_ids": [
+              "file:src/main.rs"
+            ]
+          },
+          "chat_column": {
+            "width_px": null,
+            "history_pinned": false,
+            "shown": true
+          },
+          "named_layouts": [],
+          "closed_tabs": [],
+          "migration": {
+            "origin": "created_default",
+            "source_key": null,
+            "source_schema_id": null,
+            "source_revision": null,
+            "migrated_at": null
+          }
+        },
+        "prior_layout_sha256": "907aa513afb34c1b8382192b383a5093d823cf027e357d13dc140043b0b54379",
+        "candidate_layout_sha256": "402a447c6652a77b939e0d2c50a0be2647a92d5f076ec3a7ad464e5c12dd1f7e",
+        "readback": {
+          "canonical_key": "home_workspace_layout.v2:project-fixture:workspace-fixture",
+          "layout_revision": 8,
+          "layout_sha256": "402a447c6652a77b939e0d2c50a0be2647a92d5f076ec3a7ad464e5c12dd1f7e",
+          "storage_transaction_ref": "fixture:home-tx:3",
+          "readback_ref": "fixture:readback:fixture:home-tx:3",
+          "certified_at_utc": "2026-09-11T21:01:02Z"
+        },
+        "event_semantics": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "event_type": "workspace.layout_changed",
+          "project_id": "project-fixture",
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:fixture",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T21:01:02Z",
+          "producer_sequence_id": 8,
+          "correlation_id": "correlation:fixture",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+          "payload": {
+            "schema_id": "pm.event.workspace_layout_changed.v2",
+            "schema_version": "2.0.0",
+            "project_id": "project-fixture",
+            "workspace_tab_id": "workspace-fixture",
+            "change": "panel_moved",
+            "command_id": "cmd.workspace_layout.move_surface",
+            "actor": "user",
+            "interaction_transaction_id": "interaction:fixture",
+            "origin": "home_workspace",
+            "correlation_id": "correlation:fixture",
+            "command_result_ref": "home_layout_result:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+            "receipt_refs": [
+              "home_layout_dispatch_receipt:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b"
+            ],
+            "prior_layout_revision": 7,
+            "new_layout_revision": 8,
+            "affected_tab_ids": [
+              "output"
+            ],
+            "affected_panel_ids": [
+              "panel-all"
+            ],
+            "affected_split_ids": [],
+            "created_panel_ids": [],
+            "removed_panel_ids": [],
+            "named_layout_id": null,
+            "chat_column_fields": [],
+            "commit_origin": "pointer_release",
+            "migration_source_schema_id": null,
+            "settled_layout_ref": "home_layout_settlement:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+            "settled_at_utc": "2026-09-11T21:01:02Z",
+            "settled_only": true,
+            "preview_state_included": false,
+            "persisted": true
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "last_terminal_operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+        "updated_at_utc": "2026-11-04T00:02:00Z",
+        "migration_generation": {
+          "generation_id": "home-migration:synthetic-home-pending-v3-install",
+          "migration_id": "synthetic-home-pending-v3-install",
+          "migration_completed_at_utc": "2026-01-01T00:01:00Z",
+          "migration_receipt_key": "migration_receipt.v1:synthetic-home-pending-v3-install",
+          "migration_receipt_sha256": "7a47caccfe28e70f36be6dc4c5077dd427e62a4cfb52f55a78aed8d3e58d5c95",
+          "backup_ref": "backup:home-pending-v3-install",
+          "store_transition": {
+            "store_or_family_id": "synthetic-home-redb",
+            "from_version": "900000",
+            "to_version": "900001"
+          },
+          "family_transition": {
+            "store_or_family_id": "home_layout_transaction_slot",
+            "from_version": "0.0.0",
+            "to_version": "3.0.0"
+          }
+        },
+        "prior_migration_generation": null,
+        "pending_sir_custody": {
+          "schema_id": "pm.home_layout_pending_sir_custody.v1",
+          "schema_version": "1.0.0",
+          "owner_binding": "owner.sir.home_layout_pending_custody@1.0.0",
+          "admission_transaction_id": "fixture:home-tx:1",
+          "target_identity_sha256": "22884c873946fcc3373f07cfe70a276365e2302eb37935a2a62d2576fcf19e29",
+          "original_source": {
+            "normalized_request": {
+              "request_ref": "request:fixture",
+              "command_id": "cmd.workspace_layout.move_surface",
+              "command_instance_id": "command-instance-fixture",
+              "operation_id": "owner-operation:fixture",
+              "owner_identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "dispatch_frame_id": "home-dispatch-frame:original"
+            },
+            "dispatch_id": "dispatch:fixture",
+            "command_outcome_ref": "command-outcome:fixture",
+            "actor_ref": "actor:fixture",
+            "correlation_id": "correlation:fixture",
+            "causal_event_ref": null,
+            "request_source_bytes_sha256": "09e1abb74a61fcf6679ea9686ab0595c013f6d40809cf6a66047033a8698ee6a",
+            "home_request_sha256": "4d0bfd205ee49cc7a0843257373d406cf16bf26a0137dbb783dec49be3b3f904",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "command_id": "cmd.workspace_layout.move_surface",
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "outcome": "accepted",
+              "dispatch_frame_id": "home-dispatch-frame:original",
+              "acknowledgement_frame_id": null,
+              "acknowledgement_frame_offset": null,
+              "same_frame_acknowledged": false,
+              "acknowledgement_receipt_ref": null,
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-11T21:01:00Z"
+            },
+            "capture_authority_ref": "sir:home:source:original",
+            "captured_at_utc": "2026-09-11T21:01:00Z"
+          },
+          "current_source": {
+            "normalized_request": {
+              "request_ref": "request:fixture",
+              "command_id": "cmd.workspace_layout.move_surface",
+              "command_instance_id": "command-instance-fixture",
+              "operation_id": "owner-operation:fixture",
+              "owner_identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "dispatch_frame_id": "home-dispatch-frame:original"
+            },
+            "dispatch_id": "dispatch:fixture",
+            "command_outcome_ref": "command-outcome:fixture",
+            "actor_ref": "actor:fixture",
+            "correlation_id": "correlation:fixture",
+            "causal_event_ref": null,
+            "request_source_bytes_sha256": "09e1abb74a61fcf6679ea9686ab0595c013f6d40809cf6a66047033a8698ee6a",
+            "home_request_sha256": "4d0bfd205ee49cc7a0843257373d406cf16bf26a0137dbb783dec49be3b3f904",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "project",
+                "operation_id": "owner-operation:fixture",
+                "operation_generation": 1,
+                "attempt_id": null,
+                "command_instance_id": "command-instance-fixture",
+                "server_id": "srv-1",
+                "project_id": "project-fixture",
+                "project_home_server_id": "srv-1",
+                "named_plan_id": null,
+                "thread_id": null,
+                "goal_id": null,
+                "execution_host_id": "host-1",
+                "execution_environment_id": "env-1",
+                "source_location_id": null,
+                "topology_generation": 8
+              },
+              "command_id": "cmd.workspace_layout.move_surface",
+              "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+              "idempotency_key": "request-idempotency-fixture",
+              "target_generation": 8,
+              "outcome": "executing",
+              "dispatch_frame_id": "home-dispatch-frame:original",
+              "acknowledgement_frame_id": "home-dispatch-frame:original",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "sir:home:ack:1",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-11T21:01:01Z"
+            },
+            "capture_authority_ref": "sir:home:source:1",
+            "captured_at_utc": "2026-09-11T21:01:01Z"
+          },
+          "original_source_sha256": "15a78febd84872e91adfa80bd0ea115c2f8e11b7277e9860e000ce0c3f596e25",
+          "current_source_sha256": "6b524b67334cd8e1cf5ce08540baee5a3e9cd1e38ded3cb0d5613b2508c18427"
+        },
+        "pending_append_origin": null,
+        "prior_layout_source_bytes": {
+          "form": "inline",
+          "bytes": "eyJjaGF0X2NvbHVtbiI6eyJoaXN0b3J5X3Bpbm5lZCI6ZmFsc2UsInNob3duIjp0cnVlLCJ3aWR0aF9weCI6bnVsbH0sImNsb3NlZF90YWJzIjpbXSwibWlncmF0aW9uIjp7Im1pZ3JhdGVkX2F0IjpudWxsLCJvcmlnaW4iOiJjcmVhdGVkX2RlZmF1bHQiLCJzb3VyY2Vfa2V5IjpudWxsLCJzb3VyY2VfcmV2aXNpb24iOm51bGwsInNvdXJjZV9zY2hlbWFfaWQiOm51bGx9LCJuYW1lZF9sYXlvdXRzIjpbXSwicHJvamVjdF9pZCI6InByb2plY3QtZml4dHVyZSIsInJldmlzaW9uIjo3LCJyb290Ijp7ImFjdGl2ZV90YWJfaWQiOiJmaWxlOnNyYy9tYWluLnJzIiwiY29sbGFwc2VkIjpmYWxzZSwiaWQiOiJwYW5lbC1hbGwiLCJsb2NrZWQiOmZhbHNlLCJub2RlIjoicGFuZWwiLCJwaW5uZWRfY291bnQiOjEsInByZXZpZXdfdGFiX2lkIjpudWxsLCJ0YWJfaWRzIjpbImRhc2hib2FyZDpob21lIiwiZGFzaGJvYXJkOmFnZW50cyIsImZpbGU6c3JjL21haW4ucnMiLCJmaWxlOnNyYy9yb3V0ZXMvcmVjaXBlcy5ycyIsInBsYW46YXAtaW5kZXgiLCJ0ZXJtaW5hbDp0MSIsInRlcm1pbmFsOnQyIiwib3V0cHV0Il19LCJzY2hlbWFfaWQiOiJwbS5ob21lX3dvcmtzcGFjZV9sYXlvdXQudjIiLCJzY2hlbWFfdmVyc2lvbiI6IjIuMC4wIiwidGFicyI6eyJkYXNoYm9hcmQ6YWdlbnRzIjp7ImtpbmQiOiJkYXNoYm9hcmQiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsiYm9hcmRfaWQiOiJhZ2VudHMifSwic3RhdGUiOnt9fSwiZGFzaGJvYXJkOmhvbWUiOnsia2luZCI6ImRhc2hib2FyZCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6dHJ1ZSwicmVmIjp7ImJvYXJkX2lkIjoiaG9tZSJ9LCJzdGF0ZSI6e319LCJmaWxlOnNyYy9tYWluLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9tYWluLnJzIn0sInN0YXRlIjp7fX0sImZpbGU6c3JjL3JvdXRlcy9yZWNpcGVzLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9yb3V0ZXMvcmVjaXBlcy5ycyJ9LCJzdGF0ZSI6e319LCJvdXRwdXQiOnsia2luZCI6Im91dHB1dCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6e30sInN0YXRlIjp7ImNoYW5uZWwiOiJidWlsZCJ9fSwicGxhbjphcC1pbmRleCI6eyJraW5kIjoicGxhbiIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6eyJwbGFuX2lkIjoiYXAtaW5kZXgifSwic3RhdGUiOnt9fSwidGVybWluYWw6dDEiOnsia2luZCI6InRlcm1pbmFsIiwibGFiZWwiOm51bGwsIm1vZGUiOiJrZXB0IiwicGlubmVkIjpmYWxzZSwicmVmIjp7InRlcm1pbmFsX3Nlc3Npb25faWQiOiJ0MSJ9LCJzdGF0ZSI6eyJjd2QiOiJ+L3Rhc3RlYm9vay9hcGkiLCJwcm9maWxlIjoienNoIn19LCJ0ZXJtaW5hbDp0MiI6eyJraW5kIjoidGVybWluYWwiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsidGVybWluYWxfc2Vzc2lvbl9pZCI6InQyIn0sInN0YXRlIjp7ImN3ZCI6In4vdGFzdGVib29rL2FwaSIsInByb2ZpbGUiOiJ6c2gifX19LCJ1cGRhdGVkX2F0IjoiMjAyNi0xMC0wOVQxMjowMDowMFoiLCJ2aWV3X3N0YXRlIjp7ImZvY3VzZWRfcGFuZWxfaWQiOiJwYW5lbC1hbGwiLCJtYXhpbWl6ZWRfcGFuZWxfaWQiOm51bGwsInJlY2VudF90YWJfaWRzIjpbImZpbGU6c3JjL21haW4ucnMiXX0sIndvcmtzcGFjZV90YWJfaWQiOiJ3b3Jrc3BhY2UtZml4dHVyZSJ9"
+        },
+        "candidate_layout_source_bytes": {
+          "form": "inline",
+          "bytes": "eyJjaGF0X2NvbHVtbiI6eyJoaXN0b3J5X3Bpbm5lZCI6ZmFsc2UsInNob3duIjp0cnVlLCJ3aWR0aF9weCI6bnVsbH0sImNsb3NlZF90YWJzIjpbXSwibWlncmF0aW9uIjp7Im1pZ3JhdGVkX2F0IjpudWxsLCJvcmlnaW4iOiJjcmVhdGVkX2RlZmF1bHQiLCJzb3VyY2Vfa2V5IjpudWxsLCJzb3VyY2VfcmV2aXNpb24iOm51bGwsInNvdXJjZV9zY2hlbWFfaWQiOm51bGx9LCJuYW1lZF9sYXlvdXRzIjpbXSwicHJvamVjdF9pZCI6InByb2plY3QtZml4dHVyZSIsInJldmlzaW9uIjo4LCJyb290Ijp7ImFjdGl2ZV90YWJfaWQiOiJmaWxlOnNyYy9tYWluLnJzIiwiY29sbGFwc2VkIjpmYWxzZSwiaWQiOiJwYW5lbC1hbGwiLCJsb2NrZWQiOmZhbHNlLCJub2RlIjoicGFuZWwiLCJwaW5uZWRfY291bnQiOjEsInByZXZpZXdfdGFiX2lkIjpudWxsLCJ0YWJfaWRzIjpbIm91dHB1dCIsImRhc2hib2FyZDpob21lIiwiZGFzaGJvYXJkOmFnZW50cyIsImZpbGU6c3JjL21haW4ucnMiLCJmaWxlOnNyYy9yb3V0ZXMvcmVjaXBlcy5ycyIsInBsYW46YXAtaW5kZXgiLCJ0ZXJtaW5hbDp0MSIsInRlcm1pbmFsOnQyIl19LCJzY2hlbWFfaWQiOiJwbS5ob21lX3dvcmtzcGFjZV9sYXlvdXQudjIiLCJzY2hlbWFfdmVyc2lvbiI6IjIuMC4wIiwidGFicyI6eyJkYXNoYm9hcmQ6YWdlbnRzIjp7ImtpbmQiOiJkYXNoYm9hcmQiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsiYm9hcmRfaWQiOiJhZ2VudHMifSwic3RhdGUiOnt9fSwiZGFzaGJvYXJkOmhvbWUiOnsia2luZCI6ImRhc2hib2FyZCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6dHJ1ZSwicmVmIjp7ImJvYXJkX2lkIjoiaG9tZSJ9LCJzdGF0ZSI6e319LCJmaWxlOnNyYy9tYWluLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9tYWluLnJzIn0sInN0YXRlIjp7fX0sImZpbGU6c3JjL3JvdXRlcy9yZWNpcGVzLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9yb3V0ZXMvcmVjaXBlcy5ycyJ9LCJzdGF0ZSI6e319LCJvdXRwdXQiOnsia2luZCI6Im91dHB1dCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6e30sInN0YXRlIjp7ImNoYW5uZWwiOiJidWlsZCJ9fSwicGxhbjphcC1pbmRleCI6eyJraW5kIjoicGxhbiIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6eyJwbGFuX2lkIjoiYXAtaW5kZXgifSwic3RhdGUiOnt9fSwidGVybWluYWw6dDEiOnsia2luZCI6InRlcm1pbmFsIiwibGFiZWwiOm51bGwsIm1vZGUiOiJrZXB0IiwicGlubmVkIjpmYWxzZSwicmVmIjp7InRlcm1pbmFsX3Nlc3Npb25faWQiOiJ0MSJ9LCJzdGF0ZSI6eyJjd2QiOiJ+L3Rhc3RlYm9vay9hcGkiLCJwcm9maWxlIjoienNoIn19LCJ0ZXJtaW5hbDp0MiI6eyJraW5kIjoidGVybWluYWwiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsidGVybWluYWxfc2Vzc2lvbl9pZCI6InQyIn0sInN0YXRlIjp7ImN3ZCI6In4vdGFzdGVib29rL2FwaSIsInByb2ZpbGUiOiJ6c2gifX19LCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0wNFQwMDowMjowMFoiLCJ2aWV3X3N0YXRlIjp7ImZvY3VzZWRfcGFuZWxfaWQiOiJwYW5lbC1hbGwiLCJtYXhpbWl6ZWRfcGFuZWxfaWQiOm51bGwsInJlY2VudF90YWJfaWRzIjpbImZpbGU6c3JjL21haW4ucnMiXX0sIndvcmtzcGFjZV90YWJfaWQiOiJ3b3Jrc3BhY2UtZml4dHVyZSJ9"
+        }
+      },
+      "why": "Readback-verified v2 write with the frozen 2.0.0 event semantics (CV-361 panel_moved)."
+    },
+    {
+      "id": "home4_committed_receipt",
+      "definition": "operation_receipt",
+      "value": {
+        "schema_id": "pm.storage_value.home_layout_operation_receipt.v1",
+        "schema_version": "4.0.0",
+        "binding": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-fixture",
+          "workspace_tab_id": "workspace-fixture",
+          "operation_digest": "945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "command_id": "cmd.workspace_layout.move_surface",
+          "command_instance_id": "command-instance-fixture",
+          "command_idempotency_key": "request-idempotency-fixture",
+          "request_ref": "request:fixture",
+          "request_sha256": "4d0bfd205ee49cc7a0843257373d406cf16bf26a0137dbb783dec49be3b3f904",
+          "interaction_transaction_id": "interaction:fixture",
+          "correlation_id": "correlation:fixture",
+          "actor_ref": "actor:fixture",
+          "causal_event_ref": null,
+          "dispatch_ref": "dispatch:fixture",
+          "command_outcome_ref": "command-outcome:fixture",
+          "owner_operation_id": "owner-operation:fixture",
+          "expected_layout_revision": 7,
+          "normalized_command_payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+          "request_source_bytes_sha256": "09e1abb74a61fcf6679ea9686ab0595c013f6d40809cf6a66047033a8698ee6a"
+        },
+        "state": "committed",
+        "prior_layout_revision": 7,
+        "new_layout_revision": 8,
+        "prior_layout_sha256": "907aa513afb34c1b8382192b383a5093d823cf027e357d13dc140043b0b54379",
+        "settled_layout_sha256": "402a447c6652a77b939e0d2c50a0be2647a92d5f076ec3a7ad464e5c12dd1f7e",
+        "settled_layout_ref": "home_layout_settlement:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+        "readback": {
+          "canonical_key": "home_workspace_layout.v2:project-fixture:workspace-fixture",
+          "layout_revision": 8,
+          "layout_sha256": "402a447c6652a77b939e0d2c50a0be2647a92d5f076ec3a7ad464e5c12dd1f7e",
+          "storage_transaction_ref": "fixture:home-tx:3",
+          "readback_ref": "fixture:readback:fixture:home-tx:3",
+          "certified_at_utc": "2026-09-11T21:01:02Z"
+        },
+        "event_semantics": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "event_type": "workspace.layout_changed",
+          "project_id": "project-fixture",
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:fixture",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T21:01:02Z",
+          "producer_sequence_id": 8,
+          "correlation_id": "correlation:fixture",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "workspace.layout_changed:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+          "payload": {
+            "schema_id": "pm.event.workspace_layout_changed.v2",
+            "schema_version": "2.0.0",
+            "project_id": "project-fixture",
+            "workspace_tab_id": "workspace-fixture",
+            "change": "panel_moved",
+            "command_id": "cmd.workspace_layout.move_surface",
+            "actor": "user",
+            "interaction_transaction_id": "interaction:fixture",
+            "origin": "home_workspace",
+            "correlation_id": "correlation:fixture",
+            "command_result_ref": "home_layout_result:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+            "receipt_refs": [
+              "home_layout_dispatch_receipt:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b"
+            ],
+            "prior_layout_revision": 7,
+            "new_layout_revision": 8,
+            "affected_tab_ids": [
+              "output"
+            ],
+            "affected_panel_ids": [
+              "panel-all"
+            ],
+            "affected_split_ids": [],
+            "created_panel_ids": [],
+            "removed_panel_ids": [],
+            "named_layout_id": null,
+            "chat_column_fields": [],
+            "commit_origin": "pointer_release",
+            "migration_source_schema_id": null,
+            "settled_layout_ref": "home_layout_settlement:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+            "settled_at_utc": "2026-09-11T21:01:02Z",
+            "settled_only": true,
+            "preview_state_included": false,
+            "persisted": true
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "owner_result": {
+          "schema_id": "pm.home_layout_owner_result.v1",
+          "schema_version": "2.0.0",
+          "result_ref": "home_layout_result:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "command_instance_id": "command-instance-fixture",
+          "command_id": "cmd.workspace_layout.move_surface",
+          "outcome": "applied",
+          "dispatch_accepted": true,
+          "event_status": "committed",
+          "event_ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "prior_layout_revision": 7,
+          "new_layout_revision": 8,
+          "rolled_back": false,
+          "failure_reason": null
+        },
+        "dispatch_receipt": {
+          "schema_id": "pm.home_layout_dispatch_receipt.v1",
+          "schema_version": "1.0.0",
+          "receipt_ref": "home_layout_dispatch_receipt:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "dispatch_ref": "dispatch:fixture",
+          "operation_ref": "home_layout_operation:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "command_instance_id": "command-instance-fixture",
+          "command_result_ref": "home_layout_result:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "correlation_id": "correlation:fixture",
+          "outcome": "applied",
+          "event_ref": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b"
+        },
+        "append_result": {
+          "event_id": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "sequence_id": 52,
+          "segment_ref": "segment:fixture-original-1",
+          "byte_offset": 1240
+        },
+        "source_durability_ref": "storage.first_append_receipt.resolve_full_value.v1:evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+        "terminal_at_utc": "2026-09-12T08:00:06Z",
+        "redaction_profile": "no_secrets",
+        "original_command_outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "project",
+            "operation_id": "owner-operation:fixture",
+            "operation_generation": 1,
+            "attempt_id": null,
+            "command_instance_id": "command-instance-fixture",
+            "server_id": "srv-1",
+            "project_id": "project-fixture",
+            "project_home_server_id": "srv-1",
+            "named_plan_id": null,
+            "thread_id": null,
+            "goal_id": null,
+            "execution_host_id": "host-1",
+            "execution_environment_id": "env-1",
+            "source_location_id": null,
+            "topology_generation": 8
+          },
+          "command_id": "cmd.workspace_layout.move_surface",
+          "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+          "idempotency_key": "request-idempotency-fixture",
+          "target_generation": 8,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "home-dispatch-frame:original",
+          "acknowledgement_frame_id": "home-dispatch-frame:original",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "sir:home:ack:1",
+          "result_receipt_ref": "home_layout_dispatch_receipt:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "error_ref": null,
+          "owner_result_ref": "home_layout_result:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "owner_result_schema_ref": {
+            "path": "Plans/home_layout_v2_slot_receipt.schema.json",
+            "json_pointer": "#/$defs/owner_result",
+            "schema_id": "pm.home_layout_owner_result.v1"
+          },
+          "owner_result_sha256": "baf6bb653cbe8665a499bd4be85b5c521ef4ab80ea5a468e0810662ce1dd3cad",
+          "observed_at": "2026-09-12T08:00:06Z"
+        },
+        "original_ui_response": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch:fixture",
+          "request_ref": "request:fixture",
+          "command_id": "cmd.workspace_layout.move_surface",
+          "command_instance_id": "command-instance-fixture",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [
+            "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b"
+          ],
+          "receipt_ref": "home_layout_dispatch_receipt:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "operation_id": "owner-operation:fixture",
+          "owner_identity": {
+            "scope_kind": "project",
+            "operation_id": "owner-operation:fixture",
+            "operation_generation": 1,
+            "attempt_id": null,
+            "command_instance_id": "command-instance-fixture",
+            "server_id": "srv-1",
+            "project_id": "project-fixture",
+            "project_home_server_id": "srv-1",
+            "named_plan_id": null,
+            "thread_id": null,
+            "goal_id": null,
+            "execution_host_id": "host-1",
+            "execution_environment_id": "env-1",
+            "source_location_id": null,
+            "topology_generation": 8
+          },
+          "command_outcome_ref": "command-outcome:fixture",
+          "owner_result_ref": "home_layout_result:945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "owner_result_schema_ref": {
+            "path": "Plans/home_layout_v2_slot_receipt.schema.json",
+            "json_pointer": "#/$defs/owner_result",
+            "schema_id": "pm.home_layout_owner_result.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-12T08:00:06Z"
+        },
+        "original_normalized_request": {
+          "request_ref": "request:fixture",
+          "command_id": "cmd.workspace_layout.move_surface",
+          "command_instance_id": "command-instance-fixture",
+          "operation_id": "owner-operation:fixture",
+          "owner_identity": {
+            "scope_kind": "project",
+            "operation_id": "owner-operation:fixture",
+            "operation_generation": 1,
+            "attempt_id": null,
+            "command_instance_id": "command-instance-fixture",
+            "server_id": "srv-1",
+            "project_id": "project-fixture",
+            "project_home_server_id": "srv-1",
+            "named_plan_id": null,
+            "thread_id": null,
+            "goal_id": null,
+            "execution_host_id": "host-1",
+            "execution_environment_id": "env-1",
+            "source_location_id": null,
+            "topology_generation": 8
+          },
+          "payload_sha256": "02aa93ca77a82f296bad15a18e527f561fbb275acc231d96dc6cdc1b46729dba",
+          "idempotency_key": "request-idempotency-fixture",
+          "target_generation": 8,
+          "dispatch_frame_id": "home-dispatch-frame:original"
+        },
+        "original_owner_result_sha256": "baf6bb653cbe8665a499bd4be85b5c521ef4ab80ea5a468e0810662ce1dd3cad",
+        "identity_capture_bytes_sha256": {
+          "normalized_request": "d1bf6f1421a3545f8a97986c9d4408c351bc9fbaf5ff12bdd3461f1b9e2f2a96",
+          "command_outcome": "29e81c76e7e18d52a626affd7e258c588183dddd24ddf7dc09a3dacb760f7483",
+          "ui_response": "5de772400223ccf2d03d79865134bfdbc7077f8fc7aa73ff917ceba365cccf40"
+        },
+        "identity_capture_bytes": {
+          "normalized_request": "iapjb21tYW5kX2lk2SFjbWQud29ya3NwYWNlX2xheW91dC5tb3ZlX3N1cmZhY2WzY29tbWFuZF9pbnN0YW5jZV9pZLhjb21tYW5kLWluc3RhbmNlLWZpeHR1cmWxZGlzcGF0Y2hfZnJhbWVfaWS8aG9tZS1kaXNwYXRjaC1mcmFtZTpvcmlnaW5hbK9pZGVtcG90ZW5jeV9rZXm7cmVxdWVzdC1pZGVtcG90ZW5jeS1maXh0dXJlrG9wZXJhdGlvbl9pZLdvd25lci1vcGVyYXRpb246Zml4dHVyZa5vd25lcl9pZGVudGl0eY+qYXR0ZW1wdF9pZMCzY29tbWFuZF9pbnN0YW5jZV9pZLhjb21tYW5kLWluc3RhbmNlLWZpeHR1cmW4ZXhlY3V0aW9uX2Vudmlyb25tZW50X2lkpWVudi0xsWV4ZWN1dGlvbl9ob3N0X2lkpmhvc3QtMadnb2FsX2lkwK1uYW1lZF9wbGFuX2lkwLRvcGVyYXRpb25fZ2VuZXJhdGlvbgGsb3BlcmF0aW9uX2lkt293bmVyLW9wZXJhdGlvbjpmaXh0dXJltnByb2plY3RfaG9tZV9zZXJ2ZXJfaWSlc3J2LTGqcHJvamVjdF9pZK9wcm9qZWN0LWZpeHR1cmWqc2NvcGVfa2luZKdwcm9qZWN0qXNlcnZlcl9pZKVzcnYtMbJzb3VyY2VfbG9jYXRpb25faWTAqXRocmVhZF9pZMCzdG9wb2xvZ3lfZ2VuZXJhdGlvbgiucGF5bG9hZF9zaGEyNTbZQDAyYWE5M2NhNzdhODJmMjk2YmFkMTVhMThlNTI3ZjU2MWZiYjI3NWFjYzIzMWQ5NmRjNmNkYzFiNDY3MjlkYmGrcmVxdWVzdF9yZWavcmVxdWVzdDpmaXh0dXJlsXRhcmdldF9nZW5lcmF0aW9uCA==",
+          "command_outcome": "3gATuGFja25vd2xlZGdlbWVudF9mcmFtZV9pZLxob21lLWRpc3BhdGNoLWZyYW1lOm9yaWdpbmFsvGFja25vd2xlZGdlbWVudF9mcmFtZV9vZmZzZXQAu2Fja25vd2xlZGdlbWVudF9yZWNlaXB0X3JlZq5zaXI6aG9tZTphY2s6Mapjb21tYW5kX2lk2SFjbWQud29ya3NwYWNlX2xheW91dC5tb3ZlX3N1cmZhY2WxZGlzcGF0Y2hfZnJhbWVfaWS8aG9tZS1kaXNwYXRjaC1mcmFtZTpvcmlnaW5hbKllcnJvcl9yZWbAr2lkZW1wb3RlbmN5X2tlebtyZXF1ZXN0LWlkZW1wb3RlbmN5LWZpeHR1cmWoaWRlbnRpdHmPqmF0dGVtcHRfaWTAs2NvbW1hbmRfaW5zdGFuY2VfaWS4Y29tbWFuZC1pbnN0YW5jZS1maXh0dXJluGV4ZWN1dGlvbl9lbnZpcm9ubWVudF9pZKVlbnYtMbFleGVjdXRpb25faG9zdF9pZKZob3N0LTGnZ29hbF9pZMCtbmFtZWRfcGxhbl9pZMC0b3BlcmF0aW9uX2dlbmVyYXRpb24BrG9wZXJhdGlvbl9pZLdvd25lci1vcGVyYXRpb246Zml4dHVyZbZwcm9qZWN0X2hvbWVfc2VydmVyX2lkpXNydi0xqnByb2plY3RfaWSvcHJvamVjdC1maXh0dXJlqnNjb3BlX2tpbmSncHJvamVjdKlzZXJ2ZXJfaWSlc3J2LTGyc291cmNlX2xvY2F0aW9uX2lkwKl0aHJlYWRfaWTAs3RvcG9sb2d5X2dlbmVyYXRpb24Iq29ic2VydmVkX2F0tDIwMjYtMDktMTJUMDg6MDA6MDZap291dGNvbWWpc3VjY2VlZGVksG93bmVyX3Jlc3VsdF9yZWbZU2hvbWVfbGF5b3V0X3Jlc3VsdDo5NDVmODUyM2IwNzIwYThkODQ4YjI3MzIxZDlhN2IyMDk2MTNhZjU5MGZkNmM2NDVlM2IwNjM2MjhmMjY1NTZit293bmVyX3Jlc3VsdF9zY2hlbWFfcmVmg6xqc29uX3BvaW50ZXK0Iy8kZGVmcy9vd25lcl9yZXN1bHSkcGF0aNktUGxhbnMvaG9tZV9sYXlvdXRfdjJfc2xvdF9yZWNlaXB0LnNjaGVtYS5qc29uqXNjaGVtYV9pZL5wbS5ob21lX2xheW91dF9vd25lcl9yZXN1bHQudjGzb3duZXJfcmVzdWx0X3NoYTI1NtlAYmFmNmJiNjUzY2JlODY2NWE0OTliZDRiZTg1YjVjNTIxZWY0YWI4MGVhNWE0NjhlMDgxMDY2MmNlMWRkM2NhZK5wYXlsb2FkX3NoYTI1NtlAMDJhYTkzY2E3N2E4MmYyOTZiYWQxNWExOGU1MjdmNTYxZmJiMjc1YWNjMjMxZDk2ZGM2Y2RjMWI0NjcyOWRiYatyZWNvcmRfa2luZK9jb21tYW5kX291dGNvbWWycmVzdWx0X3JlY2VpcHRfcmVm2V1ob21lX2xheW91dF9kaXNwYXRjaF9yZWNlaXB0Ojk0NWY4NTIzYjA3MjBhOGQ4NDhiMjczMjFkOWE3YjIwOTYxM2FmNTkwZmQ2YzY0NWUzYjA2MzYyOGYyNjU1NmK3c2FtZV9mcmFtZV9hY2tub3dsZWRnZWTDqXNjaGVtYV9pZNkjcG0uZnVsbF90aHJlYWRfcnVudGltZS5jb250cmFjdHMudjGxdGFyZ2V0X2dlbmVyYXRpb24I",
+          "ui_response": "3gAUqmFja19zdGF0dXOoYWNjZXB0ZWSqY29tbWFuZF9pZNkhY21kLndvcmtzcGFjZV9sYXlvdXQubW92ZV9zdXJmYWNls2NvbW1hbmRfaW5zdGFuY2VfaWS4Y29tbWFuZC1pbnN0YW5jZS1maXh0dXJls2NvbW1hbmRfb3V0Y29tZV9yZWa3Y29tbWFuZC1vdXRjb21lOmZpeHR1cmWrZGlzcGF0Y2hfaWSwZGlzcGF0Y2g6Zml4dHVyZaVlcnJvcsCqZXZlbnRfcmVmc5HZVWV2dF93b3Jrc3BhY2VfbGF5b3V0Xzk0NWY4NTIzYjA3MjBhOGQ4NDhiMjczMjFkOWE3YjIwOTYxM2FmNTkwZmQ2YzY0NWUzYjA2MzYyOGYyNjU1NmKsb3BlcmF0aW9uX2lkt293bmVyLW9wZXJhdGlvbjpmaXh0dXJltG9yaWdpbmFsX2Rpc3BhdGNoX2lkwK5vd25lcl9pZGVudGl0eY+qYXR0ZW1wdF9pZMCzY29tbWFuZF9pbnN0YW5jZV9pZLhjb21tYW5kLWluc3RhbmNlLWZpeHR1cmW4ZXhlY3V0aW9uX2Vudmlyb25tZW50X2lkpWVudi0xsWV4ZWN1dGlvbl9ob3N0X2lkpmhvc3QtMadnb2FsX2lkwK1uYW1lZF9wbGFuX2lkwLRvcGVyYXRpb25fZ2VuZXJhdGlvbgGsb3BlcmF0aW9uX2lkt293bmVyLW9wZXJhdGlvbjpmaXh0dXJltnByb2plY3RfaG9tZV9zZXJ2ZXJfaWSlc3J2LTGqcHJvamVjdF9pZK9wcm9qZWN0LWZpeHR1cmWqc2NvcGVfa2luZKdwcm9qZWN0qXNlcnZlcl9pZKVzcnYtMbJzb3VyY2VfbG9jYXRpb25faWTAqXRocmVhZF9pZMCzdG9wb2xvZ3lfZ2VuZXJhdGlvbgiwb3duZXJfcmVzdWx0X3JlZtlTaG9tZV9sYXlvdXRfcmVzdWx0Ojk0NWY4NTIzYjA3MjBhOGQ4NDhiMjczMjFkOWE3YjIwOTYxM2FmNTkwZmQ2YzY0NWUzYjA2MzYyOGYyNjU1NmK3b3duZXJfcmVzdWx0X3NjaGVtYV9yZWaDrGpzb25fcG9pbnRlcrQjLyRkZWZzL293bmVyX3Jlc3VsdKRwYXRo2S1QbGFucy9ob21lX2xheW91dF92Ml9zbG90X3JlY2VpcHQuc2NoZW1hLmpzb26pc2NoZW1hX2lkvnBtLmhvbWVfbGF5b3V0X293bmVyX3Jlc3VsdC52MatyZWNlaXB0X3JlZtldaG9tZV9sYXlvdXRfZGlzcGF0Y2hfcmVjZWlwdDo5NDVmODUyM2IwNzIwYThkODQ4YjI3MzIxZDlhN2IyMDk2MTNhZjU5MGZkNmM2NDVlM2IwNjM2MjhmMjY1NTZiqHJlcGxheWVkwqtyZXF1ZXN0X3JlZq9yZXF1ZXN0OmZpeHR1cmWtcmVzcG9uc2Vfa2luZK9vd25lcl9vcGVyYXRpb26tcmVzdWx0X3N0YXR1c6lzdWNjZWVkZWSpc2NoZW1hX2lkuXBtLnVpX2NvbW1hbmRfcmVzcG9uc2UudjKuc2NoZW1hX3ZlcnNpb26lMi4wLjCidHO0MjAyNi0wOS0xMlQwODowMDowNlo="
+        },
+        "identity_capture_encoding": "home_content_free_capture_canonical_msgpack.v1",
+        "original_append_receipt": {
+          "event_id": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "ordinary",
+          "durable_end_offset": 3173,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "original_publication": {
+          "schema_id": "pm.home_layout_original_publication.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "event_id": "evt_workspace_layout_945f8523b0720a8d848b27321d9a7b209613af590fd6c645e3b063628f26556b",
+          "sequence_id": 52,
+          "original_event_value_commitment": {
+            "schema_id": "pm.storage.original_event_value_commitment.v1",
+            "schema_version": "1.0.0",
+            "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+            "domain": "pm.storage.original_event_value_commitment.v1",
+            "event_schema_id": "pm.event.v0",
+            "event_schema_version": "2.0.0",
+            "sha256": "c8e97b046d783f3c3273221379f4e64236d0b232105e32bd019ed4456b78416b"
+          },
+          "original_append_receipt_sha256": "ddfaa940e8568bd16a8b9c6270076dbf6a2c5b45df7643f04f804d82d2b19d95",
+          "terminal_transaction_id": "fixture:home-tx:6",
+          "terminal_at_utc": "2026-09-12T08:00:06Z"
+        }
+      },
+      "why": "Committed v2 receipt: v2 readback key, 2.0.0 event, Home4 owner result, canonical MessagePack identity capture; original publication and append receipt carried from Home3 (shared SP-286/CV-339 custody, not recomputed here)."
+    }
+  ],
+  "invalid": [
+    {
+      "id": "slot_v1_layout",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_layout/schema_id",
+          "value": "pm.home_workspace_layout.v1"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "A v2 write holds v2 records only (SP-330)."
+    },
+    {
+      "id": "slot_retired_base64_field",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/prior_layout_source_bytes_base64",
+          "value": "eyJjaGF0X2NvbHVtbiI6eyJoaXN0b3J5X3Bpbm5lZCI6ZmFsc2UsInNob3duIjp0cnVlLCJ3aWR0aF9weCI6bnVsbH0sImNsb3NlZF90YWJzIjpbXSwibWlncmF0aW9uIjp7Im1pZ3JhdGVkX2F0IjpudWxsLCJvcmlnaW4iOiJjcmVhdGVkX2RlZmF1bHQiLCJzb3VyY2Vfa2V5IjpudWxsLCJzb3VyY2VfcmV2aXNpb24iOm51bGwsInNvdXJjZV9zY2hlbWFfaWQiOm51bGx9LCJuYW1lZF9sYXlvdXRzIjpbXSwicHJvamVjdF9pZCI6InByb2plY3QtZml4dHVyZSIsInJldmlzaW9uIjo3LCJyb290Ijp7ImFjdGl2ZV90YWJfaWQiOiJmaWxlOnNyYy9tYWluLnJzIiwiY29sbGFwc2VkIjpmYWxzZSwiaWQiOiJwYW5lbC1hbGwiLCJsb2NrZWQiOmZhbHNlLCJub2RlIjoicGFuZWwiLCJwaW5uZWRfY291bnQiOjEsInByZXZpZXdfdGFiX2lkIjpudWxsLCJ0YWJfaWRzIjpbImRhc2hib2FyZDpob21lIiwiZGFzaGJvYXJkOmFnZW50cyIsImZpbGU6c3JjL21haW4ucnMiLCJmaWxlOnNyYy9yb3V0ZXMvcmVjaXBlcy5ycyIsInBsYW46YXAtaW5kZXgiLCJ0ZXJtaW5hbDp0MSIsInRlcm1pbmFsOnQyIiwib3V0cHV0Il19LCJzY2hlbWFfaWQiOiJwbS5ob21lX3dvcmtzcGFjZV9sYXlvdXQudjIiLCJzY2hlbWFfdmVyc2lvbiI6IjIuMC4wIiwidGFicyI6eyJkYXNoYm9hcmQ6YWdlbnRzIjp7ImtpbmQiOiJkYXNoYm9hcmQiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsiYm9hcmRfaWQiOiJhZ2VudHMifSwic3RhdGUiOnt9fSwiZGFzaGJvYXJkOmhvbWUiOnsia2luZCI6ImRhc2hib2FyZCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6dHJ1ZSwicmVmIjp7ImJvYXJkX2lkIjoiaG9tZSJ9LCJzdGF0ZSI6e319LCJmaWxlOnNyYy9tYWluLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9tYWluLnJzIn0sInN0YXRlIjp7fX0sImZpbGU6c3JjL3JvdXRlcy9yZWNpcGVzLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9yb3V0ZXMvcmVjaXBlcy5ycyJ9LCJzdGF0ZSI6e319LCJvdXRwdXQiOnsia2luZCI6Im91dHB1dCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6e30sInN0YXRlIjp7ImNoYW5uZWwiOiJidWlsZCJ9fSwicGxhbjphcC1pbmRleCI6eyJraW5kIjoicGxhbiIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6eyJwbGFuX2lkIjoiYXAtaW5kZXgifSwic3RhdGUiOnt9fSwidGVybWluYWw6dDEiOnsia2luZCI6InRlcm1pbmFsIiwibGFiZWwiOm51bGwsIm1vZGUiOiJrZXB0IiwicGlubmVkIjpmYWxzZSwicmVmIjp7InRlcm1pbmFsX3Nlc3Npb25faWQiOiJ0MSJ9LCJzdGF0ZSI6eyJjd2QiOiJ+L3Rhc3RlYm9vay9hcGkiLCJwcm9maWxlIjoienNoIn19LCJ0ZXJtaW5hbDp0MiI6eyJraW5kIjoidGVybWluYWwiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsidGVybWluYWxfc2Vzc2lvbl9pZCI6InQyIn0sInN0YXRlIjp7ImN3ZCI6In4vdGFzdGVib29rL2FwaSIsInByb2ZpbGUiOiJ6c2gifX19LCJ1cGRhdGVkX2F0IjoiMjAyNi0xMC0wOVQxMjowMDowMFoiLCJ2aWV3X3N0YXRlIjp7ImZvY3VzZWRfcGFuZWxfaWQiOiJwYW5lbC1hbGwiLCJtYXhpbWl6ZWRfcGFuZWxfaWQiOm51bGwsInJlY2VudF90YWJfaWRzIjpbImZpbGU6c3JjL21haW4ucnMiXX0sIndvcmtzcGFjZV90YWJfaWQiOiJ3b3Jrc3BhY2UtZml4dHVyZSJ9"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "DL-270 retires the base64 field names."
+    },
+    {
+      "id": "slot_home3_version",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/schema_version",
+          "value": "3.0.0"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "Home3 values stay with the Home3 reader."
+    },
+    {
+      "id": "slot_payload_ref_too_small",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_layout_source_bytes",
+          "value": {
+            "form": "payload_ref",
+            "blake3_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "byte_size": 16384,
+            "media_type": "application/json"
+          }
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "A payload-store reference is only for bytes over 16 KiB (SP-337, SP-340)."
+    },
+    {
+      "id": "slot_bytes_missing_when_prepared",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/candidate_layout_source_bytes",
+          "value": null
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "An unresolved operation keeps both exact source byte captures."
+    },
+    {
+      "id": "slot_retired_command",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/binding/command_id",
+          "value": "cmd.terminal.move_workgroup"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "Only CV-361 2.0.0 commands bind a v2 write; terminal.workgroup_moved's command retired (DL-181)."
+    },
+    {
+      "id": "prior_core_json_codec",
+      "base": "home4_empty_slot_after_home3_migration",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_migration_generation/core_bytes_encoding",
+          "value": "home_slot_migration_core_utf8_json.v1"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "DL-270 retires the JSON migration-core codec for new writes."
+    },
+    {
+      "id": "receipt_payload_v1",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/event_semantics/payload_schema_id",
+          "value": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "New appends carry 2.0.0 only (CV-361)."
+    },
+    {
+      "id": "receipt_json_capture_codec",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/identity_capture_encoding",
+          "value": "home_content_free_capture_utf8_json.v1"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "DL-270 retires the JSON capture id for new writes."
+    },
+    {
+      "id": "receipt_v1_readback_key",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/readback/canonical_key",
+          "value": "home_workspace_layout.v1:project-fixture:workspace-fixture"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "The v1 key is read-only migration input (SP-330)."
+    },
+    {
+      "id": "receipt_migration_event",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/event_semantics/payload/change",
+          "value": "migrated_from_v1"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "The conversion has no admitted command and never uses this custody (SP-273, SP-330)."
+    },
+    {
+      "id": "receipt_owner_result_v1",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/owner_result/schema_version",
+          "value": "1.0.0"
+        }
+      ],
+      "rejected_by": "schema",
+      "why": "The Home4 owner result is version 2.0.0."
+    },
+    {
+      "id": "slot_inline_over_16k",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_layout_source_bytes/bytes",
+          "value": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHg="
+        }
+      ],
+      "rejected_by": "I6",
+      "why": "16,385 inline bytes need a payload-store reference."
+    },
+    {
+      "id": "slot_bytes_hash_mismatch",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_layout_source_bytes/bytes",
+          "value": "eyJjaGF0X2NvbHVtbiI6eyJoaXN0b3J5X3Bpbm5lZCI6ZmFsc2UsInNob3duIjp0cnVlLCJ3aWR0aF9weCI6bnVsbH0sImNsb3NlZF90YWJzIjpbXSwibWlncmF0aW9uIjp7Im1pZ3JhdGVkX2F0IjpudWxsLCJvcmlnaW4iOiJjcmVhdGVkX2RlZmF1bHQiLCJzb3VyY2Vfa2V5IjpudWxsLCJzb3VyY2VfcmV2aXNpb24iOm51bGwsInNvdXJjZV9zY2hlbWFfaWQiOm51bGx9LCJuYW1lZF9sYXlvdXRzIjpbXSwicHJvamVjdF9pZCI6InByb2plY3QtZml4dHVyZSIsInJldmlzaW9uIjo4LCJyb290Ijp7ImFjdGl2ZV90YWJfaWQiOiJmaWxlOnNyYy9tYWluLnJzIiwiY29sbGFwc2VkIjpmYWxzZSwiaWQiOiJwYW5lbC1hbGwiLCJsb2NrZWQiOmZhbHNlLCJub2RlIjoicGFuZWwiLCJwaW5uZWRfY291bnQiOjEsInByZXZpZXdfdGFiX2lkIjpudWxsLCJ0YWJfaWRzIjpbIm91dHB1dCIsImRhc2hib2FyZDpob21lIiwiZGFzaGJvYXJkOmFnZW50cyIsImZpbGU6c3JjL21haW4ucnMiLCJmaWxlOnNyYy9yb3V0ZXMvcmVjaXBlcy5ycyIsInBsYW46YXAtaW5kZXgiLCJ0ZXJtaW5hbDp0MSIsInRlcm1pbmFsOnQyIl19LCJzY2hlbWFfaWQiOiJwbS5ob21lX3dvcmtzcGFjZV9sYXlvdXQudjIiLCJzY2hlbWFfdmVyc2lvbiI6IjIuMC4wIiwidGFicyI6eyJkYXNoYm9hcmQ6YWdlbnRzIjp7ImtpbmQiOiJkYXNoYm9hcmQiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsiYm9hcmRfaWQiOiJhZ2VudHMifSwic3RhdGUiOnt9fSwiZGFzaGJvYXJkOmhvbWUiOnsia2luZCI6ImRhc2hib2FyZCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6dHJ1ZSwicmVmIjp7ImJvYXJkX2lkIjoiaG9tZSJ9LCJzdGF0ZSI6e319LCJmaWxlOnNyYy9tYWluLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9tYWluLnJzIn0sInN0YXRlIjp7fX0sImZpbGU6c3JjL3JvdXRlcy9yZWNpcGVzLnJzIjp7ImtpbmQiOiJlZGl0b3IiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsicGF0aCI6InNyYy9yb3V0ZXMvcmVjaXBlcy5ycyJ9LCJzdGF0ZSI6e319LCJvdXRwdXQiOnsia2luZCI6Im91dHB1dCIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6e30sInN0YXRlIjp7ImNoYW5uZWwiOiJidWlsZCJ9fSwicGxhbjphcC1pbmRleCI6eyJraW5kIjoicGxhbiIsImxhYmVsIjpudWxsLCJtb2RlIjoia2VwdCIsInBpbm5lZCI6ZmFsc2UsInJlZiI6eyJwbGFuX2lkIjoiYXAtaW5kZXgifSwic3RhdGUiOnt9fSwidGVybWluYWw6dDEiOnsia2luZCI6InRlcm1pbmFsIiwibGFiZWwiOm51bGwsIm1vZGUiOiJrZXB0IiwicGlubmVkIjpmYWxzZSwicmVmIjp7InRlcm1pbmFsX3Nlc3Npb25faWQiOiJ0MSJ9LCJzdGF0ZSI6eyJjd2QiOiJ+L3Rhc3RlYm9vay9hcGkiLCJwcm9maWxlIjoienNoIn19LCJ0ZXJtaW5hbDp0MiI6eyJraW5kIjoidGVybWluYWwiLCJsYWJlbCI6bnVsbCwibW9kZSI6ImtlcHQiLCJwaW5uZWQiOmZhbHNlLCJyZWYiOnsidGVybWluYWxfc2Vzc2lvbl9pZCI6InQyIn0sInN0YXRlIjp7ImN3ZCI6In4vdGFzdGVib29rL2FwaSIsInByb2ZpbGUiOiJ6c2gifX19LCJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0wNFQwMDowMjowMFoiLCJ2aWV3X3N0YXRlIjp7ImZvY3VzZWRfcGFuZWxfaWQiOiJwYW5lbC1hbGwiLCJtYXhpbWl6ZWRfcGFuZWxfaWQiOm51bGwsInJlY2VudF90YWJfaWRzIjpbImZpbGU6c3JjL21haW4ucnMiXX0sIndvcmtzcGFjZV90YWJfaWQiOiJ3b3Jrc3BhY2UtZml4dHVyZSJ9"
+        }
+      ],
+      "rejected_by": "I6",
+      "why": "Captured bytes must hash to the prior layout hash."
+    },
+    {
+      "id": "slot_candidate_skips_revision",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/candidate_layout/revision",
+          "value": 9
+        }
+      ],
+      "rejected_by": "I2",
+      "why": "The candidate is exactly the next revision."
+    },
+    {
+      "id": "slot_foreign_project_layout",
+      "base": "home4_prepared_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_layout/project_id",
+          "value": "project-foreign"
+        }
+      ],
+      "rejected_by": "I3",
+      "why": "Both layouts belong to the slot's Project."
+    },
+    {
+      "id": "slot_event_foreign_command",
+      "base": "home4_readback_verified_slot",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/event_semantics/payload/command_id",
+          "value": "cmd.workspace_layout.split"
+        },
+        {
+          "op": "replace",
+          "path": "/event_semantics/payload/change",
+          "value": "panel_split"
+        }
+      ],
+      "rejected_by": "I1",
+      "why": "The frozen event names the admitted command."
+    },
+    {
+      "id": "receipt_foreign_owner_command",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/owner_result/command_id",
+          "value": "cmd.workspace_layout.split"
+        }
+      ],
+      "rejected_by": "I1",
+      "why": "Binding, owner result and SIR values name one command."
+    },
+    {
+      "id": "receipt_revision_edge_two",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/new_layout_revision",
+          "value": 9
+        }
+      ],
+      "rejected_by": "I2",
+      "why": "An applied change advances the revision by exactly one."
+    },
+    {
+      "id": "receipt_foreign_readback_key",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/readback/canonical_key",
+          "value": "home_workspace_layout.v2:project-foreign:workspace-fixture"
+        }
+      ],
+      "rejected_by": "I3",
+      "why": "Readback certifies this Project's v2 key."
+    },
+    {
+      "id": "receipt_foreign_receipt_ref",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/event_semantics/payload/receipt_refs",
+          "value": [
+            "home_layout_dispatch_receipt:foreign"
+          ]
+        }
+      ],
+      "rejected_by": "I4",
+      "why": "The event names the one dispatch receipt."
+    },
+    {
+      "id": "receipt_foreign_event_id",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/event_semantics/event_id",
+          "value": "evt_workspace_layout_ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        }
+      ],
+      "rejected_by": "I5",
+      "why": "The event ID is formed from the operation digest."
+    },
+    {
+      "id": "receipt_json_capture_bytes",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/identity_capture_bytes/normalized_request",
+          "value": "eyJjb21tYW5kX2lkIjoiY21kLndvcmtzcGFjZV9sYXlvdXQubW92ZV9zdXJmYWNlIiwiY29tbWFuZF9pbnN0YW5jZV9pZCI6ImNvbW1hbmQtaW5zdGFuY2UtZml4dHVyZSIsImRpc3BhdGNoX2ZyYW1lX2lkIjoiaG9tZS1kaXNwYXRjaC1mcmFtZTpvcmlnaW5hbCIsImlkZW1wb3RlbmN5X2tleSI6InJlcXVlc3QtaWRlbXBvdGVuY3ktZml4dHVyZSIsIm9wZXJhdGlvbl9pZCI6Im93bmVyLW9wZXJhdGlvbjpmaXh0dXJlIiwib3duZXJfaWRlbnRpdHkiOnsiYXR0ZW1wdF9pZCI6bnVsbCwiY29tbWFuZF9pbnN0YW5jZV9pZCI6ImNvbW1hbmQtaW5zdGFuY2UtZml4dHVyZSIsImV4ZWN1dGlvbl9lbnZpcm9ubWVudF9pZCI6ImVudi0xIiwiZXhlY3V0aW9uX2hvc3RfaWQiOiJob3N0LTEiLCJnb2FsX2lkIjpudWxsLCJuYW1lZF9wbGFuX2lkIjpudWxsLCJvcGVyYXRpb25fZ2VuZXJhdGlvbiI6MSwib3BlcmF0aW9uX2lkIjoib3duZXItb3BlcmF0aW9uOmZpeHR1cmUiLCJwcm9qZWN0X2hvbWVfc2VydmVyX2lkIjoic3J2LTEiLCJwcm9qZWN0X2lkIjoicHJvamVjdC1maXh0dXJlIiwic2NvcGVfa2luZCI6InByb2plY3QiLCJzZXJ2ZXJfaWQiOiJzcnYtMSIsInNvdXJjZV9sb2NhdGlvbl9pZCI6bnVsbCwidGhyZWFkX2lkIjpudWxsLCJ0b3BvbG9neV9nZW5lcmF0aW9uIjo4fSwicGF5bG9hZF9zaGEyNTYiOiIwMmFhOTNjYTc3YTgyZjI5NmJhZDE1YTE4ZTUyN2Y1NjFmYmIyNzVhY2MyMzFkOTZkYzZjZGMxYjQ2NzI5ZGJhIiwicmVxdWVzdF9yZWYiOiJyZXF1ZXN0OmZpeHR1cmUiLCJ0YXJnZXRfZ2VuZXJhdGlvbiI6OH0="
+        }
+      ],
+      "rejected_by": "I7",
+      "why": "Capture bytes are canonical MessagePack, not JSON (DL-270)."
+    },
+    {
+      "id": "receipt_home3_owner_result_ref",
+      "base": "home4_committed_receipt",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/original_command_outcome/owner_result_schema_ref",
+          "value": {
+            "path": "Plans/home_layout_event_contracts.schema.json",
+            "json_pointer": "#/$defs/owner_result",
+            "schema_id": "pm.home_layout_owner_result.v1"
+          }
+        }
+      ],
+      "rejected_by": "I8",
+      "why": "The SIR outcome points at the Home4 owner result."
+    },
+    {
+      "id": "prior_core_wrong_successor",
+      "base": "home4_empty_slot_after_home3_migration",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_migration_generation/successor_migration_id",
+          "value": "synthetic-home4:other"
+        }
+      ],
+      "rejected_by": "I9",
+      "why": "The prior wrapper joins the current migration."
+    },
+    {
+      "id": "prior_core_bytes_not_canonical",
+      "base": "home4_empty_slot_after_home3_migration",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/prior_migration_generation/core_bytes",
+          "value": "eyJiaW5kaW5nIjpudWxsLCJjYW5kaWRhdGVfbGF5b3V0IjpudWxsLCJjYW5kaWRhdGVfbGF5b3V0X3NoYTI1NiI6bnVsbCwiY2FuZGlkYXRlX2xheW91dF9zb3VyY2VfYnl0ZXNfYmFzZTY0IjpudWxsLCJldmVudF9zZW1hbnRpY3MiOm51bGwsImluc3RhbGxhdGlvbl9yZWNlaXB0X3JlZiI6Im1pZ3JhdGlvbl9yZWNlaXB0LnYxOnN5bnRoZXRpYy1ob21lLXBlbmRpbmctdjMtaW5zdGFsbCIsImxhc3RfdGVybWluYWxfb3BlcmF0aW9uX3JlZiI6ImhvbWVfbGF5b3V0X29wZXJhdGlvbjo5NDVmODUyM2IwNzIwYThkODQ4YjI3MzIxZDlhN2IyMDk2MTNhZjU5MGZkNmM2NDVlM2IwNjM2MjhmMjY1NTZiIiwibWlncmF0aW9uX2dlbmVyYXRpb24iOnsiYmFja3VwX3JlZiI6ImJhY2t1cDpob21lLXBlbmRpbmctdjMtaW5zdGFsbCIsImZhbWlseV90cmFuc2l0aW9uIjp7ImZyb21fdmVyc2lvbiI6IjAuMC4wIiwic3RvcmVfb3JfZmFtaWx5X2lkIjoiaG9tZV9sYXlvdXRfdHJhbnNhY3Rpb25fc2xvdCIsInRvX3ZlcnNpb24iOiIzLjAuMCJ9LCJnZW5lcmF0aW9uX2lkIjoiaG9tZS1taWdyYXRpb246c3ludGhldGljLWhvbWUtcGVuZGluZy12My1pbnN0YWxsIiwibWlncmF0aW9uX2NvbXBsZXRlZF9hdF91dGMiOiIyMDI2LTAxLTAxVDAwOjAxOjAwWiIsIm1pZ3JhdGlvbl9pZCI6InN5bnRoZXRpYy1ob21lLXBlbmRpbmctdjMtaW5zdGFsbCIsIm1pZ3JhdGlvbl9yZWNlaXB0X2tleSI6Im1pZ3JhdGlvbl9yZWNlaXB0LnYxOnN5bnRoZXRpYy1ob21lLXBlbmRpbmctdjMtaW5zdGFsbCIsIm1pZ3JhdGlvbl9yZWNlaXB0X3NoYTI1NiI6IjdhNDdjYWNjZmUyOGU3MGYzNmJlNmRjNGM1MDc3ZGQ0MjdlNjJhNGNmYjUyZjU1YTc4YWVkOGQzZTU4ZDVjOTUiLCJzdG9yZV90cmFuc2l0aW9uIjp7ImZyb21fdmVyc2lvbiI6IjkwMDAwMCIsInN0b3JlX29yX2ZhbWlseV9pZCI6InN5bnRoZXRpYy1ob21lLXJlZGIiLCJ0b192ZXJzaW9uIjoiOTAwMDAxIn19LCJwZW5kaW5nX2FwcGVuZF9vcmlnaW4iOm51bGwsInBlbmRpbmdfc2lyX2N1c3RvZHkiOm51bGwsInByaW9yX2xheW91dCI6bnVsbCwicHJpb3JfbGF5b3V0X3NoYTI1NiI6bnVsbCwicHJpb3JfbGF5b3V0X3NvdXJjZV9ieXRlc19iYXNlNjQiOm51bGwsInByb2R1Y2VyX2lkIjoiaG9tZS53b3Jrc3BhY2VfbGF5b3V0X2NvbW1pdC52MSIsInByb2R1Y2VyX3ZlcnNpb24iOiIzLjAuMCIsInByb2plY3RfaWQiOiJwcm9qZWN0LWZpeHR1cmUiLCJyZWFkYmFjayI6bnVsbCwic2NoZW1hX2lkIjoicG0uc3RvcmFnZV92YWx1ZS5ob21lX2xheW91dF90cmFuc2FjdGlvbl9zbG90LnYxIiwic2NoZW1hX3ZlcnNpb24iOiIzLjAuMCIsInNsb3RfZ2VuZXJhdGlvbiI6Niwic3RhdGUiOiJlbXB0eSIsInN0b3JhZ2VfaW5zdGFuY2VfaWQiOiIxMTExMTExMS0xMTExLTQxMTEtODExMS0xMTExMTExMTExMTEiLCJ1cGRhdGVkX2F0X3V0YyI6IjIwMjYtMDktMTJUMDg6MDA6MDZaIiwid29ya3NwYWNlX3RhYl9pZCI6IndvcmtzcGFjZS1maXh0dXJlIn0="
+        }
+      ],
+      "rejected_by": "I7",
+      "why": "Core bytes are canonical MessagePack of the core."
+    }
+  ]
+}

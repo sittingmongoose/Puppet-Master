@@ -21908,6 +21908,8 @@ Amended 2026-10-09 (DL-180, DL-181): the selected layout is now `pm.home_workspa
 
 Amended 2026-10-10 (DL-188): Event Authority admitted the move on 2026-10-10 (Jared's D42): `Plans/event_family_registry.json` registers `workspace.layout_changed` at family revision 2.0.0, registry revision `2026-10-09.1`, still 43 families, and the PNC-019 checkpoint constant in `scripts/pm_pnc019_currentness.py` names that revision. The paragraph above said the move waited "once Event Authority admits it" with the family kept at 1.1.0 "until then"; that condition is met. Where the next paragraph speaks of `event-family-workspace-layout-changed@1.1.0` and its 26 required fields, it describes the 1.1.0 events already written, which stay readable and are never rewritten.
 
+Amended 2026-11-04 (DL-045): SP-400 closes the SP-330 open item named above. v2 writes use the Home4 slot and receipt contract `Plans/home_layout_v2_slot_receipt.schema.json` (slot and receipt schema version 4.0.0, slot producer version 4.0.0). It keeps this section's producer `home.workspace_layout_commit.v1`, its custody, transaction, crash convergence, retention mapping, read and withdrawal rules, and replaces only the parts typed for v1 layouts and the 1.1.0 payload, and the JSON and base64 encodings that DL-270 retires.
+
 This is a new technical binding under DL-045 for the existing `event-family-workspace-layout-changed@1.1.0`. Keep `project_only`, payload schema `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0`, its exact 26 required fields and closed enums, and `RP-AUTHORITY-INDEFINITE@1.0.0`. The event is not a new admission. F3-515 owns applicable settled interaction; CV-323 owns truthful Home event/result/receipt joins; SP-245 owns the sole layout record's transaction/readback/recovery; UCC-144/UCC-147 retain command IDs. SP-273 owns this technical Storage supplement; no competing Home product owner is created.
 
 ### Existing behavior and exact applicability
@@ -22135,6 +22137,8 @@ canonical_text: >-
   read by the 1.1.0 schema, which stays in place, and append admission takes 2.0.0 alone.
   Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the registry names it at revision
   2026-10-09.1 and the earlier condition "once Event Authority admits it" is met.
+  Amended 2026-11-04 (DL-045): SP-400 writes the v2 writer's slot and receipt schema (Home4, version 4.0.0), closing
+  the SP-330 open item; this custody, transaction, crash, retention, read and withdrawal contract governs Home4 values.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.
@@ -27609,7 +27613,7 @@ Amended 2026-10-10 (DL-186, DL-187, DL-188): Jared's answers of 2026-10-10 are c
 
 **What it never holds.** Editor buffers and dirty state, terminal sessions, PTYs and scrollback, browser history and sessions, chat messages, credentials and a dashboard's widget layout. Each dashboard board keeps its own widget layout per project under `widget_layout:v1:<project_id>:<board_id>` (`Plans/Widget_System.md#WS-030`, SP-249; amended 2026-10-10, DL-186: the key `widget_layout:v1:dashboard:<board_id>` this sentence named was never written), apart from the snapshot a saved named layout keeps (below). Narrow-window states, overlays, open menus, hover and drag state are never written.
 
-**Transaction and receipt.** Every committed structural change is one admitted command (`Plans/UI_Command_Catalog.md#UCC-200`) that validates the candidate against the schema and the invariants, writes the canonical key, reads it back, and only then advances `revision` by exactly one, publishes its result and one dispatch receipt, and appends one `workspace.layout_changed` whose `change` names what happened (`Plans/Contracts_V0.md#CV-361`). A write or readback failure restores the exact prior record and commits a failed receipt with `rolled_back=true` and no event. An open that only reveals an existing tab, and a release that changes nothing, return `no_change` with no write and no event; a reveal whose tab sits in a collapsed panel expands that panel as one committed `panel_expanded` change under the open's command id (`Plans/Contracts_V0.md#CV-360`). View state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned and the chat column's `shown`) is written with the record but never advances `revision`, never takes a receipt and never appends an event. So are the chat column's `popped_out`, whose pop-out and return append only their own `panel.undocked` or `panel.redocked`, and a terminal tab's domain reference moving to a new session after Restart or a restore, which keeps the tab id (SP-332). (Amended 2026-10-10, DL-187: the pop-out is never written at all, D32; the pop-out and return still append only `panel.undocked` or `panel.redocked`. A terminal tab's notification mute and a Debug Console tab's chosen session sub-tab, both kept in the tab's state, are written like view state too.) SP-273's custody carries over to v2 writes: the transaction slot holds the prior and candidate v2 bytes while a change is unresolved, the operation receipt holds the content-free result, and the reader checkpoint stays disposable. The existing slot and receipt schemas (`Plans/home_layout_pending_receipt.schema.json` and its siblings) are typed for v1 layouts and v1 event semantics and stay the v1 readers. The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` instead of copying them inline, and until it exists no native v2 writer is admitted through those families.
+**Transaction and receipt.** Every committed structural change is one admitted command (`Plans/UI_Command_Catalog.md#UCC-200`) that validates the candidate against the schema and the invariants, writes the canonical key, reads it back, and only then advances `revision` by exactly one, publishes its result and one dispatch receipt, and appends one `workspace.layout_changed` whose `change` names what happened (`Plans/Contracts_V0.md#CV-361`). A write or readback failure restores the exact prior record and commits a failed receipt with `rolled_back=true` and no event. An open that only reveals an existing tab, and a release that changes nothing, return `no_change` with no write and no event; a reveal whose tab sits in a collapsed panel expands that panel as one committed `panel_expanded` change under the open's command id (`Plans/Contracts_V0.md#CV-360`). View state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned and the chat column's `shown`) is written with the record but never advances `revision`, never takes a receipt and never appends an event. So are the chat column's `popped_out`, whose pop-out and return append only their own `panel.undocked` or `panel.redocked`, and a terminal tab's domain reference moving to a new session after Restart or a restore, which keeps the tab id (SP-332). (Amended 2026-10-10, DL-187: the pop-out is never written at all, D32; the pop-out and return still append only `panel.undocked` or `panel.redocked`. A terminal tab's notification mute and a Debug Console tab's chosen session sub-tab, both kept in the tab's state, are written like view state too.) SP-273's custody carries over to v2 writes: the transaction slot holds the prior and candidate v2 bytes while a change is unresolved, the operation receipt holds the content-free result, and the reader checkpoint stays disposable. The existing slot and receipt schemas (`Plans/home_layout_pending_receipt.schema.json` and its siblings) are typed for v1 layouts and v1 event semantics and stay the v1 readers. The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` instead of copying them inline, and until it exists no native v2 writer is admitted through those families. Amended 2026-11-04 (DL-045): SP-400 writes that successor, `Plans/home_layout_v2_slot_receipt.schema.json` (slot and receipt schema version 4.0.0, "Home4"), which references both by `$ref`; a native v2 writer is admitted through those families once its 4.0.0 family edges are installed as SP-400 says.
 
 **First read and migration.** The first read for a project and workspace tab that has no v2 record converts its layout into one. The sources are read in this order: the v1 record (its dotted key, then its compatibility colon keys, as SP-245 reads them), else the Home part of `layout:v1`, else nothing, which creates the default Home layout of `Plans/FinalGUISpec.md#F3-630` (stamp `created_default`, revision 0, no event). The conversion runs through the StorageMigrationCoordinator in one verified transaction: convert, check the schema and every invariant, write the v2 key, read it back. The source is never written, reset or deleted: it stays where it was, read-only, as input and lineage. A converted record's `revision` is the v1 `layout_revision` plus one (1 for a `layout:v1` source), and the conversion appends one `workspace.layout_changed` with `change` `migrated_from_v1` and actor `system`. A user's layout is never lost on upgrade.
 
@@ -29588,3 +29592,96 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+<a id="home4-v2-layout-slot-receipt-dl-045-20261104"></a>
+## The v2 Home layout slot and receipt contract (DL-045, 2026-11-04)
+
+This is a **newly authored owner contract under DL-045** for `workspace.layout_changed`, one of DL-045's 285 names. SP-330 and SP-273's 2026-10-09 amendment require a successor slot and receipt schema for v2 Home layout writes that references `pm.home_workspace_layout.v2` and the CV-361 2.0.0 payload by `$ref`, and they admit no native v2 writer until it exists. SP-400 writes it: `Plans/home_layout_v2_slot_receipt.schema.json`, slot and receipt schema version 4.0.0 ("Home4"). It adds no feature, command, event family, retention policy, hold or physical family.
+
+**Search before authoring.** On 2026-11-04 every file under `Plans/`, `scripts/` and `tests/` that names `home_workspace_layout/2.0.0`, `workspace_layout_changed/2.0.0`, `home_layout_transaction_slot`, `home_layout_operation_receipt`, `home_content_free_capture` or `home_slot_migration_core` was read. Only the v2 layout schema and its storage registry row name the v2 record. Only CV-361, the event family registry and the Event Authority audit ledger name the 2.0.0 payload. No slot, receipt or capture definition is typed for either, and no MessagePack capture or migration-core codec id exists. The search record is `reports/event-authority-20261104/ds-p2-home4-binding-search.txt`.
+
+**What it reuses unchanged**, by `$ref` into `Plans/home_layout_pending_receipt.schema.json`:
+- the two physical families and their `.v1` keys, and the producer `home.workspace_layout_commit.v1`;
+- the slot states and their conditionals, Storage and scope identities, the migration binding, pending SIR custody and both pending append-origin variants;
+- the twenty-field operation binding except `command_id`, the dispatch receipt, the readback fields and the event envelope fields;
+- the eleven-field original AppendReceipt, the four-field append result, original publication v2, and the SIR outcome, normalized request and UI response.
+
+SP-273's custody, transaction, crash convergence, retention mapping, read, deletion and withdrawal rules govern Home4 values unchanged, as its 2026-10-09 amendment says.
+
+**What it replaces:**
+- **Layouts.** `prior_layout` and `candidate_layout` are `pm.home_workspace_layout.v2` records, by `$ref`.
+- **Event semantics.** `payload_schema_id` names the 2.0.0 payload and `payload` is the CV-361 payload, by `$ref`. Its `change` is never `migrated_from_v1` and its `command_id` is never null. The v1-to-v2 conversion has no admitted command, so it appends its event inside SP-330's StorageMigrationCoordinator transaction and never takes a slot operation or receipt. SP-273 already says that restore, migration and recovery values do not authorize making up a command, interaction or receipt.
+- **Commands.** The binding's and owner result's `command_id` is the CV-361 2.0.0 command set, by `$ref`. The owner result is `pm.home_layout_owner_result.v1` at version 2.0.0, and the SIR outcome's `owner_result_schema_ref` points at this contract's `#/$defs/owner_result`.
+- **Readback key.** `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`.
+- **Encodings (DL-270; SP-337, SP-339, SP-340).** Values are canonical MessagePack. `prior_layout_source_bytes` and `candidate_layout_source_bytes` replace the retired `*_base64` fields. Each holds the exact source bytes as a binary field when they are at most 16 KiB, and a payload-store reference (BLAKE3 id, byte size, media type) above that. Identity capture uses `home_content_free_capture_canonical_msgpack.v1`. A prior migration core uses `home_slot_migration_core_canonical_msgpack.v1`; it may be the final Home3 core or a Home4 core, and it is always an empty resolved operation.
+
+**Installation and readers.** As for Home3, the sole StorageMigrationCoordinator installs coordinated slot and receipt 4.0.0 family edges, the 1.0.0 to 4.0.0 readers and the Home pending resolver, and the owner activation follows the committed MigrationReceipt, before a v2 write is admitted. Unresolved Home1 to Home3 operations are not converted: they settle under their original authority or fence the migration, as SP-273 says. Readers dispatch by `schema_version`: 1.0.0 to 3.0.0 through `Plans/home_layout_value_readers.schema.json`, 4.0.0 through this contract. The reader checkpoint `home.workspace_layout_event_reader.v1` is unchanged and resolves 4.0.0 receipts through this contract. The storage registry rows keep naming Home3 until the 4.0.0 family edges are registered with that installation; this unit changes no registry row.
+
+**Static oracles.** `Plans/home_layout_v2_slot_receipt_fixtures.json` holds 5 valid values (empty slot, empty slot after the Home3 migration, prepared slot, readback-verified slot, committed receipt), 12 schema negatives and 14 joined-value negatives. `scripts/pm_home_layout_v2_slot_receipt.py` checks them against the schema and the invariants I1 to I9 in its `$comment`. Native installation, codecs, redb transactions, authentication and durability remain NOT_RUN.
+
+### SP-400 - The v2 Home Layout Slot And Receipt Contract (Home4)
+
+```yaml
+plan_unit_id: SP-400
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04). v2 Home layout writes use the Home4 slot and receipt contract Plans/home_layout_v2_slot_receipt.schema.json, slot and receipt schema version 4.0.0 and slot producer version 4.0.0, in the existing home_layout_transaction_slot and home_layout_operation_receipt families at their .v1 keys, with producer home.workspace_layout_commit.v1. It references pm.home_workspace_layout.v2 and the CV-361 2.0.0 payload by $ref and reuses every Home3 definition that is not typed for v1 layouts or the 1.1.0 payload, so SP-273's custody, transaction, crash convergence, retention mapping, read, deletion and withdrawal rules govern it unchanged. The binding's and owner result's command_id is the CV-361 command set; the owner result is pm.home_layout_owner_result.v1 at 2.0.0; the readback key is home_workspace_layout.v2:{project_id}:{workspace_tab_id}. A Home4 event is never migrated_from_v1 and never has a null command: the conversion appends inside SP-330's StorageMigrationCoordinator transaction without a slot operation or receipt. Under DL-270 values are canonical MessagePack, prior_layout_source_bytes and candidate_layout_source_bytes hold the exact source bytes as a binary field up to 16 KiB or a BLAKE3 payload-store reference above it, identity capture uses home_content_free_capture_canonical_msgpack.v1 and a prior migration core uses home_slot_migration_core_canonical_msgpack.v1. The 4.0.0 slot and receipt edges, readers and pending resolver are installed through the StorageMigrationCoordinator with post-receipt owner activation before a v2 write is admitted; unresolved Home1 to Home3 operations settle under their original authority or fence the migration. Readers dispatch 1.0.0 to 3.0.0 through Plans/home_layout_value_readers.schema.json and 4.0.0 through this contract.
+gui_related: false
+gui_classification_reason: Defines the stored custody of Home layout writes, not presentation.
+split_recommended: false
+depends_on: [SP-330, SP-273, CV-361, SIR-046, SP-337, SP-339, SP-340, DL-045, DL-180, DL-188, DL-270]
+unblocks: []
+acceptance_criteria:
+  - Plans/home_layout_v2_slot_receipt.schema.json references pm.home_workspace_layout.v2 and the CV-361 2.0.0 payload by $ref and copies neither.
+  - Every Home3 member not typed for v1 layouts, the 1.1.0 payload or a DL-270-retired encoding is reused by $ref; families, keys and producer id are unchanged.
+  - A Home4 slot or receipt rejects a v1 layout, a 1.1.0 payload, a *_base64 field, a retired JSON codec id, a v1 readback key, a retired command and a migrated_from_v1 event.
+  - Layout source bytes are a binary field up to 16 KiB and a payload-store reference only above it; their SHA-256 equals the layout hash.
+  - Every valid case of Plans/home_layout_v2_slot_receipt_fixtures.json passes the schema and invariants I1 to I9, and every invalid case is refused by the schema or by the invariant it names.
+  - No 4.0.0 write is admitted before the 4.0.0 family edges, readers, pending resolver and owner activation are installed; unresolved Home1 to Home3 operations are never converted.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches or production build tasks are created by this unit.
+validation_surfaces:
+  - Plans/home_layout_v2_slot_receipt.schema.json
+  - Plans/home_layout_v2_slot_receipt_fixtures.json
+  - python3 scripts/pm_home_layout_v2_slot_receipt.py
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_layout_v2_write_custody_or_encoding_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/home_layout_v2_slot_receipt.schema.json
+  - Plans/home_layout_v2_slot_receipt_fixtures.json
+  - scripts/pm_home_layout_v2_slot_receipt.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+  - Plans/storage-plan.md#SP-330
+  - Plans/storage-plan.md#SP-273
+  - Plans/Contracts_V0.md#CV-361
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-270
+  - reports/event-authority-20261104/ds-p2-home4-binding-search.txt
+preserved_exact_tokens:
+  - home_layout_transaction_slot
+  - home_layout_operation_receipt
+  - home.workspace_layout_commit.v1
+  - pm.home_workspace_layout.v2
+  - workspace.layout_changed
+  - migrated_from_v1
+  - RP-CONFIG-CURRENT
+  - RP-AUTHORITY-INDEFINITE
+negative_constraints:
+  - No new feature, command, event family, payload version, retention policy, hold kind, physical family or key.
+  - No storage registry row change; the 4.0.0 family edges are registered with their installation.
+  - No conversion of unresolved Home1 to Home3 operations, no native proof, DEPTH_PASS or governance seal.
+owner_hints:
+  - Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/storage-plan.md#SP-273, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-270

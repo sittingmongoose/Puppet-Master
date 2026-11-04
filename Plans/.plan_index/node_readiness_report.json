@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18860,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22070,
+    "node_count": 7488,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T15:28:21Z",
+  "generated_at_utc": "2026-11-05T15:30:02Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -35233,8 +35233,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 22085,
-          "line": 22107,
+          "heading_line": 22087,
+          "line": 22109,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35244,8 +35244,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23593,
-          "line": 23595,
+          "heading_line": 23597,
+          "line": 23599,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35255,8 +35255,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 27650,
-          "line": 27652,
+          "heading_line": 27654,
+          "line": 27656,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35266,8 +35266,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 27815,
-          "line": 27817,
+          "heading_line": 27819,
+          "line": 27821,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35277,8 +35277,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 27937,
-          "line": 27939,
+          "heading_line": 27941,
+          "line": 27943,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35288,8 +35288,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 28036,
-          "line": 28038,
+          "heading_line": 28040,
+          "line": 28042,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35299,8 +35299,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 28406,
-          "line": 28408,
+          "heading_line": 28410,
+          "line": 28412,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35310,8 +35310,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 28472,
-          "line": 28474,
+          "heading_line": 28476,
+          "line": 28478,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35321,8 +35321,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 28538,
-          "line": 28540,
+          "heading_line": 28542,
+          "line": 28544,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35332,8 +35332,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 28591,
-          "line": 28593,
+          "heading_line": 28595,
+          "line": 28597,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -41967,10 +41967,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7487,
+  "plan_unit_count": 7488,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2806,
+      "high": 2807,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -43676,6 +43676,7 @@
       "home_gesture_regression": 1,
       "home_layout_persistence_drift": 1,
       "home_layout_readback_event_receipt_crash_or_replay_authority_escape": 2,
+      "home_layout_v2_write_custody_or_encoding_drift": 1,
       "home_menu_regression": 1,
       "home_panels_terminal_redesign_drift": 69,
       "home_platform_claim_drift": 1,
@@ -46116,7 +46117,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7269,
       "retired": 196,
       "superseded": 23
     },
@@ -46192,7 +46193,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 123,
+      "schema_contract": 124,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 18,
