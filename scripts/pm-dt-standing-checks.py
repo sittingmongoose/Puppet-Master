@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fault-inject all eight standing checks into the complete DT checker.
+"""Fault-inject all ten standing checks into the complete DT checker.
 
 Each fault affects one family. Checks 1..7 call the unmodified complete main
 with an in-memory model fault; check 8 uses a real failing subprocess. Nothing
@@ -29,6 +29,7 @@ CASES = {
     '6': 'retry digest includes Storage metadata',
     '7': 'checkpoint publishes a coherent foreign storage identity',
     '8': 'pinned family identity oracle is wrong; process must exit 1',
+    '9': 'unvisited timestamp alternative contains an unresolved schema reference',
 }
 
 
@@ -41,8 +42,34 @@ def failure_probe(name):
     return dt.main()
 
 
-def run_fault(name, number):
+def run_fault(name, number, ref_location='timestamp'):
     source = dt.source_valid; checkpoint = dt.checkpoint_result; digest = dt.producer_semantic_digest
+    original_load = dt.load
+    if number == '9':
+        document = copy.deepcopy(original_load('Plans/dt_event_contracts.schema.json'))
+        definition = document['$defs'][name.replace('.', '_')]
+        field = 'observed_at_utc' if name == 'usage.event' else 'ts'
+        missing = {'$ref': '#/$defs/standing_missing_' + name.replace('.', '_')}
+        storage = None
+        if ref_location == 'timestamp':
+            definition['properties'][field] = {'anyOf': [definition['properties'][field], missing]}
+        elif ref_location == 'optional':
+            definition['properties']['standing_unused'] = missing
+        elif ref_location == 'unused_definition':
+            document['$defs']['standing_unused_' + name.replace('.', '_')] = missing
+        elif ref_location == 'mirror':
+            storage = copy.deepcopy(original_load('Plans/storage_value_registry.json'))
+            ref = 'Plans/dt_event_contracts.schema.json#/$defs/' + name.replace('.', '_') + '_checkpoint'
+            next(row for row in storage['families'] if row['value_schema_ref'] == ref)['value_schema']['properties']['standing_unused'] = missing
+        else:
+            raise ValueError(ref_location)
+        def changed_load(path):
+            if path == 'Plans/dt_event_contracts.schema.json':
+                return document
+            if path == 'Plans/storage_value_registry.json' and storage is not None:
+                return storage
+            return original_load(path)
+        dt.load = changed_load
 
     def bad_source(c, a, b, e, schemas, *args, **kwargs):
         if c['event_type'] == name:
@@ -78,7 +105,33 @@ def run_fault(name, number):
         result = json.loads(out.getvalue())
     finally:
         dt.source_valid = source; dt.checkpoint_result = checkpoint; dt.producer_semantic_digest = digest
+        dt.load = original_load
     return code, result
+
+
+def reference_controls():
+    """Positive and negative controls for roots, nested IDs and external bundles."""
+    base = 'https://puppetmaster.local/standing-ref-controls/'
+    root = {'$id': base + 'root.json', '$defs': {
+        'unused_external': {'$ref': 'external.json#entry'},
+        'nested': {'$id': 'nested/child.json', '$defs': {'target': {'type': 'string'}}, '$ref': '#/$defs/target'},
+        'local': {'$anchor': 'here', 'type': 'string'}, 'unused_local': {'$ref': '#here'}}}
+    external = {'$id': base + 'external.json', '$defs': {'good': {'$anchor': 'entry', 'type': 'string'}}}
+    documents = {'Plans/standing-root.json': root, 'Plans/standing-external.json': external}
+    results = {'resolved_local_external_anchor_nested_id': not dt.schema_reference_errors(documents)}
+    for location in ['unused_definition', 'optional', 'alternative', 'external_unused']:
+        changed = copy.deepcopy(documents)
+        bad = {'$ref': '#/$defs/missing_control'}
+        if location == 'unused_definition':
+            changed['Plans/standing-root.json']['$defs']['unused'] = bad
+        elif location == 'optional':
+            changed['Plans/standing-root.json']['properties'] = {'unused': bad}
+        elif location == 'alternative':
+            changed['Plans/standing-root.json']['anyOf'] = [True, bad]
+        else:
+            changed['Plans/standing-external.json']['$defs']['unused'] = bad
+        results[location + '_refused'] = bool(dt.schema_reference_errors(changed))
+    return results
 
 
 def main():
@@ -104,9 +157,11 @@ def main():
         return 1
     families = [c['event_type'] for c in dt.load('Plans/dt_event_contracts.json')['families']]
     results = {}; failures = []
+    controls = reference_controls()
+    failures.extend('schema reference control: ' + name for name, passed in controls.items() if not passed)
     for name in families:
         row = {}
-        for number in map(str, range(1, 9)):
+        for number in map(str, range(1, 10)):
             if number == '8':
                 process = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--failure-probe', name],
                                          cwd=ROOT, capture_output=True, text=True, timeout=120)
@@ -116,17 +171,34 @@ def main():
             messages = result.get('failures', [])
             rejected = (code == 1 and result['status'] == 'fail' and result['families'] == len(families)
                         and any(message.startswith(name + ':') for message in messages)
-                        and result['checks'] == baseline_result['checks'])
+                        and (result['checks'] == baseline_result['checks'] if number != '9' else
+                             result['checks'] == len(families) and any(
+                                 'standing_missing_' + name.replace('.', '_') in error
+                                 for error in result.get('schema_reference_errors', []))))
             row[number] = {'case': CASES[number], 'status': 'pass' if rejected else 'fail',
                            'full_checker_status': result['status'], 'exit_code': code,
                            'families_checked': result['families'], 'assertions': result['checks'],
                            'failures': messages}
+            if number == '9':
+                locations = {}
+                for location in ['optional', 'unused_definition', 'mirror']:
+                    child_code, child = run_fault(name, number, location)
+                    passed = child_code == 1 and child['status'] == 'fail' and any(
+                        'standing_missing_' + name.replace('.', '_') in error
+                        for error in child.get('schema_reference_errors', []))
+                    locations[location] = {'status': 'pass' if passed else 'fail', 'exit_code': child_code,
+                                           'schema_reference_errors': child.get('schema_reference_errors', [])}
+                row[number]['additional_locations'] = locations
+                if any(value['status'] != 'pass' for value in locations.values()):
+                    rejected = False
+                    row[number]['status'] = 'fail'
             if not rejected:
                 failures.append(name + ': standing check ' + number + ' failed to reject fault')
         results[name] = row
         print(name + ': ' + ', '.join(k + '=' + v['status'] for k, v in row.items()), file=sys.stderr, flush=True)
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(families),
-                      'full_checker_runs': 1 + 8 * len(families), 'per_family': results,
+                      'full_checker_runs': 1 + 12 * len(families), 'per_family': results,
+                      'reference_controls': controls,
                       'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return int(bool(failures))
 
