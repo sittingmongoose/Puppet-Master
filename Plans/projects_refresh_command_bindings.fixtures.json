@@ -5,7 +5,7 @@
   "evidence_level": "static_contract_examples_only",
   "native_runtime_executed": false,
   "source_companion_ref": "Plans/projects_refresh_command_bindings.json",
-  "source_companion_sha256": "3738f2a1e52abb01c6244968121d06784544760d98e6d146bc06d36e7547b566",
+  "source_companion_sha256": "7d15b0a6420878da195ed7e9e82bcd9d4bc2010cd61f2efae5bf7befae12370c",
   "projects_refresh_cases": [
     {
       "case_id": "fd-binding-commands",
@@ -325,8 +325,8 @@
             "command_id": "cmd.chat.move.preview",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-510",
             "handler": "handlers::assistant_chat::move_preview",
-            "request_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest",
-            "result_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewRequestScopeV2",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewResultScopeV2",
             "group": "no_project",
             "gui_consumers": [
               "both conversion choices and live preview"
@@ -363,8 +363,8 @@
             "command_id": "cmd.chat.move.apply",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-510",
             "handler": "handlers::assistant_chat::move_apply",
-            "request_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest",
-            "result_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyRequestScopeV2",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyResultScopeV2",
             "group": "no_project",
             "gui_consumers": [
               "named conversion commit and guarded agent route"
@@ -27966,8 +27966,8 @@
             "command_id": "cmd.chat.move.preview",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-510",
             "handler": "handlers::assistant_chat::move_preview",
-            "request_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest",
-            "result_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewRequestScopeV2",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewResultScopeV2",
             "group": "no_project",
             "gui_consumers": [
               "both conversion choices and live preview"
@@ -28004,8 +28004,8 @@
             "command_id": "cmd.chat.move.apply",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-510",
             "handler": "handlers::assistant_chat::move_apply",
-            "request_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest",
-            "result_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult",
+            "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyRequestScopeV2",
+            "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyResultScopeV2",
             "group": "no_project",
             "gui_consumers": [
               "named conversion commit and guarded agent route"

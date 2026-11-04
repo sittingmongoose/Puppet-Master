@@ -2814,6 +2814,1716 @@
           "minimum": 0
         }
       }
+    },
+    "ChatMoveDraftDestinationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "destination_kind",
+        "project_id",
+        "draft_id",
+        "draft_revision",
+        "draft_sha256",
+        "server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "proposed_project_name",
+        "proposed_folder_ref",
+        "proposed_native_plan_ref",
+        "registration_plan_ref",
+        "registration_plan_sha256"
+      ],
+      "properties": {
+        "destination_kind": {
+          "const": "new_project"
+        },
+        "project_id": {
+          "const": null
+        },
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "proposed_project_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "proposed_folder_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "proposed_native_plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "registration_plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "registration_plan_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ChatMoveDraftPreviewManifestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "operation_id",
+        "source_scope",
+        "source_thread_id",
+        "source_sha256",
+        "source_writer_evidence",
+        "source_stop_epoch",
+        "destination",
+        "family_dispositions",
+        "file_manifest_ref",
+        "settings_preview_ref",
+        "planned_association_refs",
+        "visible_effects_sha256",
+        "manifest_sha256",
+        "created_at_utc",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.move_draft_preview_manifest.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "source_thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "source_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "destination": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveDraftDestinationV1"
+        },
+        "family_dispositions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "thread_message_title_pin_todo_composer",
+            "chat_place_folder_files_attachments",
+            "events_receipts_usage_payloads",
+            "restore_revert_safe_point_attention_handoff_lens",
+            "goals_body_control_history_association",
+            "crew_definition_run_participants_board",
+            "coordination_claims_checkpoints",
+            "assistant_plan_revisions_run_adherence_todos",
+            "schedules_messages_windows_consents_occurrences",
+            "project_only_wizard_prd_orchestrator",
+            "scm_history_forge_conflicts",
+            "artifacts_shared_refs",
+            "terminals_live_processes_profiles",
+            "debug_testing_preview_eval",
+            "editor_buffers_absolute_links",
+            "search_indexes_publication",
+            "layout_home_boards_panels",
+            "memory_capsule_teach_notebook_persona",
+            "tools_skills_plugins_commands_accounts",
+            "permissions_approvals_filesafe_trust",
+            "server_vault_routes_ws_fairness",
+            "automation_stop_pause_history",
+            "backup_deletion_retention_quotas",
+            "undo_inverse"
+          ],
+          "properties": {
+            "thread_message_title_pin_todo_composer": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "chat_place_folder_files_attachments": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "events_receipts_usage_payloads": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "restore_revert_safe_point_attention_handoff_lens": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "goals_body_control_history_association": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "crew_definition_run_participants_board": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "coordination_claims_checkpoints": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "assistant_plan_revisions_run_adherence_todos": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "schedules_messages_windows_consents_occurrences": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "project_only_wizard_prd_orchestrator": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "scm_history_forge_conflicts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "artifacts_shared_refs": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "terminals_live_processes_profiles": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "debug_testing_preview_eval": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "editor_buffers_absolute_links": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "search_indexes_publication": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "layout_home_boards_panels": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "memory_capsule_teach_notebook_persona": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "tools_skills_plugins_commands_accounts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "permissions_approvals_filesafe_trust": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "server_vault_routes_ws_fairness": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "automation_stop_pause_history": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "backup_deletion_retention_quotas": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            "undo_inverse": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "disposition",
+                "owner_ref",
+                "source_refs",
+                "planned_destination_refs",
+                "reason_ref"
+              ],
+              "properties": {
+                "disposition": {
+                  "enum": [
+                    "copy_verified_then_cutover",
+                    "linked_successor",
+                    "retained_source",
+                    "fresh_destination_state",
+                    "not_applicable_feature_gate",
+                    "held_for_explicit_readmission"
+                  ]
+                },
+                "owner_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "source_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "planned_destination_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "uniqueItems": true
+                }
+              }
+            }
+          }
+        },
+        "file_manifest_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "settings_preview_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "planned_association_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "visible_effects_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ChatMoveDraftPreviewRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_id",
+        "context",
+        "destination",
+        "selection_ref",
+        "expected_selection_sha256",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.move_draft_preview.request.v2"
+        },
+        "command_id": {
+          "const": "cmd.chat.move.preview"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "destination": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveDraftDestinationV1"
+        },
+        "selection_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_selection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ChatMoveDraftPreviewResultV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "manifest",
+        "plain_statement",
+        "preview_id",
+        "preview_sha256",
+        "expires_at_utc",
+        "blocker_refs",
+        "mode_authority",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.move_draft_preview.result.v2"
+        },
+        "manifest": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveDraftPreviewManifestV1"
+        },
+        "plain_statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "blocker_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "mode_authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ChatMoveCreateAndApplyRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_id",
+        "context",
+        "operation_id",
+        "preview_id",
+        "preview_sha256",
+        "draft_manifest_sha256",
+        "draft_id",
+        "draft_revision",
+        "draft_sha256",
+        "visible_effects_sha256",
+        "expected_operation_revision",
+        "expected_cutover_generation",
+        "source_stop_epoch",
+        "authority"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.move_create_apply.request.v2"
+        },
+        "command_id": {
+          "const": "cmd.chat.move.apply"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "draft_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "visible_effects_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_operation_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_cutover_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        }
+      }
+    },
+    "ChatMoveCutoverManifestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "draft_preview_manifest_ref",
+        "draft_preview_manifest_sha256",
+        "draft_id",
+        "draft_revision",
+        "draft_sha256",
+        "reviewed_visible_effects_sha256",
+        "bound_visible_effects_sha256",
+        "project_reservation_receipt",
+        "project_listing_readback_receipt",
+        "cutover_manifest"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.move_cutover_manifest.v2"
+        },
+        "draft_preview_manifest_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_preview_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reviewed_visible_effects_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bound_visible_effects_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "project_reservation_receipt": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "project_listing_readback_receipt": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "cutover_manifest": {
+          "$ref": "https://puppetmaster.local/Plans/application_workflow_contracts.schema.json#/$defs/ChatMoveManifestV1"
+        }
+      }
+    },
+    "ChatMovePreviewRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveDraftPreviewRequestV2"
+        }
+      ]
+    },
+    "ChatMovePreviewResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveDraftPreviewResultV2"
+        }
+      ]
+    },
+    "ChatMoveApplyRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveCreateAndApplyRequestV2"
+        }
+      ]
+    },
+    "ChatMoveApplyResultScopeV2": {
+      "$ref": "https://puppetmaster.local/Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
     }
   }
 }

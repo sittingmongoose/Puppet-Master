@@ -715,6 +715,21 @@ def semantic_outcome(predicate, record, corpus, pack, case):
         return record['outcome']
     if predicate == 'automation.final_dispatch':
         return publication_outcome(record)
+    if predicate == 'move.draft_cutover_join':
+        source = pack.get('move_draft_owner_source')
+        if source is None:
+            return 'refuse'
+        draft = source['preview']['destination']
+        if any(record[k] != draft[k] for k in ('draft_id', 'draft_revision', 'draft_sha256')):
+            return 'refuse'
+        expected = source['preview']['visible_effects_sha256']
+        if record['reviewed_visible_effects_sha256'] != expected or record['bound_visible_effects_sha256'] != expected:
+            return 'refuse'
+        if record['cutover_manifest']['destination_scope'] != source['real_project_scope']:
+            return 'refuse'
+        if any(record[k] != source[k] for k in ('project_reservation_receipt', 'project_listing_readback_receipt')):
+            return 'refuse'
+        return 'accept'
     if predicate == 'starter.source_currentness':
         source = pack.get('starter_owner_sources', {}).get(case.get('owner_source_id'))
         content = record['payload']['content']

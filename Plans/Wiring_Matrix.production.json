@@ -88000,8 +88000,8 @@
       "ui_location": "both conversion choices and live preview; Projects refresh reverse consumers: both conversion choices and live preview",
       "ui_command_id": "cmd.chat.move.preview",
       "handler_location": "handlers::assistant_chat::move_preview",
-      "request_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest",
-      "result_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewRequestScopeV2",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewResultScopeV2",
       "expected_event_types": [],
       "acceptance_checks": [
         "Exact source thread and explicit new/existing destination; neither conversion is preselected",
@@ -88058,8 +88058,8 @@
       "ui_location": "named conversion commit and guarded agent route; Projects refresh reverse consumers: named conversion commit and guarded agent route",
       "ui_command_id": "cmd.chat.move.apply",
       "handler_location": "handlers::assistant_chat::move_apply",
-      "request_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest",
-      "result_schema_ref": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyRequestScopeV2",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyResultScopeV2",
       "expected_event_types": [],
       "acceptance_checks": [
         "Current unambiguous destination/preview; source approvals settled, active work/timers safely fenced",
