@@ -5,9 +5,25 @@ export const tests = {
   for(let i=0;i<10;i++) {
    const f=await t.app.open();
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
+   await f.evaluate(()=>{
+    window.__activityPaint=null;
+    document.addEventListener('click',e=>{
+     if(!e.isTrusted||!e.target.closest('[data-action="open-activity"]'))return;
+     const start=e.timeStamp;
+     const probe=()=>{
+      const panel=document.querySelector('#pmRoot .activity-panel.cover');
+      if(panel&&panel.getBoundingClientRect().width>0)requestAnimationFrame(()=>{window.__activityPaint=performance.now()-start;});
+      else if(performance.now()-start<2000)requestAnimationFrame(probe);
+      else window.__activityPaint=2000;
+     };requestAnimationFrame(probe);
+    },{capture:true,once:true});
+   });
    await b.click();
-   await t.page.waitForTimeout(500);
-   await t.check('first click '+i,await f.evaluate(()=>PM56_APP.ctx().state.activity.open));
+   await t.until('cover frame observed',()=>window.__activityPaint!==null);
+   const ms=await f.evaluate(()=>window.__activityPaint);
+   t.log('input to cover frame '+i+': '+ms);
+   await t.check('first click painted within 500 ms '+i,ms<=500);
+   await t.painted('#pmRoot .activity-panel.cover');
   }
  },
  'SW11 duplicate titles select identity': async t => {
@@ -28,6 +44,24 @@ export const tests = {
   await f.evaluate(()=>O55.sound.pip.chatMute.setMuted(false));
   await t.page.waitForTimeout(300);
   await t.check('Pip switch projects to chat',await f.evaluate(()=>!PM56_SOUND.muted));
+ },
+ 'SW36 opened Detail resize frames': async t => {
+  await t.viewport(1390,900);const f=await t.app.open();
+  await f.evaluate(()=>{PMW.chatCol.setWidth(760);PM56_DEMO.openActivity('subagents','agent-schema');});
+  await t.painted('#pmRoot .activity-panel');
+  await f.evaluate(()=>{
+   window.__dockFrames=[];window.__dockSampling=true;
+   const sample=()=>{if(!window.__dockSampling)return;
+    const panel=document.querySelector('#pmRoot .activity-panel'),stage=document.querySelector('#pmRoot .chat-stage');
+    window.__dockFrames.push({time:performance.now(),width:stage.getBoundingClientRect().width,cover:panel.classList.contains('cover')});
+    requestAnimationFrame(sample);
+   };requestAnimationFrame(sample);
+  });
+  await t.viewport(1177,900);await t.page.waitForTimeout(1200);
+  const frames=await f.evaluate(()=>{window.__dockSampling=false;return window.__dockFrames;});
+  t.log(JSON.stringify(frames));
+  await t.check('every resized frame has 360 messages or cover',frames.length>5&&frames.every(x=>x.cover||x.width>=360));
+  await t.painted('#pmRoot .activity-panel.cover');
  },
  'SW36 dock keeps 360 pixels': async t => {
   await t.viewport(1177,900); const f=await t.app.open();
