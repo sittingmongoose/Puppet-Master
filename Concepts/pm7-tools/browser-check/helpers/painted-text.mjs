@@ -24,3 +24,26 @@ export async function paintedText(el,{coverage=250}={}){
  }
  return {count:stems.length,paintedCount:stems.filter(s=>s.contrast>=1.5).length,minimum:Math.min(...stems.map(s=>s.contrast)),brightest:[...stems].sort((a,b)=>luminance(b.ground)-luminance(a.ground))[0]};
 }
+
+// Floating prose can move by a fraction of a pixel. A fixed screen crop avoids
+// comparing different element crop dimensions. Count only ink present in both
+// visible paints and absent in the middle paint; slow backdrop changes do not count.
+export async function paintedBody(el,page){
+ const box=await el.boundingBox();
+ if(!box||box.width<1||box.height<1)return{paintedCount:0};
+ const styles=await el.evaluate(e=>[e,...e.querySelectorAll('*')].map(n=>n.getAttribute('style')));
+ const capture=async()=>decodePng(await page.screenshot({clip:box}));
+ const before=await capture();let ground,after;
+ try{
+  await el.evaluate(e=>[e,...e.querySelectorAll('*')].forEach(n=>{n.style.setProperty('-webkit-text-fill-color','transparent','important');n.style.setProperty('text-shadow','none','important');}));
+  ground=await capture();
+ }finally{await el.evaluate((e,ss)=>[e,...e.querySelectorAll('*')].forEach((n,i)=>ss[i]===null?n.removeAttribute('style'):n.setAttribute('style',ss[i])),styles);}
+ after=await capture();
+ let paintedCount=0;
+ for(let i=0;i<before.data.length;i+=4){
+  const stable=[0,1,2].every(j=>Math.abs(before.data[i+j]-after.data[i+j])<=8);
+  const ink=[0,1,2].some(j=>Math.abs(before.data[i+j]-ground.data[i+j])>=24&&Math.abs(after.data[i+j]-ground.data[i+j])>=24);
+  if(stable&&ink)paintedCount++;
+ }
+ return{paintedCount,width:before.width,height:before.height};
+}

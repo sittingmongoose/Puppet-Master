@@ -1,4 +1,4 @@
-import {paintedText} from '../helpers/painted-text.mjs';
+import {paintedBody} from '../helpers/painted-text.mjs';
 // Stream F shell state regressions; run on both normal and opaque-origin surfaces.
 export const tests = {
  async 'SW31 every CLI installer exposes failure examples'(t) {
@@ -126,9 +126,7 @@ export const tests = {
     await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');return e&&!e.matches('.typing,.o55-writing')&&!e.querySelector('.typing,.o55-writing');});
     const opacity=await words.evaluate(e=>{const walk=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let count=0,n;while((n=walk.nextNode())){if(!n.textContent.trim())continue;count++;for(let p=n.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}}return count>0;});
     await t.check(`${look} ${id} body text subtree has visible opacity`,opacity);
-    // Prose may have antialiased coverage without a fully opaque pixel. Require real ink
-    // inside its glyph mask, rather than using the stricter contrast-test stem threshold.
-    const bodyPaint=await paintedText(words,{coverage:96});
+    const bodyPaint=await paintedBody(words,t.page);
     t.log(JSON.stringify({look,id,bodyPaint}));
     await t.check(`${look} ${id} body text paints ink`,bodyPaint.paintedCount>=3,JSON.stringify(bodyPaint));
     if(['c-pair','s-wait'].includes(id)) await t.crop(`${look}-${id}-help`,'#pm7ob-explainer','Rendered help body stays visible on the pairing and discovery screens');
