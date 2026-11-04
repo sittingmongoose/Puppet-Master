@@ -278,7 +278,8 @@
           "maxLength": 256
         }
       },
-      "$id": "pm.debug_investigation.instrumentation_state_changed.schema.v1"
+      "$id": "pm.debug_investigation.instrumentation_state_changed.schema.v1",
+      "$comment": "HELD_FOR_JARED under CV-574: structurally closed draft only; no state/source mapping or transition semantics is claimed. No current candidate may append."
     },
     "started": {
       "type": "object",
@@ -377,7 +378,85 @@
       },
       "allOf": [
         {
-          "$comment": "Debug Mode persists requested_mode_overlay = debug and effective_mode_overlay = debug (Plans/assistant-chat-design.md 1.0B).",
+          "$comment": "Resolved overlay/runtime binding: assistant-chat-design 1.0A/1.0B/1.0C and enum closure; Run_Modes run.started requested/effective owner projection preserves normalized overlay equality, including none/plan for non-primary entrypoints.",
+          "if": {
+            "properties": {
+              "requested_mode_overlay": {
+                "const": "none"
+              }
+            },
+            "required": [
+              "requested_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "none"
+              },
+              "runtime_mode": {
+                "enum": [
+                  "ask",
+                  "plan",
+                  "regular",
+                  "yolo"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Resolved overlay/runtime binding: assistant-chat-design 1.0A/1.0B/1.0C and enum closure; Run_Modes run.started requested/effective owner projection preserves normalized overlay equality, including none/plan for non-primary entrypoints.",
+          "if": {
+            "properties": {
+              "requested_mode_overlay": {
+                "const": "plan"
+              }
+            },
+            "required": [
+              "requested_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "plan"
+              },
+              "runtime_mode": {
+                "enum": [
+                  "plan"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Resolved overlay/runtime binding: assistant-chat-design 1.0A/1.0B/1.0C and enum closure; Run_Modes run.started requested/effective owner projection preserves normalized overlay equality, including none/plan for non-primary entrypoints.",
+          "if": {
+            "properties": {
+              "requested_mode_overlay": {
+                "const": "deep_plan"
+              }
+            },
+            "required": [
+              "requested_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "deep_plan"
+              },
+              "runtime_mode": {
+                "enum": [
+                  "plan"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Resolved overlay/runtime binding: assistant-chat-design 1.0A/1.0B/1.0C and enum closure; Run_Modes run.started requested/effective owner projection preserves normalized overlay equality, including none/plan for non-primary entrypoints.",
           "if": {
             "properties": {
               "requested_mode_overlay": {
@@ -392,24 +471,85 @@
             "properties": {
               "effective_mode_overlay": {
                 "const": "debug"
+              },
+              "runtime_mode": {
+                "enum": [
+                  "regular",
+                  "yolo"
+                ]
               }
             }
           }
         },
         {
-          "$comment": "Debug remains execution-capable: no stable Debug + ask; debug normalizes to regular, or yolo only by explicit opt-in (Plans/assistant-chat-design.md 1.0B, 1.0C).",
+          "$comment": "Resolved overlay/runtime binding: assistant-chat-design 1.0A/1.0B/1.0C and enum closure; Run_Modes run.started requested/effective owner projection preserves normalized overlay equality, including none/plan for non-primary entrypoints.",
           "if": {
             "properties": {
-              "effective_mode_overlay": {
-                "const": "debug"
+              "requested_mode_overlay": {
+                "const": "interview"
               }
             },
             "required": [
-              "effective_mode_overlay"
+              "requested_mode_overlay"
             ]
           },
           "then": {
             "properties": {
+              "effective_mode_overlay": {
+                "const": "interview"
+              },
+              "runtime_mode": {
+                "enum": [
+                  "regular",
+                  "yolo"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Resolved overlay/runtime binding: assistant-chat-design 1.0A/1.0B/1.0C and enum closure; Run_Modes run.started requested/effective owner projection preserves normalized overlay equality, including none/plan for non-primary entrypoints.",
+          "if": {
+            "properties": {
+              "requested_mode_overlay": {
+                "const": "brainstorm"
+              }
+            },
+            "required": [
+              "requested_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "brainstorm"
+              },
+              "runtime_mode": {
+                "enum": [
+                  "regular",
+                  "yolo"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Resolved overlay/runtime binding: assistant-chat-design 1.0A/1.0B/1.0C and enum closure; Run_Modes run.started requested/effective owner projection preserves normalized overlay equality, including none/plan for non-primary entrypoints.",
+          "if": {
+            "properties": {
+              "requested_mode_overlay": {
+                "const": "crew"
+              }
+            },
+            "required": [
+              "requested_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "crew"
+              },
               "runtime_mode": {
                 "enum": [
                   "regular",

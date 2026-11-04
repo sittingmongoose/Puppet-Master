@@ -24,7 +24,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -52,6 +54,39 @@
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
         }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        }
       ]
     },
     {
@@ -62,7 +97,7 @@
         "operation_id": "op1",
         "item_id": "scrubbed",
         "previous_state": "active",
-        "state": "active"
+        "state": "revoked"
       },
       "project_id": "p1",
       "checks": [
@@ -74,7 +109,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -101,6 +138,53 @@
           "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "context_item_state_changed-equal-state-zero-append",
+          "given": "The latest accepted item and previous_state are active; requested state is also active.",
+          "expected": "No event, no append receipt, no state change; report no_op.",
+          "execution_status": "NOT_RUN"
+        }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "equal-state active no-op",
+          "patches": {
+            "payload.state": "active"
+          },
+          "expected_refusal": "no_op",
+          "expected_appends": 0
         }
       ]
     },
@@ -126,7 +210,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -154,6 +240,39 @@
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
         }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        }
       ]
     },
     {
@@ -177,7 +296,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -205,6 +326,39 @@
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
         }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        }
       ]
     },
     {
@@ -228,7 +382,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -239,9 +395,9 @@
       "mutation_value": "different-outcome",
       "native_oracles": [
         {
-          "case": "instrumentation_state_changed-transition-positive",
-          "given": "matching lane and original restore receipt records cleanup outcome",
-          "expected": "One event and original receipt; only the specified owner effect.",
+          "case": "instrumentation_state_changed-transition-held",
+          "given": "Source field mapping and transition predicate remain unanswered under CV-574.",
+          "expected": "No positive transition claim or append until Jared resolves the exact owner question.",
           "execution_status": "NOT_RUN"
         },
         {
@@ -256,7 +412,58 @@
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
         }
-      ]
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "round-1 scrubbed labels cannot establish a transition",
+          "patches": {},
+          "expected_refusal": "instrumentation_mapping_unresolved",
+          "expected_appends": 0
+        },
+        {
+          "case": "invented instrumentation labels",
+          "patches": {
+            "payload.scope_kind": "made_up_scope",
+            "payload.state": "made_up_state",
+            "payload.rollback_state": "made_up_rollback"
+          },
+          "expected_refusal": "instrumentation_mapping_unresolved",
+          "expected_appends": 0
+        }
+      ],
+      "outcome": "held_for_jared",
+      "hold_question": "Which exact source fields and closed value domains map to instrumentation_state_changed.scope_kind, state and rollback_state, and which previous-to-next transitions (including cleanup failure, retry and supersession) emit an event versus no event? MiscPlan names collector_state/cleanup_result, Storage names scope/state/cleanup_outcome, and the feature list names six lifecycle states without those mappings or transitions."
     },
     {
       "event_type": "debug.investigation.started",
@@ -270,7 +477,9 @@
         "target_locator_summary": "scrubbed",
         "requested_mode_overlay": "debug",
         "effective_mode_overlay": "debug",
-        "runtime_mode": "regular"
+        "runtime_mode": "regular",
+        "thread_id": "t1",
+        "run_id": "r1"
       },
       "project_id": "p1",
       "checks": [
@@ -282,7 +491,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -309,6 +520,107 @@
           "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
+        }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "plan cannot execute",
+          "patches": {
+            "payload.requested_mode_overlay": "plan",
+            "payload.effective_mode_overlay": "plan",
+            "payload.runtime_mode": "yolo"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "deep_plan cannot execute",
+          "patches": {
+            "payload.requested_mode_overlay": "deep_plan",
+            "payload.effective_mode_overlay": "deep_plan",
+            "payload.runtime_mode": "regular"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "payload Project only mismatch",
+          "patches": {
+            "payload.project_id": "other-project"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "envelope Project mismatch",
+          "patches": {
+            "envelope.project_id": "other-project"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "owner Project mismatch",
+          "patches": {
+            "owner_record.project_id": "other-project"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "owner investigation mismatch",
+          "patches": {
+            "owner_record.investigation_id": "other-investigation"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "payload thread mismatch",
+          "patches": {
+            "payload.thread_id": "other-thread"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "envelope run mismatch",
+          "patches": {
+            "envelope.run_id": "other-run"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
         }
       ]
     },
@@ -337,7 +649,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -365,6 +679,39 @@
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
         }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        }
       ]
     },
     {
@@ -386,7 +733,9 @@
         "missing_admission_refusal",
         "pending_retention_refusal",
         "wrong_scope_refusal",
-        "replay_zero_effect"
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
       ],
       "native_execution": "NOT_RUN",
       "expected_identity": [
@@ -414,6 +763,39 @@
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
           "execution_status": "NOT_RUN"
         }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        }
       ]
     }
   ],
@@ -422,6 +804,7 @@
     "SP-278 generic CAS and generation change",
     "revoked evidence read and export refusal",
     "per-family withdrawal cutoff and rebuild",
-    "no replay side effects"
+    "no replay side effects",
+    "SP-337: a body above 16 KiB is replaced by a BLAKE3 payload reference (id, byte size, media type), whose durable body precedes the referencing receipt; native execution NOT_RUN"
   ]
 }
