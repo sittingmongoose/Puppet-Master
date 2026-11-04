@@ -21,6 +21,47 @@ from pathlib import Path
 MAIN_SHA='16acf7594a3fe8559af89491b895f440b314b99e'
 PINNED_EXTERNAL_INPUTS={'lanes/CA-COUNT.md': 'ca7085df112d01b5574c16273b93e126e7f75dfb21d0d9704adc38f42c0e485a', 'lanes/CARDS1-APPLY.md': 'f3f553370a89a6fc0467dedde8a5ed71169cc7e4b36f2c0be32ee2475b924104', 'decision-answers/E-CARDS-1.as-presented-578a6774.md': '578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696', 'surveys/L9/REPORT.md': 'ed537ce31df64b8ec1bd8399dd324792a5d48f041e3ba178fbfbec070541a4e5', 'surveys/L9/NEW-NAMES.jsonl': 'ff5e91c7d6c6d79d2a68155d42f992c3826e392fc96cd335e993db42cfba2b02', 'state/undecided-236.tsv': 'fad5326d8565b298257aa7f5f13f7e06fc7ecb233bb78ffaf9fca9d947c33d91', 'surveys/RT/TABLE.md': 'e3b1941dc015f98ebe12e967c8394d0f5b4ffab1bf61197135914400536e4c98'}
 DEFAULT_EVIDENCE=Path('/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104')
+REVIEWED_HEAD='d6dd33d5ddbd0150bb9dcfbe391460bebac04e65'
+REPORT_DIR='reports/event-authority-20261104/census-recount-20261104'
+PINNED_EXTERNAL_INPUTS.update({
+ 'BRIEF-DRAFT.md':'59e0a0f5002966a4dec489d66ea43f4fbd3711da7fdd60c0f75a0e585a265fed',
+ 'lanes/FIX-ROUND.md':'3320d3c595b3ea73daa508f0f7f3845c372b51e5492b46b8e31659fd778d1028',
+ 'reviews/CA-COUNT-sol/REVIEW.md':'a22a067876a204df9b6b6bc0c8e49034d211b3ea3480bc68fbb2e624e5232159'})
+# Discovery is intentionally broader than authority: references, receipt effects,
+# invalid fixtures, schema labels and command receipts must all be adjudicated.
+SEMANTIC_EVENT_KEY=re.compile(r'event|emit|receipt.*effect',re.I)
+READINESS_QUESTION="Does this exact dotted spelling designate a separately persisted EventRecord family, an existing family's alias, or only this receipt/transport/readiness label?"
+CANCEL_QUESTION='When one required subagent fails and Puppet Master asks its cancellable siblings to stop, should each stop request be kept as its own history event, `subagent.cancel_requested`, or should it remain a live cancellation signal with no new history family?'
+CANCEL_OPTIONS=[
+ 'A — Delivery only. Keep the specified cancellation delivery. Add no persisted `subagent.cancel_requested` family. Preserve the existing group-failure and sibling-terminal contracts.',
+ 'B — Record each request. Require a separately persisted `subagent.cancel_requested` family. Bring this exact additional name under an explicit technical-authority grant and settle its lifetime/counting scope before admission; DL-084 and Card 4b do not supply those by analogy.']
+PROVENANCE_QUESTION='Does recording source provenance (`source_event_id` and `provenance_ref`) describe the same saved fact as resolving a navigation route (`surface_id`, `route_kind`, and `target_ref`), or must those remain separate event semantics? Orchestration and Contracts/Storage must supply equivalence evidence; any choice between conflicting owners returns to Jared.'
+READINESS_RESEARCH={
+ 'executor.intake_report.recorded':{
+  'owner_doc':'Plans/Executor_Protocol.md','binding_span':'230-239',
+  'citations':['Plans/Executor_Protocol.md:638-648','Plans/Executor_Protocol.md:7443-7447'],
+  'result':'Executor defines canonical non-rebuildable executor_intake_report/attempt_receipt records and the separate whole-graph aggregate intake receipt. Those records are not proof of this exact EventRecord family.'},
+ 'goal.receipt.recorded':{
+  'owner_doc':'Plans/Goal_Runtime_System.md','binding_span':'264-274',
+  'citations':['Plans/Goal_Runtime_System.md:2739-2739','Plans/Goal_Runtime_System.md:2759-2764','Plans/Goal_Runtime_System.md:5366-5375'],
+  'result':'Goal names goal.receipt_recorded and a canonical non-rebuildable goal_receipt record. Neither establishes equivalence with the readiness spelling. Any eventual reconciliation must preserve DL-409/Card 3 A historical-only status and create no new Goal receipt writer.'},
+ 'plan_compile.stage_receipt.recorded':{
+  'owner_doc':'Plans/Plan_To_Node_Compilation.md','binding_span':'219-228',
+  'citations':['Plans/Plan_To_Node_Compilation.md:644-645','Plans/Plan_To_Node_Compilation.md:890-901','Plans/Plan_To_Node_Compilation.md:1026-1029'],
+  'result':'Plan Compile defines resumable stage state, stage-card/worklist receipts and plan_compile_receipt handoffs. Its general EventRecord-envelope requirement does not independently identify this exact spelling as a separate family.'},
+ 'provider.stream.event_recorded':{
+  'owner_doc':'Plans/CLI_Bridged_Providers.md','binding_span':'241-251',
+  'citations':['Plans/CLI_Bridged_Providers.md:896-910','Plans/CLI_Bridged_Providers.md:1251-1266'],
+  'result':'The provider facade preserves normalized stream facts and structured malformed-tool-call error events. Neither contract binds this readiness spelling to a separately persisted EventRecord family.'},
+ 'testing.receipt.recorded':{
+  'owner_doc':'Plans/Automated_Testing_System.md','binding_span':'253-262',
+  'citations':['Plans/Automated_Testing_System.md:2568-2574','Plans/Automated_Testing_System.md:2880-2882','Plans/Automated_Testing_System.md:2941-2950'],
+  'result':'Testing defines the TestRunReceipt record, its merged field schema and commands that preserve it. Receipt persistence does not itself declare a separate testing.receipt.recorded EventRecord family.'}}
+MISSED_LABELS={
+ 'source_control.command_applied':('concept_lineage','Concept reconciliation placeholder without live owner promotion; non-authoritative/concept lineage, not a new persisted candidate.',['Plans/PMConcept_Control_Reconciliation.json:4-6','Plans/PMConcept_Control_Reconciliation.json:2499-2505']),
+ 'backup.restore_started':('negative_fixture','Deliberately invalid event_family_ids patch exposing an unadmitted event family; not a new persisted candidate.',['Plans/product_onboarding_contract_fixtures.json:12104-12111']),
+ 'remote_access.connector_ready':('negative_fixture','Deliberately invalid unadmitted-family patch; not a new persisted candidate.',['Plans/product_onboarding_contract_fixtures.json:12161-12168']),
+ 'goal.child_other':('negative_fixture','valid:false wrong-event negative fixture under event_name; not a new persisted candidate.',['Plans/goal_child_status_history_contract_fixtures.json:155-160'])}
 
 def sha(data): return hashlib.sha256(data).hexdigest()
 def blob(value): return (json.dumps(value,indent=2,ensure_ascii=False,sort_keys=True)+'\n').encode()
@@ -80,15 +121,16 @@ def extract(ROOT,GEN,BASE):
      def walk(v,ks=()):
       if isinstance(v,dict):
        for k,x in v.items():
-        if k in ('event_type','event_types','expected_event_types','emits','emitted_event_types','event_type_id'):
+        if SEMANTIC_EVENT_KEY.search(k):
          def strings(y):
           if isinstance(y,str):yield y
           elif isinstance(y,list):
            for z in y:yield from strings(z)
           elif isinstance(y,dict):
            for z in ('const','enum'):yield from strings(y.get(z,[]))
-         for n in strings(x):
-          for i in positions[n]:add(n,rel,i,'json_binding:'+k)
+         for value in strings(x):
+          for n in TOK.findall(value):
+           for i in positions[n]:add(n,rel,i,'json_binding:'+k)
         # Titles bind some schemas with no event_type property (e.g coordination).
         if k=='title' and isinstance(x,str):
          for n in TOK.findall(x):
@@ -172,9 +214,24 @@ def adjudicate(ROOT,ROWS,BASE):
      if n in RAW:assign(n,'decided_elsewhere:'+dl,note,decision_id=dl,persisted_candidate=n=='chat.response_stop_requested')
     for n in ['memory.gist.verification_requested','memory.gist.verified','memory.gist.verification_failed','memory.gist.updated','memory.gist.pinned','memory.gist.unpinned','memory.gist.discarded']:
      if n in RAW:assign(n,'decided_elsewhere:DL-407','Conditional retirement after memory.gist_state_changed covers successful edits, pins, discards and automatic changes; requested/failed verification gets no separate history.',decision_id='DL-407')
-    # Inherited machine bindings are candidates, never evidence of an admitted writer.
-    for n in ['executor.intake_report.recorded','goal.receipt.recorded','plan_compile.stage_receipt.recorded','provider.stream.event_recorded','testing.receipt.recorded']:
-     assign(n,'persisted_event_candidate','Inherited machine input explicitly binds event_type, a producer, payload contract and consumers. Retained as a candidate requiring live owner reconciliation; its non-executable scope is no admission or persistence proof.',['Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10'] + [f"{RAW[n]['occurrences'][0]['path']}:{RAW[n]['occurrences'][0]['start']}-{RAW[n]['occurrences'][0]['end']}"])
+    # Readiness labels remain investigation evidence, with no terminal disposition.
+    direct_owners=sorted((ROOT/'Plans').glob('*.md'))
+    owner_tokens={p.relative_to(ROOT).as_posix():set(TOK.findall(p.read_text())) for p in direct_owners}
+    for n,research in READINESS_RESEARCH.items():
+     matches=[p for p,tokens in owner_tokens.items() if n in tokens]
+     assert not matches,('new live owner evidence requires adjudication',n,matches)
+     refs=['Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10',
+           'Plans/.implementation_readiness/non_executable_closure_evidence.json:'+research['binding_span'],
+           'Plans/00-plans-index.md:243-243','scripts/pm-event-authority-currentness.py:95-95',*research['citations']]
+     assign(n,'undetermined','Readiness-only binding; no live owner requirement found for this exact spelling. Preserved unresolved, without exclusion, registration or merge.',refs,
+            owner_doc=research['owner_doc'],investigation_owner=research['owner_doc']+' + Plans/storage-plan.md',decision_owner='Jared (new history or owner conflict)',
+            question=READINESS_QUESTION,owner_search={'scope':'Every direct Plans/*.md owner at MAIN_SHA; exact dotted-token lookup, plus related receipt/stream contracts cited here','documents_searched':len(direct_owners),'exact_name_matches':matches,'existing_owner_answer':None,'related_contract_result':research['result']})
+    for n,(kind,note,refs) in MISSED_LABELS.items():
+     assert n in RAW,('semantic discovery missed reviewed label',n)
+     assign(n,'not_persisted_by_owner_text',note,refs,evidence_kind=kind)
+    assign('subagent.cancel_requested','undetermined','Owner specifies delivery to cancellable siblings, not a separate permanent-history requirement. Orchestration + Storage investigate; Jared decides.',
+           ['Plans/orchestrator-subagent-integration.md:31693-31697','Plans/Decision_Log.md:564-568','Plans/Decision_Log.md:608-608','Plans/Decision_Log.md:1784-1784'],
+           owner_doc='Plans/orchestrator-subagent-integration.md',investigation_owner='Orchestration + Storage',decision_owner='Jared',question=CANCEL_QUESTION,options=CANCEL_OPTIONS)
     for n in ['goal.paused','goal.resumed']:
      assign(n,'persisted_event_candidate','Current Goal owner requires this exact name and forbids automatic aliasing from goal.stopped.',['Plans/Goal_Runtime_System.md:270-272','Plans/Goal_Runtime_System.md:6862-6862'],owner_doc='Plans/Goal_Runtime_System.md')
     assign('run.graph_canonical_locked','persisted_event_candidate','Graph builder/replan reconciler emits this canonical graph-lock event; Executor uses it to advance replan_generation.',['Plans/Wiring_Matrix.md:335-337','Plans/Executor_Protocol.md:903-905'],owner_doc='Plans/Executor_Protocol.md')
@@ -706,16 +763,26 @@ def section_at(root,path,cites):
 def recommendation(n):
     targets={
       'continuity.actor_identified':'runtime_continuity.actor_bound',
-      'continuity.provenance_recorded':'runtime_continuity.route_resolved',
       'continuity.redaction_applied':'runtime_continuity.redaction_applied',
-      'continuity.replay_checkpointed':'runtime_continuity.replay_checkpointed',
-      'goal.receipt.recorded':'goal.receipt_recorded'}
+      'continuity.replay_checkpointed':'runtime_continuity.replay_checkpointed'}
+    assert n not in READINESS_RESEARCH,('unresolved label cannot receive a disposition recommendation',n)
+    if n=='continuity.provenance_recorded':
+        return {'action':'stopped for Jared: semantic question','question':PROVENANCE_QUESTION,
+                'reason':'Source provenance is required by Orchestration (source_event_id/provenance_ref); Contracts describes navigation route resolution (surface_id/route_kind/target_ref). No cited equivalence subsumes provenance into route resolution.',
+                'citations':['Plans/orchestrator-subagent-integration.md:31726-31733','Plans/Contracts_V0.md:20541-20549','Plans/Contracts_V0.md:17769-17815']}
     if n in targets:
-        reason=('Overlapping continuity concepts exist in Contracts_V0:20541-20549; ask the two owners to reconcile exact meaning before choosing a single family. This is a proposed merge, not a declared alias.' if n.startswith('continuity.') else 'Reconcile the dotted readiness label with the canonical underscore family and DL-409 history-only rule; do not revive an unused Goal receipt writer.')
-        return {'action':'merge into an existing family','target':targets[n],'reason':reason}
+        return {'action':'conditional merge proposal','target':targets[n],
+                'target_status':'August quarantined_not_admitted; absent from live registry',
+                'condition':'Jared resolves the owner semantics and owners document equivalence; target still needs its complete contract and admission.',
+                'reason':'Plausible actor/redaction/replay pairing only. The target is an unadmitted August row, not a registered family or a proved alias; this source spelling remains counted in bucket (e).',
+                'citations':['Plans/orchestrator-subagent-integration.md:31726-31733','Plans/Contracts_V0.md:20541-20549']}
     if n=='planning.question_budget_exhausted':
-        return {'action':'exclude','reason':'CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.'}
-    return {'action':'register','reason':('Exact machine event_type/producer/consumer binding exists, but live owner adoption and complete depth are still required; its non-executable evidence is not admission.' if n in {'plan_compile.stage_receipt.recorded','executor.intake_report.recorded','provider.stream.event_recorded','testing.receipt.recorded'} else 'The current owner explicitly requires or retains this exact semantic event, and no cited owner declares it an alias of an existing family; complete its contract before admission.')}
+        return {'action':'exclude','status':'recommendation only; Jared has not excluded the name; remains counted',
+                'reason':'CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.'}
+    return {'action':'register','reason':'The current owner explicitly requires or retains this exact semantic event, and no cited owner declares it an alias of an existing family; complete its contract before admission.'}
+
+def reviewed_bytes(root,name):
+    return subprocess.check_output(['git','show',f'{REVIEWED_HEAD}:{REPORT_DIR}/{name}'],cwd=root)
 
 def build(root,generator,evidence):
     raw,jsonpaths=extract(root,generator,evidence)
@@ -723,6 +790,7 @@ def build(root,generator,evidence):
     assert not left, [r['name'] for r in left]
     byname={r['name']:r for r in raw}
     august={r['event_type'] for r in map(json.loads,(root/'Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl').read_text().splitlines())}
+    august_rows={r['event_type']:r for r in map(json.loads,(root/'Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl').read_text().splitlines())}
     registered={r['event_type'] for r in json.loads((root/'Plans/event_family_registry.json').read_text())['families']}
     brows={r['event_type']:r for r in json.loads((root/'Plans/browser_event_admission.json').read_text())['rows']}
     browser51=set(brows)-registered
@@ -755,9 +823,6 @@ def build(root,generator,evidence):
         row={**a,'citations':cites,'in_august_ledger':n in august,'in_live_registry':n in registered,'discovery_sources':r['sources'],'occurrence_count':len(r['occurrences']),'persisted_candidate':candidate}
         if n in august:
             row['august_disposition_unchanged']=True
-        if n=='subagent.cancel_requested':
-            row['owner_doc']='Plans/orchestrator-subagent-integration.md'
-            row['question']='Is subagent.cancel_requested only an in-process cancellation delivery, or must each request be durably appended to EventRecord history? If durable, name its producer and storage/read-back contract.'
         if candidate and n not in registered:
             b=bucket(n);row['bucket']=b;allb[b]+=1
             if n not in august:
@@ -776,6 +841,10 @@ def build(root,generator,evidence):
                     nr['retention_status']='Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication'
                     nr['retention_citation']=f'{card_path}:{group_lines[group]}-{group_lines[group]}'
                     nr['recommendation']=recommendation(n)
+                    rec=nr['recommendation']
+                    if 'target' in rec:
+                        assert august_rows[rec['target']]['category']=='quarantined_not_admitted'
+                        assert rec['target'] not in registered
                 new.append(nr)
         if row.get('skip_rule'):skipped.append({k:row[k] for k in ('name','classification','skip_rule','note','citations','discovery_sources')})
         classified.append(row)
@@ -790,6 +859,23 @@ def build(root,generator,evidence):
     assert len(open236)==236
     absent=[n for n in open236 if n not in byname]
     meta={'classified_count':len(classified),'outside_august_and_registry':sum(not r['in_august_ledger'] and not r['in_live_registry'] for r in classified),'classification_counts':dict(sorted(collections.Counter(r['classification'] for r in classified).items())), 'outside_classification_counts':dict(sorted(collections.Counter(r['classification'] for r in classified if not r['in_august_ledger'] and not r['in_live_registry']).items())), 'new_list_bucket_counts':{b:sum(r['bucket']==b for r in new) for b in 'abcde'}, 'all_unregistered_persisted_candidate_buckets':{b:allb[b] for b in 'abcde'},'live_registered_observed':len(registered), 'mechanical_required_queues':dict(sorted(collections.Counter(r['primary_mechanical_classification'] for r in required).items())), 'skip_rule_counts':dict(sorted(collections.Counter(r['skip_rule'] for r in skipped).items())), 'absent_open_august_rows':absent,'machine_files_scanned':len(jsonpaths),'direct_prose_files_scanned':len(list((root/'Plans').glob('*.md')))}
+    previous={r['name']:r for r in map(json.loads,reviewed_bytes(root,'CLASSIFIED.jsonl').splitlines())}
+    previous_new={r['name']:r for r in json.loads(reviewed_bytes(root,'NEW-LIST.json'))}
+    current_new={r['name']:r for r in new}
+    old_e={n for n,r in previous_new.items() if r['bucket']=='e'}
+    new_e={n for n,r in current_new.items() if r['bucket']=='e'}
+    meta['semantic_keys_with_dotted_bindings']=sorted({s.removeprefix('json_binding:') for r in raw for s in r['sources'] if s.startswith('json_binding:')})
+    meta['unresolved_names']=[r['name'] for r in classified if r['classification']=='undetermined']
+    meta['round1_changes']={
+      'reviewed_head':REVIEWED_HEAD,
+      'newly_examined':[{k:r[k] for k in ('name','classification','note','citations')} for r in classified if r['name'] not in previous],
+      'names_no_longer_examined':sorted(set(previous)-set(byname)),
+      'classification_changes':[{'name':r['name'],'before':previous[r['name']]['classification'],'after':r['classification']} for r in classified if r['name'] in previous and r['classification']!=previous[r['name']]['classification']],
+      'bucket_e_removed_to_unresolved':sorted(old_e-new_e),'bucket_e_added':sorted(new_e-old_e),
+      'bucket_e_recommendation_changes':[{'name':n,'before':previous_new[n]['recommendation'],'after':current_new[n]['recommendation']} for n in sorted(old_e&new_e) if previous_new[n]['recommendation']!=current_new[n]['recommendation']]}
+    assert meta['round1_changes']['bucket_e_removed_to_unresolved']==sorted(READINESS_RESEARCH)
+    assert not meta['round1_changes']['names_no_longer_examined']
+    assert all(not r['persisted_candidate'] and 'bucket' not in r for r in classified if r['classification']=='undetermined')
     return blob(new),jsonl(classified),jsonl(skipped),meta,new,classified,jsonpaths
 
 
@@ -816,8 +902,11 @@ def main():
     frozen='Plans/.audits/event-authority-2026-08-12/'
     input_paths|={root/(frozen+p) for p in ['census-adjudication/LEDGER.jsonl','closed-world-census/CURRENT_SOURCE_INVENTORY.json','closed-world-census/FREEZE_CURRENTNESS.md','closed-world-census/FRESH_CENSUS_DELTA.md','closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json','independent-validator/pm_event_authority_independent_validator.py','closed-world-census/CURRENT_SOURCE_INVENTORY.FRESH_20260812T0900.json']}
     input_paths|={root/'scripts'/p for p in ['pm-event-authority-currentness.py','pm_event_evidence_adapter.py','pm_evidence_paths.py']}
-    input_paths|={ev/p for p in ['lanes/CA-COUNT.md','lanes/CARDS1-APPLY.md','decision-answers/E-CARDS-1.as-presented-578a6774.md','surveys/L9/REPORT.md','surveys/L9/NEW-NAMES.jsonl','state/undecided-236.tsv','surveys/RT/TABLE.md']}
+    input_paths|={ev/p for p in PINNED_EXTERNAL_INPUTS}
     inputs={str(p.relative_to(root)) if p.is_relative_to(root) else str(p):{'sha256':sha(p.read_bytes()),'bytes':p.stat().st_size} for p in sorted(input_paths,key=str)}
+    for name in ('NEW-LIST.json','CLASSIFIED.jsonl','REPORT.md','RECEIPT.json','SKIPPED.jsonl','recount.py'):
+        previous=reviewed_bytes(root,name)
+        inputs[f'git:{REVIEWED_HEAD}:{REPORT_DIR}/{name}']={'sha256':sha(previous),'bytes':len(previous)}
     def gen_receipt(p):
         return {'command':['python3','scripts/pm-event-authority-currentness.py','generate','--outdir',str(p)],'output_digests':{q.relative_to(p).as_posix():sha(q.read_bytes()) for q in sorted(p.rglob('*')) if q.is_file()},'source_sha':json.loads((p/'CURRENT_EVENT_SOURCE_INVENTORY.json').read_text())['git_custody']['head']}
     gens=[gen_receipt(args.generator),gen_receipt(args.replay_generator)]
@@ -831,11 +920,16 @@ def main():
 
 
 def report(root,ev,meta,new,classified,receipt,args):
+    source_lines=Path(__file__).read_text().splitlines()
+    def implementation_ref(prefix):
+        line=next(i for i,text in enumerate(source_lines,1) if text.startswith(prefix))
+        return f'{REPORT_DIR}/recount.py:{line}-{line}'
     lines=['# CA-COUNT — full event-name recount, 2026-11-04','',f'**Source revision:** `{MAIN_SHA}`. **Branch:** `plans/ea-census-recount-20261104`.', '',
       'This is a separately frozen discovery/adjudication list under Card 4a A (DL-410), not an admitted denominator or a seal. Every name has a classification; every surviving new persisted candidate is assigned to its exact cohort. DL-411 grants technical work only for its 35 names. The additional bucket (e) list below returns to Jared; none of its recommendations grants technical drafting, retention, admission or a writer. The August census, its 236 dispositions, registry, admission files, closure-registry hashes and frozen validator are unchanged.', '',
       '## Coverage and method','',
-      f"Both stock generator runs passed all currentness checks with `event_authority_closed=false`. The recount separately scanned **all {meta['direct_prose_files_scanned']} direct Plans Markdown files**, taking every dotted token even outside cue windows and backticks, and structurally parsed **{meta['machine_files_scanned']} JSON files**: every direct `Plans/*.json` (including all schema documents) and every JSON under `Plans/event_payloads/`. It extracted `event_type` const/enum/string bindings, `event_types`, `expected_event_types`, `emits`, `emitted_event_types`, `event_type_id`, and event/payload schema titles; this covers production Wiring Matrix emit lists. Every generator occurrence was also included, regardless of its mechanical class. L9's 158 rows were re-located and rechecked, not substituted for the new scan.", '',
-      'The prose scan has no sampling, cue-window cutoff or skipped ambiguous tail. Generated shards/indexes, migration runs, ledgers, audits and validation outputs do not originate product authority. Generator-inherited machine inputs remain discoverable; the five readiness event_type bindings are explicitly retained as candidates needing live owner reconciliation, not certified product families. Canonical required-owner candidates remain candidates even while an admission fence prevents emission. By contrast, PKT-04 inventories explicitly marked canonical=false and deferred_non_emitting_event_candidate are classified not_persisted_by_owner_text. Invalid-fixture-only names are negative oracles. Full structural parsing is not a claim of full-document semantic reading.', '',
+      f"Both stock generator runs passed all currentness checks with `event_authority_closed=false`. The recount separately scanned **all {meta['direct_prose_files_scanned']} direct Plans Markdown files**, taking every dotted token even outside cue windows and backticks, and structurally parsed **{meta['machine_files_scanned']} JSON files**: every direct `Plans/*.json` (including all schema documents) and every JSON under `Plans/event_payloads/`. Semantic keys are discovered by the case-insensitive pattern `event|emit|receipt.*effect`, covering `event_name`, `event_family_ids`, `receipt_or_event_effect`, `receipt_or_event_refs`, positive/negative/compatibility event lists, event tests and `x-event-type`, as well as all original keys. String, array and const/enum bindings are scanned for every dotted token, including tokens within effect descriptions; event/payload schema titles are also scanned. This covers production Wiring Matrix emit/receipt lists. Every generator occurrence was also included, regardless of its mechanical class. L9's 158 rows were re-located and rechecked, not substituted for the new scan.", '',
+      'Keys with dotted bindings in this snapshot: '+', '.join('`'+k+'`' for k in meta['semantic_keys_with_dotted_bindings'])+'.', '',
+      'The prose scan has no sampling, cue-window cutoff or skipped ambiguous tail. Generated shards/indexes, migration runs, ledgers, audits and validation outputs do not originate product authority. Generator-inherited machine inputs remain discoverable; the five readiness event_type bindings are retained as **undetermined unresolved evidence**, outside NEW-LIST and all candidate buckets. They are not excluded, registered or merged. Canonical required-owner candidates remain candidates even while an admission fence prevents emission. By contrast, PKT-04 inventories explicitly marked canonical=false and deferred_non_emitting_event_candidate are classified not_persisted_by_owner_text. Invalid-fixture-only names are negative oracles. Full structural parsing is not a claim of full-document semantic reading.', '',
       'All 21 likely, 5 contested and 219 ambiguous generator names outside August and registry are accounted for (245 total). CLASSIFIED.jsonl contains one sorted row per examined exact token, its current `path:start-end` citations, discovery sources, occurrence count, and any unchanged historical membership. SKIPPED.jsonl is the explicit subset handled by mechanical classes; every skipped name and its rule are listed. Command/control IDs are classified individually by namespace or exact current binding, rather than silently discarded.', '',
       '### Classifications','', '| Classification | All examined | Outside August and registry |','|---|---:|---:|']
     for k,v in meta['classification_counts'].items():lines.append(f"| {k} | {v} | {meta['outside_classification_counts'].get(k,0)} |")
@@ -845,7 +939,7 @@ def report(root,ev,meta,new,classified,receipt,args):
     labels={'a':'Already in August ledger / the 236','b':'The 51 Browser names (DL-046)','c':'The 18 collaborative names (DL-090/091)','d':'The exact 35 Card 4b names (32 outside registry)','e':'Outside every preceding set; returns to Jared'}
     for b in 'abcde':lines.append(f"| {b} | {labels[b]} | {meta['all_unregistered_persisted_candidate_buckets'][b]} | {meta['new_list_bucket_counts'][b]} |")
     lines+=['', f"The live registry has {meta['live_registered_observed']} names and is observed separately, not re-admitted. NEW-LIST contains **{len(new)}** sorted unique objects and excludes all August and live-registry names by definition, so its bucket (a) count is zero. The three registered Card 4b families remain outside this new-list universe. All 51 Browser and all 18 collaborative names are present. `collaboration.failed` is already decided by DL-091 despite its omission from section 13 (Plans/Decision_Log.md:2094-2110); it is not new scope. `chat.response_stop_requested` is already in August and is the accepted request spelling under DL-406. Conditional memory and Stop-outcome retirements preserve their prerequisites; this report neither applies them nor drops their old records.", '',
-      'L9 found 101 outside names. All remain in this list. The full recount adds 153 bucket (e) names, including block-list names the cue-window generator misses. That is a discovery delta, not proof of 153 active producers.', '',
+      f"L9 found 101 outside names. All remain in this list. The corrected full recount adds {meta['new_list_bucket_counts']['e']} supported bucket (e) names, including block-list names the cue-window generator misses. That is a discovery delta, not proof of active producers. Five previously counted readiness labels remain unresolved and visible below. The proposed exclusion of `planning.question_budget_exhausted` and all four exact `continuity.*` source names remain counted; no proposal is a completed disposition.", '',
       '## Bucket (e): exact return list for Jared','',
       'Each row names the proposed owner and section, what the event records, the closest Card 1 group, and the recommendation. **Retention analogies are proposals only.** DL-401 applied to the named card groups, not every future same-looking event. The card legend (as-presented file:29-36) supplies the rules. Keep retains references without copying bodies; Run year requires a real run and cannot borrow an external pipeline or invent a run; no-project 7-year history needs an explicit counting-bucket decision unless already named. Holds, recovery anchors, latest-25-run protection, live refs and backups override expiry (card:38). An owner must settle any incompatible anchor/scope before admission. A merge recommendation does not assert an alias or choose between owners.', '',
       '| Name | Owner / section | Records | Closest retention group | Recommendation and reason |','|---|---|---|---|---|']
@@ -853,19 +947,79 @@ def report(root,ev,meta,new,classified,receipt,args):
         if r['bucket']!='e':continue
         rec=r['recommendation'];action=rec['action']+(' → '+rec['target'] if 'target'in rec else '')
         cites='; '.join(r['citations'])
-        lines.append(f"| `{r['name']}` | {r['owner_document']} — {r['owner_section']}<br>{cites} | {r['records']} | {r['closest_card1_retention_group']} | **{action}**. {rec['reason']} |")
+        details=rec['reason']
+        for key in ('status','target_status','condition','question'):
+            if key in rec:details+=' '+rec[key]
+        if rec.get('citations'):details+=' Evidence: '+'; '.join(rec['citations'])+'.'
+        lines.append(f"| `{r['name']}` | {r['owner_document']} — {r['owner_section']}<br>{cites} | {r['records']} | {r['closest_card1_retention_group']} | **{action}**. {details} |")
     lines+=['','### Retention rules used by those analogies','', '| Group | Card rule | Exact rule summary |','|---|---|---|']
     used=sorted({r['closest_card1_retention_group'] for r in new if r['bucket']=='e'})
     for g in used:lines.append(f'| {g} | {GROUP_RULE[g]} | {RULES[GROUP_RULE[g]]} |')
-    lines+=['','## Unresolved persistence question','']
+    lines+=['','## Unresolved persistence questions','',
+      'All six remain `undetermined` in CLASSIFIED.jsonl, with no bucket or disposition recommendation. The five readiness labels are not approved exclusions. Investigation owners search existing canon; a decision to add history or resolve competing owners belongs to Jared. No answer or option is selected.','']
     for r in classified:
-        if r['classification']=='undetermined':lines += [f"- **{r['name']}** — owner: {r['owner_doc']}; {r['question']} Evidence: "+'; '.join(r['citations'])+'.']
-    lines+=['','This question is outside the frozen persisted-candidate list until answered; it is not silently excluded and is not counted as a persisted family.','', '## Open August names absent today','',
+        if r['classification']!='undetermined':continue
+        lines += [f"### `{r['name']}`",'',f"Investigation owner: **{r['investigation_owner']}**. Decision owner: **{r['decision_owner']}**.",'',r['question'],'']
+        if 'owner_search' in r:
+            s=r['owner_search']
+            lines += [f"Search: {s['scope']}; {s['documents_searched']} owner documents, **zero exact-name matches**. No existing owner answer was found. {s['related_contract_result']}",'']
+        for option in r.get('options',[]):
+            title,body=option.split('. ',1)
+            lines.append(f'- **{title}.** {body}')
+        if r.get('options'):lines.append('')
+        lines+=['Evidence: '+'; '.join(r['citations'])+'.','']
+    lines+=['### Provenance versus route: semantic question, candidate retained','',PROVENANCE_QUESTION,'',
+      'Evidence: Plans/orchestrator-subagent-integration.md:31726-31733; Plans/Contracts_V0.md:20541-20549; Plans/Contracts_V0.md:17769-17815. `continuity.provenance_recorded` remains a supported candidate in bucket (e). The unsupported route_resolved merge is withdrawn. The other three continuity pairings are conditional proposals onto August `quarantined_not_admitted` rows, not aliases or registered-family targets.','', '## Open August names absent today','',
       'None. All 236 exact names in the supplied TSV occur in the current Plans scan. Therefore there is no absent-name/replacement table and no disposition changes. Card 2 retirements still appear in today’s text; presence is not a claim that their future writers survive. The complete exact-presence check is reproduced by recount.py and the zero absent count is in RECEIPT.json.', '',
       '## Where the frozen seal check reads','',
       'The frozen validator hard-codes the August audit home, individual ledger and census path, then `DENOM = .../closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json` (Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py:22-30). It requires that denominator and `CURRENT_SOURCE_INVENTORY.json` (same validator:529-536), loads both directly (563-568), and compares the admitted exact set to the individual-disposition ledger (937-1005). It checks stored freeze-digest equality (1021-1040) and makes closure, partition/count agreement and that equality prerequisites to complete_denominator_known (1630-1646). Its receipt hashes the old artifacts (1689-1694). It never reads this reports directory or NEW-LIST.', '',
-      'The frozen census itself pins 180 sources and the August digest (Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.json:1-8). Its denominator stores the same pin and an old admitted set (Plans/.audits/event-authority-2026-08-12/closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json:1-14). The census delta explicitly distinguishes the fresh source digest, requires a rescan rather than mixed snapshots, and forbids a freeze re-stamp (Plans/.audits/event-authority-2026-08-12/closed-world-census/FRESH_CENSUS_DELTA.md:39-54). The validator compares stored pins rather than rehashing the current corpus: retaining an old matching pin beside new membership would not make this new source snapshot an honestly frozen August census.', '',
+      'The frozen census itself pins 180 sources and the August digest (Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.json:1-8). Its denominator stores the same pin and an old admitted set (Plans/.audits/event-authority-2026-08-12/closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json:1-14). The census delta explicitly distinguishes the fresh source digest, requires a rescan rather than mixed snapshots, and forbids a freeze re-stamp (Plans/.audits/event-authority-2026-08-12/closed-world-census/FRESH_CENSUS_DELTA.md:39-50). The validator compares stored pins rather than rehashing the current corpus: retaining an old matching pin beside new membership would not make this new source snapshot an honestly frozen August census.', '',
       '**Task 6 answer:** preserving August history requires an explicitly authorized change to the seal check to consume this separate freeze; replacing its frozen source pin instead would require the forbidden re-stamp, so Card 4a’s open consequence returns to Jared. DL-412’s separate multi-family-admission amendment does not authorize this denominator change. Neither change was made, and the writing frozen validator was not run.', '',
+      '## Review round 1: findings and responses','',
+      f"Review: `{ev/'reviews/CA-COUNT-sol/REVIEW.md'}`; SHA-256 `{PINNED_EXTERNAL_INPUTS['reviews/CA-COUNT-sol/REVIEW.md']}`. Reviewed head: `{REVIEWED_HEAD}`. Fix commit: this six-file result's HEAD, whose parent is that reviewed head. The source corpus stays at the same MAIN_SHA.",'',
+      '| Finding | Response | Verification |','|---|---|---|',
+      f"| 1 — Readiness labels | Fixed: five names move from supported bucket (e) to undetermined, retained with exact owner questions and negative/live-related search evidence. No existing exact-spelling owner answer was found. | {implementation_ref('READINESS_RESEARCH=')}; {implementation_ref('def adjudicate(')}; six unresolved rows in CLASSIFIED; five fewer NEW-LIST objects. |",
+      f"| 2 — Cancellation owner | Fixed routing; product cell stopped for Jared. Exact question and both verbatim options above; Orchestration + Storage investigate, Jared decides. | {implementation_ref('CANCEL_QUESTION=')}; {implementation_ref('CANCEL_OPTIONS=')}; subagent.cancel_requested stays undetermined, with no bucket. |",
+      f"| 3 — Continuity and optional planning event | Unsupported provenance-to-route merge removed; semantic cell stopped for Jared. Three other merges are conditional proposals onto unadmitted August rows. Goal readiness label follows finding 1. Optional planning exclusion remains a recommendation. | {implementation_ref('def recommendation(')}; all four continuity names and planning.question_budget_exhausted remain in bucket (e). |",
+      f"| 4 — Structural discovery | Fixed: expanded semantic keys and embedded-token extraction. Four reviewed labels explicitly classified as concept lineage or negative fixtures. Additional command receipts and a filename are accounted for below. | {implementation_ref('SEMANTIC_EVENT_KEY=')}; {implementation_ref('def extract(')}; {implementation_ref('MISSED_LABELS=')}; two complete replays. |",
+      '| 5 — Frozen citation | Fixed to FRESH_CENSUS_DELTA.md:39-50. Task 6 conclusion stands. | Citation bounds checked; frozen validator/census unchanged. |','',
+      'Family grades before/after: no family contract or admission is authored by this reports-only lane; twelve-criterion family grades are inapplicable. Recount assessment changes from review NOT_READY to fixes mechanically verified, pending independent re-review. Product questions remain open. IDs used: none. Check 11 family guard-removal table is inapplicable: there is no family checker or positive/negative contract fixture in this lane. Discovery and classification invariants are verified by complete replay and the changes below.','',
+      '### Every bucket (e) change','',
+      '| Name | Before | After |','|---|---|---|']
+    changes=meta['round1_changes']
+    for n in changes['bucket_e_removed_to_unresolved']:
+        lines.append(f'| `{n}` | Supported candidate in (e) | Undetermined; retained in CLASSIFIED and unresolved list; no exclusion, registration or merge. |')
+    for n in changes['bucket_e_added']:
+        lines.append(f'| `{n}` | Outside (e) | New supported candidate in (e); see cited owner evidence above. |')
+    for change in changes['bucket_e_recommendation_changes']:
+        old=change['before'];cur=change['after']
+        before=old['action']+(' → '+old['target'] if 'target' in old else '')
+        after=cur['action']+(' → '+cur['target'] if 'target' in cur else '')
+        if 'status' in cur:after+='; '+cur['status']
+        if 'target_status' in cur:after+='; '+cur['target_status']
+        lines.append(f"| `{change['name']}` | {before} | {after}"+('' if 'remains counted' in after else '; still counted')+'. |')
+    lines+=['',f"Bucket (e): 153 → {meta['new_list_bucket_counts']['e']}; {len(changes['bucket_e_removed_to_unresolved'])} moved to unresolved, {len(changes['bucket_e_added'])} added. All other bucket (e) rows and recommendations are unchanged. Classification changes among previously examined names: "+'; '.join(f"`{r['name']}`: {r['before']} → {r['after']}" for r in changes['classification_changes'])+'.','',
+      '### Four previously missed labels','',
+      '| Name | Classification and evidence |','|---|---|']
+    for n,(kind,note,refs) in MISSED_LABELS.items():
+        lines.append(f'| `{n}` | not_persisted_by_owner_text; {kind}. {note} Evidence: '+ '; '.join(refs)+' |')
+    added=changes['newly_examined']
+    lines+=['',f"Extended discovery examines {len(added)} additional names. Added classifications: "+', '.join(f'{k}={v}' for k,v in sorted(collections.Counter(r['classification'] for r in added).items()))+'. No formerly examined name is dropped. Every additional exact name follows; command receipts remain command/action identities, not new EventRecord families. These additions change discovery/classification totals, not supported candidate membership.','',
+      '| Newly examined exact name | Classification | Current evidence |','|---|---|---|']
+    for r in added:
+        lines.append(f"| `{r['name']}` | {r['classification']} | "+'; '.join(r['citations'])+' |')
+    lines+=['',
+      '### Checks and current-brief probes','',
+      '| Check | Exit / result |','|---|---|',
+      '| Two stock currentness generations | 0 each; all 14 checks true; event_authority_closed=false. |',
+      '| Corrected recount CLI | 0; two full extraction/adjudication procedures agree on NEW-LIST, CLASSIFIED, SKIPPED and counts. |',
+      '| Exact retained-row comparison with reviewed head | PASS; only the five recommendation objects listed above change among retained NEW-LIST rows. |',
+      '| Input/output custody and citation audit | PASS; all 590 input pins, 14 generator-output pins, four output pins, sorted membership, questions/options, citations and six-path scope verified. |',
+      '| Full CLI with forged, uppercase or space-suffixed briefing digest (in-memory mutation, no source edits) | Each rejects at external input drift before extraction or output. |',
+      '| Attempt to obtain a disposition recommendation for each unresolved readiness label | All five reject; no register/merge/exclude recommendation exists. |',
+      '| Shared briefing updated during this fix | Initial replay refused BRIEF-DRAFT input drift; reread both changed briefings and pin their new bytes. Plans and semantic source SHA did not change. |',
+      '| git diff --exit-code MAIN_SHA -- Plans scripts; git diff --check | 0; product canon, shared scripts, frozen census and validator untouched; no whitespace defects. |','',
+      'The 22:00Z shared-brief defect classes were checked against this lane: (1) forged input pins reject in the full CLI mutation above; (2) no Storage-assigned event metadata is interpreted; (3) no writer or historical reader is implemented and August dispositions remain unchanged; (4) uppercase/space-suffixed digest representations reject; (5) the recount does not resolve or validate schemas, and schema/reference files are unchanged; (6) no stored event body or payload size contract is edited; (7) both generator source heads, exact occurrence bytes, unchanged Plans/scripts and input hashes are checked before a receipt is emitted; (8) no family fixture/guard oracle exists in this reports-only lane, so the family guard-removal table has no applicable rows; (9) no family depth PASS or admission is claimed. These scope limits do not certify any runtime contract.','',
       '## Freeze and replay evidence','',
       f"NEW-LIST exact bytes: SHA-256 `{receipt['new_list_sha256']}`, {receipt['new_list_bytes']} bytes. Two independently regenerated currentness outputs and two full extraction/adjudication runs produce byte-identical NEW-LIST, CLASSIFIED and SKIPPED bytes. Generator occurrence bytes also match; generator timestamps legitimately differ. RECEIPT.json records both output digest sets, each input’s exact SHA-256, classification/cohort counts and the UTC receipt time.", '',
       'Reproduce from this source revision (with the designated ignored currentness edition copied and verified first):','', '```bash',
