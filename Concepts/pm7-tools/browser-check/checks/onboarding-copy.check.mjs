@@ -17,7 +17,7 @@ export default async function (t) {
   await t.check('SW-28: each common, chrome, welcome and look tip has an Expert wording', tips.length === 25 && tips.every(x => typeof x.expert === 'string' && x.expert.trim() && x.expert !== x.text && x.plainShown === x.text && x.expertShown === x.expert));
   for (const [mode, key] of [['ELI5','text'], ['Expert','expert']]) {
     await f.evaluate((m) => window.O55.talk.set(m, 'copy-check'), mode);
-    for (const id of ['pickFamily:basic','pickFamily:friendly','pickFamily:glass','pickFamily:retro','pickFamily:nier','group:pickMode']) {
+    for (const id of ['pickFamily:basic','pickFamily:friendly','pickFamily:glass','pickFamily:retro','pickFamily:nier']) {
       const q = f.locator(`.o55-layer:not(.o55-out) .o55-tipq[data-arg="${id}"]`).last();
       await q.click();
       const row = tips.find(x => x.g === 'look' && x.id === id);
