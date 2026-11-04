@@ -248,7 +248,7 @@
         "source_sha256"
       ],
       "transition": "Only first-load single→None, per_phase→Phase and per_task→Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "role": "Settings migration recovery and inspection",
       "scope_policy": "application_or_project",
       "cv": "CV-604",
@@ -297,7 +297,19 @@
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
         }
-      ]
+      ],
+      "retention_binding": {
+        "status": "bound_existing_policy",
+        "owner_refs": [
+          "Plans/storage-plan.md#Case L-3",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "project_bucket": "2000000/Project",
+        "application_bucket": "one Server-wide counterpart bucket for config.migrated; 2000000, never per chat",
+        "anchor": "original terminal migration transition",
+        "ttl_seconds": 220752000,
+        "holds": "all existing legal/recovery/live-ref/backup/rollback/maintenance holds"
+      }
     },
     {
       "event_type": "gate.evaluation_started",
@@ -336,7 +348,10 @@
       "source_context_fields": [
         "evaluation_state",
         "inputs_ref",
-        "evaluation_id"
+        "evaluation_id",
+        "score_threshold",
+        "dispatch_score_ref",
+        "dispatch_score_tuple"
       ],
       "semantic_case_names": [
         "reused_evaluation",
@@ -395,7 +410,10 @@
         "report_status",
         "question_ids",
         "evidence_refs",
-        "failure_reason_code"
+        "failure_reason_code",
+        "score_threshold",
+        "dispatch_score_ref",
+        "dispatch_score_tuple"
       ],
       "semantic_case_names": [
         "no_start",
@@ -455,7 +473,10 @@
         "report_status",
         "question_ids",
         "evidence_refs",
-        "all_predicates_pass"
+        "all_predicates_pass",
+        "score_threshold",
+        "dispatch_score_ref",
+        "dispatch_score_tuple"
       ],
       "semantic_case_names": [
         "no_start",
@@ -531,7 +552,9 @@
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
         }
-      ]
+      ],
+      "retention_question": "Which class and expiry anchor govern this report request where a run-completion anchor is inapplicable? Do not assume that a ref-only report request is chat content. Runtime-linked cases should reuse existing runtime minima.",
+      "retention_runtime_minimum_ref": "RP-RUNTIME-365D for runtime-linked population only; runless facet remains fenced"
     },
     {
       "event_type": "run.background_enqueued",
@@ -605,8 +628,8 @@
         "tool_use_id",
         "attempt_id"
       ],
-      "transition": "Denial follows policy/FileSafe/schema refusal and precedes any tool dispatch; never executes or contributes to executed-call tool_usage rollups. Current runtime node denials retain all blocked and attempt joins.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "transition": "Only the already specified policy/user-denial path is prepared, before any dispatch; never executes or contributes to executed-call rollups. FileSafe emission is stopped for Jared because Tools forbids it and FileSafe requests alignment. Schema refusal alone is not this prepared policy/user-denial path.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
       "role": "policy audit, blocked runtime recovery and inspection",
       "scope_policy": "application_or_project",
       "cv": "CV-610",
@@ -632,7 +655,16 @@
       "source_context_fields": [
         "policy_decision",
         "dispatch_state",
-        "denial_reason_code"
+        "denial_reason_code",
+        "blocked_reason_code",
+        "failure_class",
+        "allowed_action_ids",
+        "headless_denied",
+        "permission_snapshot_id",
+        "executed_at_all",
+        "blocked_sequence",
+        "approval_scope_key",
+        "denial_origin"
       ],
       "semantic_case_names": [
         "already_dispatched",
@@ -647,12 +679,33 @@
         {
           "from": "policy_evaluated",
           "to": "denied",
-          "predicate": "original refusal before dispatch; no executed-call contribution",
+          "predicate": "original policy/user denial before dispatch with exact frozen blocked episode, mapped actions and permission snapshot; FileSafe facet stopped",
           "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
         }
-      ]
+      ],
+      "stopped_facets": [
+        {
+          "facet": "FileSafe emission",
+          "question": "Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?",
+          "status": "STOPPED_FOR_JARED"
+        }
+      ],
+      "retention_binding": {
+        "status": "bound_existing_policy",
+        "population": "runtime-attributed actual run/attempt path only",
+        "owner_refs": [
+          "Plans/Contracts_V0.md:520",
+          "Plans/storage-plan.md#Case L-3",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "project_bucket": "actual run and Project; 1000000/run and 5000000/Project",
+        "application_bucket": "one Server-wide counterpart bucket per family, same limits and holds; no per-chat reset",
+        "anchor": "actual run completion",
+        "ttl_seconds": 31536000,
+        "holds": "all existing legal/recovery/recent-run/live-ref/backup/rollback/maintenance holds"
+      }
     },
     {
       "event_type": "tool.execution_completed",
@@ -787,7 +840,7 @@
         "attempt_id"
       ],
       "transition": "A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used describes actual acceleration and never guesses. Web operations stay this family, never web.operation.*.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "RP-RUNTIME-365D",
       "role": "tool_usage analytics, history and inspection",
       "scope_policy": "application_or_project",
       "cv": "CV-613",
@@ -814,7 +867,8 @@
         "dispatch_state",
         "success",
         "latency_ms",
-        "index_used"
+        "index_used",
+        "web_request"
       ],
       "semantic_case_names": [
         "refused_not_executed",
@@ -835,7 +889,21 @@
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
         }
-      ]
+      ],
+      "retention_binding": {
+        "status": "bound_existing_policy",
+        "population": "runtime-attributed actual run/attempt path only",
+        "owner_refs": [
+          "Plans/Contracts_V0.md:520",
+          "Plans/storage-plan.md#Case L-3",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "project_bucket": "actual run and Project; 1000000/run and 5000000/Project",
+        "application_bucket": "one Server-wide counterpart bucket per family, same limits and holds; no per-chat reset",
+        "anchor": "actual run completion",
+        "ttl_seconds": 31536000,
+        "holds": "all existing legal/recovery/recent-run/live-ref/backup/rollback/maintenance holds"
+      }
     },
     {
       "event_type": "usage.event",
@@ -849,7 +917,7 @@
         "observed_at_utc"
       ],
       "transition": "Normalize actual provider/header/CLI/estimate observations; null means unknown, never zero. Cache/reasoning subset fields are not added to inclusive totals. Adjustments replace the prior contribution for usage_record_id atomically, never add it twice. Opening Usage reads rollups and does not scan events; JSONL is import/export only. Daily account/provider/model totals survive detail expiry.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": "PENDING_RETENTION_BINDING",
       "role": "UsageTracker rollup accounting, Ledger and inspection",
       "scope_policy": "application_or_project",
       "cv": "CV-614",
@@ -905,7 +973,33 @@
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
         }
-      ]
+      ],
+      "retention_binding": {
+        "status": "decided_policy_technical_adapter_pending",
+        "owner_refs": [
+          "Plans/storage-plan.md#SP-341",
+          "Plans/usage-feature.md#UF-108",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "setting_key": "ai.usage.usage-retention",
+        "default_days": 90,
+        "allowed_values": [
+          "30 days",
+          "90 days",
+          "180 days",
+          "1 year",
+          "unlimited"
+        ],
+        "detail_scope": [
+          "seglog",
+          "Parquet archive"
+        ],
+        "daily_totals": "canonical, backed up, permanent, committed before detail retirement; never rebuilt from expired events",
+        "application_bucket": "one Server-wide counterpart bucket; same setting/holds, no per-chat reset",
+        "missing_dependency": "RT structured setting-driven policy object/expiry-anchor adapter; no new duration choice",
+        "deletion_enabled": false,
+        "admission_enabled": false
+      }
     },
     {
       "event_type": "worktree.created",
@@ -965,7 +1059,9 @@
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
         }
-      ]
+      ],
+      "retention_question": "Resolve the runless event's class/anchor and required lineage dependencies; the projection policy does not automatically register this event's retention.",
+      "retention_runtime_minimum_ref": "RP-RUNTIME-365D for runtime-linked population only; runless facet remains fenced"
     },
     {
       "event_type": "worktree.deleted",
@@ -1035,13 +1131,15 @@
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
         }
-      ]
+      ],
+      "retention_question": "Is this exact event deletion-tombstone authority, or runless lifecycle history, and what is its applicable anchor? Separate runtime history and the distinct worktree_lane_thread_families projection; its RP-WORKTREE-TOMBSTONE-365D policy does not automatically register this event.",
+      "retention_runtime_minimum_ref": "RP-RUNTIME-365D for runtime-linked population only; runless facet remains fenced"
     }
   ],
   "blocked": [
     {
       "event_type": "tool.custom_headless.skipped",
-      "question": "Does first Doctor run mean once per Project lifetime, once per config revision, or once per absent-key episode? What happens after config/key removal and restore? This selects visible emission frequency, so DT does not decide it.",
+      "question": "Is skipped eligible only on a Project's first-ever Doctor invocation, or on the first invocation that observes `tools.custom_headless` absent? If the first invocation has the key, may a later absence emit? What resets eligibility across a configuration revision, key removal/re-addition, Project import/clone or older restore?",
       "evidence": [
         "Plans/newtools.md:494-513"
       ],

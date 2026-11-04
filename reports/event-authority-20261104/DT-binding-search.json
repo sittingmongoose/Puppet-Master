@@ -573,6 +573,132 @@
           "application_source_encoding": "pm.application.physical_messagepack.v1"
         },
         "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
+      },
+      "fix_round_1_search": {
+        "scope": "Each exact family searched independently in current live top-level Plans owner markdown before DT units, plus existing schema definitions; generated, lineage and DT companion bindings excluded. Current source findings supersede the pass-2 blanket claims.",
+        "terms": [
+          "RP-OPERATIONAL-2555D",
+          "Server-wide counterpart bucket"
+        ],
+        "matches": [
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 669,
+            "quote": "PlatformCapabilityManager/newtools own evaluation meaning and original decision authority, Models and concrete capability-domain owners supply source truth, Doctor remains a router, and Storage owns physical custody, reference-aware retention/deletion, migration and coherent recovery. The active catalog remains unchanged and empty. This policy creates no capability identity, new evaluation trigger, account-derived scope, event admission or runtime proof. Application/project event scope and RP-OPERATIONAL-2555D remain unchanged."
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 1719,
+            "quote": "**Why:** Boot recovery, recovery-applied and compaction-lifecycle events are application-wide and carry no project. The policy they use, `RP-OPERATIONAL-2555D` (seven years, 2,000,000 records, per-project counting, fail-closed overflow), counts only per project. Storage's own text (the Boot aggregate custody text of SP-291) calls application-scoped counting under that policy \"an unproved policy-owner adapter seam\" and says that no invented project, new bucket, cap or policy value may resolve it. Retention choices are Jared's (DL-045)."
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 1735,
+            "quote": "Under `RP-OPERATIONAL-2555D`, the records of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed` are counted in one application-wide bucket. It takes the place of the project bucket and has the same 2,000,000-record cap, the same fail-closed overflow and the same seven-year period. Project-scoped records keep their per-project counting, and no project behavior changes. This is the policy-owner decision the Storage adapter seam waits for. The Storage retention owner writes it into the SP-291 policy text and binds the bucket technically under DL-045; no new policy object is created and no other policy value changes. Until that owner edit lands, the th"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 2004,
+            "quote": "Under `RP-OPERATIONAL-2555D`, the application-scoped evaluations of `platform.capability_evaluated` are counted in an application-wide bucket of their own, apart from the DL-083 bucket of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed`, with the same 2,000,000-record cap, the same fail-closed overflow and the same seven-year period, so platform checks cannot use up the room kept for recovery records. Project-scoped evaluations keep their per-project counting, and no project behavior changes. This answers the part of the SP-291 adapter seam that DL-083 left open for Jared. The Storage retention owner writes it into the SP-291 aggregate custody te"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 6890,
+            "quote": "  - RP-OPERATIONAL-2555D"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 8990,
+            "quote": "### DL-083 - Application-Wide Records Count In One Application Bucket Under RP-OPERATIONAL-2555D"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 8999,
+            "quote": "  under RP-OPERATIONAL-2555D, the records of storage.boot_recovery,"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9017,
+            "quote": "  - Storage owner text counts the application-wide records of storage.boot_recovery, storage.recovery_applied and storage.compaction_lifecycle_changed in one application-wide bucket under RP-OPERATIONAL-2555D with its unchanged cap, overflow and period, and replaces the unproved adapter seam statement with that binding for those three families."
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9018,
+            "quote": "  - No new retention policy object is created and no RP-OPERATIONAL-2555D value changes; project-scoped records keep per-project counting."
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9041,
+            "quote": "  - \"RP-OPERATIONAL-2555D\""
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9043,
+            "quote": "  - Do not create a new retention policy or change any RP-OPERATIONAL-2555D value to implement the application-wide bucket."
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9396,
+            "quote": "### DL-089 - Application-Scoped Platform Evaluations Count In Their Own Application Bucket Under RP-OPERATIONAL-2555D"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9405,
+            "quote": "  under RP-OPERATIONAL-2555D, the application-scoped evaluations of"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9422,
+            "quote": "  - Storage owner text counts the application-scoped evaluations of platform.capability_evaluated in an application-wide bucket of their own under RP-OPERATIONAL-2555D, separate from the DL-083 bucket, with its unchanged cap, overflow and period, and replaces the unproved adapter seam statement for this family with that binding."
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9423,
+            "quote": "  - No new retention policy object is created and no RP-OPERATIONAL-2555D value changes; project-scoped evaluations keep per-project counting."
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9446,
+            "quote": "  - \"RP-OPERATIONAL-2555D\""
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 9450,
+            "quote": "  - Do not create a new retention policy, change any RP-OPERATIONAL-2555D value, or invent a project for application-scoped evaluations."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 18109,
+            "quote": "All have `source_policy_ref=null`, `max_bytes=null`; only runtime has additional project cardinality. Existing `RP-AUTHORITY-INDEFINITE`, `RP-OPERATIONAL-2555D`, and `RP-SAFEPOINT-90D-AFTER-RELEASE` remain unchanged."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 18114,
+            "quote": "| `platform.capability_evaluated`, `storage.boot_recovery`, `storage.compaction_lifecycle_changed`, `storage.recovery_applied` | `RP-OPERATIONAL-2555D@1.0.0` | 4 |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 23693,
+            "quote": "Backup capture and decision-only restore authenticate complete image bytes and original row origins. Restore must preserve every currently held row exactly: it cannot drop a newer pending original, rewind committed to pending or replace current authority. Capture/deletion preserve unrelated active/source/backup survivors exactly; backups cannot resurrect a lawfully cleaned row. Mandatory full-root restore still requires separate real coherent root authority. Original first receipt, events, frozen snapshots and raw source bodies keep independent policies. `platform.capability_evaluated` remains `RP-OPERATIONAL-2555D@1.0.0`."
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 23791,
+            "quote": "Unsettled aggregate custody is protected until actual original resolution. Settled/no-obligation controls retain the unchanged `RP-OPERATIONAL-2555D@1.0.0` policy and stronger existing references/holds. This policy remains `fixed_ttl`, terminal-transition anchor, `retain_indefinitely=false`, `ttl_seconds=220752000`, `max_cardinality=2000000`, `cardinality_scope=project`, `max_bytes=null`, fail-closed overflow, hold eligible and compact expiry; it is not changed to an application-root cardinality bucket. The existing application Boot event already maps to that same policy. Application-scoped aggregate cardinality enforcement under the existing project bucket remains an unproved policy-owner a"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 24019,
+            "quote": "Only this new compact content-free authority is assigned to the existing `RP-AUTHORITY-INDEFINITE@1.0.0` receipt/audit-authority/source-lineage class: indefinite creation anchoring, no TTL/count/byte ceiling, fail-closed overflow and existing hold eligibility. The event remains `RP-OPERATIONAL-2555D@1.0.0`; the five-kind maintenance-history family and every raw intent/source/backup lifetime remain unchanged. Pending compact custody and necessary original controls remain protected. Existing owners release obsolete raw controls only under their own settled dependencies, references, holds and exclusion. Mandatory backup preserves complete coherent pending/terminal capsules with corresponding or"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 29011,
+            "quote": "  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard "
+          }
+        ],
+        "negative_evidence": "No existing complete exact-family closed DT source join for these fields was found outside this draft. Existing owner-defined tuple, mapping, web metadata, optional identity and retention semantics are reused; only the missing closed source/correlation binding is newly authored under DL-045. No product recommendation is adopted.",
+        "newly_authored_binding": "exact operational-policy/app-counterpart adapter"
       }
     },
     {
@@ -673,6 +799,194 @@
           "source_owner_guard": "ProgressionGateRunner.evaluation_started.resolve_original",
           "source_encoding": "pm.dt.source.json.v1"
         }
+      },
+      "fix_round_1_search": {
+        "scope": "Each exact family searched independently in current live top-level Plans owner markdown before DT units, plus existing schema definitions; generated, lineage and DT companion bindings excluded. Current source findings supersede the pass-2 blanket claims.",
+        "terms": [
+          "dispatch_score_ref",
+          "dispatch_score_tuple",
+          "scheduler_lane",
+          "transitive_unblock_count"
+        ],
+        "matches": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 640,
+            "quote": "Execution ownership fields on that context include `execution_role`, `scheduler_lane`, `manual_priority?`, `safe_point_id?`, and remediation lineage refs when those facts control scheduling, recovery, or handoff priority."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2746,
+            "quote": "- `scheduler_lane`"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15191,
+            "quote": "  - \"attempt.started payload includes run_id, thread_id, node_id, attempt_id, scheduler_lane, and replan_generation.\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15211,
+            "quote": "  - \"`scheduler_lane`\""
+          },
+          {
+            "path": "Plans/Crosswalk.md",
+            "line": 310,
+            "quote": "- Append-after-references drift is a structural owner-doc failure: `References` followed by then-more-content in Crosswalk, `GitHub_Integration.md`, or adjacent owner docs must be treated as normative content placement debt, not as a new source of truth. `ArtifactStore` and assistant-memory/AuthPolicy short anchors are routing risks until their SSOT pointers are explicit; runtime nouns such as `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, handoff, and promotion namespaces must route to owner docs before Glossary or Crosswalk consumers cite them."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 225,
+            "quote": "- Optional UI, `/ledger/history/debuggability`, and inspection fields such as `thread_id`, `scheduler_lane`, `feature_seam_id`, `work_package_id`, `manual_priority`, `allowed_action_ids`, `allowed_action_ids[]`, `operational_identity`, and `effective_project_id` may enrich projections but are not prerequisites for dispatch validity."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 303,
+            "quote": "- `scheduler_lane`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 305,
+            "quote": "- `transitive_unblock_count`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 310,
+            "quote": "- `scheduler_lane` order is `remediation > unblocker > normal`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 312,
+            "quote": "- larger `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 322,
+            "quote": "1. Normalize `scheduler_lane` to `scheduler_lane_rank` where `remediation = 3`, `unblocker = 2`, and `normal = 1`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 323,
+            "quote": "2. Sort the ready set by `(scheduler_lane_rank DESC, manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, node_id ASC)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 595,
+            "quote": "The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 596,
+            "quote": "- `scheduler_lane` order: `remediation > unblocker > normal`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 598,
+            "quote": "- higher `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 769,
+            "quote": "The canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 772,
+            "quote": "- `scheduler_lane = remediation` only for remediation lineage work"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 773,
+            "quote": "- `scheduler_lane = unblocker` when successful completion would increase the ready set for other nodes in the active generation"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 774,
+            "quote": "- `scheduler_lane = normal` otherwise"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 776,
+            "quote": "- `transitive_unblock_count` counts currently blocked descendants in the active generation that would become ready if this node completed successfully now; invalid/cyclic relationships are excluded"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2274,
+            "quote": "canonical_text: Ready-node selection uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id, with explicit normalization rules, no critical-path weighting, and user-visible queue analysis tuple breakdown."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2299,
+            "quote": "- scheduler_lane"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2301,
+            "quote": "- transitive_unblock_count"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2306,
+            "quote": "- larger `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3607,
+            "quote": "canonical_text: Scheduler score tuple uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id with remediation/unblocker/normal ordering, no critical-path MVP term, explicit defaults, and invalid/cyclic exclusion."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3633,
+            "quote": "- scheduler_lane"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3635,
+            "quote": "- transitive_unblock_count"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7170,
+            "quote": "  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7171,
+            "quote": "  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7213,
+            "quote": "  - \"`scheduler_lane_rank`\""
+          },
+          {
+            "path": "Plans/Plan_To_Node_Compilation.md",
+            "line": 824,
+            "quote": "    WorkNode request ordering metadata explicitly carries build_phase, dependency_type, depends_on, unblocks, manual_priority, required_before_start, required_after_start, required_before_completion, required_after_completion, parallel_group_id, scheduler_lane, and ordering_reason. Its test_binding includes generated_test_ids, reused_test_ids, completion_commands, browser_session_required, emulator_required, visual_evidence_required, expected_artifacts, flake_policy, test_gap_policy, and manual_only_acceptance_not_allowed when automated evidence is required. The current repair records schema contracts only and emits no NodeSeeds, WorkNodes, executable queues, or build tasks."
+          },
+          {
+            "path": "Plans/Plan_To_Node_Compilation.md",
+            "line": 871,
+            "quote": "  - \"scheduler_lane\""
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 78,
+            "quote": "- The cross-cutting canonical runtime fields already exist elsewhere: - `Contracts_V0.md` and `Prompt_Pipeline.md` already own the requested/effective persona/platform/model/auth/account snapshot contract - `storage-plan.md` already owns canonical runnable identity through `run_id`, `node_id`, `attempt_id`, blocked projections, and attempt/runtime records - newer scheduler addenda already expect runnable-unit fields like `replan_generation`, `scheduler_lane`, and queue-analysis refs"
+          },
+          {
+            "path": "Plans/Run_Graph_View.md",
+            "line": 49,
+            "quote": "- Run Graph tier-era cleanup disposition: older worker/verifier activity filtered by `tier_id`, `View in Usage`, `worker_provider`, `worker_model`, `verifier_provider`, `verifier_model`, `hitl_request_id`, `Open that tier in the Tiers tab`, `View in Tiers`, and `Copy tier_id` are compatibility/source-lineage tokens only. Live Run Graph joins use node_id, attempt_id, blocked episode, graph generation, lane, artifact, provider platform identity, `scheduler_lane`, `allowed_action_ids[]`, `blocked_sequence`, and historical lineage preservation."
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 3538,
+            "quote": "`package`, `seam`, `lane`, `promotion`, `review`, and `resolution_thread` are persisted-or-projected schema questions owned by the package `/seam/lane` family, not by the chat thread model. Chat may render a detail-focus route with `inspector_target`, but that enum must stay small and must never become a fallback bag for unresolved route design. Live page/widget attribution that chat consumes is attempt-/lane-/session-aware: it uses `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, requested/effective identity, and avoids tier-only routing through `tier_id` or generic `/widget` summaries."
+          }
+        ],
+        "negative_evidence": "No existing complete exact-family closed DT source join for these fields was found outside this draft. Existing owner-defined tuple, mapping, web metadata, optional identity and retention semantics are reused; only the missing closed source/correlation binding is newly authored under DL-045. No product recommendation is adopted.",
+        "newly_authored_binding": "exact original Executor dispatch tuple/ref source and score/threshold joins for gate.evaluation_started"
       }
     },
     {
@@ -773,6 +1087,194 @@
           "source_owner_guard": "ProgressionGateRunner.failed.resolve_original",
           "source_encoding": "pm.dt.source.json.v1"
         }
+      },
+      "fix_round_1_search": {
+        "scope": "Each exact family searched independently in current live top-level Plans owner markdown before DT units, plus existing schema definitions; generated, lineage and DT companion bindings excluded. Current source findings supersede the pass-2 blanket claims.",
+        "terms": [
+          "dispatch_score_ref",
+          "dispatch_score_tuple",
+          "scheduler_lane",
+          "transitive_unblock_count"
+        ],
+        "matches": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 640,
+            "quote": "Execution ownership fields on that context include `execution_role`, `scheduler_lane`, `manual_priority?`, `safe_point_id?`, and remediation lineage refs when those facts control scheduling, recovery, or handoff priority."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2746,
+            "quote": "- `scheduler_lane`"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15191,
+            "quote": "  - \"attempt.started payload includes run_id, thread_id, node_id, attempt_id, scheduler_lane, and replan_generation.\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15211,
+            "quote": "  - \"`scheduler_lane`\""
+          },
+          {
+            "path": "Plans/Crosswalk.md",
+            "line": 310,
+            "quote": "- Append-after-references drift is a structural owner-doc failure: `References` followed by then-more-content in Crosswalk, `GitHub_Integration.md`, or adjacent owner docs must be treated as normative content placement debt, not as a new source of truth. `ArtifactStore` and assistant-memory/AuthPolicy short anchors are routing risks until their SSOT pointers are explicit; runtime nouns such as `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, handoff, and promotion namespaces must route to owner docs before Glossary or Crosswalk consumers cite them."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 225,
+            "quote": "- Optional UI, `/ledger/history/debuggability`, and inspection fields such as `thread_id`, `scheduler_lane`, `feature_seam_id`, `work_package_id`, `manual_priority`, `allowed_action_ids`, `allowed_action_ids[]`, `operational_identity`, and `effective_project_id` may enrich projections but are not prerequisites for dispatch validity."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 303,
+            "quote": "- `scheduler_lane`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 305,
+            "quote": "- `transitive_unblock_count`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 310,
+            "quote": "- `scheduler_lane` order is `remediation > unblocker > normal`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 312,
+            "quote": "- larger `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 322,
+            "quote": "1. Normalize `scheduler_lane` to `scheduler_lane_rank` where `remediation = 3`, `unblocker = 2`, and `normal = 1`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 323,
+            "quote": "2. Sort the ready set by `(scheduler_lane_rank DESC, manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, node_id ASC)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 595,
+            "quote": "The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 596,
+            "quote": "- `scheduler_lane` order: `remediation > unblocker > normal`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 598,
+            "quote": "- higher `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 769,
+            "quote": "The canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 772,
+            "quote": "- `scheduler_lane = remediation` only for remediation lineage work"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 773,
+            "quote": "- `scheduler_lane = unblocker` when successful completion would increase the ready set for other nodes in the active generation"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 774,
+            "quote": "- `scheduler_lane = normal` otherwise"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 776,
+            "quote": "- `transitive_unblock_count` counts currently blocked descendants in the active generation that would become ready if this node completed successfully now; invalid/cyclic relationships are excluded"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2274,
+            "quote": "canonical_text: Ready-node selection uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id, with explicit normalization rules, no critical-path weighting, and user-visible queue analysis tuple breakdown."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2299,
+            "quote": "- scheduler_lane"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2301,
+            "quote": "- transitive_unblock_count"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2306,
+            "quote": "- larger `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3607,
+            "quote": "canonical_text: Scheduler score tuple uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id with remediation/unblocker/normal ordering, no critical-path MVP term, explicit defaults, and invalid/cyclic exclusion."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3633,
+            "quote": "- scheduler_lane"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3635,
+            "quote": "- transitive_unblock_count"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7170,
+            "quote": "  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7171,
+            "quote": "  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7213,
+            "quote": "  - \"`scheduler_lane_rank`\""
+          },
+          {
+            "path": "Plans/Plan_To_Node_Compilation.md",
+            "line": 824,
+            "quote": "    WorkNode request ordering metadata explicitly carries build_phase, dependency_type, depends_on, unblocks, manual_priority, required_before_start, required_after_start, required_before_completion, required_after_completion, parallel_group_id, scheduler_lane, and ordering_reason. Its test_binding includes generated_test_ids, reused_test_ids, completion_commands, browser_session_required, emulator_required, visual_evidence_required, expected_artifacts, flake_policy, test_gap_policy, and manual_only_acceptance_not_allowed when automated evidence is required. The current repair records schema contracts only and emits no NodeSeeds, WorkNodes, executable queues, or build tasks."
+          },
+          {
+            "path": "Plans/Plan_To_Node_Compilation.md",
+            "line": 871,
+            "quote": "  - \"scheduler_lane\""
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 78,
+            "quote": "- The cross-cutting canonical runtime fields already exist elsewhere: - `Contracts_V0.md` and `Prompt_Pipeline.md` already own the requested/effective persona/platform/model/auth/account snapshot contract - `storage-plan.md` already owns canonical runnable identity through `run_id`, `node_id`, `attempt_id`, blocked projections, and attempt/runtime records - newer scheduler addenda already expect runnable-unit fields like `replan_generation`, `scheduler_lane`, and queue-analysis refs"
+          },
+          {
+            "path": "Plans/Run_Graph_View.md",
+            "line": 49,
+            "quote": "- Run Graph tier-era cleanup disposition: older worker/verifier activity filtered by `tier_id`, `View in Usage`, `worker_provider`, `worker_model`, `verifier_provider`, `verifier_model`, `hitl_request_id`, `Open that tier in the Tiers tab`, `View in Tiers`, and `Copy tier_id` are compatibility/source-lineage tokens only. Live Run Graph joins use node_id, attempt_id, blocked episode, graph generation, lane, artifact, provider platform identity, `scheduler_lane`, `allowed_action_ids[]`, `blocked_sequence`, and historical lineage preservation."
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 3538,
+            "quote": "`package`, `seam`, `lane`, `promotion`, `review`, and `resolution_thread` are persisted-or-projected schema questions owned by the package `/seam/lane` family, not by the chat thread model. Chat may render a detail-focus route with `inspector_target`, but that enum must stay small and must never become a fallback bag for unresolved route design. Live page/widget attribution that chat consumes is attempt-/lane-/session-aware: it uses `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, requested/effective identity, and avoids tier-only routing through `tier_id` or generic `/widget` summaries."
+          }
+        ],
+        "negative_evidence": "No existing complete exact-family closed DT source join for these fields was found outside this draft. Existing owner-defined tuple, mapping, web metadata, optional identity and retention semantics are reused; only the missing closed source/correlation binding is newly authored under DL-045. No product recommendation is adopted.",
+        "newly_authored_binding": "exact original Executor dispatch tuple/ref source and score/threshold joins for gate.failed"
       }
     },
     {
@@ -873,6 +1375,194 @@
           "source_owner_guard": "ProgressionGateRunner.passed.resolve_original",
           "source_encoding": "pm.dt.source.json.v1"
         }
+      },
+      "fix_round_1_search": {
+        "scope": "Each exact family searched independently in current live top-level Plans owner markdown before DT units, plus existing schema definitions; generated, lineage and DT companion bindings excluded. Current source findings supersede the pass-2 blanket claims.",
+        "terms": [
+          "dispatch_score_ref",
+          "dispatch_score_tuple",
+          "scheduler_lane",
+          "transitive_unblock_count"
+        ],
+        "matches": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 640,
+            "quote": "Execution ownership fields on that context include `execution_role`, `scheduler_lane`, `manual_priority?`, `safe_point_id?`, and remediation lineage refs when those facts control scheduling, recovery, or handoff priority."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2746,
+            "quote": "- `scheduler_lane`"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15191,
+            "quote": "  - \"attempt.started payload includes run_id, thread_id, node_id, attempt_id, scheduler_lane, and replan_generation.\""
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 15211,
+            "quote": "  - \"`scheduler_lane`\""
+          },
+          {
+            "path": "Plans/Crosswalk.md",
+            "line": 310,
+            "quote": "- Append-after-references drift is a structural owner-doc failure: `References` followed by then-more-content in Crosswalk, `GitHub_Integration.md`, or adjacent owner docs must be treated as normative content placement debt, not as a new source of truth. `ArtifactStore` and assistant-memory/AuthPolicy short anchors are routing risks until their SSOT pointers are explicit; runtime nouns such as `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, handoff, and promotion namespaces must route to owner docs before Glossary or Crosswalk consumers cite them."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 225,
+            "quote": "- Optional UI, `/ledger/history/debuggability`, and inspection fields such as `thread_id`, `scheduler_lane`, `feature_seam_id`, `work_package_id`, `manual_priority`, `allowed_action_ids`, `allowed_action_ids[]`, `operational_identity`, and `effective_project_id` may enrich projections but are not prerequisites for dispatch validity."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 303,
+            "quote": "- `scheduler_lane`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 305,
+            "quote": "- `transitive_unblock_count`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 310,
+            "quote": "- `scheduler_lane` order is `remediation > unblocker > normal`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 312,
+            "quote": "- larger `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 322,
+            "quote": "1. Normalize `scheduler_lane` to `scheduler_lane_rank` where `remediation = 3`, `unblocker = 2`, and `normal = 1`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 323,
+            "quote": "2. Sort the ready set by `(scheduler_lane_rank DESC, manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, node_id ASC)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 595,
+            "quote": "The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 596,
+            "quote": "- `scheduler_lane` order: `remediation > unblocker > normal`"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 598,
+            "quote": "- higher `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 769,
+            "quote": "The canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 772,
+            "quote": "- `scheduler_lane = remediation` only for remediation lineage work"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 773,
+            "quote": "- `scheduler_lane = unblocker` when successful completion would increase the ready set for other nodes in the active generation"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 774,
+            "quote": "- `scheduler_lane = normal` otherwise"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 776,
+            "quote": "- `transitive_unblock_count` counts currently blocked descendants in the active generation that would become ready if this node completed successfully now; invalid/cyclic relationships are excluded"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2274,
+            "quote": "canonical_text: Ready-node selection uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id, with explicit normalization rules, no critical-path weighting, and user-visible queue analysis tuple breakdown."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2299,
+            "quote": "- scheduler_lane"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2301,
+            "quote": "- transitive_unblock_count"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 2306,
+            "quote": "- larger `transitive_unblock_count` wins"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3607,
+            "quote": "canonical_text: Scheduler score tuple uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id with remediation/unblocker/normal ordering, no critical-path MVP term, explicit defaults, and invalid/cyclic exclusion."
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3633,
+            "quote": "- scheduler_lane"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 3635,
+            "quote": "- transitive_unblock_count"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7170,
+            "quote": "  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7171,
+            "quote": "  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 7213,
+            "quote": "  - \"`scheduler_lane_rank`\""
+          },
+          {
+            "path": "Plans/Plan_To_Node_Compilation.md",
+            "line": 824,
+            "quote": "    WorkNode request ordering metadata explicitly carries build_phase, dependency_type, depends_on, unblocks, manual_priority, required_before_start, required_after_start, required_before_completion, required_after_completion, parallel_group_id, scheduler_lane, and ordering_reason. Its test_binding includes generated_test_ids, reused_test_ids, completion_commands, browser_session_required, emulator_required, visual_evidence_required, expected_artifacts, flake_policy, test_gap_policy, and manual_only_acceptance_not_allowed when automated evidence is required. The current repair records schema contracts only and emits no NodeSeeds, WorkNodes, executable queues, or build tasks."
+          },
+          {
+            "path": "Plans/Plan_To_Node_Compilation.md",
+            "line": 871,
+            "quote": "  - \"scheduler_lane\""
+          },
+          {
+            "path": "Plans/Provider_OpenCode.md",
+            "line": 78,
+            "quote": "- The cross-cutting canonical runtime fields already exist elsewhere: - `Contracts_V0.md` and `Prompt_Pipeline.md` already own the requested/effective persona/platform/model/auth/account snapshot contract - `storage-plan.md` already owns canonical runnable identity through `run_id`, `node_id`, `attempt_id`, blocked projections, and attempt/runtime records - newer scheduler addenda already expect runnable-unit fields like `replan_generation`, `scheduler_lane`, and queue-analysis refs"
+          },
+          {
+            "path": "Plans/Run_Graph_View.md",
+            "line": 49,
+            "quote": "- Run Graph tier-era cleanup disposition: older worker/verifier activity filtered by `tier_id`, `View in Usage`, `worker_provider`, `worker_model`, `verifier_provider`, `verifier_model`, `hitl_request_id`, `Open that tier in the Tiers tab`, `View in Tiers`, and `Copy tier_id` are compatibility/source-lineage tokens only. Live Run Graph joins use node_id, attempt_id, blocked episode, graph generation, lane, artifact, provider platform identity, `scheduler_lane`, `allowed_action_ids[]`, `blocked_sequence`, and historical lineage preservation."
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 3538,
+            "quote": "`package`, `seam`, `lane`, `promotion`, `review`, and `resolution_thread` are persisted-or-projected schema questions owned by the package `/seam/lane` family, not by the chat thread model. Chat may render a detail-focus route with `inspector_target`, but that enum must stay small and must never become a fallback bag for unresolved route design. Live page/widget attribution that chat consumes is attempt-/lane-/session-aware: it uses `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, requested/effective identity, and avoids tier-only routing through `tier_id` or generic `/widget` summaries."
+          }
+        ],
+        "negative_evidence": "No existing complete exact-family closed DT source join for these fields was found outside this draft. Existing owner-defined tuple, mapping, web metadata, optional identity and retention semantics are reused; only the missing closed source/correlation binding is newly authored under DL-045. No product recommendation is adopted.",
+        "newly_authored_binding": "exact original Executor dispatch tuple/ref source and score/threshold joins for gate.passed"
       }
     },
     {
@@ -1983,6 +2673,193 @@
           "application_source_encoding": "pm.application.physical_messagepack.v1"
         },
         "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
+      },
+      "fix_round_1_search": {
+        "scope": "Each exact family searched independently in current live top-level Plans owner markdown before DT units, plus existing schema definitions; generated, lineage and DT companion bindings excluded. Current source findings supersede the pass-2 blanket claims.",
+        "terms": [
+          "blocked_sequence",
+          "permission_snapshot_id",
+          "denial_origin"
+        ],
+        "matches": [
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 423,
+            "quote": "- Runtime scheduler/executor blocked-sequence seam: `blocked_sequence` is owned by the runtime scheduler/executor layer through `Plans/Executor_Protocol.md` and `Plans/Contracts_V0.md`; UI/HITL/chat/storage docs, including the legacy `/HITL/chat/storage` bucket shorthand, are consumers and must not re-own the blocked episode."
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 599,
+            "quote": "The `request_id <-> blocked_sequence` relation is compatibility and lineage routing: surviving `request_id` values resolve to the canonical blocked episode before a runtime mutation is allowed. New tool-approval or HITL surfaces use `blocked_sequence`, `approval_scope_key`, and ordered `allowed_action_ids[]`; they do not revive `allowed_actions` as a peer field family or let a generic session approval widen beyond its explicit scope key."
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 1507,
+            "quote": "  The owner-map GUI/widget/usage/final-pass seams preserve GUI widget and usage routing, usage_event_ref shape, page_tab, cost_usage, runtime-recovery duplicate-canon cleanup, blocked_sequence ownership, and /HITL/chat/storage compatibility-only bucket handling."
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 1536,
+            "quote": "- 'blocked_sequence'"
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 1546,
+            "quote": "- 'Executor_Protocol and Contracts_V0 own blocked_sequence runtime scheduler/executor semantics.'"
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 2131,
+            "quote": "  The approval compatibility boundary preserves request_id to blocked_sequence as lineage routing, canonical blocked episode resolution before runtime mutation, approval_scope_key, ordered allowed_action_ids[], and the negative constraint that allowed_actions is not revived as a peer field family or generic approval widener."
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 2133,
+            "quote": "  The blocked_sequence/node form remains the Orchestrator compatibility branch. PS-145/148 and CV-365 define a separate scope-aware ordinary chat tool-approval envelope with real thread/run/Computer/tool/target; no fake node or blocked sequence is introduced for application work. Human, mode and build_grant authority stay distinct, and the owner's current approval/decline route is reused."
+          },
+          {
+            "path": "Plans/00-plans-index.md",
+            "line": 2158,
+            "quote": "- 'request_id <-> blocked_sequence'"
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 295,
+            "quote": "- `blocked_sequence` is the canonical blocked-episode anchor; startup recovery rebinds unresolved blocked episodes to the preserved runtime identity instead of minting a new episode."
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 302,
+            "quote": "- `Plans/Run_Graph_View.md` must resolve its internal identity split before consumers treat it as runtime truth: older `tier_id` / `tier_type` detail panes, worker activity, verification streams, Usage links, and event correlation cannot compete with `scheduler_pass_id`, `blocked_sequence`, `safe_point_id`, and remediation lineage."
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 2140,
+            "quote": "  attribution; execution_role, requested_account_id, requested/effective operational identity, account-switch lineage, blocked_sequence,"
+          },
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 2175,
+            "quote": "- blocked_sequence"
+          },
+          {
+            "path": "Plans/Assistant_Plan_Runtime.md",
+            "line": 967,
+            "quote": "Every request reuses the central command/runtime envelope and carries, as applicable, `schema_id`, `schema_version`, `command_id`, `command_instance_id`, explicit scope, `project_id` (present null for app), actual Server/Computer, `thread_id`, `assistant_plan_id`, `expected_version`, `expected_currentness_hash`, `actor_identity`, `permission_snapshot_id`, `idempotency_key`, `source_surface`, `correlation_id`, `causation_id`, and `created_at`. App variants reference APR-073/074 and preserve original Project codec/result identity."
+          },
+          {
+            "path": "Plans/Assistant_Plan_Runtime.md",
+            "line": 981,
+            "quote": "                               runtime_ref, permission_snapshot_id,"
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 2345,
+            "quote": "The L-020 static oracle scans exactly the nine current command surfaces—UI Command Catalog, production Wiring Matrix, UI Wiring Rules, Commands System, Assistant Chat, Final GUI, Worktree Git Improvement, Executor Protocol, and Orchestrator Page—and requires zero `retry_scope`. The canonical runtime command, Orchestrator wrapper, and compatibility alias must have one production row each, the same `handlers::runtime::restore_safe_point_then_retry`, `safe_point.restored`, event effect, state/disabled projections, idempotency, result, and admission contract. Wrapper and alias accept the same canonical fields plus optional `permission_snapshot_id`; admission validates it against current permissi"
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 2572,
+            "quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`."
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 2590,
+            "quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`."
+          },
+          {
+            "path": "Plans/Collaborative_Workflows.md",
+            "line": 398,
+            "quote": "Every collaborative mutation request reuses the central command and runtime envelopes and carries, as applicable, `schema_id`, `schema_version`, `command_id`, `command_instance_id`, explicit scope, `project_id` (present null for app), actual Server/Computer, `thread_id`, `object_id`, `expected_revision`, `expected_currentness_hash`, `actor_identity`, `permission_snapshot_id`, `idempotency_key`, `source_surface`, `correlation_id`, `causation_id`, and `created_at`. App/Project record editions are deliberately versioned; a null app Project is not project_not_found, while a dangling real Project still refuses."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 60,
+            "quote": "Route-like UICommands may be surfaced beside User Commands, but Commands does not let feature-local labels become private target models. In `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`), `/UI` rows that still expose graph HITL `request_id` or `hitl_request_id` commands are a same-file contradiction when the same catalog centers canonical runtime recovery commands; those rows must resolve to runtime `blocked_sequence` before acting. First-class object-selection/navigation commands such as `cmd.source_control.select_worktree` must not remain `layout/UI state only` when they perform object-first worktree selection or object-selection. `cmd.artifacts.open_panel`, `cmd.artifacts.show_i"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 132,
+            "quote": "The canonical runtime recovery commands remain `cmd.runtime.restore_safe_point_then_retry`, `cmd.runtime.retry_now`, and `cmd.runtime.start_fresh_attempt`. `cmd.orchestrator.safe_point_retry` is a UI/catalog wrapper and `cmd.orchestrator.restore_safe_point_then_retry` is its compatibility alias. Both accept the same wrapper input: the exact canonical safe-point fields plus optional `permission_snapshot_id`. Admission validates that optional evidence against current permission state, consumes it, and deterministically produces the exact canonical payload for the sole domain/handler pair `cmd.runtime.restore_safe_point_then_retry` / `handlers::runtime::restore_safe_point_then_retry`. Both shar"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 134,
+            "quote": "Command admission consumes the exact blocked episode `{run_id, node_id, blocked_sequence, prior_attempt_id?}`, its ordered `allowed_action_ids[]`, and exact repo/worktree/baseline identity. When `requires_safe_point_restore = true`, only `cmd.runtime.restore_safe_point_then_retry` is legal, its `baseline_target` is exactly `safe_point`, and it requires the named `safe_point_id`, `repo_id`, and `worktree_id`. `retry_now`, `start_fresh_attempt`, resume, and wrapper aliases cannot bypass that rule. A missing/corrupt/unanchored safe point keeps the episode `recovery_unavailable`; recovery hold, local work, and worktree ownership remain preserved."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 4371,
+            "quote": "`LocateAndVerifyRecoveryRequest` is closed at `1.0.0` and requires `schema_version`, const command ID, `project_id`, `run_id`, `node_id`, `blocked_sequence`, `safe_point_id`, `anchor_ref`, `expected_snapshot_refs`, `expected_recovery_unavailable_reason_code`, `recovery_source_ref`, `actor_ref`, and `idempotency_key`, plus the conditional attempt field. Optional `expected_manifest_sha256` and `permission_snapshot_id` are evidence only. FileSafe must place the source under owner custody and verify safe-point/run/node/attempt/worktree identity, scope, manifest, and content before Storage commits the result."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 7028,
+            "quote": "identity), `permission_snapshot_id` (the Permissions-owned snapshot the handler revalidates;"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 7123,
+            "quote": "degrade. Preview carries `actor_ref` for audit but no `permission_snapshot_id` (no permission"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 7361,
+            "quote": "- permission_snapshot_id"
+          },
+          {
+            "path": "Plans/Containers_Registry_and_Unraid.md",
+            "line": 5951,
+            "quote": "  host_assignment_id?, runtime_family?, runtime_context_ref?, port_access_ref?, receipt_ref?, blocked_sequence?}`."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 27,
+            "quote": "  - `object_id = blocked_sequence`"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 28,
+            "quote": "  - object_id = blocked_sequence"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 41,
+            "quote": "  - `object_id = <blocked_sequence>`"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 42,
+            "quote": "  - object_id = <blocked_sequence>"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 252,
+            "quote": "Concern actions are authorized by `approval_scope_key`, `actor_ref`, `permission_snapshot_id`, and `allowed_action_ids[]`. User-visible actions such as acknowledge, resolve, dismiss, reopen, or link evidence must produce a typed command response and cannot mutate a concern record by editing projections directly."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 284,
+            "quote": "`approval_scope_key` is a stable string composed as `scope_kind:scope_id:action_family:normalized_subject_hash`. The approver identity is stored as `approver_ref`, with optional `approval_lease_id`, `permission_snapshot_id`, and `expires_at`. Approval keys are not reusable across different normalized command identities, projects, worktrees, or purpose strings."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 334,
+            "quote": "`LocateAndVerifyRecoveryRequest` and `AbandonRecoveryRequest` are closed `1.0.0` contracts. Both bind the current `project_id`, `run_id`, `node_id`, `blocked_sequence`, `safe_point_id`, `anchor_ref`, exact `expected_snapshot_refs`, exact `expected_recovery_unavailable_reason_code`, actor/idempotency identity, and the pre/post-attempt branch. Locate additionally requires `recovery_source_ref`; abandon additionally requires `confirmation = abandon_recovery_and_preserve_local_work`, a durable `confirmation_ref`, and `preserved_local_work_acknowledged = true`. A pre-attempt request omits `attempt_id`; a post-attempt request requires the exact prior attempt identity. Optional permission evidence "
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 548,
+            "quote": "Legacy `HITLRequest` / blocked-flow examples that lean on `tier_id` or `tier_type` are compatibility references only; runtime-facing records use `node_id`, `blocked_sequence`, and attempt-scoped records as canonical execution anchors."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 554,
+            "quote": "HITL request identity is compatibility vocabulary unless it resolves to blocked runtime action identity. `Plans/human-in-the-loop.md`, `/human-in-the-loop.md`, `request_id`, `tier_id`, `tier_type`, `request_kind`, `request_kind = tier_boundary_approval`, `tier_boundary_approval`, and `tier-boundary` restore state are lineage terms only after the runtime contract binds approval state to `blocked_sequence`, `allowed_action_ids`, and `allowed_action_ids[]`. `Plans/Orchestrator_Page.md`, `/Orchestrator_Page.md`, `/recovery`, and `HITL` consumers must present the mixed model as a migration bridge, not as a second approval authority."
+          }
+        ],
+        "negative_evidence": "No existing complete exact-family closed DT source join for these fields was found outside this draft. Existing owner-defined tuple, mapping, web metadata, optional identity and retention semantics are reused; only the missing closed source/correlation binding is newly authored under DL-045. No product recommendation is adopted.",
+        "newly_authored_binding": "closed original runtime mapping and blocked-episode join; FileSafe emission facet stopped"
       }
     },
     {
@@ -3283,6 +4160,78 @@
           "application_source_encoding": "pm.application.physical_messagepack.v1"
         },
         "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
+      },
+      "fix_round_1_search": {
+        "scope": "Each exact family searched independently in current live top-level Plans owner markdown before DT units, plus existing schema definitions; generated, lineage and DT companion bindings excluded. Current source findings supersede the pass-2 blanket claims.",
+        "terms": [
+          "edges_count",
+          "sources_ref",
+          "batch_role"
+        ],
+        "matches": [
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1459,
+            "quote": "For `tool.invoked.payload.meta`, common web fields are `web_operation`, `tool_id`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source`, `agent_reason?`, source IDs when present, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `result_quality_hint?`, `warnings_count?: number`, and `error_code?: string` when `success = false`. Result-shape hints by operation remain lightweight: `websearch` may include `query_preview` and `results_count`; `webfetch`/semantic `read` may include `url`, `fina"
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 1463,
+            "quote": "Web result and denial payloads use the same lightweight `/meta` shape. `tool.denied.payload.meta` for web operations may carry `web_operation?`, `tool_id?`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source?`, `agent_reason?`, source IDs when present, `requested_adapter_id?`, `projection_freshness?`, `projection_health?`, `denial_reason_code?`, `allowed_action_ids[]?`, and `headless_denied?`. Legacy web child payload aliases `web_input`, `web_input_preview`, and `blocked_reason_code` normalize to `operation_input`, `operation_input_preview`, and `denial_reason_code`; only top-level runtime blocked payloads may keep the shared `blocked_reason_code`. Operation-specific inl"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 754,
+            "quote": "- Operation-specific result fields extend the common envelope without replacing it: `websearch` adds `results: Array<{ title, url, snippet?, score? }>`; `webfetch` returns `content: string`, `status?: number`, `formats_returned?: string[]`, `screenshot?`, `cache_state?`, and `change_status?` for the requested URL; `batch_webfetch` returns `results: Array<{ url, success, content?, formats_returned?, screenshot?, cache_state?, change_status?, error_code?, error_message? }>` plus `summary: { total, succeeded, failed, cached }`; `webextract` returns extracted content + provenance refs and adds `content_ref?: string`, `content_preview?: string`, `content_format?: \"text\" | \"markdown\" | \"structured"
+          },
+          {
+            "path": "Plans/Tools.md",
+            "line": 758,
+            "quote": "- The web-operation child payload used by `tool.invoked` / `tool.denied` stores operation-local data under the web child payload, while requested/effective runtime identity remains top-level and shared. Required child fields are `web_operation`, `operation_input`, `invocation_source`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, and operation-specific counters/refs. `web_input` is a retired compatibility alias that normalizes to `operation_input` at ingress; it is not a new canonical fie"
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 1013,
+            "quote": "- Web `/activity` and history rows use assistant-chat-design-style operation cards: top-level requested/effective runtime snapshot fields plus web-operation child payloads, with large `sources_ref`, `content_ref`, and `map_ref` material dereferenced on demand from refs/blobs or `/blob` storage rather than loaded eagerly."
+          },
+          {
+            "path": "Plans/UI_Command_Catalog.md",
+            "line": 5890,
+            "quote": "- sources_ref"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 1506,
+            "quote": "- History rows and `/inspector` details combine top-level requested/effective runtime fields with the web child payload and dereference `sources_ref`, `content_ref`, `map_ref`, and `answer_summary_ref` only on demand. `sources_ref` points to a normalized source-set or blob-ref with `URLs`, /titles/snippets/provenance badges, `content_ref` points to /read or extracted content, and `/url/task` previews remain bounded metadata rather than payload storage. `map_ref` points to site-map /topology data, and storage-key naming follows storage-plan blob-ref conventions with sensitive-data scrubbed before persistence."
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 9528,
+            "quote": "  fields with web child payloads and dereference `sources_ref`, `content_ref`,"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 9538,
+            "quote": "  - sources_ref, content_ref, map_ref, and answer_summary_ref are dereferenced on demand."
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "line": 9557,
+            "quote": "  - \"sources_ref\""
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1851,
+            "quote": "Concrete web-operation storage registers the `payload.meta` child fields used by replay and audit without duplicating full result bodies. Common inline fields include `web_operation`, `tool_id`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source`, `agent_reason?`, source IDs when present, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, `result_quality_hint?`, `warnings_count?`, and `error_code?`. Legacy `web_input` and `web_input_preview` normalize to `operation_input` a"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 12053,
+            "quote": "- sources_ref?"
+          }
+        ],
+        "negative_evidence": "No existing complete exact-family closed DT source join for these fields was found outside this draft. Existing owner-defined tuple, mapping, web metadata, optional identity and retention semantics are reused; only the missing closed source/correlation binding is newly authored under DL-045. No product recommendation is adopted.",
+        "newly_authored_binding": "closed operation-specific web metadata and exact original batch parent/URL-child correlation"
       }
     },
     {
@@ -4168,6 +5117,192 @@
           "application_source_encoding": "pm.application.physical_messagepack.v1"
         },
         "application_premise": "CV-366 currently requires actual server/original-operation app identity and a distinct source/codec; this draft reuses them explicitly. No pre-existing exact DT application source custody sibling was found. WorkflowScopeV2 and the selected actual owner graph remain controlling, specified_unimplemented and admission-gated."
+      },
+      "fix_round_1_search": {
+        "scope": "Each exact family searched independently in current live top-level Plans owner markdown before DT units, plus existing schema definitions; generated, lineage and DT companion bindings excluded. Current source findings supersede the pass-2 blanket claims.",
+        "terms": [
+          "provider_account_ref",
+          "ai.usage.usage-retention"
+        ],
+        "matches": [
+          {
+            "path": "Plans/Architecture_Invariants.md",
+            "line": 195,
+            "quote": "The UF-085 canonical token buckets (`input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`) MUST be stored or explicitly represented as unknown/not_exposed in every usage record, with `total_tokens` derived without losing bucket detail or double-counting provider-inclusive cache/reasoning fields. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` are compatibility import/export aliases only. Pre-aggregation or collapsing at the storage or event layer is prohibited"
+          },
+          {
+            "path": "Plans/Automated_Testing_System.md",
+            "line": 2380,
+            "quote": "- `RET-007-usage-detail-follows-setting`, `RET-008-usage-daily-totals-kept`, and `RET-009-usage-rollup-reads` (DL-270, UF-108, SP-341) prove that detailed usage records follow the Keep usage history for setting (`ai.usage.usage-retention`, 90 days by default) in the event log and the Parquet archive, that daily usage totals per account, provider and model are kept whatever that setting says, and that usage totals, windows and charts read redb rollups with no raw-event scan while the Ledger's list pages through usage records by index."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 9048,
+            "quote": "**Usage detail retention.** Nothing other than the Keep usage history for setting (`ai.usage.usage-retention`) prunes `usage.event` records, and no command, `cmd.storage.compaction.request` included, prunes them; daily usage totals are kept whatever it says (Plans/usage-feature.md#UF-108, Plans/storage-plan.md#SP-341). Commands infer no expiry for them from prefix, key, path or age."
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 9063,
+            "quote": "  50 older row stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and"
+          },
+          {
+            "path": "Plans/Commands_System.md",
+            "line": 9093,
+            "quote": "- No command prunes usage.event beyond ai.usage.usage-retention."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 280,
+            "quote": "Runtime attribution uses `package_id`, `run_id`, `node_id`, `attempt_id`, `execution_unit_context_ref`, and `provider_account_ref` where applicable. `package_id` is canonical; `work_package_id` is import/export compatibility only and must normalize before persistence."
+          },
+          {
+            "path": "Plans/Contracts_V0.md",
+            "line": 2379,
+            "quote": "The canonical usage pipeline is `seglog -> analytics scan -> redb rollups -> UI`. Amended 2026-10-31 (DL-270): the analytics scan runs as events land and at segment seal, where a Parquet archive is also written (derived, read only by on-demand embedded DuckDB, SP-341). The Usage page and widgets read only redb rollups and never scan raw events. Detailed usage records follow the Keep usage history for setting (`ai.usage.usage-retention`, 90 days by default) and daily totals per account, provider and model are kept whatever it says (UF-108). Rollups preserve per-run, per-session, and per-tool attribution, including `parent_run_id`, `cache_hit?`, and `cache_strategy?`, so helper calls and subag"
+          },
+          {
+            "path": "Plans/DRY_Rules.md",
+            "line": 4757,
+            "quote": "| Usage history | `Plans/usage-feature.md` UF-108, with its policy row in `Plans/storage_value_registry.json#/retention_policies` | detailed usage records follow the existing `ai.usage.usage-retention` setting (90 days by default); daily totals per account, provider and model are kept forever whatever it says | SP-341, the storage-plan retention table, usage-feature Problem 5 |"
+          },
+          {
+            "path": "Plans/Decision_Log.md",
+            "line": 19575,
+            "quote": "  ai.usage.usage-retention stays as it is, 90 days by default, and governs detailed usage records, while daily"
+          },
+          {
+            "path": "Plans/Executor_Protocol.md",
+            "line": 462,
+            "quote": "Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file (SP-339, UF-108). Receipts reference `usage.event` refs and the redb daily usage rollups, never a `usage.jsonl` artifact, and `pm export` writes JSONL on request. How long detailed usage records are kept is set by `ai.usage.usage-retention` (UF-108); daily totals are kept regardless."
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "line": 3787,
+            "quote": "| Usage | Detailed usage records: 90 days by default, set by the existing Keep usage history for setting (`ai.usage.usage-retention`), in the event log and the Parquet archive alike. Amended 2026-10-31 (DL-270): daily usage totals per account, provider and model are kept whatever it says (SP-341, UF-108). |"
+          },
+          {
+            "path": "Plans/Runtime_Artifacts_Panel.md",
+            "line": 2664,
+            "quote": "Amended 2026-10-31 (DL-270): `runtime_artifact.cost_usage` rows and their `usage_event_ref` are not bounded-retention rows. They show no expires-in line and never become tombstones. Detailed usage records follow the existing `ai.usage.usage-retention` setting (90 days by default, selectable shorter or longer), and daily usage totals are kept whatever it says (SP-341, UF-108). The usage totals, windows and charts a cost_usage row links to read those rollups."
+          },
+          {
+            "path": "Plans/Settings_System.md",
+            "line": 1553,
+            "quote": "  is Everywhere-only, default false. ai.usage.usage-retention is Everywhere-only, default 90 days with daily totals"
+          },
+          {
+            "path": "Plans/Settings_System.md",
+            "line": 3756,
+            "quote": "Amended 2026-10-31 (DL-270): in the Usage & budgets page above, `ai.usage.usage-retention` (Keep usage history for: 30d, 90d by default, 180d, 1y, unlimited) stays as it is; Jared answered \"Defualt to 90 days, selectable to longer or shorter time periods.\" It governs the detailed usage records in the event log and the Parquet archive. Daily usage totals are kept whatever it says, and the Usage page and its charts read those totals (UF-108, SP-341)."
+          },
+          {
+            "path": "Plans/Settings_System.md",
+            "line": 5568,
+            "quote": "  and the bytes returned, or the owner's reason. Usage history: ai.usage.usage-retention is unchanged (default"
+          },
+          {
+            "path": "Plans/Settings_System.md",
+            "line": 5574,
+            "quote": "  stores are placed. ai.usage.usage-retention is Everywhere-only (same_for_you), retains its 90-day default and"
+          },
+          {
+            "path": "Plans/Settings_System.md",
+            "line": 5586,
+            "quote": "- ai.usage.usage-retention keeps its 90-day default and its longer and shorter choices."
+          },
+          {
+            "path": "Plans/Settings_System.md",
+            "line": 5601,
+            "quote": "preserved_exact_tokens: [cmd.storage.compaction.request, cmd.settings.open_storage_retention, ai.usage.usage-retention, web.fetch.cache-size, 16 KiB]"
+          },
+          {
+            "path": "Plans/Settings_System.md",
+            "line": 5604,
+            "quote": "  - \"Do not retire or re-scope ai.usage.usage-retention.\""
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1572,
+            "quote": "| Persisted event records and `seglog.event_appended` append observability | TTL + cardinality | Registered `retention_policy_ref`; never prefix/mtime inference | Approval/receipt/audit authority, deletion tombstones, and source lineage retain indefinitely; non-authority security diagnostics plus migration/recovery operational history retain 2,555 days; runtime 365 days; chat until thread deletion with 250,000 events/thread and successor roll; detailed usage records follow the Keep usage history for setting `ai.usage.usage-retention` (90 days by default) in the event log and the Parquet archive, while daily usage totals per account, provider and model are kept forever (UF-108, SP-341); appen"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 1579,
+            "quote": "| Parquet analytics archive (added 2026-10-31, DL-270) | Max bytes | Storage registry budget (SP-341) | Derived from seglog and never authoritative; detailed usage records in it follow `ai.usage.usage-retention`, daily usage totals are kept forever (UF-108). |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 10309,
+            "quote": "  Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants. Amended 2026-10-31 (DL-270): detailed usage.event records carry the ai.usage.usage-retention window (90 days by default) and no count cap, and the daily usage totals per account, provider and model are exempt from TTL and cardinality bounds because they are kept whatever that setting says (SP-341, UF-108). Their size is controlled by the cold tier and per-group disk budgets, not"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 17413,
+            "quote": "| Detailed usage records (`usage.event`; amended 2026-10-31, DL-270) | the `ai.usage.usage-retention` window (90 days by default); no count eviction | compact expired unheld rows from the event log and the Parquet archive; daily usage totals per account, provider and model are kept forever (SP-341, UF-108) |"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 28494,
+            "quote": "  ai.usage.usage-retention (90 days by default), in the event log and the Parquet archive alike, and daily usage"
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 28505,
+            "quote": "  - \"Detailed usage records follow ai.usage.usage-retention in the event log and the archive, and daily usage totals are never pruned.\""
+          },
+          {
+            "path": "Plans/storage-plan.md",
+            "line": 28529,
+            "quote": "  - \"ai.usage.usage-retention\""
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 42,
+            "quote": "| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. Amended 2026-10-31 (DL-270): the analytics rollups are derived data and live in the derived redb file, separate from the canonical file that holds settings, sessions and runs (SP-340); deleting the derived file rebuilds the rollups from seglog. Daily usage totals are the exception: they are canonical records in the canonical file, backed up and kept whatever `ai.usage.usage-retention` says, and rebuilt rollups take older days from them (UF-108). |"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 154,
+            "quote": "- **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views. Amended 2026-10-31 (DL-270): detailed usage records follow the existing Keep usage history for setting, `ai.usage.usage-retention` (90 days by default), in the event log and the Parquet archive; daily usage totals per account, provider and model are kept forever, whatever the setting says (UF-108, SP-341)."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 617,
+            "quote": "  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step. Amended 2026-10-31 (DL-270): for `usage.event` this window is the Keep usage history for setting, `ai.usage.usage-retention` (90 days by default); daily usage totals are kept whatever it says (UF-108)."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 3159,
+            "quote": "  and pm export writes it on request (SP-339); detailed usage records follow ai.usage.usage-retention and daily"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 5651,
+            "quote": "  UsageRecord is the single normalized accounting record for provider, CLI, local, estimated, and unknown usage signals. Every record carries idempotent correlation through usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, run_id, thread_id?, node_id?, tool_call_id?, parent_usage_record_id?, and dedupe_key so retries, escalations, resumed streams, and receipt/artifact drill-through cannot double-count or fork attribution. Provider identity is normalized through provider_id, provider_route_kind, provider_account_ref?, model_id, model_variant?, reasoning_tier?, and context_window_tokens?. Authority is explicit through source_class = provider_reported | provider_header | cli_r"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 5844,
+            "quote": "- Repairs `sfk-829f3e79121c4f7c6355204a`: refresh config key is `usage.refresh_interval_seconds` with default `300`; retention config key is `usage.retention_days` with default `90`. Enforcement occurs during usage projection compaction, not at event ingestion. Amended 2026-10-31 (DL-270): that key reads as `ai.usage.usage-retention` and bounds detailed usage records only; daily usage totals per account, provider and model are kept forever, whatever it says (UF-108)."
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 6228,
+            "quote": "  Amended 2026-10-17 (DL-228): the retention figure is ai.usage.usage-retention (the `usage.retention_days`"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 6232,
+            "quote": "  Amended 2026-10-31 (DL-270, UF-108): ai.usage.usage-retention stays the retention figure, now bounding detailed"
+          },
+          {
+            "path": "Plans/usage-feature.md",
+            "line": 7603,
+            "quote": "  ai.usage.usage-retention (30 days, 90 days by default, 180 days, 1 year or unlimited), in the event log and in"
+          }
+        ],
+        "negative_evidence": "No existing complete exact-family closed DT source join for these fields was found outside this draft. Existing owner-defined tuple, mapping, web metadata, optional identity and retention semantics are reused; only the missing closed source/correlation binding is newly authored under DL-045. No product recommendation is adopted.",
+        "newly_authored_binding": "nullable original optional account identities in both custody editions"
       }
     },
     {
