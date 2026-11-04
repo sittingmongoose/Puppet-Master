@@ -11,23 +11,67 @@ import sys
 import jsonschema
 from blake3 import blake3
 from referencing import Registry, Resource
+from referencing.exceptions import Unresolvable
+from referencing.jsonschema import DRAFT202012
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_BASE = "https://puppetmaster.local/schemas/"
 
 
-def schema_registry():
+def validate_schema_graph(documents):
+    """Resolve every reference, including unused definitions and absent optional fields."""
     registry = Registry()
+    for path, schema in documents.items():
+        jsonschema.Draft202012Validator.check_schema(schema)
+        resource = Resource.from_contents(schema, default_specification=DRAFT202012)
+        registry = registry.with_resource(SCHEMA_BASE + path, resource)
+        if "$id" in schema:
+            registry = registry.with_resource(schema["$id"], resource)
+    registry = registry.crawl()
+
+    def visit(resource, resolver, location):
+        node = resource.contents
+        resolver = resolver.in_subresource(resource)
+        if isinstance(node, dict):
+            if "$ref" in node:
+                try:
+                    resolver.lookup(node["$ref"])
+                except Unresolvable as error:
+                    raise ValueError("unresolved schema reference at " + location + ": " + node["$ref"]) from error
+            # Follow schema positions defined by the dialect, including all $defs and
+            # optional properties. A properties map may itself name "$schema" or
+            # "$ref"; that map is not a schema and must not be treated as a resource.
+            children = {id(child.contents): child for child in resource.subresources()}
+
+            def descend(value, pointer):
+                if id(value) in children:
+                    visit(children[id(value)], resolver, location + pointer)
+                elif isinstance(value, dict):
+                    for key, child in value.items():
+                        descend(child, pointer + "/" + key.replace("~", "~0").replace("/", "~1"))
+                elif isinstance(value, list):
+                    for index, child in enumerate(value):
+                        descend(child, pointer + "/" + str(index))
+
+            for key, child in node.items():
+                descend(child, "/" + key.replace("~", "~0").replace("/", "~1"))
+
+    for path, schema in documents.items():
+        visit(Resource.from_contents(schema, default_specification=DRAFT202012),
+              registry.resolver(SCHEMA_BASE + path), path + "#")
+    return registry
+
+
+def schema_registry():
+    return validate_schema_graph(schema_documents())
+
+
+def schema_documents():
     paths = ["filemanager_operation_contracts.schema.json", "event_record.schema.json",
-             "event_append_receipt_contracts.schema.json"]
+             "event_append_receipt_contracts.schema.json", "storage_value_registry.schema.json"]
     paths += [str(p.relative_to(ROOT / "Plans")) for p in
               sorted((ROOT / "Plans/event_payloads/file_manager").glob("*.schema.json"))]
-    for path in paths:
-        schema = json.loads((ROOT / "Plans" / path).read_text())
-        resource = Resource.from_contents(schema)
-        registry = registry.with_resource(SCHEMA_BASE + path, resource)
-        registry = registry.with_resource(schema["$id"], resource)
-    return registry
+    return {path: json.loads((ROOT / "Plans" / path).read_text()) for path in paths}
 
 
 SCHEMAS = schema_registry()
@@ -225,6 +269,13 @@ def boundary_case(row, case):
     name, scenario = row["event_type"], case["scenario"]
     p, t = copy.deepcopy(row["payload"]), copy.deepcopy(row["trace"])
     m = t["custody_model"]
+    if scenario == "schema-reference":
+        documents = schema_documents()
+        path = "event_payloads/file_manager/" + name.replace(".", "_") + ".schema.json"
+        schema = documents[path]
+        target = schema.setdefault(case["container"], {})
+        target["unexercised_probe"] = {"$ref": case["reference"]}
+        return validate_schema_graph({path: schema})
     if scenario.startswith("profile-"):
         registry = json.loads((ROOT / "Plans/storage_value_registry.json").read_text())
         profiles = registry["storage_profile"]["family_profiles"]
@@ -353,10 +404,42 @@ def boundary_case(row, case):
     elif scenario.startswith("checkpoint-"):
         field = scenario.removeprefix("checkpoint-")
         m["checkpoint_binding"][field] = 999 if field == "recovery_epoch" else "foreign"
+    elif scenario == "snapshot-join":
+        operation = m["operation_rows"][m["operation_key"]]
+        if case["target"] == "selected_root_ref":
+            operation["accepted_command"]["selected_root_ref"] = case["value"]
+        else:
+            entries = (operation["accepted_path_snapshots"] if case["phase"] == "accepted"
+                       else operation["settlement"]["path_snapshots"])
+            entry = next(p for p in entries if p["path_ref"] == case["path_ref"])
+            entry[case["target"]] = case["value"]
+            if case.get("both_phases"):
+                other = next(p for p in operation["accepted_path_snapshots"]
+                             if p["path_ref"] == case["path_ref"])
+                other[case["target"]] = case["value"]
+        synchronize_fixture(name, p, t)
     elif scenario.startswith("identifier-lf-"):
         p[scenario.removeprefix("identifier-lf-")] += "\n"
+        # Test the lexical boundary directly. A derived receipt cannot legally acquire LF;
+        # running custody equality afterwards would hide a broken lexical guard.
+        return validate_shape("event_payloads/file_manager/" + name.replace(".", "_") + ".schema.json", "", p)
     elif scenario.startswith("companion-lf-"):
-        m["operation_rows"][m["operation_key"]][scenario.removeprefix("companion-lf-")] += "\n"
+        value = m["operation_rows"][m["operation_key"]]
+        value[scenario.removeprefix("companion-lf-")] += "\n"
+        return validate_shape("filemanager_operation_contracts.schema.json", "operation_custody", value)
+    elif scenario == "schema-identifier":
+        value = p if case["schema"] == "payload" else m["operation_rows"][m["operation_key"]]
+        target = value
+        for key in case["path"][:-1]:
+            target = target[key]
+        key = case["path"][-1]
+        target[key] = target[key] + case["suffix"] if "suffix" in case else case["value"]
+        path = ("event_payloads/file_manager/" + name.replace(".", "_") + ".schema.json"
+                if case["schema"] == "payload" else "filemanager_operation_contracts.schema.json")
+        return validate_shape(path, "" if case["schema"] == "payload" else "operation_custody", value)
+    elif scenario == "historical-live-state":
+        # Retained SP-278 source authentication is distinct from today's native tree.
+        t["current_live_state"] = case["live_state"]
     else:
         raise AssertionError("unknown boundary scenario " + scenario)
     return validate_case(name, p, t)
@@ -388,6 +471,60 @@ def control_key(row):
             ":" + row["event_type"] + ":" + row["family_revision"])
 
 
+def validate_snapshot_subjects(event_type, payload, operation):
+    """Join represented original facts; semantic flags cannot attest these relations."""
+    kind, action = event_type.split(".")
+    noun = "node" if kind == "file" else "folder"
+    accepted = {p["path_ref"]: p for p in operation["accepted_path_snapshots"]}
+    settled = {p["path_ref"]: p for p in operation["settlement"]["path_snapshots"]}
+
+    def subject(entry, reference, label):
+        if entry["node_ref"] != reference or entry["node_kind"] != kind:
+            raise ValueError(label + " snapshot subject/kind")
+
+    if action == "created":
+        if operation["accepted_command"]["selected_root_ref"] is not None:
+            raise ValueError("creation selected root")
+        destination = accepted[payload["destination_path_ref"]]
+        if destination["node_ref"] is not None or destination["node_kind"] != "absent":
+            raise ValueError("creation original absence")
+        subject(settled[payload["destination_path_ref"]], payload["result_" + noun + "_ref"], "result")
+        containers = [p for p in accepted.values() if p["node_ref"] == payload["destination_container_ref"]]
+        if len(containers) != 1 or containers[0]["node_kind"] != "folder":
+            raise ValueError("creation exact container")
+        container = containers[0]
+        final_container = settled[container["path_ref"]]
+        if (final_container["node_ref"] != container["node_ref"] or
+                final_container["node_kind"] != "folder"):
+            raise ValueError("creation settled container")
+        if (destination["computer_id"] != container["computer_id"] or
+                destination["root_identity_ref"] != container["root_identity_ref"] or
+                destination["relative_components"][:-1] != container["relative_components"]):
+            raise ValueError("creation container location")
+        return
+
+    field = ({"copied": "source_", "exported": "source_", "deleted": "prior_"}.get(action, "") +
+             noun + "_ref")
+    reference = payload[field]
+    if operation["accepted_command"]["selected_root_ref"] != reference:
+        raise ValueError("selected original subject")
+    source = accepted[payload["source_path_ref"]]
+    subject(source, reference, "accepted source")
+    subject(settled[payload["source_path_ref"]], reference, "source")
+    if action in {"copied", "moved", "renamed"}:
+        result_ref = payload["result_" + noun + "_ref"] if action == "copied" else reference
+        subject(settled[payload["destination_path_ref"]], result_ref, "result")
+    elif action == "exported" and settled[payload["destination_path_ref"]]["node_kind"] != kind:
+        raise ValueError("export destination kind")
+    if action == "renamed":
+        destination = settled[payload["destination_path_ref"]]
+        if (source["computer_id"] != destination["computer_id"] or
+                source["root_identity_ref"] != destination["root_identity_ref"] or
+                source["relative_components"][:-1] != destination["relative_components"][:-1] or
+                source["relative_components"][-1] == destination["relative_components"][-1]):
+            raise ValueError("rename original parent/basename")
+
+
 def validate_operation_transition(before, after, proof=None, storage=None):
     storage = storage or {}
     for label, row in (("before", before), ("after", after)):
@@ -413,6 +550,7 @@ def validate_operation_transition(before, after, proof=None, storage=None):
             any(payload[k] != after["accepted_command"][k]
                 for k in ("command_id", "handler_target", "correlation_id", "origin"))):
         raise ValueError("settlement acceptance join")
+    validate_snapshot_subjects(after["event_type"], payload, after)
     if after["phase"] == "history_settled":
         event = after["complete_event"]
         validate_writer(event)
@@ -513,16 +651,7 @@ def validate_original_models(event_type, payload, trace, *, operation_candidate=
         if any(original[k] != p[k] for k in ("project_id", "path_snapshot_revision", "computer_id",
                                              "root_identity_ref", "relative_components")):
             raise ValueError("changed accepted location")
-    kind, action = event_type.split(".")
-    root = "node" if kind == "file" else "folder"
-    if action == "created":
-        destination = next(a for a in accepted_paths if a["path_ref"] == payload["destination_path_ref"])
-        result = next(p for p in paths if p["path_ref"] == payload["destination_path_ref"])
-        if (destination["node_kind"] != "absent" or destination["node_ref"] is not None or
-                not any(a["node_ref"] == payload["destination_container_ref"] and a["node_kind"] == "folder"
-                        for a in accepted_paths) or
-                result["node_ref"] != payload["result_" + root + "_ref"] or result["node_kind"] != kind):
-            raise ValueError("creation original parent/absence")
+    validate_snapshot_subjects(event_type, payload, row)
     event = row["complete_event"]
     validate_writer(event)
     if (not same_value(event_body(event, model["payload_rows"]), payload) or event["event_type"] != event_type or
@@ -613,9 +742,7 @@ def identity(event_type, payload, context):
 
 
 def validate_case(event_type, payload, trace, *, operation_candidate=None):
-    schema = json.loads((ROOT / "Plans/event_payloads/file_manager" /
-                         (event_type.replace(".", "_") + ".schema.json")).read_text())
-    jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(payload)
+    validate_shape("event_payloads/file_manager/" + event_type.replace(".", "_") + ".schema.json", "", payload)
     if payload["project_id"] != trace["project_id"]:
         raise ValueError("scope mismatch")
     kind, action = event_type.split(".")
@@ -671,7 +798,39 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None):
     return expected
 
 
+def negative_case(row, case):
+    p, t = copy.deepcopy(row["payload"]), copy.deepcopy(row["trace"])
+    for k, v in case.get("payload_set", {}).items():
+        p[k] = v
+    for k in case.get("payload_delete", []):
+        p.pop(k, None)
+    t.update(case.get("trace_set", {}))
+    for mutation in case.get("model_set", []):
+        target = t["custody_model"]
+        for key in mutation["path"][:-1]:
+            target = target[key]
+        target[mutation["path"][-1]] = mutation["value"]
+    if case.get("schema_only"):
+        return validate_shape("event_payloads/file_manager/" + row["event_type"].replace(".", "_") +
+                              ".schema.json", "", p)
+    return validate_case(row["event_type"], p, t)
+
+
+def check_negative_reason(case, error):
+    if "expected_error" not in case and "expected_schema" not in case:
+        raise AssertionError("negative has no defect oracle: " + case["name"]) from error
+    if case.get("expected_error") and str(error) != case["expected_error"]:
+        raise AssertionError("negative masked: " + case["name"]) from error
+    if "expected_schema" in case:
+        actual = ({"validator": error.validator, "path": list(error.absolute_path)}
+                  if isinstance(error, jsonschema.ValidationError) else None)
+        if actual != case["expected_schema"]:
+            raise AssertionError("schema negative masked: " + case["name"]) from error
+
+
 def main():
+    global SCHEMAS
+    SCHEMAS = schema_registry()  # Fail before instances, even if no fixture visits a broken ref.
     fixtures = json.loads((ROOT / "Plans/filemanager_event_contract_fixtures.json").read_text())
     expected_families = {kind + "." + action for kind in ("file", "folder")
                          for action in ("copied", "created", "deleted", "exported", "moved", "renamed")}
@@ -684,22 +843,10 @@ def main():
         validate_case(name, payload, trace)
         count += 1
         for case in row["negative_cases"]:
-            p, t = copy.deepcopy(payload), copy.deepcopy(trace)
-            for k, v in case.get("payload_set", {}).items():
-                p[k] = v
-            for k in case.get("payload_delete", []):
-                p.pop(k, None)
-            t.update(case.get("trace_set", {}))
-            for mutation in case.get("model_set", []):
-                target = t["custody_model"]
-                for key in mutation["path"][:-1]:
-                    target = target[key]
-                target[mutation["path"][-1]] = mutation["value"]
             try:
-                validate_case(name, p, t)
+                negative_case(row, case)
             except (ValueError, KeyError, jsonschema.ValidationError) as error:
-                if case.get("expected_error") and str(error) != case["expected_error"]:
-                    raise AssertionError(name + ": negative masked: " + case["name"]) from error
+                check_negative_reason(case, error)
                 count += 1
             else:
                 raise AssertionError(name + ": accepted negative " + case["name"])
@@ -711,9 +858,10 @@ def main():
                     validator(*args, proof=terminal_fixture_proof(trace, args[0]))
                 else:
                     validator(*args)
-            except (ValueError, KeyError, jsonschema.ValidationError):
+            except (ValueError, KeyError, jsonschema.ValidationError) as error:
                 if case["valid"]:
                     raise AssertionError(name + ": rejected positive transition " + case["name"])
+                check_negative_reason(case, error)
             else:
                 if not case["valid"]:
                     raise AssertionError(name + ": accepted negative transition " + case["name"])
@@ -724,8 +872,7 @@ def main():
             except (ValueError, KeyError, jsonschema.ValidationError) as error:
                 if case["valid"]:
                     raise AssertionError(name + ": rejected positive boundary " + case["name"]) from error
-                if case.get("expected_error") and str(error) != case["expected_error"]:
-                    raise AssertionError(name + ": boundary negative masked: " + case["name"]) from error
+                check_negative_reason(case, error)
             else:
                 if not case["valid"]:
                     raise AssertionError(name + ": accepted negative boundary " + case["name"])
@@ -749,6 +896,7 @@ def main():
                                ("filemanager_family_control", "family_control")]:
         entry = next(f for f in registry["families"] if f["family_id"] == family)
         jsonschema.Draft202012Validator.check_schema(entry["value_schema"])
+        validate_schema_graph({**schema_documents(), "embedded/" + family + ".schema.json": entry["value_schema"]})
         for field in ("properties", "required", "additionalProperties", "oneOf"):
             if entry["value_schema"][field] != schema["$defs"][definition + "_value"][field]:
                 raise AssertionError(family + ": registry/schema drift")
