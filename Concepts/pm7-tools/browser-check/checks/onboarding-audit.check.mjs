@@ -87,6 +87,14 @@ export const tests = Object.fromEntries(LOOKS.flatMap((look) => SCREENS.map((scr
 		return { groups: g.length, lines: g.reduce((n, x) => n + x.querySelectorAll('text').length, 0), inClip: g.every((x) => /url\(/.test((x.parentElement && x.parentElement.getAttribute('clip-path')) || '')), other: g.reduce((n, x) => n + x.querySelectorAll(':scope > :not(text)').length, 0) }; }, DECOR);
 	if (nier) await t.check('the exemption is NieR\'s data column alone (one g.st-data of 80 lines and nothing else, in its clip, in the aria-hidden stage svg)', cover.groups === 1 && cover.lines === 80 && cover.other === 0 && cover.inClip, JSON.stringify(cover));
 	else await t.check('no exemption applies in this look', cover.groups === 0, JSON.stringify(cover));
+	/* (how many of the column's lines its clip cuts through as the audit runs, by the clipped-text rule's measure: over 40 %
+	   of a line outside, at least 2 px inside; the lines the exemption keeps from being reported) */
+	if (nier) t.log(`${look} ${screen}: the data column's clip cuts ${await A.frame().evaluate(() => { const g = document.querySelector('#pm-o55-onboarding svg.pst-svg g.st-data'); if (!g) return 'no column';
+		const id = (/url\(\s*["']?#([^"')]+)/.exec(g.parentElement.getAttribute('clip-path') || '') || [])[1], rect = id && document.getElementById(id) && document.getElementById(id).querySelector('rect'); if (!rect) return 'no clip';
+		const top = +rect.getAttribute('y'), bot = top + +rect.getAttribute('height'), ty = new DOMMatrixReadOnly(getComputedStyle(g).transform).f, cut = [];
+		for (const x of g.querySelectorAll('text')) { const b = x.getBBox(), y0 = b.y + ty, y1 = y0 + b.height, out = Math.max(0, top - y0) + Math.max(0, y1 - bot), seen = Math.min(y1, bot) - Math.max(y0, top);
+			if (seen >= 2 * b.height / 9 && out > 0.4 * b.height) cut.push(x.textContent); }
+		return cut.length + ' line(s) through' + (cut.length ? ': ' + cut.join(', ') : ''); })}`);
 	let ignore = ['body > :not(#pm-o55-onboarding)', DECOR];
 	if (selftest === 'column') {
 		const fz = await A.frame().evaluate(FREEZE);
