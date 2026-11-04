@@ -66,10 +66,11 @@ export default async function (t) {
           const q = f.locator(`.o55-lookslot .o55-tipq[data-arg="${id}"]`);
           await q.click();
           const expected = tips.find(x => x.g === 'chrome' && x.id === id)[key];
-          const note = f.locator('.o55-lookslot .o55-explainer-w');
+          const inline = !await f.evaluate(() => window.O55.tips.onStage());
+          const note = f.locator(inline ? '.o55-lookslot .o55-explainer-w' : '.o55-stage .pst-tip-t').last();
           const body = await note.textContent();
           const marker = await note.getAttribute('data-written');
-          observations.push({id, body, expected, marker, ok:body === expected && marker === id + '|' + mode});
+          observations.push({id, body, expected, marker, ok:body === expected && (!inline || marker === id + '|' + mode)});
           const reach = await reachableMenuLines(t, f, id);
           observations.push(reach);
           if (width === 1280 && family === 'basic' && themeMode === 'dark' && mode === 'ELI5' && id === 'lookFamily:nier') {
@@ -81,7 +82,7 @@ export default async function (t) {
               await f.evaluate(m => window.O55.talk.set(m, 'copy-check-settings'), other);
               const changed = await note.textContent();
               const target = tips.find(x => x.g === 'chrome' && x.id === id)[other === 'Expert' ? 'expert' : 'text'];
-              observations.push({id, other, body:changed, expected:target, ok:changed === target && await note.getAttribute('data-written') === id + '|' + other});
+              observations.push({id, other, body:changed, expected:target, ok:changed === target && (!inline || await note.getAttribute('data-written') === id + '|' + other)});
             }
           }
           await q.click();
