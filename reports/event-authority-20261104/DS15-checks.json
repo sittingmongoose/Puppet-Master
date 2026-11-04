@@ -6,9 +6,10 @@
       "scripts/pm-ds15-event-contracts.py"
     ],
     "exit_code": 0,
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/ds15-final.log",
+    "sha256": "2450f39003e0472d9f4a3315758fee3eb29cb20d43ab200ef7add4fe68e6f8c0",
     "top_level_status": "pass",
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/ds15-final.log",
-    "sha256": "b4d7407de1ac30a436aba40c55cb4029f44bdd5a9897edcd93cf4d393abb8027",
+    "final_rerun": true,
     "result": {
       "status": "pass",
       "families": 14,
@@ -18,6 +19,7 @@
       "predicate_oracles": 107,
       "value_oracles": 49,
       "guard_proof_oracles": 172,
+      "numeric_oracles": 3092,
       "native_execution": "NOT_RUN"
     }
   },
@@ -28,8 +30,8 @@
       "scripts/pm-storage-profile-check.py"
     ],
     "exit_code": 1,
-    "seconds": 0.69,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/storage-profile.log",
+    "seconds": 0.59,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/storage-profile.log",
     "sha256": "9270749a06650c8ca65cd42ed7a1f73fde7d3b2a574c20d5950831cc0bf94bd8",
     "top_level_status": "fail"
   },
@@ -41,9 +43,9 @@
       "validate-case-l"
     ],
     "exit_code": 0,
-    "seconds": 1.26,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/case-l.log",
-    "sha256": "b8b623f0843122fe4c4a445ec04008f5cb54ab971ce0cb339738033f7b4ecc24",
+    "seconds": 1.15,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/case-l.log",
+    "sha256": "05768be3e1da1e9bc7c18a1645a8ee75ba2b9514bb2db8a19dc40cd6a0c52a69",
     "top_level_status": "pass"
   },
   {
@@ -54,8 +56,8 @@
       "--self-test"
     ],
     "exit_code": 0,
-    "seconds": 2.12,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/storage-recovery.log",
+    "seconds": 1.62,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/storage-recovery.log",
     "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a",
     "top_level_status": "pass"
   },
@@ -67,8 +69,8 @@
       "--self-test"
     ],
     "exit_code": 0,
-    "seconds": 0.88,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/shared-runtime.log",
+    "seconds": 0.83,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/shared-runtime.log",
     "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027",
     "top_level_status": "pass"
   },
@@ -85,9 +87,9 @@
       "test_shared_runtime_storage_contracts.py"
     ],
     "exit_code": 1,
-    "seconds": 33.29,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/shared-runtime-tests.log",
-    "sha256": "c120da71ab592ef26f469a6eb575061bda347970047aa16e4d31104ea867450f"
+    "seconds": 94.8,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/shared-runtime-tests.log",
+    "sha256": "593423d0117d8ce6b149c3aa8d8ab67a30f613ad821712d419cc463b2b9f7400"
   },
   {
     "check": "shard-check",
@@ -99,8 +101,8 @@
       "Plans/sharding_config.json"
     ],
     "exit_code": 0,
-    "seconds": 28.03,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/shard-check.log",
+    "seconds": 34.13,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/shard-check.log",
     "sha256": "e5387ddb13846f72ceb7a5cfa0dec6047818f910b8005f5e44885508a42eb602",
     "top_level_status": "pass"
   },
@@ -112,8 +114,9 @@
       "validate"
     ],
     "exit_code": 0,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/index-final.log",
-    "sha256": "58bce82232dc6e42be4b916755b954c478ff2e0c1831242cbb14e88d93964a98",
+    "seconds": 62.58,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/index-validate.log",
+    "sha256": "f3c1ac4e8fe9014fbfcd5e246ae0755625cb07bd4a9ab7db7ae1e49ba3d33fe3",
     "top_level_status": "pass"
   },
   {
@@ -124,26 +127,26 @@
       "--check"
     ],
     "exit_code": 0,
-    "seconds": 1.94,
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/diff-check.log",
+    "seconds": 0.03,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/diff-check.log",
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   {
-    "check": "exact-guard-audit",
+    "check": "whole-lane-guard-audit",
     "command": [
       "python3",
       "scripts/pm-ds15-guard-audit.py",
       "--out",
-      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/whole-lane-guard-audit.json"
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/whole-lane-guard-audit.json"
     ],
     "exit_code": 1,
     "top_level_status": "partial",
-    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/whole-lane-guard-audit.json",
-    "sha256": "c0300146767b12cd8663e1d450a1c027ee2f9234ac8d2bb899ea8dba1389b26d",
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix6/whole-lane-guard-audit.json",
+    "sha256": "82283b355a6467b4eb07698f425a341e6c4bd37e5de89c50e1d6181e667b014d",
     "result": {
       "status": "partial",
-      "mutants": 177,
-      "negatives": 2120,
+      "mutants": 179,
+      "negatives": 4418,
       "unexposed": 345,
       "guards_without_flips": 16,
       "positive_regressions": 0,
@@ -151,7 +154,65 @@
       "duplicate_witnesses": 171,
       "guards_without_single_or_duplicate_proof": [],
       "unexposed_after_duplicate_sets": 58,
-      "seconds": 97.2
+      "numeric_grammar_refusals": [
+        "doctor.custom_headless.checked/atom/01",
+        "doctor.custom_headless.checked/atom/00",
+        "doctor.custom_headless.checked/atom/-01",
+        "doctor.custom_headless.checked/caller-sequence-spelling/01",
+        "live.session.started/atom/01",
+        "live.session.started/atom/00",
+        "live.session.started/atom/-01",
+        "live.session.started/caller-sequence-spelling/01",
+        "live.step.updated/atom/01",
+        "live.step.updated/atom/00",
+        "live.step.updated/atom/-01",
+        "live.step.updated/caller-sequence-spelling/01",
+        "live.artifact.created/atom/01",
+        "live.artifact.created/atom/00",
+        "live.artifact.created/atom/-01",
+        "live.artifact.created/caller-sequence-spelling/01",
+        "live.session.completed/atom/01",
+        "live.session.completed/atom/00",
+        "live.session.completed/atom/-01",
+        "live.session.completed/caller-sequence-spelling/01",
+        "live.session.degraded/atom/01",
+        "live.session.degraded/atom/00",
+        "live.session.degraded/atom/-01",
+        "live.session.degraded/caller-sequence-spelling/01",
+        "browser.context_captured/atom/01",
+        "browser.context_captured/atom/00",
+        "browser.context_captured/atom/-01",
+        "browser.context_captured/caller-sequence-spelling/01",
+        "dev.session.started/atom/01",
+        "dev.session.started/atom/00",
+        "dev.session.started/atom/-01",
+        "dev.session.started/caller-sequence-spelling/01",
+        "dev.session.stopping/atom/01",
+        "dev.session.stopping/atom/00",
+        "dev.session.stopping/atom/-01",
+        "dev.session.stopping/caller-sequence-spelling/01",
+        "dev.session.stopped/atom/01",
+        "dev.session.stopped/atom/00",
+        "dev.session.stopped/atom/-01",
+        "dev.session.stopped/caller-sequence-spelling/01",
+        "dev.session.restarting/atom/01",
+        "dev.session.restarting/atom/00",
+        "dev.session.restarting/atom/-01",
+        "dev.session.restarting/caller-sequence-spelling/01",
+        "preview.session.started/atom/01",
+        "preview.session.started/atom/00",
+        "preview.session.started/atom/-01",
+        "preview.session.started/caller-sequence-spelling/01",
+        "preview.session.refreshed/atom/01",
+        "preview.session.refreshed/atom/00",
+        "preview.session.refreshed/atom/-01",
+        "preview.session.refreshed/caller-sequence-spelling/01",
+        "preview.session.stopped/atom/01",
+        "preview.session.stopped/atom/00",
+        "preview.session.stopped/atom/-01",
+        "preview.session.stopped/caller-sequence-spelling/01"
+      ],
+      "seconds": 320.5
     }
   }
 ]

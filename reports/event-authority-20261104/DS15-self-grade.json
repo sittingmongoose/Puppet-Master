@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-DS15-FIX5-SELF-GRADE-20261104",
+  "assessment_id": "EA-DS15-FIX6-SELF-GRADE-20261104",
   "assessment_kind": "worker_self_grade_prepared_without_admission",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -21,8 +21,8 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-section15-newtools-20261104",
-    "reviewed_head": "90e76fc7cfc127ab004525e7f3f1860031c16004",
-    "head_binding": "Implementation commit pinned here; immutable fix5/push-receipt.json pins the containing report/self-grade commit.",
+    "reviewed_head": "d4f871112535fb8846c13e8070d45df6a687a0c5",
+    "head_binding": "Implementation commit pinned here; immutable fix6/push-receipt.json pins the report commit.",
     "owner_sha256": {
       "Plans/Section15_MVP_Promoted_Features_Spec.md": "5ac37e1af98dba25d16f72b3079e7992ec7001313af3ab7c2fb5504f6b460bcc",
       "Plans/newtools.md": "ce32d50d1efa16c5849fc94fea3a753d121b894ff84eb66b416137a7dfcfe76b",
@@ -30,24 +30,27 @@
       "Plans/Contracts_V0.md": "f4b6b2a2a48f34da3b40ba18610534cc293bab8dd9265b2c2e8ab17e029aa6e5",
       "Plans/Automated_Testing_System.md": "bedf4c5c767f8945976a3d1b0ca4ed56bdbd73ba19ea3a8e18ba9c9757b4698a"
     },
-    "implementation_head": "8649acac85d19cf6c327d8d3d92f788e1e35b4ac",
+    "implementation_head": "ae2b4d2bc214c09403745d192dd4623ce78e30e7",
     "companion_sha256": {
-      "scripts/pm-ds15-event-contracts.py": "6341de7f4926b703aaf911e5c450139292927bc1f75a0157ce7a7d19501c2498",
-      "scripts/pm-ds15-guard-audit.py": "a103e09a6dfa5da3cd70b988e53aee209749c006e955bfbfe832d9964ea116b6",
+      "scripts/pm-ds15-event-contracts.py": "5a00bec1abca5c687657f7670d0998792a899acdeb6ae669fb5011748e24ce87",
+      "scripts/pm-ds15-guard-audit.py": "078de42452981e3b80c0bf20b5990c5f3d6ccca4f7cb57d146ebeeeda5f1cfce",
+      "Plans/ds15_event_contracts.json": "e26106b0f6c64ed0165d5435379079283fbdddc483113aa3dd2da39fb311ef16",
+      "Plans/ds15_integer_domain.schema.json": "8b6f101e8a5e84568d06d821b46b1fbb2c09a9ad965beed91376dacce7865adb",
+      "Plans/ds15_numeric_contract_fixtures.json": "417ecaaa1ae68d1093d32390b7f094fde9f94135192d02153be7497891548660",
       "Plans/ds15_event_contract_fixtures.json": "65dabc5baeeb0d22acc0c546b5518eb7f41ab80ec39645f51086bc3ec04e6458",
       "Plans/ds15_value_contract_fixtures.json": "6a88462fb3ce168672c95b1db0f805d9680b2542754299c513eefa2da25b0a82",
       "Plans/ds15_guard_proof_fixtures.json": "61289d968939cc2f68fdee919a91bc4257cb3390cd207bdb1dd97a752f98dea4"
     }
   },
   "native_execution": "NOT_RUN",
-  "prepared_family_count": 0,
+  "prepared_family_count": 14,
   "all_twelve_PASS_family_count": 0,
   "rows": [
     {
       "event_type": "browser.context_captured",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-310",
         "SP-647",
@@ -76,11 +79,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -103,11 +106,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -130,11 +133,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -157,11 +160,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -191,11 +194,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -232,11 +235,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -259,11 +262,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -307,11 +310,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -334,11 +337,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -383,8 +386,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -396,11 +399,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -423,16 +426,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -479,40 +482,54 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "browser.context_captured",
+              "line_start": 11271,
+              "line_end": 11271,
+              "quote": "\"id\": \"browser.context_captured/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
-        "RT event/checkpoint policy assignments.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT event/checkpoint policy assignments."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "browser.context_share_revoked",
@@ -2566,7 +2583,7 @@
       "event_type": "dev.session.restarting",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-314",
         "SP-651",
@@ -2595,11 +2612,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2622,11 +2639,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -2649,11 +2666,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2676,11 +2693,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2703,11 +2720,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2744,11 +2761,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2771,11 +2788,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2819,11 +2836,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2846,11 +2863,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2895,8 +2912,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -2908,11 +2925,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2935,16 +2952,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -2991,47 +3008,61 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "dev.session.restarting",
+              "line_start": 19119,
+              "line_end": 19119,
+              "quote": "\"id\": \"dev.session.restarting/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
         "RT event/checkpoint policy assignments.",
-        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "dev.session.started",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-311",
         "SP-648",
@@ -3060,11 +3091,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3087,11 +3118,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -3114,11 +3145,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3141,11 +3172,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3168,11 +3199,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3209,11 +3240,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3236,11 +3267,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3284,11 +3315,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -3311,11 +3342,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3360,8 +3391,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -3373,11 +3404,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3400,16 +3431,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -3456,47 +3487,61 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "dev.session.started",
+              "line_start": 13029,
+              "line_end": 13029,
+              "quote": "\"id\": \"dev.session.started/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
         "RT event/checkpoint policy assignments.",
-        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "dev.session.stopped",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-313",
         "SP-650",
@@ -3525,11 +3570,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3552,11 +3597,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -3579,11 +3624,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3606,11 +3651,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3633,11 +3678,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3674,11 +3719,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3701,11 +3746,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3749,11 +3794,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -3776,11 +3821,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3825,8 +3870,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -3838,11 +3883,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3865,16 +3910,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -3921,47 +3966,61 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "dev.session.stopped",
+              "line_start": 17089,
+              "line_end": 17089,
+              "quote": "\"id\": \"dev.session.stopped/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
         "RT event/checkpoint policy assignments.",
-        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "dev.session.stopping",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-312",
         "SP-649",
@@ -3990,11 +4049,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4017,11 +4076,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -4044,11 +4103,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4071,11 +4130,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4098,11 +4157,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4139,11 +4198,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4166,11 +4225,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4214,11 +4273,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -4241,11 +4300,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4290,8 +4349,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -4303,11 +4362,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4330,16 +4389,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -4386,47 +4445,61 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "dev.session.stopping",
+              "line_start": 15059,
+              "line_end": 15059,
+              "quote": "\"id\": \"dev.session.stopping/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
         "RT event/checkpoint policy assignments.",
-        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT expanded dev value v2 policy; DAP-only v1 policy is not extended."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "doctor.custom_headless.checked",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "N2-217",
         "SP-640",
@@ -4455,11 +4528,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4482,11 +4555,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -4509,11 +4582,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4536,11 +4609,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4563,11 +4636,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4604,11 +4677,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4631,11 +4704,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4679,11 +4752,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -4706,11 +4779,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4755,8 +4828,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -4768,11 +4841,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4795,16 +4868,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -4851,46 +4924,60 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "doctor.custom_headless.checked",
+              "line_start": 11,
+              "line_end": 11,
+              "quote": "\"id\": \"doctor.custom_headless.checked/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
-        "RT event/checkpoint policy assignments.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT event/checkpoint policy assignments."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "live.artifact.created",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "N2-221",
         "SP-644",
@@ -4919,11 +5006,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4946,11 +5033,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -4973,11 +5060,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5000,11 +5087,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5027,11 +5114,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5068,11 +5155,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5095,11 +5182,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5143,11 +5230,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -5170,11 +5257,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5219,8 +5306,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -5232,11 +5319,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5259,16 +5346,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -5315,46 +5402,60 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "live.artifact.created",
+              "line_start": 5725,
+              "line_end": 5725,
+              "quote": "\"id\": \"live.artifact.created/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
-        "RT event/checkpoint policy assignments.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT event/checkpoint policy assignments."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "live.session.completed",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "N2-222",
         "SP-645",
@@ -5383,11 +5484,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5410,11 +5511,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -5437,11 +5538,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5464,11 +5565,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5491,11 +5592,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5532,11 +5633,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5559,11 +5660,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5607,11 +5708,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -5634,11 +5735,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5683,8 +5784,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -5696,11 +5797,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5723,16 +5824,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -5779,46 +5880,60 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "live.session.completed",
+              "line_start": 7483,
+              "line_end": 7483,
+              "quote": "\"id\": \"live.session.completed/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
-        "RT event/checkpoint policy assignments.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT event/checkpoint policy assignments."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "live.session.degraded",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "N2-223",
         "SP-646",
@@ -5847,11 +5962,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5874,11 +5989,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -5901,11 +6016,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5928,11 +6043,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5955,11 +6070,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5996,11 +6111,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6023,11 +6138,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6071,11 +6186,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -6098,11 +6213,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6147,8 +6262,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -6160,11 +6275,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6187,16 +6302,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -6243,46 +6358,60 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "live.session.degraded",
+              "line_start": 9241,
+              "line_end": 9241,
+              "quote": "\"id\": \"live.session.degraded/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
-        "RT event/checkpoint policy assignments.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT event/checkpoint policy assignments."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "live.session.started",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "N2-219",
         "SP-642",
@@ -6311,11 +6440,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6338,11 +6467,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -6365,11 +6494,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6392,11 +6521,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6419,11 +6548,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6460,11 +6589,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6487,11 +6616,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6535,11 +6664,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -6562,11 +6691,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6611,8 +6740,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -6624,11 +6753,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6651,16 +6780,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -6707,46 +6836,60 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "live.session.started",
+              "line_start": 1769,
+              "line_end": 1769,
+              "quote": "\"id\": \"live.session.started/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
-        "RT event/checkpoint policy assignments.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT event/checkpoint policy assignments."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "live.step.updated",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "N2-220",
         "SP-643",
@@ -6775,11 +6918,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6802,11 +6945,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -6829,11 +6972,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6856,11 +6999,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6883,11 +7026,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6924,11 +7067,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6951,11 +7094,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6999,11 +7142,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -7026,11 +7169,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -7075,8 +7218,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -7088,11 +7231,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7115,16 +7258,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -7171,46 +7314,60 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "live.step.updated",
+              "line_start": 3695,
+              "line_end": 3695,
+              "quote": "\"id\": \"live.step.updated/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
-        "RT event/checkpoint policy assignments.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT event/checkpoint policy assignments."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "preview.session.refreshed",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-316",
         "SP-653",
@@ -7239,11 +7396,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -7266,11 +7423,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -7293,11 +7450,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -7320,11 +7477,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -7347,11 +7504,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -7388,11 +7545,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -7415,11 +7572,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -7463,11 +7620,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -7490,11 +7647,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -7539,8 +7696,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -7552,11 +7709,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7579,16 +7736,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -7635,47 +7792,61 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "preview.session.refreshed",
+              "line_start": 23179,
+              "line_end": 23179,
+              "quote": "\"id\": \"preview.session.refreshed/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
         "RT event/checkpoint policy assignments.",
-        "RT exact preview subject UI value policy.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT exact preview subject UI value policy."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "preview.session.started",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-315",
         "SP-652",
@@ -7704,11 +7875,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -7731,11 +7902,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -7758,11 +7929,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -7785,11 +7956,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -7812,11 +7983,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -7853,11 +8024,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -7880,11 +8051,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -7928,11 +8099,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -7955,11 +8126,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -8004,8 +8175,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -8017,11 +8188,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8044,16 +8215,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -8100,47 +8271,61 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "preview.session.started",
+              "line_start": 21149,
+              "line_end": 21149,
+              "quote": "\"id\": \"preview.session.started/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
         "RT event/checkpoint policy assignments.",
-        "RT exact preview subject UI value policy.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT exact preview subject UI value policy."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "preview.session.stopped",
       "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
-      "outcome": "NOT_READY_CHECK_11",
+      "outcome": "prepared_without_admission",
       "current_owner_units": [
         "SMPFS-317",
         "SP-654",
@@ -8169,11 +8354,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -8196,11 +8381,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -8223,11 +8408,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -8250,11 +8435,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -8277,11 +8462,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -8318,11 +8503,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -8345,11 +8530,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -8393,11 +8578,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -8420,11 +8605,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -8469,8 +8654,8 @@
             {
               "path": "scripts/pm-ds15-event-contracts.py",
               "unit": "token_matches_storage",
-              "line_start": 203,
-              "line_end": 203,
+              "line_start": 259,
+              "line_end": 259,
               "quote": "token['checkpoint_key'] == key"
             },
             {
@@ -8482,11 +8667,11 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8509,16 +8694,16 @@
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred."
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eleven F9 cases now flip. Exact targeting proves 161/177 predicates singly and 16 through 20 named duplicate sets, with zero unproved guards. Thirty end-to-end prerequisite cases still lack accepting mutations; legal pending dispatches are separate. Oracle completeness stays PARTIAL.",
+          "finding": "F11 fixed: 3092 numeric cases, uniform schema/comparison/codec prerequisites, 163/179 singleton guard proofs and 16 guards in 20 named sets. All 44 residual cases were accepted by cycle 6 and remain unchanged. Native execution NOT_RUN; no admission or retention choice.",
           "evidence": [
             {
               "path": "Plans/ds15_event_contract_fixtures.json",
@@ -8565,41 +8750,55 @@
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 262,
-              "line_end": 262,
+              "line_start": 304,
+              "line_end": 304,
               "quote": "'guards_without_flips':sum(not o['negative_successes'] for o in outputs)"
             },
             {
               "path": "scripts/pm-ds15-guard-audit.py",
               "unit": "strict guard audit",
-              "line_start": 275,
-              "line_end": 275,
+              "line_start": 318,
+              "line_end": 318,
               "quote": "sys.exit(0 if result['status']=='pass' else 1)"
+            },
+            {
+              "path": "Plans/ds15_numeric_contract_fixtures.json",
+              "unit": "preview.session.stopped",
+              "line_start": 25209,
+              "line_end": 25209,
+              "quote": "\"id\": \"preview.session.stopped/atom/1.0\""
+            },
+            {
+              "path": "scripts/pm-ds15-event-contracts.py",
+              "unit": "DS15 numeric boundary",
+              "line_start": 20,
+              "line_end": 20,
+              "quote": "def numeric_atom_ok(value):"
             }
           ],
           "prior": {
-            "source": "DS15-sol/REVIEW-cycle5.md at 90e76fc7cfc127ab004525e7f3f1860031c16004",
+            "source": "DS15-sol/REVIEW-cycle6.md at d4f871112535fb8846c13e8070d45df6a687a0c5",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Round 5 preserves the owner contract and grade. F9 named repairs and F10 exact targeting are fixed; complete per-case guard sensitivity remains PARTIAL. No admission or retention choice is inferred.",
+          "change": "upgraded",
+          "change_reason": "F11 numeric policy and operation-specific controls close the only cycle-6 blocker. F9/F10 and all 44 residuals remain accepted. Membership and retention exceptions stay unchanged.",
           "superseded_worker_claim": {
             "head": "200e70b3ddac04c7d25f5c08eabe8abcc43ff70b",
             "status": "PASS",
-            "correction": "Cycle-4 reviewer PARTIAL is retained until whole-lane check 11 is proved."
+            "correction": "Cycle 6 accepted every residual construction; fix6 supplies F11 numeric coverage before upgrading this cell."
           }
         }
       },
-      "pass_count": 9,
+      "pass_count": 10,
       "prepared_criteria_complete_except_membership_and_retention": true,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "remaining_gaps": [
         "Separate exact Event Authority admission.",
         "RT event/checkpoint policy assignments.",
-        "RT exact preview subject UI value policy.",
-        "STATIC: Complete per-case guard sensitivity remains PARTIAL: 30 end-to-end prerequisite cases do not become accepting mutations, despite independently exposed presence/cardinality controls."
-      ]
+        "RT exact preview subject UI value policy."
+      ],
+      "prepared_contract_complete": true
     },
     {
       "event_type": "tool.custom_headless.skipped",
@@ -8868,7 +9067,7 @@
     "DT-first-Doctor": "DT owns the first Doctor run eligibility/reset/restore question; see origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. DS15 supplies no second draft or answer."
   },
   "evidence_quote_checks": {
-    "checked": 669,
+    "checked": 697,
     "mismatches": 0,
     "prepared_rows": 14,
     "held_rows_unchanged": 9,
