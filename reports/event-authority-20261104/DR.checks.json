@@ -1,82 +1,101 @@
-[
-  {
-    "command": [
-      "python3",
-      "scripts/pm-shard-plans.py",
-      "--generate",
-      "--config",
-      "Plans/sharding_config.json"
-    ],
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/shard-generate.log",
-    "output_sha256": "fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2"
+{
+  "schema_id": "pm.event_authority.DR.fix1_checks.v1",
+  "implementation_head": "796707f50aa275cba7debed746bc1d363a7e24ba",
+  "native_execution": "NOT_RUN",
+  "admission": "NONE",
+  "environment": "Isolated --system-site-packages venv; pinned scripts/requirements-runtime-artifact-drafts.txt installed. The temporary venv is removed after push; recreate it outside the repository to rerun.",
+  "checked_owner_sha256": {
+    "Plans/Runtime_Artifacts_Panel.md": "dedfde0e900f5a1bdf812195238bc2a14d17ae153070c9f241d60779d73320f1",
+    "Plans/storage-plan.md": "c27cb67cf2d79f5c06dad215881fe706ea86f028126041f19b628afb94255bd6",
+    "Plans/Contracts_V0.md": "0645818e1a91ee83e4d9f8a0746a8eb7eba4bc38d2dbf9730d22a36149a67bdb",
+    "Plans/Automated_Testing_System.md": "9f3d3c496c19641981fc0752dc54e7658f70bab1da29b827786b27f63696c3ef"
   },
-  {
-    "command": [
-      "python3",
-      "scripts/pm-plan-index.py",
-      "generate"
-    ],
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/index-generate.log",
-    "output_sha256": "50200415eabf479b935798f604620d5565a01f5e32a41761844e85d095afc315"
-  },
-  {
-    "command": [
-      "python3",
-      "scripts/pm-shard-plans.py",
-      "--check",
-      "--config",
-      "Plans/sharding_config.json"
-    ],
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/shard-check.log",
-    "output_sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85"
-  },
-  {
-    "command": [
-      "python3",
-      "scripts/pm-plan-index.py",
-      "validate"
-    ],
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/validate.log",
-    "output_sha256": "118939b3bc60059297b796fddf91bca0feba8921061dac1fde06d9cf4c3b36e2"
-  },
-  {
-    "command": [
-      "python3",
-      "scripts/pm-plans-verify.py",
-      "validate-runtime-artifact-schemas"
-    ],
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/validate-runtime-artifact-schemas.log",
-    "output_sha256": "75cff8a2120bc13cdef976c8f49ad200429eacbf4f3f6184fa392fd745f6de12"
-  },
-  {
-    "command": [
-      "python3",
-      "scripts/pm-runtime-artifact-event-drafts.py"
-    ],
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/pm-runtime-artifact-event-drafts.log",
-    "output_sha256": "08742445cb3eadc11b2a8c0d6af4dfa83636f85883b9d36f5f0972e44a3871f2"
-  },
-  {
-    "command": [
-      "git",
-      "diff",
-      "--check"
-    ],
-    "exit_code": 0,
-    "top_level_status": null,
-    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/diff-check.log",
-    "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  }
-]
+  "checks": [
+    {
+      "name": "index-generate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/index-generate.log",
+      "sha256": "3317126f3fde5302a4331f34a489bb3e2232c3c008afe5f25becac24c696258c"
+    },
+    {
+      "name": "shard-generate",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/shard-generate.log",
+      "sha256": "fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2"
+    },
+    {
+      "name": "shard-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/shard-check.log",
+      "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/index-validate.log",
+      "sha256": "dff115dca1eff507d6465d613b5a052b33ffcdc4136f8a900c3849009a88329a",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "schema-check",
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-runtime-artifact-schemas"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/schema-check.log",
+      "sha256": "3c8290c06a486139c8506a7c1730322b2043c6344946bc28dab2ee7a4d992d9b",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "draft-check",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix1-venv/bin/python",
+        "scripts/pm-runtime-artifact-event-drafts.py"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/draft-check.log",
+      "sha256": "ff1d77e0b56e440f0a5ac306fe2ce225b3b827f9cdde6a254f8f41079e718ab6",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
