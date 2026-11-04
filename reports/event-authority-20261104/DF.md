@@ -1,96 +1,110 @@
-# DF — FileSafe event authority draft
+# DF — second-pass FileSafe Event Authority draft
 
-Branch: `plans/ea-w2-filesafe-20261104`. Contract head: `ad68e8d4bc5817cbdc5c14df6fb0970ff5a872a5`.
-Base: `be4766513f` (origin/main when fetched). Worktree: `/home/sittingmongoose/pm-worktrees/DF` (left for lead integration).
+Branch: `plans/ea-w2-filesafe-20261104`. DF-P2 contract head: `43921a583f7641c1c5ee5d6858b2c5d136223fb6`. Started from pushed `c7058590332b1cc87afb56e39dc6b7afc2fa3e7a`; origin/main basis remains `be4766513ff71776346fc73b84f2542990f955af`.
+Worktree: `/home/sittingmongoose/pm-worktrees/DF-p2`, left for integration. The following report-only commit preserves this assessed source tree.
 
-**Status: technical drafts pushed for review, not depth complete or ready for admission.** No registry append, admission record, Decision Log entry or exclusion was written. Each row has its own owner contract, schema, reader/identity definition and fixtures. Retention is pending for all nine. Technical gaps are disclosed below rather than mislabeled product decisions.
+**All nine families now have 10 PASS / 1 PARTIAL / 1 ABSENT.** Producer, scope_identity and positive_negative_oracles moved from PARTIAL to PASS. Retention remains PARTIAL with its exact PENDING_RETENTION_DECISION marker; membership_version remains ABSENT until individual admission. Native execution is NOT_RUN, and every original-source method is specified_unimplemented. No family is 12/12 or ready to emit.
 
-| Row | Outcome | Self-grade | Units |
+## Per-family grades and units
+
+| Family | Before (PASS / PARTIAL / ABSENT) | After | Units |
 |---|---|---|---|
-| `filesafe.command_denied` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-550, SP-550 |
-| `filesafe.destructive_override_denied` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-551, SP-551 |
-| `filesafe.destructive_override_granted` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-552, SP-552 |
-| `filesafe.destructive_override_requested` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-553, SP-553 |
-| `filesafe.guard_init_failed` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-554, SP-554 |
-| `filesafe.path_denied` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-555, SP-555 |
-| `filesafe.policy_degraded` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-556, SP-556 |
-| `safe_point.created` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-557, SP-557 |
-| `safe_point.restored` | register (prepared draft; depth incomplete) | 7 PASS / 4 PARTIAL / 1 ABSENT | CV-558, SP-558 |
+| `filesafe.command_denied` | 7 / 4 / 1 | 10 / 1 / 1 | CV-550, SP-550, ATS-275 |
+| `filesafe.destructive_override_denied` | 7 / 4 / 1 | 10 / 1 / 1 | CV-551, SP-551, ATS-275 |
+| `filesafe.destructive_override_granted` | 7 / 4 / 1 | 10 / 1 / 1 | CV-552, SP-552, ATS-276 |
+| `filesafe.destructive_override_requested` | 7 / 4 / 1 | 10 / 1 / 1 | CV-553, SP-553, ATS-276 |
+| `filesafe.guard_init_failed` | 7 / 4 / 1 | 10 / 1 / 1 | CV-554, SP-554, ATS-277 |
+| `filesafe.path_denied` | 7 / 4 / 1 | 10 / 1 / 1 | CV-555, SP-555, ATS-277 |
+| `filesafe.policy_degraded` | 7 / 4 / 1 | 10 / 1 / 1 | CV-556, SP-556, ATS-278 |
+| `safe_point.created` | 7 / 4 / 1 | 10 / 1 / 1 | CV-557, SP-557, ATS-279 |
+| `safe_point.restored` | 7 / 4 / 1 | 10 / 1 / 1 | CV-558, SP-558, ATS-279 |
 
-The four PARTIAL cells are producer, scope_identity, retention and positive_negative_oracles. Membership is ABSENT by design. Family_id/revision are null in grades because no registry identity is being allocated here. All native execution is NOT_RUN, which alone does not lower grades. Individual JSON grades and `DF.self-grade.json` carry current exact line citations and SHA-256 source commitments.
+Counts before are the first-pass reported grades; current source was re-read, including the inconsistencies corrected below. The aggregate and nine individual self-grade JSON files contain current exact line citations, source hashes, prior statuses and change reasons. Family IDs/revisions remain null: no registry identity has been minted.
 
-## Newly authored bindings and search evidence
+## Exact technical additions
 
-The search covers each exact family separately across current non-generated Plans Markdown/JSON, explicitly inspecting FileSafe, Contracts, Storage, Decision Log, central event/storage-value registries, payload and application schemas. Existing safe_point_record and safe_point_restore_transaction keys/values, SP-278's generic projector/checkpoint/CAS/token, SP-286 full-value receipt custody, SP-336/SP-347 and SP-337 are reused. No new redb value, checkpoint row or storage-value registry row is needed by the passive reader. This does not convert the existing safe-point projection/journal into EventRecord-derived mutation authority.
-
-No exact family-complete identity recipe, versioned history reader, SP-286 adoption or withdrawal protocol was found. This is negative evidence within the stated search scope, not a repository-wide proof that no identifier exists. Evidence is in the per-family `.search.txt` files and `search-summary.json` at the external evidence directory below. These definitions are new owner contracts under DL-045, not found prior canon.
-
-| Family | New payload resource under Plans/event_payloads/ | New ephemeral reader @1.0.0 |
+| Family | Own source schema / graph basename | Exact producer |
 |---|---|---|
-| `filesafe.command_denied` | `filesafe_command_denied_v2.schema.json` | `storage.filesafe_command_denied_history_read.v1` |
-| `filesafe.destructive_override_denied` | `filesafe_destructive_override_denied_v2.schema.json` | `storage.filesafe_destructive_override_denied_history_read.v1` |
-| `filesafe.destructive_override_granted` | `filesafe_destructive_override_granted_v2.schema.json` | `storage.filesafe_destructive_override_granted_history_read.v1` |
-| `filesafe.destructive_override_requested` | `filesafe_destructive_override_requested_v2.schema.json` | `storage.filesafe_destructive_override_requested_history_read.v1` |
-| `filesafe.guard_init_failed` | `filesafe_guard_init_failed_v2.schema.json` | `storage.filesafe_guard_init_failed_history_read.v1` |
-| `filesafe.path_denied` | `filesafe_path_denied_v2.schema.json` | `storage.filesafe_path_denied_history_read.v1` |
-| `filesafe.policy_degraded` | `filesafe_policy_degraded_v2.schema.json` | `storage.filesafe_policy_degraded_history_read.v1` |
-| `safe_point.created` | `safe_point_created_v2.schema.json` | `storage.safe_point_created_history_read.v1` |
-| `safe_point.restored` | `safe_point_restored_v2.schema.json` | `storage.safe_point_restored_history_read.v1` |
+| `filesafe.command_denied` | `Plans/filesafe_event_sources/filesafe_command_denied.schema.json` and `.contract.json` | `BaseRunner::check_command -> BashGuard::check_command -> log_blocked_command` |
+| `filesafe.destructive_override_denied` | `Plans/filesafe_event_sources/filesafe_destructive_override_denied.schema.json` and `.contract.json` | `FileSafe::evaluate_destructive_override -> deny_override` |
+| `filesafe.destructive_override_granted` | `Plans/filesafe_event_sources/filesafe_destructive_override_granted.schema.json` and `.contract.json` | `FileSafe::evaluate_destructive_override -> issue_override_receipt` |
+| `filesafe.destructive_override_requested` | `Plans/filesafe_event_sources/filesafe_destructive_override_requested.schema.json` and `.contract.json` | `FileSafe::request_destructive_override -> record_override_request` |
+| `filesafe.guard_init_failed` | `Plans/filesafe_event_sources/filesafe_guard_init_failed.schema.json` and `.contract.json` | `FileSafe::initialize_guard -> record_guard_init_failure` |
+| `filesafe.path_denied` | `Plans/filesafe_event_sources/filesafe_path_denied.schema.json` and `.contract.json` | `FileSafe::check_path -> FileGuard::check_operation -> record_path_denial` |
+| `filesafe.policy_degraded` | `Plans/filesafe_event_sources/filesafe_policy_degraded.schema.json` and `.contract.json` | `FileSafe::load_policy -> record_policy_degradation` |
+| `safe_point.created` | `Plans/filesafe_event_sources/safe_point_created.schema.json` and `.contract.json` | `FileSafe::capture_pre_write_safe_point -> commit_safe_point_record` |
+| `safe_point.restored` | `Plans/filesafe_event_sources/safe_point_restored.schema.json` and `.contract.json` | `FileSafe::restore_exact_replace -> reconcile_restore_transaction` |
 
-Each SP unit separately defines Project idempotency `filesafe@2:hex(operation_id)`, existing CV-366 application idempotency `application@1:hex(server_id):hex(operation_id)` and its own event_id digest over exact family/partition/key. Each explicitly adopts SP-278 and SP-286/CV-339 strict full-value custody. All payloads are newly authored 2.0.0 drafts, no old Project source or historical payload is restamped. CV-365's intact WorkflowScopeV2 is referenced; known execution context is separately closed, with nulls for genuinely inapplicable startup/pre-context diagnostics. Such nulls grant no effect.
+Each schema has separate closed Project/application original-source roots and its own complete request/result/materialization definitions. Each graph pins exact resources by path/URI/SHA-256, names the two private original-source interfaces and their capture_at_original_commit/read_same_operation/recover_same_operation operations, lists own input/subject/body joins, orders body commit, prepared event, append, first receipt, terminal, history read, backup and withdrawal, and preserves the retention hold.
 
-## Premise checks and retention
+The exact interface pattern is `owner.filesafe.<basename>.original_source.project@1.0.0` and `owner.filesafe.<basename>.original_source.application@1.0.0`, expanded independently in every graph and CV unit. These are newly authored owner contracts under DL-045, not discoveries, public commands, new durable tables, a registry append or native installation. All existing history-reader IDs remain unchanged.
 
-- DL-045, Decision_Log bounded authority and exact approved scope: all nine names remain in scope; current FileSafe/Contracts specify the same security/safe-point behavior. Used only for technical authoring, never admission or retention choice.
-- F2-213 and CV-365/366 are current: application FileSafe is required, with real roots/Host evidence, explicit source graph and original Project definitions preserved. Older project-only payload minima therefore cannot alone close these families. **The Project-only completeness premise fails today.** Draft schemas include application scope; complete authentic original-source resources/method graphs still need materialization and checking.
-- Case L-3 was checked against current text: authority/approval/receipt, non-authority security/recovery and runtime classes are candidates. Snapshot-body retention and restore-transaction authority do not themselves assign event-history retention. No old September retention decision is imported; no decision answer is extended.
-- `safe_point.recovery_unavailable` remains a registered comparison, not authority for any of these nine identities, readers, source or retention policies.
+Original source views require genuine owner operation/commit, writer/storage context, original request/result and body ref/hash selection. Source hashes cannot authenticate acceptance. Application accepted-source and graph hashes use the exact CV-366 typed domains; Project adds a view commitment without replacing original native codecs or source hashes. The unchanged original Project safe_point_record and restore-transaction schemas are imported in full for their respective Project source roots and joined to actual body bytes and event subjects. Application uses a separate source root and rejects the Project-only record member.
 
-All nine event `retention_policy_ref` cells remain `PENDING_RETENTION_DECISION`; candidate classes and Case L-3 citation are in each SP unit. Existing safe-point bodies, transaction authority, generic index/checkpoint and holds retain their own owners. **For Jared/RT:** which exact class owns each of the nine event histories? RT may close this from current canon or a premise-checked owner answer; this draft chooses none. No other Jared product decision is identified.
+Every SP unit explicitly retains SP-286/CV-339 strict full-value v2 and SP-278, its existing generic index/checkpoint/CAS and durable token. No family checkpoint/read model or new physical storage family is introduced. Replay returns the original complete event and all first-receipt fields; changed semantic intent conflicts, missing dedupe/source fences, and no audit replay performs the original domain effect.
 
-## Technical work still required
+## Current-premise checks and corrections
 
-1. Materialize and check each family's exact CV-366 application original-source resource/method graph, reusing authentic FileSafe originals where applicable; do not synthesize accepted source from an event or boolean witness.
-2. Add full EventRecord/source joins and executable original-result/conflicting retry, receipt/crash and withdrawal cases for each family. The current checker covers payload/scope/identity, expiry and restore equality. ATS native obligations cover actual durability/CAS/access/backup/withdrawal effects and remain NOT_RUN.
-3. Independent grade/reviews and separate per-family admission after technical gaps and RT close. No row is a justified exclusion or a fabricated product blocker.
+- **DL-045:** its exact scope still names all nine families; current FileSafe F2-041/F2-052/F2-213 and the other cited guard/capture/restore owners retain the specified behaviors. Only missing technical contracts were authored. No feature, user-visible behavior, retention/deletion choice or competing owner was decided.
+- **CV-365/366 and F2-213:** application context remains required. The first-pass Project-only completeness premise cannot close these current families; separate full original-source graphs now describe application. Existing app.restore_lifecycle.v1 belongs to restore_point lifecycle and was not borrowed for safe_point or FileSafe.
+- **Override scope:** the first-pass flat scope omitted application Server/Environment/recorded roots and overconstrained optional Project run/worktree/command restrictions. Prepared requested/granted schemas now follow current F2-213 with an explicit closed union. Application binds real Server/Computer/thread/run/Host/Environment and roots; Project retains its optional restrictions, with no broader grant than the authentic request. The checker has Project-wide positives and narrowing/wrong-root/missing-identity negatives. No original accepted Project source was recast.
+- **Snapshot versions:** the first-pass created payload used integers while the intact original Project safe_point_record schema uses nonempty strings. The unadmitted draft and its fixtures now preserve those strings without coercion. Restore conflict codes likewise use the original closed vocabulary, and both safe-point families import full original Project native source records.
+- **Envelope:** canonical EventRecord has scope_kind/project_id and no nested scope object. Own CV text, fixtures and joins now use the actual envelope fields and preserve the payload WorkflowScopeV2 intact.
+- **Retention:** the exact first-pass paragraphs in SP-550..558 were checked byte-for-byte unchanged. Case L-3 candidate classes, original snapshot retention and generic index/checkpoint policies are distinct. No August/September retention answer was imported or extended; no failed old decision premise was applied. The registered safe_point.recovery_unavailable comparison supplies no admission or sibling contract.
 
-## Checks
+## Every remaining non-PASS cell
 
-- `check-contracts.json`: top-level `pass`, exit 0.
-- `check-shards-generate.txt`: top-level `pass`, exit 0.
-- `check-shards.txt`: top-level `pass`, exit 0.
-- `check-index-generate.txt`: top-level `pass`, exit 0.
-- `check-index-validate.json`: top-level `pass`, exit 0.
-- Payload checker: 20 positives, 150 negatives, 18 identity vectors across nine families; native NOT_RUN.
-- `git diff --check`: exit 0. Scope guard: only edited owner shard directories changed; forbidden paths untouched.
-- Index generation used the copied ignored currentness edition, verified byte-identical by SHA-256 before generation. Node readiness remains blocked_runtime_certification_incomplete; no readiness clearance or seal is claimed.
-- Initial index validation overlapped generation and failed against stale index counts. It was rerun sequentially; only the final result above is authoritative.
-- No existing targeted FileSafe-event checker was found. New read-only `scripts/pm_filesafe_event_contracts.py` and Plans fixtures provide bounded checks; no tests/ file was edited.
+| Family | membership_version — ABSENT | retention — PARTIAL / exact question for Jared |
+|---|---|---|
+| `filesafe.command_denied` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `filesafe.command_denied` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `filesafe.destructive_override_denied` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `filesafe.destructive_override_denied` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `filesafe.destructive_override_granted` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `filesafe.destructive_override_granted` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `filesafe.destructive_override_requested` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `filesafe.destructive_override_requested` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `filesafe.guard_init_failed` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `filesafe.guard_init_failed` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `filesafe.path_denied` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `filesafe.path_denied` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `filesafe.policy_degraded` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `filesafe.policy_degraded` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `safe_point.created` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `safe_point.created` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
+| `safe_point.restored` | No registry row; individual batch admission is outside DF-P2. | Which Case L-3 class owns `safe_point.restored` history: authority/approval/receipt indefinite, non-authority security/recovery operational, or runtime/run history? `PENDING_RETENTION_DECISION` waits on Jared. |
 
-## IDs, shared hunks and evidence
+All other cells are PASS in the current self-grade. No additional product blocker was invented. RT/integration may apply a genuine current retention answer later; this worker selects none. Independent grading, reviews, retention and individual admission remain lead/integration work.
 
-Used **CV-550..558, SP-550..558, ATS-275..279** (23 units); no F2 IDs. All 475 origin refs were checked before minting: maxima SP-420, CV-368, ATS-085, F2-213; no block collisions.
+## Verification and limits
 
-Shared owner hunks are append-only: `Contracts_V0.md` CV-550..558; `storage-plan.md` SP-550..558; `Automated_Testing_System.md` ATS-275..279. There are no shared registry hunks. Nine new payload files, one Plans fixture and one checker accompany them. Shards and index are generated only; no manual shard/evidence edit. No main push, landing lock, reseal, frozen-validator edit, .gitignore edit, pm-mail or subagent.
+- **Authority/source suite:** `python3 scripts/pm_filesafe_event_authority.py`, exit 0, top-level pass: 30 complete Project/application positives, 1074 negatives, 162 protocol traces across nine families. All five restore outcomes are covered. Forged self-consistent sources, wrong scope/subject/Host/root, missing joins/body/receipt, altered complete-value commitments, exact-original retries, digest conflict, dedupe loss, six crash boundaries, older-backup skew, early terminal publication, pending withdrawal, tampered/changed survivor sets and fenced reader publication have authored cases.
+- **Existing payload suite:** `python3 scripts/pm_filesafe_event_contracts.py`, exit 0, top-level pass. Closed schemas, Project/application payloads, identity vectors and own semantic negatives still pass after the scope/type corrections.
+- **Derived files:** shard generate, index generate, shard check and index validate each exit 0 with top-level pass. Validation status was parsed from JSON. Shard changes are confined to Contracts, Storage and Automated Testing; index changes reflect those owner units and their companions. No unrelated owner shard changed.
+- **Currentness:** copied all 15 ignored currentness-edition files from the shared checkout and confirmed matching SHA-256 before index generation. This copies existing inputs and performs no reseal. Index readiness stays blocked_runtime_certification_incomplete; no executable node, readiness clearance or governance seal follows.
+- **Scope guards:** git diff --check passes; event registry, Spec Lock, auto decisions, .evidence, .gitignore and frozen validator are unchanged. No test file was edited. No main push, landing lock, pm-mail, subagent, admission record or Decision Log entry.
+- **Infrastructure:** full checkout and broad Plans checkout hit disk exhaustion before drafting; their incomplete worktree was removed. The final sparse worktree excludes historical migration/evidence/ledger bulk but includes the exact run-002 migration input required by index generation. An initial index generation reported only that absent input; after adding it, generation/validation passed. No baseline, governance or unrelated worktree was changed.
+- **Native boundary:** source authenticity, native producer installation, actual original codecs/durability/fsync, filesystem effects/equality, SP-278 transaction/CAS, permissions/holds/deletion, coherent backup/restore and real withdrawal effects remain authored NOT_RUN. Synthetic source banks and protocol state machines establish contract cases only; none is runtime acceptance or an effect/grant source.
 
-Evidence/copy directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/`.
+## IDs and shared hunks
 
-| Evidence file | SHA-256 |
+**IDs used/reused:** CV-550..558, SP-550..558, ATS-275..279 (23 existing DF units). No new PlanUnit ID, family ID, family revision or Decision ID. CV-559/SP-559 remain unused. Native Project resources are unchanged.
+
+Shared-file hunks are confined to the existing first-pass DF units: Contracts CV-550..558 (source graphs, lifecycle, exact joins and corrections), Storage SP-550..558 (same-original/full-value recovery joins), Automated Testing ATS-275..279 (separate per-family source/envelope/receipt/trace acceptance and validator surfaces). No shared registry hunk. Four own prepared payload schemas, existing payload fixtures/checker, nine new source schemas, nine new source graphs, one new authority fixture and one new read-only checker accompany the prose.
+
+## Evidence custody
+
+Per-family searches were rerun against pushed baseline c7058590332b1cc87afb56e39dc6b7afc2fa3e7a before claiming new bindings. Each external search file states its exact current owner/schema/registry/source-bank scope, cites partial definitions and records the missing complete original-source graph/fixture set within that scope. Existing definitions were reused first; no sibling identity or contract was inferred. Search summaries and old/new report copies live in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/`; pass1/ preserves the prior aggregate/report. The table below cites retained evidence by exact path suffix and SHA-256.
+
+| File under the external DF evidence directory | SHA-256 |
 |---|---|
-| `check-contracts.json` | `8f7d3c1856e3d51f2147aa2f9833ff0158a30678adcf3ea5b526f21861d688ad` |
-| `check-index-generate.txt` | `4d7fe4aceed9622501e42fbe43b8bcfcf655ab591e65d113f5e1347a125f2940` |
-| `check-index-validate.json` | `5fbbb3d1231d946aa7fe9229199839722d5883b478abfae95bde4526a6463ac4` |
-| `check-shards-generate.txt` | `48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4` |
-| `check-shards.txt` | `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21` |
-| `currentness-sha256.txt` | `76fa6f4657ab818ac61ef422c10a66ef11906f79a736374dc2e6e4da4d5acce9` |
-| `filesafe.command_denied.search.txt` | `60cafa0c6598ce2d08cad87fd589bafc351d9f8e543778e592becf34f83ad20c` |
-| `filesafe.destructive_override_denied.search.txt` | `c4458a534e567a2ef496e7fa5862d6609611ba7c03a7884c19b506693c56505f` |
-| `filesafe.destructive_override_granted.search.txt` | `f81864cdb7bab2ab7c216716414152a3151c6a89e72c13836bdd4ad9218acdb2` |
-| `filesafe.destructive_override_requested.search.txt` | `62416dc102e04d0dee8d1749d1e10e655573a30fdeb2379fb9d85bfd000662dd` |
-| `filesafe.guard_init_failed.search.txt` | `0e92e5eacb38d064e2db8864680ea2b10eb66a3857042a8ed617c4b709db86cc` |
-| `filesafe.path_denied.search.txt` | `ffb67f1c0c127814f83593fe06b3d88e894455062345a3fc28b05e1ae689109f` |
-| `filesafe.policy_degraded.search.txt` | `a9066a7b3064073b536acd52c275c6f28969fefcafa4b1c5443306da6a8ee23c` |
-| `id-search.json` | `39833aafc62b52a6eaf17c68cdc0c614eb1564a97aa4e0416a5185a8c06214bc` |
-| `safe_point.created.search.txt` | `07b0c3048dfe0bbca0e2ff3b14cab286769fc54dda66fcdbcf1c1e8e9a986a6f` |
-| `safe_point.restored.search.txt` | `166267668fa03cb79827ff18e49a6bf637c71c6bc04cfb55f49ec45fce5096c8` |
-| `search-summary.json` | `83eb105d8e8b01f9fa05ea39b594ded123f0c41779bcf9440e0b3b2be9eff060` |
+| `check-authority-p2.json` | `98f38f7ef54749aa6717aa12569a2b0f3c9b2bcd13e8d71e2c68068289b7a9e3` |
+| `check-contracts-p2.json` | `8f7d3c1856e3d51f2147aa2f9833ff0158a30678adcf3ea5b526f21861d688ad` |
+| `check-shards-generate-p2.txt` | `48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4` |
+| `check-shards-p2.txt` | `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21` |
+| `check-index-generate-p2.txt` | `d3c3f46aa4228c72dff2fca2f904302bbeabcccab64ab4e3026289fa54a6fe67` |
+| `check-index-validate-p2.json` | `ca23d529fbdfd8364758472935deb7dfb437969e00e421673589dae3cf3ff2f6` |
+| `check-evidence-p2.json` | `d7a7dad27552b93ec92e7240fa733c2e1ebf600de25f4015f2540688f63612af` |
+| `currentness-sha256-p2.json` | `1b765b9ac2ab42d60576eba5c1f1edd03454965e434717497da8cbcf32c009bf` |
+| `search-summary-p2.json` | `b2f79ebb660d54bd4772fe9fc67b9a08f321c055160c4a7f565b8803a7c53129` |
+| `filesafe.command_denied.search-p2.txt` | `07b5711f0aa26c04a908aef2f19286bbd70733ed879317d3c11a9fadaacd4624` |
+| `filesafe.destructive_override_denied.search-p2.txt` | `4330f16ff56ef65394a21d42d388e6350410a4b72e1121bb28ad5f1803062246` |
+| `filesafe.destructive_override_granted.search-p2.txt` | `8e0f01642a6e920643d49df026182b5bfc88df4f09bae0433eac94d51671a678` |
+| `filesafe.destructive_override_requested.search-p2.txt` | `1d55d9cbd051e788197e0f22ddc1ff6e764b097d9cfac49d8df7b60a33e997d7` |
+| `filesafe.guard_init_failed.search-p2.txt` | `a29abeeeb1958414e461684bb26dbaa4ec3432218dcd89ba5390b572ab69faa5` |
+| `filesafe.path_denied.search-p2.txt` | `3ac7de57886a383770741aa06c5afba7115fba07d3f98d16f19bad43d9a28c71` |
+| `filesafe.policy_degraded.search-p2.txt` | `c099f06c4e6e639843b8d7b9dbc2773f0cdb8bc4c820db7bee1afc97a201eb0c` |
+| `safe_point.created.search-p2.txt` | `4ea6edd46b78444112bcef55eefc96867c68d7a9b2a71d42ba7f08e978101605` |
+| `safe_point.restored.search-p2.txt` | `e384902ae3d8dc78903fbcf0b37f0c4e3ba219c4a885c84842a8ae1a40efec58` |
