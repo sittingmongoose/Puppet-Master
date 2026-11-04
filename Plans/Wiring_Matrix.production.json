@@ -1184,8 +1184,8 @@
       "event_test_requirements": [
         "No EventRecord may be emitted for cmd.chat.attachment.details until its Event Authority is adjudicated centrally; assert zero unregistered event emissions."
       ],
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDetailsV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDetailsV3Result"
     },
     "assistant.redesign.cmd.chat_attachment_freeze_reference": {
       "ui_element_id": "assistant.redesign.cmd.chat_attachment_freeze_reference",
@@ -1269,8 +1269,8 @@
       "event_test_requirements": [
         "No EventRecord may be emitted for cmd.chat.attachment.freeze_reference until its Event Authority is adjudicated centrally; assert zero unregistered event emissions."
       ],
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreezeReferenceRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreezeReferenceResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentFreezeReferenceV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentFreezeReferenceV3Result"
     },
     "assistant.redesign.cmd.chat_attachment_open": {
       "ui_element_id": "assistant.redesign.cmd.chat_attachment_open",
@@ -1367,8 +1367,8 @@
         "Assert cmd.chat.attachment.open emits exactly one workspace.layout_changed when it adds a tab and none when it reveals an open tab; no other event.",
         "Assert cmd.chat.attachment.open preserves command_id and correlation_id and carries where, mode, by and background unchanged into the opening module."
       ],
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentOpenV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentOpenV3Result"
     },
     "assistant.redesign.cmd.chat_attachment_remove": {
       "ui_element_id": "assistant.redesign.cmd.chat_attachment_remove",
@@ -1452,8 +1452,8 @@
       "event_test_requirements": [
         "No EventRecord may be emitted for cmd.chat.attachment.remove until its Event Authority is adjudicated centrally; assert zero unregistered event emissions."
       ],
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRemoveV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRemoveV3Result"
     },
     "assistant.redesign.cmd.chat_attachment_retry": {
       "ui_element_id": "assistant.redesign.cmd.chat_attachment_retry",
@@ -1537,8 +1537,8 @@
       "event_test_requirements": [
         "No EventRecord may be emitted for cmd.chat.attachment.retry until its Event Authority is adjudicated centrally; assert zero unregistered event emissions."
       ],
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRetryV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRetryV3Result"
     },
     "assistant.redesign.cmd.chat_attachment_save_to_project": {
       "ui_element_id": "assistant.redesign.cmd.chat_attachment_save_to_project",
@@ -4571,8 +4571,8 @@
         "Assert cmd.chat.attachment.download records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
         "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
       ],
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadResultV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDownloadV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDownloadV3Result"
     },
     "assistant.redesign.w_004.chat_composer_destination_set": {
       "ui_element_id": "assistant.redesign.w_004.chat_composer_destination_set",
@@ -5419,8 +5419,8 @@
         "Assert cmd.chat.plan.strategy.set records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
         "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
       ],
-      "request_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyRequestScopeV2",
-      "result_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyResultScopeV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Result"
     },
     "assistant.redesign.w_014.chat_plan_create": {
       "ui_element_id": "assistant.redesign.w_014.chat_plan_create",
@@ -5591,8 +5591,8 @@
         "Assert cmd.chat.plan.request_revision records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
         "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
       ],
-      "request_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionRequestScopeV2",
-      "result_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionResultScopeV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Result"
     },
     "assistant.redesign.w_016.chat_plan_build": {
       "ui_element_id": "assistant.redesign.w_016.chat_plan_build",
@@ -5989,8 +5989,8 @@
         "Assert cmd.chat.plan.send_to_planning_wizard records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
         "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
       ],
-      "request_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanHandoffRequestScopeV2",
-      "result_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/PlanningWizardIntakeResultScopeV2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Result"
     },
     "assistant.redesign.w_020.chat_plan_export": {
       "ui_element_id": "assistant.redesign.w_020.chat_plan_export",
@@ -49126,8 +49126,8 @@
       "event_test_requirements": [
         "Assert cmd.permissions.open records route/open receipt cmd.permissions.open.route_open_receipt and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_result_v2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Result"
     },
     "catalog.permissions_pick_external_directory": {
       "ui_element_id": "catalog.permissions_pick_external_directory",
@@ -49204,8 +49204,8 @@
       "event_test_requirements": [
         "Assert cmd.permissions.pick_external_directory records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_result_v2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Result"
     },
     "catalog.permissions_reorder_rule": {
       "ui_element_id": "catalog.permissions_reorder_rule",
@@ -49366,8 +49366,8 @@
       "event_test_requirements": [
         "Assert cmd.permissions.review_request records route/open receipt cmd.permissions.review_request.route_open_receipt and emits no unexpected persisted domain event."
       ],
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_result_v2"
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Result"
     },
     "catalog.permissions_revoke": {
       "ui_element_id": "catalog.permissions_revoke",

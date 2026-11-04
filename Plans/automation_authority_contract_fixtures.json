@@ -5403,6 +5403,559 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsOpenV3-exact-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Request",
+      "record": {
+        "command_id": "cmd.permissions.open",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "route": "settings.permissions",
+        "target": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.open",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsOpenV3-no-rule-mutation-fields",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Request",
+      "record": {
+        "command_id": "cmd.permissions.open",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "route": "settings.permissions",
+        "target": null,
+        "normalized_pattern": "wrong"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.open",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsOpenV3-wrong-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Request",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "route": "settings.permissions",
+        "target": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.open",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsOpenV3-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Result",
+      "record": {
+        "command_id": "cmd.permissions.open",
+        "status": "opened",
+        "persisted_rule_mutation": false,
+        "route_ref": "permissions-a",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.permissions.open",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsOpenV3-wrong-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Result",
+      "record": {
+        "command_id": "cmd.permissions.open",
+        "status": "added",
+        "persisted_rule_mutation": false,
+        "route_ref": "permissions-a",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.permissions.open",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsReviewV3-exact-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Request",
+      "record": {
+        "command_id": "cmd.permissions.review_request",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "approval_scope_key": "approval-a",
+        "requesting_context": {
+          "request_ref": "request-a",
+          "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "expected_request_revision": 1,
+          "request_owner_ref": "owner-a"
+        },
+        "review_disposition": "inspect_only"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.review_request",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsReviewV3-no-rule-mutation-fields",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Request",
+      "record": {
+        "command_id": "cmd.permissions.review_request",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "approval_scope_key": "approval-a",
+        "requesting_context": {
+          "request_ref": "request-a",
+          "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "expected_request_revision": 1,
+          "request_owner_ref": "owner-a"
+        },
+        "review_disposition": "inspect_only",
+        "normalized_pattern": "wrong"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.review_request",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsReviewV3-wrong-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Request",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "approval_scope_key": "approval-a",
+        "requesting_context": {
+          "request_ref": "request-a",
+          "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "expected_request_revision": 1,
+          "request_owner_ref": "owner-a"
+        },
+        "review_disposition": "inspect_only"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.review_request",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsReviewV3-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Result",
+      "record": {
+        "command_id": "cmd.permissions.review_request",
+        "status": "review_opened",
+        "persisted_rule_mutation": false,
+        "route_ref": "permissions-a",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.permissions.review_request",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsReviewV3-wrong-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Result",
+      "record": {
+        "command_id": "cmd.permissions.review_request",
+        "status": "added",
+        "persisted_rule_mutation": false,
+        "route_ref": "permissions-a",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.permissions.review_request",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsDirectoryPickerV3-exact-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Request",
+      "record": {
+        "command_id": "cmd.permissions.pick_external_directory",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "expected_owner_revision": 1,
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "selection_kind": "directory"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.pick_external_directory",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsDirectoryPickerV3-no-rule-mutation-fields",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Request",
+      "record": {
+        "command_id": "cmd.permissions.pick_external_directory",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "expected_owner_revision": 1,
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "selection_kind": "directory",
+        "normalized_pattern": "wrong"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.pick_external_directory",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsDirectoryPickerV3-wrong-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Request",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "initiating_client_id": "client-a",
+        "origin_route_ref": "route-a",
+        "origin_focus_ref": "focus-a",
+        "context_revision": 1,
+        "command_instance_id": "command-a",
+        "return_context_ref": "return-a",
+        "target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "expected_owner_revision": 1,
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "selection_kind": "directory"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.permissions.pick_external_directory",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsDirectoryPickerV3-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Result",
+      "record": {
+        "command_id": "cmd.permissions.pick_external_directory",
+        "status": "added",
+        "persisted_rule_mutation": true,
+        "route_ref": "permissions-a",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a",
+        "selected_directory_ref": "directory-a",
+        "native_picker_receipt_ref": "picker-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.permissions.pick_external_directory",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-permissions-PermissionsDirectoryPickerV3-wrong-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Result",
+      "record": {
+        "command_id": "cmd.permissions.pick_external_directory",
+        "status": "opened",
+        "persisted_rule_mutation": true,
+        "route_ref": "permissions-a",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a",
+        "selected_directory_ref": "directory-a",
+        "native_picker_receipt_ref": "picker-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.permissions.pick_external_directory",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }
