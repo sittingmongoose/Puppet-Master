@@ -34,7 +34,6 @@ export default async function(t) {
   await t.check('FO-56 question retains expanded state, note description and screen-reader copy',await f.evaluate(() => {
     const q=document.querySelector('.o55-lookslot .o55-tipq[data-arg="lookNierAdjust:nier-adjust"]');
     const note=document.querySelector('.o55-lookslot [role="note"]');
-    const option=document.querySelector('.o55-lookslot .o55-looknier-adjust');
-    return q.getAttribute('aria-expanded') === 'true' && !!note && option.getAttribute('aria-describedby').split(' ').includes(note.id) && note.querySelector('.o55-sr').textContent === note.querySelector('.o55-explainer-w').textContent;
+    return q.getAttribute('aria-expanded') === 'true' && !!note && q.getAttribute('aria-controls') === note.id && !!q.getAttribute('aria-label') && note.querySelector('.o55-sr').textContent === note.querySelector('.o55-explainer-w').textContent;
   }));
 }
