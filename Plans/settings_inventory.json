@@ -325,7 +325,9 @@
     {
       "id": "general.visual.theme",
       "label": "Theme",
-      "desc": "Pick a look: Basic, Friendly, Glass, Retro or NieR. Each has a light and dark version.",
+      "desc": "Pick one of five looks: Basic, Friendly, Retro, Glass or NieR. Light or dark is the only scheme control, offering Light, Dark and Auto. Changing the look preserves the chosen scheme, including Auto.",
+      "presentation_options": ["Basic", "Friendly", "Retro", "Glass", "NieR"],
+      "presentation_contract": "Show only the five family names in Theme. The options below are retained composite storage values for compatibility, not additional visible choices. Map a family pick to its resolved composite value while preserving general.visual.theme-mode; commit the pair atomically. Existing per-Project selections remain intact; no data migration.",
       "type": "select",
       "options": [
         "Basic Dark",
@@ -380,7 +382,7 @@
     {
       "id": "general.visual.theme-mode",
       "label": "Light or dark",
-      "desc": "Switches the chosen theme between light and dark. Match my computer follows your computer, and Theme shows the version you see.",
+      "desc": "The single scheme control for every theme: Light, Dark or Auto (Match my computer). Auto follows your computer while Theme continues to show the chosen family.",
       "type": "select",
       "options": [
         "Light",
