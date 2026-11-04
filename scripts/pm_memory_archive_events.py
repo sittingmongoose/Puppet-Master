@@ -79,9 +79,9 @@ def start_custody_gate(state, first_start=False, writer_event=None):
         guard('payload_schema', core.validator('Plans/memory_maintenance_event_payloads.schema.json',
                                                started.replace('.', '_')).is_valid(value['payload']), 'start_receipt_missing')
         producer = set(reference) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
-        guard('producer_join', all(value[k] == reference[k] for k in producer), 'start_receipt_missing')
+        guard('semantic_binding', core.retained_binding({k: value[k] for k in producer}, {k: reference[k] for k in producer}), 'start_receipt_missing')
         guard('replay_policy', value['replay_policy'] == reference['replay_policy'], 'start_receipt_missing')
-        guard('payload_join', value['payload'] == reference['payload'], 'start_receipt_missing')
+        guard('semantic_binding', core.retained_binding(value['payload'], reference['payload']), 'start_receipt_missing')
     for value in later:
         core.require(isinstance(value, dict) and value.get('causation_event_id') == start_id
                      and isinstance(value.get('payload'), dict)
@@ -187,10 +187,10 @@ def append_current(before, value, event):
     guard('operation_valid', core.valid_operation(row, core.operation_name(event)))
     expected = core.canonical_value(row, suffix)
     producer_fields = set(expected) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
-    guard('producer_join', all(value[k] == expected[k] for k in producer_fields))
+    guard('semantic_binding', all(value[k] == expected[k] for k in producer_fields), 'producer_join')
     guard('payload_schema', core.validator('Plans/memory_maintenance_event_payloads.schema.json',
                                           event.replace('.', '_')).is_valid(value['payload']))
-    guard('payload_join', all(value['payload'].get(k) == v for k, v in expected['payload'].items()))
+    guard('semantic_binding', all(value['payload'].get(k) == v for k, v in expected['payload'].items()), 'payload_join')
     # The closed schema's bounded fields prove its entire MessagePack payload is below 16 KiB.
     # No unreachable second inline-cap guard obscures schema-negative isolation.
     guard('partition', state['dedupe_key'] == [core.scope_partition(row['project_id']), event, value['idempotency_key']])
@@ -200,7 +200,8 @@ def append_current(before, value, event):
         if suffix == 'completed':
             guard('original_value', core.original_matches(state['original'], original)
                   and core.envelope_validator().is_valid(original)
-                  and all(original[k] == value[k] for k in set(expected) - core.STORAGE_FIELDS))
+                  and core.retained_binding({k: original[k] for k in set(expected) - core.STORAGE_FIELDS},
+                                           {k: value[k] for k in set(expected) - core.STORAGE_FIELDS}))
         output = deepcopy(original)
     else:
         guard('phase', row['phase'] == ('accepted' if suffix == 'started' else 'effect_committed'))
@@ -225,7 +226,7 @@ REASONS = {'invalid_operation': 'operation_valid', 'invalid_operation_after': 'o
            'start_receipt_missing': 'start_custody', 'not_admitted': 'admission',
            'permission_or_withdrawal': 'permission_or_withdrawal',
            'replay_only_not_appendable': 'replay_policy', 'replay_policy_mismatch': 'replay_policy',
-           'envelope_join': 'producer_join', 'idempotency_conflict': 'producer_join',
+           'envelope_join': 'semantic_binding', 'idempotency_conflict': 'semantic_binding',
            'invalid_payload': 'payload_schema', 'invalid_event_record': 'envelope_schema',
            'inline_payload_too_large': 'inline_cap', 'scope_partition_mismatch': 'partition',
            'original_value_changed': 'original_value', 'original_missing': 'original_custody', 'request_changed': 'request',
@@ -243,24 +244,43 @@ def _require(test, reason):
 
 core.require = _require
 
+_ISOLATION = None
+
+
+def guard_isolation():
+    """Load the sibling audit by absolute path, including when this checker is imported by a reviewer."""
+    global _ISOLATION
+    if _ISOLATION is None:
+        spec = importlib.util.spec_from_file_location('_dmem_guard_isolation', ROOT / 'scripts/pm_memory_guard_isolation.py')
+        _ISOLATION = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(_ISOLATION)
+    return _ISOLATION
+
+
 @contextmanager
 def removed(name):
-    """Audit-only removal, including all redundant sites of one logical guard; never a writer option."""
+    """Audit-only removal of one logical guard, restored even when a probe fails."""
     global _REMOVED
+    if name == 'semantic_binding':
+        custody_mutant = guard_isolation().custody_mutant
+        saved = _REMOVED
+        try:
+            _REMOVED = name
+            with custody_mutant(core, 'custody_binding', archive=True):
+                yield
+        finally:
+            _REMOVED = saved
+        return
+    if name.startswith('custody_'):
+        custody_mutant = guard_isolation().custody_mutant
+        with custody_mutant(core, name, archive=True):
+            yield
+        return
     saved = _REMOVED
-    gate = core.start_custody_gate
-    matches = core.original_matches
     try:
         _REMOVED = name
-        if name == 'start_custody':
-            core.start_custody_gate = lambda *args, **kwargs: None
-            # The same retained-start guard also appears in requested-original custody and the boundary.
-            core.original_matches = lambda original, value: (True if isinstance(value, dict)
-                and value.get('event_type', '').endswith('.started') else matches(original, value))
         yield
     finally:
-        core.start_custody_gate = gate
-        core.original_matches = matches
         _REMOVED = saved
 
 
@@ -324,7 +344,7 @@ def probe(case, fixtures, contracts):
                       core.validator(case['schema'], case['definition'])).is_valid(case['value'])
             guard(case['guard'], result)
         elif kind == 'references':
-            docs = core.checked_documents(); doc = docs[case['schema']]
+            docs = deepcopy(core.checked_documents()); doc = docs[case['schema']]
             doc['$defs'][case['definition']]['$defs'] = {'dormant': {'$ref': '#/$defs/not_present'}}
             guard('references_resolve', not core.unresolved_references(docs))
             result = True
@@ -352,6 +372,7 @@ def run_guards(fixtures, contracts):
             control['value'] = case['control_value']
         elif case['kind'] == 'checkpoint':
             control['checkpoint'] = case['control_checkpoint']
+            control['value'] = case.get('control_value', case['value'])
         elif case['kind'] == 'references':
             # Resolving reference control independently walks the same document, with no mutation.
             assert not core.unresolved_references(core.checked_documents())

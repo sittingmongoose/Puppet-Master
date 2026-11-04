@@ -194,18 +194,43 @@ def validator(path, definition):
                                 registry=checked_registry(), format_checker=FormatChecker())
 
 
+def target_schema_matches(target, kind):
+    return validator('Plans/memory_maintenance_rebuild_target.schema.json', kind + '_target').is_valid(target)
+
+
+def target_order_matches(target):
+    names = [x['relative_name'] for x in target['artifacts']]
+    return names == sorted(set(names))
+
+
+def target_manifest_matches(target):
+    return target['manifest_sha256'] == digest(target['artifacts'])
+
+
+def target_source_matches(target, row):
+    return target['source_revision_sha256'] == row['source_revision_sha256']
+
+
+def target_identity_matches(target, row, kind):
+    h = digest(['pm.memory.maintenance.target.v1', row['storage_instance_id'], row['project_id'],
+                row['operation_id'], kind, row['source_revision_sha256'], target['manifest_sha256']])
+    return target['target_id'] == 'memtarget_' + h
+
+
 @pure
 def valid_target(target, row):
     kind = 'lexical' if 'lexical' in row['command_id'] else 'semantic'
-    if not validator('Plans/memory_maintenance_rebuild_target.schema.json', kind + '_target').is_valid(target):
-        return False
-    files = target['artifacts']
-    names = [x['relative_name'] for x in files]
-    if names != sorted(set(names)) or target['manifest_sha256'] != digest(files):
-        return False
-    h = digest(['pm.memory.maintenance.target.v1', row['storage_instance_id'], row['project_id'],
-                row['operation_id'], kind, row['source_revision_sha256'], target['manifest_sha256']])
-    return target['source_revision_sha256'] == row['source_revision_sha256'] and target['target_id'] == 'memtarget_' + h
+    return (target_schema_matches(target, kind) and target_order_matches(target)
+            and target_manifest_matches(target) and target_source_matches(target, row)
+            and target_identity_matches(target, row, kind))
+
+
+def selector_schema_matches(value, kind):
+    return validator('Plans/memory_maintenance_rebuild_target.schema.json', kind + '_selector').is_valid(value)
+
+
+def selector_scope_matches(value, row):
+    return all(value[k] == row[k] for k in ('storage_instance_id', 'project_id'))
 
 
 @pure
@@ -213,9 +238,9 @@ def valid_selector(value, row):
     if value is None:
         return True
     kind = 'lexical' if 'lexical' in row['command_id'] else 'semantic'
-    if not validator('Plans/memory_maintenance_rebuild_target.schema.json', kind + '_selector').is_valid(value) or not within_value_cap(value):
+    if not selector_schema_matches(value, kind) or not within_value_cap(value):
         return False
-    if any(value[k] != row[k] for k in ('storage_instance_id', 'project_id')):
+    if not selector_scope_matches(value, row):
         return False
     source = {**row, 'operation_id': value['operation_id'],
               'source_revision_sha256': value['target']['source_revision_sha256']}
@@ -229,14 +254,30 @@ def result_digest(row):
                    target['target_id'] if target else None])
 
 
+def operation_schema_matches(row, name):
+    return validator('Plans/memory_maintenance_operation.schema.json', name).is_valid(row)
+
+
+def operation_receipts_match(row):
+    return all(row[field] is None or row[field] == identity(event_type(row, suffix), row['storage_instance_id'],
+                                                          row['project_id'], row['operation_id'])[0]
+               for suffix, field in [('started', 'started_event_id'), ('completed', 'completed_event_id')])
+
+
+def operation_result_ref_matches(row):
+    return row['result_ref'] == result_ref(row)
+
+
+def operation_result_digest_matches(row):
+    return row['result_sha256'] == result_digest(row)
+
+
 @pure
 def valid_operation(row, name):
-    if not validator('Plans/memory_maintenance_operation.schema.json', name).is_valid(row) or not within_value_cap(row):
+    if not operation_schema_matches(row, name) or not within_value_cap(row):
         return False
-    for suffix, field in [('started', 'started_event_id'), ('completed', 'completed_event_id')]:
-        if row[field] is not None and row[field] != identity(event_type(row, suffix), row['storage_instance_id'],
-                                                          row['project_id'], row['operation_id'])[0]:
-            return False
+    if not operation_receipts_match(row):
+        return False
     if row.get('prepared_target') is not None and not valid_target(row['prepared_target'], row):
         return False
     if row['phase'] == 'prepared':
@@ -250,7 +291,7 @@ def valid_operation(row, name):
             return False
 
     if row['status'] is not None:
-        if row['result_ref'] != result_ref(row) or row['result_sha256'] != result_digest(row):
+        if not operation_result_ref_matches(row) or not operation_result_digest_matches(row):
             return False
     return True
 
@@ -346,8 +387,9 @@ def start_custody_gate(state, first_start=False, writer_event=None):
         value = canonical.get('full_value') if isinstance(canonical, dict) else None
         reference = canonical_value(row, 'started')
         require(original_matches(canonical, value) and envelope_validator().is_valid(value)
-                and all(value[k] == reference[k] for k in set(reference) - STORAGE_FIELDS)
-                and {k: value[k] for k in expected} == expected, 'start_receipt_missing')
+                and retained_binding({k: value[k] for k in set(reference) - STORAGE_FIELDS},
+                                     {k: reference[k] for k in set(reference) - STORAGE_FIELDS})
+                and retained_binding({k: value[k] for k in expected}, expected), 'start_receipt_missing')
     for value in later:
         # Every later retained original of this operation cites exactly this start record.
         require(isinstance(value, dict) and value.get('causation_event_id') == start_id
@@ -390,7 +432,8 @@ def _append_current(before, value, event):
     if state['original'] is not None:
         original = state['original']['full_value']
         require(original_matches(state['original'], original) and envelope_validator().is_valid(original)
-                and all(original[k] == value[k] for k in producer_fields), 'original_value_changed')
+                and retained_binding({k: original[k] for k in producer_fields},
+                                     {k: value[k] for k in producer_fields}), 'original_value_changed')
         return state, deepcopy(original)
     require(row['phase'] == ('accepted' if suffix == 'started' else 'effect_committed'), 'wrong_phase')
     state['original'] = retained(value)
@@ -402,10 +445,27 @@ def retained(value):
     return {'full_value': deepcopy(value), 'full_value_sha256': digest(value), 'durability': 'full_flush'}
 
 
+def retained_shape(original):
+    return isinstance(original, dict) and set(original) == {'full_value', 'full_value_sha256', 'durability'}
+
+
+def retained_flush(original):
+    return original['durability'] == 'full_flush'
+
+
+def retained_digest(original):
+    return original['full_value_sha256'] == digest(original['full_value'])
+
+
+def retained_binding(value, expected):
+    return value == expected
+
+
 def original_matches(original, value):
-    return (isinstance(original, dict) and set(original) == {'full_value', 'full_value_sha256', 'durability'}
-            and original['durability'] == 'full_flush' and original['full_value'] == value
-            and original['full_value_sha256'] == digest(value))
+    # Equivalent conjunction: after equality holds, self-digest and expected-value digest are identical.
+    # Separate predicates let check 11 remove integrity without also removing the operation/value join.
+    return (retained_shape(original) and retained_flush(original)
+            and retained_binding(original['full_value'], value) and retained_digest(original))
 
 
 def accept(payload, contract, context):
@@ -569,7 +629,7 @@ def _transition(before, action):
         require(action['event_type'] == event_type(row, suffix) and custody(state, suffix), 'original_missing')
         start_custody_gate(state)
         output = deepcopy(state['originals'][action['event_type']]['full_value'])
-        require(action['value'] == output, 'original_value_changed')
+        require(retained_binding(action['value'], output), 'original_value_changed')
     elif op == 'crash':
         state['volatile'] = None
     elif op == 'recover':
@@ -631,8 +691,8 @@ def run_reference_cases(fixtures, families):
     return {event: len(names) for event, names in counts.items()}
 
 
-MATRIX_DEFECTS = ('missing', 'digest', 'value-unhashed', 'operation-rehashed', 'identity-rehashed',
-                  'phase-rehashed', 'payload-rehashed', 'not-flushed', 'shape', 'withdrawn')
+MATRIX_DEFECTS = ('missing', 'digest', 'value-rehashed', 'operation-rehashed', 'identity-rehashed',
+                  'family-rehashed', 'payload-rehashed', 'not-flushed', 'shape', 'withdrawn')
 MATRIX_MODELS = ('phase', 'writer', 'boundary', 'reader')
 
 
