@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21366-L22146
+Source lines: L21366-L22150
 
-Source SHA256: `1446fb94b80770bee96e1d1f5ba89c17b14b214bde53879aa443909ea6c0bdd7`
+Source SHA256: `70a756fcb6fd1ad6c93bc3973016c4d0ad974098ca657fa2c1a2f69ad1d2a43c`
 
 ---
 
@@ -471,6 +471,8 @@ Amended 2026-10-09 (DL-180, DL-181): the selected layout is now `pm.home_workspa
 
 Amended 2026-10-10 (DL-188): Event Authority admitted the move on 2026-10-10 (Jared's D42): `Plans/event_family_registry.json` registers `workspace.layout_changed` at family revision 2.0.0, registry revision `2026-10-09.1`, still 43 families, and the PNC-019 checkpoint constant in `scripts/pm_pnc019_currentness.py` names that revision. The paragraph above said the move waited "once Event Authority admits it" with the family kept at 1.1.0 "until then"; that condition is met. Where the next paragraph speaks of `event-family-workspace-layout-changed@1.1.0` and its 26 required fields, it describes the 1.1.0 events already written, which stay readable and are never rewritten.
 
+Amended 2026-11-04 (DL-045): SP-400 closes the SP-330 open item named above. v2 writes use the Home4 slot and receipt contract `Plans/home_layout_v2_slot_receipt.schema.json` (slot and receipt schema version 4.0.0, slot producer version 4.0.0). It keeps this section's producer `home.workspace_layout_commit.v1`, its custody, transaction, crash convergence, retention mapping, read and withdrawal rules, and replaces only the parts typed for v1 layouts and the 1.1.0 payload, and the JSON and base64 encodings that DL-270 retires.
+
 This is a new technical binding under DL-045 for the existing `event-family-workspace-layout-changed@1.1.0`. Keep `project_only`, payload schema `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0`, its exact 26 required fields and closed enums, and `RP-AUTHORITY-INDEFINITE@1.0.0`. The event is not a new admission. F3-515 owns applicable settled interaction; CV-323 owns truthful Home event/result/receipt joins; SP-245 owns the sole layout record's transaction/readback/recovery; UCC-144/UCC-147 retain command IDs. SP-273 owns this technical Storage supplement; no competing Home product owner is created.
 
 ### Existing behavior and exact applicability
@@ -698,6 +700,8 @@ canonical_text: >-
   read by the 1.1.0 schema, which stays in place, and append admission takes 2.0.0 alone.
   Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the registry names it at revision
   2026-10-09.1 and the earlier condition "once Event Authority admits it" is met.
+  Amended 2026-11-04 (DL-045): SP-400 writes the v2 writer's slot and receipt schema (Home4, version 4.0.0), closing
+  the SP-330 open item; this custody, transaction, crash, retention, read and withdrawal contract governs Home4 values.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.

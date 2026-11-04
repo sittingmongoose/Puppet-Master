@@ -18566,10 +18566,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 231,
+        "False": 232,
         "True": 110
       },
-      "heading_count": 817,
+      "heading_count": 819,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18621,6 +18621,8 @@
         "Plans/goal_update_command_custody.schema.json",
         "Plans/home_layout_event_contracts.schema.json",
         "Plans/home_layout_pending_receipt.schema.json",
+        "Plans/home_layout_v2_slot_receipt.schema.json",
+        "Plans/home_layout_v2_slot_receipt_fixtures.json",
         "Plans/home_layout_value_readers.schema.json",
         "Plans/home_workspace_layout.schema.json",
         "Plans/home_workspace_layout_v2.schema.json",
@@ -18662,11 +18664,12 @@
         "future sound asset records",
         "future taught memory records",
         "future visualizer artifact records",
-        "scripts/pm-implementation-readiness.py"
+        "scripts/pm-implementation-readiness.py",
+        "scripts/pm_home_layout_v2_slot_receipt.py"
       ],
-      "line_count": 29481,
+      "line_count": 29578,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 341,
+      "plan_unit_count": 342,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19008,7 +19011,8 @@
         "SP-350",
         "SP-351",
         "SP-352",
-        "SP-353"
+        "SP-353",
+        "SP-400"
       ],
       "reasoning_tiers": [
         "high",
@@ -19057,6 +19061,7 @@
         "home_cross_axis_or_semantic_preset_schema_drift",
         "home_layout_persistence_drift",
         "home_layout_readback_event_receipt_crash_or_replay_authority_escape",
+        "home_layout_v2_write_custody_or_encoding_drift",
         "home_panels_terminal_redesign_drift",
         "import_snapshot_storage_drift",
         "indexer_cpu_and_scan_overhead",
@@ -19131,10 +19136,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "1446fb94b80770bee96e1d1f5ba89c17b14b214bde53879aa443909ea6c0bdd7",
+      "sha256": "70a756fcb6fd1ad6c93bc3973016c4d0ad974098ca657fa2c1a2f69ad1d2a43c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 337,
+        "accepted": 338,
         "retired": 3,
         "superseded": 1
       },
@@ -19146,7 +19151,7 @@
         "migration_contract": 2,
         "owner_boundary": 2,
         "requirement": 277,
-        "schema_contract": 23,
+        "schema_contract": 24,
         "security_contract": 1,
         "storage_contract": 27,
         "storage_security_contract": 1
@@ -19291,6 +19296,8 @@
         "Plans/home_layout_full_value_contract_fixtures.json",
         "Plans/home_layout_pending_receipt.schema.json",
         "Plans/home_layout_pending_receipt_v2_reader.schema.json",
+        "Plans/home_layout_v2_slot_receipt.schema.json",
+        "Plans/home_layout_v2_slot_receipt_fixtures.json",
         "Plans/home_layout_value_readers.schema.json",
         "Plans/home_workspace_layout.schema.json",
         "Plans/home_workspace_layout_v2.schema.json",
@@ -19413,6 +19420,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "python3 scripts/pm_browser_workspace_created_v2.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_home_layout_v2_slot_receipt.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -21506,7 +21514,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:26:51Z",
+  "generated_at_utc": "2026-11-04T18:56:43Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21514,13 +21522,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3630,
+      "False": 3631,
       "True": 3791
     },
-    "plan_unit_count": 7421,
+    "plan_unit_count": 7422,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7205,
       "retired": 194,
       "superseded": 23
     },
@@ -21596,7 +21604,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 123,
+      "schema_contract": 124,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 18,

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28060-L29481
+Source lines: L28064-L29487
 
-Source SHA256: `1446fb94b80770bee96e1d1f5ba89c17b14b214bde53879aa443909ea6c0bdd7`
+Source SHA256: `70a756fcb6fd1ad6c93bc3973016c4d0ad974098ca657fa2c1a2f69ad1d2a43c`
 
 ---
 
@@ -1430,3 +1430,5 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+<a id="home4-v2-layout-slot-receipt-dl-045-20261104"></a>
