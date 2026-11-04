@@ -783,16 +783,19 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # counterpart's tier. 7 are new settings-level, Project settings v2, settings-differences, chat-move,
 # build-grant, created-resource and app automation-pause records (6 tier_0_launch_critical, 1 later). App
 # families carry no Project-keyed legacy aliases (SP-349). Retention policies are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 342
+# Re-pinned 2026-11-04 for the full-review fixes (finding 14): dev_session_record_application and
+# eval_session_record_application add two materialized later_gui_or_feature_projection families, the app
+# DebugSessionRecord/EvalSessionRecord editions (SMPFS-139/140) that replace the browser records named before.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 318,
+    "materialized": 320,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 61,
-    "later_gui_or_feature_projection": 271,
+    "later_gui_or_feature_projection": 273,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
