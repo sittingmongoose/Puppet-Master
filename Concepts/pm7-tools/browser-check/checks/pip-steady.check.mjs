@@ -10,19 +10,19 @@
 //   1. the cause: no part of Pip's rig carries a transition or an animation, in all ten looks (computed style and
 //      getAnimations(), every frame for 40 frames per look), and, on the normal surface, no compositor layer of its own for
 //      the head (CDP LayerTree);
-//   2. every painted frame (read after the frame's rendering) through look flips by the Pick a look tiles and through
+//   2. DOM state samples after rendering through look flips by the Pick a look tiles and through
 //      presses and hovers on the SMB route (Check access, Back, Continue, a share card): both strings end on the head's
-//      painted box, and the rig is never unplaced (a head with no transform, strings with no path);
+//      DOM box, and the rig is never unplaced (a head with no transform, strings with no path);
 //   3. pixels in Basic Light: bursts of captures of Pip's box right after each press and hover each show Pip's body
 //      (#0056B3) over at least 12 % of the box.
-// A one-frame glitch is judged on a 60 fps film: run with --record (one surface) and scan every frame with
-// Concepts/onboarding/opus-5.5/tools/pip_body_scan.mjs <film.mp4> (exits 1 on a dropout; marks name each trigger).
+// Required FO-30 gate: node Concepts/pm7-tools/browser-check/tools/pip-steady-gate.mjs --page <build> --out <fresh-dir>.
+// It records this check and requires the every-frame scan to pass. This file alone is structural coverage only.
 // About 3 minutes per surface; --set reps=N repeats the SMB presses and hovers (default 3).
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 
-/* the per-frame witness: installed by the test (not the product); each frame is read in a task after that frame's
-   rendering, so it sees what was painted */
+/* DOM witness after rendering; it cannot observe compositor paint loss. The required film gate is
+   ../tools/pip-steady-gate.mjs, which records this sequence and scans every encoded frame. */
 function installWitness() {
 	const W = window.__pipSteady = { on: true, n: 0, moving: 0, off: [], offN: 0, anim: [] };
 	const host = () => document.querySelector('#pm-o55-onboarding .o55-stage');
@@ -95,8 +95,8 @@ async function surface(t, sandbox) {
 	};
 	const witness = async (name) => {
 		const w = await f.evaluate(() => { const W = window.__pipSteady; const out = { n: W.n, moving: W.moving, anim: W.anim, offN: W.offN, off: W.off }; Object.assign(W, { n: 0, moving: 0, anim: [], offN: 0, off: [] }); return out; });
-		await t.check(`${name}: nothing on Pip's rig animates (${w.n} painted frames)`, w.n > 20 && !w.moving, w.n <= 20 ? `only ${w.n} frames read` : `${w.moving} of ${w.n} frames had an animation on ${w.anim.join(' | ')}`);
-		await t.check(`${name}: Pip's head hangs on its strings, placed, in every painted frame (${w.n})`, w.n > 20 && !w.offN, w.n <= 20 ? `only ${w.n} frames read` : `${w.offN} of ${w.n} frames: head off its strings or unplaced; first: ${JSON.stringify(w.off.slice(0, 4))}`);
+		await t.check(`${name}: nothing on Pip's rig animates (${w.n} DOM samples)`, w.n > 20 && !w.moving, w.n <= 20 ? `only ${w.n} frames read` : `${w.moving} of ${w.n} frames had an animation on ${w.anim.join(' | ')}`);
+		await t.check(`${name}: Pip's head hangs on its strings, placed, in every DOM sample (${w.n})`, w.n > 20 && !w.offN, w.n <= 20 ? `only ${w.n} frames read` : `${w.offN} of ${w.n} frames: head off its strings or unplaced; first: ${JSON.stringify(w.off.slice(0, 4))}`);
 		return w;
 	};
 	/* Basic Light: Pip's body (#0056B3) painted inside its box, in a burst of captures right after a trigger */
@@ -139,15 +139,20 @@ async function surface(t, sandbox) {
 		await t.check(`${look_}: no transition or animation on Pip's rig`, !css.length, css.join(' | '));
 		if (cdp) {
 			const layers = await (async () => {
-				await cdp.send('DOM.enable'); await cdp.send('LayerTree.enable');
-				const doc = await cdp.send('DOM.getDocument', { depth: 0 });
-				const q = await cdp.send('DOM.querySelector', { nodeId: doc.root.nodeId, selector: '#pm-o55-onboarding .pst-pip > g.pst-head' });
-				const head = q.nodeId && (await cdp.send('DOM.describeNode', { nodeId: q.nodeId })).node.backendNodeId;
-				let seen = 0, n = 0;
-				const on = (e) => { n++; if ((e.layers || []).some((l) => l.backendNodeId === head)) seen++; };
-				cdp.on('LayerTree.layerTreeDidChange', on);
-				await sleep(1500);
-				cdp.off('LayerTree.layerTreeDidChange', on); await cdp.send('LayerTree.disable');
+                const trees = [];
+                const on = (e) => { trees.push(e.layers || []); };
+                cdp.on('LayerTree.layerTreeDidChange', on);
+                let head;
+                try {
+                    await cdp.send('DOM.enable'); await cdp.send('LayerTree.enable');
+                    const doc = await cdp.send('DOM.getDocument', { depth: 0 });
+                    const q = await cdp.send('DOM.querySelector', { nodeId: doc.root.nodeId, selector: '#pm-o55-onboarding .pst-pip > g.pst-head' });
+                    head = q.nodeId && (await cdp.send('DOM.describeNode', { nodeId: q.nodeId })).node.backendNodeId;
+                    await sleep(1500);
+                } finally {
+                    cdp.off('LayerTree.layerTreeDidChange', on); await cdp.send('LayerTree.disable');
+                }
+                const n = trees.length, seen = trees.filter((tree) => tree.some((l) => l.backendNodeId === head)).length;
 				return { seen, n, head: !!head };
 			})();
 			await t.check(`${look_}: Pip's head is not a compositor layer of its own`, layers.head && layers.n > 0 && !layers.seen, `head in its own layer in ${layers.seen} of ${layers.n} layer-tree updates${layers.head ? '' : ' (head not found)'}`);

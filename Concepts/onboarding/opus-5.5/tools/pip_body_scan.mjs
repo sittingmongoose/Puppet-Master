@@ -14,7 +14,7 @@ import fs from 'node:fs';
 const a = process.argv.slice(2), v = a[0], opt = (k, d) => { const i = a.indexOf('--' + k); return i >= 0 ? a[i + 1] : d; };
 if (!v || !fs.existsSync(v)) { console.error('usage: node pip_body_scan.mjs <film.mp4> [--crop x,y,w,h] [--color r,g,b] [--tol n] [--out csv] [--dump n,n --dir d]'); process.exit(2); }
 const [cx, cy, cw, ch] = opt('crop', '422,240,452,660').split(',').map(Number);
-if (cx % 2 || cw % 2 || cy % 2 || ch % 2) { console.error('crop x, y, width and height must be even (yuv420p)'); process.exit(2); }
+if (![cx, cy, cw, ch].every(Number.isSafeInteger) || cx < 0 || cy < 0 || cw <= 0 || ch <= 0 || cx % 2 || cw % 2 || cy % 2 || ch % 2) { console.error('crop x, y, width and height must be even (yuv420p)'); process.exit(2); }
 const col = opt('color', '0,86,179').split(',').map(Number), tol = Number(opt('tol', 48));
 const dump = opt('dump') ? new Set(opt('dump').split(',').map(Number)) : null, dir = opt('dir');
 if (dump && !dir) { console.error('--dump needs --dir <fresh directory>'); process.exit(2); }
@@ -34,7 +34,13 @@ ff.stdout.on('data', (d) => {
 		if (n > last) { stopped = true; ff.kill(); return; }
 	}
 });
-ff.on('close', () => {
+ff.on('error', (error) => { console.error(`decoder could not start: ${error.message}`); process.exitCode = 2; });
+ff.on('close', (code, signal) => {
+	// --dump deliberately stops after its last requested frame. Full scans must decode to a clean EOF.
+	if ((!stopped && (code !== 0 || signal)) || !n || (!stopped && buf.length)) {
+		console.error(JSON.stringify({ video: v, error: 'incomplete or failed decode', code, signal, frames: n, trailingBytes: buf.length }));
+		process.exitCode = 2; return;
+	}
 	if (dump) { console.log(JSON.stringify({ video: v, dumped: [...dump].filter((k) => k < n), dir })); return; }
 	const out = opt('out'); if (out) fs.writeFileSync(out, counts.map((c, i) => `${i},${c}`).join('\n') + '\n');
 	const med = (i) => { const w = counts.slice(Math.max(0, i - 60), i + 61).sort((x, y) => x - y); return w[w.length >> 1]; };
