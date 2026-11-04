@@ -7926,6 +7926,120 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f13-conservative-1",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 1,
+        "source_kind": "explicit",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f13-conservative-3",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 3,
+        "source_kind": "persona",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f13-conservative-4",
+      "schema_ref": "Plans/requested_effective_runtime.schema.json#/$defs/ModelPrecedenceAuditV2",
+      "record": {
+        "tier_version": "scoped_owner_ladder_v2",
+        "strategy": "Conservative",
+        "precedence_tier": 4,
+        "source_kind": "surface_stage",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "source_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "historical_audit_recast": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "models.strategy_tier_allowed",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }
