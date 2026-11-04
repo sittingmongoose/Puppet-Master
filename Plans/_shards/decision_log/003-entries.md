@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L4388
+Source lines: L13-L4412
 
-Source SHA256: `cb0b66e622c7ad836432d160886ad6a0beb7e1806841853ab902d71c504f74b0`
+Source SHA256: `fe4baa2bb5244c389eeb700475178d0b49fc7879632d68ca91d03ce6c03cae98`
 
 ---
 
@@ -2235,7 +2235,7 @@ Answered on 2026-09-25 by Jared, in the Event Authority program's host session: 
 
 **Answer:** Approve. Jared's words for this question, verbatim: "And yes I approve the DL-093 covering the families and later".
 
-This answers the wider reading that DL-093 records as unanswered. For the 18 collaborative workflow families of DL-090 and DL-091, and for every later Step 9 registration, the Decision Log entry that the family's own registration landing adds under DL-078, which names the family, is Jared's decision entry for that family in the sense of DL-077, and the family's DL-077 admission record cites it as its `decision_ref`, as DL-093 records for the seven coordination families. Jared does not approve each of those admissions himself: each registration still passes the whole Step 9 procedure, and he sees each checkpoint change in its landing record, as DL-078 provides. Review question D-02 of the Step 9 procedure record is now answered for every Step 9 registration, by DL-093 for the seven coordination families and by this entry for all others. This answer changes neither DL-077's nor DL-078's nor DL-093's text. DL-077's prose section is pinned under the V-07 rule, DL-078's text already says that the entry each such landing adds "is the decision entry its DL-077 admission record cites", and DL-093 remains the record of the answer for the seven coordination families. This entry names no family and is not itself any family's decision entry. It registers nothing, admits no family and lowers no Step 9 requirement: every registration still needs its full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, the coordinator's landing go, and a complete DL-077 admission record whose depth assessment shows all twelve criteria passing. It changes no registry row, validator, receipt or admission record.
+This answers the wider reading that DL-093 records as unanswered. For the 18 collaborative workflow families of DL-090 and DL-091, and for every later Step 9 registration, the Decision Log entry that the family's own registration landing adds under DL-078, which names the family, is Jared's decision entry for that family in the sense of DL-077, and the family's DL-077 admission record cites it as its `decision_ref`, as DL-093 records for the seven coordination families. Jared does not approve each of those admissions himself: each registration still passes the whole Step 9 procedure, and he sees each checkpoint change in its landing record, as DL-078 provides. Review question D-02 of the Step 9 procedure record is now answered for every Step 9 registration, by DL-093 for the seven coordination families and by this entry for all others. This answer changes neither DL-077's nor DL-078's nor DL-093's text. DL-077's prose section is pinned under the V-07 rule, DL-078's text already says that the entry each such landing adds "is the decision entry its DL-077 admission record cites", and DL-093 remains the record of the answer for the seven coordination families. This entry names no family and is not itself any family's decision entry. It registers nothing, admits no family and lowers no Step 9 requirement: every registration still needs its full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, the coordinator's landing go, and a complete DL-077 admission record whose depth assessment shows all twelve criteria passing. It changes no registry row, validator, receipt or admission record. On 2026-11-04 Jared replaced the one-family-per-landing granularity with three batch landings (DL-400); each registration's own commit, Decision Log entry and admission record are unchanged.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md`, SHA-256 `5d0538a1ab9e9a7d397093cfefc71045b2ac214654984767f37efa2bbabf889f`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md` (open question 2, D-02); DL-093's source `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md`, SHA-256 `678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a`; the host's wordings of the question, `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/QUESTION_WORDINGS_DL093_SCOPE.md`, SHA-256 `6c546805b16ff95b0a442439ad2c2e1bd6f9b6f10d10240bc96aeeac4e3cbe56`.
 
@@ -4384,3 +4384,27 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9` (D42).
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/event_family_registry.json, ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Decision_Log.md#DL-045
+
+### DL-400: Event Authority lands in three batches with review before and right after
+
+Answered by Jared on 2026-11-04; the excerpts below are verbatim, including double spaces.
+
+**Batching answer:**
+
+> Do it all in 3 batches.  We will just have to check each change before it lands.  Which can be done in parallel immediately after the change lands.  Most of these changes and reviews can be done in parallel.
+
+**Review answer:**
+
+> Review before and right after.
+
+Jared also said, as the premise-check rule: "Keep in mind, a lot of things have changed in canon since those August and sept events.  So some of those decisions might be very outdated."
+
+The landing granularity is now three batches. This replaces the one-family-per-landing clause in Plans/Decision_Log.md#DL-045, the cadence answer recorded in Plans/Decision_Log.md#DL-046, the procedure condition in Plans/Decision_Log.md#DL-078, the individual-landing requirements in Plans/Decision_Log.md#DL-090 and Plans/Decision_Log.md#DL-091, the restatements in Plans/Decision_Log.md#DL-093 and Plans/Decision_Log.md#DL-096, and the Scope and outcomes, Per registration and Standing constraints of reports/event-authority-20260911/step-09-procedure-20260924.md. Those earlier entries and records remain historical text; their landing granularity is superseded here.
+
+Coordinator's reading, relayed to Jared on 2026-11-04: every family still has its own full contract, its own Decision Log entry, its own admission record (registry revision and SHA-256 before and after its own commit), its own depth assessment with all twelve criteria passing, and its own Sol 6.1 max then Astra max verdict. A batch lands only when its changes passed; a change that fails is pulled from the batch. Each batch is reviewed again right after it lands, against main. DL-039's no bulk registration stands. The coordinator's landing go and checkpoint bookkeeping remain required. This paragraph records the coordinator's reading, not additional quoted words from Jared.
+
+This entry records the landing and review decision; it admits no family, changes no registry row, and grants no seal or validator change.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_BATCHES_REVIEWS_20261104.md`, SHA-256 `31b9a7a7950c620703445bbbbca638f9487899e95b9151a07902e7ffe22f8919` (messages at 2026-11-04T16:47:48.766Z and 2026-11-04T16:54:00.352Z).
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/Decision_Log.md#DL-090, ContractName:Plans/Decision_Log.md#DL-091, ContractName:Plans/Decision_Log.md#DL-093, ContractName:Plans/Decision_Log.md#DL-096

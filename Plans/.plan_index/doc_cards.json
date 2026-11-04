@@ -5743,10 +5743,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 60,
+        "False": 61,
         "True": 206
       },
-      "heading_count": 441,
+      "heading_count": 443,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5866,10 +5866,11 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 21295,
+      "line_count": 21384,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 266,
+      "plan_unit_count": 267,
       "plan_unit_ids": [
+        "DL-400",
         "DL-002",
         "DL-003",
         "DL-004",
@@ -6210,6 +6211,7 @@
         "event_authority_checkpoint_approval_drift",
         "event_authority_checkpoint_drift",
         "event_authority_decision_drift",
+        "event_authority_landing_granularity_drift",
         "event_authority_registration_checkpoint_drift",
         "event_authority_seal_check_drift",
         "extraction_mapping_overauthority",
@@ -6310,17 +6312,17 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "cb0b66e622c7ad836432d160886ad6a0beb7e1806841853ab902d71c504f74b0",
+      "sha256": "fe4baa2bb5244c389eeb700475178d0b49fc7879632d68ca91d03ce6c03cae98",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 266
+        "accepted": 267
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 151,
         "decision_record": 24,
-        "requirement": 90
+        "requirement": 91
       },
       "validation_surfaces": [
         "60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip frames",
@@ -6334,6 +6336,7 @@
         "Exact approved card, quotation and supersession coverage review.",
         "Exact response SHA-256 and scope-name comparison",
         "Exact response-byte preservation and source SHA-256 checks",
+        "Frozen validator decision_section_bytes hash comparison for DL-077 and DL-094",
         "Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.",
         "Manual review of Plans/Planning_Wizard.md PWIZ-006, PWIZ-011, and PWIZ-028 against this record.",
         "Owner/consumer source-to-decision review",
@@ -21510,7 +21513,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T16:44:41Z",
+  "generated_at_utc": "2026-11-04T17:45:21Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21518,13 +21521,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3632,
+      "False": 3633,
       "True": 3791
     },
-    "plan_unit_count": 7423,
+    "plan_unit_count": 7424,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7206,
+      "accepted": 7207,
       "retired": 194,
       "superseded": 23
     },
@@ -21594,7 +21597,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5616,
+      "requirement": 5617,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

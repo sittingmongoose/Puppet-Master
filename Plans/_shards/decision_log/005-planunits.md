@@ -2,13 +2,77 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4396-L14756
+Source lines: L4420-L14845
 
-Source SHA256: `cb0b66e622c7ad836432d160886ad6a0beb7e1806841853ab902d71c504f74b0`
+Source SHA256: `fe4baa2bb5244c389eeb700475178d0b49fc7879632d68ca91d03ce6c03cae98`
 
 ---
 
 ## PlanUnits
+
+### DL-400 - Event Authority Three Batch Landings And Before And After Review
+
+```yaml
+plan_unit_id: DL-400
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered on 2026-11-04, verbatim: "Do it all in 3 batches.  We will just have to check each change before it lands.  Which can be done in parallel immediately after the change lands.  Most of these changes and reviews can be done in parallel." Review answer, verbatim: "Review before and right after." Jared also said, as the premise-check rule: "Keep in mind, a lot of things have changed in canon since those August and sept events.  So some of those decisions might be very outdated."
+
+
+  The landing granularity is now three batches. This replaces the one-family-per-landing clause in Plans/Decision_Log.md#DL-045, the cadence answer recorded in Plans/Decision_Log.md#DL-046, the procedure condition in Plans/Decision_Log.md#DL-078, the individual-landing requirements in Plans/Decision_Log.md#DL-090 and Plans/Decision_Log.md#DL-091, the restatements in Plans/Decision_Log.md#DL-093 and Plans/Decision_Log.md#DL-096, and the Scope and outcomes, Per registration and Standing constraints of reports/event-authority-20260911/step-09-procedure-20260924.md. Those earlier entries and records remain historical text; their landing granularity is superseded here.
+
+
+  Coordinator''s reading, relayed to Jared on 2026-11-04: every family still has its own full contract, its own Decision Log entry, its own admission record (registry revision and SHA-256 before and after its own commit), its own depth assessment with all twelve criteria passing, and its own Sol 6.1 max then Astra max verdict. A batch lands only when its changes passed; a change that fails is pulled from the batch. Each batch is reviewed again right after it lands, against main. DL-039''s no bulk registration stands. The coordinator''s landing go and checkpoint bookkeeping remain required. This paragraph records the coordinator''s reading, not additional quoted words from Jared.
+
+
+  This entry admits no family, changes no registry row, and grants no seal or validator change.'
+gui_related: false
+gui_classification_reason: Records landing and review governance, not visual presentation.
+split_recommended: false
+depends_on:
+- DL-039
+- DL-045
+- DL-046
+- DL-078
+- DL-090
+- DL-091
+- DL-093
+- DL-096
+unblocks: []
+acceptance_criteria:
+- The three verbatim excerpts and source SHA-256 match the recorded answers of 2026-11-04.
+- Three batch landings supersede the cited earlier landing granularity while preserving separate family commits, contracts, decision entries, admission records, depth assessments and verdicts.
+- Each change receives Sol 6.1 max then Astra max review before landing; failed changes are pulled, and each batch is reviewed again right after landing against main.
+- DL-039 no bulk registration, all twelve depth criteria, coordinator go and checkpoint bookkeeping remain required.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes hash comparison for DL-077 and DL-094
+risk_class: event_authority_landing_granularity_drift
+reasoning_tier: high
+context_scope: event_authority_batching_20261104
+implementation_surfaces:
+- reports/event-authority-20260911/step-09-procedure-20260924.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_BATCHES_REVIEWS_20261104.md (SHA-256 31b9a7a7950c620703445bbbbca638f9487899e95b9151a07902e7ffe22f8919)
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/FX1.md (coordinator reading relayed to Jared on 2026-11-04)
+preserved_exact_tokens:
+- Do it all in 3 batches.  We will just have to check each change before it lands.  Which can be done in parallel immediately after the change lands.  Most of these changes and reviews can be done in parallel.
+- Review before and right after.
+- Keep in mind, a lot of things have changed in canon since those August and sept events.  So some of those decisions might be very outdated.
+negative_constraints:
+- Do not treat the coordinator reading as additional quoted words from Jared.
+- Do not bulk register families or bypass a failing change, the full contract, admission records, depth or reviews.
+- Do not admit families, alter pinned decisions, change the validator or reseal through this entry.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/storage-plan.md
+```
 
 ### DL-002 - Decision Log Human-Authored Ledger Boundary
 
@@ -5570,6 +5634,7 @@ canonical_text: >-
   no Step 9 requirement is lowered: each registration still needs its full Event Authority
   contract, a blind form-driven review, its own Storage admission landing, the
   coordinator's landing go and a complete DL-077 admission record.
+  On 2026-11-04 Jared replaced the one-family-per-landing granularity with three batch landings (DL-400); each registration's own commit, Decision Log entry and admission record are unchanged.
 gui_related: false
 gui_classification_reason: Defines admission-record governance, not visual presentation.
 split_recommended: false

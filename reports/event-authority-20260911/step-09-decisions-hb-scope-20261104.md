@@ -110,3 +110,17 @@ After the landing, the landing agent runs `snapshot-current` and `--record-basel
 
 - **DL-095's owner edit** lands before or with the `coordination.agent_crashed` admission. It names where the Orchestrator runtime policy records the value, and it aligns OSI-438's sentences that assign no number.
 - **D-02** needs nothing more.
+
+## FX1 repair, 2026-11-04
+
+The byte-for-byte carry-over statements above describe the original rebuild at c94f437e93. Review B1-br1-sol finding 1 identified an unqualified historical one-family-per-landing requirement in DL-096. DL-400 now records Jared's November batching and review answers verbatim, with the source SHA-256, explicit supersession citations and a separately labelled coordinator reading. One dated context sentence was added to DL-096 and its PlanUnit; dated notes under Per registration and Standing constraints apply three batch landings while retaining the separate family evidence and gates. Historical entries, including DL-093, and the DL-077/DL-094 pins remain unchanged. This repair admits no family.
+
+FX1 verification: shard generation **exit 0**, index generation **exit 0**, shard check **exit 0** (`status=pass`), index validation **exit 0** (parsed top-level `status=pass`), and `git diff --check` **exit 0**. The 15-file ignored currentness edition was copied and SHA-256 matched before index generation. Only Decision Log shards changed. The frozen validator's `decision_section_bytes` function confirms DL-077 = `b93a7d768eb301b81ce0eaa38345f0f49ff9b3d74b76e721418d6d2dce2d67d4` and DL-094 = `e8e2404f028e426c6e69572ab848eae668ea095baf7389b3ae21ba85f151587f`, matching their receipt/admission-record pins. The cited historical sections and DL-077/DL-093/DL-094 PlanUnits are byte-identical; the quote/pin check exits 0. Its initial broader probe stopped on the pre-existing duplicate DL-001 marker (exit 1); the targeted check passed. An initial Git status failed during transient disk exhaustion; it passed when disk space became available. Index validation interrupted before output was rerun to completion.
+
+FX1 has no family admissions, new technical bindings, family self-grades or unresolved product choices; DL-400 is the only new ID. The failed historical premise is separate family landings, now superseded by DL-400. No landing check, baseline refresh or reseal was run. Check outputs: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/FX1/` (the SHA-256 values below identify the cited captures).
+
+- `shard-generate.json`: `48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4`.
+- `index-generate.json`: `39b60ff3fa4916f8b7e49c1f6d8e7166513e602b03b359896ee15d7c365e4d4c`.
+- `shard-check.json`: `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`.
+- `index-validate.json`: `63dcb8015cdbc5b604ec78835033b9c95b41888da9514da3b388ed649393c0c5`.
+- `pins-and-quotes.json`: `b156f280186120bf437bdefe5f5b54768a4cda74dd60af6fbee5a585c08a5765`.
