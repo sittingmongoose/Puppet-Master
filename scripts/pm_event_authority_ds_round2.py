@@ -11,6 +11,7 @@ import inspect
 import json
 import re
 import textwrap
+from datetime import datetime
 import subprocess
 import sys
 from contextlib import contextmanager, ExitStack
@@ -55,11 +56,20 @@ def padded(body, target, field):
                 return value
     raise AssertionError('no exact encoded boundary')
 
+def compaction_timestamp_valid(value):
+    try:
+        datetime.fromisoformat(value.replace('Z','+00:00'))
+    except (ValueError,TypeError):
+        return False
+    return True
+
 def compaction_payload_errors(payload):
     schema = load('Plans/event_payload_context_compaction_completed.schema.json')
     errors = []
     if not route.validator(schema).is_valid(payload):
         return ['compaction_payload_schema']
+    if not compaction_timestamp_valid(payload['committed_at_utc']):
+        errors.append('valid_utc_datetime')
     if payload['output_context_revision'] <= payload['input_context_revision']:
         errors.append('revision_must_increase')
     if payload['input_tokens'] - payload['output_tokens'] != payload['reclaimed_tokens']:
@@ -278,6 +288,11 @@ def build():
             suite.negative(family+':dormant_ref_'+str(i),'eager_reference_closure',closure_accepts)
     comp=load('Plans/context_compaction_completion_contract_fixtures.json')
     suite.positive('compaction:valid_event',lambda:not compaction_event_errors(comp['valid_event']))
+    invalid_date=copy.deepcopy(comp['valid_event']['payload']);invalid_date['committed_at_utc']='2026-02-30T16:00:00Z'
+    suite.negative('compaction:invalid_calendar','compaction_calendar_validation',lambda:not compaction_payload_errors(invalid_date))
+    leap_day=copy.deepcopy(comp['valid_event']['payload']);leap_day['committed_at_utc']='2028-02-29T16:00:00Z'
+    suite.positive('compaction:valid_leap_day',lambda:not compaction_payload_errors(leap_day))
+    suite.weakeners['compaction_calendar_validation']=lambda:patch(__name__+'.compaction_payload_errors',source_without_guard(compaction_payload_errors,'not compaction_timestamp_valid'))
     for field in ('project_id','thread_id','operation_id','context_epoch_id'):
         bad=copy.deepcopy(comp['valid_event']['payload']);bad[field]+='\n'
         suite.negative('compaction:'+field+'_LF','identifier_end_of_input',lambda b=bad:not compaction_payload_errors(b))

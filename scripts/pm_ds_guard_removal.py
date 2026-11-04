@@ -42,7 +42,7 @@ def cohort():
     checker=home.Checker(ROOT);fixtures=load(home.FIXTURES);valid={v['id']:v for v in fixtures['valid']};store=home.PayloadStore.from_fixture(fixtures['payload_store'])
     for negative in fixtures['invalid']:
         if negative.get('rejected_by')=='schema':continue
-        base=valid[negative['base']];value=home.apply_ops(base['value'],negative['ops']);changed_store=store.apply(negative.get('store_ops',[]))
+        base=valid[negative['base']];value=home.apply_ops(base['value'],negative['ops']);changed_store=store.apply(negative.get('payload_store_ops',[]))
         def accepts(v=value,d=base['definition'],s=changed_store):return not checker.semantic(d,v,s)
         cases.append(('home:'+negative['id'],accepts))
     for fn in (home.value_limit_check,home.event_checks,home.binding_checks,home.source_bytes_check,home.slot_invariants,home.receipt_invariants,home.PayloadStore.resolve,home.Checker.reference_invariants):
@@ -99,7 +99,18 @@ def audit():
     source_hashes={str(Path(m.__file__).relative_to(ROOT)):__import__('hashlib').sha256(Path(m.__file__).read_bytes()).hexdigest() for m in modules}
     for relative in ('scripts/pm_ds_guard_removal.py','scripts/pm_event_payload_route.py','scripts/pm-browser-event-admission.py'):
         source_hashes[relative]=__import__('hashlib').sha256((ROOT/relative).read_bytes()).hexdigest()
-    for module,fn,cases in cohort():
+    groups=cohort()
+    checked=set()
+    for _,_,cases in groups:
+        for name,test in cases:
+            if name in checked:continue
+            checked.add(name)
+            try:
+                if test():baseline_failures.append({'case':name,'accepted_before_weakening':True})
+            except Exception as exc:baseline_failures.append({'case':name,'exception':repr(exc)})
+    if baseline_failures:
+        return {'status':'fail','baseline_failures':baseline_failures,'guard_count':0,'witnessed_guard_count':0,'guard_removal_table':[],'source_sha256':source_hashes,'claim':'No ablation is valid until every negative rejects before weakening.'}
+    for module,fn,cases in groups:
         print('audit '+fn.__qualname__+' cases='+str(len(cases)),flush=True)
         baseline={}
         for name,test in cases:
@@ -126,6 +137,12 @@ def audit():
             'guard_removal_table':table,'claim':'Inventory and actual source-condition ablations; no complete check-11 claim while any row is partial or ownership unadjudicated.'}
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path);parser.add_argument('--self-test',action='store_true');args=parser.parse_args()
+    if args.self_test:
+        with patch(__name__+'.cohort',return_value=[(round2,round2.compaction_payload_errors,[('injected_accepted_negative',lambda:True)])]):
+            bad=audit()
+        good=bad['status']=='fail' and bad['guard_count']==0 and bool(bad['baseline_failures'])
+        print(json.dumps({'status':'pass' if good else 'fail','injected_accepted_negative_refused_before_ablation':good}));return not good
+    if args.output is None:parser.error('--output is required unless --self-test')
     result=audit();args.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='guard_removal_table'},indent=2));return bool(result['baseline_failures'])
 if __name__=='__main__':raise SystemExit(main())
