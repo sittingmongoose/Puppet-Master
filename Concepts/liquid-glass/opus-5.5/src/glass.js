@@ -2933,7 +2933,9 @@
     window.addEventListener('resize', viewportVars);
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
+    /* data-col-top: the onboarding window's column, held at a top and centred again on a window resize, moves its tab strips
+       with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25) */
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
        project's name, a long name, its badge, the density fold) the tabs move, and the chosen tab's chip is this lens. On
