@@ -1,61 +1,79 @@
 [
   {
-    "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/shard-generate.log",
-    "sha256": "51f90d9686394a874dcb747e703ac8d30600168c5045904d78aa3f228f033c87"
-  },
-  {
-    "command": "python3 scripts/pm-plan-index.py generate",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/index-generate.log",
-    "sha256": "88d0257b4d3440403288b00565841b926b296c0e677f68eed6ef4c6812068c20"
-  },
-  {
-    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/shard-check.log",
-    "sha256": "7fd4132d67fb6c69830ff7ddfdd4c58572ef3596ad4dc9db7389955f9e55dac3"
-  },
-  {
-    "command": "python3 scripts/pm-plan-index.py validate",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/index-validate-final.log",
-    "sha256": "1cd1461eb4b5f7a220e178bc949105e22c8ff3447b4abe4a60d001f5166d8975"
-  },
-  {
     "command": "python3 scripts/pm-ds15-event-contracts.py",
     "exit_code": 0,
     "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/targeted-check.log",
-    "sha256": "cdfea6bce92edea179c5c94a205e75a55b51ff5def01b0ab1b4dc3c0fe0ad4ab"
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/ds15-final.log",
+    "sha256": "5ee243719236cf529a6880ba3a5c6251f5c4942b50f96ad5c8489cd8f3be68b7"
   },
   {
     "command": "python3 scripts/pm-implementation-readiness.py validate-case-l",
     "exit_code": 0,
     "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/case-l-check.log",
-    "sha256": "fad47380afd0cb99acc0934478d2b891696f76679a0ed378747d875e24229388"
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/case-l-final.log",
+    "sha256": "8f0cceb3d9a35e4b05ca887e3caf2bc10730734d6f9e3260126968ad918811f3"
   },
   {
-    "command": "storage registry JSON Schema + self-grade exact quotes",
+    "command": "python3 scripts/pm-storage-recovery-contracts.py --self-test",
     "exit_code": 0,
     "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/schema-evidence-check.log",
-    "sha256": "260738e5a1348f38505aa04bb98362996a133c2c4e5564b4006d4047386b89d3"
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/storage-recovery-final.log",
+    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
   },
   {
-    "command": "git diff --check",
-    "exit_code": 0
+    "command": "python3 scripts/pm-shared-runtime-contracts.py --self-test",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shared-runtime-final.log",
+    "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027"
   },
   {
-    "command": "initial index validate (overlapped unfinished generation)",
+    "command": "python3 scripts/pm-storage-profile-check.py",
     "exit_code": 1,
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/index-validate.log",
-    "resolution": "Rerun only after generation settled; final top-level pass."
+    "top_level_status": "fail",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/storage-profile-final.log",
+    "sha256": "9270749a06650c8ca65cd42ed7a1f73fde7d3b2a574c20d5950831cc0bf94bd8"
+  },
+  {
+    "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shard-generate-final.log",
+    "sha256": "d84a2c16f59253693752d9f4a4daedcffeeb7bd5bae8afeae0670c8b7499549e"
+  },
+  {
+    "command": "python3 scripts/pm-plan-index.py generate",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/index-generate-final.log",
+    "sha256": "adde8bc62f775c4d550ac15482e5343d5d7a0f8d6c740c33ed5b95a0263a3675"
+  },
+  {
+    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shard-check-final.log",
+    "sha256": "e5387ddb13846f72ceb7a5cfa0dec6047818f910b8005f5e44885508a42eb602"
+  },
+  {
+    "command": "python3 scripts/pm-plan-index.py validate",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/index-validate-final.log",
+    "sha256": "77258d3798bba2d8f7587ee41e686e6eaba96353517a336acde4d54f10bcbe8d"
+  },
+  {
+    "command": "python3 -m unittest discover -s tests -p test_shared_runtime_storage_contracts.py",
+    "exit_code": 1,
+    "top_level_status": "fail (17/20 pass; three explained exceptions)",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shared-runtime-storage-tests-final.log",
+    "sha256": "5752b62d399735100e171ca967303410921467fa5e851a4f97974b2e773eba37"
+  },
+  {
+    "command": "Inline JSON Schema + all current self-grade evidence quotes",
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/schema-and-grade-final.json",
+    "sha256": "ad580b755bbefb0b43ce3d3a442b1d71d107deeba89c63359b7d07672c649b18"
   }
 ]
