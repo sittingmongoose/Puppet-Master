@@ -74,7 +74,8 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
             self.assertTrue(all(v['producer_admission'] == 'requires_owner_adoption' for v in live[ident]['payload_versions']))
         self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids | proposed_ids)
         self.assertEqual(len(families), 40 + len(admitted_ids) + len(proposed_ids))
-        # Registry census includes the three explicitly unadmitted proposals.
+        # Registry census includes the three families DL-300 registered; their app producers still
+        # require owner adoption.
         return len(admitted_ids) + len(proposed_ids)
 
     def assert_quarantined_unchanged(self, replay, case):

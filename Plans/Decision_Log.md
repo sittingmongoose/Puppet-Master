@@ -21032,3 +21032,75 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Permissions_System.md#PS-148, ContractName:Plans/orchestrator-subagent-integration.md#OSI-441, ContractName:Plans/human-in-the-loop.md#HITL-038, ContractName:Plans/FinalGUISpec.md#F3-673
+
+
+### DL-300 - Event Authority Admits The App Scope Editions And Three New Families
+
+```yaml
+plan_unit_id: DL-300
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-300 records Jared's approval of 2026-11-04 ("Admit them now") of the Event Authority checkpoint that
+  registers settings.layer.changed (Plans/Settings_System.md#SSYS-060), approval.chat_tool_requested and
+  approval.chat_tool_resolved (Plans/Permissions_System.md#PS-145), and gives eleven Goal event families the exact
+  application scope-selector edition of Plans/Contracts_V0.md#CV-366 and Plans/Goal_Runtime_System.md#GRS-086
+  (scope_policy application_or_project, payload_versions, payload_selection_policy
+  exact_scope_and_schema_id_no_fallback). Registry checkpoint: Plans/event_family_registry.json revision
+  2026-11-04.1 (46 families) is approved as the PNC-019 baseline, superseding 2026-10-09.1, in the manner of
+  DL-039, DL-045 and DL-188. Registration admits the families and selectors only: every application payload
+  version keeps producer_admission requires_owner_adoption, so no app producer may append until its owner adopts
+  it; Project payload bytes and Project producers are unchanged, and events already written are never rewritten.
+  This is the one Event Authority grant of the projects and settings refresh; DL-280 through DL-299 still grant
+  none. The checkpoint evidence and the readiness receipt are refreshed by the next reseal.
+gui_related: false
+gui_classification_reason: Records an Event Authority checkpoint approval for persisted event families.
+split_recommended: false
+depends_on: [DL-188, DL-292]
+unblocks: [SSYS-060, PS-145, CV-366, GRS-086]
+acceptance_criteria:
+  - "Plans/event_family_registry.json is registry revision 2026-11-04.1 with 46 families: the 43 of 2026-10-09.1, eleven of them Goal families with the exact CV-366 scope-selector edition, plus settings.layer.changed, approval.chat_tool_requested and approval.chat_tool_resolved."
+  - "The PNC-019 checkpoint pinned in scripts/pm_pnc019_currentness.py names that revision and 46 rows; the browser and emit-only admission gates accept the eleven editions and the three families only by exact digest or whole-row fingerprint."
+  - "Every application payload version keeps producer_admission requires_owner_adoption, and no Project payload byte changes."
+  - "No unit still calls these three families proposed or candidate pending Event Authority admission."
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py validate-browser-event-admission
+  - python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_checkpoint_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+  - Plans/event_family_registry.json
+  - Plans/browser_event_admission.json
+  - Plans/Settings_System.md
+  - Plans/Permissions_System.md
+  - Plans/storage-plan.md
+  - scripts/pm_pnc019_currentness.py
+  - scripts/pm-browser-event-admission.py
+  - scripts/pm_emit_only_event_contract.py
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 42da24d4-cc18-4469-8092-ed4f38d15061, 2026-11-04: Jared's answer \"Admit them now\" to the lead's question on the three new families and eleven Goal editions in the registry"
+  - "/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/plans-edit-requests/Fd-phase2-report.md, SHA-256 977ae697c027507bd4532e89889145371d266341a57848ed234e4567d7aff584 (the registry rows)"
+  - "Plans/Decision_Log.md#DL-188 (the checkpoint pattern; cited, not a dependency)"
+preserved_exact_tokens:
+  - "DL-300"
+  - "2026-11-04.1"
+  - "settings.layer.changed"
+  - "approval.chat_tool_requested"
+  - "approval.chat_tool_resolved"
+  - "requires_owner_adoption"
+negative_constraints:
+  - "Do not let registration admit an application producer append."
+  - "Do not rewrite events already written."
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/Permissions_System.md
+  - Plans/Contracts_V0.md
+```

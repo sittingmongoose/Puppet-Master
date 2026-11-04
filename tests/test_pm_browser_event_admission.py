@@ -151,8 +151,9 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
                 next(row for row in rows if row["family_id"] == original["family_id"])["family_revision"] = "99.0.0"
                 report, failures = GATE.preexisting_preservation(self.admission, rows)
                 self.assertTrue(failures)
-                if (original["family_id"], original["event_type"]) in coordination:
-                    # An admitted coordination row is not historical: drift makes it unexpected (Step 9 batch 2).
+                if (original["family_id"], original["event_type"]) in coordination or original["family_id"] in GATE.REVIEWED_DL300_FAMILIES:
+                    # An admitted coordination row (Step 9 batch 2) or DL-300 family is not historical: drift makes
+                    # it unexpected.
                     self.assertIn("unexpected_central_event_family", {row["error"] for row in failures})
                     continue
                 self.assertFalse(report["historical_baseline_verified"])
@@ -223,9 +224,11 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         self.assertEqual(admitted | prepared, set(ROWS))
         self.assertEqual(report["prepared_scoped_event_families"], len(prepared))
         self.assertEqual(report["admitted_scoped_event_families"], len(admitted))
-        # The only other additions are rows the coordination ledger marks admitted (Step 9 batch 2).
+        # The only other additions are rows the coordination ledger marks admitted (Step 9 batch 2) and the
+        # three DL-300 families.
         coordination = GATE.admitted_coordination_rows()
-        self.assertEqual(report["registry_family_count"], 40 + len(admitted) + len(coordination))
+        self.assertEqual(report["registry_family_count"],
+                         40 + len(admitted) + len(coordination) + len(GATE.REVIEWED_DL300_FAMILIES))
         self.assertEqual(report["admission_complete"], len(admitted) == 53)
 
     def test_isolated_prepared_consistency_is_not_admission_completion(self):

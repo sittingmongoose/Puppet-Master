@@ -31,7 +31,10 @@ ORIGINAL40_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746
 # Re-frozen 2026-10-10 for DL-188 (Jared approved the Event Authority checkpoint that moves
 # workspace.layout_changed to family revision 2.0.0, D42): the one changed row is the reviewed layout
 # successor below; was e2b5a433c668a36ffe3ffdc329f90a0f860b680bbc54fb9c596d1a302c6cd306.
-CURRENT39_SHA256 = "5ccb9d5d543fcb81e91db26ce432b89192fe96ed86ca6adf5515c9e5929383ed"
+# Re-frozen 2026-11-04 for DL-300 (Jared admitted the app scope-selector editions, "Admit them now"): the
+# eleven changed Goal rows carry the exact pm_emit_only_event_contract.EVENT_EDITION_DELTAS edition that
+# historical_preexisting_rows projects back out; was 5ccb9d5d543fcb81e91db26ce432b89192fe96ed86ca6adf5515c9e5929383ed.
+CURRENT39_SHA256 = "5619e8337f1ee1d0c359af94992a6055c3dd1f7d78ba00a1597d53beafba2b37"
 COMPACTION_FAMILY = "event-family-context-compaction-completed"
 COORDINATION_LEDGER = "Plans/coordination_event_admission.json"
 # The exact seven Step 9 batch 2 families (DL-045), each event type mapped to its prepared family ID
@@ -113,6 +116,38 @@ REVIEWED_LAYOUT_HISTORICAL_FIELDS = {
 }
 
 
+# The three families Jared admitted on 2026-11-04 (DL-300, "Admit them now"), pinned as whole rows taken
+# from the registering commit, never generated from the live registry. Pins: (event type, row
+# fingerprint, approval, owner). Their app producers stay requires_owner_adoption; no other family opens.
+REVIEWED_DL300_FAMILIES = {
+    "event-family-settings-layer-changed": (
+        "settings.layer.changed",
+        "05040513b1cc6abfa09a8374df186dbfee496c56b089fc381837f664420be4dd",
+        "Plans/Decision_Log.md#DL-300", "Plans/Settings_System.md#SSYS-060",
+    ),
+    "event-family-approval-chat-tool-requested": (
+        "approval.chat_tool_requested",
+        "378699b25be007f3491484166d7757f33d47668eee17b76277b93658399e573b",
+        "Plans/Decision_Log.md#DL-300", "Plans/Permissions_System.md#PS-145",
+    ),
+    "event-family-approval-chat-tool-resolved": (
+        "approval.chat_tool_resolved",
+        "4f91ed5da384c9466f15945a5775888232a2cfe611da011d9d36b09cdf7b33c2",
+        "Plans/Decision_Log.md#DL-300", "Plans/Permissions_System.md#PS-145",
+    ),
+}
+
+
+@lru_cache(maxsize=1)
+def emit_only_contract():
+    """Reuse the exact DL-300 Goal scope-selector edition deltas, not a general exemption."""
+    path = ROOT / "scripts/pm_emit_only_event_contract.py"
+    spec = importlib.util.spec_from_file_location("browser_emit_only_event_contract", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 @lru_cache(maxsize=1)
 def envelope_oracle():
     """Reuse the existing pure Case L identity oracle, not readiness admission."""
@@ -166,7 +201,9 @@ def historical_preexisting_rows(rows):
     the original rows and reviewed successors are usable in historical tests;
     an unknown change is rejected before any historical fields are restored.
     """
-    historical = copy.deepcopy(rows)
+    # DL-300: project the exact reviewed Goal scope-selector editions back to their prior rows first; an
+    # unknown edition raises before any historical field is restored.
+    historical = emit_only_contract().legacy_registry_rows(rows)
     for row in historical:
         layout_pins = REVIEWED_LAYOUT_SUCCESSORS.get(row["family_id"])
         if layout_pins is not None:
@@ -255,11 +292,17 @@ def preexisting_preservation(admission, registry_rows, *, allow_historical=False
     coordination = admitted_coordination_rows() if coordination_rows is None else coordination_rows
     if any(row["family_id"] not in original_ids | {COMPACTION_FAMILY}
            and (row["family_id"], row["event_type"]) not in browser_pairs
-           and coordination.get((row["family_id"], row["event_type"])) != fingerprint(row) for row in registry_rows):
+           and coordination.get((row["family_id"], row["event_type"])) != fingerprint(row)
+           and REVIEWED_DL300_FAMILIES.get(row["family_id"], (None, None))[:2] != (row["event_type"], fingerprint(row))
+           for row in registry_rows):
         failures.append({"error": "unexpected_central_event_family"})
     if len({row["family_id"] for row in registry_rows}) != len(registry_rows):
         failures.append({"error": "duplicate_central_family_id"})
-    adopted = [row["family_id"] for row in existing
+    try:
+        existing_prior = emit_only_contract().legacy_registry_rows(existing)
+    except ValueError:
+        existing_prior = existing
+    adopted = [row["family_id"] for row in existing_prior
                if row["family_id"] in REVIEWED_GOAL_SUCCESSORS
                and fingerprint(row) == REVIEWED_GOAL_SUCCESSORS[row["family_id"]][1]]
     missing_successors = sorted(set(REVIEWED_GOAL_SUCCESSORS) - set(adopted))

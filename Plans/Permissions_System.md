@@ -10403,7 +10403,7 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
   fields exist only for real owners. Commit the evidence before mutation-capable run/attempt admission; audit
   failure blocks dispatch. Storage owns its explicit app key family, retention/backup and single writer; never
   interpolate an empty Project into the v1 key or reconstruct history from current Settings. App ordinary
-  tool asks use a distinct thread/tool/request/target-bound approval contract (candidate approval.chat_tool_requested/resolved)
+  tool asks use a distinct thread/tool/request/target-bound approval contract (approval.chat_tool_requested/resolved, registered by DL-300; producers still require owner adoption)
   through the shared approval host; do not null required node fields in Orchestrator approval payloads or
   reuse cmd.runtime.approve without a typed app variant.
 

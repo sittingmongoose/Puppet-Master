@@ -56,9 +56,16 @@ EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
 # SHA-256 4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe (predecessor
 # 4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70). The audit status file's
 # pinned revision and hash move with the next reseal, not here.
+# Moved by Jared's approval of 2026-11-04 ("Admit them now"; Plans/Decision_Log.md#DL-300, recorded as
+# DL-188 was): settings.layer.changed (SSYS-060), approval.chat_tool_requested and
+# approval.chat_tool_resolved (PS-145) are registered, and eleven Goal families gain the exact CV-366/GRS-086
+# application scope-selector edition with every app producer still requires_owner_adoption: registry
+# 2026-11-04.1, 46 families, SHA-256 443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653 (predecessor
+# 4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe). The audit status file's pinned revision and hash move with
+# the next reseal, not here.
 # Checkpoint data only: denominator and contract-depth clearance remain false.
-EVENT_FAMILY_REGISTRY_REVISION = "2026-10-09.1"
-EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 43
+EVENT_FAMILY_REGISTRY_REVISION = "2026-11-04.1"
+EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 46
 EVENT_FAMILY_QUARANTINED_ROW_COUNT = 252
 EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
 EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
