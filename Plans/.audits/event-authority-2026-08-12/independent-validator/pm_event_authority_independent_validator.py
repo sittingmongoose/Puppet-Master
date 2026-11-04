@@ -263,7 +263,7 @@ def registry_step_states(record):
                 or not HEX64.fullmatch(str(value.get("sha256", "")))
                 or type(value.get("family_count")) is not int):
             return None
-        sides.append((value["revision"], value["sha256"], value["family_count"]))
+        sides.append((value["revision"], str(value["sha256"]), value["family_count"]))
     return tuple(sides)
 
 
@@ -271,15 +271,16 @@ def registry_step_claim(record):
     """The (before, after) sha256 a record names, read without validating anything else.
 
     A record naming a step's SHA-256 pair must not escape the step check because
-    its revision, family count, list or any other field is malformed.
+    its revision, family count, list or any other field is malformed. Stringify
+    SHA fields as record validation does, including accepted JSON integers.
     """
     shas = []
     for side in ("registry_before", "registry_after"):
         value = record.get(side) if isinstance(record, dict) else None
         sha = value.get("sha256") if isinstance(value, dict) else None
-        if not isinstance(sha, str):
+        if sha is None:
             return None
-        shas.append(sha.strip().lower())
+        shas.append(str(sha).strip().lower())
     return tuple(shas)
 
 
@@ -361,7 +362,7 @@ def admission_record_problems(record, family) -> list:
             problems.append("registry_before_after_not_exactly_one_family")
     elif sides_ok and step_ok:
         before, after = record["registry_before"], record["registry_after"]
-        if after["family_count"] != before["family_count"] + len(step) or after["sha256"] == before["sha256"]:
+        if after["family_count"] != before["family_count"] + len(step) or str(after["sha256"]) == str(before["sha256"]):
             problems.append("registry_before_after_not_exactly_step_families")
     if record.get("registry_row_sha256") != canonical_json_sha256(family):
         problems.append("registry_row_sha256")
