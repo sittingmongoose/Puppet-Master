@@ -903,39 +903,66 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
             return target_names(target.value)
         return []
 
-    def bindings(statements: list[ast.stmt], name: str) -> list[ast.stmt]:
-        """Every statement that binds `name` in this lexical scope, including inside if/try/
-        with/for/while/match blocks, but not inside nested function or class bodies."""
-        found: list[ast.stmt] = []
-        for item in statements:
+    def pattern_names(pattern: ast.AST) -> list[str]:
+        out: list[str] = []
+        for sub in ast.walk(pattern):
+            if type(sub).__name__ in ("MatchAs", "MatchStar") and getattr(sub, "name", None):
+                out.append(sub.name)
+            elif type(sub).__name__ == "MatchMapping" and getattr(sub, "rest", None):
+                out.append(sub.rest)
+        return out
+
+    def bound_names(node: ast.AST) -> list[str]:
+        """Names one node binds, deletes or rebinds in the scope it belongs to."""
+        if isinstance(node, ast.Assign):
+            return [n for t in node.targets for n in target_names(t)]
+        if isinstance(node, (ast.AnnAssign, ast.AugAssign, ast.For, ast.AsyncFor)):
+            return target_names(node.target)
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            return [(alias.asname or alias.name).split(".")[0] for alias in node.names]
+        if isinstance(node, (ast.With, ast.AsyncWith)):
+            return [n for w in node.items if w.optional_vars is not None for n in target_names(w.optional_vars)]
+        if isinstance(node, ast.ExceptHandler):
+            return [node.name] if node.name else []
+        if isinstance(node, ast.NamedExpr):
+            return target_names(node.target)
+        if isinstance(node, ast.Delete):
+            return [n for t in node.targets for n in target_names(t)]
+        if type(node).__name__ == "match_case":
+            return pattern_names(node.pattern)  # type: ignore[attr-defined]
+        if type(node).__name__ == "TypeAlias":
+            return target_names(node.name)  # type: ignore[attr-defined]
+        return []
+
+    def bindings(statements: list[ast.stmt], name: str) -> list[ast.AST]:
+        """Every node that binds, rebinds or deletes `name` in this lexical scope: definitions,
+        assignments, imports, loop/with/except targets, walrus targets (including inside
+        comprehensions, which bind in the enclosing scope), match captures, del and type
+        aliases, at any depth of if/try/with/for/while/match blocks. Nested function, class and
+        lambda bodies are their own scopes and are not searched."""
+        found: list[ast.AST] = []
+        stack: list[ast.AST] = list(statements)
+        while stack:
+            item = stack.pop()
             if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
                 if item.name == name:
                     found.append(item)
-                continue  # a nested scope: its body binds its own names
-            names: list[str] = []
-            if isinstance(item, ast.Assign):
-                names = [n for t in item.targets for n in target_names(t)]
-            elif isinstance(item, (ast.AnnAssign, ast.AugAssign)):
-                names = target_names(item.target)
-            elif isinstance(item, (ast.Import, ast.ImportFrom)):
-                names = [(alias.asname or alias.name).split(".")[0] for alias in item.names]
-            elif isinstance(item, (ast.For, ast.AsyncFor)):
-                names = target_names(item.target)
-            elif isinstance(item, (ast.With, ast.AsyncWith)):
-                names = [n for w in item.items if w.optional_vars is not None for n in target_names(w.optional_vars)]
-            if name in names:
+                # Decorators, defaults and bases are evaluated in this scope.
+                stack.extend(item.decorator_list)
+                if isinstance(item, ast.ClassDef):
+                    stack.extend(item.bases)
+                    stack.extend(k.value for k in item.keywords)
+                else:
+                    stack.extend(item.args.defaults)
+                    stack.extend(d for d in item.args.kw_defaults if d is not None)
+                continue
+            if isinstance(item, ast.Lambda):
+                stack.extend(item.args.defaults)
+                stack.extend(d for d in item.args.kw_defaults if d is not None)
+                continue
+            if name in bound_names(item):
                 found.append(item)
-            for block in ("body", "orelse", "finalbody"):
-                if isinstance(item, (ast.If, ast.For, ast.AsyncFor, ast.While, ast.With, ast.AsyncWith, ast.Try)) \
-                        or type(item).__name__ == "TryStar":
-                    found.extend(bindings(list(getattr(item, block, []) or []), name))
-            for handler in getattr(item, "handlers", []) or []:
-                if getattr(handler, "name", None) == name:
-                    found.append(item)
-                found.extend(bindings(list(handler.body), name))
-            if type(item).__name__ == "Match":
-                for case in item.cases:  # type: ignore[attr-defined]
-                    found.extend(bindings(list(case.body), name))
+            stack.extend(ast.iter_child_nodes(item))
         return found
 
     scope: list[ast.stmt] = list(tree.body)
@@ -1151,6 +1178,7 @@ REAUDIT_RECORD_SCHEMA = "pm.audit_closure.reaudit_record.v1"
 REAUDIT_VERDICTS = {"supported", "resolved_differently", "superseded_by_later_closure", "not_supported"}
 REAUDIT_REVIEWERS = ("worker", "sol", "astra")
 REAUDIT_MIN_QUOTE = 12
+REAUDIT_WORKER_FIELDS = ("verdict", "claim", "dependencies", "evidence", "stale_ref_dispositions", "rationale", "fix")
 
 
 def raw_registry_lines(registry_path: Path) -> dict[int, str]:
@@ -1250,11 +1278,13 @@ def _target_stale_refs(target: dict[str, Any], resolver: AnchorResolver) -> set[
 
 
 class ReceiptLedger:
-    """Git provenance of re-audit receipts: worker records, review outputs and review packets.
+    """Git provenance of re-audit receipts: worker records, review outputs, review packets and
+    the per-row record files.
 
-    A receipt counts only as committed: tracked at HEAD with the bytes it has now, touched by
-    exactly one commit (added once, never rewritten), and added after the recheck commit it
-    judged, which must be a strict ancestor of that commit. A review output and the packet it
+    A receipt counts only as committed: tracked at HEAD with the bytes it has now, added by
+    exactly one ordinary commit, with the same bytes at that adding commit as at HEAD (so no
+    later commit, merges included, changed it), and added after the recheck commit it judged,
+    which must be a strict ancestor of the adding commit. A review output and the packet it
     was shown must be added by the same commit. So an output cannot be paired later with a
     replacement packet, and receipts cannot be replayed onto a newer snapshot."""
 
@@ -1266,10 +1296,10 @@ class ReceiptLedger:
         self._ancestor: dict[tuple[str, str], bool] = {}
         self._prefetched: set[int] = set()
 
-    def _git(self, *args: str) -> bytes | None:
+    def _git(self, *args: str, stdin: bytes | None = None) -> bytes | None:
         import subprocess  # noqa: PLC0415
 
-        proc = subprocess.run(["git", "-C", str(self.root), *args], capture_output=True)
+        proc = subprocess.run(["git", "-C", str(self.root), *args], capture_output=True, input=stdin)
         return proc.stdout if proc.returncode == 0 else None
 
     def prefetch(self, paths: Any) -> None:
@@ -1280,7 +1310,8 @@ class ReceiptLedger:
         for start in range(0, len(todo), self.CHUNK):
             chunk = todo[start:start + self.CHUNK]
             blobs: dict[str, str] = {}
-            touched: dict[str, list[str]] = {path: [] for path in chunk}
+            adders: dict[str, list[str]] = {path: [] for path in chunk}
+            added_blob: dict[str, str | None] = {}
             if head:
                 for entry in (self._git("ls-tree", "-z", "HEAD", "--", *chunk) or b"").split(b"\0"):
                     if b"\t" not in entry:
@@ -1289,16 +1320,26 @@ class ReceiptLedger:
                     mode, kind, obj = meta.split(b" ")
                     if kind == b"blob" and mode != b"120000":
                         blobs[name.decode()] = obj.decode()
-                log = self._git("log", "--full-history", "--no-renames", "--format=%x01%H", "--name-only", "-z", "--", *chunk) or b""
+                # Ordinary (non-merge) commits that add each path. A merge never counts as the
+                # adding commit; what a merge does to a receipt shows up as differing bytes.
+                log = self._git("log", "--full-history", "--no-renames", "--diff-filter=A", "--format=%x01%H",
+                                "--name-only", "-z", "--", *chunk) or b""
                 for part in log.split(b"\x01"):
                     fields = part.split(b"\0")
                     sha = fields[0].decode().strip()
                     for name in fields[1:]:
                         name_s = name.decode().lstrip("\n")
-                        if name_s in touched:
-                            touched[name_s].append(sha)
+                        if name_s in adders:
+                            adders[name_s].append(sha)
+                queries = [(path, found[0]) for path, found in adders.items() if len(found) == 1]
+                if queries:
+                    out = self._git("cat-file", "--batch-check=%(objectname) %(objecttype)",
+                                    stdin="".join(f"{c}:{p}\n" for p, c in queries).encode()) or b""
+                    for (path, _), line in zip(queries, out.decode().splitlines()):
+                        obj, _, kind = line.partition(" ")
+                        added_blob[path] = obj if kind == "blob" else None
             for path in chunk:
-                self._info[path] = {"head_blob": blobs.get(path), "commits": touched[path]}
+                self._info[path] = {"head_blob": blobs.get(path), "adders": adders[path], "added_blob": added_blob.get(path)}
 
     def prefetch_records(self, records: dict[str, Any]) -> None:
         if id(records) in self._prefetched:
@@ -1319,7 +1360,7 @@ class ReceiptLedger:
         return self._ancestor[key]
 
     def check(self, path: str, recheck_commit: str) -> tuple[str | None, str | None]:
-        """(introducing commit, problem) for one receipt judged at recheck_commit."""
+        """(adding commit, problem) for one receipt judged at recheck_commit."""
         self.prefetch([path])
         info = self._info[path]
         try:
@@ -1329,9 +1370,11 @@ class ReceiptLedger:
         blob = hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
         if info["head_blob"] != blob:
             return None, f"receipt {path} is not committed at HEAD with its current bytes"
-        if len(info["commits"]) != 1:
-            return None, f"receipt {path} was changed after it was first committed ({len(info['commits'])} commits touch it)"
-        added = info["commits"][0]
+        if len(info["adders"]) != 1:
+            return None, f"receipt {path} must be added by exactly one ordinary commit ({len(info['adders'])} add it)"
+        added = info["adders"][0]
+        if info["added_blob"] != blob:
+            return added, f"receipt {path} was changed after it was first committed (its bytes differ from the commit that added it)"
         if not self.is_strict_ancestor(recheck_commit, added):
             return added, f"receipt {path} was committed at or before the recheck commit {recheck_commit[:12]} it claims to judge"
         return added, None
@@ -1595,6 +1638,12 @@ def validate_reaudit_record(
             judged_deps = judged.get("dependencies")
             if not _str_list(judged_deps) or set(judged_deps) != set(deps):
                 errors.append(f"{label}: worker output must rely on exactly the record's dependencies")
+            # The record is assembled from the committed worker output: its judgement fields must be that output's.
+            bound = list(REAUDIT_WORKER_FIELDS) + (["status_now"] if verdict == "resolved_differently" else []) \
+                + (["later_closure_id"] if verdict == "superseded_by_later_closure" else [])
+            for field in bound:
+                if judged.get(field) != record.get(field):
+                    errors.append(f"{label}: record.{field} differs from the committed worker output it was assembled from")
             continue
         shown = _bound_output_row(review, "packet", supersedes, label, who, errors)
         if shown is None:
@@ -1614,6 +1663,17 @@ def validate_reaudit_record(
             shown_refs.append(ref)
             if not isinstance(ref, str) or ref not in snapshot or item.get("sha256") != snapshot[ref]:
                 errors.append(f"{label}: record.reviews.{who} packet showed {ref!r} at a different snapshot than the record")
+                continue
+            # What the reviewer read must be that anchor's text at the recheck commit (a prefix when truncated).
+            text, truncated = item.get("text"), item.get("truncated", False)
+            try:
+                view = at_commit.content(ref)[1]
+            except AnchorError:
+                continue  # reported above as an unresolvable dependency
+            if not isinstance(text, str) or not isinstance(truncated, bool) or not (
+                (not truncated and text == view) or (truncated and len(text) < len(view) and view.startswith(text))
+            ):
+                errors.append(f"{label}: record.reviews.{who} packet text for {ref} is not that anchor's text at recheck_commit")
         if len(set(map(str, shown_refs))) != len(shown_refs):
             errors.append(f"{label}: record.reviews.{who} packet shows an anchor twice")
 
@@ -1701,6 +1761,11 @@ def validate_reaudit_row(
             errors.append(f"{label}: reaudit.record_sha256 does not match the canonical record")
         receipts = record_cache.setdefault("__receipts__", ReceiptLedger(ROOT))  # type: ignore[arg-type]
         receipts.prefetch_records(records)  # type: ignore[union-attr]
+        commit_ref = record.get("recheck_commit")
+        if isinstance(commit_ref, str) and re.fullmatch(r"[0-9a-f]{40}", commit_ref):
+            _, problem = receipts.check(record_ref, commit_ref)  # type: ignore[union-attr]
+            if problem:
+                errors.append(f"{label}: re-audit record file: {problem}")
         validate_reaudit_record(
             record, row, target, label, resolver, errors, record_cache.setdefault("__commits__", {}), receipts  # type: ignore[arg-type]
         )
@@ -3419,14 +3484,16 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         def receipt(who: str, n: int, target: dict[str, Any], rec: dict[str, Any], verdict: str, **extra: Any) -> dict[str, Any]:
             judged = {"line": rec["line"], "closure_id": target["closure_id"], "verdict": verdict, **extra}
             if who == "worker":
-                judged.update(row_sha256=rec["row_sha256"], dependencies=list(rec["dependencies"]))
+                judged.update({k: rec.get(k) for k in REAUDIT_WORKER_FIELDS})
+                judged.update(row_sha256=rec["row_sha256"], dependencies=list(rec["dependencies"]), verdict=verdict)
             path = audit_dir / "reviews" / f"{who}-{n}.jsonl"
             path.write_text(json.dumps(judged) + "\n", encoding="utf-8")
             review = {"model": f"fixture-{who}", "verdict": verdict, "evidence_path": rel(path), "evidence_sha256": sha256_file(path)}
             if who != "worker":
                 shown = {"line": rec["line"], "closure_id": target["closure_id"],
                          "claim": {k: v for k, v in target.items() if k not in ("hashes", "_line_no")},
-                         "dependency_anchors": [{"ref": ref, "sha256": rec["dependency_hashes_at_recheck"][ref]} for ref in rec["dependencies"]]}
+                         "dependency_anchors": [{"ref": ref, "sha256": rec["dependency_hashes_at_recheck"][ref],
+                                                 "text": AnchorResolver(tmp).content(ref)[1], "truncated": False} for ref in rec["dependencies"]]}
                 packet = audit_dir / "reviews" / f"packet-{who}-{n}.jsonl"
                 packet.write_text(json.dumps(shown) + "\n", encoding="utf-8")
                 review.update(packet_path=rel(packet), packet_sha256=sha256_file(packet))
@@ -3442,12 +3509,16 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             keep_records: bool = False,
             **fields: Any,
         ) -> dict[str, Any]:
-            """A complete, valid re-audit of `line`, then `mutate(record)` to tamper with it."""
+            """A complete, valid re-audit of `line`, then `mutate(record)` to tamper with it. Each call
+            writes its record to a new file (record files are receipts: added once, never rewritten)."""
+            nonlocal records_path
             rows_before = rows_before or [legacy_row()]
             lines = write_registry(rows_before)
             target = rows_before[line - 1]
             resolver = AnchorResolver(tmp)
             counter[0] += 1
+            previous_records = records_path
+            records_path = audit_dir / f"reaudit_records-{counter[0]}.jsonl"
             commit = commit_all()
             extra = {k: fields[k] for k in ("status_now", "later_closure_id") if k in fields}
             rec: dict[str, Any] = {
@@ -3474,7 +3545,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             if mutate:
                 mutate(rec)  # tamper after the row is built, then re-bind the digest so only the tampering is tested
                 row["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
-            previous = records_path.read_text() if keep_records and records_path.exists() else ""
+            previous = previous_records.read_text() if keep_records and previous_records.exists() else ""
             records_path.write_text(previous + json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
             commit_all()  # receipts count only once committed, after the recheck commit they judged
             return row
@@ -3882,6 +3953,57 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             lost_code = cmd_refresh_hashes(argparse.Namespace(registry=str(registry), dry_run=True))
         lost_report = json.loads(out.getvalue())
         check("refresh_dry_run_reports_missing_anchor", lost_code != 0 and lost_report.get("missing_refs"), lost_report)
+
+        # V1 r4 regressions.
+        # A2: a receipt rewritten inside a merge commit no longer counts.
+        row = append_with()
+        rec = [json.loads(l) for l in records_path.read_text().splitlines() if l.strip()][-1]
+        branch = git("rev-parse", "--abbrev-ref", "HEAD")
+        git("checkout", "-q", "-b", "side-a2")
+        (tmp / "side.txt").write_text("side", encoding="utf-8")
+        commit_all()
+        git("checkout", "-q", branch)
+        (tmp / "other.txt").write_text("other", encoding="utf-8")
+        commit_all()
+        git("merge", "-q", "--no-commit", "--no-ff", "side-a2")
+        rewrite_output(rec, "sol", note="rewritten during a merge")
+        row["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
+        records_path.write_text(json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
+        git("add", "-A")
+        git("commit", "-q", "-m", "merge side-a2")
+        report = validate_rows([legacy_row(), row])
+        sol_out = rec["reviews"]["sol"]["evidence_path"]
+        check("receipt_rewritten_in_merge_fails", has(report, f"reviews.sol: receipt {sol_out} was changed after it was first committed")
+              and has(report, "is stale"), report["errors"])
+        # A3: the record file is a receipt too, and the record must be the committed worker output's judgement.
+        row = append_with()
+        loose = audit_dir / "loose-records.jsonl"
+        loose.write_text(records_path.read_text(), encoding="utf-8")
+        row["reaudit"]["record"] = rel(loose)
+        report = validate_rows([legacy_row(), row])
+        check("uncommitted_record_file_fails", has(report, "re-audit record file: receipt") and has(report, "is stale"), report["errors"])
+        loose.unlink()
+        row = append_with(mutate=lambda rec: rec.update(claim="A different claim than the worker wrote down."))
+        report = validate_rows([legacy_row(), row])
+        check("record_differing_from_worker_output_fails", has(report, "record.claim differs from the committed worker output") and has(report, "is stale"), report["errors"])
+        # A4: packet text must be the anchor's text at the recheck commit.
+        def fabricated_packet_text(rec: dict[str, Any]) -> None:
+            rewrite_packet(rec, "sol", dependency_anchors=[{"ref": unit_ref, "sha256": rec["dependency_hashes_at_recheck"][unit_ref],
+                                                            "text": "Fabricated text the reviewer was shown.", "truncated": False}])
+        row = append_with(mutate=fabricated_packet_text)
+        report = validate_rows([legacy_row(), row])
+        check("packet_text_mismatch_fails", has(report, "is not that anchor's text at recheck_commit") and has(report, "is stale"), report["errors"])
+        # A5: walrus targets, match captures and del rebind a name in the same scope.
+        for name, source in (
+            ("pydef_walrus_rebinding_fails", "def f():\n    return 1\nif (f := (lambda: 2)):\n    pass\n"),
+            ("pydef_comprehension_walrus_fails", "def f():\n    return 1\n[f := 2 for _ in range(1)]\n"),
+            ("pydef_match_capture_fails", "def f():\n    return 1\nmatch 0:\n    case f:\n        pass\n"),
+            ("pydef_del_fails", "def f():\n    return 1\ndel f\n"),
+        ):
+            (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
+            check(name, not resolves("scripts/bind.py#pydef=f"))
+        (tmp / "scripts/bind.py").write_text("def g():\n    if (f := 3):\n        pass\n\ndef f():\n    return 1\n", encoding="utf-8")
+        check("pydef_walrus_in_nested_scope_ignored", "return 1" in AnchorResolver(tmp).content("scripts/bind.py#pydef=f")[1])
 
         # F12: the hash report reads anchor rows by their scope.
         fresh = _self_test_registry_row(closure_id="closure-fixture-fresh", hashes={
