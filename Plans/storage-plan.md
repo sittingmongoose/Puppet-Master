@@ -29600,7 +29600,134 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - folder.exported@1.0.0: Plans/FileManager.md#F-159 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
 - folder.moved@1.0.0: Plans/FileManager.md#F-160 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
 - folder.renamed@1.0.0: Plans/FileManager.md#F-161 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
-No family-specific stored value is introduced: events reuse canonical seglog, receipts reuse SP-286 custody and each history-only reader adopts the existing SP-278 checkpoint. No event registry row is appended. Candidate retention classes remain Case L-3 authority versus telemetry/operational history; this routing selects none.
+**Newly authored original-operation custody.** The twelve routes above each adopt the following
+physical companion through their own F unit. These bindings are scoped to those exact DL-045
+families and already specified commands. The reviewed search found no closed normal FileManager
+operation/path custody in current canon; generic receipt_record_baseline is deferred and is not used.
+
+Plans/filemanager_operation_contracts.schema.json owns the closed operation_custody and
+family_control values and their closed nested types; CV-560 adopts their cross-field rules.
+Plans/storage_value_registry.json adds only filemanager_operation_custody and
+filemanager_family_control; neither is an EventRecord family, generic checkpoint or event admission.
+Both are canonical_non_rebuildable, mandatory-backup redb values using SP-339 canonical MessagePack.
+No critical/MVP array changes. Exact table names are filemanager_operation_custody.v1 and
+filemanager_family_control.v1 in the actual selected Storage-instance database. No alternate store,
+flat-key alias, generic receipt key, SQLite fallback or lazy migration exists.
+
+For operation custody let K = hex(UTF8(storage_instance_id)) + ":" + hex(UTF8(project_id)) + ":" +
+hex(UTF8(operation_id)) + ":" + hex(UTF8(root_slot_id)), all lowercase without normalization.
+Let H = lowercase SHA-256(UTF8(K)). The exact UTF-8 key is filemanager_operation_custody.v1:<H>;
+the payload receipt_ref is exactly pmref:filemanager_operation:<H>. This fixed-size token fits the
+existing receipt-ref schema even at the maximum allowed raw identity lengths. root_slot_id is allocated once by the original accepting handler
+for each selected root (including the prospective creation slot), never by a retry or a reader.
+The original handler's filemanager.operation_custody.commit.v1 durably creates phase=accepted,
+revision=0, the actual storage_instance_id/recovery_epoch/Project/OperationId/family, closed
+accepted_command and accepted_path_snapshots before any filesystem effect. Creation records the
+absent destination and existing parent; copy/move/export record their original source and destination;
+delete/rename record their original target. Revalidate current permission, native source identity,
+FileSafe admission and conflict resolution before execution. The descriptor and acceptance epoch are
+immutable; no acceptance can be reconstructed from a replayed EventRecord after restore.
+
+The domain mutation owner authenticates its actual settled filesystem outcome, including native
+node kind, source/result/container identities, source/destination edges, affected set, confirmation,
+FileSafe/transfer evidence and descendant count where applicable. A same-key revision CAS changes
+accepted to effect_settled, freezing the complete closed family payload and settled path_snapshots
+in settlement. Intent and settlement original fields are never changed thereafter. The complete
+payload receipt_ref, Project/OperationId/family/command/handler/correlation/origin join the accepted
+row; payload ts is the original completion time, never a replay clock. A duplicate unequal settlement
+is an integrity conflict. This is a domain receipt, not an append queue or effect-retry authorization.
+A failed, cancelled or no-op accepted original instead CASes accepted -> no_event_settled with
+closed noncompletion (terminal_status, effect_state, original evidence_refs and settled_at_utc),
+null settlement/complete_event/first_append_receipt, and no completed EventRecord. The native owner
+must authenticate a known no-effect, rolled-back or partial-but-settled outcome; uncertainty cannot
+use this terminal branch and stays fenced. This original receipt may resolve a drain member without
+advancing last_admitted_sequence. No_event_settled is immutable and never becomes a completed
+operation on retry. This records the already specified noncompletion behavior, not a new rollback.
+Filesystem effect and redb are not one transaction: crash/uncertainty between them fences; the actual
+native owner reconciles its original journal/transfer evidence or reports unresolved, never repeats an
+uncertain effect or fabricates success. Lost accepted custody never becomes a new command.
+
+Each path_snapshot_entry binds path_ref, Project, path_snapshot_revision, Computer, original
+root_identity_ref, exact relative_components and captured node_ref/node_kind (or absent/null).
+Path refs in source/destination/affected_path_refs are exactly covered once in the settled receipt;
+no duplicate handle, cross-Project/revision/root substitution, absolute path, separator, dot/dot-dot or
+NUL component is accepted. The private components preserve original spelling and platform identity;
+current root relocation never rewrites a historical snapshot. Event payloads remain opaque refs only.
+filemanager.operation_custody.resolve.v1 takes the original receipt_ref and authenticated current
+Project/access context, selects H directly, reads the actual table/store/key, validates closed schema and every
+raw/key/hash/acceptance/settlement join, then returns the exact closed operation_custody row.
+Completed readers extract only its original settlement; a no_event_settled row resolves only its
+original noncompletion and cannot terminalize a completed event. It cannot accept a caller's
+row as origin. filemanager.path_snapshot.resolve.v1 additionally takes the exact path_ref/revision,
+selects its unique entry and checks current permission/deletion/retention before returning private
+location evidence. Resolution grants no filesystem action or access to a deleted/unavailable body.
+Root metadata needed for a path must resolve through its original FileManager/Computer owner with
+current access; absent original root custody yields unavailable, never a current-path fallback.
+
+Append uses only the frozen settled payload/identity and current native admission. After issuance,
+a final same-key CAS to history_settled stores the exact complete original EventRecord and original
+AppendReceipt after the family's separate strict-v2 resolve_full_value.v1 verification. Terminal
+completion follows this durable CAS. A lost append acknowledgement can retrieve the ORIGINAL full
+EventRecord through current authenticated SP-278 retained source (or the already settled domain
+row); its entire payload and owner envelope must match the frozen settlement and actual original
+acceptance epoch. Use the exact full-value request/result and final equality checks in each F unit.
+Missing original full value, v2 witness or native domain evidence fences; semantic resolution alone
+cannot fill it. Lost domain terminal CAS retries resolve the same original, never a second effect or
+append. SP-336 full-flush-before-durable-redb rules and barrier-class receipts apply to UI completion.
+This domain row does not change SP-286 first issuance or reconstruct a missing first acknowledgement.
+
+**Newly authored exact-family withdrawal control.** For each exact route the key is
+filemanager_family_control.v1:{hex(UTF8(storage_instance_id))}:{event_type}:1.0.0. The closed value
+has storage/family/version, control_revision, state, admission_revision, last_admitted_sequence,
+writer_cutoff_sequence, reader_enabled, drain_operation_keys and redaction_profile, with no open map.
+Prepared has no admission, no cutoff, sequence 0, reader disabled and no drain keys. Only a future
+actual exact-family Event Authority admission plus installed native gates can CAS prepared to active;
+this draft creates no active control or admission record. Missing control refuses dispatch/delivery.
+storage.filemanager_family_control.cas.v1 is the sole writer. It reads the actual current selected
+row, schema and raw/key identities, checks expected control_revision and exact authorized owner
+transition, and commits the full next value in one durable redb transaction under Storage's existing
+writer/coordinator exclusion. A revision changes on every publication; no ABA, blind overwrite or
+caller-supplied active flag. Each issued append advances last_admitted_sequence from its exact
+SP-286 receipt before terminal publication, under that gate. It is the maximum issued sequence of
+this exact family, not a contiguous family sequence count. Gate failure with issued custody blocks
+further admission until native recovery reconciles the original; it never hides an issued append.
+
+Active-to-draining CAS closes new command acceptance, records the exact accepted operation keys
+and preserves readers. Only those originals may settle/append under the gate. Late accepted keys,
+new effects, crossed versions, unresolved originals or inconsistent receipt boundaries fence the
+transition. When all drain operations are reconciled, a single draining-to-withdrawn CAS sets
+writer_cutoff_sequence=last_admitted_sequence and empties drain_operation_keys under the append
+gate. In the zero-event case both sequence values are 0. A pending uncertain operation prevents
+final cutoff; its truthful recovery state remains durable. No append can occur after that commit.
+The same-version withdrawn writer is never reopened; a successor requires its own explicit contract
+and admission. Reader retirement CAS sets reader_enabled=false before replacement. Each read
+joins exact current control/version, final cutoff when withdrawn (otherwise current issued high-water),
+current SP-278 token/snapshot, access and retained original, and rechecks revision before disclosure.
+Retirement or any concurrent change retries/refuses the delivery. SP-278 rebuild changes no cutoff.
+
+**Activation, backup, restore and retention boundary.** StorageMigrationCoordinator installs both
+literal tables, exact schemas/codecs, resolvers, CAS gates and mandatory backup membership together
+through protected preflight/backup/verification/version-last activation. Old generic receipts have no
+verified mapping and receive no historical backfill. Unknown versions fence pending explicit migration.
+BRS-031's brief capture barrier and SP-286 backup_gate.v2 capture both entire tables, canonical
+seglog/source/custody and original root/source dependencies at the same verified boundary/epoch;
+background copy uses that fixed snapshot. An unresolved operation is disclosed and fences dependent
+completion on restore; no snapshot is permission to execute it. Exact original operation/epoch/payload/
+paths and cutoff/revision/reader flags survive backup/restore, never rebuild from events or current disk.
+Verify completeness and all joins before enabling either writer or reader. Source/custody/control skew,
+missing rows or mixed epochs fence. A confirmed older restore follows SP-286's actual restore journal,
+loss disclosure and pre_restore evidence: absent post-backup originals stay unavailable, and an older
+active control cannot reopen a subsequently withdrawn version. Preserve verified newer withdrawal
+control or fence until its actual authority is resolved; equal hashes or a lower restored revision do
+not supply that authority. Actual fresh operations require current admission and a new native owner
+acceptance under the current restore session; old retries keep their original epoch and identity.
+
+Case L-3 explicitly assigns receipts, audit authority and source lineage indefinite/no-count-eviction;
+these two ORIGINAL RECEIPT / ADMISSION AUTHORITY companions bind the existing
+RP-AUTHORITY-INDEFINITE (no new policy or deletion choice). They never store file bodies and never
+grant access. All twelve EVENT HISTORY retention_policy_ref values stay PENDING_RETENTION_DECISION;
+no class is selected for them. SP-278 retains its existing checkpoint policy; no family projection or
+checkpoint is added. No event registry row is appended. Native execution remains NOT_RUN.
 
 ```yaml
 plan_unit_id: SP-560
@@ -29622,7 +29749,7 @@ validation_surfaces:
 risk_class: file_event_contract_routing
 reasoning_tier: high
 context_scope: filemanager_event_authority
-implementation_surfaces: [Plans/storage-plan.md]
+implementation_surfaces: [Plans/storage-plan.md, Plans/filemanager_operation_contracts.schema.json, Plans/storage_value_registry.json]
 node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
 source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
 preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]

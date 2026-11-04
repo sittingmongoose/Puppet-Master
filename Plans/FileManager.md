@@ -5500,19 +5500,33 @@ OperationId, original command instance/correlation, Project, selected root and r
 The payload is the closed schema Plans/event_payloads/file_manager/file_copied.schema.json
 (pm.file_manager_event.file_copied.schema.v1, version 1.0.0), adopted in full. Required fields are not inferred from UI focus.
 
+Actual identity requirement: result_node_ref != source_node_ref; the original resolver must also reject distinct aliases of the same native node. Claimed semantic booleans cannot override this relation.
+
 **Ordering and first custody.** Validate exact scope, permissions, FileSafe decision, source version and
 conflict outcome before mutation. The original FileSafe/transfer owner settles the actual filesystem
 effect and original receipt before this producer prepares a completed event. Original operation
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -5545,10 +5559,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -5562,10 +5586,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw file.copied,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:file.copied:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -5623,19 +5654,33 @@ OperationId, original command instance/correlation, Project, selected root and r
 The payload is the closed schema Plans/event_payloads/file_manager/file_created.schema.json
 (pm.file_manager_event.file_created.schema.v1, version 1.0.0), adopted in full. Required fields are not inferred from UI focus.
 
+Actual identity requirement: result_node_ref != destination_container_ref; the resolved result is a new child of that exact existing container, never an alias of the container. Claimed semantic booleans cannot override this relation.
+
 **Ordering and first custody.** Validate exact scope, permissions, FileSafe decision, source version and
 conflict outcome before mutation. The original FileSafe/transfer owner settles the actual filesystem
 effect and original receipt before this producer prepares a completed event. Original operation
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -5668,10 +5713,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -5685,10 +5740,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw file.created,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:file.created:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -5752,13 +5814,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -5791,10 +5865,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -5808,10 +5892,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw file.deleted,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:file.deleted:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -5875,13 +5966,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -5914,10 +6017,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -5931,10 +6044,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw file.exported,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:file.exported:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -5998,13 +6118,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6037,10 +6169,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6054,10 +6196,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw file.moved,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:file.moved:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -6121,13 +6270,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6160,10 +6321,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6177,10 +6348,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw file.renamed,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:file.renamed:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -6238,19 +6416,33 @@ OperationId, original command instance/correlation, Project, selected root and r
 The payload is the closed schema Plans/event_payloads/file_manager/folder_copied.schema.json
 (pm.file_manager_event.folder_copied.schema.v1, version 1.0.0), adopted in full. Required fields are not inferred from UI focus.
 
+Actual identity requirement: result_folder_ref != source_folder_ref; the original resolver must also reject distinct aliases of the same native node. Claimed semantic booleans cannot override this relation.
+
 **Ordering and first custody.** Validate exact scope, permissions, FileSafe decision, source version and
 conflict outcome before mutation. The original FileSafe/transfer owner settles the actual filesystem
 effect and original receipt before this producer prepares a completed event. Original operation
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6283,10 +6475,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6300,10 +6502,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw folder.copied,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:folder.copied:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -6361,19 +6570,33 @@ OperationId, original command instance/correlation, Project, selected root and r
 The payload is the closed schema Plans/event_payloads/file_manager/folder_created.schema.json
 (pm.file_manager_event.folder_created.schema.v1, version 1.0.0), adopted in full. Required fields are not inferred from UI focus.
 
+Actual identity requirement: result_folder_ref != destination_container_ref; the resolved result is a new child of that exact existing container, never an alias of the container. Claimed semantic booleans cannot override this relation.
+
 **Ordering and first custody.** Validate exact scope, permissions, FileSafe decision, source version and
 conflict outcome before mutation. The original FileSafe/transfer owner settles the actual filesystem
 effect and original receipt before this producer prepares a completed event. Original operation
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6406,10 +6629,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6423,10 +6656,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw folder.created,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:folder.created:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -6490,13 +6730,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6529,10 +6781,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6546,10 +6808,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw folder.deleted,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:folder.deleted:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -6613,13 +6882,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6652,10 +6933,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6669,10 +6960,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw folder.exported,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:folder.exported:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -6736,13 +7034,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6775,10 +7085,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6792,10 +7112,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw folder.moved,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:folder.moved:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.
@@ -6859,13 +7186,25 @@ effect and original receipt before this producer prepares a completed event. Ori
 receipt/evidence refs must authenticate the entire payload, node kind, affected set, command/handler,
 timestamp and terminal result, not merely report success. Append follows that settled receipt;
 terminal public completion follows the original append acknowledgement. Explicitly adopt
-SP-286/CV-339 storage.first_append_receipt.resolve.v2, including full-value v2 custody, original
-eleven-field AppendReceipt and four-field original_append_result, never a caller-supplied digest.
+SP-286/CV-339 storage.first_append_receipt.resolve.v2 for semantic acknowledgement replay only,
+including the original eleven-field AppendReceipt and four-field original_append_result. Full-value
+recovery separately adopts storage.first_append_receipt.resolve_full_value.v1 with the exact closed
+Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_request containing the complete
+ORIGINAL EventRecord, including its three Storage-assigned fields, never an asserted digest. Require
+the actual selected canonical custody_v2 row (2.0.0), exact original event ID and recomputed CV-339
+full-value commitment. The closed #/$defs/full_value_result returns first_append_receipt,
+original_segment_ref and original_event_value_commitment; compare all three to that immutable row.
+After every resolver, validator and copy, recheck the complete original request, frozen operation
+payload/epoch, candidate, selected row, current SP-278 authority, access and control revision before
+terminalization or disclosure. Alternate semantic IDs, v1/no witness, changed typed values, source or
+backup skew and late changes fence; no backfill, reconstruction or fallback to semantic proof.
 Use the actual current ordinary SeglogFrameV2 append/read and SP-336 group durability; no invented
 per-group manifest sync. Uncertain mutation or append is recovery-required. Reconcile the original
 operation receipt and first append with their original owners; never perform a second filesystem
 effect to repair missing history. A lost previously issued receipt is not permission to mint one.
-Missing or contradictory original custody fences completion. No new pending-event outbox is stored.
+Failed/cancelled/no-op originals use SP-560 no_event_settled and append no completed event; uncertain
+effects stay fenced. Missing or contradictory original custody fences completion. The SP-560 domain intent/receipt is
+original operation custody, not a dispatchable pending-event outbox; it never authorizes effect replay.
 
 **Identity and scope.** This schema's scope is project_only: its real project_id equals the EventRecord
 Project and original command/operation scope. App operations do not acquire a fabricated Project or
@@ -6898,10 +7237,20 @@ Generic checkpoint failure fences the reader until the actual SP-278 owner rebui
 canonical seglog. Retention gaps remain disclosed as gaps, never recreated file operations.
 
 **Custody and retention.** Canonical seglog owns the event and coherent canonical backup; SP-286 owns
-first-receipt custody. FileSafe/transfer receipt owners retain their original journals and source refs;
-the event creates no independent path map, file-content copy, transfer manifest or undo authority.
-Opaque pm-path-ref:v1:project:<token> resolves only the exact path snapshot entry in the original
-receipt_ref and Project, with current access/deletion/retention checks. Other pmref values resolve
+first-receipt custody. This family separately adopts SP-560 filemanager_operation_custody.v1
+and its closed operation_custody, accepted_command, settlement and path_snapshot_entry schemas
+in Plans/filemanager_operation_contracts.schema.json. FileManager owns its accepted intent and
+settled original receipt; FileSafe/transfer owners keep their distinct original journals. The event
+contains no raw paths, file-content copy, transfer manifest or undo authority.
+receipt_ref is exactly pmref:filemanager_operation:<H>, where H is SP-560's SHA-256
+original-operation token for the original accepted root slot. filemanager.operation_custody.resolve.v1
+reads that exact table/key/store, joins Project/OperationId/family/command/correlation and frozen
+acceptance recovery_epoch, and returns the immutable settlement; caller copies are not authority.
+Opaque pm-path-ref:v1:project:<token> resolves through filemanager.path_snapshot.resolve.v1
+only to its unique settled path_snapshot_entry in that receipt and snapshot revision, preserving
+Computer/root identity, exact relative components and captured node-or-absence. The resolver
+checks current access/deletion/retention before returning any private location; spelling never
+proves existence. Never use current focus, current paths or another receipt as a substitute. Other pmref values resolve
 only under their actual typed original owner. Reject raw paths, file bodies, credentials, URLs with
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
@@ -6915,10 +7264,17 @@ own owners' policies. The generic checkpoint keeps SP-278's existing policy, wit
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
 are unavailable, never coerced or treated as sibling families. Existing unadmitted drafts gain no
 historical admission. No alias, sibling outcome or app variant is admitted. To withdraw folder.renamed,
-Storage records this exact family's writer cutoff at its last admitted sequence, fences new
-dispatch, reconciles original in-flight operations/custody and preserves their truthful recovery state.
-Retained history reads use this exact reader version and cutoff; an unknown version or inconsistent
-cutoff fences delivery. Reader retirement disables that reader before replacement; the replacement
+this family independently adopts SP-560 filemanager_family_control.v1 at the literal key
+filemanager_family_control.v1:{hex(storage_instance_id)}:folder.renamed:1.0.0 and its closed
+family_control schema. storage.filemanager_family_control.cas.v1 owns its revision-checked durable
+publication under the same writer/coordinator gate as command acceptance and append issuance.
+Active-to-draining CAS fences fresh dispatch and freezes exact in-flight operation keys; only those
+originals may reconcile. Unresolved effects or receipts prevent final cutoff. After all issued original
+receipts settle, one durable CAS publishes withdrawn with writer_cutoff_sequence equal to the last
+admitted sequence and no drain members. No append crosses that final cutoff. The reader joins this
+actual control, exact version and SP-278 snapshot and revalidates control revision immediately before
+delivery; missing control, post-cutoff sequence or late withdrawal fences. Reader retirement sets
+reader_enabled=false by the same CAS before replacement; the replacement
 must prove its own version/schema and SP-278 current coverage. No family projector is rebuilt because
 none exists. SP-278 rebuild never repeats original effects, rewrites originals or changes the cutoff.
 Retention and writer admission remain open; this document grants no runtime authority.

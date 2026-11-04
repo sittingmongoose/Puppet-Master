@@ -24497,6 +24497,20 @@ The selected app request union accepts only an authenticated user actor. A malfo
 - folder.renamed@1.0.0: Plans/event_payloads/file_manager/folder_renamed.schema.json; semantic owner F-161.
 Each closed root is adopted independently under its own schema_id and schema_version. Opaque references resolve original owner receipt entries, never raw filesystem paths. No family is admitted.
 
+The newly authored closed Plans/filemanager_operation_contracts.schema.json types operation_custody,
+accepted_command, settlement, path_snapshot_entry and family_control are adopted by each own F unit
+through SP-560. Accepted descriptor/store/epoch and settled payload/path originals are immutable;
+only accepted -> effect_settled -> history_settled or accepted -> no_event_settled revision CAS
+transitions are permitted; the latter has a closed noncompletion receipt and no completed event. Exact
+receipt_ref/key, family/payload discriminator, command/envelope/scope, path coverage and source/
+result/container joins are semantic requirements in addition to closed shape validation. Copy result
+identity differs from source; create result differs from destination container, including native aliases.
+Unknown schemas, unequal retries, unavailable originals, bad joins or late changes fence. The separate
+SP-286/CV-339 full_value_request/full_value_result and strict v2 witness remain their original shapes;
+resolve.v2 is semantic replay only and cannot establish full-value equality. SP-560 supplies literal
+physical keys, resolvers, transaction fences, activation and coherent backup/restore; the generic
+receipt_record_baseline supplies none of this authority. No admission is granted.
+
 ```yaml
 plan_unit_id: CV-560
 unit_type: contract
@@ -24517,7 +24531,7 @@ validation_surfaces:
 risk_class: file_event_contract_routing
 reasoning_tier: high
 context_scope: filemanager_event_authority
-implementation_surfaces: [Plans/Contracts_V0.md]
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/filemanager_operation_contracts.schema.json]
 node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
 source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
 preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]

@@ -7237,7 +7237,13 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
 
 ### ATS-280 - FileManager per-family event oracles
 
-Plans/filemanager_event_contract_fixtures.json contains separately named positive and negative cases for each of the twelve exact FileManager families. Run python3 scripts/pm-filemanager-event-contracts.py. The checker validates closed payloads and rejects kind/scope/extra-field and original identity, recovery ordering or replay-effect violations. Native filesystem, original receipt, crash/restore and shared Storage execution obligations remain NOT_RUN. No admission or retention policy is inferred from a static pass.
+Plans/filemanager_event_contract_fixtures.json contains separately named positive and negative cases for each of the twelve exact FileManager families. Run python3 scripts/pm-filemanager-event-contracts.py. The checker validates closed payloads and rejects kind/scope/extra-field and original identity, recovery ordering or replay-effect violations. Added independent negatives keep claimed semantic booleans true while copy result equals source
+or create result equals the existing container. Closed operation/control shapes, physical key/raw
+identity, frozen epoch/payload/path coverage, original full-value request/result and strict v2 witness,
+final selected-row equality, cutoff CAS/revision/reader fences and restore coherence have explicit
+positive/negative model cases. Every added checker rule runs through this full checker; mutation
+cases include internally consistent changed payloads so earlier equality guards cannot mask identity
+failures. Native filesystem, original receipt, crash/restore and shared Storage execution obligations remain NOT_RUN. No admission or retention policy is inferred from a static pass.
 
 ```yaml
 plan_unit_id: ATS-280
@@ -7259,7 +7265,7 @@ validation_surfaces:
 risk_class: file_event_contract_routing
 reasoning_tier: high
 context_scope: filemanager_event_authority
-implementation_surfaces: [Plans/Automated_Testing_System.md]
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/filemanager_event_contract_fixtures.json, scripts/pm-filemanager-event-contracts.py]
 node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
 source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
 preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]
