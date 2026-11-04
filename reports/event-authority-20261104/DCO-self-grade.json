@@ -1,0 +1,1866 @@
+{
+  "schema_id": "pm.event_authority.depth_assessment.v1",
+  "assessment_id": "DCO-wave2-20261104",
+  "assessment_kind": "self_grade_prepared_without_admission",
+  "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+  "assessed_tree": "58e68620d2dbad2dbd9554d396538f9577ea29d7",
+  "registry": {
+    "path": "Plans/event_family_registry.json",
+    "modified": false
+  },
+  "native_execution": "NOT_RUN",
+  "status_counts": {
+    "PASS": 66,
+    "ABSENT": 6
+  },
+  "rows": [
+    {
+      "event_type": "coordination.agent_aborted",
+      "family_id": "event-family-coordination-agent-aborted",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-540",
+          "line_start": 27251,
+          "line_end": 27251,
+          "quote": "**Producer and ordering.** `AgentCoordinator.record_abort(AgentAbortResolution)`: Only the component that resolves the abort: the parent run's orchestration path, the user command path or th",
+          "excerpt_sha256": "740c5dedaf3254c22088c849d95960cd6e89c066c738d2d2672829f30955fe8a",
+          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "quote_check": "exact"
+        }
+      ],
+      "pass_count": 11,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "current_owner_units": [
+        "SP-540",
+        "OSI-438",
+        "CV-353",
+        "SP-320",
+        "SP-278",
+        "SP-286",
+        "SP-339",
+        "ATS-058"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Central registry membership is absent; the prepared row remains denied. This drafting wave performs no admission.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27265,
+              "line_end": 27265,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-540 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27249,
+              "line_end": 27249,
+              "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
+              "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "AgentCoordinator.record_abort(AgentAbortResolution) uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27251,
+              "line_end": 27251,
+              "quote": "**Producer and ordering.** `AgentCoordinator.record_abort(AgentAbortResolution)`: Only the component that resolves the abort: the parent run's orchestration path, the user command path or th",
+              "excerpt_sha256": "740c5dedaf3254c22088c849d95960cd6e89c066c738d2d2672829f30955fe8a",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27253,
+              "line_end": 27253,
+              "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_aborted` (schema ID `pm.coordination_event.agent_aborted.schema.v1`, version 1.0.0) i",
+              "excerpt_sha256": "160a8d5269b89ac5a04d134de854ef5b4ca14e764b82702d00ff97ba33e7ce80",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/coordination_event_payloads.schema.json",
+              "unit": "#/$defs/agent_aborted",
+              "line_start": 584,
+              "line_end": 584,
+              "quote": "\"agent_aborted\": {",
+              "excerpt_sha256": "b6817cc5534556562876889df294ff55551849183fb9ba708c9355461523bc25",
+              "file_sha256": "ff7779df68c9bc7ed8fb61a776df6544c2efc2d8671214ab4b9fe7adddc90be3",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27255,
+              "line_end": 27255,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27255,
+              "line_end": 27255,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27261,
+              "line_end": 27261,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3",
+              "line_start": 17416,
+              "line_end": 17416,
+              "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
+              "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27261,
+              "line_end": 27261,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Terminal, as coordination.agent_unregistered, with agent status cancelled. aborted_by_ref kind follows abort_reason: run and parent_run_id for parent, actor for user, component for runtime. The first terminal event to append wins.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27257,
+              "line_end": 27257,
+              "quote": "**Transition.** Terminal, as coordination.agent_unregistered, with agent status cancelled. aborted_by_ref kind follows abort_reason: run and parent_run_id for parent, actor for user, compone",
+              "excerpt_sha256": "e280d23e2b96caefd89e600c7b664ecf6e2321a4ddfc260af9721e0603fb43d2",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27259,
+              "line_end": 27259,
+              "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
+              "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27263,
+              "line_end": 27263,
+              "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
+              "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-540",
+              "line_start": 27265,
+              "line_end": 27265,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry admission deliberately absent; later integration must admit this family individually.",
+        "Native activation remains gated on all seven coordination admissions.",
+        "Existing unittest helper pin subtest fails twice on origin/main and branch; requires a separately authorized test update."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_coordination_events.py: pass",
+        "scripts/pm_coordination_wave2.py: pass",
+        "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
+      ],
+      "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
+      "grading_batch": "DCO_self_grade_20261104"
+    },
+    {
+      "event_type": "coordination.agent_crashed",
+      "family_id": "event-family-coordination-agent-crashed",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-541",
+          "line_start": 27323,
+          "line_end": 27323,
+          "quote": "**Producer and ordering.** `AgentCoordinator.record_crash(AgentCrashResolution)`: Only the scheduler or the crash detector, once, on direct crash evidence (process_exit, heartbeat_expired, p",
+          "excerpt_sha256": "7377fcee17c8eed6268e574b9357e85f75321f5a8517f0852110d0406b76cea4",
+          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "quote_check": "exact"
+        }
+      ],
+      "pass_count": 11,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "current_owner_units": [
+        "SP-541",
+        "OSI-438",
+        "CV-353",
+        "SP-320",
+        "SP-278",
+        "SP-286",
+        "SP-339",
+        "ATS-058",
+        "OSI-650"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Central registry membership is absent; the prepared row remains denied. This drafting wave performs no admission.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27337,
+              "line_end": 27337,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-541 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27321,
+              "line_end": 27321,
+              "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
+              "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "AgentCoordinator.record_crash(AgentCrashResolution) uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27323,
+              "line_end": 27323,
+              "quote": "**Producer and ordering.** `AgentCoordinator.record_crash(AgentCrashResolution)`: Only the scheduler or the crash detector, once, on direct crash evidence (process_exit, heartbeat_expired, p",
+              "excerpt_sha256": "7377fcee17c8eed6268e574b9357e85f75321f5a8517f0852110d0406b76cea4",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-650",
+              "line_start": 3969,
+              "line_end": 3969,
+              "quote": "For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded on branch `plans/ea-s09-decisio",
+              "excerpt_sha256": "5a7da6e026f286abd145f13d3ace5fc4eedd7721e9ade4c36338ee7ca9ae5809",
+              "file_sha256": "b61da72a2ad907da2b438c037f75b441606c19c0a2f5bd88362d348476ebca3b",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27325,
+              "line_end": 27325,
+              "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_crashed` (schema ID `pm.coordination_event.agent_crashed.schema.v1`, version 1.0.0) i",
+              "excerpt_sha256": "f8c025e361131196c265944b191385ce544a8d41c8bfe97ebdff0abc2cd63a66",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/coordination_event_payloads.schema.json",
+              "unit": "#/$defs/agent_crashed",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "\"agent_crashed\": {",
+              "excerpt_sha256": "5b05db1ffe3d49a8140013c9b059103e5dfcff35e51262844ea567d58b134b57",
+              "file_sha256": "ff7779df68c9bc7ed8fb61a776df6544c2efc2d8671214ab4b9fe7adddc90be3",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27327,
+              "line_end": 27327,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27327,
+              "line_end": 27327,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27333,
+              "line_end": 27333,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3",
+              "line_start": 17416,
+              "line_end": 17416,
+              "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
+              "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27333,
+              "line_end": 27333,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Terminal, as coordination.agent_unregistered, with agent status failed. The first terminal event to append wins; the other gets coordination_conflict and appends nothing. Heartbeat expiry reaches the agent's claims only through this event.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27329,
+              "line_end": 27329,
+              "quote": "**Transition.** Terminal, as coordination.agent_unregistered, with agent status failed. The first terminal event to append wins; the other gets coordination_conflict and appends nothing. Hea",
+              "excerpt_sha256": "bab22eb5d39afc3219db99845d262e17454f909a2400dad7850308022b2f666b",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27331,
+              "line_end": 27331,
+              "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
+              "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27335,
+              "line_end": 27335,
+              "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
+              "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-541",
+              "line_start": 27337,
+              "line_end": 27337,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry admission deliberately absent; later integration must admit this family individually.",
+        "Native activation remains gated on all seven coordination admissions.",
+        "Existing unittest helper pin subtest fails twice on origin/main and branch; requires a separately authorized test update.",
+        "DL-095 decision recording branch must integrate before/with OSI-650."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_coordination_events.py: pass",
+        "scripts/pm_coordination_wave2.py: pass",
+        "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
+      ],
+      "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
+      "grading_batch": "DCO_self_grade_20261104"
+    },
+    {
+      "event_type": "coordination.agent_file_ownership_updated",
+      "family_id": "event-family-coordination-agent-file-ownership-updated",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-542",
+          "line_start": 27397,
+          "line_end": 27397,
+          "quote": "**Producer and ordering.** `AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate); Gap #33's update_file_activity_claim is a sketch of the same append`: The same execution path, f",
+          "excerpt_sha256": "d126f6218a1048e08120787e21cd44de0b050c4cbf14c5906379b751d3a9009e",
+          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "quote_check": "exact"
+        }
+      ],
+      "pass_count": 11,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "current_owner_units": [
+        "SP-542",
+        "OSI-438",
+        "CV-353",
+        "SP-320",
+        "SP-278",
+        "SP-286",
+        "SP-339",
+        "ATS-058"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Central registry membership is absent; the prepared row remains denied. This drafting wave performs no admission.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27411,
+              "line_end": 27411,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-542 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27395,
+              "line_end": 27395,
+              "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
+              "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate); Gap #33's update_file_activity_claim is a sketch of the same append uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27397,
+              "line_end": 27397,
+              "quote": "**Producer and ordering.** `AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate); Gap #33's update_file_activity_claim is a sketch of the same append`: The same execution path, f",
+              "excerpt_sha256": "d126f6218a1048e08120787e21cd44de0b050c4cbf14c5906379b751d3a9009e",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27399,
+              "line_end": 27399,
+              "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_file_ownership_updated` (schema ID `pm.coordination_event.agent_file_ownership_update",
+              "excerpt_sha256": "e41438b0d6649c633211b8c59fc39b388b7b7efde259a37c97f28e470e9158e4",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/coordination_event_payloads.schema.json",
+              "unit": "#/$defs/agent_file_ownership_updated",
+              "line_start": 342,
+              "line_end": 342,
+              "quote": "\"agent_file_ownership_updated\": {",
+              "excerpt_sha256": "7b065d73b1015c12f5e4cd4feae73e78d8108c3bc5651353d6d1a9063393d5c2",
+              "file_sha256": "ff7779df68c9bc7ed8fb61a776df6544c2efc2d8671214ab4b9fe7adddc90be3",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27401,
+              "line_end": 27401,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27401,
+              "line_end": 27401,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27407,
+              "line_end": 27407,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3",
+              "line_start": 17416,
+              "line_end": 17416,
+              "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
+              "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27407,
+              "line_end": 27407,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "A registered, non-terminal agent only, at the agent's revision plus 1. A new claim, or a changed claim_kind, claim_confidence or operation_id for the same path_hash, replaces the agent's claim row for that path; an identical claim returns coordination_unchanged. A claim warns and sequences agents and is not a FileSafe lock or lease. It ends only when the agent's terminal event is applied; there is no release value.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27403,
+              "line_end": 27403,
+              "quote": "**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. A new claim, or a changed claim_kind, claim_confidence or operation_id for the same path_hash, replaces",
+              "excerpt_sha256": "3150501f4fa4277b1c111fd5f7589e6ae10c42492fe2123bc7dc4ad48569f5fa",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27405,
+              "line_end": 27405,
+              "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
+              "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27409,
+              "line_end": 27409,
+              "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
+              "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-542",
+              "line_start": 27411,
+              "line_end": 27411,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry admission deliberately absent; later integration must admit this family individually.",
+        "Native activation remains gated on all seven coordination admissions.",
+        "Existing unittest helper pin subtest fails twice on origin/main and branch; requires a separately authorized test update."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_coordination_events.py: pass",
+        "scripts/pm_coordination_wave2.py: pass",
+        "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
+      ],
+      "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
+      "grading_batch": "DCO_self_grade_20261104"
+    },
+    {
+      "event_type": "coordination.agent_operation_updated",
+      "family_id": "event-family-coordination-agent-operation-updated",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-543",
+          "line_start": 27469,
+          "line_end": 27469,
+          "quote": "**Producer and ordering.** `AgentCoordinator.update_operation(AgentOperationUpdate)`: The same execution path: once for the initial operation right after registration, then on a new operatio",
+          "excerpt_sha256": "a2a7bfde7c3ad5377f24b2f60c30e8ec4c1a1c45551d4cd28ebffb53887c4ffe",
+          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "quote_check": "exact"
+        }
+      ],
+      "pass_count": 11,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "current_owner_units": [
+        "SP-543",
+        "OSI-438",
+        "CV-353",
+        "SP-320",
+        "SP-278",
+        "SP-286",
+        "SP-339",
+        "ATS-058"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Central registry membership is absent; the prepared row remains denied. This drafting wave performs no admission.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27483,
+              "line_end": 27483,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-543 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27467,
+              "line_end": 27467,
+              "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
+              "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "AgentCoordinator.update_operation(AgentOperationUpdate) uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27469,
+              "line_end": 27469,
+              "quote": "**Producer and ordering.** `AgentCoordinator.update_operation(AgentOperationUpdate)`: The same execution path: once for the initial operation right after registration, then on a new operatio",
+              "excerpt_sha256": "a2a7bfde7c3ad5377f24b2f60c30e8ec4c1a1c45551d4cd28ebffb53887c4ffe",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27471,
+              "line_end": 27471,
+              "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_operation_updated` (schema ID `pm.coordination_event.agent_operation_updated.schema.v",
+              "excerpt_sha256": "3583d1f059c3458509c17c05a980beb2414ee1e8261f1df1fe31fb9e565eddca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/coordination_event_payloads.schema.json",
+              "unit": "#/$defs/agent_operation_updated",
+              "line_start": 258,
+              "line_end": 258,
+              "quote": "\"agent_operation_updated\": {",
+              "excerpt_sha256": "79c56d53887646127f45c6963062f61812b9a0494d2af3397aea340b85fbd3c7",
+              "file_sha256": "ff7779df68c9bc7ed8fb61a776df6544c2efc2d8671214ab4b9fe7adddc90be3",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27473,
+              "line_end": 27473,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27473,
+              "line_end": 27473,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27479,
+              "line_end": 27479,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3",
+              "line_start": 17416,
+              "line_end": 17416,
+              "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
+              "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27479,
+              "line_end": 27479,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "A registered, non-terminal agent only, at the agent's revision plus 1. The latest event for an operation_id wins in coordination_operation_projection.v1 and sets the agent's current operation; the first observation time is kept. An unchanged operation returns coordination_unchanged. Operation rows stay after the terminal event.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27475,
+              "line_end": 27475,
+              "quote": "**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. The latest event for an operation_id wins in coordination_operation_projection.v1 and sets the agent's ",
+              "excerpt_sha256": "c8500a032e9b3e5518f92ffa5a35c677e6b0dc40ba8c2cde69916b1fc16a3451",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27477,
+              "line_end": 27477,
+              "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
+              "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27481,
+              "line_end": 27481,
+              "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
+              "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-543",
+              "line_start": 27483,
+              "line_end": 27483,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry admission deliberately absent; later integration must admit this family individually.",
+        "Native activation remains gated on all seven coordination admissions.",
+        "Existing unittest helper pin subtest fails twice on origin/main and branch; requires a separately authorized test update."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_coordination_events.py: pass",
+        "scripts/pm_coordination_wave2.py: pass",
+        "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
+      ],
+      "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
+      "grading_batch": "DCO_self_grade_20261104"
+    },
+    {
+      "event_type": "coordination.agent_status_updated",
+      "family_id": "event-family-coordination-agent-status-updated",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-544",
+          "line_start": 27541,
+          "line_end": 27541,
+          "quote": "**Producer and ordering.** `AgentCoordinator.update_status(AgentStatusUpdate)`: The Orchestrator's execution path for the agent, on an actual change of status or status_reason. Only AgentCoo",
+          "excerpt_sha256": "bbf02256d3e14c0a320e08bee08ee20a76d1ae65cd1280109701f689456825c9",
+          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "quote_check": "exact"
+        }
+      ],
+      "pass_count": 11,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "current_owner_units": [
+        "SP-544",
+        "OSI-438",
+        "CV-353",
+        "SP-320",
+        "SP-278",
+        "SP-286",
+        "SP-339",
+        "ATS-058"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Central registry membership is absent; the prepared row remains denied. This drafting wave performs no admission.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27555,
+              "line_end": 27555,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-544 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27539,
+              "line_end": 27539,
+              "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
+              "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "AgentCoordinator.update_status(AgentStatusUpdate) uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27541,
+              "line_end": 27541,
+              "quote": "**Producer and ordering.** `AgentCoordinator.update_status(AgentStatusUpdate)`: The Orchestrator's execution path for the agent, on an actual change of status or status_reason. Only AgentCoo",
+              "excerpt_sha256": "bbf02256d3e14c0a320e08bee08ee20a76d1ae65cd1280109701f689456825c9",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27543,
+              "line_end": 27543,
+              "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_status_updated` (schema ID `pm.coordination_event.agent_status_updated.schema.v1`, ve",
+              "excerpt_sha256": "70ec62a9827ee3117c85e57db416b4ac026a58af1ebbff6990cbc3411ba0e3de",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/coordination_event_payloads.schema.json",
+              "unit": "#/$defs/agent_status_updated",
+              "line_start": 186,
+              "line_end": 186,
+              "quote": "\"agent_status_updated\": {",
+              "excerpt_sha256": "8d7b876366656fefef67c0fea3578101b28218018c082e582ccad6cc28a995eb",
+              "file_sha256": "ff7779df68c9bc7ed8fb61a776df6544c2efc2d8671214ab4b9fe7adddc90be3",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27545,
+              "line_end": 27545,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27545,
+              "line_end": 27545,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27551,
+              "line_end": 27551,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3",
+              "line_start": 17416,
+              "line_end": 17416,
+              "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
+              "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27551,
+              "line_end": 27551,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "A registered, non-terminal agent only, at the agent's revision plus 1. status takes queued, running, awaiting_parent or blocked; complete, failed and cancelled arise only from the three terminal families, and a status update never stands in for a terminal event. An update that changes neither status nor status_reason returns coordination_unchanged; a skipped or repeated revision is stale_revision, a changed lineage lineage_mismatch, an event after the terminal event already_terminal.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27547,
+              "line_end": 27547,
+              "quote": "**Transition.** A registered, non-terminal agent only, at the agent's revision plus 1. status takes queued, running, awaiting_parent or blocked; complete, failed and cancelled arise only fro",
+              "excerpt_sha256": "1f2b86f96bccde154302472f43aefc35e72e2dee998ffa53033f600ab1eeb6f4",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27549,
+              "line_end": 27549,
+              "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
+              "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27553,
+              "line_end": 27553,
+              "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
+              "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-544",
+              "line_start": 27555,
+              "line_end": 27555,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry admission deliberately absent; later integration must admit this family individually.",
+        "Native activation remains gated on all seven coordination admissions.",
+        "Existing unittest helper pin subtest fails twice on origin/main and branch; requires a separately authorized test update."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_coordination_events.py: pass",
+        "scripts/pm_coordination_wave2.py: pass",
+        "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
+      ],
+      "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
+      "grading_batch": "DCO_self_grade_20261104"
+    },
+    {
+      "event_type": "coordination.agent_unregistered",
+      "family_id": "event-family-coordination-agent-unregistered",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-545",
+          "line_start": 27613,
+          "line_end": 27613,
+          "quote": "**Producer and ordering.** `AgentCoordinator.unregister_agent(AgentTerminalUpdate)`: The Orchestrator's node completion path or the scheduler's cleanup, once, when the agent ends with a know",
+          "excerpt_sha256": "0bd2484ab4f6b2178e81c9e3596239e2800a56e6ff7bcc3c9320ddb3dcb4c40f",
+          "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+          "quote_check": "exact"
+        }
+      ],
+      "pass_count": 11,
+      "normative_depth_complete": false,
+      "native_execution": "NOT_RUN",
+      "current_owner_units": [
+        "SP-545",
+        "OSI-438",
+        "CV-353",
+        "SP-320",
+        "SP-278",
+        "SP-286",
+        "SP-339",
+        "ATS-058"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Central registry membership is absent; the prepared row remains denied. This drafting wave performs no admission.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27627,
+              "line_end": 27627,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-545 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27611,
+              "line_end": 27611,
+              "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
+              "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "AgentCoordinator.unregister_agent(AgentTerminalUpdate) uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27613,
+              "line_end": 27613,
+              "quote": "**Producer and ordering.** `AgentCoordinator.unregister_agent(AgentTerminalUpdate)`: The Orchestrator's node completion path or the scheduler's cleanup, once, when the agent ends with a know",
+              "excerpt_sha256": "0bd2484ab4f6b2178e81c9e3596239e2800a56e6ff7bcc3c9320ddb3dcb4c40f",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27615,
+              "line_end": 27615,
+              "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_unregistered` (schema ID `pm.coordination_event.agent_unregistered.schema.v1`, versio",
+              "excerpt_sha256": "052bb8db5504749050845c72d9195bd273ec03860f88c0010c669e42579973f2",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/coordination_event_payloads.schema.json",
+              "unit": "#/$defs/agent_unregistered",
+              "line_start": 429,
+              "line_end": 429,
+              "quote": "\"agent_unregistered\": {",
+              "excerpt_sha256": "fe1defee3d5a54828759bee5d2053d5f31b1955831b6ab11828c539776cd1e8a",
+              "file_sha256": "ff7779df68c9bc7ed8fb61a776df6544c2efc2d8671214ab4b9fe7adddc90be3",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27617,
+              "line_end": 27617,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27617,
+              "line_end": 27617,
+              "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+              "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27623,
+              "line_end": 27623,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3",
+              "line_start": 17416,
+              "line_end": 17416,
+              "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
+              "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27623,
+              "line_end": 27623,
+              "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+              "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Terminal. A registered, non-terminal agent at the agent's revision plus 1. The agent row takes terminal_status, every claim of the agent is released in the same transaction and the agent leaves every snapshot. Each agent has exactly one terminal event: a racing terminal event with the same revision is stale_revision, a later one already_terminal.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27619,
+              "line_end": 27619,
+              "quote": "**Transition.** Terminal. A registered, non-terminal agent at the agent's revision plus 1. The agent row takes terminal_status, every claim of the agent is released in the same transaction a",
+              "excerpt_sha256": "733f26649aafa697b431ac02d1ea0d446a7ffbf7db45b2de1adb5b5a9ce179cf",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27621,
+              "line_end": 27621,
+              "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
+              "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27625,
+              "line_end": 27625,
+              "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
+              "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-545",
+              "line_start": 27627,
+              "line_end": 27627,
+              "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+              "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+              "file_sha256": "b143ed72de2df6faf1f56dfea920dc8417e4f1461203d7bac500b85d11f6daca",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Central registry admission deliberately absent; later integration must admit this family individually.",
+        "Native activation remains gated on all seven coordination admissions.",
+        "Existing unittest helper pin subtest fails twice on origin/main and branch; requires a separately authorized test update."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_coordination_events.py: pass",
+        "scripts/pm_coordination_wave2.py: pass",
+        "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
+      ],
+      "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
+      "grading_batch": "DCO_self_grade_20261104"
+    }
+  ]
+}
