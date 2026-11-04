@@ -1197,6 +1197,9 @@ def validate_reaudit_record(
             errors.append(f"{label}: record.reviews.{who} evidence file is missing or its SHA-256 differs")
             continue
         judged = _jsonl_row_for(evidence_file, supersedes.get("line"), supersedes.get("closure_id"))
+        if judged is not None and judged.get("verdict") == "resolved_differently" and judged.get("status_now") == target.get("closure_status"):
+            # The status decides: "resolved differently" to the row's own status is a supported closure.
+            judged = dict(judged, verdict="supported")
         if judged is None or judged.get("verdict") != verdict:
             errors.append(f"{label}: record.reviews.{who} evidence file has no single row for this closure with verdict {verdict!r}")
         elif verdict == "resolved_differently" and judged.get("status_now") != record.get("status_now"):
@@ -3131,6 +3134,14 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             row = append_with(mutate=mutate)
             report = validate_rows([legacy_row(), row])
             check(name, has(report, text) and has(report, "is stale"), report["errors"])
+        def same_status_receipt(rec: dict[str, Any]) -> None:
+            path = ROOT / rec["reviews"]["astra"]["evidence_path"]
+            path.write_text(json.dumps({"line": rec["line"], "closure_id": rec["closure_id"], "verdict": "resolved_differently",
+                                        "status_now": "repaired"}) + "\n")
+            rec["reviews"]["astra"]["evidence_sha256"] = sha256_file(path)
+
+        row = append_with(mutate=same_status_receipt)
+        check("receipt_resolved_to_same_status_counts_as_supported", not validate_rows([legacy_row(), row])["errors"])
         bad = append_with(mutate=lambda rec: None)
         bad["reaudit"]["record"] = "Plans/.audits/../.audits/reaudit-fixture/reaudit_records.jsonl"
         report = validate_rows([legacy_row(), bad])
