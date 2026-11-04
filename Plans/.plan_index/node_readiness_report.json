@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18844,
+    "depends_on_edge_count": 18854,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22052,
-    "node_count": 7470,
+    "edge_count": 22062,
+    "node_count": 7473,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T17:57:59Z",
+  "generated_at_utc": "2026-11-04T18:36:23Z",
   "gui_related_units": {
-    "count": 3807,
+    "count": 3808,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3850,8 +3850,8 @@
         "source_location": {
           "heading": "ACD-611 — bundle.selection_sent_to_chat",
           "heading_level": 3,
-          "heading_line": 29137,
-          "line": 29141,
+          "heading_line": 29146,
+          "line": 29150,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3861,8 +3861,19 @@
         "source_location": {
           "heading": "ACD-612 — chat.message",
           "heading_level": 3,
-          "heading_line": 29196,
-          "line": 29200,
+          "heading_line": 29214,
+          "line": 29218,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-613",
+        "source_location": {
+          "heading": "ACD-613 — chat.thread_archived",
+          "heading_level": 3,
+          "heading_line": 30155,
+          "line": 30159,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3872,8 +3883,8 @@
         "source_location": {
           "heading": "ACD-614 — chat.thread_created",
           "heading_level": 3,
-          "heading_line": 29254,
-          "line": 29258,
+          "heading_line": 29281,
+          "line": 29285,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3883,8 +3894,8 @@
         "source_location": {
           "heading": "ACD-615 — chat.thread_deleted",
           "heading_level": 3,
-          "heading_line": 29312,
-          "line": 29316,
+          "heading_line": 29348,
+          "line": 29352,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3894,8 +3905,8 @@
         "source_location": {
           "heading": "ACD-616 — chat.thread_worktree_bound",
           "heading_level": 3,
-          "heading_line": 29371,
-          "line": 29375,
+          "heading_line": 29416,
+          "line": 29420,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3905,8 +3916,8 @@
         "source_location": {
           "heading": "ACD-617 — chat.thread_worktree_create_failed",
           "heading_level": 3,
-          "heading_line": 29429,
-          "line": 29433,
+          "heading_line": 29483,
+          "line": 29487,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3916,8 +3927,8 @@
         "source_location": {
           "heading": "ACD-618 — chat.thread_worktree_merge_failed",
           "heading_level": 3,
-          "heading_line": 29487,
-          "line": 29491,
+          "heading_line": 29550,
+          "line": 29554,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3927,8 +3938,8 @@
         "source_location": {
           "heading": "ACD-619 — chat.thread_worktree_merged",
           "heading_level": 3,
-          "heading_line": 29545,
-          "line": 29549,
+          "heading_line": 29617,
+          "line": 29621,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3938,8 +3949,8 @@
         "source_location": {
           "heading": "ACD-620 — chat.thread_worktree_pr_created",
           "heading_level": 3,
-          "heading_line": 29603,
-          "line": 29607,
+          "heading_line": 29684,
+          "line": 29688,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3949,8 +3960,8 @@
         "source_location": {
           "heading": "ACD-621 — chat.thread_worktree_pr_failed",
           "heading_level": 3,
-          "heading_line": 29660,
-          "line": 29664,
+          "heading_line": 29750,
+          "line": 29754,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3960,8 +3971,8 @@
         "source_location": {
           "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
           "heading_level": 3,
-          "heading_line": 29718,
-          "line": 29722,
+          "heading_line": 29817,
+          "line": 29821,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3971,8 +3982,8 @@
         "source_location": {
           "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
           "heading_level": 3,
-          "heading_line": 29776,
-          "line": 29780,
+          "heading_line": 29885,
+          "line": 29889,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3982,8 +3993,8 @@
         "source_location": {
           "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
           "heading_level": 3,
-          "heading_line": 29834,
-          "line": 29838,
+          "heading_line": 29952,
+          "line": 29956,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3993,8 +4004,8 @@
         "source_location": {
           "heading": "ACD-625 — chat.thread_worktree_renamed",
           "heading_level": 3,
-          "heading_line": 29893,
-          "line": 29897,
+          "heading_line": 30020,
+          "line": 30024,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4004,8 +4015,8 @@
         "source_location": {
           "heading": "ACD-626 — chat.thread_worktree_unbound",
           "heading_level": 3,
-          "heading_line": 29951,
-          "line": 29955,
+          "heading_line": 30087,
+          "line": 30091,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -41901,10 +41912,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7470,
+  "plan_unit_count": 7473,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2792,
+      "high": 2795,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -43113,7 +43124,7 @@
       "event_authority_binding_scope_expansion": 1,
       "event_authority_checkpoint_approval_drift": 1,
       "event_authority_checkpoint_drift": 2,
-      "event_authority_contract": 49,
+      "event_authority_contract": 52,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
       "event_authority_payload_depth_drift": 1,
@@ -46040,7 +46051,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7253,
+      "accepted": 7256,
       "retired": 194,
       "superseded": 23
     },
@@ -46110,7 +46121,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5663,
+      "requirement": 5666,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46201,7 +46212,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "9b6a4f3ef57c1dd9c7be8e731298c99742dd328674f3929a4a6c83b929dd6dd3",
+        "expected": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46237,7 +46248,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "f6a02758b7c8c5a57e1c3d08fe4a096b65771f7b3c9b759601765952a54ec2b7",
+        "expected": "f590fc7841c7f194c07bb118200a1980cee83b5764fe202c3324e51b5717dda9",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

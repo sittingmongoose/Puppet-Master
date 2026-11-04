@@ -7234,6 +7234,8 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
 
 DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry. Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278 frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild. These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
 
+Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys, and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback. These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.
+
 ```yaml
 plan_unit_id: ATS-305
 unit_type: requirement
@@ -7251,7 +7253,16 @@ canonical_text: '### ATS-305 — DCH
   frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild.
   These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint
   with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention
-  acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.'
+  acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+
+
+  Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization
+  cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys,
+  and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE
+  for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended
+  to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic
+  origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback.
+  These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on: []

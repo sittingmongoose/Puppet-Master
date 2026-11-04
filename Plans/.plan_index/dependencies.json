@@ -6870,6 +6870,7 @@
     "UCC-149",
     "WM-047",
     "C-047",
+    "ACD-613",
     "APR-073",
     "CWR-045",
     "GRS-086",
@@ -6883,6 +6884,7 @@
     "UCC-151",
     "WM-048",
     "C-048",
+    "CV-633",
     "OSI-440",
     "GRS-087",
     "ACD-509",
@@ -6901,6 +6903,7 @@
     "UCC-155",
     "WM-050",
     "N2-154",
+    "SP-613",
     "APR-074",
     "CS-113",
     "F3-672",
@@ -12320,6 +12323,31 @@
       "edge_type": "depends_on",
       "from": "ACD-612",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-613",
+      "to": "ACD-071"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-613",
+      "to": "ACD-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-613",
+      "to": "ACD-508"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-613",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-613",
+      "to": "DL-287"
     },
     {
       "edge_type": "depends_on",
@@ -26075,6 +26103,11 @@
       "edge_type": "depends_on",
       "from": "CV-632",
       "to": "ACD-612"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-633",
+      "to": "ACD-613"
     },
     {
       "edge_type": "depends_on",
@@ -82263,6 +82296,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-613",
+      "to": "ACD-613"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-613",
+      "to": "CV-633"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-613",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-613",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-614",
       "to": "ACD-614"
     },
@@ -117737,7 +117790,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T17:57:58Z",
+  "generated_at_utc": "2026-11-04T18:36:22Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -127354,8 +127407,8 @@
       "source_location": {
         "heading": "ACD-611 — bundle.selection_sent_to_chat",
         "heading_level": 3,
-        "heading_line": 29137,
-        "line": 29141,
+        "heading_line": 29146,
+        "line": 29150,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127371,8 +127424,25 @@
       "source_location": {
         "heading": "ACD-612 — chat.message",
         "heading_level": 3,
-        "heading_line": 29196,
-        "line": 29200,
+        "heading_line": 29214,
+        "line": 29218,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-613",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-613 — chat.thread_archived",
+        "heading_level": 3,
+        "heading_line": 30155,
+        "line": 30159,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127388,8 +127458,8 @@
       "source_location": {
         "heading": "ACD-614 — chat.thread_created",
         "heading_level": 3,
-        "heading_line": 29254,
-        "line": 29258,
+        "heading_line": 29281,
+        "line": 29285,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127405,8 +127475,8 @@
       "source_location": {
         "heading": "ACD-615 — chat.thread_deleted",
         "heading_level": 3,
-        "heading_line": 29312,
-        "line": 29316,
+        "heading_line": 29348,
+        "line": 29352,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127422,8 +127492,8 @@
       "source_location": {
         "heading": "ACD-616 — chat.thread_worktree_bound",
         "heading_level": 3,
-        "heading_line": 29371,
-        "line": 29375,
+        "heading_line": 29416,
+        "line": 29420,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127439,8 +127509,8 @@
       "source_location": {
         "heading": "ACD-617 — chat.thread_worktree_create_failed",
         "heading_level": 3,
-        "heading_line": 29429,
-        "line": 29433,
+        "heading_line": 29483,
+        "line": 29487,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127456,8 +127526,8 @@
       "source_location": {
         "heading": "ACD-618 — chat.thread_worktree_merge_failed",
         "heading_level": 3,
-        "heading_line": 29487,
-        "line": 29491,
+        "heading_line": 29550,
+        "line": 29554,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127473,8 +127543,8 @@
       "source_location": {
         "heading": "ACD-619 — chat.thread_worktree_merged",
         "heading_level": 3,
-        "heading_line": 29545,
-        "line": 29549,
+        "heading_line": 29617,
+        "line": 29621,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127490,8 +127560,8 @@
       "source_location": {
         "heading": "ACD-620 — chat.thread_worktree_pr_created",
         "heading_level": 3,
-        "heading_line": 29603,
-        "line": 29607,
+        "heading_line": 29684,
+        "line": 29688,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127507,8 +127577,8 @@
       "source_location": {
         "heading": "ACD-621 — chat.thread_worktree_pr_failed",
         "heading_level": 3,
-        "heading_line": 29660,
-        "line": 29664,
+        "heading_line": 29750,
+        "line": 29754,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127524,8 +127594,8 @@
       "source_location": {
         "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
         "heading_level": 3,
-        "heading_line": 29718,
-        "line": 29722,
+        "heading_line": 29817,
+        "line": 29821,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127541,8 +127611,8 @@
       "source_location": {
         "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
         "heading_level": 3,
-        "heading_line": 29776,
-        "line": 29780,
+        "heading_line": 29885,
+        "line": 29889,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127558,8 +127628,8 @@
       "source_location": {
         "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
         "heading_level": 3,
-        "heading_line": 29834,
-        "line": 29838,
+        "heading_line": 29952,
+        "line": 29956,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127575,8 +127645,8 @@
       "source_location": {
         "heading": "ACD-625 — chat.thread_worktree_renamed",
         "heading_level": 3,
-        "heading_line": 29893,
-        "line": 29897,
+        "heading_line": 30020,
+        "line": 30024,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127592,8 +127662,8 @@
       "source_location": {
         "heading": "ACD-626 — chat.thread_worktree_unbound",
         "heading_level": 3,
-        "heading_line": 29951,
-        "line": 29955,
+        "heading_line": 30087,
+        "line": 30091,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -132132,7 +132202,7 @@
         "heading": "ATS-305 — DCH",
         "heading_level": 3,
         "heading_line": 7233,
-        "line": 7237,
+        "line": 7239,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -145204,8 +145274,8 @@
       "source_location": {
         "heading": "CV-631 — bundle.selection_sent_to_chat",
         "heading_level": 3,
-        "heading_line": 24533,
-        "line": 24537,
+        "heading_line": 24543,
+        "line": 24547,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145221,8 +145291,25 @@
       "source_location": {
         "heading": "CV-632 — chat.message",
         "heading_level": 3,
-        "heading_line": 24594,
-        "line": 24598,
+        "heading_line": 24614,
+        "line": 24618,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-633",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-633 — chat.thread_archived",
+        "heading_level": 3,
+        "heading_line": 25605,
+        "line": 25611,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145238,8 +145325,8 @@
       "source_location": {
         "heading": "CV-634 — chat.thread_created",
         "heading_level": 3,
-        "heading_line": 24655,
-        "line": 24659,
+        "heading_line": 24684,
+        "line": 24688,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145255,8 +145342,8 @@
       "source_location": {
         "heading": "CV-635 — chat.thread_deleted",
         "heading_level": 3,
-        "heading_line": 24716,
-        "line": 24720,
+        "heading_line": 24754,
+        "line": 24758,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145272,8 +145359,8 @@
       "source_location": {
         "heading": "CV-636 — chat.thread_worktree_bound",
         "heading_level": 3,
-        "heading_line": 24777,
-        "line": 24781,
+        "heading_line": 24824,
+        "line": 24828,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145289,8 +145376,8 @@
       "source_location": {
         "heading": "CV-637 — chat.thread_worktree_create_failed",
         "heading_level": 3,
-        "heading_line": 24838,
-        "line": 24842,
+        "heading_line": 24895,
+        "line": 24899,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145306,8 +145393,8 @@
       "source_location": {
         "heading": "CV-638 — chat.thread_worktree_merge_failed",
         "heading_level": 3,
-        "heading_line": 24899,
-        "line": 24903,
+        "heading_line": 24966,
+        "line": 24970,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145323,8 +145410,8 @@
       "source_location": {
         "heading": "CV-639 — chat.thread_worktree_merged",
         "heading_level": 3,
-        "heading_line": 24960,
-        "line": 24964,
+        "heading_line": 25037,
+        "line": 25041,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145340,8 +145427,8 @@
       "source_location": {
         "heading": "CV-640 — chat.thread_worktree_pr_created",
         "heading_level": 3,
-        "heading_line": 25021,
-        "line": 25025,
+        "heading_line": 25108,
+        "line": 25112,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145357,8 +145444,8 @@
       "source_location": {
         "heading": "CV-641 — chat.thread_worktree_pr_failed",
         "heading_level": 3,
-        "heading_line": 25082,
-        "line": 25086,
+        "heading_line": 25179,
+        "line": 25183,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145374,8 +145461,8 @@
       "source_location": {
         "heading": "CV-642 — chat.thread_worktree_pre_merge_test_failed",
         "heading_level": 3,
-        "heading_line": 25143,
-        "line": 25147,
+        "heading_line": 25250,
+        "line": 25254,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145391,8 +145478,8 @@
       "source_location": {
         "heading": "CV-643 — chat.thread_worktree_pre_merge_test_passed",
         "heading_level": 3,
-        "heading_line": 25204,
-        "line": 25208,
+        "heading_line": 25321,
+        "line": 25325,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145408,8 +145495,8 @@
       "source_location": {
         "heading": "CV-644 — chat.thread_worktree_pre_merge_test_started",
         "heading_level": 3,
-        "heading_line": 25265,
-        "line": 25269,
+        "heading_line": 25392,
+        "line": 25396,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145425,8 +145512,8 @@
       "source_location": {
         "heading": "CV-645 — chat.thread_worktree_renamed",
         "heading_level": 3,
-        "heading_line": 25326,
-        "line": 25330,
+        "heading_line": 25463,
+        "line": 25467,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145442,8 +145529,8 @@
       "source_location": {
         "heading": "CV-646 — chat.thread_worktree_unbound",
         "heading_level": 3,
-        "heading_line": 25387,
-        "line": 25391,
+        "heading_line": 25534,
+        "line": 25538,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -229212,6 +229299,23 @@
       "context_scope": "event_authority_dch",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-613",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-613 — chat.thread_archived",
+        "heading_level": 3,
+        "heading_line": 31664,
+        "line": 31676,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
       "plan_unit_id": "SP-614",
       "reasoning_tier": "high",
       "risk_class": "event_authority_contract",
@@ -244736,10 +244840,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18844,
+    "depends_on_edge_count": 18854,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22052,
-    "node_count": 7470,
+    "edge_count": 22062,
+    "node_count": 7473,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -156,6 +156,58 @@
     ]
   },
   {
+    "event_type": "chat.thread_archived",
+    "schema_ref": "Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json#",
+    "valid": {
+      "schema_id": "pm.storage_value.dch_chat_thread_archived_checkpoint.v1",
+      "schema_version": "1.0.0",
+      "storage_instance_id": "fixture_storage_instance_id",
+      "scope_partition": "app",
+      "event_type": "chat.thread_archived",
+      "consumer_id": "reader.chat.chat_thread_archived@1.0.0",
+      "projector_id": "projector.chat.chat_thread_archived@1.0.0",
+      "publication_id": "fixture_publication_id",
+      "revision": 0,
+      "last_event_id": "evt_dch_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "last_sequence_id": 0,
+      "source_token": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "checkpoint_key": "fixture_checkpoint_key",
+        "checkpoint_ref": "fixture_checkpoint_ref",
+        "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "generation_anchor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "frontier_revision": 0,
+        "frontier_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "index_dataset_name": "fixture_index_dataset_name",
+        "source_selection": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "selected_segment_generation": 0,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "manifest_generation": 0,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "projection_refs": [],
+      "state": "current",
+      "history": []
+    },
+    "negative_cases": [
+      "persisted_redb_snapshot_id",
+      "wrong_consumer",
+      "wrong_projector",
+      "missing_source_token",
+      "four_generations"
+    ]
+  },
+  {
     "event_type": "chat.thread_created",
     "schema_ref": "Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json#",
     "valid": {

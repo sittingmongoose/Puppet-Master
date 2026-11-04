@@ -73,13 +73,35 @@
     },
     {
       "event_type": "chat.thread_archived",
-      "outcome": "blocked_on_Jared",
-      "question": "Does the lifecycle table permission for retention-policy automatic archive still apply to Project chats, or does ACD-508\u2019s \u201cArchive keeps the folder and is never automatic\u201d prohibit automatic archive for every chat? Clarify scope before the exact producer contract is adopted.",
-      "citations": [
-        "Plans/assistant-chat-design.md:1122-1123",
-        "Plans/assistant-chat-design.md:28766"
+      "outcome": "register_prepared",
+      "revision": "1.0.0",
+      "owner_unit": "ACD-613",
+      "payload_unit": "CV-633",
+      "storage_unit": "SP-613",
+      "payload_schema_ref": "Plans/dch_event_payloads/chat_thread_archived.schema.json",
+      "reader": "reader.chat.chat_thread_archived@1.0.0",
+      "projector": "projector.storage.event_record_index@1.0.0",
+      "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "newly_authored_bindings": [
+        "producer/ordering",
+        "closed Project/application payload editions",
+        "original-operation identity recipe",
+        "reader/withdrawal"
       ],
-      "scope_of_stop": "Whole family stopped; no archive-specific new PlanUnit, schema, registry companion, producer or admission."
+      "native_execution": "NOT_RUN",
+      "domain_projector": "projector.chat.chat_thread_archived@1.0.0",
+      "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_archived.v1:{storage_instance_id}:{scope_partition}",
+      "domain_checkpoint_family": "dch_chat_thread_archived_checkpoint",
+      "producer": "cmd.chat.thread.archive lifecycle owner, reached through cataloged cmd.chat.archive",
+      "premise_refs": [
+        "Plans/Decision_Log.md#DL-280",
+        "Plans/Decision_Log.md#DL-287",
+        "Plans/assistant-chat-design.md#ACD-071",
+        "Plans/assistant-chat-design.md#ACD-074",
+        "Plans/assistant-chat-design.md#ACD-508",
+        "Plans/UI_Command_Catalog.md:730"
+      ]
     },
     {
       "event_type": "chat.thread_created",

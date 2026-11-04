@@ -553,9 +553,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 184,
-        "True": 327
+        "True": 328
       },
-      "heading_count": 732,
+      "heading_count": 733,
       "implementation_surfaces": [
         "AGENTS.md",
         "Plans/Architecture_Invariants.md",
@@ -635,9 +635,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 30007,
+      "line_count": 30234,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 511,
+      "plan_unit_count": 512,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1149,7 +1149,8 @@
         "ACD-623",
         "ACD-624",
         "ACD-625",
-        "ACD-626"
+        "ACD-626",
+        "ACD-613"
       ],
       "reasoning_tiers": [
         "high",
@@ -1508,10 +1509,10 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967",
+      "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 508,
+        "accepted": 509,
         "retired": 1,
         "superseded": 2
       },
@@ -1522,7 +1523,7 @@
         "decision": 6,
         "gui_requirement": 5,
         "integration_contract": 1,
-        "requirement": 352,
+        "requirement": 353,
         "retirement_record": 1,
         "validation_rule": 2
       },
@@ -2004,7 +2005,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7283,
+      "line_count": 7294,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2157,7 +2158,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "f6a02758b7c8c5a57e1c3d08fe4a096b65771f7b3c9b759601765952a54ec2b7",
+      "sha256": "f590fc7841c7f194c07bb118200a1980cee83b5764fe202c3324e51b5717dda9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -4487,10 +4488,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 301,
+        "False": 302,
         "True": 76
       },
-      "heading_count": 577,
+      "heading_count": 578,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4594,9 +4595,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 25445,
+      "line_count": 25683,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 377,
+      "plan_unit_count": 378,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4974,7 +4975,8 @@
         "CV-643",
         "CV-644",
         "CV-645",
-        "CV-646"
+        "CV-646",
+        "CV-633"
       ],
       "reasoning_tiers": [
         "high",
@@ -5336,10 +5338,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab",
+      "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 377
+        "accepted": 378
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -5350,7 +5352,7 @@
         "integration_contract": 3,
         "interface_contract": 6,
         "owner_boundary": 1,
-        "requirement": 246,
+        "requirement": 247,
         "schema_contract": 28,
         "source_lineage_residual_disposition": 1
       },
@@ -18605,10 +18607,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 247,
+        "False": 248,
         "True": 110
       },
-      "heading_count": 833,
+      "heading_count": 834,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18703,9 +18705,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 31661,
+      "line_count": 31798,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 357,
+      "plan_unit_count": 358,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19063,7 +19065,8 @@
         "SP-623",
         "SP-624",
         "SP-625",
-        "SP-626"
+        "SP-626",
+        "SP-613"
       ],
       "reasoning_tiers": [
         "high",
@@ -19187,10 +19190,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556",
+      "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 353,
+        "accepted": 354,
         "retired": 3,
         "superseded": 1
       },
@@ -19201,7 +19204,7 @@
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
-        "requirement": 293,
+        "requirement": 294,
         "schema_contract": 23,
         "security_contract": 1,
         "storage_contract": 27,
@@ -21563,7 +21566,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:57:58Z",
+  "generated_at_utc": "2026-11-04T18:36:22Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21571,13 +21574,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3663,
-      "True": 3807
+      "False": 3665,
+      "True": 3808
     },
-    "plan_unit_count": 7470,
+    "plan_unit_count": 7473,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7253,
+      "accepted": 7256,
       "retired": 194,
       "superseded": 23
     },
@@ -21647,7 +21650,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5663,
+      "requirement": 5666,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
