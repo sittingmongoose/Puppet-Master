@@ -18,8 +18,8 @@ export const tests = {
     },{capture:true,once:true});
    });
    await b.click();
-   await f.waitForFunction(()=>window.__activityPaintResult!==null,{},{timeout:10000});
-   const paint=await f.evaluate(()=>window.__activityPaintResult);
+   await f.waitForFunction(()=>window.__activityPaintResult!==null,{},{timeout:5000}).catch(()=>{});
+   const paint=await f.evaluate(()=>window.__activityPaintResult||{error:'No first-paint entry',input:window.__activityPaintInput,entries:window.__activityPaintEntries});
    t.log('input to first cover paint '+i+': '+JSON.stringify(paint));
    await t.check('first click painted within 500 ms '+i,
     !paint.error&&paint.input.trusted&&paint.elapsed>=0&&paint.elapsed<=500);

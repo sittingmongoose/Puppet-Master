@@ -3,6 +3,7 @@
 export function installActivityPaintProbe() {
  window.__activityPaintResult = null;
  window.__activityPaintInput = null;
+ window.__activityPaintEntries = [];
  window.__activityPaintObserver?.disconnect();
  if (!PerformanceObserver.supportedEntryTypes.includes('element')) {
   window.__activityPaintResult = {error:'Element Timing is unavailable'};
@@ -22,10 +23,11 @@ export function installActivityPaintProbe() {
  };
  const observer = new PerformanceObserver(list => {
   for (const entry of list.getEntries()) {
+   if (entry.identifier === 'pm-activity-cover-title') window.__activityPaintEntries.push({...entry.toJSON(),deliveredAt:performance.now()});
    if (entry.identifier !== 'pm-activity-cover-title' || entry.renderTime <= 0 ||
        entry.intersectionRect.width <= 0 || entry.intersectionRect.height <= 0) continue;
    entries.push({renderTime:entry.renderTime, identifier:entry.identifier,
-    name:entry.name, rect:entry.intersectionRect.toJSON()});
+    name:entry.name, paintTime:entry.paintTime, presentationTime:entry.presentationTime, rect:entry.intersectionRect.toJSON()});
   }
   resolve();
  });
