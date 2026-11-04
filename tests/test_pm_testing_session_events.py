@@ -86,13 +86,13 @@ class TestingSessionEventTests(unittest.TestCase):
         failures = owner.event_family_registry_data_failures(
             registry, gate.load("Plans/event_family_registry.schema.json"),
             path_label="test:session-events", include_residuals=False)
-        # The approved checkpoint is 43 (the 40 upstream rows, the two admitted Browser rows and
-        # the admitted coordination.agent_registered row), moved from Jared's 2026-09-23 Step 8
-        # checkpoint (42) under DL-078 by that family's Step 9 registration landing; any other
-        # registry change still needs Jared's own approval.
+        # The approved checkpoint is 46 (the 40 upstream rows, the two admitted Browser rows, the
+        # admitted coordination.agent_registered row and the three DL-300 families), moved from 43 by
+        # Jared's 2026-11-04 approval (DL-300) and before that from his 2026-09-23 Step 8 checkpoint
+        # (42) under DL-078; any other registry change still needs Jared's own approval.
         self.assertEqual({failure["error"] for failure in failures},
-                         {"event_family_registry_kernel_row_count_mismatch"} if 40 + admitted_count != 43 else set())
-        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 43)
+                         {"event_family_registry_kernel_row_count_mismatch"} if 40 + admitted_count != 46 else set())
+        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 46)
 
     def test_transport_aliases_and_conflicts_are_denied_without_remembering_identity(self):
         for case in gate.fixture_cases():

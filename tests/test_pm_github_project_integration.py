@@ -264,13 +264,13 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
         failures = readiness.event_family_registry_data_failures(
             GATE.load("Plans/event_family_registry.json"), GATE.load("Plans/event_family_registry.schema.json"),
             path_label="test:github-project-events", include_residuals=False)
-        self.assertEqual([row["error"] for row in failures], ["event_family_registry_kernel_row_count_mismatch"] if 40 + admitted_count != 43 else [])
-        # The approved checkpoint is 43 (40 upstream, the two admitted Browser rows and
-        # the admitted coordination.agent_registered row), moved from Jared's 2026-09-23
-        # Step 8 checkpoint (42) under DL-078 by that family's Step 9 registration landing;
-        # never lift it otherwise without fresh approval, and never admit emit-only
-        # candidates through it.
-        self.assertEqual(readiness.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 43)
+        self.assertEqual([row["error"] for row in failures], ["event_family_registry_kernel_row_count_mismatch"] if 40 + admitted_count != 46 else [])
+        # The approved checkpoint is 46 (40 upstream, the two admitted Browser rows, the
+        # admitted coordination.agent_registered row and the three DL-300 families), moved from
+        # 43 by Jared's 2026-11-04 approval (DL-300) and before that from his 2026-09-23 Step 8
+        # checkpoint (42) under DL-078; never lift it otherwise without fresh approval, and
+        # never admit emit-only candidates through it.
+        self.assertEqual(readiness.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 46)
 
 
 if __name__ == "__main__":

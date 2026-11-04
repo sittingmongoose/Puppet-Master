@@ -1718,6 +1718,7 @@ depends_on:
 - SSYS-009
 - SRV-004
 - SRV-006
+- DL-300
 unblocks: []
 acceptance_criteria:
 - Offline home/Computer/Project writers make no write or queue entry; Device own screen writes still use only
@@ -2300,7 +2301,7 @@ Each descriptor freezes title, purpose, owner refs or named owner gap, dispositi
 
 ### 3.6 Events and command boundary
 
-Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; until they do, the action is disabled with `command_not_registered` or `handler_unavailable` and dispatches nothing. SSYS-060 defines the proposed application-only `settings.layer.changed` family; F must close registry/schema/retention/producer admission before an actual writer emits it. This prose supplies no native producer or certification. If a retained owner requires persistence through EventRecord, its family must be independently admitted through Event Authority; absence remains `missing_event_registration`, never success.
+Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; until they do, the action is disabled with `command_not_registered` or `handler_unavailable` and dispatches nothing. SSYS-060 defines the application-only `settings.layer.changed` family, registered by DL-300; no writer emits it until its producer is adopted (requires_owner_adoption). This prose supplies no native producer or certification. If a retained owner requires persistence through EventRecord, its family must be independently admitted through Event Authority; absence remains `missing_event_registration`, never success.
 
 Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its `request_id`, `project_id`, `changed_setting_ids`, revisions and `receipt_ref` remain the current transaction join, not new event fields admitted here. A key spelling still grants no scope or writer authority; genuine application level transactions are admitted only by SSYS-002/059, independently of this unresolved key-to-inventory mapping. It does not match the current ordinary `setting_id` grammar and is not automatically the inventory ID `memory.assembly.dry-method-guard`; do not insert the owner key into `changed_setting_ids`, infer that alias, or claim the writer mapping is closed without explicit owner evidence. Until that key-to-valid-setting-ID and writer mapping is proven, the toggle remains disabled with the existing `owner_contract_missing` reason and dispatches no mutation command and performs no setting write. `cmd.settings.agent_rules.dry_method_default_guard.set` remains retired with no dispatch alias. Historical `settings.agent_rules.dry_method_default_guard.updated` records remain read-only source/history lineage until an explicit payload-compatible migration is separately established. This approved naming choice registers no EventRecord and supplies no missing producer, schema or checkpoint authority.
 

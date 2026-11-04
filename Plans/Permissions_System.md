@@ -10570,6 +10570,7 @@ depends_on:
 - PS-144
 - PS-017
 - PS-019
+- DL-300
 unblocks: []
 acceptance_criteria:
 - App Goal/Crew/Plan/scheduled task uses actual roots and immutable app evidence; original Project exact fixtures

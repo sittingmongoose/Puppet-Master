@@ -8239,6 +8239,7 @@ depends_on:
 - ACD-508
 - SIR-055
 - PS-145
+- DL-300
 unblocks: []
 acceptance_criteria:
 - App Goal create/direct Save/approved proposal/pause/resume/Stop/cancel/history/restart/backup succeeds through

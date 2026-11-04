@@ -24101,6 +24101,7 @@ depends_on:
 - CV-365
 - CV-317
 - CV-339
+- DL-300
 unblocks: []
 acceptance_criteria:
 - Every selected sibling has exact logical ID/root/version/source methods and full offline resource closure.
