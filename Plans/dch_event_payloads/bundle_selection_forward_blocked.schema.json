@@ -38,7 +38,9 @@
         },
         "thread_id": {
           "type": "string",
-          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$"
+          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$(?![\\s\\S])",
+          "minLength": 30,
+          "maxLength": 30
         },
         "operation_id": {
           "type": "string",
@@ -47,13 +49,13 @@
         },
         "actor_ref": {
           "type": "string",
-          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
           "maxLength": 512
         },
         "ts": {
           "type": "string",
           "format": "date-time",
-          "pattern": "Z$"
+          "pattern": "Z$(?![\\s\\S])"
         },
         "computer_id": {
           "type": "string",
@@ -172,7 +174,7 @@
                   },
                   "scope_partition": {
                     "type": "string",
-                    "pattern": "^project~[A-Za-z0-9_-]+$"
+                    "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
                   }
                 }
               }
@@ -203,7 +205,7 @@
         },
         "requested_target": {
           "type": "string",
-          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
           "maxLength": 512
         },
         "reason_code": {
@@ -240,7 +242,9 @@
         },
         "thread_id": {
           "type": "string",
-          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$"
+          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$(?![\\s\\S])",
+          "minLength": 30,
+          "maxLength": 30
         },
         "operation_id": {
           "type": "string",
@@ -249,13 +253,13 @@
         },
         "actor_ref": {
           "type": "string",
-          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
           "maxLength": 512
         },
         "ts": {
           "type": "string",
           "format": "date-time",
-          "pattern": "Z$"
+          "pattern": "Z$(?![\\s\\S])"
         },
         "computer_id": {
           "type": "string",
@@ -374,7 +378,7 @@
                   },
                   "scope_partition": {
                     "type": "string",
-                    "pattern": "^project~[A-Za-z0-9_-]+$"
+                    "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
                   }
                 }
               }
@@ -405,7 +409,7 @@
         },
         "requested_target": {
           "type": "string",
-          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
           "maxLength": 512
         },
         "reason_code": {

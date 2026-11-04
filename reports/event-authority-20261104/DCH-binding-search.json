@@ -35,7 +35,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24472,
-          "text": "### CV-630 — bundle.selection_forward_blocked",
+          "text": "### CV-630 \u2014 bundle.selection_forward_blocked",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -47,7 +47,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24481,
-          "text": "canonical_text: '### CV-630 — bundle.selection_forward_blocked",
+          "text": "canonical_text: '### CV-630 \u2014 bundle.selection_forward_blocked",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -95,7 +95,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29079,
-          "text": "### ACD-610 — bundle.selection_forward_blocked",
+          "text": "### ACD-610 \u2014 bundle.selection_forward_blocked",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -107,7 +107,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29088,
-          "text": "canonical_text: '### ACD-610 — bundle.selection_forward_blocked",
+          "text": "canonical_text: '### ACD-610 \u2014 bundle.selection_forward_blocked",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -203,7 +203,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29481,
-          "text": "### SP-610 — bundle.selection_forward_blocked",
+          "text": "### SP-610 \u2014 bundle.selection_forward_blocked",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -221,7 +221,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29498,
-          "text": "canonical_text: '### SP-610 — bundle.selection_forward_blocked",
+          "text": "canonical_text: '### SP-610 \u2014 bundle.selection_forward_blocked",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -265,17 +265,139 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            24472,
+            24474,
+            24481,
+            24484,
+            24490,
+            24493,
+            24494,
+            24533
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "lines": [
+            441
+          ],
+          "sha256": "14fd3cdb089efc95ee176d37639d858cfb4ec7bfd71652645985dad5bde7233b"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29079,
+            29081,
+            29088,
+            29091,
+            29094,
+            29096,
+            29138
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            3,
+            10
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            3,
+            60,
+            233,
+            291
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            5
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_bundle_selection_forward_blocked_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "2c93514040a7b1a79abe109fd18129717864de0ee7ec48ff94e4f8bb91292ff7"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1173,
+            8652,
+            29481,
+            29483,
+            29487,
+            29498,
+            29501,
+            29533,
+            29606
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            123117,
+            123197,
+            123404
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-610",
+        "CV-630",
+        "SP-610"
+      ]
     }
   },
   "bundle.selection_sent_to_chat": {
@@ -410,7 +532,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24533,
-          "text": "### CV-631 — bundle.selection_sent_to_chat",
+          "text": "### CV-631 \u2014 bundle.selection_sent_to_chat",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -422,7 +544,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24542,
-          "text": "canonical_text: '### CV-631 — bundle.selection_sent_to_chat",
+          "text": "canonical_text: '### CV-631 \u2014 bundle.selection_sent_to_chat",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -470,7 +592,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29137,
-          "text": "### ACD-611 — bundle.selection_sent_to_chat",
+          "text": "### ACD-611 \u2014 bundle.selection_sent_to_chat",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -482,7 +604,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29146,
-          "text": "canonical_text: '### ACD-611 — bundle.selection_sent_to_chat",
+          "text": "canonical_text: '### ACD-611 \u2014 bundle.selection_sent_to_chat",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -578,7 +700,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29617,
-          "text": "### SP-611 — bundle.selection_sent_to_chat",
+          "text": "### SP-611 \u2014 bundle.selection_sent_to_chat",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -596,7 +718,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29634,
-          "text": "canonical_text: '### SP-611 — bundle.selection_sent_to_chat",
+          "text": "canonical_text: '### SP-611 \u2014 bundle.selection_sent_to_chat",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -640,17 +762,147 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            907,
+            952,
+            6975,
+            6985,
+            7005,
+            7011,
+            7236,
+            7257,
+            24543,
+            24545,
+            24552,
+            24555,
+            24561,
+            24564,
+            24565,
+            24604
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "lines": [
+            441
+          ],
+          "sha256": "14fd3cdb089efc95ee176d37639d858cfb4ec7bfd71652645985dad5bde7233b"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29146,
+            29148,
+            29155,
+            29158,
+            29162,
+            29164,
+            29206
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            55,
+            62
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            372,
+            435,
+            612,
+            676
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            28
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_bundle_selection_sent_to_chat_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "a4fadf980b55fa4fc121157a9b1a05e9924d3a932bf13cad87ecf257722d7311"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1172,
+            8649,
+            29617,
+            29619,
+            29623,
+            29634,
+            29637,
+            29669,
+            29742
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            123615,
+            123695,
+            123902
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-611",
+        "CV-631",
+        "SP-611"
+      ]
     }
   },
   "chat.message": {
@@ -905,7 +1157,7 @@
       {
         "path": "Plans/storage-plan.md",
         "line": 1663,
-        "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
+        "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
         "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
       },
       {
@@ -1007,7 +1259,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24594,
-          "text": "### CV-632 — chat.message",
+          "text": "### CV-632 \u2014 chat.message",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -1019,7 +1271,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24603,
-          "text": "canonical_text: '### CV-632 — chat.message",
+          "text": "canonical_text: '### CV-632 \u2014 chat.message",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -1229,7 +1481,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29196,
-          "text": "### ACD-612 — chat.message",
+          "text": "### ACD-612 \u2014 chat.message",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -1241,7 +1493,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29205,
-          "text": "canonical_text: '### ACD-612 — chat.message",
+          "text": "canonical_text: '### ACD-612 \u2014 chat.message",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -1355,7 +1607,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 1663,
-          "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
+          "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -1409,7 +1661,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29753,
-          "text": "### SP-612 — chat.message",
+          "text": "### SP-612 \u2014 chat.message",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -1427,7 +1679,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29770,
-          "text": "canonical_text: '### SP-612 — chat.message",
+          "text": "canonical_text: '### SP-612 \u2014 chat.message",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -1645,17 +1897,263 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Commands_System.md",
+          "lines": [
+            58,
+            281,
+            682,
+            1042,
+            1068,
+            1483,
+            2957,
+            2981
+          ],
+          "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            24614,
+            24616,
+            24623,
+            24626,
+            24632,
+            24634,
+            24636,
+            24674
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/OpenCode_Deep_Extraction.md",
+          "lines": [
+            242,
+            552,
+            560,
+            700,
+            2087,
+            3098,
+            3127,
+            3135,
+            3819,
+            3849
+          ],
+          "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+        },
+        {
+          "path": "Plans/Plugins_System.md",
+          "lines": [
+            271,
+            531,
+            1904,
+            1932
+          ],
+          "sha256": "d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "lines": [
+            8580,
+            14594
+          ],
+          "sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+        },
+        {
+          "path": "Plans/Wiring_Matrix.production.json",
+          "lines": [
+            22284,
+            22308,
+            22341,
+            22360,
+            87043,
+            87055,
+            87063,
+            87065,
+            87088,
+            87098,
+            87113,
+            87117
+          ],
+          "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29214,
+            29216,
+            29223,
+            29226,
+            29230,
+            29231,
+            29273
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            107,
+            114
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            761,
+            818,
+            991,
+            1049
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            51
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "7d6171031d7786d50500d55a19f096ce9b0fafc000881c1933d38f3ebbb43561"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_message.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "272086687897b6e5e9d99349940e238db96703e595e7b40d2651ce26b2be794d"
+        },
+        {
+          "path": "Plans/projects_refresh_command_bindings.fixtures.json",
+          "lines": [
+            24788,
+            52429
+          ],
+          "sha256": "5a69ddce5a0ff2fdcfbf124736c008e19088e6e16efd139b2d2c769509faefd8"
+        },
+        {
+          "path": "Plans/projects_refresh_command_bindings.json",
+          "lines": [
+            24512
+          ],
+          "sha256": "6ff5290dd5008a6e399c0ab92bba1c55fe198076b0ecb380271d8417981d3d20"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1663,
+            2048,
+            2139,
+            10968,
+            13447,
+            29487,
+            29545,
+            29623,
+            29681,
+            29753,
+            29755,
+            29759,
+            29770,
+            29773,
+            29809,
+            29821,
+            29882,
+            29899,
+            29956,
+            30034,
+            30093,
+            30171,
+            30229,
+            30307,
+            30365,
+            30443,
+            30501,
+            30579,
+            30637,
+            30715,
+            30773,
+            30851,
+            30909,
+            30987,
+            31046,
+            31124,
+            31183,
+            31261,
+            31320,
+            31398,
+            31456,
+            31534,
+            31592
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            124113,
+            124193,
+            124400
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        },
+        {
+          "path": "Plans/touch_closure.json",
+          "lines": [
+            35215,
+            47638
+          ],
+          "sha256": "ce5ea327531aec6be291958213b20223edfd2549904283a567d527a7e1f9c8fa"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-612",
+        "CV-632",
+        "SP-612"
+      ]
     }
   },
   "chat.thread_archived": {
@@ -1762,13 +2260,13 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -1780,7 +2278,7 @@
         {
           "path": "Plans/Decision_Log.md",
           "line": 19967,
-          "text": "  Jared said on 2026-11-03: \"I approve the outstanding questions with their recommended settings.\" This accepts the Split Projects direction, S1–S16, Y1, O1–O3, N1–N27, P1–P12 and the proposal's Q1–Q11 defaults, with the later corrections recorded in DL-292. Goals and Crew are available without a Project, and the later Plan-mode and scheduled-task ruling overturns N21/N22 as well as the old Q11 exclusion. The approved recommendations, followed by those later rulings, control this pass; older proposal tables and research remain source history. The earlier blanket person-only conversion wording is qualified by N27's guarded YOLO route. DL-273's service retirements and deliberately deferred restricted Forgejo token route remain unchanged. HTML concepts show the approved look and behavior; their demo names, data, APIs and simulated success are not product contracts or native evidence.",
+          "text": "  Jared said on 2026-11-03: \"I approve the outstanding questions with their recommended settings.\" This accepts the Split Projects direction, S1\u2013S16, Y1, O1\u2013O3, N1\u2013N27, P1\u2013P12 and the proposal's Q1\u2013Q11 defaults, with the later corrections recorded in DL-292. Goals and Crew are available without a Project, and the later Plan-mode and scheduled-task ruling overturns N21/N22 as well as the old Q11 exclusion. The approved recommendations, followed by those later rulings, control this pass; older proposal tables and research remain source history. The earlier blanket person-only conversion wording is qualified by N27's guarded YOLO route. DL-273's service retirements and deliberately deferred restricted Forgejo token route remain unchanged. HTML concepts show the approved look and behavior; their demo names, data, APIs and simulated success are not product contracts or native evidence.",
           "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
         },
         {
@@ -1797,6 +2295,140 @@
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. No archive-specific versioned reader/domain projector/checkpoint or closed two-edition payload was found in the reviewed source; generic SP-278 and lifecycle shape-only mentions do not supply those missing contracts. The own archive bindings are newly authored under DL-045 for manual behavior already decided; no sibling is treated as authority."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "lines": [
+            7237,
+            7262
+          ],
+          "sha256": "f590fc7841c7f194c07bb118200a1980cee83b5764fe202c3324e51b5717dda9"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            977,
+            7406,
+            25605,
+            25607,
+            25616,
+            25619,
+            25625,
+            25628,
+            25629,
+            25676
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            30155,
+            30157,
+            30164,
+            30167,
+            30177,
+            30179,
+            30226
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            159,
+            166
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            1130,
+            1191,
+            1565,
+            1627
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            75
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "013fe5c09ce54fa674dd019aa00828cc18beb3e50be0913ca2d9d694798eebe1"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_archived.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "54075fed4b44336867b4dfcc19f0ed4e0c7296bbdb12954957d4d336473cd86b"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            10778,
+            31664,
+            31666,
+            31670,
+            31681,
+            31684,
+            31715,
+            31726,
+            31790
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            131085,
+            131165,
+            131372
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-613",
+        "CV-633",
+        "SP-613"
+      ]
     }
   },
   "chat.thread_created": {
@@ -1853,7 +2485,7 @@
       {
         "path": "Plans/storage-plan.md",
         "line": 1663,
-        "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
+        "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
         "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
       },
       {
@@ -1931,7 +2563,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24655,
-          "text": "### CV-634 — chat.thread_created",
+          "text": "### CV-634 \u2014 chat.thread_created",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -1943,7 +2575,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24664,
-          "text": "canonical_text: '### CV-634 — chat.thread_created",
+          "text": "canonical_text: '### CV-634 \u2014 chat.thread_created",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -2003,7 +2635,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29254,
-          "text": "### ACD-614 — chat.thread_created",
+          "text": "### ACD-614 \u2014 chat.thread_created",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -2015,7 +2647,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29263,
-          "text": "canonical_text: '### ACD-614 — chat.thread_created",
+          "text": "canonical_text: '### ACD-614 \u2014 chat.thread_created",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -2117,7 +2749,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 1663,
-          "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
+          "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -2147,7 +2779,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29893,
-          "text": "### SP-614 — chat.thread_created",
+          "text": "### SP-614 \u2014 chat.thread_created",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -2165,7 +2797,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 29910,
-          "text": "canonical_text: '### SP-614 — chat.thread_created",
+          "text": "canonical_text: '### SP-614 \u2014 chat.thread_created",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -2209,17 +2841,163 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Commands_System.md",
+          "lines": [
+            281,
+            1482
+          ],
+          "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            977,
+            7405,
+            24684,
+            24686,
+            24693,
+            24696,
+            24702,
+            24705,
+            24706,
+            24744
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/Document_Packaging_Policy.md",
+          "lines": [
+            90,
+            649,
+            674
+          ],
+          "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29281,
+            29283,
+            29290,
+            29293,
+            29296,
+            29298,
+            29340
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            211,
+            218
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            1909,
+            1960,
+            2130,
+            2182
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            107
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "7e824f6df50645a03f6ee8016807970ba8d2a9a5679f073b7f46a514b8bf2661"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_created.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "23148a6cc095ad63995bcb244a6bf2e61879628cb3d5d8b93f0d5dd80cdc3b4d"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            1663,
+            2048,
+            10777,
+            10969,
+            13448,
+            29893,
+            29895,
+            29899,
+            29910,
+            29913,
+            29944,
+            30017
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            124611,
+            124691,
+            124898
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-614",
+        "CV-634",
+        "SP-614"
+      ]
     }
   },
   "chat.thread_deleted": {
@@ -2288,7 +3066,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24716,
-          "text": "### CV-635 — chat.thread_deleted",
+          "text": "### CV-635 \u2014 chat.thread_deleted",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -2300,7 +3078,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24725,
-          "text": "canonical_text: '### CV-635 — chat.thread_deleted",
+          "text": "canonical_text: '### CV-635 \u2014 chat.thread_deleted",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -2342,7 +3120,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29312,
-          "text": "### ACD-615 — chat.thread_deleted",
+          "text": "### ACD-615 \u2014 chat.thread_deleted",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -2354,7 +3132,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29321,
-          "text": "canonical_text: '### ACD-615 — chat.thread_deleted",
+          "text": "canonical_text: '### ACD-615 \u2014 chat.thread_deleted",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -2462,7 +3240,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30028,
-          "text": "### SP-615 — chat.thread_deleted",
+          "text": "### SP-615 \u2014 chat.thread_deleted",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -2480,7 +3258,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30045,
-          "text": "canonical_text: '### SP-615 — chat.thread_deleted",
+          "text": "canonical_text: '### SP-615 \u2014 chat.thread_deleted",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -2524,17 +3302,142 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            977,
+            7407,
+            24754,
+            24756,
+            24763,
+            24766,
+            24772,
+            24775,
+            24776,
+            24814
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            29348,
+            29350,
+            29357,
+            29360,
+            29364,
+            29365,
+            29408
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            263,
+            270
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            2260,
+            2311,
+            2481,
+            2533
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            130
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_deleted_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "8ab7e421d64e7b85b6d24d15b8019eea92383eb6c5666be9a0f5dc104407f4e6"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_deleted.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "2a255678b4177621dc58025b76803514e2f6c57e59f28d214df2c316233be986"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            10779,
+            30028,
+            30030,
+            30034,
+            30045,
+            30048,
+            30081,
+            30154
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            125109,
+            125189,
+            125396
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-615",
+        "CV-635",
+        "SP-615"
+      ]
     }
   },
   "chat.thread_worktree_bound": {
@@ -2669,7 +3572,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24777,
-          "text": "### CV-636 — chat.thread_worktree_bound",
+          "text": "### CV-636 \u2014 chat.thread_worktree_bound",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -2681,7 +3584,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24786,
-          "text": "canonical_text: '### CV-636 — chat.thread_worktree_bound",
+          "text": "canonical_text: '### CV-636 \u2014 chat.thread_worktree_bound",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -2771,7 +3674,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29371,
-          "text": "### ACD-616 — chat.thread_worktree_bound",
+          "text": "### ACD-616 \u2014 chat.thread_worktree_bound",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -2783,7 +3686,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29380,
-          "text": "canonical_text: '### ACD-616 — chat.thread_worktree_bound",
+          "text": "canonical_text: '### ACD-616 \u2014 chat.thread_worktree_bound",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -2909,7 +3812,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30165,
-          "text": "### SP-616 — chat.thread_worktree_bound",
+          "text": "### SP-616 \u2014 chat.thread_worktree_bound",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -2927,7 +3830,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30182,
-          "text": "canonical_text: '### SP-616 — chat.thread_worktree_bound",
+          "text": "canonical_text: '### SP-616 \u2014 chat.thread_worktree_bound",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -2971,17 +3874,153 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            983,
+            7456,
+            24824,
+            24826,
+            24833,
+            24836,
+            24842,
+            24845,
+            24846,
+            24885
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            2990,
+            3033,
+            3365,
+            18921,
+            18949,
+            19110,
+            19138,
+            21189,
+            29416,
+            29418,
+            29425,
+            29428,
+            29431,
+            29433,
+            29475
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            315,
+            322
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            2611,
+            2666,
+            2838,
+            2894
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            153
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_bound_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "cf8916e04eae392164b6288127a9cb65959e4d389616471b61c005952cb6525b"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_bound.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "e289c31ad0dd52dc8b5d408faf53c39324ceb4651ea435c34e62a65bc4543743"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1636,
+            1638,
+            1642,
+            10781,
+            10836,
+            30165,
+            30167,
+            30171,
+            30182,
+            30185,
+            30217,
+            30290
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            125607,
+            125687,
+            125894
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-616",
+        "CV-636",
+        "SP-616"
+      ]
     }
   },
   "chat.thread_worktree_create_failed": {
@@ -3050,7 +4089,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24838,
-          "text": "### CV-637 — chat.thread_worktree_create_failed",
+          "text": "### CV-637 \u2014 chat.thread_worktree_create_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -3062,7 +4101,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24847,
-          "text": "canonical_text: '### CV-637 — chat.thread_worktree_create_failed",
+          "text": "canonical_text: '### CV-637 \u2014 chat.thread_worktree_create_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -3116,7 +4155,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29429,
-          "text": "### ACD-617 — chat.thread_worktree_create_failed",
+          "text": "### ACD-617 \u2014 chat.thread_worktree_create_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -3128,7 +4167,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29438,
-          "text": "canonical_text: '### ACD-617 — chat.thread_worktree_create_failed",
+          "text": "canonical_text: '### ACD-617 \u2014 chat.thread_worktree_create_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -3224,7 +4263,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30301,
-          "text": "### SP-617 — chat.thread_worktree_create_failed",
+          "text": "### SP-617 \u2014 chat.thread_worktree_create_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -3242,7 +4281,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30318,
-          "text": "canonical_text: '### SP-617 — chat.thread_worktree_create_failed",
+          "text": "canonical_text: '### SP-617 \u2014 chat.thread_worktree_create_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -3286,17 +4325,136 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            986,
+            7459,
+            24895,
+            24897,
+            24904,
+            24907,
+            24913,
+            24916,
+            24917,
+            24956
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3368,
+            21192,
+            29483,
+            29485,
+            29492,
+            29495,
+            29498,
+            29500,
+            29542
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            367,
+            374
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            2974,
+            3025,
+            3195,
+            3247
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            176
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_create_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "75a1e4b1ae3c339cdb50b4616f3919e77faefeebfeded6ec13429d66c472a113"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1645,
+            10839,
+            30301,
+            30303,
+            30307,
+            30318,
+            30321,
+            30353,
+            30426
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            126105,
+            126185,
+            126392
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-617",
+        "CV-637",
+        "SP-617"
+      ]
     }
   },
   "chat.thread_worktree_merge_failed": {
@@ -3365,7 +4523,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24899,
-          "text": "### CV-638 — chat.thread_worktree_merge_failed",
+          "text": "### CV-638 \u2014 chat.thread_worktree_merge_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -3377,7 +4535,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24908,
-          "text": "canonical_text: '### CV-638 — chat.thread_worktree_merge_failed",
+          "text": "canonical_text: '### CV-638 \u2014 chat.thread_worktree_merge_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -3431,7 +4589,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29487,
-          "text": "### ACD-618 — chat.thread_worktree_merge_failed",
+          "text": "### ACD-618 \u2014 chat.thread_worktree_merge_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -3443,7 +4601,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29496,
-          "text": "canonical_text: '### ACD-618 — chat.thread_worktree_merge_failed",
+          "text": "canonical_text: '### ACD-618 \u2014 chat.thread_worktree_merge_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -3539,7 +4697,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30437,
-          "text": "### SP-618 — chat.thread_worktree_merge_failed",
+          "text": "### SP-618 \u2014 chat.thread_worktree_merge_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -3557,7 +4715,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30454,
-          "text": "canonical_text: '### SP-618 — chat.thread_worktree_merge_failed",
+          "text": "canonical_text: '### SP-618 \u2014 chat.thread_worktree_merge_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -3601,17 +4759,136 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            988,
+            7461,
+            24966,
+            24968,
+            24975,
+            24978,
+            24984,
+            24987,
+            24988,
+            25027
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3370,
+            21231,
+            29550,
+            29552,
+            29559,
+            29562,
+            29565,
+            29567,
+            29609
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            419,
+            426
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            3325,
+            3384,
+            3558,
+            3618
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            199
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merge_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "9a9cc3ba979730f1ec9b797bca1202f5ac9b3c2c2a5fd6f5ae8837b32a9aedc7"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1647,
+            10841,
+            30437,
+            30439,
+            30443,
+            30454,
+            30457,
+            30489,
+            30562
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            126603,
+            126683,
+            126890
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-618",
+        "CV-638",
+        "SP-618"
+      ]
     }
   },
   "chat.thread_worktree_merged": {
@@ -3680,7 +4957,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24960,
-          "text": "### CV-639 — chat.thread_worktree_merged",
+          "text": "### CV-639 \u2014 chat.thread_worktree_merged",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -3692,7 +4969,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24969,
-          "text": "canonical_text: '### CV-639 — chat.thread_worktree_merged",
+          "text": "canonical_text: '### CV-639 \u2014 chat.thread_worktree_merged",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -3746,7 +5023,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29545,
-          "text": "### ACD-619 — chat.thread_worktree_merged",
+          "text": "### ACD-619 \u2014 chat.thread_worktree_merged",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -3758,7 +5035,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29554,
-          "text": "canonical_text: '### ACD-619 — chat.thread_worktree_merged",
+          "text": "canonical_text: '### ACD-619 \u2014 chat.thread_worktree_merged",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -3854,7 +5131,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30573,
-          "text": "### SP-619 — chat.thread_worktree_merged",
+          "text": "### SP-619 \u2014 chat.thread_worktree_merged",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -3872,7 +5149,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30590,
-          "text": "canonical_text: '### SP-619 — chat.thread_worktree_merged",
+          "text": "canonical_text: '### SP-619 \u2014 chat.thread_worktree_merged",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -3916,17 +5193,136 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            987,
+            7460,
+            25037,
+            25039,
+            25046,
+            25049,
+            25055,
+            25058,
+            25059,
+            25098
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3369,
+            21230,
+            29617,
+            29619,
+            29626,
+            29629,
+            29632,
+            29634,
+            29676
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            471,
+            478
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            3700,
+            3757,
+            3930,
+            3988
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            222
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merged_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "7e40d016e3fbf76d99ccd204c7d43aca093b10c8985f1ec0fb3e52e494901854"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1646,
+            10840,
+            30573,
+            30575,
+            30579,
+            30590,
+            30593,
+            30625,
+            30698
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            127101,
+            127181,
+            127388
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-619",
+        "CV-639",
+        "SP-619"
+      ]
     }
   },
   "chat.thread_worktree_pr_created": {
@@ -3995,7 +5391,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25021,
-          "text": "### CV-640 — chat.thread_worktree_pr_created",
+          "text": "### CV-640 \u2014 chat.thread_worktree_pr_created",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -4007,7 +5403,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25030,
-          "text": "canonical_text: '### CV-640 — chat.thread_worktree_pr_created",
+          "text": "canonical_text: '### CV-640 \u2014 chat.thread_worktree_pr_created",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -4061,7 +5457,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29603,
-          "text": "### ACD-620 — chat.thread_worktree_pr_created",
+          "text": "### ACD-620 \u2014 chat.thread_worktree_pr_created",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -4073,7 +5469,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29612,
-          "text": "canonical_text: '### ACD-620 — chat.thread_worktree_pr_created",
+          "text": "canonical_text: '### ACD-620 \u2014 chat.thread_worktree_pr_created",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -4169,7 +5565,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30709,
-          "text": "### SP-620 — chat.thread_worktree_pr_created",
+          "text": "### SP-620 \u2014 chat.thread_worktree_pr_created",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -4187,7 +5583,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30726,
-          "text": "canonical_text: '### SP-620 — chat.thread_worktree_pr_created",
+          "text": "canonical_text: '### SP-620 \u2014 chat.thread_worktree_pr_created",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -4231,17 +5627,136 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            989,
+            7462,
+            25108,
+            25110,
+            25117,
+            25120,
+            25126,
+            25129,
+            25130,
+            25169
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3371,
+            21232,
+            29684,
+            29686,
+            29693,
+            29696,
+            29698,
+            29700,
+            29742
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            523,
+            530
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            4069,
+            4126,
+            4299,
+            4357
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            245
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_created_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "cd1a3a5716b237b216be59274b5ef5d3ea81d43e32d53b4c333b7874e962f56b"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1648,
+            10842,
+            30709,
+            30711,
+            30715,
+            30726,
+            30729,
+            30761,
+            30834
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            127599,
+            127679,
+            127886
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-620",
+        "CV-640",
+        "SP-620"
+      ]
     }
   },
   "chat.thread_worktree_pr_failed": {
@@ -4280,7 +5795,7 @@
       {
         "path": "Plans/assistant-chat-design.md",
         "line": 3268,
-        "text": "**Auto-push:** `git push -u origin {branch}` before PR panel opens. Push failure → error toast, PR panel does NOT open, and Chat emits `chat.thread_worktree_pr_failed` with `phase=push`.",
+        "text": "**Auto-push:** `git push -u origin {branch}` before PR panel opens. Push failure \u2192 error toast, PR panel does NOT open, and Chat emits `chat.thread_worktree_pr_failed` with `phase=push`.",
         "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
       },
       {
@@ -4388,7 +5903,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25082,
-          "text": "### CV-641 — chat.thread_worktree_pr_failed",
+          "text": "### CV-641 \u2014 chat.thread_worktree_pr_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -4400,7 +5915,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25091,
-          "text": "canonical_text: '### CV-641 — chat.thread_worktree_pr_failed",
+          "text": "canonical_text: '### CV-641 \u2014 chat.thread_worktree_pr_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -4442,7 +5957,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 3268,
-          "text": "**Auto-push:** `git push -u origin {branch}` before PR panel opens. Push failure → error toast, PR panel does NOT open, and Chat emits `chat.thread_worktree_pr_failed` with `phase=push`.",
+          "text": "**Auto-push:** `git push -u origin {branch}` before PR panel opens. Push failure \u2192 error toast, PR panel does NOT open, and Chat emits `chat.thread_worktree_pr_failed` with `phase=push`.",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -4478,7 +5993,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29660,
-          "text": "### ACD-621 — chat.thread_worktree_pr_failed",
+          "text": "### ACD-621 \u2014 chat.thread_worktree_pr_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -4490,7 +6005,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29669,
-          "text": "canonical_text: '### ACD-621 — chat.thread_worktree_pr_failed",
+          "text": "canonical_text: '### ACD-621 \u2014 chat.thread_worktree_pr_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -4604,7 +6119,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30845,
-          "text": "### SP-621 — chat.thread_worktree_pr_failed",
+          "text": "### SP-621 \u2014 chat.thread_worktree_pr_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -4622,7 +6137,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30862,
-          "text": "canonical_text: '### SP-621 — chat.thread_worktree_pr_failed",
+          "text": "canonical_text: '### SP-621 \u2014 chat.thread_worktree_pr_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -4666,17 +6181,152 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            990,
+            995,
+            7429,
+            7439,
+            7463,
+            25179,
+            25181,
+            25188,
+            25191,
+            25197,
+            25200,
+            25201,
+            25240
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3268,
+            3272,
+            3372,
+            20521,
+            20547,
+            21233,
+            29750,
+            29752,
+            29759,
+            29762,
+            29765,
+            29767,
+            29809
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            575,
+            582
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            4438,
+            4493,
+            4665,
+            4721
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            268
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "6e8ca08844fc33cb627320a5b6546fe13a5f1cbfdb50541405432f5900e287c0"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_pr_failed.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "790a2b401a5a7a00fbfef8a48d3f62905b213a228f9d8aca4ac68eb70efa42c3"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1649,
+            1654,
+            10843,
+            30845,
+            30847,
+            30851,
+            30862,
+            30865,
+            30897,
+            30970
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            128097,
+            128177,
+            128384
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-621",
+        "CV-641",
+        "SP-621"
+      ]
     }
   },
   "chat.thread_worktree_pre_merge_test_failed": {
@@ -4757,7 +6407,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25143,
-          "text": "### CV-642 — chat.thread_worktree_pre_merge_test_failed",
+          "text": "### CV-642 \u2014 chat.thread_worktree_pre_merge_test_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -4769,7 +6419,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25152,
-          "text": "canonical_text: '### CV-642 — chat.thread_worktree_pre_merge_test_failed",
+          "text": "canonical_text: '### CV-642 \u2014 chat.thread_worktree_pre_merge_test_failed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -4823,7 +6473,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29718,
-          "text": "### ACD-622 — chat.thread_worktree_pre_merge_test_failed",
+          "text": "### ACD-622 \u2014 chat.thread_worktree_pre_merge_test_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -4835,7 +6485,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29727,
-          "text": "canonical_text: '### ACD-622 — chat.thread_worktree_pre_merge_test_failed",
+          "text": "canonical_text: '### ACD-622 \u2014 chat.thread_worktree_pre_merge_test_failed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -4943,7 +6593,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30981,
-          "text": "### SP-622 — chat.thread_worktree_pre_merge_test_failed",
+          "text": "### SP-622 \u2014 chat.thread_worktree_pre_merge_test_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -4961,7 +6611,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 30998,
-          "text": "canonical_text: '### SP-622 — chat.thread_worktree_pre_merge_test_failed",
+          "text": "canonical_text: '### SP-622 \u2014 chat.thread_worktree_pre_merge_test_failed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -5005,17 +6655,139 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            993,
+            7466,
+            25250,
+            25252,
+            25259,
+            25262,
+            25268,
+            25271,
+            25272,
+            25311
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3375,
+            21274,
+            29817,
+            29819,
+            29826,
+            29829,
+            29832,
+            29834,
+            29877
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            627,
+            634
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            4801,
+            4860,
+            5034,
+            5094
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            291
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "127029a158d279b24667f6c2f14cde1539929f3381edde78a5be794fc42c3e1d"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1652,
+            1654,
+            10846,
+            10862,
+            30981,
+            30983,
+            30987,
+            30998,
+            31001,
+            31033,
+            31107
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            128595,
+            128675,
+            128882
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key",
+        "started_event_id joins original started operation and W.9.3 actual terminal outcome; failure uses explicit exit/timeout/process_error and error_ref"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-622",
+        "CV-642",
+        "SP-622"
+      ]
     }
   },
   "chat.thread_worktree_pre_merge_test_passed": {
@@ -5096,7 +6868,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25204,
-          "text": "### CV-643 — chat.thread_worktree_pre_merge_test_passed",
+          "text": "### CV-643 \u2014 chat.thread_worktree_pre_merge_test_passed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -5108,7 +6880,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25213,
-          "text": "canonical_text: '### CV-643 — chat.thread_worktree_pre_merge_test_passed",
+          "text": "canonical_text: '### CV-643 \u2014 chat.thread_worktree_pre_merge_test_passed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -5162,7 +6934,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29776,
-          "text": "### ACD-623 — chat.thread_worktree_pre_merge_test_passed",
+          "text": "### ACD-623 \u2014 chat.thread_worktree_pre_merge_test_passed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -5174,7 +6946,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29785,
-          "text": "canonical_text: '### ACD-623 — chat.thread_worktree_pre_merge_test_passed",
+          "text": "canonical_text: '### ACD-623 \u2014 chat.thread_worktree_pre_merge_test_passed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -5282,7 +7054,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31118,
-          "text": "### SP-623 — chat.thread_worktree_pre_merge_test_passed",
+          "text": "### SP-623 \u2014 chat.thread_worktree_pre_merge_test_passed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -5300,7 +7072,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31135,
-          "text": "canonical_text: '### SP-623 — chat.thread_worktree_pre_merge_test_passed",
+          "text": "canonical_text: '### SP-623 \u2014 chat.thread_worktree_pre_merge_test_passed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -5344,17 +7116,139 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            992,
+            7465,
+            25321,
+            25323,
+            25330,
+            25333,
+            25339,
+            25342,
+            25343,
+            25382
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3374,
+            21273,
+            29885,
+            29887,
+            29894,
+            29897,
+            29900,
+            29902,
+            29944
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            679,
+            686
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            5176,
+            5231,
+            5403,
+            5459
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            314
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "89cdc2c23c3422428f3a45e77b96279506cc18b767fb268ad7f283889d2218d6"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1651,
+            1654,
+            10845,
+            10862,
+            31118,
+            31120,
+            31124,
+            31135,
+            31138,
+            31170,
+            31244
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            129093,
+            129173,
+            129380
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key",
+        "started_event_id joins original started operation and W.9.3 actual terminal outcome; failure uses explicit exit/timeout/process_error and error_ref"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-623",
+        "CV-643",
+        "SP-623"
+      ]
     }
   },
   "chat.thread_worktree_pre_merge_test_started": {
@@ -5441,7 +7335,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25265,
-          "text": "### CV-644 — chat.thread_worktree_pre_merge_test_started",
+          "text": "### CV-644 \u2014 chat.thread_worktree_pre_merge_test_started",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -5453,7 +7347,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25274,
-          "text": "canonical_text: '### CV-644 — chat.thread_worktree_pre_merge_test_started",
+          "text": "canonical_text: '### CV-644 \u2014 chat.thread_worktree_pre_merge_test_started",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -5507,7 +7401,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29834,
-          "text": "### ACD-624 — chat.thread_worktree_pre_merge_test_started",
+          "text": "### ACD-624 \u2014 chat.thread_worktree_pre_merge_test_started",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -5519,7 +7413,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29843,
-          "text": "canonical_text: '### ACD-624 — chat.thread_worktree_pre_merge_test_started",
+          "text": "canonical_text: '### ACD-624 \u2014 chat.thread_worktree_pre_merge_test_started",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -5633,7 +7527,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31255,
-          "text": "### SP-624 — chat.thread_worktree_pre_merge_test_started",
+          "text": "### SP-624 \u2014 chat.thread_worktree_pre_merge_test_started",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -5651,7 +7545,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31272,
-          "text": "canonical_text: '### SP-624 — chat.thread_worktree_pre_merge_test_started",
+          "text": "canonical_text: '### SP-624 \u2014 chat.thread_worktree_pre_merge_test_started",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -5695,17 +7589,139 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            991,
+            7464,
+            25392,
+            25394,
+            25401,
+            25404,
+            25410,
+            25413,
+            25414,
+            25453
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3373,
+            21272,
+            29952,
+            29954,
+            29961,
+            29964,
+            29968,
+            29969,
+            30012
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            731,
+            738
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            5539,
+            5594,
+            5766,
+            5822
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            337
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_started_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "761d839d6da5dcbedace0ed32215f569bdccce13c7ab9d33a5fe5141348da60f"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1650,
+            1654,
+            10844,
+            10860,
+            10862,
+            31255,
+            31257,
+            31261,
+            31272,
+            31275,
+            31307,
+            31381
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            129591,
+            129671,
+            129878
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-624",
+        "CV-644",
+        "SP-624"
+      ]
     }
   },
   "chat.thread_worktree_renamed": {
@@ -5810,7 +7826,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25326,
-          "text": "### CV-645 — chat.thread_worktree_renamed",
+          "text": "### CV-645 \u2014 chat.thread_worktree_renamed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -5822,7 +7838,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25335,
-          "text": "canonical_text: '### CV-645 — chat.thread_worktree_renamed",
+          "text": "canonical_text: '### CV-645 \u2014 chat.thread_worktree_renamed",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -5900,7 +7916,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29893,
-          "text": "### ACD-625 — chat.thread_worktree_renamed",
+          "text": "### ACD-625 \u2014 chat.thread_worktree_renamed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -5912,7 +7928,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29902,
-          "text": "canonical_text: '### ACD-625 — chat.thread_worktree_renamed",
+          "text": "canonical_text: '### ACD-625 \u2014 chat.thread_worktree_renamed",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -6020,7 +8036,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31392,
-          "text": "### SP-625 — chat.thread_worktree_renamed",
+          "text": "### SP-625 \u2014 chat.thread_worktree_renamed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -6038,7 +8054,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31409,
-          "text": "canonical_text: '### SP-625 — chat.thread_worktree_renamed",
+          "text": "canonical_text: '### SP-625 \u2014 chat.thread_worktree_renamed",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -6082,17 +8098,148 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            985,
+            7458,
+            25463,
+            25465,
+            25472,
+            25475,
+            25481,
+            25484,
+            25485,
+            25524
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            3061,
+            3367,
+            19285,
+            19294,
+            19315,
+            21191,
+            30020,
+            30022,
+            30029,
+            30032,
+            30035,
+            30037,
+            30079
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            783,
+            790
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            5902,
+            5955,
+            6126,
+            6180
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            360
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_renamed_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "9a3e7187bd186bedb5e22972610181ca09a0b74639602731f2ed5e9ce93c7d01"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_renamed.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "58f30892f7a24a6f4d912b256459ffc2e3cf1a01d8d6b3cd0907fb3192454568"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1644,
+            10838,
+            31392,
+            31394,
+            31398,
+            31409,
+            31412,
+            31444,
+            31517
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            130089,
+            130169,
+            130376
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-625",
+        "CV-645",
+        "SP-625"
+      ]
     }
   },
   "chat.thread_worktree_unbound": {
@@ -6221,7 +8368,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25387,
-          "text": "### CV-646 — chat.thread_worktree_unbound",
+          "text": "### CV-646 \u2014 chat.thread_worktree_unbound",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -6233,7 +8380,7 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 25396,
-          "text": "canonical_text: '### CV-646 — chat.thread_worktree_unbound",
+          "text": "canonical_text: '### CV-646 \u2014 chat.thread_worktree_unbound",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
@@ -6329,7 +8476,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29951,
-          "text": "### ACD-626 — chat.thread_worktree_unbound",
+          "text": "### ACD-626 \u2014 chat.thread_worktree_unbound",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -6341,7 +8488,7 @@
         {
           "path": "Plans/assistant-chat-design.md",
           "line": 29960,
-          "text": "canonical_text: '### ACD-626 — chat.thread_worktree_unbound",
+          "text": "canonical_text: '### ACD-626 \u2014 chat.thread_worktree_unbound",
           "sha256": "2713ade98ec6376cbec38dee33509248363830187cd3fb876cf801a70445f967"
         },
         {
@@ -6455,7 +8602,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31528,
-          "text": "### SP-626 — chat.thread_worktree_unbound",
+          "text": "### SP-626 \u2014 chat.thread_worktree_unbound",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -6473,7 +8620,7 @@
         {
           "path": "Plans/storage-plan.md",
           "line": 31545,
-          "text": "canonical_text: '### SP-626 — chat.thread_worktree_unbound",
+          "text": "canonical_text: '### SP-626 \u2014 chat.thread_worktree_unbound",
           "sha256": "1f65b35687501a12a9432e6aca03237fcc67451e1d796c8af762395e6d890556"
         },
         {
@@ -6517,17 +8664,152 @@
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24099,
-          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage’s project~base64url rule, never a new project:hex scheme.",
+          "text": "  App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}; the existing storage lifetime tuple remains (scope_partition,event_type,idempotency_key) and app-root-global event_id remains unchanged. Every optional effect uses an exact declared operation component before hashing; no retry timestamp/focus can remint an original source. Same identity/same semantic digest returns the original result; different digest conflicts; missing authoritative dedupe is dedupe_unavailable with zero new effect. Reversible Project partitions keep Storage\u2019s project~base64url rule, never a new project:hex scheme.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "line": 24018,
-          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage §2.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
+          "text": "  WorkflowScopeV2, logical pm.workflow_scope.v2 version 2.0.0, is the single explicit application/Project scope contract at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2. Its required members are schema_id, schema_version, scope_kind, scope_partition, server_id, project_id, project_home_server_id and named_plan_id; no unknown members. server_id is the real owning Server, not a display Computer or client device. Application requires scope_kind=application, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project requires the actual nonempty Project/Home Server, scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id under existing Storage \u00a72.2.5, and a real named_plan_id only when actually referenced, otherwise null. Empty/sentinel Project strings, mismatched outer/inner scope and focus-based inference refuse. A scope is not an execution context: Server-owned Settings/pause need no fabricated thread; every chat/task execution envelope additionally requires actual thread/Server/Host/Environment/root identities and applicable run/Goal/Crew/Plan/schedule refs. Before first message use draft_id, never a fabricated durable thread.",
           "sha256": "924525be067b2a83e24085a774ece805e2e28378c9e6001af96d45ef26bd18ab"
         }
       ],
       "negative_evidence": "Existing CV-366 application key and CV-365 Project partition definitions are controlling and reused; the earlier DCH replacement recipe is rejected. The existing exact-family DCH producer, event_id, readers/projector/checkpoint and withdrawal bindings are retained. No evidence authorizes overriding CV-366 or replacing CV-365 encoding; no new sibling-derived binding is needed."
+    },
+    "review_round_2": {
+      "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
+      "scope": "live non-generated non-ledger non-bootstrap Plans markdown/schema/registry bytes at reviewed head",
+      "searched_files": 741,
+      "exact_family_hits": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "lines": [
+            984,
+            7457,
+            25534,
+            25536,
+            25543,
+            25546,
+            25552,
+            25555,
+            25556,
+            25595
+          ],
+          "sha256": "080f48f26f4b5ab64a6c380d296decd9dbc1cac726af17d32681bd54475f8c32"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "lines": [
+            603
+          ],
+          "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "lines": [
+            2990,
+            2996,
+            3127,
+            3158,
+            3366,
+            18922,
+            18950,
+            19637,
+            21190,
+            30087,
+            30089,
+            30096,
+            30099,
+            30103,
+            30104,
+            30147
+          ],
+          "sha256": "f99ef2e44718df281185b861ec4eb6cfce3ed0c204b614a8e6d0990f926b9015"
+        },
+        {
+          "path": "Plans/dch_checkpoint_fixtures.json",
+          "lines": [
+            835,
+            842
+          ],
+          "sha256": "fb1498150a9c54e143806b11f32ca464c4094b7b4ce33534f614b823ddf96ca1"
+        },
+        {
+          "path": "Plans/dch_event_contract_fixtures.json",
+          "lines": [
+            6259,
+            6310,
+            6480,
+            6532
+          ],
+          "sha256": "175ede00cb1dd157a87c6b33a4a8ba2aed7296a8835069ab4a6ee179032b19ec"
+        },
+        {
+          "path": "Plans/dch_event_contracts.json",
+          "lines": [
+            383
+          ],
+          "sha256": "34d91624793e76d868698b8a7dc31286c106b3f0e3f0da979a0294ba4c667d96"
+        },
+        {
+          "path": "Plans/dch_event_payloads/dch_chat_thread_worktree_unbound_checkpoint.schema.json",
+          "lines": [
+            41,
+            248
+          ],
+          "sha256": "d046637f66f118050419dd297c6e3af48f5b68c38d80bac76fbe630cb0321d29"
+        },
+        {
+          "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_unbound.schema.json",
+          "lines": [
+            5,
+            7
+          ],
+          "sha256": "9b30b19c91f92f20caf99480daf6e55fee44736033c4804adcebd3f6a19bc2b4"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "lines": [
+            1638,
+            1643,
+            10837,
+            31528,
+            31530,
+            31534,
+            31545,
+            31548,
+            31580,
+            31653
+          ],
+          "sha256": "c7e44039fabdebfa07e5601a2cec34872eb005247cc4855a85b3b6ccea55e160"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "lines": [
+            130587,
+            130667,
+            130874
+          ],
+          "sha256": "80779b2892ea73d839e3bc6e25a2bb23c47acb99ce1b53afa91f782011ba8099"
+        }
+      ],
+      "negative_evidence": "The existing family units select payload inline, but define no SP-337 complete-body reference binding or byte-size acceptance oracle. Existing SP-337 and the payload_pack_index key payload:v1:{blake3_hex} are reused first. This round authors the missing typed reference-string/whole-body joins only; no feature/retention choice or admission. Existing SP-278 full-index and durable nine-field token are reused; no new generic projector/checkpoint schema or digest recipe.",
+      "new_bindings": [
+        "SP-337 exact-body reference string selecting existing pack-index key; encoded-size/auth/readback acceptance",
+        "per-family append policy explicitly selects existing dedupe_by_idempotency_key"
+      ],
+      "reused_owner_units": [
+        "SP-236",
+        "SP-337",
+        "SP-278",
+        "CV-366",
+        "CV-365"
+      ],
+      "family_owner_units": [
+        "ACD-626",
+        "CV-646",
+        "SP-626"
+      ]
     }
   }
 }

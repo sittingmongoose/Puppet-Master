@@ -24484,7 +24484,11 @@ The selected app request union accepts only an authenticated user actor. A malfo
 
 ### CV-630 — bundle.selection_forward_blocked
 
-Newly authored closed payload contract for `bundle.selection_forward_blocked` 1.0.0: `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project` selects `pm.dch_event.bundle_selection_forward_blocked.project.v1`; `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/application` selects `pm.dch_event.bundle_selection_forward_blocked.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_forward_blocked`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `bundle.selection_forward_blocked` 1.0.0: `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project` selects `pm.dch_event.bundle_selection_forward_blocked.project.v1`; `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/application` selects `pm.dch_event.bundle_selection_forward_blocked.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_forward_blocked`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-630
@@ -24496,38 +24500,72 @@ canonical_text: '### CV-630 — bundle.selection_forward_blocked
 
   Newly authored closed payload contract for `bundle.selection_forward_blocked` 1.0.0: `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project`
   selects `pm.dch_event.bundle_selection_forward_blocked.project.v1`; `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/application`
-  selects `pm.dch_event.bundle_selection_forward_blocked.application.v1`. The root and both payload editions are
-  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_forward_blocked`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect
-  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.bundle_selection_forward_blocked.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `bundle.selection_forward_blocked`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_forward_blocked,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-610
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -24555,7 +24593,11 @@ owner_hints:
 
 ### CV-631 — bundle.selection_sent_to_chat
 
-Newly authored closed payload contract for `bundle.selection_sent_to_chat` 1.0.0: `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/project` selects `pm.dch_event.bundle_selection_sent_to_chat.project.v1`; `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/application` selects `pm.dch_event.bundle_selection_sent_to_chat.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_sent_to_chat`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `bundle.selection_sent_to_chat` 1.0.0: `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/project` selects `pm.dch_event.bundle_selection_sent_to_chat.project.v1`; `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/application` selects `pm.dch_event.bundle_selection_sent_to_chat.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_sent_to_chat`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-631
@@ -24567,38 +24609,72 @@ canonical_text: '### CV-631 — bundle.selection_sent_to_chat
 
   Newly authored closed payload contract for `bundle.selection_sent_to_chat` 1.0.0: `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/project`
   selects `pm.dch_event.bundle_selection_sent_to_chat.project.v1`; `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/application`
-  selects `pm.dch_event.bundle_selection_sent_to_chat.application.v1`. The root and both payload editions are closed;
-  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_sent_to_chat`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect
-  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.bundle_selection_sent_to_chat.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `bundle.selection_sent_to_chat`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_sent_to_chat,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-611
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -24626,7 +24702,11 @@ owner_hints:
 
 ### CV-632 — chat.message
 
-Newly authored closed payload contract for `chat.message` 1.0.0: `Plans/dch_event_payloads/chat_message.schema.json#/$defs/project` selects `pm.dch_event.chat_message.project.v1`; `Plans/dch_event_payloads/chat_message.schema.json#/$defs/application` selects `pm.dch_event.chat_message.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.message`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.message` 1.0.0: `Plans/dch_event_payloads/chat_message.schema.json#/$defs/project` selects `pm.dch_event.chat_message.project.v1`; `Plans/dch_event_payloads/chat_message.schema.json#/$defs/application` selects `pm.dch_event.chat_message.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.message`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-632
@@ -24642,33 +24722,67 @@ canonical_text: '### CV-632 — chat.message
   and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
   scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
   null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.message`, schema/version
-  dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline,
-  and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.message,
-  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
-  retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope,
-  computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple).
-  Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~"
-  + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or
-  read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id))
-  + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family''s original operation_id,
-  frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No
-  additional optional effect component is defined for this family; distinct event types retain separate Storage
-  lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins
-  remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result
-  and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable
-  with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord
-  semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope
-  is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition
-  and governed migration; readers never rewrite original identities or payload bytes.'
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.message`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic
+  run/node/attempt joins. For chat.message, freeze operation_id from the original accepted operation before
+  its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
+  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded
+  exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
+  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id
+  is exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry,
+  timestamp, focus or result component is added. No additional optional effect component is defined for this
+  family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-612
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -24696,7 +24810,11 @@ owner_hints:
 
 ### CV-634 — chat.thread_created
 
-Newly authored closed payload contract for `chat.thread_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_created.project.v1`; `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_created.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_created`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_created.project.v1`; `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_created.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_created`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-634
@@ -24708,37 +24826,71 @@ canonical_text: '### CV-634 — chat.thread_created
 
   Newly authored closed payload contract for `chat.thread_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_created.project.v1`; `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_created.application.v1`. The root and both payload editions are closed; application
-  and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  selects `pm.dch_event.chat_thread_created.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
   scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
   null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
   from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_created`,
   schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy
-  for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0",
-  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
-  = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact
-  scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project
-  identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
-  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this
-  family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus
-  or result component is added. No additional optional effect component is defined for this family; distinct event
-  types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source
-  joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original
-  result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields
-  dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original
-  payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite.
-  Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change
-  requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+  body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic
+  run/node/attempt joins. For chat.thread_created, freeze operation_id from the original accepted operation
+  before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple
+  is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use
+  RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" +
+  that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts
+  CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source
+  before any effect; no retry, timestamp, focus or result component is added. No additional optional effect
+  component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-614
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -24766,7 +24918,11 @@ owner_hints:
 
 ### CV-635 — chat.thread_deleted
 
-Newly authored closed payload contract for `chat.thread_deleted` 1.0.0: `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_deleted.project.v1`; `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_deleted.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_deleted`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_deleted` 1.0.0: `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_deleted.project.v1`; `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_deleted.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_deleted`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-635
@@ -24778,37 +24934,71 @@ canonical_text: '### CV-635 — chat.thread_deleted
 
   Newly authored closed payload contract for `chat.thread_deleted` 1.0.0: `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_deleted.project.v1`; `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_deleted.application.v1`. The root and both payload editions are closed; application
-  and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  selects `pm.dch_event.chat_thread_deleted.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
   scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
   null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
   from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_deleted`,
   schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy
-  for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0",
-  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
-  = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact
-  scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project
-  identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
-  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this
-  family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus
-  or result component is added. No additional optional effect component is defined for this family; distinct event
-  types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source
-  joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original
-  result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields
-  dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original
-  payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite.
-  Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change
-  requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+  body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic
+  run/node/attempt joins. For chat.thread_deleted, freeze operation_id from the original accepted operation
+  before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple
+  is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use
+  RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" +
+  that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts
+  CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source
+  before any effect; no retry, timestamp, focus or result component is added. No additional optional effect
+  component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-615
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -24836,7 +25026,11 @@ owner_hints:
 
 ### CV-636 — chat.thread_worktree_bound
 
-Newly authored closed payload contract for `chat.thread_worktree_bound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_bound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_bound.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_bound`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_bound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_bound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_bound.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_bound`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-636
@@ -24848,38 +25042,72 @@ canonical_text: '### CV-636 — chat.thread_worktree_bound
 
   Newly authored closed payload contract for `chat.thread_worktree_bound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_bound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_bound.application.v1`. The root and both payload editions are closed;
-  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_bound`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh
-  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.chat_thread_worktree_bound.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_bound`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_bound, freeze
+  operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained
+  across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-616
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -24907,7 +25135,11 @@ owner_hints:
 
 ### CV-637 — chat.thread_worktree_create_failed
 
-Newly authored closed payload contract for `chat.thread_worktree_create_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_create_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_create_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_create_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_create_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_create_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_create_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_create_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-637
@@ -24919,38 +25151,72 @@ canonical_text: '### CV-637 — chat.thread_worktree_create_failed
 
   Newly authored closed payload contract for `chat.thread_worktree_create_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_create_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_create_failed.application.v1`. The root and both payload editions are
-  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_create_failed`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect
-  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
-  focus or result component is added. No additional optional effect component is defined for this family; distinct
-  event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
-  Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  selects `pm.dch_event.chat_thread_worktree_create_failed.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_create_failed`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_create_failed,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0",
+  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
+  = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
+  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded
+  exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
+  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id
+  is exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry,
+  timestamp, focus or result component is added. No additional optional effect component is defined for this
+  family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-617
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -24978,7 +25244,11 @@ owner_hints:
 
 ### CV-638 — chat.thread_worktree_merge_failed
 
-Newly authored closed payload contract for `chat.thread_worktree_merge_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_merge_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merge_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_merge_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_merge_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merge_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-638
@@ -24990,38 +25260,72 @@ canonical_text: '### CV-638 — chat.thread_worktree_merge_failed
 
   Newly authored closed payload contract for `chat.thread_worktree_merge_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_merge_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`. The root and both payload editions are
-  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merge_failed`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect
-  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_merge_failed`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merge_failed,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-618
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25049,7 +25353,11 @@ owner_hints:
 
 ### CV-639 — chat.thread_worktree_merged
 
-Newly authored closed payload contract for `chat.thread_worktree_merged` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_merged.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_merged.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merged`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_merged` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_merged.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_merged.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merged`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-639
@@ -25061,38 +25369,72 @@ canonical_text: '### CV-639 — chat.thread_worktree_merged
 
   Newly authored closed payload contract for `chat.thread_worktree_merged` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_merged.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_merged.application.v1`. The root and both payload editions are closed;
-  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merged`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh
-  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.chat_thread_worktree_merged.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_merged`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merged, freeze
+  operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained
+  across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-619
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25120,7 +25462,11 @@ owner_hints:
 
 ### CV-640 — chat.thread_worktree_pr_created
 
-Newly authored closed payload contract for `chat.thread_worktree_pr_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pr_created.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pr_created.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_created`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_pr_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pr_created.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pr_created.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_created`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-640
@@ -25132,38 +25478,72 @@ canonical_text: '### CV-640 — chat.thread_worktree_pr_created
 
   Newly authored closed payload contract for `chat.thread_worktree_pr_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_pr_created.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_pr_created.application.v1`. The root and both payload editions are
-  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_created`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect
-  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.chat_thread_worktree_pr_created.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_pr_created`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_created,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-620
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25191,7 +25571,11 @@ owner_hints:
 
 ### CV-641 — chat.thread_worktree_pr_failed
 
-Newly authored closed payload contract for `chat.thread_worktree_pr_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pr_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pr_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_pr_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pr_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pr_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-641
@@ -25203,38 +25587,72 @@ canonical_text: '### CV-641 — chat.thread_worktree_pr_failed
 
   Newly authored closed payload contract for `chat.thread_worktree_pr_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_pr_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_pr_failed.application.v1`. The root and both payload editions are closed;
-  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_failed`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect
-  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.chat_thread_worktree_pr_failed.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_pr_failed`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_failed,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-621
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25262,7 +25680,11 @@ owner_hints:
 
 ### CV-642 — chat.thread_worktree_pre_merge_test_failed
 
-Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-642
@@ -25274,38 +25696,72 @@ canonical_text: '### CV-642 — chat.thread_worktree_pre_merge_test_failed
 
   Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1`. The root and both payload editions
-  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
-  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
-  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root
-  authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_failed`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before
-  its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
-  focus or result component is added. No additional optional effect component is defined for this family; distinct
-  event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
-  Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1`. The root and both payload
+  editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old
+  swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind;
+  envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance.
+  Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback.
+  EventRecord event_type is `chat.thread_worktree_pre_merge_test_failed`, schema/version dispatch selects the
+  exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below,
+  and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_failed,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0",
+  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
+  = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
+  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded
+  exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
+  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id
+  is exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry,
+  timestamp, focus or result component is added. No additional optional effect component is defined for this
+  family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-622
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25333,7 +25789,11 @@ owner_hints:
 
 ### CV-643 — chat.thread_worktree_pre_merge_test_passed
 
-Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_passed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_passed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_passed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_passed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-643
@@ -25345,38 +25805,72 @@ canonical_text: '### CV-643 — chat.thread_worktree_pre_merge_test_passed
 
   Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_passed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`. The root and both payload editions
-  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
-  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
-  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root
-  authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_passed`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before
-  its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
-  focus or result component is added. No additional optional effect component is defined for this family; distinct
-  event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
-  Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`. The root and both payload
+  editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old
+  swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind;
+  envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance.
+  Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback.
+  EventRecord event_type is `chat.thread_worktree_pre_merge_test_passed`, schema/version dispatch selects the
+  exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below,
+  and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_passed,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0",
+  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
+  = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
+  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded
+  exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
+  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id
+  is exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry,
+  timestamp, focus or result component is added. No additional optional effect component is defined for this
+  family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-623
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25404,7 +25898,11 @@ owner_hints:
 
 ### CV-644 — chat.thread_worktree_pre_merge_test_started
 
-Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_started` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_started`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_started` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_started`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-644
@@ -25416,38 +25914,72 @@ canonical_text: '### CV-644 — chat.thread_worktree_pre_merge_test_started
 
   Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_started` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1`. The root and both payload editions
-  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
-  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
-  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root
-  authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_started`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before
-  its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
-  focus or result component is added. No additional optional effect component is defined for this family; distinct
-  event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
-  Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1`. The root and both payload
+  editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old
+  swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind;
+  envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance.
+  Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback.
+  EventRecord event_type is `chat.thread_worktree_pre_merge_test_started`, schema/version dispatch selects
+  the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337
+  below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation
+  before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple
+  is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id,
+  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts
+  CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source
+  before any effect; no retry, timestamp, focus or result component is added. No additional optional effect
+  component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-624
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25475,7 +26007,11 @@ owner_hints:
 
 ### CV-645 — chat.thread_worktree_renamed
 
-Newly authored closed payload contract for `chat.thread_worktree_renamed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_renamed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_renamed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_renamed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_renamed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_renamed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_renamed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_renamed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-645
@@ -25487,38 +26023,72 @@ canonical_text: '### CV-645 — chat.thread_worktree_renamed
 
   Newly authored closed payload contract for `chat.thread_worktree_renamed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_renamed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_renamed.application.v1`. The root and both payload editions are closed;
-  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_renamed`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh
-  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.chat_thread_worktree_renamed.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_renamed`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_renamed,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-625
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25546,7 +26116,11 @@ owner_hints:
 
 ### CV-646 — chat.thread_worktree_unbound
 
-Newly authored closed payload contract for `chat.thread_worktree_unbound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_unbound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_unbound.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_unbound`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_worktree_unbound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_unbound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_unbound.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_unbound`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-646
@@ -25558,38 +26132,72 @@ canonical_text: '### CV-646 — chat.thread_worktree_unbound
 
   Newly authored closed payload contract for `chat.thread_worktree_unbound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_worktree_unbound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_worktree_unbound.application.v1`. The root and both payload editions are closed;
-  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
-  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
-  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
-  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_unbound`,
-  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh
-  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound",
-  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
-  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
-  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
-  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
-  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  selects `pm.dch_event.chat_thread_worktree_unbound.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual
+  Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord
+  event_type is `chat.thread_worktree_unbound`, schema/version dispatch selects the exact edition; occurred_at_utc
+  equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual
+  original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_unbound,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id,
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" +
+  SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition
+  = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity
+  before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly
+  this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
   focus or result component is added. No additional optional effect component is defined for this family; distinct
   event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
   Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
-  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
-  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
-  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
-  never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted.
-  A payload change requires a new version/edition and governed migration; readers never rewrite original identities
-  or payload bytes.'
+  digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the
+  Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed
+  semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier
+  shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-626
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -25617,9 +26225,13 @@ owner_hints:
 
 ### CV-633 — chat.thread_archived
 
-Newly authored closed payload contract for `chat.thread_archived` 1.0.0: `Plans/dch_event_payloads/chat_thread_archived.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_archived.project.v1`; `Plans/dch_event_payloads/chat_thread_archived.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_archived.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_archived`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_archived, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_archived", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+Newly authored closed payload contract for `chat.thread_archived` 1.0.0: `Plans/dch_event_payloads/chat_thread_archived.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_archived.project.v1`; `Plans/dch_event_payloads/chat_thread_archived.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_archived.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_archived`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_archived, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_archived", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
 
 Archive payload additionally requires previous_state (active or suspended), state=archived, archive_origin=manual, command_id=cmd.chat.archive, expected_thread_revision and committed_thread_revision. The latter is exactly predecessor+1 and joins the canonical archived thread readback; thread_record_ref identifies that original record. A payload claim is not proof of authorization or commit: the owner must revalidate the actual catalog guards and original before/after source. Automatic origin, other predecessor state, active run, stale revision, changed target and missing readback refuse before append.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc from this comparison; metadata-only variation returns the original result/first receipt. Global event_id integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested; no whole-record equality substitutes for the owner commitment.
 
 ```yaml
 plan_unit_id: CV-633
@@ -25631,45 +26243,79 @@ canonical_text: '### CV-633 — chat.thread_archived
 
   Newly authored closed payload contract for `chat.thread_archived` 1.0.0: `Plans/dch_event_payloads/chat_thread_archived.schema.json#/$defs/project`
   selects `pm.dch_event.chat_thread_archived.project.v1`; `Plans/dch_event_payloads/chat_thread_archived.schema.json#/$defs/application`
-  selects `pm.dch_event.chat_thread_archived.application.v1`. The root and both payload editions are closed; application
-  and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  selects `pm.dch_event.chat_thread_archived.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
   scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
   null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
   from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_archived`,
   schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
-  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
-  For chat.thread_archived, freeze operation_id from the original accepted operation before its effect (fresh entropy
-  for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_archived", "1.0.0",
-  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
-  = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact
-  scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project
-  identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
-  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this
-  family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus
-  or result component is added. No additional optional effect component is defined for this family; distinct event
-  types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source
-  joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original
-  result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields
-  dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original
-  payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite.
-  Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change
-  requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+  body transport under SP-337 below, and thread joins the actual original source/committed record. No synthetic
+  run/node/attempt joins. For chat.thread_archived, freeze operation_id from the original accepted operation
+  before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple
+  is ["chat.thread_archived", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use
+  RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" +
+  that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts
+  CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source
+  before any effect; no retry, timestamp, focus or result component is added. No additional optional effect
+  component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same
+  operation and semantic digest returns the original result and first receipt without a new effect; a different
+  digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application
+  must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity
+  with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed
+  migration; readers never rewrite original identities or payload bytes.
 
 
   Archive payload additionally requires previous_state (active or suspended), state=archived, archive_origin=manual,
-  command_id=cmd.chat.archive, expected_thread_revision and committed_thread_revision. The latter is exactly predecessor+1
-  and joins the canonical archived thread readback; thread_record_ref identifies that original record. A payload
-  claim is not proof of authorization or commit: the owner must revalidate the actual catalog guards and original
-  before/after source. Automatic origin, other predecessor state, active run, stale revision, changed target and
-  missing readback refuse before append.'
+  command_id=cmd.chat.archive, expected_thread_revision and committed_thread_revision. The latter is exactly
+  predecessor+1 and joins the canonical archived thread readback; thread_record_ref identifies that original
+  record. A payload claim is not proof of authorization or commit: the owner must revalidate the actual catalog
+  guards and original before/after source. Automatic origin, other predecessor state, active run, stale revision,
+  changed target and missing readback refuse before append.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  This family selects current replay_policy=dedupe_by_idempotency_key for ordinary writes and retries. Reject
+  projector_replay_only as replay_only_not_appendable before dedupe, even if both retry records use it; its
+  separate compatibility-reader behavior remains the EventRecord owner rule and never authorizes a current
+  append. Compute producer_semantic_digest using only the exact caller-supplied EventRecord semantic field
+  list in the EventRecord owner clause, with its RFC 8785/SHA-256 recipe, including payload and payload_ref
+  in their original transport form. Exclude only the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc
+  from this comparison; metadata-only variation returns the original result/first receipt. Global event_id
+  integrity is a separate mandatory check: same scoped key with a changed event_id, or same event_id with another
+  lifetime identity or semantic body, conflicts. Every included semantic field is independently mutation-tested;
+  no whole-record equality substitutes for the owner commitment.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on:
 - ACD-613
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
   absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
