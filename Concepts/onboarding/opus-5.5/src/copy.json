@@ -687,6 +687,7 @@
       "codeLead": "On any device, go to {url} and enter this code:",
       "codeExpires": "The code expires in 15 minutes.",
       "signedIn": "Signed in as {account}",
+      "stale": "This sign-in was made for another address of {name}. Go back and sign in again.",
       "createOpened": "{name}'s sign-up page opened",
       "finished": "Finished? Sign in",
       "email": "Check your email to confirm your new account",
@@ -1593,6 +1594,7 @@
     "lead": "{name} is set up.",
     "leadLater": "Puppet Master is set up. Create a Project whenever you like.",
     "project": "Project",
+    "projectFiles": "{name} · work on {where}, files on {files}",
     "online": "Online copy",
     "ai": "AI",
     "free": "Free Models",
@@ -1786,7 +1788,9 @@
       "empty": "Empty folder",
       "nameFirst": "Type a folder name first.",
       "notChosen": "{name} · folder not chosen yet",
-      "notChosenAny": "a place not chosen yet"
+      "notChosenAny": "a place not chosen yet",
+      "unnamed": "a saved place",
+      "noDevice": "Choose the device first: no device is chosen for this folder."
     },
     "smb": {
       "eyebrow": "Shared folder",

@@ -2137,7 +2137,8 @@
           }
         },
         "folder": {
-          "readOnly": "I can't write in that folder."
+          "readOnly": "I can't write in that folder.",
+          "noDevice": "No device chosen yet. Let's pick one first."
         },
         "smb": {
           "wrong": "Hmm, it didn't take that password."
@@ -2147,7 +2148,8 @@
         "signin": {
           "tokenBad": "Hmm, that token didn't work.",
           "admin": "Sign-ups are off on that server.",
-          "fail": "Oh no. That sign-in didn't finish."
+          "fail": "Oh no. That sign-in didn't finish.",
+          "stale": "That sign-in was for another address."
         },
         "details": {
           "taken": "That name's already taken there.",
@@ -2393,7 +2395,8 @@
           }
         },
         "folder": {
-          "readOnly": "This one's writable. Good."
+          "readOnly": "This one's writable. Good.",
+          "noDevice": "There's the device. Now a folder."
         },
         "smb": {
           "wrong": "In! The folder opened."
@@ -2403,7 +2406,8 @@
         "signin": {
           "tokenBad": "Token accepted!",
           "admin": "Signed in. Sorted!",
-          "fail": "Signed in! There we go."
+          "fail": "Signed in! There we go.",
+          "stale": "Signed in for this address. Good."
         },
         "details": {
           "taken": "That name's free. Lovely.",
