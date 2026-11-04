@@ -1,80 +1,73 @@
-# DR — Event Authority, final fix round 3
+# DR — Event Authority, authorized mechanical fix round 4
 
-Branch `plans/ea-w2-runtime-artifacts-20261104`; reviewed head `a39121ebd79f660d9d651aecf45b3718b4ee6405`; implementation **`1ba1729437fe55d5609e3204f85f0f08bd1cb8a4`**. The report-only delivery head is pinned in external `drafts/DR/HEAD.txt`.
+Branch `plans/ea-w2-runtime-artifacts-20261104`; reviewed head `19c4973d6bd8fc71360fe012eede59cf31da5848`; implementation **`a2f381cf001a1c3d1e551228cb47bea1c2c04960`**. The report-only delivery head is pinned in external `drafts/DR/HEAD.txt`.
 
-**Result:** 19/19 families self-graded prepared without admission, up from Astra's 0/19. All 228 cells were regraded: **190 PASS / 19 PARTIAL / 19 ABSENT → 209 PASS / 0 PARTIAL / 19 ABSENT**. Each family moves from 10 PASS / 1 PARTIAL / 1 ABSENT to 11 PASS / membership ABSENT. Independent acceptance remains integration work. Native execution remains NOT_RUN.
+**Result:** 0/19 independently prepared before → **19/19 self-graded prepared without admission** after. All 228 cells were regraded: **188 PASS / 21 PARTIAL / 19 ABSENT → 209 PASS / 0 PARTIAL / 19 ABSENT**. Membership remains ABSENT; native execution remains NOT_RUN. Independent acceptance remains the lead's work. Jared explicitly authorized this extra mechanical round despite the review's prior cycle cap.
 
-## Review round 3: findings and responses
+## Review round 4: findings and responses
 
-- **B1 — fixed (`1ba1729437fe55d5609e3204f85f0f08bd1cb8a4`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:39`, `:240`, `:502`; `Plans/runtime_artifact_event_drafts.fixtures.json`; ATS-260 at `Plans/Automated_Testing_System.md:7243`. Cause: Python `$` accepted a final LF and full-value equality could preserve that malformed digest. Fix: preserve historical schema IDs/bytes and every existing validator rule; add full-match guards for adopted anchored value patterns and patternProperties keys. Enforce them at payload decode, fresh append and original stored event/custody/result validation. Every family exercises custody digest LF/nonhex/short/long negatives; the seven affected payload families exercise all eight hash fields through schema, inline/packed decode, append and self-consistent stored copies. Shared guards cover exact event types, pack refs, checkpoint identifiers and tokens. Verification: the complete checker passes; removing the guard makes all nineteen fail, and injecting LF custody into the original positive input makes the complete checker exit 1 for all nineteen.
-- **B2 — fixed (`1ba1729437fe55d5609e3204f85f0f08bd1cb8a4`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:312` and `:433`; each family's `checkpoint_positives` fixture; ATS-260. Cause: advertised checkpoint schema/key routes and event/store joins were unchecked. Fix: resolve the exact adopted schema/pointer and root-key template, and give every family a concrete current root/generation, actual-shaped live ten-field token, selected-source adapter, complete single-event dataset and original receipt. Reuse SP-278's schema, binding codec and existing known-answer generation; join store/key/anchor/frontier/token/source/Project/event/value bytes/physical receipt coordinates and dataset coverage. Twenty independent faults per family must refuse, including wrong-store keys and checkpoint values, wrong selected source or custody, dangling pointers, stale frontier and nonexistent schema routes. The sixteen bundle-positive fault injections and both broken-route reproductions each make the complete checker exit 1 for all nineteen. This is synthetic relational evidence, not native source authentication, redb transactions or CAS.
-- **Standing 3 additional gap — fixed (`1ba1729437fe55d5609e3204f85f0f08bd1cb8a4`).** Where: `full_value_matches` at checker line 218. Cause: valid writer output used the encoded partition, but self-consistent stored custody could carry the raw Project ID. The recorded pre-guard probe accepted it for 19/19. Fix: join original custody's encoded Project partition, exact event type and idempotency key to its EventRecord. Direct stored-copy negatives and removal of the partition join fail the full checker for every family.
-- **Standing 4 additional gap — fixed (`1ba1729437fe55d5609e3204f85f0f08bd1cb8a4`).** Where: `stored_event_valid` at checker line 240. Cause: decode enforced 16 KiB, but self-consistent stored copies could bypass the inline boundary; the pre-guard probe accepted this in 19/19. Fix: enforce the existing limit at stored-value resolution as well. Both 16,385- and 17,000-byte stored-inline negatives refuse after commitments are recomputed. Removing only that stored limit fails the complete checker for every family.
+- **B1 — fixed (`a2f381cf001a1c3d1e551228cb47bea1c2c04960`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:47` (SchemaReferences), `:804` (pre-instance gate), `scripts/pm-runtime-artifact-standing-checks.py`, ATS-260 at `Plans/Automated_Testing_System.md:7243`. Cause: schema meta-validation and fixture traversal missed unresolved references in optional/unselected branches. Fix: walk every reference in every complete schema in the selected nineteen-family graph, recursively including whole external dependencies, before any instance check. Resolve declared IDs, repository-local URI/file aliases, JSON pointers and anchors with a closed local registry; unknown documents/fragments fail closed. Each family supplies optional-property, unused-definition, external-document, external-fragment and unused-external-definition negatives plus a resolvable external-ID positive. Removing preflight or injecting unresolved refs into every family's optional property/unused definition/external route makes the complete checker fail. Latest Astra reproducer now exits 1/status fail for all nineteen injected schemas; original graph remains 608 resolved refs across 24 schemas, zero unresolved. Verify with the full checker and mutation driver.
+- **B2 — fixed (`a2f381cf001a1c3d1e551228cb47bea1c2c04960`).** Where: RAP-106 at `Plans/Runtime_Artifacts_Panel.md:3530`, RAP-117 at `:3976`, CV-526 at `Plans/Contracts_V0.md:24701`, CV-537 at `:25099`, checker `validator` at `scripts/pm-runtime-artifact-event-drafts.py:161` and provider-hash cases at `:652`. Cause: both provider hashes were unrestricted stringOrNull and their positive examples were placeholders. Fix: each exact family now separately defines required-present null for an unknown original source digest, otherwise literal `sha256:` plus 64 lowercase hexadecimal SHA-256 digits, exactly 71 ASCII characters, over the original redacted provider-payload bytes. Current Project-writer validation composes the original schema constraint with pattern/full-match/exact-length guards via allOf. Preserve historical schema files/IDs and supported historical decoding; no retained value is rewritten. The two synthetic positives use actual hashes of their explicit fixture source bytes; only their consequent event/receipt/source/checkpoint/dataset fixture bindings are regenerated. Valid/null positives and 14 malformed cases, including LF/CRLF, run through schema, inline/packed decode, fresh append and self-consistent stored copies. Removing the provider guard fails both families. Latest Astra's malformed and trailing-LF probes now fail schema and append validation for both.
 
-**Disputed findings:** none. **Stopped for Jared:** none. **Open product questions:** none. This is the third and final fix round; no further review/fix cycle was started.
+**Disputed:** none. **Stopped for Jared:** none. **Open findings:** none. No product choice, admission, Decision Log, retention policy, feature or visible behavior was reopened.
 
-## All eight standing checks, per family
+## All ten standing checks, per family
 
-**P = pass; F = fixed in `1ba1729437fe55d5609e3204f85f0f08bd1cb8a4`; open = none.** Check 2 is Project-only refusal: these editions select no application writer, even with an exact CV-366 key. The numbered negative cases are recorded in `DR.standing-checks.json`; all execute inside the full checker. The mutation driver independently reruns that full checker and requires a structured failure for every affected family.
+**P = pass in this round; F = fixed in `a2f381cf001a1c3d1e551228cb47bea1c2c04960`; open = none.** Grade abbreviations: P=PASS, Q=PARTIAL, A=ABSENT. Check 2 means refusal by these Project-only editions even with the exact CV-366 key; it does not certify an application writer. Check 10 exercises retained authenticated history after current live state changes and body deletion, while withdrawn readers and forged sources/receipts still refuse.
 
-| Exact family | 1 policy | 2 app key | 3 partition | 4 inline | 5 exact match | 6 semantic | 7 checkpoint | 8 failure |
-|---|---|---|---|---|---|---|---|---|
-| `runtime_artifact.api_web_call` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.artifact_version` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.before_after_snapshot` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.browser_recording` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.code_diff` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.context_snapshot` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.cost_usage` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.document` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.evidence` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.failed_attempts` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.hitl_approval` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.implementation_plan` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.reasoning_summary` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.restore_point` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.screenshot` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.subagent_lineage` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.suggested_next_steps` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.tool_llm_trace` | P | P | F | F | F | P | F | P |
-| `runtime_artifact.validation_test` | P | P | F | F | F | P | F | P |
+| Exact family | Grade before → after | 1 replay | 2 app | 3 partition | 4 size | 5 format | 6 semantics | 7 checkpoint | 8 failure | 9 refs | 10 history |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `runtime_artifact.api_web_call` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.artifact_version` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.before_after_snapshot` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.browser_recording` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.code_diff` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.context_snapshot` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.cost_usage` | 9P/2Q/1A → 11P/0Q/1A | P | P | P | P | F | P | P | P | F | P |
+| `runtime_artifact.document` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.evidence` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.failed_attempts` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.hitl_approval` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.implementation_plan` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.reasoning_summary` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.restore_point` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.screenshot` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.subagent_lineage` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.suggested_next_steps` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
+| `runtime_artifact.tool_llm_trace` | 9P/2Q/1A → 11P/0Q/1A | P | P | P | P | F | P | P | P | F | P |
+| `runtime_artifact.validation_test` | 10P/1Q/1A → 11P/0Q/1A | P | P | P | P | P | P | P | P | F | P |
 
-For each family: (1) inline/packed fresh, retry and alternate IDs refuse projector_replay_only; (2) exact CV-366 and malformed application keys cannot enter its Project-only edition; (3) independently encoded writer and stored partitions reject raw IDs; (4) boundary positives and oversized inline/stored-copy/missing or corrupt pack negatives execute; (5) LF and malformed hash negatives cover payload and stored boundaries; (6) all 21 producer fields conflict while the three Storage fields stay excluded; (7) the exact checkpoint/source positive and twenty independent mismatch negatives execute; (8) return code zero is never a failure, and a failure expectation replaced by success makes the checker exit 1.
+The exact negative-case descriptions and per-family assertion counts are in `DR.standing-checks.json`. All ten execute inside the full checker; the mutation driver requires a nonzero structured failure for every affected family. Earlier fixes are graded pass here, not counted as newly fixed.
 
-## Verification
+## Verification and earlier-finding regressions
 
-**5,544 assertions pass**, including all pre-existing assertion groups. **Thirty full-checker mutation trials are caught**, each with exit 1 and failures for all nineteen families; guard-removal trials pin their mutated source hashes. The copied Astra driver runs **1,189 assertions, zero failed expectations**. Its only behavioral adaptation handles the strengthened fresh-append rejection returning `invalid` instead of dereferencing that refusal as a custody object; the head provenance was updated. It retains its original semantic/restore/replay/size/receipt assertions and whole-checker reproductions. No check is weakened.
+- **Full checker:** 5,998 assertions, exit 0/status pass, all nineteen families; every pre-existing assertion group remains.
+- **Full-checker mutation driver:** 41/41 trials caught; each mutated run exits 1/status fail with failures in every affected family. Includes all previous thirty trials, B1 reference injections/preflight removal, B2 provider-guard removal, all three history/live-state/withdrawal/forgery controls, old wrong-index-retention input, and restore grouping-guard removal.
+- **Earlier cycle-3 driver:** 1,890 assertions pass (931 family, 26 restore, 933 extensions), including old retention, precise 17,000-byte inline counterexample/boundaries, full envelopes/eleven-field receipts/all semantic and Storage fields, replay-only fresh/retry/alternate-ID paths and recomputed restore ordinal/grouping/predecessor/source mutations. The old wrong-retention input and both removed policy/grouping guards still fail the complete checker.
+- **Earlier Astra driver:** 1,189 assertions pass with zero failed expectations; custody/payload LF, wrong-store/missing-checkpoint route and success-substituted-for-failure mutations still refuse. Copies change provenance labels only, retaining all probe bodies/assertions; source and copied hashes are recorded.
+- **Latest Astra reproducer:** unchanged probe logic confirms B1 and B2 closure; the original schema graph resolves without errors.
+- **Derived/targeted checks:** shard generate/check, index generate and parsed top-level index validate, runtime-artifact schema validation and whitespace check all exit 0. The 15 ignored currentness files match the shared edition byte-for-byte. All 228 grade cells have exact current-source excerpts checked within their owner unit/function/fixture. Commands, source pins and evidence SHA-256 values are in `DR.checks.json`.
 
-The pinned `jsonschema==4.23.0`, `rfc8785==0.1.4`, `blake3==1.0.8`, `msgpack==1.1.2` environment is isolated. Shard generate/check, index generate and **parsed top-level index validate**, runtime-artifact schema validation and diff check all exit 0. The 15 ignored currentness files match the shared edition byte-for-byte. The self-grade quote audit validates **514 exact current-source excerpts across all 228 cells**.
+## Authority, search, scope and IDs
 
-Commands, exit codes, source hashes and every retained evidence path/SHA-256 are in `DR.checks.json`. Evidence lives in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/`. In particular:
+The provider-hash search is separate for cost_usage and tool_llm_trace over all live top-level Plans owner documents and schemas. It reuses existing Usage/RAP source authority and redaction-before-persistence; no algorithm/encoding/length or null-meaning contract was found for either field. RAP-106/CV-526 and RAP-117/CV-537 explicitly label the narrow new representation as newly authored under DL-045. Its per-family search evidence and source hashes are in external `fix4-provider-hash-search.json`. Original handler/consumer/identity searches remain `drafts/DR/canon-search.json` (SHA-256 `94c22a7cf45511240628db8dbe4cfe94e8da51b545eba8d8dae04b333d999bac`) and `drafts/DR/fix-round-1/canon-search.json` (SHA-256 `ca087c26e09c210688290cda3ead21bc309c4a5899e5111e29ad8cb548433556`).
 
-| Evidence | SHA-256 |
+No additional old decision is applied. DL-045 still names these exact families; existing DL-075 event history, DL-076 durable-token and SP-337 pack premises remain unchanged. Source bodies, Usage, original receipts, source-coupled index rows and checkpoint generations retain their existing separate policies. Failed premise checks: none.
+
+Shared-file hunks: one appended provider-hash paragraph each in CV-526/CV-537, one each in RAP-106/RAP-117, and ATS-260's existing oracle paragraph extended to checks 9 and 10 and the two provider guards. No Storage owner text changes. Authored companions: the existing DR fixture and two existing checkers. Derived changes remain within the three edited owners' shard directories and six standard global indexes. No historical schema, event registry, admission, stored-value registry, Decision Log, Spec Lock, auto-decision, governance evidence, frozen validator, .gitignore or test-file edit.
+
+**IDs:** zero new IDs. Existing branch allocation remains **58**: RAP-100..118, SP-520..538, CV-520..538, ATS-260. This round edits only RAP-106, RAP-117, CV-526, CV-537 and ATS-260. Start resources: 17 GB available RAM / 110 GB free disk; subsequent checks remain above 6 GB / 50 GB. Sparse detached worktree: `/home/sittingmongoose/pm-worktrees/DR-fix4`. No pm-mail, subagent, landing lock or main push. Push this lane only; remove the worktree and its temporary venv after pushed delivery. Cleanup completion is recorded in external `cleanup.json`.
+
+## Retained evidence
+
+| Evidence path | SHA-256 |
 |---|---|
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-draft-check.json` | `f6994e45138cc94f6930413af2d7d5c173e218908e6dfce6b32699abbacaea3c` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-mutations.json` | `6188a29b00ab43c9f186b4418b453d8e58716c9a0d1b7ff3b3971c491146b27f` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-mutations.log` | `7d751b5ec61d00e8169a75139c0ecfce05f87c042909ae4c6d5bb0a96b31f798` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-astra-probes.py` | `92cc592fcb9e695f8f99365b74dec152aac91942054c4de2bc9c2ea0f3541481` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-astra-probes.json` | `d978e6232cc0761a8102501b741acdff56fe74c2cc29b0b0fc3d24786bee7c35` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-extra-pre-guard.json` | `d681b2d2f5c713e6958b9592d24b940e39925f5d829bd7a212cfd2d420f8ab4c` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-index-generate.log` | `3199c26f6046dd9146ec54cd6496f0ef2a6aa8ae3c0123ea82acda3915cbe2dd` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-index-validate.log` | `a77caa2e35f02f9171233b1c79525c5df80317f11313af0a4ba634e6e7b0a6cc` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-shard-generate.log` | `fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-shard-check.log` | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-schema-check.log` | `ad0f9b097aabd7df59731ac1ed213ca9d025874a093cd29433bf6824707f5527` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-scope-audit.json` | `3bae6586e38ea82c5ccfca6b63623da2088d9ea0a0c768f361e6fe72e7fb931b` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-currentness-copy.json` | `1b765b9ac2ab42d60576eba5c1f1edd03454965e434717497da8cbcf32c009bf` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-grade-source-audit.json` | `18e514f7fc9ee8f8bfdf58c88fcfe23175bbc57149bcafe03f685985f04c4d3a` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-dependencies.log` | `787c0de158dbac700207643d8950bdaa056bc8d8198255cc9e2c5bb72e867a69` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-draft-check.json` | `b88a9808707c25b4387350579aaca55f5198282c31bfb501ed83a3d2c519f208` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-mutations.json` | `ca3ddc8ff104af79c8280eb795ba23a439b1845213063a4c4422045b04618fd2` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/cycle3-mutation-results.json` | `60262999fa8ea16267250e91bd8edb34f7491a73822e204d0f20c618b4ffacf7` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-astra.json` | `6d828881785b82c98dfee119855ddfd0492e1a71c0d62dba4a0c4e5f3cb48491` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-astra2.json` | `da2cb009d436dfad5fe4237896eab7d5df5c1dfc97ca49d1974e14de14e872ac` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-provider-hash-search.json` | `c0570f5ef1eeca03d04457f20ff567457b13576a29b0f8d775969f0923516864` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-grade-source-audit.json` | `5c4f9f5df94efba1c18c82017a63e1e53a909b16b56e946236f06e9cafba63f4` |
 
-## Authority, premises, scope and IDs
-
-No new durable binding or product decision is authored. Each family's existing SP-520..538 adoption is instantiated separately using the existing SP-278 checkpoint machinery; no sibling contract substitutes for it. The original per-family searches remain pinned by the prior report: `drafts/DR/canon-search.json`, SHA-256 `94c22a7cf45511240628db8dbe4cfe94e8da51b545eba8d8dae04b333d999bac`, and `drafts/DR/fix-round-1/canon-search.json`, SHA-256 `ca087c26e09c210688290cda3ead21bc309c4a5899e5111e29ad8cb548433556`.
-
-DL-045's technical authority, DL-075's indefinite event history, DL-076's nine-field durable-token rule and DL-270/SP-337's inline/pack boundary retain their premises. No additional old decision is applied this round. The five premise-owner files have no differences between reviewed main `5e37ffb616ec393af9097a198a9fc78dee9b8605` and fetched `origin/main` `16acf7594a3fe8559af89491b895f440b314b99e`. **Failed premise checks: none.** Event/index/checkpoint/body/Usage/restore-point retention assignments remain their existing separate assignments. These stateless readers persist no token.
-
-Authored changes: ATS-260, the DR fixture/checker, and the new full-checker mutation driver. Derived changes are only the ATS owner's 52 shard files and six standard global index outputs. The three per-family RAP/SP/CV owner documents and all historical payload/receipt/checkpoint schemas are unchanged. Report and self-grade files are the delivery follow-up. No registry, admission, stored-value row, Decision Log, Spec Lock, evidence/governance seal, auto-decision, frozen validator, .gitignore or test file changes.
-
-**IDs:** existing **58** — RAP-100..118, SP-520..538, CV-520..538, ATS-260; **new IDs zero**. This round edits only existing ATS-260 owner prose. Start resources were 15 GB available RAM / 111 GB free disk, above 6 GB / 50 GB thresholds; subsequent checks stayed above them. No mailbox command, subagent, landing lock or main push ran. The sparse detached `/home/sittingmongoose/pm-worktrees/DR-fix3` and temporary venv are removed after the pushed delivery and written final message.
-
-Native source parsing/authentication, real payload sync, append receipt issuance, redb snapshot/CAS, crash recovery, coherent backup/restore and GUI execution remain NOT_RUN. This report requests no governance reseal or admission; those remain separate integration work.
+Native source authentication, real payload sync, receipt issuance, redb snapshot/CAS, crash/backup recovery and UI execution remain NOT_RUN.

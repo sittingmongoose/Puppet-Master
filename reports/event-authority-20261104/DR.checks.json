@@ -1,125 +1,406 @@
 {
-  "schema_id": "pm.runtime_artifact.fix_round_checks.v1",
-  "implementation_commit": "1ba1729437fe55d5609e3204f85f0f08bd1cb8a4",
-  "reviewed_head": "a39121ebd79f660d9d651aecf45b3718b4ee6405",
+  "implementation_commit": "a2f381cf001a1c3d1e551228cb47bea1c2c04960",
+  "reviewed_head": "19c4973d6bd8fc71360fe012eede59cf31da5848",
   "status": "pass",
-  "source_sha256": {
-    "Plans/Automated_Testing_System.md": "93d3bda8731bc53a115822a5ec67b28082aa13e5a844016462284964a9f29a49",
-    "Plans/runtime_artifact_event_drafts.fixtures.json": "9dbcf17319fa17f1fbd3e0cdbef70c53ee818e118e86acd7f09324accc8ff11a",
-    "scripts/pm-runtime-artifact-event-drafts.py": "83ede59ceb0cacf0e53820d4b51e6c6558501de572c759d5914e14b5ff186027",
-    "scripts/pm-runtime-artifact-standing-checks.py": "fa0143989c3ed0eedd7f4e0da1da1cf8e34683a8b9bd78a0b46b88f9f7f84d55"
-  },
   "commands": [
-    {
-      "command": "python scripts/pm-runtime-artifact-event-drafts.py",
-      "exit_code": 0,
-      "cases": 5544
-    },
-    {
-      "command": "python scripts/pm-runtime-artifact-standing-checks.py",
-      "exit_code": 0,
-      "trials": 30,
-      "invalid_checker_exit_codes": [
-        1
-      ]
-    },
-    {
-      "command": "PYTHONPATH=scripts python fix3-astra-probes.py <worktree>",
-      "exit_code": 0,
-      "assertions": 1189,
-      "failed_expectations": 0
-    },
     {
       "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit_code": 0,
-      "status": "pass"
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-shard-generate.json"
     },
     {
       "command": "python3 scripts/pm-plan-index.py generate",
       "exit_code": 0,
-      "status": "pass"
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-index-generate.json"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit_code": 0,
-      "status": "pass"
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-shard-check.json"
     },
     {
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "status": "pass"
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-index-validate.json"
     },
     {
       "command": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
       "exit_code": 0,
-      "status": "pass"
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-schema-check.json"
+    },
+    {
+      "command": "<pinned venv>/bin/python scripts/pm-runtime-artifact-event-drafts.py",
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-draft-check.json"
+    },
+    {
+      "command": "<pinned venv>/bin/python scripts/pm-runtime-artifact-standing-checks.py --output <evidence>",
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-mutations.json"
     },
     {
       "command": "git diff --check",
       "exit_code": 0,
-      "status": "pass"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-diff-check.txt"
+    },
+    {
+      "command": "Prior cycle-3 probes (all earlier findings B1-B6 and N1/N2 regression evidence)",
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-cycle3.log"
+    },
+    {
+      "command": "Prior Astra probes (custody/payload LF, checkpoint routes, failure expectations and restore/replay/size/semantic regressions)",
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-astra.json"
+    },
+    {
+      "command": "Latest Astra reproducer (every unresolved optional ref and both malformed/LF provider hashes)",
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-astra2.json"
+    },
+    {
+      "command": "Exact current-source quote audit for every rubric cell",
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-grade-source-audit.json"
     }
   ],
-  "proofs": [
+  "static_assertions": 5998,
+  "full_checker_mutation_trials": 41,
+  "mutation_trials_caught": 41,
+  "prior_cycle3_assertions": 1890,
+  "prior_astra_assertions": 1189,
+  "schema_graph": {
+    "schemas": 24,
+    "refs": 608,
+    "unresolved": 0
+  },
+  "scope": {
+    "baseline": "19c4973d6bd8fc71360fe012eede59cf31da5848",
+    "scope": "DR-FIX4 mechanical B1/B2 plus required ten standing checks and earlier mutations",
+    "changed_paths": [
+      "Plans/.plan_index/acceptance_units.jsonl",
+      "Plans/.plan_index/coverage_report.json",
+      "Plans/.plan_index/dependencies.json",
+      "Plans/.plan_index/doc_cards.json",
+      "Plans/.plan_index/node_readiness_report.json",
+      "Plans/.plan_index/plan_units.jsonl",
+      "Plans/Automated_Testing_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/_shards/automated_testing_system/00-index.md",
+      "Plans/_shards/automated_testing_system/001-preamble.md",
+      "Plans/_shards/automated_testing_system/002-0.-scope.md",
+      "Plans/_shards/automated_testing_system/003-1.-ownership-and-consumers.md",
+      "Plans/_shards/automated_testing_system/004-2.-canonical-planunits.md",
+      "Plans/_shards/automated_testing_system/005-gui-visible-testing-repair-addendum-2026-07-02.md",
+      "Plans/_shards/automated_testing_system/006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md",
+      "Plans/_shards/automated_testing_system/007-3.-contracts-schemas-events-or-data-shapes.md",
+      "Plans/_shards/automated_testing_system/008-4.-integration-surfaces.md",
+      "Plans/_shards/automated_testing_system/009-5.-validation-and-acceptance.md",
+      "Plans/_shards/automated_testing_system/010-6.-plan-to-node-readiness.md",
+      "Plans/_shards/automated_testing_system/011-7.-deferred-retired-compatibility-and-non-goals.md",
+      "Plans/_shards/automated_testing_system/012-8.-source-lineage-and-governance.md",
+      "Plans/_shards/automated_testing_system/013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/automated_testing_system/014-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/automated_testing_system/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/automated_testing_system/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md",
+      "Plans/_shards/automated_testing_system/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "Plans/_shards/automated_testing_system/022-fable-remaining-action-plan-repair-notes-2026-07-08.md",
+      "Plans/_shards/automated_testing_system/023-known-37-owner-oracle-materialization-and-execution-status-ledge.md",
+      "Plans/_shards/automated_testing_system/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+      "Plans/_shards/automated_testing_system/025-pmconcept7-home-workspace-test-contract-2026-08-04.md",
+      "Plans/_shards/automated_testing_system/026-runtime-integration-acceptance-matrices-2026-08-13.md",
+      "Plans/_shards/automated_testing_system/027-pmconcept7-user-polished-acceptance-addendum-2026-08-27.md",
+      "Plans/_shards/automated_testing_system/028-additive-correction-v4-correction-test-obligations-2026-09-03.md",
+      "Plans/_shards/automated_testing_system/029-working-notebook-contract-validation-registration-2026-09-05.md",
+      "Plans/_shards/automated_testing_system/030-dl-035-terminal-research-acceptance-obligations-2026-09-09.md",
+      "Plans/_shards/automated_testing_system/031-ats-048-existing-session-and-bundle-command-bindings.md",
+      "Plans/_shards/automated_testing_system/032-external-packet-custody-and-completion-integrity-2026-09-10.md",
+      "Plans/_shards/automated_testing_system/033-ats-049-existing-session-event-obligations-and-non-admission.md",
+      "Plans/_shards/automated_testing_system/034-external-research-contract-validation-registration-2026-09-17.md",
+      "Plans/_shards/automated_testing_system/035-ats-055-successful-native-source-contract-preservation-and-accep.md",
+      "Plans/_shards/automated_testing_system/036-ats-056-certified-producer-source-validation-and-native-proof-se.md",
+      "Plans/_shards/automated_testing_system/037-ats-057-twelve-complete-source-to-native-acceptance-facets-with-.md",
+      "Plans/_shards/automated_testing_system/038-ats-058-coordination-event-oracles-for-the-seven-agent-families-.md",
+      "Plans/_shards/automated_testing_system/039-platform-assurance-and-apple-native-proof-2026-09-27.md",
+      "Plans/_shards/automated_testing_system/040-chat-presentation-acceptance-checks-2026-09-27.md",
+      "Plans/_shards/automated_testing_system/041-collaborative-workflows-static-contract-family-2026-09-27.md",
+      "Plans/_shards/automated_testing_system/042-live-helper-text-acceptance-checks-2026-09-27.md",
+      "Plans/_shards/automated_testing_system/043-project-wide-automation-pause-acceptance-checks-2026-09-27.md",
+      "Plans/_shards/automated_testing_system/044-eli5-in-chat-acceptance-checks-2026-09-27.md",
+      "Plans/_shards/automated_testing_system/045-wand-module-closure-command-checks-2026-09-27.md",
+      "Plans/_shards/automated_testing_system/046-gui-test-build-observability-2026-10-02-dl-139.md",
+      "Plans/_shards/automated_testing_system/047-dl-180-to-dl-185-home-panels-and-terminal-tab-certification-2026.md",
+      "Plans/_shards/automated_testing_system/048-dl-218-wonderer-and-grilling-test-obligations.md",
+      "Plans/_shards/automated_testing_system/049-dl-231-chat-room-automatic-round-test-obligations.md",
+      "Plans/_shards/automated_testing_system/050-runtime-artifact-event-contracts-prepared-without-admission-2026.md",
+      "Plans/_shards/automated_testing_system/manifest.json",
+      "Plans/_shards/contracts_v0/00-index.md",
+      "Plans/_shards/contracts_v0/001-preamble.md",
+      "Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/contracts_v0/003-pmconcept7-home-workspace-openfile-placement-addendum-2026-08-04.md",
+      "Plans/_shards/contracts_v0/004-known-37-case-l-owner-materialization-requested-effective-runtim.md",
+      "Plans/_shards/contracts_v0/005-0.-scope.md",
+      "Plans/_shards/contracts_v0/006-cross-surface-runtime-concern-and-route-open-contracts.md",
+      "Plans/_shards/contracts_v0/007-1.-events-persisted.md",
+      "Plans/_shards/contracts_v0/008-provider-model-capability-snapshot-reference-envelope.md",
+      "Plans/_shards/contracts_v0/009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/contracts_v0/010-2.-provider-normalized-stream-non-persisted-contract.md",
+      "Plans/_shards/contracts_v0/011-3.-tool-events-persisted.md",
+      "Plans/_shards/contracts_v0/012-5.-context-management-instruction-scoping-attempt-journaling-par.md",
+      "Plans/_shards/contracts_v0/013-6.-hitlrequest.md",
+      "Plans/_shards/contracts_v0/014-7.-uicommand.md",
+      "Plans/_shards/contracts_v0/015-8.-ui-scaling.md",
+      "Plans/_shards/contracts_v0/016-usage-and-billing-contracts-addendum.md",
+      "Plans/_shards/contracts_v0/017-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md",
+      "Plans/_shards/contracts_v0/018-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md",
+      "Plans/_shards/contracts_v0/019-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md",
+      "Plans/_shards/contracts_v0/020-canonical-runtime-event-outcome-and-action-contract-canonical-al.md",
+      "Plans/_shards/contracts_v0/021-owner-consumer-map.md",
+      "Plans/_shards/contracts_v0/022-planunits.md",
+      "Plans/_shards/contracts_v0/023-pmconcept7-home-workspace-event-contracts-2026-08-04.md",
+      "Plans/_shards/contracts_v0/024-known-37-goal-runtime-v2-schema-registration.md",
+      "Plans/_shards/contracts_v0/025-migration-coverage.md",
+      "Plans/_shards/contracts_v0/026-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/contracts_v0/027-ledger-compile-addendum-pldg-20260614-002.md",
+      "Plans/_shards/contracts_v0/028-ledger-compile-addendum-pldg-20260615-001.md",
+      "Plans/_shards/contracts_v0/029-ledger-compile-addendum-pldg-20260616-001.md",
+      "Plans/_shards/contracts_v0/030-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/contracts_v0/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/contracts_v0/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/contracts_v0/033-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/contracts_v0/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/contracts_v0/035-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/036-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/contracts_v0/037-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/038-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/039-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/040-fable-residual-feature-contract-cleanup-addendum-2026-07-07.md",
+      "Plans/_shards/contracts_v0/041-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "Plans/_shards/contracts_v0/042-usage-gui-propagation-addendum-2026-07-09.md",
+      "Plans/_shards/contracts_v0/043-case-l-durable-state-contract-addendum-2026-07-17.md",
+      "Plans/_shards/contracts_v0/044-shared-integration-runtime-typed-envelope-addendum-2026-08-13.md",
+      "Plans/_shards/contracts_v0/045-touch-closure-registry-boundary-addendum-2026-09-01.md",
+      "Plans/_shards/contracts_v0/046-forge-backup-tsnet-route-scope-and-exact-return-addendum-2026-09.md",
+      "Plans/_shards/contracts_v0/047-additive-correction-v4-admitted-shapes-and-effect-dispositions-2.md",
+      "Plans/_shards/contracts_v0/048-research-decision-review-profile.md",
+      "Plans/_shards/contracts_v0/049-compaction-completion-envelope-consumer-dl-039-and-dl-040.md",
+      "Plans/_shards/contracts_v0/050-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md",
+      "Plans/_shards/contracts_v0/051-scoped-browser-eventrecord-contracts-2026-09-10.md",
+      "Plans/_shards/contracts_v0/052-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md",
+      "Plans/_shards/contracts_v0/053-first-append-receipt-shared-contract.md",
+      "Plans/_shards/contracts_v0/054-original-standard-certification-contract-shapes.md",
+      "Plans/_shards/contracts_v0/055-goal-start-original-command-shapes.md",
+      "Plans/_shards/contracts_v0/056-cv-341-goal-start-original-command-shapes.md",
+      "Plans/_shards/contracts_v0/057-original-goal-update-command-and-event-shapes.md",
+      "Plans/_shards/contracts_v0/058-cv-350-whole-versioned-successful-source-composition-and-authori.md",
+      "Plans/_shards/contracts_v0/059-cv-351-whole-certified-producer-schema-transport-and-isolated-so.md",
+      "Plans/_shards/contracts_v0/060-cv-352-exact-whole-identity-coordinator-consumer-schema-roots-me.md",
+      "Plans/_shards/contracts_v0/061-approval-binding-to-its-tool-call-2026-09-27.md",
+      "Plans/_shards/contracts_v0/062-dl-180-to-dl-185-placement-fields-the-layout-event-and-the-termi.md",
+      "Plans/_shards/contracts_v0/063-dl-218-collaboration-and-questionnaire-companion-shapes.md",
+      "Plans/_shards/contracts_v0/064-dl-231-chat-room-definition-and-command-shapes.md",
+      "Plans/_shards/contracts_v0/065-runtime-artifact-event-contracts-prepared-without-admission-2026.md",
+      "Plans/_shards/contracts_v0/manifest.json",
+      "Plans/_shards/runtime_artifacts_panel/00-index.md",
+      "Plans/_shards/runtime_artifacts_panel/001-preamble.md",
+      "Plans/_shards/runtime_artifacts_panel/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/runtime_artifacts_panel/003-1.-purpose-and-scope.md",
+      "Plans/_shards/runtime_artifacts_panel/004-3.-mechanism-one-event-type-per-artifact-type.md",
+      "Plans/_shards/runtime_artifacts_panel/005-4.-redb-key-and-projector.md",
+      "Plans/_shards/runtime_artifacts_panel/006-5a.-debug-investigation-grouping-manifests-and-exports.md",
+      "Plans/_shards/runtime_artifacts_panel/007-6.-reasoning_tokens-and-cost_usage.md",
+      "Plans/_shards/runtime_artifacts_panel/008-7.-json-schemas-all-required.md",
+      "Plans/_shards/runtime_artifacts_panel/009-8.-browser-recordings.md",
+      "Plans/_shards/runtime_artifacts_panel/010-9.-all-differentiators-mvp.md",
+      "Plans/_shards/runtime_artifacts_panel/011-10.-references.md",
+      "Plans/_shards/runtime_artifacts_panel/012-cross-surface-operation-receipt-linkage-addendum-2026-03-12.md",
+      "Plans/_shards/runtime_artifacts_panel/013-owner-consumer-map.md",
+      "Plans/_shards/runtime_artifacts_panel/014-planunits.md",
+      "Plans/_shards/runtime_artifacts_panel/015-known-37-recovery-artifact-projection-2026-07-18.md",
+      "Plans/_shards/runtime_artifacts_panel/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/runtime_artifacts_panel/017-migration-coverage.md",
+      "Plans/_shards/runtime_artifacts_panel/018-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/runtime_artifacts_panel/019-ledger-compile-addendum-pldg-20260614-002.md",
+      "Plans/_shards/runtime_artifacts_panel/020-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/runtime_artifacts_panel/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/runtime_artifacts_panel/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/runtime_artifacts_panel/023-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/runtime_artifacts_panel/024-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/runtime_artifacts_panel/025-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/runtime_artifacts_panel/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/runtime_artifacts_panel/027-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/runtime_artifacts_panel/028-usage-artifact-schema-strictness-addendum-2026-07-09.md",
+      "Plans/_shards/runtime_artifacts_panel/029-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "Plans/_shards/runtime_artifacts_panel/030-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
+      "Plans/_shards/runtime_artifacts_panel/031-usage-gui-propagation-addendum-2026-07-09.md",
+      "Plans/_shards/runtime_artifacts_panel/032-case-l-durable-state-consumer-addendum-2026-07-17.md",
+      "Plans/_shards/runtime_artifacts_panel/033-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+      "Plans/_shards/runtime_artifacts_panel/034-runtime-artifact-event-authority-owner-contract-2026-09-01.md",
+      "Plans/_shards/runtime_artifacts_panel/035-run-debug-revival-addendum-2026-07-27.md",
+      "Plans/_shards/runtime_artifacts_panel/036-additive-correction-v4-plan-revisions-embeds-and-execution-repor.md",
+      "Plans/_shards/runtime_artifacts_panel/037-notebook-artifact-reference-addendum-2026-09-05.md",
+      "Plans/_shards/runtime_artifacts_panel/038-rap-056-existing-recording-playback-and-watch-bindings.md",
+      "Plans/_shards/runtime_artifacts_panel/039-restore-point-created-passive-record-reader.md",
+      "Plans/_shards/runtime_artifacts_panel/040-deleted-restore-point-evidence-admission.md",
+      "Plans/_shards/runtime_artifacts_panel/041-expired-restore-point-evidence-admission.md",
+      "Plans/_shards/runtime_artifacts_panel/042-dl-180-to-dl-185-the-artifact-viewer-is-a-tab-kind-2026-10-09.md",
+      "Plans/_shards/runtime_artifacts_panel/043-runtime-artifact-event-contracts-prepared-without-admission-2026.md",
+      "Plans/_shards/runtime_artifacts_panel/manifest.json",
+      "Plans/runtime_artifact_event_drafts.fixtures.json",
+      "scripts/pm-runtime-artifact-event-drafts.py",
+      "scripts/pm-runtime-artifact-standing-checks.py"
+    ],
+    "source_sha256": {
+      "Plans/Automated_Testing_System.md": "cbd5eda80121a8ae7cf63a415482e902cd6717acc009eb266d1c2ca40bf8db7a",
+      "Plans/Contracts_V0.md": "9607f4ff9b4130be5753ff70f9a894bfedf67d03883c55e552ecccca321b41f5",
+      "Plans/Runtime_Artifacts_Panel.md": "cf7e8481830f4211dcdd6bcc17a8e32fb2d77190a5c87afa34223ffab5eb8b89",
+      "Plans/storage-plan.md": "c27cb67cf2d79f5c06dad215881fe706ea86f028126041f19b628afb94255bd6",
+      "Plans/runtime_artifact_event_drafts.json": "238e68373869824485d53d84b557feb5e1eadb1ccd880f37172814521fe4cb3a",
+      "Plans/runtime_artifact_event_drafts.fixtures.json": "830e8c5efa52296eccaf4ff0848cc44e20c14d2abb67f13ced3371c397928388",
+      "scripts/pm-runtime-artifact-event-drafts.py": "e944ff92debc8adb7a5b12f038ce0d7c12f448a5cb01aeafba3b2a9881e0562a",
+      "scripts/pm-runtime-artifact-standing-checks.py": "3ad85b91ddccfa54a4fed560503ed555a7bf2b2289185da82f0b8452cde78fe5"
+    },
+    "historical_schema_files_changed": false,
+    "forbidden_paths_changed": [],
+    "new_ids": [],
+    "edited_existing_units": [
+      "RAP-106",
+      "RAP-117",
+      "CV-526",
+      "CV-537",
+      "ATS-260"
+    ],
+    "historical_schema_sha256": {
+      "Plans/runtime_artifact_cost_usage.schema.json": "77d7bbf04bb03612f2c69fc72ab1462c0d967bb13808664d9238efbfa29885e0",
+      "Plans/runtime_artifact_tool_llm_trace.schema.json": "8236239132467b731df8b3bc265e2f41193bec152b51c7773c3d1d631a71372a"
+    },
+    "current_main": "16acf7594a3fe8559af89491b895f440b314b99e",
+    "current_main_provider_owner_schema_drift": "None: usage-feature and both historical schemas match the reviewed branch baseline."
+  },
+  "evidence": [
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-draft-check.json",
-      "sha256": "f6994e45138cc94f6930413af2d7d5c173e218908e6dfce6b32699abbacaea3c"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/cycle3-mutation-results.json",
+      "sha256": "60262999fa8ea16267250e91bd8edb34f7491a73822e204d0f20c618b4ffacf7"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-mutations.json",
-      "sha256": "6188a29b00ab43c9f186b4418b453d8e58716c9a0d1b7ff3b3971c491146b27f"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-astra2.json",
+      "sha256": "da2cb009d436dfad5fe4237896eab7d5df5c1dfc97ca49d1974e14de14e872ac"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-mutations.log",
-      "sha256": "7d751b5ec61d00e8169a75139c0ecfce05f87c042909ae4c6d5bb0a96b31f798"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-astra2.py",
+      "sha256": "a1577d84507421e709482405192fb02d4ea87e343ae7f51c57af781a603c07a1"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-astra-probes.py",
-      "sha256": "92cc592fcb9e695f8f99365b74dec152aac91942054c4de2bc9c2ea0f3541481"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-currentness-copy.json",
+      "sha256": "d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-astra-probes.json",
-      "sha256": "d978e6232cc0761a8102501b741acdff56fe74c2cc29b0b0fc3d24786bee7c35"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-delivery.py",
+      "sha256": "78588cccfef506825187fae713a2d0ccc6e9964a125cff6fbbba48760ddfcbd9"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-extra-pre-guard.json",
-      "sha256": "d681b2d2f5c713e6958b9592d24b940e39925f5d829bd7a212cfd2d420f8ab4c"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-dependencies.log",
+      "sha256": "41111ffbf5b68ada074460bab7ca1a063d3134ef4cacf920e8b8de5a0c9d25ea"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-index-generate.log",
-      "sha256": "3199c26f6046dd9146ec54cd6496f0ef2a6aa8ae3c0123ea82acda3915cbe2dd"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-index-validate.log",
-      "sha256": "a77caa2e35f02f9171233b1c79525c5df80317f11313af0a4ba634e6e7b0a6cc"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-draft-check.json",
+      "sha256": "b88a9808707c25b4387350579aaca55f5198282c31bfb501ed83a3d2c519f208"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-shard-generate.log",
-      "sha256": "fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-grade-source-audit.json",
+      "sha256": "5c4f9f5df94efba1c18c82017a63e1e53a909b16b56e946236f06e9cafba63f4"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-shard-check.log",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-index-generate.json",
+      "sha256": "0485335ec332f2aa69f02f321121a473ada11d27d5b4af5063bdbbdbcad3ca2d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-index-validate.json",
+      "sha256": "1acf635c84bdf9c67c81778dd9994ba52b4b20873930e64ce9007799411f77ab"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-mutations.json",
+      "sha256": "ca3ddc8ff104af79c8280eb795ba23a439b1845213063a4c4422045b04618fd2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-mutations.log",
+      "sha256": "4279c030a155e20f16f504140dade4003ceb259769977b898248ad7b557f283b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-pre-regrade-quote-audit.json",
+      "sha256": "9b011e8b26616293ebc3bb9d4b114d3e9540e41317085fec0dba36add76ae098"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-astra.json",
+      "sha256": "6d828881785b82c98dfee119855ddfd0492e1a71c0d62dba4a0c4e5f3cb48491"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-astra.py",
+      "sha256": "ad1b9f251a5cdbb59ab7071d3013583d46d106ecb7b68abda18a9446a100f248"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-cycle3.log",
+      "sha256": "617ba41841045ca752824ac77d7557eb369cd055e79b0aab5828a00613db3c84"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-cycle3.py",
+      "sha256": "27eda10d0b995b23423ac5a6ab2904a48fb502f0ce84bf532e3d0dd4a2834c9e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-prior-probe-provenance.json",
+      "sha256": "762597dff43425fa3e35d5da5b810c518f23e4869d3306173a86d263283886b7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-provider-hash-search.json",
+      "sha256": "c0570f5ef1eeca03d04457f20ff567457b13576a29b0f8d775969f0923516864"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-reference-loader-check.json",
+      "sha256": "beed2dd7f9f0c51dc4ae1ef04777694da175455be84c4d174fb53443ad5fb698"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-refresh-fixtures.py",
+      "sha256": "9189db6ccde052281c57c0f7fedf3e8101705ea86ce1453f85ccc11a19fda64f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-regrade.py",
+      "sha256": "e7562edb103b342ce8448b5b55edb6e376f544ceab245a2628071dd2aaee6aa9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-resources.json",
+      "sha256": "490467c733bceccfd0a726f930e1c8ac25b40f9e19b1828de5ea09ee2039f64f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-schema-check.json",
+      "sha256": "3c5eaa867e424877851cc4634ef62c05cfaec8e25fc761a2a5db9d1aa831dd2f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-scope-audit.json",
+      "sha256": "06f97ca374dc111783c810698554574f867055bbbb819a109b9e17c5edb64990"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-shard-check.json",
       "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-schema-check.log",
-      "sha256": "ad0f9b097aabd7df59731ac1ed213ca9d025874a093cd29433bf6824707f5527"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-scope-audit.json",
-      "sha256": "3bae6586e38ea82c5ccfca6b63623da2088d9ea0a0c768f361e6fe72e7fb931b"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-currentness-copy.json",
-      "sha256": "1b765b9ac2ab42d60576eba5c1f1edd03454965e434717497da8cbcf32c009bf"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-grade-source-audit.json",
-      "sha256": "18e514f7fc9ee8f8bfdf58c88fcfe23175bbc57149bcafe03f685985f04c4d3a"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-3/fix3-dependencies.log",
-      "sha256": "787c0de158dbac700207643d8950bdaa056bc8d8198255cc9e2c5bb72e867a69"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-4/fix4-shard-generate.json",
+      "sha256": "fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2"
     }
   ],
   "native_execution": "NOT_RUN",
