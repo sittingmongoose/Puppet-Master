@@ -138,6 +138,15 @@ PLATFORM_ID = {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^
 PATH_REF = {"type": "string", "minLength": 1, "maxLength": 1024,
             "pattern": r"^(?![A-Za-z]:[\\/])(?![~\\])(?!\.{1,2}(?:/|$))(?![\s\S]*/\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"}
 PROJECTION_MEMBERS = ("agent_projection", "file_projection", "operation_projection", "snapshot_projection", "checkpoint")
+# Enumerate the separately governed app edition; arbitrary suffixes grant no exemption.
+PROJECT_PROJECTION_DEFS = frozenset((
+    "id", "timestamp", "event_id", "non_secret_ref", "path_ref", "status_reason",
+    "operation_summary", "agent_projection", "agent_terminal", "file_projection",
+    "operation_projection", "snapshot_projection", "snapshot_agent", "snapshot_claim",
+    "checkpoint", "checkpoint_core", "retired_generation", "durable_read_token",
+))
+APPLICATION_PROJECTION_DEFS = frozenset(name + "ApplicationV1" for name in PROJECT_PROJECTION_DEFS)
+
 PROJECTION_SCHEMA_IDS = {
     "agent_projection": "pm.storage_value.coordination_agent_projection.v1",
     "file_projection": "pm.storage_value.coordination_file_projection.v1",
@@ -410,6 +419,24 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "path_ref_pattern", "definition": "agent_file_ownership_updated"})
     project_payloads = copy.deepcopy(payloads)
     project_payloads["$defs"] = {name: value for name, value in defs.items() if name not in app_members}
+    # Scan Project references before accepting the pruned view: otherwise a Project
+    # field can reach a nullable app subtree that the null scan cannot see.
+    allowed_defs = set(defs) - app_members
+    def isolated_refs(node: Any, path: str = "#") -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key in ("$ref", "$dynamicRef", "$recursiveRef"):
+                    local = value.removeprefix(PAYLOAD_SCHEMA_URI) if isinstance(value, str) else ""
+                    parts = local.split("/")
+                    if (len(parts) < 3 or parts[:2] != ["#", "$defs"]
+                            or parts[2] not in allowed_defs):
+                        failures.append({"error": "project_payload_reference_not_isolated",
+                                         "detail": path + "/" + key})
+                isolated_refs(value, path + "/" + key)
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                isolated_refs(value, f"{path}/{index}")
+    isolated_refs(project_payloads)
     nulls = null_admitting_nodes(project_payloads)
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
@@ -492,6 +519,8 @@ def projection_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     if projections.get("$id") != PROJECTION_SCHEMA_URI:
         failures.append({"error": "projection_schema_uri"})
     defs = projections.get("$defs", {})
+    if set(defs) != PROJECT_PROJECTION_DEFS | APPLICATION_PROJECTION_DEFS:
+        failures.append({"error": "projection_schema_definition_census", "detail": sorted(defs)})
     if projections.get("oneOf") != [{"$ref": f"#/$defs/{name}"} for name in PROJECTION_MEMBERS]:
         failures.append({"error": "projection_schema_root_members"})
     for name in PROJECTION_MEMBERS:
@@ -804,7 +833,7 @@ def projections_bundle(root: Path = ROOT) -> dict[str, Any]:
     projections = load(PROJECTION_PATH, root)
     generic = load(GENERIC_PATH, root)
     mapping = {GENERIC_CURSOR_REF: "#/$defs/generic_source_cursor"}
-    bundle_defs = {name: rewrite_refs(copy.deepcopy(definition), mapping) for name, definition in projections["$defs"].items() if not name.endswith("ApplicationV1")}
+    bundle_defs = {name: rewrite_refs(copy.deepcopy(definition), mapping) for name, definition in projections["$defs"].items() if name not in APPLICATION_PROJECTION_DEFS}
     bundle_defs["generic_source_cursor"] = copy.deepcopy(generic["$defs"]["coverage"]["properties"]["last_frame"])
     return {
         "$id": "pm.storage_value.coordination_read_model_projections.v1",
