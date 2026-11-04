@@ -253,6 +253,24 @@ def history_matrix(kind, m, family, fixture):
         for path, value in receipt_leaves(base['event']['receipt'], ['event','receipt']):
             negatives.append(dict(name='storage_'+'_'.join(path[2:]), path=path,
                                   value=value+1 if isinstance(value, int) else 'foreign', guard='original_receipt'))
+        for name, path, value, guard in [
+                ('typed_event_sequence', ['event', 'sequence_id'], True, 'event_original'),
+                ('typed_receipt_sequence', ['event','receipt','sequence_id'], True, 'original_receipt'),
+                ('typed_first_receipt_sequence', ['event','receipt','first_append_receipt','sequence_id'], True, 'original_receipt'),
+                ('typed_first_receipt_generation', ['event','receipt','first_append_receipt','segment_generation'], False, 'original_receipt'),
+                ('typed_original_result_offset', ['event','receipt','original_append_result','byte_offset'], False, 'original_receipt'),
+                ('typed_source_generation', ['event','source_selection','manifest_generation'], False, 'original_source')]:
+            negatives.append(dict(name=name,path=path,value=value,guard=guard))
+        def integer_leaf(value, path):
+            if type(value) is int:
+                return path, value
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    found = integer_leaf(child, path+[key])
+                    if found is not None:
+                        return found
+        payload_path, integer = integer_leaf(base['event']['payload'], ['event','payload'])
+        negatives.append(dict(name='typed_original_payload_integer',path=payload_path,value=float(integer),guard='historical_payload'))
         for policy in ('dedupe_by_idempotency_key', 'projector_replay_only'):
             base['event']['replay_policy'] = expected['event']['replay_policy'] = policy
             live = copy.deepcopy(base)

@@ -73,9 +73,9 @@ def protocol_errors(context, original):
     """Synthetic authority/source joins only. Native authentication remains NOT_RUN."""
     found = shared.writer_policy_errors(context['replay_policy'])
     for key in ('admitted', 'authority_verified', 'source_current', 'permission_allowed'):
-        if not context[key]:
+        if context[key] is not True:
             found.append(key)
-    if context['subject_already_active'] or context['concern_key_exists']:
+    if context['subject_already_active'] is not False or context['concern_key_exists'] is not False:
         found.append('existing concern cannot be recreated')
     command = original['original_command']
     for key in ('actor_ref', 'creator_kind', 'project_id', 'authority_basis_ref', 'currentness_basis_ref', 'permission_snapshot_ref', 'source_refs'):

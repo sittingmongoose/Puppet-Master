@@ -13503,6 +13503,946 @@
       "errors": [
         "invalid schema contract"
       ]
+    },
+    {
+      "name": "typed_protocol_admitted",
+      "target": "protocol",
+      "value": {
+        "admitted": "false",
+        "authority_verified": true,
+        "source_current": true,
+        "permission_allowed": true,
+        "authority": {
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "project_id": "fixture",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ]
+        },
+        "subject_already_active": false,
+        "concern_key_exists": false,
+        "receipt_event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "retry_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "publication_state": "current",
+        "replay_policy": "dedupe_by_idempotency_key"
+      },
+      "errors": [
+        "admitted"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.concern_created_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "operation_digest": "7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "idempotency_key": "fixture-create",
+        "request_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "state": "settled",
+        "original_command": {
+          "command_id": "cmd.concern.create",
+          "handler_target": "handlers::concern::create",
+          "project_id": "fixture",
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "title_ref": "pmref:summary:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "severity": "warning",
+          "category": "weak_integration",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "origin": "orchestrator",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "payload": {
+          "schema_id": "pm.concern_event.concern_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "concern_revision": 1,
+          "concern_record_ref": "pmref:concern_record:fixture/concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c/r1",
+          "actor_ref": "pmref:runtime:fixture",
+          "created_by_ref": "pmref:runtime:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "state": "active",
+          "category": "weak_integration",
+          "severity": "warning",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "origin": "orchestrator",
+          "handler_target": "handlers::concern::create",
+          "command_id": "cmd.concern.create",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "prior_record": null,
+        "candidate_record": {
+          "schema_id": "pm.storage_value.concern_record.v1",
+          "schema_version": "1.0.0",
+          "record_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "record_kind": "concern",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "project_id": "fixture",
+          "revision": 1,
+          "concern_category": "weak_integration",
+          "severity": "warning",
+          "status": "active",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "creator_ref": "pmref:runtime:fixture",
+          "created_by_kind": "Runtime",
+          "created_by_ref": "pmref:runtime:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "source_event_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "summary": "pmref:summary:fixture",
+          "created_at": "2026-11-04T18:00:00Z",
+          "updated_at": "2026-11-04T18:00:00Z",
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "resolution_kind": null,
+          "resolver_ref": null,
+          "resolved_at": null,
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "redaction_profile": "secret_refs_only"
+        },
+        "owner_commit_ref": "pmref:commit:fixture",
+        "result_ref": "pmref:result:fixture",
+        "dispatch_receipt_ref": "pmref:dispatch:fixture",
+        "original_append_result_ref": "pmref:original_append:fixture"
+      }
+    },
+    {
+      "name": "typed_protocol_authority_verified",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "authority_verified": "false",
+        "source_current": true,
+        "permission_allowed": true,
+        "authority": {
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "project_id": "fixture",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ]
+        },
+        "subject_already_active": false,
+        "concern_key_exists": false,
+        "receipt_event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "retry_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "publication_state": "current",
+        "replay_policy": "dedupe_by_idempotency_key"
+      },
+      "errors": [
+        "authority_verified"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.concern_created_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "operation_digest": "7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "idempotency_key": "fixture-create",
+        "request_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "state": "settled",
+        "original_command": {
+          "command_id": "cmd.concern.create",
+          "handler_target": "handlers::concern::create",
+          "project_id": "fixture",
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "title_ref": "pmref:summary:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "severity": "warning",
+          "category": "weak_integration",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "origin": "orchestrator",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "payload": {
+          "schema_id": "pm.concern_event.concern_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "concern_revision": 1,
+          "concern_record_ref": "pmref:concern_record:fixture/concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c/r1",
+          "actor_ref": "pmref:runtime:fixture",
+          "created_by_ref": "pmref:runtime:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "state": "active",
+          "category": "weak_integration",
+          "severity": "warning",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "origin": "orchestrator",
+          "handler_target": "handlers::concern::create",
+          "command_id": "cmd.concern.create",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "prior_record": null,
+        "candidate_record": {
+          "schema_id": "pm.storage_value.concern_record.v1",
+          "schema_version": "1.0.0",
+          "record_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "record_kind": "concern",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "project_id": "fixture",
+          "revision": 1,
+          "concern_category": "weak_integration",
+          "severity": "warning",
+          "status": "active",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "creator_ref": "pmref:runtime:fixture",
+          "created_by_kind": "Runtime",
+          "created_by_ref": "pmref:runtime:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "source_event_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "summary": "pmref:summary:fixture",
+          "created_at": "2026-11-04T18:00:00Z",
+          "updated_at": "2026-11-04T18:00:00Z",
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "resolution_kind": null,
+          "resolver_ref": null,
+          "resolved_at": null,
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "redaction_profile": "secret_refs_only"
+        },
+        "owner_commit_ref": "pmref:commit:fixture",
+        "result_ref": "pmref:result:fixture",
+        "dispatch_receipt_ref": "pmref:dispatch:fixture",
+        "original_append_result_ref": "pmref:original_append:fixture"
+      }
+    },
+    {
+      "name": "typed_protocol_source_current",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "authority_verified": true,
+        "source_current": "false",
+        "permission_allowed": true,
+        "authority": {
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "project_id": "fixture",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ]
+        },
+        "subject_already_active": false,
+        "concern_key_exists": false,
+        "receipt_event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "retry_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "publication_state": "current",
+        "replay_policy": "dedupe_by_idempotency_key"
+      },
+      "errors": [
+        "source_current"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.concern_created_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "operation_digest": "7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "idempotency_key": "fixture-create",
+        "request_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "state": "settled",
+        "original_command": {
+          "command_id": "cmd.concern.create",
+          "handler_target": "handlers::concern::create",
+          "project_id": "fixture",
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "title_ref": "pmref:summary:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "severity": "warning",
+          "category": "weak_integration",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "origin": "orchestrator",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "payload": {
+          "schema_id": "pm.concern_event.concern_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "concern_revision": 1,
+          "concern_record_ref": "pmref:concern_record:fixture/concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c/r1",
+          "actor_ref": "pmref:runtime:fixture",
+          "created_by_ref": "pmref:runtime:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "state": "active",
+          "category": "weak_integration",
+          "severity": "warning",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "origin": "orchestrator",
+          "handler_target": "handlers::concern::create",
+          "command_id": "cmd.concern.create",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "prior_record": null,
+        "candidate_record": {
+          "schema_id": "pm.storage_value.concern_record.v1",
+          "schema_version": "1.0.0",
+          "record_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "record_kind": "concern",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "project_id": "fixture",
+          "revision": 1,
+          "concern_category": "weak_integration",
+          "severity": "warning",
+          "status": "active",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "creator_ref": "pmref:runtime:fixture",
+          "created_by_kind": "Runtime",
+          "created_by_ref": "pmref:runtime:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "source_event_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "summary": "pmref:summary:fixture",
+          "created_at": "2026-11-04T18:00:00Z",
+          "updated_at": "2026-11-04T18:00:00Z",
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "resolution_kind": null,
+          "resolver_ref": null,
+          "resolved_at": null,
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "redaction_profile": "secret_refs_only"
+        },
+        "owner_commit_ref": "pmref:commit:fixture",
+        "result_ref": "pmref:result:fixture",
+        "dispatch_receipt_ref": "pmref:dispatch:fixture",
+        "original_append_result_ref": "pmref:original_append:fixture"
+      }
+    },
+    {
+      "name": "typed_protocol_permission_allowed",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "authority_verified": true,
+        "source_current": true,
+        "permission_allowed": "false",
+        "authority": {
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "project_id": "fixture",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ]
+        },
+        "subject_already_active": false,
+        "concern_key_exists": false,
+        "receipt_event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "retry_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "publication_state": "current",
+        "replay_policy": "dedupe_by_idempotency_key"
+      },
+      "errors": [
+        "permission_allowed"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.concern_created_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "operation_digest": "7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "idempotency_key": "fixture-create",
+        "request_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "state": "settled",
+        "original_command": {
+          "command_id": "cmd.concern.create",
+          "handler_target": "handlers::concern::create",
+          "project_id": "fixture",
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "title_ref": "pmref:summary:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "severity": "warning",
+          "category": "weak_integration",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "origin": "orchestrator",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "payload": {
+          "schema_id": "pm.concern_event.concern_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "concern_revision": 1,
+          "concern_record_ref": "pmref:concern_record:fixture/concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c/r1",
+          "actor_ref": "pmref:runtime:fixture",
+          "created_by_ref": "pmref:runtime:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "state": "active",
+          "category": "weak_integration",
+          "severity": "warning",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "origin": "orchestrator",
+          "handler_target": "handlers::concern::create",
+          "command_id": "cmd.concern.create",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "prior_record": null,
+        "candidate_record": {
+          "schema_id": "pm.storage_value.concern_record.v1",
+          "schema_version": "1.0.0",
+          "record_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "record_kind": "concern",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "project_id": "fixture",
+          "revision": 1,
+          "concern_category": "weak_integration",
+          "severity": "warning",
+          "status": "active",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "creator_ref": "pmref:runtime:fixture",
+          "created_by_kind": "Runtime",
+          "created_by_ref": "pmref:runtime:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "source_event_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "summary": "pmref:summary:fixture",
+          "created_at": "2026-11-04T18:00:00Z",
+          "updated_at": "2026-11-04T18:00:00Z",
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "resolution_kind": null,
+          "resolver_ref": null,
+          "resolved_at": null,
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "redaction_profile": "secret_refs_only"
+        },
+        "owner_commit_ref": "pmref:commit:fixture",
+        "result_ref": "pmref:result:fixture",
+        "dispatch_receipt_ref": "pmref:dispatch:fixture",
+        "original_append_result_ref": "pmref:original_append:fixture"
+      }
+    },
+    {
+      "name": "typed_protocol_subject_already_active",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "authority_verified": true,
+        "source_current": true,
+        "permission_allowed": true,
+        "authority": {
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "project_id": "fixture",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ]
+        },
+        "subject_already_active": 0,
+        "concern_key_exists": false,
+        "receipt_event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "retry_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "publication_state": "current",
+        "replay_policy": "dedupe_by_idempotency_key"
+      },
+      "errors": [
+        "existing concern cannot be recreated"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.concern_created_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "operation_digest": "7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "idempotency_key": "fixture-create",
+        "request_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "state": "settled",
+        "original_command": {
+          "command_id": "cmd.concern.create",
+          "handler_target": "handlers::concern::create",
+          "project_id": "fixture",
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "title_ref": "pmref:summary:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "severity": "warning",
+          "category": "weak_integration",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "origin": "orchestrator",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "payload": {
+          "schema_id": "pm.concern_event.concern_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "concern_revision": 1,
+          "concern_record_ref": "pmref:concern_record:fixture/concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c/r1",
+          "actor_ref": "pmref:runtime:fixture",
+          "created_by_ref": "pmref:runtime:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "state": "active",
+          "category": "weak_integration",
+          "severity": "warning",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "origin": "orchestrator",
+          "handler_target": "handlers::concern::create",
+          "command_id": "cmd.concern.create",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "prior_record": null,
+        "candidate_record": {
+          "schema_id": "pm.storage_value.concern_record.v1",
+          "schema_version": "1.0.0",
+          "record_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "record_kind": "concern",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "project_id": "fixture",
+          "revision": 1,
+          "concern_category": "weak_integration",
+          "severity": "warning",
+          "status": "active",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "creator_ref": "pmref:runtime:fixture",
+          "created_by_kind": "Runtime",
+          "created_by_ref": "pmref:runtime:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "source_event_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "summary": "pmref:summary:fixture",
+          "created_at": "2026-11-04T18:00:00Z",
+          "updated_at": "2026-11-04T18:00:00Z",
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "resolution_kind": null,
+          "resolver_ref": null,
+          "resolved_at": null,
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "redaction_profile": "secret_refs_only"
+        },
+        "owner_commit_ref": "pmref:commit:fixture",
+        "result_ref": "pmref:result:fixture",
+        "dispatch_receipt_ref": "pmref:dispatch:fixture",
+        "original_append_result_ref": "pmref:original_append:fixture"
+      }
+    },
+    {
+      "name": "typed_protocol_concern_key_exists",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "authority_verified": true,
+        "source_current": true,
+        "permission_allowed": true,
+        "authority": {
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "project_id": "fixture",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ]
+        },
+        "subject_already_active": false,
+        "concern_key_exists": 0,
+        "receipt_event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "retry_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "publication_state": "current",
+        "replay_policy": "dedupe_by_idempotency_key"
+      },
+      "errors": [
+        "existing concern cannot be recreated"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.concern_created_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "operation_digest": "7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "event_id": "evt_concern_created_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "idempotency_key": "fixture-create",
+        "request_digest": "2427a1b093aef3f02c3c7bfceb044db08c30aad56d4d00bddaa49cd0a783a83c",
+        "state": "settled",
+        "original_command": {
+          "command_id": "cmd.concern.create",
+          "handler_target": "handlers::concern::create",
+          "project_id": "fixture",
+          "actor_ref": "pmref:runtime:fixture",
+          "creator_kind": "Runtime",
+          "authority_basis_ref": "pmref:authority:fixture",
+          "permission_snapshot_ref": "pmref:permission:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "title_ref": "pmref:summary:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "severity": "warning",
+          "category": "weak_integration",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "origin": "orchestrator",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "payload": {
+          "schema_id": "pm.concern_event.concern_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "concern_revision": 1,
+          "concern_record_ref": "pmref:concern_record:fixture/concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c/r1",
+          "actor_ref": "pmref:runtime:fixture",
+          "created_by_ref": "pmref:runtime:fixture",
+          "currentness_basis_ref": "pmref:currentness:fixture",
+          "source_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "state": "active",
+          "category": "weak_integration",
+          "severity": "warning",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "origin": "orchestrator",
+          "handler_target": "handlers::concern::create",
+          "command_id": "cmd.concern.create",
+          "correlation_id": "fixture-correlation",
+          "idempotency_key": "fixture-create",
+          "ts": "2026-11-04T18:00:00Z"
+        },
+        "prior_record": null,
+        "candidate_record": {
+          "schema_id": "pm.storage_value.concern_record.v1",
+          "schema_version": "1.0.0",
+          "record_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "record_kind": "concern",
+          "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+          "project_id": "fixture",
+          "revision": 1,
+          "concern_category": "weak_integration",
+          "severity": "warning",
+          "status": "active",
+          "owner_kind": "User",
+          "owner_ref": "pmref:owner:fixture",
+          "creator_ref": "pmref:runtime:fixture",
+          "created_by_kind": "Runtime",
+          "created_by_ref": "pmref:runtime:fixture",
+          "subject_ref": "pmref:subject:fixture",
+          "source_event_refs": [
+            "pmref:source_event:fixture"
+          ],
+          "evidence_refs": [
+            "pmref:evidence:fixture"
+          ],
+          "artifact_refs": [],
+          "lineage_refs": [],
+          "summary": "pmref:summary:fixture",
+          "created_at": "2026-11-04T18:00:00Z",
+          "updated_at": "2026-11-04T18:00:00Z",
+          "visibility_level": "project",
+          "attention_level": "warning",
+          "chatworthy": false,
+          "blocking_effect_ref": null,
+          "resolution_kind": null,
+          "resolver_ref": null,
+          "resolved_at": null,
+          "scope_ref": "pmref:scope:fixture",
+          "run_ref": "pmref:run:fixture",
+          "redaction_profile": "secret_refs_only"
+        },
+        "owner_commit_ref": "pmref:commit:fixture",
+        "result_ref": "pmref:result:fixture",
+        "dispatch_receipt_ref": "pmref:dispatch:fixture",
+        "original_append_result_ref": "pmref:original_append:fixture"
+      }
+    },
+    {
+      "name": "typed_storage_maximum_boolean",
+      "target": "profile",
+      "value": {
+        "storage_profile": {
+          "family_profiles": {
+            "concern_created_operation": {
+              "redb_file": "canonical",
+              "storage_group": "coordination_and_storage",
+              "encoding_target": "messagepack_canonical",
+              "encoding_note": "SP-666: original concern creation custody",
+              "max_value_bytes": true
+            }
+          }
+        }
+      },
+      "errors": [
+        "non-integer maximum"
+      ]
+    },
+    {
+      "name": "typed_storage_maximum_float",
+      "target": "profile",
+      "value": {
+        "storage_profile": {
+          "family_profiles": {
+            "concern_created_operation": {
+              "redb_file": "canonical",
+              "storage_group": "coordination_and_storage",
+              "encoding_target": "messagepack_canonical",
+              "encoding_note": "SP-666: original concern creation custody",
+              "max_value_bytes": 16384.0
+            }
+          }
+        }
+      },
+      "errors": [
+        "non-integer maximum"
+      ]
     }
   ]
 }

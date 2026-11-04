@@ -10038,6 +10038,702 @@
         "protected": false
       },
       "errors": []
+    },
+    {
+      "name": "typed_protocol_admitted",
+      "target": "protocol",
+      "value": {
+        "admitted": "false",
+        "allowed": true,
+        "current": true,
+        "source_verified": true,
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "admitted"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_snoozed_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "idempotency_key": "fixture",
+        "request_digest": "9f8b5f9835e0a1e66db1f1af547dc56b5159ba2fd411b720a09d7c664f6a2e24",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "snoozed",
+          "unread": true,
+          "inbox_visible": false,
+          "snooze_until": "2026-11-05T00:00:00Z"
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_protocol_allowed",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "allowed": "false",
+        "current": true,
+        "source_verified": true,
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "allowed"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_snoozed_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "idempotency_key": "fixture",
+        "request_digest": "9f8b5f9835e0a1e66db1f1af547dc56b5159ba2fd411b720a09d7c664f6a2e24",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "snoozed",
+          "unread": true,
+          "inbox_visible": false,
+          "snooze_until": "2026-11-05T00:00:00Z"
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_protocol_current",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "allowed": true,
+        "current": "false",
+        "source_verified": true,
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "current"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_snoozed_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "idempotency_key": "fixture",
+        "request_digest": "9f8b5f9835e0a1e66db1f1af547dc56b5159ba2fd411b720a09d7c664f6a2e24",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "snoozed",
+          "unread": true,
+          "inbox_visible": false,
+          "snooze_until": "2026-11-05T00:00:00Z"
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_protocol_source_verified",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "allowed": true,
+        "current": true,
+        "source_verified": "false",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "source_verified"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_snoozed_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "event_id": "evt_alert_snoozed_4960e1bd19e1ff485889965bea02f195a0075803e5664d05fa662c81a9f2e86b",
+        "idempotency_key": "fixture",
+        "request_digest": "9f8b5f9835e0a1e66db1f1af547dc56b5159ba2fd411b720a09d7c664f6a2e24",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "snoozed",
+          "unread": true,
+          "inbox_visible": false,
+          "snooze_until": "2026-11-05T00:00:00Z"
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_storage_maximum_boolean",
+      "target": "profile",
+      "value": {
+        "storage_profile": {
+          "family_profiles": {
+            "alert_snoozed_operation": {
+              "redb_file": "canonical",
+              "storage_group": "coordination_and_storage",
+              "encoding_target": "messagepack_canonical",
+              "encoding_note": "SP-663: bounded original custody",
+              "max_value_bytes": true
+            }
+          }
+        }
+      },
+      "errors": [
+        "non-integer maximum"
+      ]
+    },
+    {
+      "name": "typed_storage_maximum_float",
+      "target": "profile",
+      "value": {
+        "storage_profile": {
+          "family_profiles": {
+            "alert_snoozed_operation": {
+              "redb_file": "canonical",
+              "storage_group": "coordination_and_storage",
+              "encoding_target": "messagepack_canonical",
+              "encoding_note": "SP-663: bounded original custody",
+              "max_value_bytes": 16384.0
+            }
+          }
+        }
+      },
+      "errors": [
+        "non-integer maximum"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_current",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_alert_state": "unacknowledged",
+        "result_alert_state": "snoozed",
+        "snooze_until": "2026-11-05T00:00:00Z",
+        "snooze_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::snooze",
+        "command_id": "cmd.alert.snooze",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": 1,
+        "allowed": true,
+        "committed": true,
+        "protected": false
+      },
+      "errors": [
+        "uncommitted/stale/refused"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_allowed",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_alert_state": "unacknowledged",
+        "result_alert_state": "snoozed",
+        "snooze_until": "2026-11-05T00:00:00Z",
+        "snooze_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::snooze",
+        "command_id": "cmd.alert.snooze",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": true,
+        "allowed": "false",
+        "committed": true,
+        "protected": false
+      },
+      "errors": [
+        "uncommitted/stale/refused"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_committed",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_alert_state": "unacknowledged",
+        "result_alert_state": "snoozed",
+        "snooze_until": "2026-11-05T00:00:00Z",
+        "snooze_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::snooze",
+        "command_id": "cmd.alert.snooze",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": true,
+        "allowed": true,
+        "committed": "false",
+        "protected": false
+      },
+      "errors": [
+        "uncommitted/stale/refused"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_protected",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_alert_state": "unacknowledged",
+        "result_alert_state": "snoozed",
+        "snooze_until": "2026-11-05T00:00:00Z",
+        "snooze_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::snooze",
+        "command_id": "cmd.alert.snooze",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": true,
+        "allowed": true,
+        "committed": true,
+        "protected": 0
+      },
+      "errors": [
+        "invalid protection proof"
+      ]
     }
   ]
 }

@@ -100,11 +100,11 @@ def protocol_errors(context, original_operation):
     original_payload = original_operation['payload']
     errors = []
     errors += shared.writer_policy_errors(context['replay_policy'])
-    if not context['admitted']:
+    if context['admitted'] is not True:
         errors.append('family absent')
-    if not context['desktop']:
+    if context['desktop'] is not True:
         errors.append('unsupported web')
-    if not context['source_verified']:
+    if context['source_verified'] is not True:
         errors.append('unverified source')
     if context['receipt_event_id'] != context['original_event_id']:
         errors.append('wrong original receipt')

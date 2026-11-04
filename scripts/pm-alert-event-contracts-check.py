@@ -26,8 +26,10 @@ def errors(payload, schema, guard):
     if not found:
         if payload['result_revision'] != payload['prior_revision'] + 1:
             found.append('non-successor')
-        if not guard['current'] or not guard['allowed'] or not guard['committed']:
+        if any(guard[field] is not True for field in ('current', 'allowed', 'committed')):
             found.append('uncommitted/stale/refused')
+        if type(guard['protected']) is not bool:
+            found.append('invalid protection proof')
         if snooze_expired(payload):
             found.append('expired snooze')
         if payload['command_id'] in ('cmd.alert.snooze', 'cmd.alert.mute_rule') and guard['protected']:
@@ -142,7 +144,7 @@ def protocol_errors(context, original):
     """Current retry evidence; the retained historical reader never calls this."""
     found = writer_policy_errors(context['replay_policy'])
     for field in ('admitted', 'allowed', 'current', 'source_verified'):
-        if not context[field]:
+        if context[field] is not True:
             found.append(field)
     if context['receipt_event_id'] != original['event_id']:
         found.append('wrong original receipt')
@@ -207,7 +209,10 @@ def profile_errors(registry, fid, kind, group):
     expected_file = 'derived' if kind == 'redb_checkpoint' else 'canonical'
     if profile['redb_file'] != expected_file or profile['storage_group'] != group:
         return ['wrong physical binding']
-    if not 1 <= profile.get('max_value_bytes', 0) <= 16384:
+    maximum = profile.get('max_value_bytes', 0)
+    if type(maximum) is not int:
+        return ['non-integer maximum']
+    if not 1 <= maximum <= 16384:
         return ['missing/oversized maximum']
     return []
 
@@ -290,12 +295,12 @@ def historical_guards(request, expected, payload_schemas, cp_schema, cp_checker)
         Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
     return {
         'checkpoint_publication': cp['state'] == 'current',
-        'checkpoint_original': not cp_checker(cp, cp_schema, original) and publication == expected_publication,
+        'checkpoint_original': not cp_checker(cp, cp_schema, original) and exact_value(publication, expected_publication),
         'event_publication': event['state'] == 'current',
-        'event_original': set(event) == set(original) and all(event[k] == original[k] for k in identity_fields),
-        'historical_payload': payload_valid and payload == original['payload'],
-        'original_receipt': event['receipt'] == original['receipt'],
-        'original_source': event['source_selection'] == original['source_selection'],
+        'event_original': set(event) == set(original) and all(exact_value(event[k], original[k]) for k in identity_fields),
+        'historical_payload': payload_valid and exact_value(payload, original['payload']),
+        'original_receipt': exact_value(event['receipt'], original['receipt']),
+        'original_source': exact_value(event['source_selection'], original['source_selection']),
         'original_admission': original['valid_when_written'] is True and event['valid_when_written'] is True,
         'current_permission': all(request['disclosure'][key] is True for key in
                                   ('permission_allowed', 'membership_allowed', 'source_access_allowed')),
@@ -338,10 +343,23 @@ def history_patch(request, case):
     parent[case['path'][-1]] = copy.deepcopy(case['value'])
 
 
+def exact_value(left, right):
+    """Immutable evidence equality includes JSON value types, not Python coercions."""
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        return left.keys() == right.keys() and all(exact_value(left[k], right[k]) for k in left)
+    if isinstance(left, list):
+        return len(left) == len(right) and all(exact_value(a, b) for a, b in zip(left, right))
+    return left == right
+
+
 def changed_leaves(left, right):
     if isinstance(left, dict) and isinstance(right, dict) and left.keys() == right.keys():
         return sum(changed_leaves(left[k], right[k]) for k in left)
-    return int(left != right)
+    if isinstance(left, list) and isinstance(right, list) and len(left) == len(right):
+        return sum(changed_leaves(a, b) for a, b in zip(left, right))
+    return int(not exact_value(left, right))
 
 
 def historical_reader_cases(fixture, checkpoint, reader, observations=None):

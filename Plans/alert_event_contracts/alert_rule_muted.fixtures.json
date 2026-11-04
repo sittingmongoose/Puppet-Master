@@ -9250,6 +9250,694 @@
       "errors": [
         "original command/payload source_refs"
       ]
+    },
+    {
+      "name": "typed_protocol_admitted",
+      "target": "protocol",
+      "value": {
+        "admitted": "false",
+        "allowed": true,
+        "current": true,
+        "source_verified": true,
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "admitted"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_rule_muted_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "idempotency_key": "fixture",
+        "request_digest": "ef5dce80f606a6c3d0a87abb735db4c481001bb79a5132aca81a56b9f7f597d2",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "unmuted",
+          "mute_expires_at": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "muted",
+          "mute_expires_at": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_protocol_allowed",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "allowed": "false",
+        "current": true,
+        "source_verified": true,
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "allowed"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_rule_muted_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "idempotency_key": "fixture",
+        "request_digest": "ef5dce80f606a6c3d0a87abb735db4c481001bb79a5132aca81a56b9f7f597d2",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "unmuted",
+          "mute_expires_at": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "muted",
+          "mute_expires_at": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_protocol_current",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "allowed": true,
+        "current": "false",
+        "source_verified": true,
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "current"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_rule_muted_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "idempotency_key": "fixture",
+        "request_digest": "ef5dce80f606a6c3d0a87abb735db4c481001bb79a5132aca81a56b9f7f597d2",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "unmuted",
+          "mute_expires_at": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "muted",
+          "mute_expires_at": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_protocol_source_verified",
+      "target": "protocol",
+      "value": {
+        "admitted": true,
+        "allowed": true,
+        "current": true,
+        "source_verified": "false",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "receipt_event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "retry_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "retry_payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "source_verified"
+      ],
+      "original": {
+        "schema_id": "pm.storage_value.alert_rule_muted_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "event_id": "evt_alert_rule_muted_d44fd32ed7977720ef8582d2a22736a5c3a11c1059b6009ddfc85958280766f0",
+        "idempotency_key": "fixture",
+        "request_digest": "ef5dce80f606a6c3d0a87abb735db4c481001bb79a5132aca81a56b9f7f597d2",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "result_mute_state": "muted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "unmuted",
+          "mute_expires_at": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_rule_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "root_cause_ref": "fixture",
+          "mute_state": "muted",
+          "mute_expires_at": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_rule_id": "fixture",
+          "alert_rule_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_mute_state": "unmuted",
+          "mute_scope": "project",
+          "mute_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::mute_rule",
+          "command_id": "cmd.alert.mute_rule",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "typed_storage_maximum_boolean",
+      "target": "profile",
+      "value": {
+        "storage_profile": {
+          "family_profiles": {
+            "alert_rule_muted_operation": {
+              "redb_file": "canonical",
+              "storage_group": "coordination_and_storage",
+              "encoding_target": "messagepack_canonical",
+              "encoding_note": "SP-662: bounded original custody",
+              "max_value_bytes": true
+            }
+          }
+        }
+      },
+      "errors": [
+        "non-integer maximum"
+      ]
+    },
+    {
+      "name": "typed_storage_maximum_float",
+      "target": "profile",
+      "value": {
+        "storage_profile": {
+          "family_profiles": {
+            "alert_rule_muted_operation": {
+              "redb_file": "canonical",
+              "storage_group": "coordination_and_storage",
+              "encoding_target": "messagepack_canonical",
+              "encoding_note": "SP-662: bounded original custody",
+              "max_value_bytes": 16384.0
+            }
+          }
+        }
+      },
+      "errors": [
+        "non-integer maximum"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_current",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_rule_id": "fixture",
+        "alert_rule_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_mute_state": "unmuted",
+        "result_mute_state": "muted",
+        "mute_scope": "project",
+        "mute_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::mute_rule",
+        "command_id": "cmd.alert.mute_rule",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": 1,
+        "allowed": true,
+        "committed": true,
+        "protected": false
+      },
+      "errors": [
+        "uncommitted/stale/refused"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_allowed",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_rule_id": "fixture",
+        "alert_rule_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_mute_state": "unmuted",
+        "result_mute_state": "muted",
+        "mute_scope": "project",
+        "mute_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::mute_rule",
+        "command_id": "cmd.alert.mute_rule",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": true,
+        "allowed": "false",
+        "committed": true,
+        "protected": false
+      },
+      "errors": [
+        "uncommitted/stale/refused"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_committed",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_rule_id": "fixture",
+        "alert_rule_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_mute_state": "unmuted",
+        "result_mute_state": "muted",
+        "mute_scope": "project",
+        "mute_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::mute_rule",
+        "command_id": "cmd.alert.mute_rule",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": true,
+        "allowed": true,
+        "committed": "false",
+        "protected": false
+      },
+      "errors": [
+        "uncommitted/stale/refused"
+      ]
+    },
+    {
+      "name": "typed_payload_guard_protected",
+      "target": "payload",
+      "value": {
+        "schema_id": "pm.attention_event.alert_rule_muted.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_rule_id": "fixture",
+        "alert_rule_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_mute_state": "unmuted",
+        "result_mute_state": "muted",
+        "mute_scope": "project",
+        "mute_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::mute_rule",
+        "command_id": "cmd.alert.mute_rule",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "guard": {
+        "current": true,
+        "allowed": true,
+        "committed": true,
+        "protected": 0
+      },
+      "errors": [
+        "invalid protection proof"
+      ]
     }
   ]
 }
