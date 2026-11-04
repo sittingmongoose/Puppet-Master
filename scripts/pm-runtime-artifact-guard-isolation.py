@@ -160,10 +160,13 @@ expr('P02','policies_match',"row.get('checkpoint_retention_policy_ref') == check
 expr('P03','policies_match',"'derived_retention_policy_ref' not in row")
 GUARDS['C01']=('checkpoint: schema/key route and resolved checkpoint target',lambda s:condition(condition(s,'checkpoint_matches',"row['checkpoint_key']"),'checkpoint_matches',"definition !="))
 block('C02','checkpoint_matches',"validator(schema, 'checkpoint')")
-block('C03','checkpoint_matches',"bundle['checkpoint_key'] ==")
+GUARDS['C03']=('checkpoint store/key identities, including repeated token store/key joins',
+    lambda s:replace(condition(s,'checkpoint_matches',"bundle['checkpoint_key'] =="),'checkpoint_matches',
+        'token != expected_token',"{k:v for k,v in token.items() if k not in ('storage_instance_id','checkpoint_key')} != {k:v for k,v in expected_token.items() if k not in ('storage_instance_id','checkpoint_key')}"))
 GUARDS['C04']=('checkpoint live selection/verification/snapshot, including the repeated token snapshot join',
-    lambda s:replace(condition(s,'checkpoint_matches',"node['state']"),'checkpoint_matches',
-        'token != expected_token',"{k:v for k,v in token.items() if k != 'redb_snapshot_id'} != {k:v for k,v in expected_token.items() if k != 'redb_snapshot_id'}"))
+    lambda s:replace(replace(condition(s,'checkpoint_matches',"node['state']"),'checkpoint_matches',
+        "anchor['source_selection'] != selection",'False'),'checkpoint_matches',
+        'token != expected_token',"{k:v for k,v in token.items() if k not in ('redb_snapshot_id','source_selection')} != {k:v for k,v in expected_token.items() if k not in ('redb_snapshot_id','source_selection')}"))
 block('C05','checkpoint_matches',"generation != expected_generation")
 block('C06','checkpoint_matches',"not full_value_matches")
 block('C07','checkpoint_matches',"source['scope_partition']")

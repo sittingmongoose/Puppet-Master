@@ -196,6 +196,24 @@ def cases(m, excluded=()):
             if guard in ('C09','C10','C13','C14'):
                 b['read_token']['frontier_sha256']=m.binding_digest(node(b)['frontier'])
             add(guard,family,name,cp(row,original,bundle),cp(r,o,b))
+        # Re-execute every shipped checkpoint fault, with non-targeted
+        # generation/token/dataset observations independently rebound.
+        checkpoint_guards={
+            'wrong_store_key':'C03','wrong_checkpoint_store':'C03','wrong_token_store':'C03',
+            'wrong_source_store':'C03','wrong_custody_store':'C03',
+            'wrong_anchor_store':'C04','wrong_frontier_store':'C04','wrong_token_source_store':'C04',
+            'unverified_source':'C04','wrong_live_snapshot':'C04',
+            'wrong_source_selection':'C08','wrong_event':'C06','wrong_custody_event':'C06',
+            'wrong_partition':'C07','wrong_locator':'C07','wrong_key_route':'C01',
+            'wrong_pointer':'C05','wrong_frontier':'C05','missing_dataset':'C12',
+        }
+        for name,guard in checkpoint_guards.items():
+            r,e,o,b=m.checkpoint_negative(name,row,full,original,bundle)
+            add(guard,family,'shipped_'+name,cp(row,original,bundle),cp(r,o,b,e))
+        # A missing schema file remains a structural-unavailability control.
+        # Use an available WRONG target to prove the route guard itself.
+        r=copy.deepcopy(row);r['checkpoint_schema_ref']=m.CHECKPOINT_SCHEMA.split('#')[0]+'#/$defs/read_token'
+        add('C01',family,'available_wrong_schema_target',cp(row,original,bundle),cp(r,original,bundle))
 
         if family in m.PROVIDER_HASH_PATHS:
             bad=copy.deepcopy(full['payload']);m.set_path(bad,m.PROVIDER_HASH_PATHS[family],'not-a-hash')

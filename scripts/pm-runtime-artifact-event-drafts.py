@@ -557,6 +557,45 @@ def checkpoint_matches(row, event, original, bundle):
         return False
 
 
+def checkpoint_rebind(event, original, bundle, preserve_token=()):
+    """Recompute observations NOT targeted by a single checkpoint defect.
+
+    This is fixture construction only. It never repairs data on a read path.
+    Keep an intentionally stale token component when that component IS the
+    defect. Missing datasets remain missing, with their source commitment intact.
+    """
+    cp, source = bundle['checkpoint'], bundle['selected_source']
+    node = cp['generations'][cp['current_generation_id']]
+    anchor, frontier = node['anchor'], node['frontier']
+    storage = original['custody']['storage_instance_id']
+    key = CHECKPOINT_KEY.format(storage_instance_id=storage)
+    generation = 'eig_' + binding_digest(dict(domain='pm.event_index.generation.v1',
+        storage_instance_id=storage, projector_version=node['projector_version'],
+        birth_source_selection=anchor['source_selection'], generation_seed_sha256=anchor['generation_seed_sha256']))
+    cp['current_generation_id'] = generation
+    node['generation_id'] = generation
+    node['index_dataset_name'] = 'event_record_index.v2@' + generation
+    cp['generations'] = {generation: node}
+    old_token = bundle['read_token']
+    token = dict(storage_instance_id=storage, checkpoint_key=key,
+        checkpoint_ref=key+'#/generations/'+generation, generation_id=generation,
+        generation_anchor_sha256=binding_digest(anchor), frontier_revision=frontier['publication_revision'],
+        frontier_sha256=binding_digest(frontier), index_dataset_name=node['index_dataset_name'],
+        source_selection=copy.deepcopy(source['source_selection']), redb_snapshot_id=source['redb_snapshot_id'])
+    token.update({k:copy.deepcopy(old_token[k]) for k in preserve_token})
+    bundle['read_token'] = token
+    if bundle['datasets']:
+        dataset = next(iter(bundle['datasets'].values()))
+        for value in dataset.values():
+            value['source_locator'] = copy.deepcopy(source['source_locator'])
+            value['publication_locator']['checkpoint_ref'] = token['checkpoint_ref']
+        bundle['datasets'] = {node['index_dataset_name']:dataset}
+        frontier['index_row_set_sha256'] = binding_digest(dict(domain='pm.event_index.row_set.v1',
+            entries=[dict(key=k,value=v) for k,v in sorted(dataset.items())]))
+    if 'frontier_sha256' not in preserve_token:
+        token['frontier_sha256'] = binding_digest(frontier)
+
+
 def checkpoint_negative(name, row, event, original, bundle):
     """Independent, schema-valid where possible, identity/route fault injection."""
     row, event, original, bundle = copy.deepcopy((row, event, original, bundle))
@@ -578,12 +617,33 @@ def checkpoint_negative(name, row, event, original, bundle):
     elif name == 'wrong_locator': source['source_locator']['byte_offset'] += 1
     elif name == 'wrong_schema_ref': row['checkpoint_schema_ref'] = 'Plans/DOES_NOT_EXIST.schema.json#/$defs/checkpoint'
     elif name == 'wrong_key_route': row['checkpoint_key'] = CHECKPOINT_KEY.format(storage_instance_id=foreign)
-    elif name == 'wrong_pointer': token['checkpoint_ref'] += '-missing'
+    elif name == 'wrong_pointer': token['checkpoint_ref'] = token['checkpoint_ref'].rsplit('/',1)[0]+'/eig_'+'0'*64
     elif name == 'missing_dataset': bundle['datasets'] = {}
     elif name == 'wrong_frontier': node['frontier']['publication_revision'] += 1
     elif name == 'unverified_source': source['verified'] = False
     elif name == 'wrong_live_snapshot': token['redb_snapshot_id'] += '-other'
     else: raise ValueError('unknown checkpoint fault: ' + name)
+    # Source-selection changes must update every observational copy, while a
+    # deliberately mismatched anchor/frontier/token selection stays mismatched.
+    if name == 'wrong_source_selection':
+        node['anchor']['source_selection'] = copy.deepcopy(source['source_selection'])
+        node['frontier']['source_selection'] = copy.deepcopy(source['source_selection'])
+    if name == 'wrong_custody_store':
+        storage = original['custody']['storage_instance_id']
+        bundle['checkpoint_key'] = CHECKPOINT_KEY.format(storage_instance_id=storage)
+        cp['storage_instance_id'] = storage
+        source['source_selection']['storage_instance_id'] = storage
+        node['anchor']['source_selection'] = copy.deepcopy(source['source_selection'])
+        node['frontier']['source_selection'] = copy.deepcopy(source['source_selection'])
+        # The selected source's original store remains the conflicting truth.
+    preserve = {
+        'wrong_token_store': ('storage_instance_id',),
+        'wrong_token_source_store': ('source_selection',),
+        'wrong_pointer': ('checkpoint_ref',),
+        'wrong_frontier': ('frontier_revision','frontier_sha256'),
+        'wrong_live_snapshot': ('redb_snapshot_id',),
+    }.get(name,())
+    checkpoint_rebind(event,original,bundle,preserve)
     return row, event, original, bundle
 
 
