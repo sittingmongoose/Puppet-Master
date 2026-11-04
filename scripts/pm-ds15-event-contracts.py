@@ -124,6 +124,22 @@ def shared_valid(kind, value):
     schema = read('Plans/event_append_receipt_contracts.schema.json')
     return not list(validator({'$defs': schema['$defs'], '$ref': '#/$defs/' + kind}).iter_errors(value))
 
+def application_source_present(value):
+    return bool(value)
+
+
+def original_output_present(value):
+    return value is not None
+
+
+def outcome_present(value):
+    return value is not None
+
+
+def admission_present(value):
+    return value is not None
+
+
 def envelope_ok(c, d, retry=True):
     e, original = d['envelope'], d['original']['event']
     scope = d['context']['scope']
@@ -146,7 +162,7 @@ def envelope_ok(c, d, retry=True):
         return False
     source = d.get('application_source')
     if scope['kind'] == 'app':
-        if (not source or source != d['original']['application_source']
+        if (not application_source_present(source) or source != d['original']['application_source']
                 or list(application_source_validator().iter_errors(source))
                 or source['schema_id'] != 'pm.application_source.browser_transition.v1'
                 or source['interface_id'] != 'owner.browser.transition.application@1.0.0'
@@ -154,7 +170,7 @@ def envelope_ok(c, d, retry=True):
                 or source['thread_id'] != e['thread_id']
                 or source['scope']['scope_kind'] != 'application' or source['scope']['project_id'] is not None
                 or source['scope']['server_id'] != source['server_id']
-                or source['original_output'] is None
+                or not original_output_present(source['original_output'])
                 or source['original_output']['profile_id'] != scope['profile_id']
                 or d['payload']['browser_session_id'] not in source['original_output']['session_refs']
                 or any(stage['original_operation_id'] != source['original_operation_id']
@@ -291,7 +307,7 @@ def evaluate(c, op, d):
         return {'result': 'ACCEPT' if payload_ok(c, p, x) and envelope_ok(c, d, retry=False) else 'REFUSE', 'effects': 0}
     if op in ('recover', 'publish', 'read'):
         o, r, out = d['original'], d['receipt'], d['outcome']
-        if out is None or not out['committed'] or not d['backup_closure_verified']:
+        if not outcome_present(out) or not out['committed'] or not d['backup_closure_verified']:
             return {'result': 'UNAVAILABLE', 'effects': 0}
         if (not payload_ok(c, o['payload'], d['original_context']) or not envelope_ok(c, d)
                 or p != o['payload'] or out['payload'] != o['payload']
@@ -365,7 +381,7 @@ def evaluate(c, op, d):
         return {'result': 'ADVANCE', 'effects': 0, 'through_sequence_id': high, 'last_event_id': last}
     if op == 'withdraw_writer':
         admitted = d['admitted_sequence']
-        if admitted is None or admitted > d['withdrawal_frontier']:
+        if not admission_present(admitted) or admitted > d['withdrawal_frontier']:
             return {'result': 'REFUSE', 'effects': 0}
         return evaluate(c, 'publish', d)
     raise AssertionError(op)
@@ -383,6 +399,33 @@ def patch(data, changes):
             parent[key] = copy.deepcopy(value)
 
 
+def semantic_input(c, fixture, case, active=()):
+    """Build one defect from a valid operation-specific parent.
+
+    Reserializing the candidate body and recomputing its derived identity is
+    observation maintenance, not another semantic mutation. Retained original
+    event/receipt custody is never rewritten by this fixture helper.
+    """
+    assert case['id'] not in active, 'Cyclic fixture parent'
+    if 'parent_case' in case:
+        parent_case = next(z for z in fixture['semantic_cases'] if z['id'] == case['parent_case'])
+        assert parent_case['operation'] == case['operation'], 'Wrong operation-specific parent'
+        data = semantic_input(c, fixture, parent_case, (*active, case['id']))
+    else:
+        data = copy.deepcopy(fixture['semantic_base'])
+    patch(data, case['changes'])
+    if case.get('refresh_envelope'):
+        data['envelope']['payload'] = copy.deepcopy(data['payload'])
+        data['envelope']['idempotency_key'] = identity(c, data['payload'], data.get('application_source'))
+    return data
+
+
+def semantic_parent(c, fixture, case):
+    parent = dict(case, changes={})
+    parent.pop('refresh_envelope', None)
+    return semantic_input(c, fixture, parent)
+
+
 def predicate_ok(c, target, data):
     """Exercise a real validation boundary without a caller's other guards.
 
@@ -398,6 +441,14 @@ def predicate_ok(c, target, data):
         return receipt_ok(data)
     if target == 'token_matches_storage':
         return token_matches_storage(data['selected_token'], data['storage_instance_id'])
+    if target == 'application_source_present':
+        return application_source_present(data['application_source'])
+    if target == 'original_output_present':
+        return original_output_present(data['application_source']['original_output'])
+    if target == 'outcome_present':
+        return outcome_present(data['outcome'])
+    if target == 'admission_present':
+        return admission_present(data['admitted_sequence'])
     raise AssertionError('Unknown guard boundary: ' + target)
 
 REQUIRED = {'valid-transition', 'invalid-transition', 'envelope-mismatch', 'original-retry', 'lost-ack',
@@ -500,6 +551,49 @@ def check_value_contracts():
             count += 1
     return count
 
+def guard_proof_input(proof, negative=True):
+    """Materialize the named guard proof without changing immutable originals."""
+    if proof.get('event_type'):
+        fixture = next(f for f in read('Plans/ds15_event_contract_fixtures.json') if f['event_type'] == proof['event_type'])
+        data = copy.deepcopy(fixture['semantic_base'])
+    else:
+        fixture = next(f for f in read('Plans/ds15_value_contract_fixtures.json') if f['schema_ref'] == proof['schema_ref'])
+        data = (copy.deepcopy(fixture['migration_base']) if proof['target'] == 'migrate'
+                else {'schema_ref': fixture['schema_ref'], 'value': copy.deepcopy(fixture['positive'])})
+    patch(data, proof.get('parent_changes', {}))
+    if negative:
+        assert len(proof['changes']) == 1, (proof['id'], 'not one source change')
+        patch(data, proof['changes'])
+        patch(data, proof.get('derived_changes', {}))
+    return data
+
+
+def guard_proof_result(proof, data):
+    target = proof['target']
+    if target == 'migrate':
+        return migrate(data['kind'], data['source'], data['evidence'])
+    if target == 'value_valid':
+        return value_valid(data['schema_ref'], data['value'])
+    c = next(c for c in read('Plans/ds15_event_contracts.json') if c['event_type'] == proof['event_type'])
+    if target in ('payload_ok', 'envelope_ok'):
+        return predicate_ok(c, target, data)
+    return evaluate(c, target, data)
+
+
+def proof_success(result):
+    return result is not None and result is not False and (not isinstance(result, dict)
+            or result.get('result') not in ('REFUSE', 'UNAVAILABLE', 'PENDING'))
+
+
+def check_guard_proofs():
+    proofs = read('Plans/ds15_guard_proof_fixtures.json')
+    assert len({p['id'] for p in proofs}) == len(proofs), 'Duplicate guard proof id'
+    for proof in proofs:
+        assert proof_success(guard_proof_result(proof, guard_proof_input(proof, False))), (proof['id'], 'invalid parent')
+        assert not proof_success(guard_proof_result(proof, guard_proof_input(proof))), (proof['id'], 'negative accepted')
+    return len(proofs)
+
+
 def main():
     shared = read('Plans/event_append_receipt_full_value_fixtures.json')
     assert commitment(shared['base_original_event'])['sha256'] == shared['commitment_sha256']
@@ -546,7 +640,11 @@ def main():
                     'application-wrong-server_id', 'application-wrong-original_operation_id',
                     'project-capture-original-retry'} <= set(ids)
         for case in f['semantic_cases']:
-            data = copy.deepcopy(f['semantic_base']); patch(data, case['changes'])
+            if case.get('single_defect'):
+                assert len(case['changes']) == 1, (name, case['id'], 'not one semantic change')
+                parent = semantic_parent(c, f, case)
+                assert evaluate(c, case['operation'], parent) == case['parent_expected'], (name, case['id'], 'invalid parent')
+            data = semantic_input(c, f, case)
             got = evaluate(c, case['operation'], data)
             assert got == case['expected'], (name, case['id'], got, case['expected'])
             semantic_count += 1
@@ -570,6 +668,7 @@ def main():
                 raise AssertionError((name, case['id'], 'unresolved schema reference accepted'))
             schema_count += 1
     value_cases = check_value_contracts() if (ROOT / 'Plans/ds15_value_contract_fixtures.json').exists() else 0
-    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'native_execution':'NOT_RUN'}))
+    guard_proofs = check_guard_proofs()
+    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'native_execution':'NOT_RUN'}))
 
 if __name__ == '__main__': main()
