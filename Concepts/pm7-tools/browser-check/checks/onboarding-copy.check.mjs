@@ -51,7 +51,7 @@ export default async function (t) {
   }
   await t.emulate({ reducedMotion: 'reduce' });
   const menuIds = ['lookFamily:basic','lookFamily:friendly','lookFamily:glass','lookFamily:retro','lookFamily:nier','lookMode:light','lookMode:dark','lookNierAdjust:nier-adjust'];
-  for (const [width,height] of [[1280,500],[740,768]]) {
+  for (const [width,height] of [[1280,500],[740,768],[860,900],[1024,900],[1280,900],[1390,900],[1920,1080]]) {
     await t.viewport(width,height);
     for (const family of ['basic','friendly','retro','glass','nier']) for (const themeMode of ['light','dark']) {
       await f.locator(`[data-o55-do="pickFamily"][data-arg="${family}"]`).last().click();
