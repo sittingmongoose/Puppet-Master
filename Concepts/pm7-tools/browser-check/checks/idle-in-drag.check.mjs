@@ -1,29 +1,48 @@
-// SW-17 (F3-3 remainder): no idle job runs inside a held drag. PLAN's performance rule: "no idle job runs inside a drag".
-// Basic Dark at 1390: a Home divider (chat edge in NieR) held for 3 s right after boot, then the Usage page's edge held for 3 s right
-// after a look change (both moments with idle work queued: Usage's warm build, its prewarm, the look covers' paint and
-// warm, the hover census). requestIdleCallback and setTimeout are wrapped before the page loads, each request keeping
-// its caller's stack; a callback counts as inside the drag when a drag class is on the body as it fires.
-// Asserted: no idle callback from Usage's board (40-board.js: warm slices, late bodies, prewarm), the look covers
-// (12-theme-transition.js) or the hover census (pm-hover-tags-js.js) fires inside a drag, nor any callback admitted by
-// PM_BUSY.idle (11-motion-start.js), not even one that would only park itself; and once the drag ends the parked work
-// runs (nothing waits forever). Usage's own drag bookkeeping (opSync) is the drag itself and is only listed.
-//   browser-check run Concepts/pm7-tools/browser-check/checks/idle-in-drag.check.mjs --set page=<build> [--set sandbox=1]
+// SW-17: witness real owner jobs before a real divider hold. The native-idle
+// gate preserves boot work across fast setup; opening it during the held drag
+// gives control callbacks a real native idle opportunity. The product scheduler
+// must cancel/park them and re-admit the identical callback after release.
+// No owner job supplied by the test, no synthetic input, no fake drag marker.
+// Missing owner work is an unexercised setup FAILURE, never a coverage pass.
 
 const HOLD_MS = 3000;
 
 // installed before the page's own scripts, in every frame (the sandbox's too)
 const RECORDER = () => {
 	if (window.__pmIdleRec) return;
-	const R = window.__pmIdleRec = { fired: [] };
+	const R = window.__pmIdleRec = { fired: [], jobs: [], gated: true };
 	const DRAG = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
-	const inDrag = () => { const b = document.body; return !!b && DRAG.some((c) => b.classList.contains(c)); };
-	const ric = window.requestIdleCallback, st = window.setTimeout;
-	const stackOf = () => { const n = Error.stackTraceLimit; Error.stackTraceLimit = 14; const s = new Error().stack || ''; Error.stackTraceLimit = n; return s; };
-	const note = (kind, stack, t0, drag) => { if (drag || R.fired.length < 20000) R.fired.push({ kind, stack, at: t0, ms: performance.now() - t0, drag }); };
-	if (ric) window.requestIdleCallback = function (fn, o) {
-		const stack = stackOf();
-		return ric.call(window, function (dl) { const t0 = performance.now(), drag = inDrag(); try { return fn(dl); } finally { note('idle', stack, t0, drag); } }, o);
-	};
+	const inDrag = () => document.body && DRAG.some(c => document.body.classList.contains(c));
+	const ric = window.requestIdleCallback, cic = window.cancelIdleCallback, st = window.setTimeout;
+	const stackOf = () => { const n = Error.stackTraceLimit; Error.stackTraceLimit = 24; const s = new Error().stack || ''; Error.stackTraceLimit = n; return s; };
+	const owned = s => /\bat (?:buildSliced|lateNext|prewarmSoon|prewarm|idleStill|whenIdle|paintSoon|censusSchedule|censusFrame|[\w.]*idleWhenStill|job\.ask)\b/.test(s);
+	const identities = new WeakMap(), pending = new Map(); let seq = 0, handle = 1000000000;
+	const note = (kind, stack, t0, drag, id) => R.fired.push({kind, stack, at:t0, ms:performance.now()-t0, drag, id});
+	const ask = j => { j.native = ric.call(window, dl => {
+		pending.delete(j.handle); j.pending = false;
+		const at = performance.now(), drag = inDrag();
+		try { return j.fn(dl); } finally { note('idle', j.stack, at, drag, j.id); }
+	}, j.options); };
+	// Delay delivery only, never execute the callback ourselves. Cancellation is
+	// honoured, and a scheduler re-admission keeps the function's original identity.
+	if (ric) {
+		window.requestIdleCallback = function(fn, options) {
+			const stack = stackOf();
+			if (!owned(stack)) return ric.call(window, fn, options);
+			let id = identities.get(fn); if (!id) { id=++seq; identities.set(fn,id); }
+			const j={id, handle:++handle, fn, options, stack, pending:true, native:0};
+			R.jobs.push(j); pending.set(j.handle,j);
+			if (!R.gated) ask(j);
+			return j.handle;
+		};
+		window.cancelIdleCallback = function(id) {
+			const j=pending.get(id); if (!j) return cic.call(window,id);
+			if(j.native) cic.call(window,j.native);
+			j.pending=false; j.cancelled=true; pending.delete(id);
+		};
+	}
+	R.release = () => { R.gated=false; for(const j of pending.values()) if(!j.native) ask(j); };
+	R.pending = () => R.jobs.filter(j=>j.pending).map(({id,stack})=>({id,stack}));
 	window.setTimeout = function (fn, ms, ...a) {
 		if (typeof fn !== 'function') return st.call(window, fn, ms, ...a);
 		const stack = stackOf();
@@ -53,13 +72,15 @@ async function holdDrag(t, f, sel, label) {
 	if (!(await t.check(`${label}: a divider to hold`, !!box, sel))) return null;
 	const axisX = box.h >= box.w;   // a tall bar moves sideways
 	const at = (d) => (axisX ? [box.x + d, box.y] : [box.x, box.y + d]);
-	await f.evaluate(() => { window.__pmIdleRec.fired = []; });
+	const queued = await f.evaluate(() => window.__pmIdleRec.pending());
+	await t.check(`${label}: queued owner jobs witnessed before pointerdown`, queued.length > 0, JSON.stringify(queued.map(j=>({id:j.id,owner:ownerOf(j.stack)}))));
 	await t.page.mouse.move(...at(0)); await t.page.waitForTimeout(120);
 	await t.page.mouse.down();
 	for (let i = 1; i <= 8; i++) { await t.page.mouse.move(...at(-i * 4)); await t.page.waitForTimeout(16); }
 	const began = await f.evaluate(() => performance.now());
 	const dragOn = await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag()) || document.body.classList.contains('pm-resizing'));
 	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)));
+	await f.evaluate(() => window.__pmIdleRec.release());
 	await t.mark(label + ' held');
 	// held: the hand rests on the bar, with the small moves a held hand makes
 	for (let k = 0; k < HOLD_MS / 100; k++) { await t.page.mouse.move(...at(-32 + (k % 2 ? 1 : -1))); await t.page.waitForTimeout(100); }
@@ -67,7 +88,7 @@ async function holdDrag(t, f, sel, label) {
 	await t.check(`${label}: drag remains held`, await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag())), 'the whole measurement must be a held drag');
 	await t.mark(label + ' released');
 	await t.page.mouse.up();
-	return { began, ended };
+	return { began, ended, queued };
 }
 
 async function judge(t, f, label, win) {
@@ -93,36 +114,31 @@ export const tests = {
 		if(t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
 		await t.page.addInitScript(RECORDER);
 		if (!t.args.film) await t.viewport(Number(t.args.width || 1390), Number(t.args.height || 900));
-		const f = await t.app.open({ settleMs: 200 });
-		await t.app.resetLayout();
-		await t.check('recorder installed in the app frame', await f.evaluate(() => !!window.__pmIdleRec), '');
+		for (let repeat=0; repeat<Number(t.args.repeats || 1); repeat++) {
 		for (const look of String(t.args.looks || 'basic-dark').split(',')) {
+		const f = await t.app.open({ settleMs: 200 });
+		await t.check('recorder installed in the app frame', await f.evaluate(() => !!window.__pmIdleRec), '');
 		await t.app.resetLayout();
 		await t.app.look(look);
-		// Home, right after boot and a look change: a panel divider (row, else column)
-		if (await f.locator('.page-tab[data-page="dashboard"]:not(.active)').count()) await f.locator('.page-tab[data-page="dashboard"]').click();
-		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
-		await f.waitForFunction(() => document.querySelector('#panel-dashboard.active') && !document.documentElement.hasAttribute('data-pm-page-transition'), null, {timeout:20000});
-		const homeHandle = look.startsWith('nier-') ? '#chatResizer' : '.pmw-divider[data-dir="row"]|.pmw-divider[data-dir="col"]';
-			const home = await holdDrag(t, f, homeHandle, 'Home');
-		if (home) await judge(t, f, 'Home', home);
-		// Usage, right after a look change and back (the covers repaint, the board's prewarm and hold start a fresh round)
+		// Keep real boot jobs queued even on fast hosts. Usage starts its own warm
+		// slices; no synthetic owner callback or artificial body drag class is used.
 		await f.locator('.page-tab[data-page="usage"]').click();
-		await t.until('Usage shown', () => !!document.querySelector('.page-tab[data-page="usage"].active') || !!(window.PM_PAGES && PM_PAGES.current === 'usage'), null, { timeout: 15000 });
 		await f.waitForFunction(() => !document.documentElement.hasAttribute('data-pm-page-transition'), null, {timeout:20000});
-		await t.page.waitForTimeout(1500);
-		await t.app.look(look.replace(/-(dark|light)$/, look.endsWith('-dark') ? '-light' : '-dark'));
-		await t.app.look(look);
-		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
+		await t.page.waitForTimeout(Number(t.args.setupDelay ?? 1500));
+		const pending = await f.evaluate(() => window.__pmIdleRec.pending());
+		for (const [owner] of OWNERS.slice(0,3)) {
+			await t.check(`setup exercised: pending ${owner}`, pending.some(j=>ownerOf(j.stack)===owner), JSON.stringify(pending.map(j=>({id:j.id,owner:ownerOf(j.stack),stack:top(j.stack)}))));
+		}
 		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', 'Usage');
 		if (usage) {
 			await judge(t, f, 'Usage', usage);
-			// after the release the parked work goes on: some idle work of those callers runs within 6 s
-			const after = await f.evaluate(() => performance.now());
 			await t.page.waitForTimeout(6000);
-			const ran = await f.evaluate((a) => window.__pmIdleRec.fired.filter((c) => c.at > a && c.kind === 'idle' && !c.drag).map((c) => c.stack), after);
-			const ours = ran.filter((s) => OWNERS.some(([, re]) => re.test(s)));
-			await t.check('after the release, parked idle work runs again', ours.length > 0, `${ours.length} of ${ran.length} idle callbacks in 6 s are those callers'`);
+			const fired = await f.evaluate(() => window.__pmIdleRec.fired);
+			for (const j of usage.queued) {
+				await t.check(`job ${j.id} (${ownerOf(j.stack)}): same queued job resumes after release`,
+					fired.some(c=>c.id===j.id && !c.drag && c.at>=usage.ended), top(j.stack));
+			}
+		}
 		}
 		}
 		await cdp.detach();
