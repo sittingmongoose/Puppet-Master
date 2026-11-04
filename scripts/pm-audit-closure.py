@@ -996,6 +996,10 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
     scope_kind = "module"
     node: ast.AST | None = None
     for part in qualname.split("."):
+        # Inside a class or function body, a global/nonlocal declaration of the name moves its
+        # definition out of that body, so the component would not name what the source runs.
+        if scope_kind in ("class", "function") and (declares(scope, part, ast.Global) or declares(scope, part, ast.Nonlocal)):
+            raise AnchorError(f"{ref}: {part!r} is declared global or nonlocal in that scope, so its definition does not belong to it")
         hits = bindings(scope, part, scope_kind)
         if len(hits) != 1:
             raise AnchorError(f"{ref}: {part!r} is bound {len(hits)} times in that scope (control-flow blocks included); expected exactly 1")
@@ -4063,7 +4067,14 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         # V1 r5 regressions.
         # B1: a newline in a receipt path cannot misframe git's batch lookups.
         newline_path = "Plans/.audits/reaudit-fixture/reviews/x.jsonl\nPlans/Fixture.md"
-        check("receipt_path_with_newline_refused", ReceiptLedger(tmp).check(newline_path, git("rev-parse", "HEAD"))[1] is not None)
+        before_newline = git("rev-parse", "HEAD")
+        (tmp / newline_path).parent.mkdir(parents=True, exist_ok=True)
+        (tmp / newline_path).write_text('{"line": 1}\n', encoding="utf-8")  # a real, committed newline-named receipt
+        commit_all()
+        newline_problem = ReceiptLedger(tmp).check(newline_path, before_newline)[1] or ""
+        check("receipt_path_with_newline_refused", "not a safe repository-relative path" in newline_problem, newline_problem)
+        shutil.rmtree(tmp / "Plans/.audits/reaudit-fixture/reviews/x.jsonl\nPlans")
+        commit_all()
         check("anchor_path_with_control_character_refused", anchor_ref_problem("Plans/Fix\nture.md#unit=FIX-001") is not None)
         row = append_with(mutate=set_review("sol", evidence_path="Plans/.audits/reaudit-fixture/reviews/sol\nx.jsonl"))
         report = validate_rows([legacy_row(), row])
@@ -4082,6 +4093,15 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         ):
             (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
             check(name, not resolves(f"scripts/bind.py#pydef={ref}"))
+        for name, source, ref in (
+            ("pydef_class_member_declared_global_fails", "class C:\n    global f\n    def f():\n        return 1\n", "C.f"),
+            ("pydef_class_member_declared_nonlocal_fails", "def outer():\n    f = None\n    class C:\n        nonlocal f\n        def f():\n            return 1\n    return C, f\n", "outer.C.f"),
+            ("pydef_function_member_declared_global_fails", "def outer():\n    global f\n    def f():\n        return 1\n", "outer.f"),
+        ):
+            (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
+            check(name, not resolves(f"scripts/bind.py#pydef={ref}"))
+        (tmp / "scripts/bind.py").write_text("class C:\n    global g\n    def f():\n        return 1\n", encoding="utf-8")
+        check("pydef_class_member_other_global_ignored", resolves("scripts/bind.py#pydef=C.f"))
         for name, source in (
             ("pydef_class_local_binding_ignored", "def f():\n    return 1\nclass C:\n    f = 2\n"),
             ("pydef_class_global_of_other_name_ignored", "def f():\n    return 1\nclass C:\n    global g\n    f = 2\n"),
