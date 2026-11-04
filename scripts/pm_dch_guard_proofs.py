@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 from unittest.mock import patch
 from jsonschema import Draft202012Validator, FormatChecker, validators
+from pm_dch_schema_guard_proofs import normalize, aliases, generate, SchemaContractDrift
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -201,6 +202,7 @@ class Proof:
         self.m.Draft202012Validator=self.validator
         self.envelope=self.validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()))
         self.cases=corpus(self.m)
+        self.exploration=generate(self,Case)
         original_resolve=self.m.resolve_body
         def materialize(record,source=None,storage_instance=self.m.STORAGE_INSTANCE):
             key='transport: original reference materialization'
@@ -232,6 +234,8 @@ class Proof:
             "checkpoint_joins: value['projector_id'] == row['domain_projector']":'checkpoint: projector identity',
         }
         if key in function_groups:return function_groups[key]
+        if key.startswith('schema: ') and '/properties/scope/required/scope_kind' in key:
+            return key.replace('/required/scope_kind','/properties/scope_kind/edition_tag')
         if key.startswith('schema: '):
             if 'pm.storage_value.dch_' in key and '/history/' not in key:
                 if key.endswith('/properties/consumer_id/const'):return 'checkpoint: consumer identity'
@@ -244,11 +248,14 @@ class Proof:
                 if '/properties/exit_code/' in key and key.endswith('/not'):return 'test: failed exit is nonzero'
                 if '/properties/test_outcome/enum' in key:return 'test: supported failure outcome'
                 if '/properties/exit_code/' in key and key.endswith('/type'):return 'test: exit code type'
-                if '/allOf/0/else/properties/exit_code/const' in key:return 'test: nonexit has no exit code'
-                if '/allOf/1/then/properties/error_ref/type' in key:return 'test: process error requires evidence'
-                if '/allOf/0/then/properties/error_ref/const' in key:return 'test: ordinary exit has no process error'
+                if '/allOf/0/' in key and '/else/properties/exit_code/const' in key:return 'test: nonexit has no exit code'
+                if '/allOf/1/' in key and key.endswith('/properties/error_ref/type'):return 'test: process error requires evidence'
+                if '/allOf/0/' in key and '/then/properties/error_ref/const' in key:return 'test: ordinary exit has no process error'
             key=re.sub(r'#/(?:\$defs/(?:project|application)/)?additionalProperties$', '#/closed_payload', key)
-        return self.aliases.get(key,key)
+        seen=set()
+        while key in self.aliases and key not in seen:
+            seen.add(key);key=self.aliases[key]
+        return key
 
     def instrument(self):
         tree=ast.parse((ROOT/'scripts/pm_dch_events.py').read_text())
@@ -285,7 +292,7 @@ class Proof:
         signature=json.dumps(schema,sort_keys=True)
         if signature in self.adapters:return self.adapters[signature]
         if signature not in self.schemas:
-            canonical=copy.deepcopy(schema);doc=canonical.get('$id','anonymous:'+hashlib.sha256(signature.encode()).hexdigest())
+            canonical=normalize(copy.deepcopy(schema));doc=canonical.get('$id','anonymous:'+hashlib.sha256(signature.encode()).hexdigest())
             def walk(v,path=''):
                 if isinstance(v,dict):
                     self.schema_paths[id(v)]=(doc,path)
@@ -293,6 +300,7 @@ class Proof:
                         for keyword in ['pattern','minLength','maxLength']:
                             self.aliases['schema: '+doc+'#'+path+'/'+keyword]='schema: '+doc+'#'+path+'/identifier_shape'
                         if 'format' in v:self.aliases['schema: '+doc+'#'+path+'/format']='schema: '+doc+'#'+path+'/identifier_shape'
+                    aliases(self,doc,path,v)
                     for k,w in v.items():walk(w,path+'/'+k)
                 elif isinstance(v,list):
                     for k,w in enumerate(v):walk(w,path+'/'+str(k))
@@ -313,7 +321,7 @@ class Proof:
                     # Failed non-selected editions are ordinary oneOf probing,
                     # not guards on this instance's selected edition.
                     edition=getattr(proof,'edition',None)
-                    relevant=not (('/$defs/project' in path and edition=='application') or ('/$defs/application' in path and edition=='project'))
+                    relevant=True
                     if relevant:
                         pass
                     error._dch_key=key;error._dch_relevant=relevant
@@ -325,7 +333,7 @@ class Proof:
             def is_valid(self,value):
                 old=getattr(proof,'edition',None)
                 if isinstance(value,dict):
-                    if isinstance(value.get('scope'),dict):proof.edition=value['scope']['scope_kind']
+                    if isinstance(value.get('scope'),dict) and value['scope'].get('scope_kind') in ['project','application']:proof.edition=value['scope']['scope_kind']
                     elif '.project.v1' in value.get('schema_id',''):proof.edition='project'
                     elif '.application.v1' in value.get('schema_id',''):proof.edition='application'
                     elif proof.current_case and proof.current_case.split('/')[1] in ['project','application']:proof.edition=proof.current_case.split('/')[1]
@@ -338,12 +346,41 @@ class Proof:
                             key=error._dch_key
                             proof.seen.setdefault(key,{'kind':'schema'})
                             proof.failures.add(key)
+                    def products(groups):
+                        result=[set()]
+                        for alternatives in groups:
+                            result=[left|right for left in result for right in alternatives]
+                        return result
+                    def requirements(error):
+                        if error.context:
+                            by_branch={}
+                            for child in error.context:
+                                branch=child.schema_path[0] if child.schema_path else 0
+                                by_branch.setdefault(branch,[]).append(requirements(child))
+                            return [required for group in by_branch.values() for required in products(group)]
+                        return [{getattr(error,'_dch_key','__structural_schema_failure__')}]
+                    proof.last_schema_requirements=products([requirements(error) for error in errors])
                     for error in errors:record(error)
                     return not errors
                 finally:proof.edition=old
         adapter=Adapter();self.adapters[signature]=adapter;return adapter
     def evaluate(self,c):
         m=self.m;a=c.args;s=c.surface;self.failures=set();self.current_case=c.name
+        if s=='schema_coverage':
+            from pm_dch_schema_guard_proofs import raw_contract
+            key='preflight: schema guard vocabulary covered'
+            self.seen.setdefault(key,{'kind':'preflight'})
+            try:raw_contract(a[0]);valid=True
+            except SchemaContractDrift:valid=False
+            if not valid:self.failures.add(key)
+            return True if key in self.removed else valid
+        if s=='schema_contract':
+            from pm_dch_schema_guard_proofs import contract_drift
+            key='preflight: frozen schema guard contract'
+            self.seen.setdefault(key,{'kind':'preflight'})
+            valid=not contract_drift(*a)
+            if not valid:self.failures.add(key)
+            return True if key in self.removed else valid
         if s in ['references','parity']:
             key='schema: complete reference graph' if s=='references' else 'checkpoint: selected/registered schema parity'
             self.seen.setdefault(key,{'kind':'preflight'})
@@ -392,17 +429,19 @@ class Proof:
         if s=='checkpoint':return self.validator(a[4]).is_valid(a[0]) and m.checkpoint_joins(*a[:4])
         raise ValueError(s)
     def run(self,out):
-        baseline=[];traces={}
+        baseline=[];traces={};schema_blocks={}
         for c in self.cases:
             result=self.evaluate(c)
             if result!=c.expected:baseline.append({'case':c.name,'expected':c.expected,'actual':result})
             traces[c.name]=sorted(self.failures)
+            if c.surface=='payload':schema_blocks[c.name]=self.last_schema_requirements
         if baseline:raise AssertionError(baseline)
-        keys=list(self.seen);rows=[];coverage={c.name:[] for c in self.cases if (c.expected is False or c.expected in ['conflict','dedupe_unavailable','replay_only_not_appendable','invalid_append_policy'])}
+        print(json.dumps({'phase':'baseline','cases':len(self.cases),'schema_inventory':self.exploration}),flush=True)
+        keys=list(dict.fromkeys([*self.seen,*sorted(self.declared_inventory)]));rows=[];coverage={c.name:[] for c in self.cases if (c.expected is False or c.expected in ['conflict','dedupe_unavailable','replay_only_not_appendable','invalid_append_policy'])}
         for key in keys:
             # Only cases that reached this guard can possibly change. Replaying
             # the others yields their cached baseline (all other guards restored).
-            affected=[c for c in self.cases if key in traces[c.name]]
+            affected=[c for c in self.cases if key in traces[c.name] and (c.name not in schema_blocks or any(required<={key} for required in schema_blocks[c.name]))]
             self.removed={key};flips=[];errors=[]
             for c in affected:
                 try:
@@ -412,12 +451,27 @@ class Proof:
             self.removed=set()
             for name in flips:
                 if name in coverage:coverage[name].append(key)
-            rows.append({'guard':key,**self.seen[key],'negatives_that_flip':flips,
+            rows.append({'guard':key,**self.seen.get(key,{'kind':'declared schema'}),'negatives_that_flip':flips,
                          'other_negatives_stay_rejected':len(coverage)-sum(name in coverage for name in flips),
                          'exceptions':errors})
+        # Candidate generation is exploration. Select only candidates which
+        # actually prove a declared guard; committed fixture cases are mandatory.
+        mandatory={name for name in coverage if name not in self.exploration_names}
+        selected=set(mandatory)
+        for row in rows:
+            if not any(name in selected for name in row['negatives_that_flip']):
+                choices=[name for name in row['negatives_that_flip'] if name in self.exploration_names]
+                if choices:selected.add(choices[0])
+        coverage={name:guards for name,guards in coverage.items() if name in selected}
+        for row in rows:
+            row['negatives_that_flip']=[name for name in row['negatives_that_flip'] if name in selected]
+            row['other_negatives_stay_rejected']=len(coverage)-len(row['negatives_that_flip'])
+        retained={c.name for c in self.cases if c.name not in self.exploration_names or c.name in selected}
+        traces={name:trace for name,trace in traces.items() if name in retained}
         report={'method':'Direct acceptance corpus; real function AST accepting-value substitutions and exact schema-keyword variants. Equivalent copies of one rule are grouped; unrelated rules remain enforced. Unreached guards reuse the deterministic baseline; every reached failing guard is reevaluated. All guards are restored per row.',
                 'status':'pass' if all(coverage.values()) and all(r['negatives_that_flip'] for r in rows) and not any(r['exceptions'] for r in rows) else 'fail',
-                'cases':len(self.cases),'negative_cases':len(coverage),'guards':len(rows),
+                'cases':len(retained),'negative_cases':len(coverage),'guards':len(rows),'schema_inventory':self.exploration,
+                'discarded_exploration_candidates':len(self.exploration_names-selected),
                 'unproved_negatives':[n for n,gs in coverage.items() if not gs],
                 'guards_without_flips':[r['guard'] for r in rows if not r['negatives_that_flip']],
                 'table':rows,'negative_guards':coverage,'baseline_traces':traces}
@@ -427,8 +481,18 @@ class Proof:
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);args=p.parse_args()
-    return Proof().run(args.out)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--write-schema-fixtures',action='store_true',help='Explicitly rebuild reviewed schema oracle data; never use to excuse a regression.')
+    args=p.parse_args()
+    import pm_dch_schema_guard_proofs as schemas
+    schemas.REBUILD=args.write_schema_fixtures
+    try:
+        proof=Proof();code=proof.run(args.out)
+        if args.write_schema_fixtures and not code:schemas.write_fixtures(proof,json.loads(args.out.read_text()))
+        return code
+    except SchemaContractDrift as exc:
+        report={'status':'fail','schema_guard_fixture_mismatch':exc.details}
+        args.out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report));return 1
 
 
 if __name__=='__main__':raise SystemExit(main())
