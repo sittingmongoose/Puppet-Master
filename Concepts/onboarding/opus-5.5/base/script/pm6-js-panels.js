@@ -883,11 +883,12 @@
         try { popInput.focus(); popInput.select(); } catch (e0) {}
       }
     }
-    /* focus that was inside the pop goes back to the button that opened it (SW-07: Escape left it on the page body), or to
-       the inline field when a wider bar has put the button away; as the project menu's close does (projectMenuClose) */
+    /* Escape and clicks on nonfocusable page areas return to the opener. A click on
+       another control keeps its focus; a wider bar returns to the inline field. */
     function closePop() {
       if (!popOpen && !window.PM6_SPROUT.isOpen(pop)) return;
-      var had = pop.contains(document.activeElement);
+      var active = document.activeElement;
+      var had = pop.contains(active) || !active || active === document.body || active === document.documentElement;
       popOpen = false;
       btn.setAttribute('aria-expanded', 'false');
       if (popInput && inline) inline.value = popInput.value || inline.value;

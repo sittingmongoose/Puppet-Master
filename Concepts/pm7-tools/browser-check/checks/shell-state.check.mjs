@@ -67,25 +67,32 @@ export const tests = {
   await t.check('tastebook pick plays NieR reboot cover',await f.locator('#o55np-reboot').isVisible());
   await t.until('tastebook returns to NieR',()=>PMLogo.look()==='nier-dark');
  },
- async 'SW07 Escape restores search trigger'(t) {
-  const f = await t.app.open();
-  const looks=['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark']);
-  for(const look of looks){
-   await t.app.look(look); await f.locator('#o55np-reboot').waitFor({state:'hidden'}); await t.viewport(900,900); await t.settle();
-   await t.until('search trigger is reachable',()=>{const e=document.getElementById('tbSearchBtn'),r=e.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return !e.hidden && hit && (hit===e||e.contains(hit));});
-   await f.locator('#tbSearchBtn').focus(); await t.page.keyboard.press('Enter');
-   await f.waitForSelector('#tbSearchPopInput', {state:'visible'});
-   await t.page.keyboard.press('Escape'); await t.settle();
-   await t.equal(look+' focus returns to search button', () => f.evaluate(() => document.activeElement.id), 'tbSearchBtn');
+ async 'SW07 search dismissal preserves useful focus'(t) {
+  const f=await t.app.open();
+  for(const look of ['basic','friendly','retro','glass','nier'].flatMap(x=>[x+'-light',x+'-dark'])){
+   await t.app.look(look); await f.locator('#o55np-reboot').waitFor({state:'hidden'});
+   for(const [w,h] of [[740,900],[860,900],[900,900],[1024,900],[1280,900],[1280,500],[1390,900],[1920,900]]){
+    await t.viewport(w,h); await t.settle();
+    if(!await f.locator('#tbSearchBtn').isVisible()) {await t.check(`${look} ${w}x${h} inline`,await f.locator('#tbSearchInput').isVisible());continue;}
+    for(const mode of ['Escape','outside margin','outside control']){
+     await f.locator('#tbSearchBtn').focus();await t.page.keyboard.press('Enter');
+     await f.waitForSelector('#tbSearchPopInput',{state:'visible'});
+     let target='tbSearchBtn';
+     if(mode==='Escape') await t.page.keyboard.press('Escape');
+     else if(mode==='outside margin') {
+      // Real pointer click on a nonfocusable page margin, including opaque iframe coordinates.
+      await f.locator('body').click({position:{x:w-4,y:h-4}});
+     } else {
+      const control=f.locator('#themeMenuWrap button:visible').first();
+      target=await control.getAttribute('id'); await control.click();
+     }
+     await t.settle();
+     await t.equal(`${look} ${w}x${h} ${mode} focus`,()=>f.evaluate(()=>document.activeElement.id),target);
+     await t.check(`${look} ${w}x${h} ${mode} closed`,await f.evaluate(()=>!PM_TB_SEARCH.isOpen()));
+     await t.page.keyboard.press('Escape');
+    }
+   }
   }
-  for(const width of [740,860,1024,1280,1390,1920]){
-   await t.viewport(width, width===1280?500:900); await t.settle();
-   if(await f.locator('#tbSearchBtn').isVisible()){
-    await f.locator('#tbSearchBtn').focus();await t.page.keyboard.press('Enter');await t.page.keyboard.press('Escape');await t.settle();
-    await t.equal(width+' focus returns to search button',()=>f.evaluate(()=>document.activeElement.id),'tbSearchBtn');
-   }else await t.check(width+' inline search visible',await f.locator('#tbSearchInput').isVisible());
-  }
-
  },
  async 'SW08 Studio opens tip-bearing owner screens'(t) {
   let f;
@@ -102,7 +109,13 @@ export const tests = {
     await t.equal(`${look} ${id} keeps look`,()=>f.evaluate(()=>PMLogo.look()),look);
     await t.check(`${look} ${id} pane has content`,await f.locator('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').innerText().then(x=>x.trim().length>0));
     const note=f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"]:visible').first();
-    if(await note.count()){await note.click();await t.check(`${look} ${id} help opens`,await f.evaluate(()=>!!O55.S.tip));}
+    // A deliberate negative fixture proves a missing control cannot silently pass.
+    if(t.args.helpSelftest==='missing') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="tip"]').evaluateAll(es=>es.forEach(e=>e.remove()));
+    await t.check(`${look} ${id} help control exists`,await note.count()>0);
+    if(!await note.count()) throw new Error(`${look} ${id}: required help control missing`);
+    await note.click();
+    await t.visible('#pm7ob-explainer',`${look} ${id} help note visible`);
+    await t.check(`${look} ${id} help note has content`,(await f.locator('#pm7ob-explainer').innerText()).trim().length>0);
 
     await f.evaluate(() => O55.ui.close());
    }
