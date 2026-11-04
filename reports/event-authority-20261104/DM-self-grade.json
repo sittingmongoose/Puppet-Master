@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-DM-FIX2-SELF-20261104",
+  "assessment_id": "EA-DM-APPLY-DL408-SELF-20261104",
   "assessment_kind": "branch_local_self_grade",
   "assessed_tree": {
     "branch": "plans/ea-w2-small-owners-20261104",
     "base": "be4766513ff71776346fc73b84f2542990f955af",
-    "method": "Re-read all ten families against this canonical fix head after the final permitted review cycle. Every standing check is audited across the eight prepared families; both Settings families remain explicit Jared holds with no current-writer contract or event oracles. Normative self-grade only, no independent review or native result inferred.",
-    "canonical_head": "6eb5a0ba62d6268406851a50e2d4243a38d3fdd4",
+    "method": "DL-408/card 2d A applied to both retired Settings rows; all eight standing checks rerun across all ten rows. No native or admission claim. Existing checkpoint mismatch gap exposed and recorded without out-of-scope contract changes.",
+    "canonical_head": "6757da332b26353112ee795c9bdeaeb00bfb3217",
     "reviewed_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7"
   },
   "rubric": {
@@ -70,9 +70,9 @@
             {
               "path": "Plans/Formatters_System.md",
               "unit": "FS-075",
-              "line_start": 1117,
-              "line_end": 1117,
-              "quote": "format.applied 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 1109,
+              "line_end": 1109,
+              "quote": "format.applied 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
@@ -263,9 +263,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/Formatters_System.md",
@@ -280,8 +280,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -344,12 +344,13 @@
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0"
@@ -396,9 +397,9 @@
             {
               "path": "Plans/Source_Control_System.md",
               "unit": "SCS-085",
-              "line_start": 2150,
-              "line_end": 2150,
-              "quote": "git.clone.completed 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 2142,
+              "line_end": 2142,
+              "quote": "git.clone.completed 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
@@ -589,9 +590,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/Source_Control_System.md",
@@ -606,8 +607,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -670,12 +671,13 @@
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0"
@@ -722,9 +724,9 @@
             {
               "path": "Plans/LSPSupport.md",
               "unit": "LSPS-173",
-              "line_start": 7256,
-              "line_end": 7256,
-              "quote": "lsp.server.lifecycle_changed 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "lsp.server.lifecycle_changed 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
@@ -915,9 +917,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/LSPSupport.md",
@@ -932,8 +934,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -996,12 +998,13 @@
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0"
@@ -1048,9 +1051,9 @@
             {
               "path": "Plans/Models_System.md",
               "unit": "MS-199",
-              "line_start": 9915,
-              "line_end": 9915,
-              "quote": "model.catalog_refreshed 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 9907,
+              "line_end": 9907,
+              "quote": "model.catalog_refreshed 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
@@ -1249,9 +1252,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/Models_System.md",
@@ -1266,8 +1269,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1338,12 +1341,13 @@
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0"
@@ -1390,9 +1394,9 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-072",
-              "line_start": 992,
-              "line_end": 992,
-              "quote": "project.added 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 984,
+              "line_end": 984,
+              "quote": "project.added 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
@@ -1583,9 +1587,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -1600,8 +1604,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1664,12 +1668,13 @@
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.project.added@1.0.0"
@@ -1716,9 +1721,9 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1043,
-              "line_end": 1043,
-              "quote": "project.created 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 1035,
+              "line_end": 1035,
+              "quote": "project.created 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
@@ -1737,8 +1742,8 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 996,
+              "line_end": 996,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
               "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
@@ -1845,8 +1850,8 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1053,
-              "line_end": 1053,
+              "line_start": 1002,
+              "line_end": 1002,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
               "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
@@ -1909,9 +1914,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -1926,8 +1931,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1937,8 +1942,8 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1054,
-              "line_end": 1054,
+              "line_start": 1003,
+              "line_end": 1003,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
               "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
@@ -1990,12 +1995,13 @@
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.project.created@1.0.0"
@@ -2004,8 +2010,8 @@
       "event_type": "settings.theme.updated",
       "family_id": null,
       "family_revision": null,
-      "outcome": "blocked_on_Jared",
-      "disposition": "UNDISPOSITIONED",
+      "outcome": "retired",
+      "disposition": "RETIRED_AS_SUPERSEDED",
       "current_owner_units": [
         "SSYS-060",
         "DL-041",
@@ -2015,369 +2021,512 @@
       "cells": {
         "membership_version": {
           "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "representation": "retired_as_superseded",
+          "finding": "Absent membership retained; no registry edit or admission.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "PASS",
+          "representation": "retired_as_superseded",
+          "finding": "DL-408 retires this exact name as superseded by settings.layer.changed; no current writes. Older dedicated DRY-guard records stay readable without a payload alias or rewrite.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "retention": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "PASS",
+          "representation": "retired_as_superseded",
+          "finding": "DL-408 retires this exact name as superseded by settings.layer.changed; no current writes. Older dedicated DRY-guard records stay readable without a payload alias or rewrite.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No authored exact-family event oracle exists. Naming/owner holds are not event cases; source-closure tests earn no event-oracle credit.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "Added GUI command families",
-              "line_start": 8555,
-              "line_end": 8555,
-              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
-              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS section 3.6",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
             },
             {
-              "path": "Plans/Settings_System.md",
-              "unit": "SSYS current writer boundary",
-              "line_start": 2310,
-              "line_end": 2310,
-              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged.",
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
           "branch_prior": {
-            "source": "DM-self-grade.json@247e523f69",
-            "status": "PARTIAL"
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
           }
         }
       },
-      "remaining_gaps": [
-        "PRODUCT: Does the retained cmd.theme.* exact-event requirement survive as a distinct settings.theme.updated family beside the current atomic theme-pair Settings transactions and admitted settings.layer.changed, or should the old requirement receive an explicit historical-only/alias disposition? No alias or duplicate emission is inferred."
+      "remaining_gaps": [],
+      "static_checks_seen": [
+        "DL-408 retirement/owner consistency",
+        "all-ten standing audit; retired writer checks not applicable"
       ],
-      "static_checks_seen": [],
-      "notes": "No new contract, alias, admission or owner answer authored. retention_policy_ref=PENDING_RETENTION_DECISION."
+      "notes": "No current writer, schema, retention class or event oracle is authored for these retired names. Historical dedicated DRY-guard records remain readable. The DRY guard remains disabled pending exact owner key/writer proof. Existing successor owner-adoption requirements stand.",
+      "successor": "settings.layer.changed",
+      "decision_ref": "DL-408"
     },
     {
       "event_type": "settings.updated",
       "family_id": null,
       "family_revision": null,
-      "outcome": "blocked_on_Jared",
-      "disposition": "UNDISPOSITIONED",
+      "outcome": "retired",
+      "disposition": "RETIRED_AS_SUPERSEDED",
       "current_owner_units": [
         "SSYS-060",
         "DL-041",
@@ -2387,362 +2536,505 @@
       "cells": {
         "membership_version": {
           "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "representation": "retired_as_superseded",
+          "finding": "Absent membership retained; no registry edit or admission.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "PASS",
+          "representation": "retired_as_superseded",
+          "finding": "DL-408 retires this exact name as superseded by settings.layer.changed; no current writes. Older dedicated DRY-guard records stay readable without a payload alias or rewrite.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "retention": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "PARTIAL"
+          }
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "exact_normative_owner",
-          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "status": "PASS",
+          "representation": "retired_as_superseded",
+          "finding": "DL-408 retires this exact name as superseded by settings.layer.changed; no current writes. Older dedicated DRY-guard records stay readable without a payload alias or rewrite.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
+          "branch_prior": {
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
+          }
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "No authored exact-family event oracle exists. Naming/owner holds are not event cases; source-closure tests earn no event-oracle credit.",
+          "status": "NOT_APPLICABLE",
+          "representation": "retired_as_superseded",
+          "finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
-              "unit": "SSYS default guard boundary",
+              "unit": "SSYS section 3.6",
               "line_start": 2312,
               "line_end": 2312,
-              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
-              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+              "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
+              "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "UCC theme command rows",
+              "line_start": 8554,
+              "line_end": 8554,
+              "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+              "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
               "line_start": 28944,
               "line_end": 28944,
-              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
+              "file_sha256": "562e925ba5cbee0918835b73ab96c29effc59dc97fab70b8983f8acecf9a5a4c"
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged.",
+          "change": "updated",
+          "change_reason": "Jared approved card 2d A, recorded as DL-408; replaces DL-041 naming only.",
           "branch_prior": {
-            "source": "DM-self-grade.json@247e523f69",
-            "status": "PARTIAL"
+            "source": "DM-self-grade.json@c9d623f793",
+            "status": "ABSENT"
           }
         }
       },
-      "remaining_gaps": [
-        "PRODUCT: How should the retained settings.updated obligations (including memory auto-save and the DL-041 default guard) relate to current settings.layer.changed, given SSYS-060/SP-348 leave settings.updated owner_contract_missing? DL-041 already decides the spelling; this asks only for resolution of the competing owner obligations, not a new naming answer. The guard stays disabled until its exact key-to-valid-setting-ID and writer mapping is established."
+      "remaining_gaps": [],
+      "static_checks_seen": [
+        "DL-408 retirement/owner consistency",
+        "all-ten standing audit; retired writer checks not applicable"
       ],
-      "static_checks_seen": [],
-      "notes": "No new contract, alias, admission or owner answer authored. retention_policy_ref=PENDING_RETENTION_DECISION."
+      "notes": "No current writer, schema, retention class or event oracle is authored for these retired names. Historical dedicated DRY-guard records remain readable. The DRY guard remains disabled pending exact owner key/writer proof. Existing successor owner-adoption requirements stand.",
+      "successor": "settings.layer.changed",
+      "decision_ref": "DL-408"
     },
     {
       "event_type": "subagent.context_rehydrated",
@@ -2786,9 +3078,9 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-151",
-              "line_start": 6050,
-              "line_end": 6050,
-              "quote": "subagent.context_rehydrated 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 6042,
+              "line_end": 6042,
+              "quote": "subagent.context_rehydrated 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
@@ -2987,9 +3279,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3004,8 +3296,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3075,12 +3367,13 @@
         }
       },
       "remaining_gaps": [
-        "Exact membership intentionally ABSENT pending later independent review and admission."
+        "Exact membership intentionally ABSENT pending later independent review and admission.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0"
@@ -3127,9 +3420,9 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6101,
-              "line_end": 6101,
-              "quote": "subagent.context_shrunk 1.0.0 — newly authored owner contract under DL-045.",
+              "line_start": 6093,
+              "line_end": 6093,
+              "quote": "subagent.context_shrunk 1.0.0 \u2014 newly authored owner contract under DL-045.",
               "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
@@ -3148,8 +3441,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6105,
-              "line_end": 6105,
+              "line_start": 6054,
+              "line_end": 6054,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
               "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
@@ -3214,8 +3507,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6106,
-              "line_end": 6106,
+              "line_start": 6055,
+              "line_end": 6055,
               "quote": "application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)} exactly under CV-366.",
               "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
@@ -3264,8 +3557,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6111,
-              "line_end": 6111,
+              "line_start": 6060,
+              "line_end": 6060,
               "quote": "Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING marker no",
               "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
@@ -3328,9 +3621,9 @@
           "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress.",
+          "finding": "Exact named operating reader adopts SP-278, atomic complete global frontier CAS, live ten-field token and nine-field durable token; no own persisted progress. Standing check 7 exposes a pre-existing model gap: rebuilding accepts a checkpoint with mismatched storage_instance_id. Positive identities match; no native proof. Not repaired in the 2d-only task.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3345,8 +3638,8 @@
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
+          "change": "downgraded",
+          "change_reason": "Expanded standing-check probe; checker and fixture bytes unchanged from c9d623f793."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3356,8 +3649,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6112,
-              "line_end": 6112,
+              "line_start": 6061,
+              "line_end": 6061,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
               "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
@@ -3401,8 +3694,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6107,
-              "line_end": 6107,
+              "line_start": 6056,
+              "line_end": 6056,
               "quote": "At most 16 KiB stays inline with payload_ref=null. Above 16 KiB, SP-337 owns the pack bytes/index:",
               "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
@@ -3416,12 +3709,13 @@
         }
       },
       "remaining_gaps": [
-        "Exact membership intentionally ABSENT pending later independent review and admission."
+        "Exact membership intentionally ABSENT pending later independent review and admission.",
+        "TECHNICAL: pre-existing checkpoint Storage identity mismatch acceptance in rebuild_publication; see apply/standing-extra.json and baseline proof; outside DL-408-only scope."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — top-level status pass"
+        "python3 scripts/pm-small-owner-events.py \u2014 3411 static assertions across eight independently authored families; full checker PASS at 9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json \u2014 pass",
+        "python3 scripts/pm-plan-index.py validate \u2014 top-level status pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.context.shrunk@1.0.0"
@@ -3429,13 +3723,15 @@
   ],
   "native_execution": "NOT_RUN",
   "status_counts": {
-    "ABSENT": 20,
-    "PASS": 82,
-    "PARTIAL": 18
+    "ABSENT": 10,
+    "PASS": 78,
+    "PARTIAL": 14,
+    "NOT_APPLICABLE": 18
   },
   "review_round": 2,
   "prior_review": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
     "sha256": "2319f9b7bf0c21b8ea1db65cecf659053e0b1768bcad8c3cd03516d3a3dd549a"
-  }
+  },
+  "settings_decision": "DL-408; retired as superseded by settings.layer.changed"
 }
