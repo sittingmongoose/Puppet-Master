@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DT-FIX3-SELF-GRADE-20261104",
+  "assessment_id": "EA-W2-DT-FIX4-SELF-GRADE-20261104",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md"
@@ -12,18 +12,19 @@
   "static_suites_run_by_grader": true,
   "assessed_tree": {
     "branch": "plans/ea-w2-tools-gates-approvals-20261104",
-    "commit": "5851ccc170ec0743a5a920b652df14d145c1247a",
-    "read_method": "Round-3 implementation head; reports-only publication follows. Cycle-3 independent regrade is the before baseline. All ten standing checks, F1–F8 mutations and Storage mismatches are rechecked. Original-owner, payload-pack and SP-278 authentication remain assumed; native NOT_RUN.",
+    "commit": "ba59027ddedf9835fdd05f4a06a68b24e444685f",
+    "read_method": "Round-4 implementation head; reports-only publication follows. Cycle-4 independent regrade is the before baseline. All eleven standing checks and the whole-lane guard inventory pass. Original-owner, payload-pack and SP-278 authentication remain assumed; native NOT_RUN.",
     "contract_hashes": {
       "Plans/Contracts_V0.md": "543ab234acd8c7e1dafdd9374054f5cf1ff6e16e1adbc7eb36dd80383ab0ac2a",
       "Plans/storage-plan.md": "abcd09354f22eb66349adf5d1fc4c7a1c31b9cc57d2493814b7013d044972436",
       "Plans/Automated_Testing_System.md": "0e5383bbe6c3da11ab2a9f8f6ea648717d2cfd4b512818bc124293dd4113819f",
       "Plans/dt_event_contracts.json": "51fa8e6d97bcf6eddb5fc3441ab82243b14c65df67f4a627ee1b842c810615f5",
-      "Plans/dt_event_contracts.schema.json": "622f24a665c63e0e64dd959069f5d95259003e4e15a57236c59dc4d340e32419",
-      "Plans/dt_event_contract_fixtures.json": "c918f1b0d943ddbaba5fa7f21c08f58d35bd6c4f8adb7516382c75f62b2f57d4",
-      "Plans/storage_value_registry.json": "d2956a77606b8360a646d751de204f3e68048e0d106453067587af4915ec5290",
-      "scripts/pm-dt-event-contracts.py": "b25cb8abdee608da378dc943a340030c9aba67354dfeb8bd997642d7dbc36912",
-      "scripts/pm-dt-standing-checks.py": "2de96c18bbf9bdb6aa2b1ef8ce61901620efba87ea84dc3feeee6381b0d9f228"
+      "Plans/dt_event_contracts.schema.json": "6a74a0578b4ef9af0ff22f573258d58098fdd07f53af9120e94b628e49d58da1",
+      "Plans/dt_event_contract_fixtures.json": "0a5218b271fc41af3ef1a472dd0eaec75458178924f6a34c93b4b40e0eef4068",
+      "Plans/storage_value_registry.json": "569e5ae38404f91c56b7e886546038d697ab35bf64ff93648295fbcd5b09c984",
+      "scripts/pm-dt-event-contracts.py": "48113697230c0ebb4858fb938f427cdfae194bd40a15c478e1b743d39b0c2962",
+      "scripts/pm-dt-standing-checks.py": "da003de898318169be4bef6d08d410a125733b415c0626bfa8ea3ae5dc2030ad",
+      "scripts/pm-dt-guard-isolation.py": "db9e4d25c1cac4df2e4d4c328e0cfb8b89620c2d4764c0f1f6d2cb90d9ddd5c8"
     }
   },
   "status_counts": {
@@ -253,8 +254,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -288,7 +289,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -300,38 +301,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "approval.requested retry_oracle",
-              "line_start": 8205,
-              "line_end": 8205,
+              "line_start": 8207,
+              "line_end": 8207,
               "quote": "\"producer_semantic_digest\": \"be977f69cdf90e0f89f918f17a4fde8361bd58661f54483527ebf6675b105eed\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -565,8 +573,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -600,7 +608,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -612,38 +620,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "approval.granted retry_oracle",
-              "line_start": 16791,
-              "line_end": 16791,
+              "line_start": 16795,
+              "line_end": 16795,
               "quote": "\"producer_semantic_digest\": \"b35a08f5cf9adb9213145600e6099c299f2fe5a9af36d6dcb69ea34ea0abc1e5\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -877,8 +892,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -912,7 +927,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -924,38 +939,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "approval.denied retry_oracle",
-              "line_start": 25289,
-              "line_end": 25289,
+              "line_start": 25295,
+              "line_end": 25295,
               "quote": "\"producer_semantic_digest\": \"5335d199995d92f4019dc65f9b9598baaf06f7f6e2919ba4b8a3cae1f708ffde\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -1189,8 +1211,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -1224,7 +1246,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1236,38 +1258,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "approval.timeout retry_oracle",
-              "line_start": 33783,
-              "line_end": 33783,
+              "line_start": 33791,
+              "line_end": 33791,
               "quote": "\"producer_semantic_digest\": \"c1146e4fe02864e5d4fe6ae1fd8de8631cf611bf76bdbf8f0b96a2a499883cea\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -1501,8 +1530,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -1536,7 +1565,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1548,38 +1577,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "config.migrated retry_oracle",
-              "line_start": 42632,
-              "line_end": 42632,
+              "line_start": 42642,
+              "line_end": 42642,
               "quote": "\"producer_semantic_digest\": \"5a5c4693b1e2f636801a8936bd9927474de0589fd99de28251af3a63d6b6c4b2\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -1821,8 +1857,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -1856,7 +1892,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1868,38 +1904,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "gate.evaluation_started retry_oracle",
-              "line_start": 52589,
-              "line_end": 52589,
+              "line_start": 52601,
+              "line_end": 52601,
               "quote": "\"producer_semantic_digest\": \"5ee1241f04caada2b6c92cb6257ffdaa71b36e2be31c905240691d9a8aa08760\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -2140,8 +2183,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -2175,7 +2218,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2187,38 +2230,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "gate.failed retry_oracle",
-              "line_start": 62691,
-              "line_end": 62691,
+              "line_start": 62705,
+              "line_end": 62705,
               "quote": "\"producer_semantic_digest\": \"6e31cfb4c73d84cf10a59a3da8382c045865c72975128f8f0715d291fb55cf00\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -2459,8 +2509,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -2494,7 +2544,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2506,38 +2556,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "gate.passed retry_oracle",
-              "line_start": 72783,
-              "line_end": 72783,
+              "line_start": 72799,
+              "line_end": 72799,
               "quote": "\"producer_semantic_digest\": \"3156abdc29b343f4fbc56c57fe151feef60ab24d32a0093d7440916e801f6445\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -2771,8 +2828,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -2806,7 +2863,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -2818,38 +2875,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "requirements.clarification_requested retry_oracle",
-              "line_start": 81168,
-              "line_end": 81168,
+              "line_start": 81186,
+              "line_end": 81186,
               "quote": "\"producer_semantic_digest\": \"b5f1c867432f98800f46cb5225b00dfecce0a66d5e8347139a73d05f37e8bef5\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -3084,8 +3148,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -3119,7 +3183,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3131,38 +3195,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "run.background_enqueued retry_oracle",
-              "line_start": 89738,
-              "line_end": 89738,
+              "line_start": 89758,
+              "line_end": 89758,
               "quote": "\"producer_semantic_digest\": \"bacb547fef45a9265f2a70fb21adc7993316b6749ec40e944ea600f65e1b8ee9\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -3431,8 +3502,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -3466,7 +3537,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3478,38 +3549,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "tool.denied retry_oracle",
-              "line_start": 101900,
-              "line_end": 101900,
+              "line_start": 101922,
+              "line_end": 101922,
               "quote": "\"producer_semantic_digest\": \"adc41858b6ae79d17050c9606b8a0cb74c934b542b12a2cc78fe71f3626b8df4\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -3744,8 +3822,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -3779,7 +3857,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3791,38 +3869,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "tool.execution_completed retry_oracle",
-              "line_start": 110933,
-              "line_end": 110933,
+              "line_start": 110957,
+              "line_end": 110957,
               "quote": "\"producer_semantic_digest\": \"b2cb5caa39956fbe53e1fde007bcc57a86152ca0617223b8f5fc5825528202b1\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -4056,8 +4141,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -4091,7 +4176,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4103,38 +4188,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "tool.execution_started retry_oracle",
-              "line_start": 119510,
-              "line_end": 119510,
+              "line_start": 119536,
+              "line_end": 119536,
               "quote": "\"producer_semantic_digest\": \"c45a2d45757e0595c24fee96845a9dfacfba4a8223384076c7aca6ed9639731d\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -4375,8 +4467,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -4410,7 +4502,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4422,38 +4514,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "tool.invoked retry_oracle",
-              "line_start": 133721,
-              "line_end": 133721,
+              "line_start": 133749,
+              "line_end": 133749,
               "quote": "\"producer_semantic_digest\": \"eff558e25942df72c41df671e8fee6d23f1b3751a7f2108654fe86f869d1214c\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -4561,8 +4660,8 @@
             {
               "path": "Plans/dt_event_contracts.schema.json",
               "unit": "Plans/dt_event_contracts.schema.json#/$defs/usage_event",
-              "line_start": 6073,
-              "line_end": 6073,
+              "line_start": 6097,
+              "line_end": 6097,
               "quote": "\"const\": \"pm.event_payload.usage_event.v1\""
             }
           ],
@@ -4688,8 +4787,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -4723,7 +4822,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -4735,38 +4834,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "usage.event retry_oracle",
-              "line_start": 154878,
-              "line_end": 154878,
+              "line_start": 154917,
+              "line_end": 154917,
               "quote": "\"producer_semantic_digest\": \"254357fd3346f20821dfb45d310dd4aad1793f0c4d3df688c6ef2787f085a4d9\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -4874,8 +4980,8 @@
             {
               "path": "Plans/dt_event_contracts.schema.json",
               "unit": "Plans/dt_event_contracts.schema.json#/$defs/worktree_created",
-              "line_start": 7055,
-              "line_end": 7055,
+              "line_start": 7079,
+              "line_end": 7079,
               "quote": "\"const\": \"pm.event_payload.worktree_created.v1\""
             }
           ],
@@ -5001,8 +5107,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -5036,7 +5142,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5048,38 +5154,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "worktree.created retry_oracle",
-              "line_start": 163553,
-              "line_end": 163553,
+              "line_start": 163594,
+              "line_end": 163594,
               "quote": "\"producer_semantic_digest\": \"6e664227730ba54c1b4530659d51a22fccbc9c4a59e3d3c179ff0a08fe33993e\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -5187,8 +5300,8 @@
             {
               "path": "Plans/dt_event_contracts.schema.json",
               "unit": "Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted",
-              "line_start": 7374,
-              "line_end": 7374,
+              "line_start": 7398,
+              "line_end": 7398,
               "quote": "\"const\": \"pm.event_payload.worktree_deleted.v1\""
             }
           ],
@@ -5314,8 +5427,8 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 520,
-              "line_end": 520,
+              "line_start": 523,
+              "line_end": 523,
               "quote": "if t['storage_instance_id'] != context['source_storage_instance_id']:"
             }
           ],
@@ -5349,7 +5462,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All ten standing checks execute for this exact family. Unvisited unresolved references fail before fixtures; retained originals survive changed/unavailable live state, and withdrawn, forged or inaccessible records refuse. All earlier source, LF, retry and Storage identity regressions pass under assumed adapters.",
+          "finding": "All eleven standing checks pass for this exact drafted population. Each authored negative has an actual predicate/schema-rule removal witness; complete tables retain the negatives that flip and those that still refuse. Runtime predicates, schema boundaries and the missing-schema configuration precondition are explicitly distinguished. Earlier source, retained-history, LF, retry and Storage regressions remain fixed under assumed adapters.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5361,38 +5474,45 @@
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round2_oracle",
-              "line_start": 727,
-              "line_end": 727,
+              "line_start": 799,
+              "line_end": 799,
               "quote": "check(standing[name][number] == f['standing_check_oracles'][number]"
             },
             {
               "path": "Plans/dt_event_contract_fixtures.json",
               "unit": "worktree.deleted retry_oracle",
-              "line_start": 172026,
-              "line_end": 172026,
+              "line_start": 172069,
+              "line_end": 172069,
               "quote": "\"producer_semantic_digest\": \"9054332c7f9ae2b49b190cbd7408cc6237313461721dd5bb715628fd4f55d436\""
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_reference_preflight",
-              "line_start": 707,
-              "line_end": 707,
+              "line_start": 779,
+              "line_end": 779,
               "quote": "reference_errors = schema_reference_errors(documents, mirrors)"
             },
             {
               "path": "scripts/pm-dt-event-contracts.py",
               "unit": "round3_historical_reader",
-              "line_start": 547,
-              "line_end": 547,
+              "line_start": 550,
+              "line_end": 550,
               "quote": "def historical_read(c, prepared, completed, event, schemas, context):"
+            },
+            {
+              "path": "scripts/pm-dt-guard-isolation.py",
+              "unit": "round4_guard_isolation",
+              "line_start": 574,
+              "line_end": 574,
+              "quote": "def prove_family(dt, c, f, schemas):"
             }
           ],
           "prior": {
-            "source": "DT-sol cycle-3 independent re-grade@7d6b73958a",
+            "source": "DT-sol cycle-4 independent re-grade@e767d85c73148d2aa398a88898746d26eaf0f1d4",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "F9 exhaustive schema reference closure and check-10 retained-history oracles rechecked; other current owner/schema/identity/retention/custody facts unchanged. Native execution remains NOT_RUN."
+          "change_reason": "F10: coherent one-defect closures, precise AST/schema faults, and complete lane guard coverage. No admission, native proof or product answer."
         }
       },
       "remaining_gaps": [
@@ -5694,5 +5814,24 @@
     }
   },
   "prepared_pass_count": 16,
-  "prepared_count_basis": "WAVE2 retention exception only: 16/18 prepared without admission; whole tool.denied FileSafe producer/transition conflict and stopped Doctor row remain. Standing checks pass for all 17 drafted populations; not native readiness."
+  "prepared_count_basis": "WAVE2 retention exception only: 16/18 prepared without admission; whole tool.denied FileSafe producer/transition conflict and stopped Doctor row remain. Standing checks pass for all 17 drafted populations; not native readiness.",
+  "round4_proof": {
+    "before_counts": {
+      "PASS": 165,
+      "PARTIAL": 24,
+      "ABSENT": 25,
+      "CONFLICT": 2
+    },
+    "after_counts": {
+      "ABSENT": 25,
+      "PASS": 182,
+      "PARTIAL": 7,
+      "CONFLICT": 2
+    },
+    "guard_table": "reports/event-authority-20261104/DT-guard-removal.json",
+    "quote_records": 327,
+    "prepared_families": 16,
+    "drafted_populations": 17,
+    "no_new_ids": true
+  }
 }
