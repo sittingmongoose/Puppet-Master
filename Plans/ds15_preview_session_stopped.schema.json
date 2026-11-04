@@ -1,0 +1,171 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "preview_subject_id",
+    "preview_session_id",
+    "source_revision",
+    "preview_revision",
+    "source_kind",
+    "preview_surface_kind",
+    "transport_mode",
+    "attached_surface",
+    "restore_intent",
+    "runtime_state",
+    "outcome_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "preview_subject_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "preview_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "source_revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "preview_revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 18446744073709551615
+    },
+    "source_kind": {
+      "enum": [
+        "markdown",
+        "mermaid",
+        "html",
+        "svg",
+        "image",
+        "generated_doc",
+        "browser_page"
+      ]
+    },
+    "preview_surface_kind": {
+      "enum": [
+        "generated_restricted",
+        "browser_capable",
+        "native_image_surface"
+      ]
+    },
+    "transport_mode": {
+      "enum": [
+        "internal_preview_origin",
+        "browser_runtime",
+        "native_image_surface"
+      ]
+    },
+    "attached_surface": {
+      "enum": [
+        "chat_card",
+        "editor_preview",
+        "embedded_doc_pane",
+        "editor_browser_tab",
+        "detached_window"
+      ]
+    },
+    "restore_intent": {
+      "enum": [
+        "none",
+        "inline",
+        "split",
+        "browser_tab",
+        "detached"
+      ]
+    },
+    "runtime_state": {
+      "const": "closed"
+    },
+    "outcome_ref": {
+      "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "browser_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "session_class": {
+      "enum": [
+        "workspace_preview",
+        "detached_preview",
+        "automation_session",
+        "normal_browsing"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.preview_session_stopped.payload.v1",
+  "dependentRequired": {
+    "browser_session_id": [
+      "session_class"
+    ],
+    "session_class": [
+      "browser_session_id"
+    ]
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "preview_surface_kind": {
+            "const": "browser_capable"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "browser_session_id",
+          "session_class"
+        ],
+        "properties": {
+          "transport_mode": {
+            "const": "browser_runtime"
+          }
+        }
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "browser_session_id"
+              ]
+            },
+            {
+              "required": [
+                "session_class"
+              ]
+            }
+          ]
+        },
+        "properties": {
+          "transport_mode": {
+            "enum": [
+              "internal_preview_origin",
+              "native_image_surface"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

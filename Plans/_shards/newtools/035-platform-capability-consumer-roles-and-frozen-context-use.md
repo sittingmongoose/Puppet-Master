@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L9027-L9444
 
-Source SHA256: `68d667b1dd489b9fbaa9329fa2199aac020fe6d11fd8b288837aeb08a96fe7b1`
+Source SHA256: `3056b9b2bd07ac9321e201a28e34212f34660fbe6c1cbe5a4697e8d04d0dffc2`
 
 ---
 
@@ -140,7 +140,7 @@ Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): curr
 ```
 
 
-### N2-218 — tool.custom_headless.skipped 1.0.0 — newly authored owner contract, prepared without admission.
+### N2-218 — tool.custom_headless.skipped — withdrawn DS15 draft; DT question reference
 
 ```yaml
 {

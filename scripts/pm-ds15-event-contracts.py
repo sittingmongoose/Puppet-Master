@@ -12,6 +12,9 @@ FORMAT = jsonschema.FormatChecker()
 _codec_spec = importlib.util.spec_from_file_location('pm_ds15_readiness_codec', ROOT / 'scripts/pm-implementation-readiness.py')
 _codec = importlib.util.module_from_spec(_codec_spec)
 _codec_spec.loader.exec_module(_codec)
+_debug_spec = importlib.util.spec_from_file_location('pm_ds15_debug_semantics', ROOT / 'scripts/pm-shared-runtime-contracts.py')
+_debug = importlib.util.module_from_spec(_debug_spec)
+_debug_spec.loader.exec_module(_debug)
 
 def read(path):
     return json.loads((ROOT / path).read_text())
@@ -40,6 +43,17 @@ def owner_text(c):
 def payload_ok(c, p, x):
     if list(validator(read(c['payload_schema_ref'])).iter_errors(p)):
         return False
+    if not x['owner_command_authorized']:
+        return False
+    def safe_refs(value):
+        if isinstance(value, str):
+            return not (_debug.ABSOLUTE_PATH_RE.search(value) or _debug.TOKEN_SHAPED_RE.search(value)
+                        or _debug.FORBIDDEN_REF_RE.search(value))
+        if isinstance(value, dict):
+            return all(safe_refs(v) for v in value.values())
+        return True
+    if not safe_refs(p):
+        return False
     scope = p.get('scope', {'kind': 'project', 'project_id': p.get('project_id')})
     if x['scope'] != scope or x['envelope_project_id'] != scope.get('project_id'):
         return False
@@ -65,11 +79,12 @@ def payload_ok(c, p, x):
                 and x['launch_outcome'] == ('refused' if p['requested_visual_mode'] == 'forced_visible' else 'headless'))
     if n == 'browser.context_captured':
         return (x['target_resolution'] in ('explicit', 'owning_surface', 'explicit_new_thread')
+                and p['target_resolution'] == x['target_resolution']
                 and x['resolved_thread_id'] == p['thread_id'] and x['thread_writable']
                 and x['chip']['chip_id'] == p['chip_id'] and x['chip']['thread_id'] == p['thread_id']
                 and x['chip']['attachment_type'] == p['attachment_type']
                 and x['chip']['source_ref'] == p['source_ref'] and x['chip']['committed']
-                and x['chip']['status'] == p['capture_status'] and not x['auto_send'])
+                and x['chip']['status'] == p['capture_status'] and x['thread_scope'] == scope and not x['auto_send'])
     if n.startswith('dev.session.'):
         transitions = {'dev.session.started': ({'created', 'restarting'}, 'running'),
                        'dev.session.restarting': ({'running', 'stopped'}, 'restarting'),
@@ -79,9 +94,12 @@ def payload_ok(c, p, x):
         return (p['previous_state'] in before and p['workflow_state'] == after
                 and x['workflow_state'] == p['previous_state'] and p['workflow_revision'] == x['previous_revision'] + 1
                 and x['dev_session_id'] == p['dev_session_id'] and x['managed_outcome_committed']
+                and x['operation_id'] == p['operation_id']
                 and (n != 'dev.session.started' or x['launch_outcome'] == 'launched')
                 and (n != 'dev.session.stopped' or x['managed_resources_settled'])
-                and x['dap_state_after'] == x['dap_state_before'] and not x['rewrite_terminal_history'])
+                and (x['dap_state_after'] == x['dap_state_before'] or (x['dap_transition_ref'] is not None and x['dap_owner_verified']))
+                and all(p.get(k) == x['links'].get(k) for k in ('run_id','thread_id','workspace_tab_id','terminal_session_id','dap_session_id'))
+                and not x['rewrite_terminal_history'])
     if n.startswith('preview.session.'):
         return (x['preview_subject_id'] == p['preview_subject_id']
                 and x['preview_session_id'] == p['preview_session_id']
@@ -91,7 +109,7 @@ def payload_ok(c, p, x):
                 and (n != 'preview.session.stopped' or (x['session_state'] != 'closed' and p['runtime_state'] == 'closed' and x['managed_resources_settled']))
                 and (n != 'preview.session.refreshed' or (x['session_state'] in ('ready', 'stale', 'degraded', 'error')
                      and x['refreshable'] and x['refresh_committed'] and p['preview_revision'] > x['previous_revision']
-                     and ((p['refresh_origin'] == 'cmd.browser.reload' and p.get('browser_session_id') == x['browser_session_id'])
+                     and ((p['refresh_origin'] == 'cmd.browser.reload' and bool(p.get('browser_session_id')) and p['browser_session_id'] == x['browser_session_id'])
                           or (p['refresh_origin'] == 'filemanager.preview_refresh' and not p.get('browser_session_id'))))))
     raise AssertionError('Missing per-family transition oracle: ' + n)
 
@@ -107,6 +125,8 @@ def evaluate(c, op, d):
         if (not payload_ok(c, o['payload'], x) or p != o['payload'] or out['payload'] != o['payload']
                 or out['event_id'] != o['event_id'] or o['idempotency_key'] != identity(c, p)):
             return {'result': 'REFUSE', 'effects': 0}
+        if p.get('outcome_ref', out['source_ref']) != out['source_ref']:
+            return {'result': 'REFUSE', 'effects': 0}
         if r is None:
             return {'result': 'APPEND_ORIGINAL' if op == 'recover' else 'PENDING', 'effects': 0, 'event_id': o['event_id']}
         if any(r[k] != v for k, v in {'event_id': o['event_id'], 'idempotency_key': o['idempotency_key'], 'payload_sha256': digest(p)}.items()):
@@ -118,7 +138,8 @@ def evaluate(c, op, d):
         return {'result': 'ORIGINAL', 'effects': 0, 'event_id': o['event_id'], 'receipt_ref': r['receipt_ref']}
     if op in ('checkpoint', 'rebuild'):
         cp = d['checkpoint']
-        if list(validator(read(c['checkpoint_schema_ref'])).iter_errors(cp)):
+        if (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(cp))
+                or len(_codec.canonical_messagepack_bytes(cp)) > 16384):
             return {'result': 'REFUSE', 'effects': 0}
         if op == 'rebuild' and not d['retained_prefix_complete']:
             return {'result': 'UNAVAILABLE', 'effects': 0}
@@ -130,6 +151,8 @@ def evaluate(c, op, d):
                 or token['storage_instance_id'] != token['source_selection']['storage_instance_id']
                 or cp.get('project_id') != p.get('project_id') or cp.get('scope') != p.get('scope')):
             return {'result': 'REFUSE', 'effects': 0}
+        if cp == d['stored_previous']:
+            return {'result': 'UNCHANGED', 'effects': 0}
         rows, low, high = d['index_rows'], d['scan_low'], d['scan_high']
         if ([r['sequence'] for r in rows] != list(range(low, high + 1))
                 or cp['through_sequence_id'] != high or high != d['selected_high']
@@ -166,14 +189,63 @@ REQUIRED = {'valid-transition', 'invalid-transition', 'envelope-mismatch', 'orig
             'rebuild-valid', 'rebuild-missing-prefix', 'stale-reader-version', 'unknown-checkpoint-field',
             'persisted-snapshot', 'terminal-before-receipt'}
 
+def value_valid(schema_ref, value):
+    if list(validator(read(schema_ref)).iter_errors(value)):
+        return False
+    if len(_codec.canonical_messagepack_bytes(value)) > 16384:
+        return False
+    if schema_ref.endswith('dev_session_record_v2.schema.json') and value['dap'] is not None:
+        dap = value['dap']
+        if (value['project_id'] != dap['project_id'] or value['dev_session_id'] != dap['dev_session_id']
+                or value['project_id'] != dap['topology']['project_id']
+                or _debug.validate(dap, 'dev_session_record', read('Plans/shared_runtime_contracts.schema.json'))):
+            return False
+    return True
+
+
+def migrate(kind, source, evidence):
+    """Static migration oracle only. It neither opens a store nor authorizes writes."""
+    if not evidence.get('verified') or not evidence.get('backup_verified'):
+        return None
+    if kind == 'dap_v1':
+        if _debug.validate(source, 'dev_session_record', read('Plans/shared_runtime_contracts.schema.json')):
+            return None
+        if source['project_id'] != evidence['project_id'] or source['dev_session_id'] != evidence['dev_session_id']:
+            return None
+        result = {'schema_id': 'pm.storage_value.dev_session_record.v2', 'schema_version': '2.0.0',
+                  'project_id': source['project_id'], 'dev_session_id': source['dev_session_id'],
+                  'workflow': None, 'dap': copy.deepcopy(source)}
+        return result if value_valid('Plans/ds15_dev_session_record_v2.schema.json', result) else None
+    if kind == 'preview_v1':
+        mappings = evidence.get('mappings', [])
+        if (len(mappings) != 1 or mappings[0]['preview_id'] != source['preview_id']
+                or mappings[0]['source_file'] != source['source_file'] or source['status'] not in ('starting', 'running', 'stopped', 'error')):
+            return None
+        result = copy.deepcopy(mappings[0]['saved_subject_ui'])
+        result.update(runtime_verification='unverified', legacy_status=source['status'])
+        return result if value_valid('Plans/ds15_preview_state_v2.schema.json', result) else None
+    if kind == 'capture_chip':
+        if (source.get('thread_id') != evidence.get('thread_id') or source.get('scope') != evidence.get('scope')):
+            return None
+        result = copy.deepcopy(source)
+        result.update(schema_id='pm.ds15.browser_capture_chip.v2', schema_version='2.0.0')
+        return result if value_valid('Plans/ds15_browser_capture_chip_v2.schema.json', result) else None
+    raise AssertionError(kind)
+
+
 def check_value_contracts():
     count = 0
     for f in read('Plans/ds15_value_contract_fixtures.json'):
-        v = validator(read(f['schema_ref']))
         for case in f['cases']:
             data = copy.deepcopy(f['positive'])
             patch(data, case['changes'])
-            assert (not list(v.iter_errors(data))) == case['valid'], (f['schema_ref'], case['id'])
+            assert value_valid(f['schema_ref'], data) == case['valid'], (f['schema_ref'], case['id'])
+            count += 1
+        for case in f.get('migration_cases', []):
+            data = copy.deepcopy(f['migration_base'])
+            patch(data, case['changes'])
+            got = migrate(data['kind'], data['source'], data['evidence'])
+            assert got == case['expected'], (f['schema_ref'], case['id'], got, case['expected'])
             count += 1
     return count
 

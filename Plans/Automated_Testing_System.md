@@ -7284,7 +7284,7 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
 ```
 
 
-### ATS-321 — tool.custom_headless.skipped positive/negative oracles.
+### ATS-321 — tool.custom_headless.skipped — withdrawn DS15 draft; DT question reference
 
 ```yaml
 {
@@ -7561,6 +7561,150 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/U
   ],
   "preserved_exact_tokens": [
     "ATS-326"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-327 — DS15 independent family semantic oracle sections
+
+```yaml
+{
+  "plan_unit_id": "ATS-327",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "browser.context_captured@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-327"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-328 — DS15 independent family semantic oracle sections
+
+```yaml
+{
+  "plan_unit_id": "ATS-328",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "dev.session.started@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.\n\ndev.session.stopping@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.\n\ndev.session.stopped@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.\n\ndev.session.restarting@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-328"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-329 — DS15 independent family semantic oracle sections
+
+```yaml
+{
+  "plan_unit_id": "ATS-329",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "preview.session.started@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.\n\npreview.session.refreshed@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.\n\npreview.session.stopped@1.0.0: independently adopt Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317; execute this exact family's concrete payload/checkpoint/custody/transition/coverage/CAS/withdrawal/permission/rebuild vectors in Plans/ds15_event_contract_fixtures.json via scripts/pm-ds15-event-contracts.py. Valid source/outcome/receipt joins return original identity without effect; changed joins refuse. Native execution NOT_RUN. No sibling fixture supplies this family's cases.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-329"
   ],
   "negative_constraints": [
     "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
