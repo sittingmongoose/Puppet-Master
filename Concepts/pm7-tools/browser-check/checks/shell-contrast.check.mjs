@@ -37,6 +37,7 @@ export default async function(t){
    await f.locator('#o55np-reboot').waitFor({state:'hidden'});
    await t.equal(`${look} ${screen} look retained`,()=>f.evaluate(()=>PMLogo.look()),look);
    if(screen==='where') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [role="radio"]').first().click();
+   await t.page.mouse.move(1,1);await t.settle();
    if(screen==='where') await measure(t,f,f.locator('#pm-o55-onboarding .o55-tag:visible').first(),look+' Recommended');
    if(screen==='ai-install') await f.locator('#pm-o55-onboarding [data-o55-do="install"][data-arg="claude"]').click();
    const el=f.locator(screen==='ai-install'?'#pm-o55-onboarding [data-o55-do="installGo"][data-arg="claude"]':'#pm-o55-onboarding .o55-foot .o55-primary:visible:not(:disabled)').first();
