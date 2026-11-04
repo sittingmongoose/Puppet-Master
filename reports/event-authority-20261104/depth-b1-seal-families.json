@@ -3,8 +3,8 @@
   "assessment_id": "EA-B1-SEAL-FAMILIES-DEPTH-20261104",
   "assessed_tree": {
     "branch": "plans/ea-b1-seal-blockers-20261104",
-    "commit": "093d102406a3368f246eb255ecc92f3db5a0d2b7",
-    "note": "Cycle-2 correction at reviewed head; unsupported claims retracted before technical repair."
+    "commit": "9f83b5ed566206585dcff5a22ac4db94feaf3cee",
+    "note": "Cycle-2 normative regrade after the technical fixes. Native NOT_RUN alone lowers no cell; incomplete whole-lane check-11 witnesses do."
   },
   "registry": {
     "path": "Plans/event_family_registry.json",
@@ -31,15 +31,15 @@
   },
   "method": {
     "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md (the twelve criteria with the 2026-09-24 clarifications), unchanged.",
-    "grading": "One grader (lane DS, claude-opus-5.5) re-read each cited passage at the branch head; D1b's 2026-11-04 survey rows (surveys/D1b/DEPTH.jsonl) were leads only. Each quote is an exact substring of one cited line, located mechanically; excerpt_sha256 is SHA-256 of that line.",
+    "grading": "Cycle-2 implementation-worker regrade against the pinned branch head; exact quotes re-read and re-anchored; no native execution or complete check-11 claim.",
     "quote_check": {
       "exact": 191
     },
     "evidence_items": 191
   },
   "status_counts": {
-    "PASS": 31,
-    "PARTIAL": 5
+    "PASS": 33,
+    "PARTIAL": 3
   },
   "status_counts_by_criterion": {
     "membership_version": {
@@ -49,8 +49,7 @@
       "PASS": 3
     },
     "producer": {
-      "PASS": 1,
-      "PARTIAL": 2
+      "PASS": 3
     },
     "closed_payload_schema": {
       "PASS": 3
@@ -82,8 +81,9 @@
   },
   "normative_depth_complete_families": [],
   "change_against_prior": {
-    "carried": 31,
-    "upgraded": 5
+    "cycle2_retraction": "Original three 12/12 claims retracted in 72abc40713",
+    "technical_repairs": "Browser producer and layout producer route reconciled in 2a9364409a",
+    "unresolved": "Whole-lane guard-removal coverage; terminal owner question."
   },
   "native_execution": "NOT_RUN for every family",
   "static_checks_at_head": [
@@ -164,10 +164,10 @@
         "ATS-040"
       ],
       "remaining_gaps": [
-        "DS-SOL2-01/02/03: repair technical guards and prove check 11 before full depth."
+        "Full standing-check-11 guard-removal proof remains incomplete; see ds-fix2-guard-removal.md."
       ],
-      "grading_batch": "DS-B1",
-      "notes": "ACD-461's identity-and-scope paragraph and canonical text were reworded on this branch (d7e5840240) so the app counterpart emits no EventRecord until Event Authority admits an application payload version.",
+      "grading_batch": "DS-FIX2",
+      "notes": "Cycle-2 correction and technical follow-through. No 12/12 or complete admission-depth claim. See ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -472,8 +472,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "Compaction completion envelope consumer (DL-039 and DL-040)",
-              "line_start": 21595,
-              "line_end": 21595,
+              "line_start": 21607,
+              "line_end": 21607,
               "quote": "The original payload edition remains Project-only with exact payload/envelope Project/thread equality.",
               "excerpt_sha256": "8a1032622324a64863a009a4699bd0a480df2a7f73e5e3097c7598a7da94f74e",
               "quote_check": "exact"
@@ -801,11 +801,11 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-2 retraction: replay-only, identifier LF, eager dormant-$ref and complete guard-removal coverage not yet proved; Browser inline/reference route is inconsistent. Earlier suite success did not establish these boundaries.",
+          "finding": "Compaction payload/event fixtures, exact replay-only writer refusal, four LF identifier controls, eager dormant-$ref refusal and retained/deleted-thread/forged/withdrawn historical controls are authored and pass. Existing native oracle obligations remain NOT_RUN. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md; no complete-depth claim.",
           "evidence": [
             {
               "path": "Plans/context_compaction_completion_contract_fixtures.json",
-              "unit": "#/invalid",
+              "unit": null,
               "line_start": 85,
               "line_end": 85,
               "quote": "\"invalid\": [",
@@ -814,7 +814,7 @@
             },
             {
               "path": "Plans/context_compaction_completion_contract_fixtures.json",
-              "unit": "#/required_native_oracles",
+              "unit": null,
               "line_start": 440,
               "line_end": 440,
               "quote": "\"required_native_oracles\": [",
@@ -823,7 +823,7 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "unit": "SP-259",
+              "unit": null,
               "line_start": 19514,
               "line_end": 19514,
               "quote": "Positive oracles require one committed marker",
@@ -832,7 +832,7 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-017",
+              "unit": null,
               "line_start": 1416,
               "line_end": 1416,
               "quote": "Successful committed compaction produces exactly one context.compaction.completed",
@@ -841,7 +841,7 @@
             },
             {
               "path": "Plans/shared_runtime_command_contract_fixtures.json",
-              "unit": "#/invalid",
+              "unit": null,
               "line_start": 1445,
               "line_end": 1445,
               "quote": "\"name\": \"pm7_context_compaction_completed_requires_event\",",
@@ -850,7 +850,7 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-040",
+              "unit": null,
               "line_start": 3919,
               "line_end": 3919,
               "quote": "the event registry, shared runtime command validator, PM7 GUI fixture validator, JSON syntax gate, and PlanUnit validation must also pass together",
@@ -859,11 +859,29 @@
             },
             {
               "path": "scripts/pm-validate-pm7-gui-fixtures.py",
-              "unit": "validate",
+              "unit": null,
               "line_start": 552,
               "line_end": 552,
               "quote": "forbidden_compaction = [event for event in compaction if event != COMPACTION_COMPLETION_TYPE]",
               "excerpt_sha256": "77b789a1cb2e12d3629e8b40ea1c3743ba09e71b0ea4f02afee2f9cbeece9cb7",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_authority_ds_round2_fixtures.json",
+              "unit": null,
+              "line_start": 18,
+              "line_end": 18,
+              "quote": "\"compaction_identifier_LF_fields\": [",
+              "excerpt_sha256": "d3f60bb345377a68e1cdfc192b0c5bc18d3b968a4bf2d13636c2d93b9196b318",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_payload_context_compaction_completed.schema.json",
+              "unit": null,
+              "line_start": 42,
+              "line_end": 42,
+              "quote": "\"thread_id\": {",
+              "excerpt_sha256": "198a5876c6489868240a5a6fad24f93f1927b8ac0c597eabf5913b2b22c8906b",
               "quote_check": "exact"
             }
           ],
@@ -882,7 +900,7 @@
       "family_revision": "1.0.0",
       "registry_pointer": "#/families/40",
       "disposition": "CURRENT_WRITER",
-      "pass_count": 10,
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -898,10 +916,10 @@
         "DL-076"
       ],
       "remaining_gaps": [
-        "DS-SOL2-01/02/03: repair technical guards and prove check 11 before full depth."
+        "Full standing-check-11 guard-removal proof remains incomplete; see ds-fix2-guard-removal.md."
       ],
-      "grading_batch": "DS-B1",
-      "notes": "Both Step 8(c) halves landed in September (SP-286 adoption a3d6bb616b; v2 current 0ba3ac9019).",
+      "grading_batch": "DS-FIX2",
+      "notes": "Cycle-2 correction and technical follow-through. No 12/12 or complete admission-depth claim. See ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -1011,13 +1029,13 @@
           "change_reason": "Anchors re-read; SMPFS-167 now names the v2 reader as current."
         },
         "producer": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-2 retraction: replay-only, identifier LF, eager dormant-$ref and complete guard-removal coverage not yet proved; Browser inline/reference route is inconsistent. Earlier suite success did not establish these boundaries.",
+          "finding": "The exact existing family producer adopts the governed EventRecord 3.0.0 route. The complete canonical MessagePack body uses the inclusive 16384-byte boundary or a verified BLAKE3/size/media reference; resolved-body joins precede append/publication. Exact retry pins and independent total-body budgets are retained. StorageMigrationCoordinator installation is explicit; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-167 producer",
+              "unit": null,
               "line_start": 11917,
               "line_end": 11917,
               "quote": "The sole producer is `BrowserRuntimeService.workspace`, reached through the",
@@ -1026,7 +1044,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-167 producer",
+              "unit": null,
               "line_start": 11918,
               "line_end": 11918,
               "quote": "existing `cmd.browser.workspace.create` / `handlers::browser_program::workspace_create`",
@@ -1035,7 +1053,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-167 producer",
+              "unit": null,
               "line_start": 11934,
               "line_end": 11934,
               "quote": "The AppendReceipt for the barrier EventRecord append is the logical creation commit.",
@@ -1044,7 +1062,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "Workspace-created first AppendReceipt recovery adoption",
+              "unit": null,
               "line_start": 11979,
               "line_end": 11979,
               "quote": "For exactly this creation barrier, `BrowserRuntimeService.workspace` explicitly",
@@ -1053,7 +1071,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "Workspace-created first AppendReceipt recovery adoption",
+              "unit": null,
               "line_start": 11980,
               "line_end": 11980,
               "quote": "adopts SP-286/CV-339's `storage.first_append_receipt.resolve.v2`.",
@@ -1062,7 +1080,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "Workspace-created first AppendReceipt recovery adoption",
+              "unit": null,
               "line_start": 12024,
               "line_end": 12024,
               "quote": "so it does not rely on `storage.first_append_receipt.resolve_full_value.v1`",
@@ -1071,7 +1089,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-167",
+              "unit": null,
               "line_start": 12116,
               "line_end": 12116,
               "quote": "through the explicitly adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.",
@@ -1080,11 +1098,47 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-167",
+              "unit": null,
               "line_start": 12124,
               "line_end": 12124,
               "quote": "depends_on: [DL-046, SMPFS-166, CV-332, SP-286, CV-339]",
               "excerpt_sha256": "b156cbdb5fe7d0c6fd420de39162456d49c40834e2da84261e30e3b54d52059d",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1039,
+              "line_end": 1039,
+              "quote": "### 1.2.1 DL-270 governed body-reference successor",
+              "excerpt_sha256": "eb5f93d0a7407fe504343a6a63ce01cf4dff828d1363856470d3531537752c75",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1043,
+              "line_end": 1043,
+              "quote": "The BLAKE3 domain is the entire uncompressed canonical payload byte string",
+              "excerpt_sha256": "1d03cb5a1c49146691e74d2c9d7c0243b9dc4ec51784b9d27ecb59991e0bf63e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_record_v3.schema.json",
+              "unit": null,
+              "line_start": 381,
+              "line_end": 381,
+              "quote": "\"payload_store_ref\": {",
+              "excerpt_sha256": "ca03c30c4e95f067a08e18cbeaaf0929993bdc8195fbfd8baa4a92ee1a8cd6c8",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 21667,
+              "line_end": 21667,
+              "quote": "Individually, browser.workspace.created and browser.workspace.reset adopt the governed EventRecord 3.0.0 inline/reference route",
+              "excerpt_sha256": "8b3f8dfc367944dfb4adc995b5fc8b5edce6da02522488190b6252d6f7b1e938",
               "quote_check": "exact"
             }
           ],
@@ -1188,8 +1242,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-332",
-              "line_start": 21665,
-              "line_end": 21665,
+              "line_start": 21677,
+              "line_end": 21677,
               "quote": "App-root-global event_id and scope-partition/event_type/idempotency_key use the existing producer-semantic digest",
               "excerpt_sha256": "92a8b420c1b63dfb6ae9a551c98b40c97574027f9b0e6262b65a53b7cd7fa873",
               "quote_check": "exact"
@@ -1237,8 +1291,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20004,
-              "line_end": 20004,
+              "line_start": 20005,
+              "line_end": 20005,
               "quote": "identity are authoritative. Same identity and producer-semantic digest returns",
               "excerpt_sha256": "c7602660c89643a922b1e7bc3c643f583ed75a821fc0c71c2fe405493e6cc1a7",
               "quote_check": "exact"
@@ -1246,8 +1300,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20005,
-              "line_end": 20005,
+              "line_start": 20006,
+              "line_end": 20006,
               "quote": "the original result; changed digest is `idempotency_conflict`, unavailable dedupe",
               "excerpt_sha256": "927e1c04d22d3b744e70cd5210b4fc894ded5e03ad8092ea4b39394ac49f80c9",
               "quote_check": "exact"
@@ -1295,8 +1349,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20019,
-              "line_end": 20019,
+              "line_start": 20020,
+              "line_end": 20020,
               "quote": "The event retains the existing SP-262 **`RP-AUTHORITY-INDEFINITE@1.0.0`** assignment:",
               "excerpt_sha256": "694f9feecaeaa30167343ca514f41741556bc288fec2baac9be7ad0b0bcb2b3e",
               "quote_check": "exact"
@@ -1304,8 +1358,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20024,
-              "line_end": 20024,
+              "line_start": 20025,
+              "line_end": 20025,
               "quote": "**`RP-PROJECTION-3GEN@1.0.0`**: current plus history, terminal-transition anchor,",
               "excerpt_sha256": "b6b55f50e24310360658511c821328f04c833eba510a8e5b9c83623eb547b4c9",
               "quote_check": "exact"
@@ -1313,8 +1367,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20027,
-              "line_end": 20027,
+              "line_start": 20028,
+              "line_end": 20028,
               "quote": "For this checkpoint the terminal transition is first durable withdrawal; set",
               "excerpt_sha256": "59bde621cf3f8953fe1e81a1e72f5ec62b37f3ea72114dcd6ab016da82b27292",
               "quote_check": "exact"
@@ -1362,8 +1416,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20033,
-              "line_end": 20033,
+              "line_start": 20034,
+              "line_end": 20034,
               "quote": "Apply current Project/thread access and deletion tombstones before every normal",
               "excerpt_sha256": "b83c74823aef958731327facbd849ff5fec14789b665ea4ce5cdefe178e411d0",
               "quote_check": "exact"
@@ -1371,8 +1425,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20039,
-              "line_end": 20039,
+              "line_start": 20040,
+              "line_end": 20040,
               "quote": "keeps its own custody and can become unavailable independently.",
               "excerpt_sha256": "74b89f36c20a6633400cbba79df8f3735b2bd0dd2864df4866e40a74253752b9",
               "quote_check": "exact"
@@ -1478,8 +1532,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20097,
-              "line_end": 20097,
+              "line_start": 20098,
+              "line_end": 20098,
               "quote": "digest, physical dataset and complete source selection. Its `index_read_token`",
               "excerpt_sha256": "fb8a695cd5ed261094a931485f365769a0daf5d0afe74e9c0d703965f0b7abc2",
               "quote_check": "exact"
@@ -1487,8 +1541,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20098,
-              "line_end": 20098,
+              "line_start": 20099,
+              "line_end": 20099,
               "quote": "stores exactly those nine fields, as",
               "excerpt_sha256": "ebe40d5aaf20f5890e63d6a892ace171f349c24e4eb0141a512ea22f74e4119d",
               "quote_check": "exact"
@@ -1496,8 +1550,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20116,
-              "line_end": 20116,
+              "line_start": 20117,
+              "line_end": 20117,
               "quote": "filtered writer still commits only its own checkpoint under prior-value CAS and",
               "excerpt_sha256": "8012b5b8d7aa52e1386b773229387201bf72fbdebd61e9e61231a199280b5cae",
               "quote_check": "exact"
@@ -1505,8 +1559,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20198,
-              "line_end": 20198,
+              "line_start": 20199,
+              "line_end": 20199,
               "quote": "**Admission as the current definition — 2026-09-25.**",
               "excerpt_sha256": "b984d79be6cfcd0af9c703b3c17523e73d50ca49496de9d6329cdc1e3821fb21",
               "quote_check": "exact"
@@ -1545,8 +1599,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20007,
-              "line_end": 20007,
+              "line_start": 20008,
+              "line_end": 20008,
               "quote": "replaced by reconstructed owner results. No alias, extension, old candidate",
               "excerpt_sha256": "e16959a2939cc59c2bdf1497d881e2efa6b346f05bfc0704a69bbf17068b46fe",
               "quote_check": "exact"
@@ -1554,8 +1608,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20008,
-              "line_end": 20008,
+              "line_start": 20009,
+              "line_end": 20009,
               "quote": "schema, local receipt backfill or unregistered migration is accepted.",
               "excerpt_sha256": "e08887752797abb788d50db49c0e06fcd3436f2d4336e1867ddc7dfa73c5ae63",
               "quote_check": "exact"
@@ -1563,8 +1617,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20043,
-              "line_end": 20043,
+              "line_start": 20044,
+              "line_end": 20044,
               "quote": "For event-writer withdrawal, stop creation publication at SMPFS-167's barrier",
               "excerpt_sha256": "9f06cde4995468d0fcaba513c640efe77d91121dac103fc0d7f1c38077f3e7d3",
               "quote_check": "exact"
@@ -1572,8 +1626,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20044,
-              "line_end": 20044,
+              "line_start": 20045,
+              "line_end": 20045,
               "quote": "and fence unresolved prepared resources; checkpoint-only withdrawal fences this",
               "excerpt_sha256": "9d7665be4cb918611c3c1ac8eac63852697ea1ce18ac98226a589ea92def7923",
               "quote_check": "exact"
@@ -1581,8 +1635,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20069,
-              "line_end": 20069,
+              "line_start": 20070,
+              "line_end": 20070,
               "quote": "and stored digest meanings remain immutable compatibility custody; an old value",
               "excerpt_sha256": "f31834afcd2eadefc228ff1958803717844f2610e45bb25220ef3ef7c343d279",
               "quote_check": "exact"
@@ -1598,11 +1652,11 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-2 retraction: replay-only, identifier LF, eager dormant-$ref and complete guard-removal coverage not yet proved; Browser inline/reference route is inconsistent. Earlier suite success did not establish these boundaries.",
+          "finding": "This exact family has passing fresh/known-retry replay-only refusals, artifact/checkpoint LF cases, eager dormant-$ref cases, exact encoded inline boundary, resolved reference, missing/hash/size/media/encoding negatives, original-result retry and retained historical controls. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/browser_workspace_created_contract_fixtures.json",
-              "unit": "#/creation_invalid",
+              "unit": null,
               "line_start": 151,
               "line_end": 151,
               "quote": "\"creation_invalid\": [",
@@ -1611,7 +1665,7 @@
             },
             {
               "path": "Plans/browser_workspace_created_contract_fixtures.json",
-              "unit": "#/checkpoint_invalid",
+              "unit": null,
               "line_start": 391,
               "line_end": 391,
               "quote": "\"checkpoint_invalid\": [",
@@ -1620,7 +1674,7 @@
             },
             {
               "path": "Plans/browser_workspace_created_checkpoint_v2_fixtures.json",
-              "unit": "#/checkpoint_template",
+              "unit": null,
               "line_start": 2,
               "line_end": 2,
               "quote": "\"checkpoint_template\": {",
@@ -1629,7 +1683,7 @@
             },
             {
               "path": "tests/test_pm_browser_workspace_created.py",
-              "unit": "test_stored_token_is_nine_field_durable_token",
+              "unit": null,
               "line_start": 629,
               "line_end": 629,
               "quote": "def test_stored_token_is_nine_field_durable_token(self):",
@@ -1638,20 +1692,56 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "unit": "SP-266",
-              "line_start": 20250,
-              "line_end": 20250,
+              "unit": null,
+              "line_start": 20251,
+              "line_end": 20251,
               "quote": "python3 scripts/pm_browser_workspace_created_v2.py",
               "excerpt_sha256": "1c2b15163c9f65eece78859bfe90386db61eb0b66c172694d723b084fa48b6f4",
               "quote_check": "exact"
             },
             {
               "path": "Plans/storage-plan.md",
-              "unit": "SP-262",
-              "line_start": 19609,
-              "line_end": 19609,
+              "unit": null,
+              "line_start": 19610,
+              "line_end": 19610,
               "quote": "tests/test_pm_browser_event_admission.py",
               "excerpt_sha256": "27234e83086d62f7516d1e62fd8bc2edbbae8e02dc1f949fa3820a93888a4192",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1039,
+              "line_end": 1039,
+              "quote": "### 1.2.1 DL-270 governed body-reference successor",
+              "excerpt_sha256": "eb5f93d0a7407fe504343a6a63ce01cf4dff828d1363856470d3531537752c75",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1043,
+              "line_end": 1043,
+              "quote": "The BLAKE3 domain is the entire uncompressed canonical payload byte string",
+              "excerpt_sha256": "1d03cb5a1c49146691e74d2c9d7c0243b9dc4ec51784b9d27ecb59991e0bf63e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_record_v3.schema.json",
+              "unit": null,
+              "line_start": 381,
+              "line_end": 381,
+              "quote": "\"payload_store_ref\": {",
+              "excerpt_sha256": "ca03c30c4e95f067a08e18cbeaaf0929993bdc8195fbfd8baa4a92ee1a8cd6c8",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_authority_ds_round2_fixtures.json",
+              "unit": null,
+              "line_start": 24,
+              "line_end": 24,
+              "quote": "\"browser_identifier_LF_fields\": [",
+              "excerpt_sha256": "d82a276ce62b91d6755b221aaa9938b1be0311d7a1270fa4c1ef9fafc516b68f",
               "quote_check": "exact"
             }
           ],
@@ -1670,7 +1760,7 @@
       "family_revision": "1.0.0",
       "registry_pointer": "#/families/41",
       "disposition": "CURRENT_WRITER",
-      "pass_count": 10,
+      "pass_count": 11,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1686,10 +1776,10 @@
         "DL-076"
       ],
       "remaining_gaps": [
-        "DS-SOL2-01/02/03: repair technical guards and prove check 11 before full depth."
+        "Full standing-check-11 guard-removal proof remains incomplete; see ds-fix2-guard-removal.md."
       ],
-      "grading_batch": "DS-B1",
-      "notes": "SP-286 adoption landed in a3d6bb616b.",
+      "grading_batch": "DS-FIX2",
+      "notes": "Cycle-2 correction and technical follow-through. No 12/12 or complete admission-depth claim. See ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -1799,13 +1889,13 @@
           "change_reason": "Anchors re-read."
         },
         "producer": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-2 retraction: replay-only, identifier LF, eager dormant-$ref and complete guard-removal coverage not yet proved; Browser inline/reference route is inconsistent. Earlier suite success did not establish these boundaries.",
+          "finding": "The exact existing family producer adopts the governed EventRecord 3.0.0 route. The complete canonical MessagePack body uses the inclusive 16384-byte boundary or a verified BLAKE3/size/media reference; resolved-body joins precede append/publication. Exact retry pins and independent total-body budgets are retained. StorageMigrationCoordinator installation is explicit; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-168 producer",
+              "unit": null,
               "line_start": 12165,
               "line_end": 12165,
               "quote": "The only producer is the authenticated `BrowserRuntimeService.workspace` on the",
@@ -1814,7 +1904,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-168 producer",
+              "unit": null,
               "line_start": 12168,
               "line_end": 12168,
               "quote": "`cmd.browser.workspace.reset` / `handlers::browser_program::workspace_reset` path",
@@ -1823,7 +1913,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-168 producer",
+              "unit": null,
               "line_start": 12214,
               "line_end": 12214,
               "quote": "the actual new generation and fences old projections, then submits the original",
@@ -1832,7 +1922,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "Workspace-reset first AppendReceipt recovery adoption",
+              "unit": null,
               "line_start": 12250,
               "line_end": 12250,
               "quote": "For exactly this reset barrier, `BrowserRuntimeService.workspace` explicitly",
@@ -1841,16 +1931,16 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "Workspace-reset first AppendReceipt recovery adoption",
-              "line_start": 12251,
-              "line_end": 12251,
+              "unit": null,
+              "line_start": 11980,
+              "line_end": 11980,
               "quote": "adopts SP-286/CV-339's `storage.first_append_receipt.resolve.v2`.",
               "excerpt_sha256": "ee7a58368a8f1d541614945f9e177c192e4eb00d85ed2fc17f2ba59c5598edc7",
               "quote_check": "exact"
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "Workspace-reset first AppendReceipt recovery adoption",
+              "unit": null,
               "line_start": 12299,
               "line_end": 12299,
               "quote": "`storage.first_append_receipt.resolve_full_value.v1`; a later claim of that kind",
@@ -1859,7 +1949,7 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-168",
+              "unit": null,
               "line_start": 12341,
               "line_end": 12341,
               "quote": "SP-286/CV-339 storage.first_append_receipt.resolve.v2 and, when no original event exists, retries",
@@ -1868,11 +1958,47 @@
             },
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-              "unit": "SMPFS-168",
+              "unit": null,
               "line_start": 12348,
               "line_end": 12348,
               "quote": "depends_on: [DL-046, SMPFS-166, CV-332, SP-278, SP-286, CV-339]",
               "excerpt_sha256": "2d12fba8a4f2ce9536dd9c9064b692321ea69794ea0668448378c91fabc4f2aa",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1039,
+              "line_end": 1039,
+              "quote": "### 1.2.1 DL-270 governed body-reference successor",
+              "excerpt_sha256": "eb5f93d0a7407fe504343a6a63ce01cf4dff828d1363856470d3531537752c75",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1043,
+              "line_end": 1043,
+              "quote": "The BLAKE3 domain is the entire uncompressed canonical payload byte string",
+              "excerpt_sha256": "1d03cb5a1c49146691e74d2c9d7c0243b9dc4ec51784b9d27ecb59991e0bf63e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_record_v3.schema.json",
+              "unit": null,
+              "line_start": 381,
+              "line_end": 381,
+              "quote": "\"payload_store_ref\": {",
+              "excerpt_sha256": "ca03c30c4e95f067a08e18cbeaaf0929993bdc8195fbfd8baa4a92ee1a8cd6c8",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 21667,
+              "line_end": 21667,
+              "quote": "Individually, browser.workspace.created and browser.workspace.reset adopt the governed EventRecord 3.0.0 inline/reference route",
+              "excerpt_sha256": "8b3f8dfc367944dfb4adc995b5fc8b5edce6da02522488190b6252d6f7b1e938",
               "quote_check": "exact"
             }
           ],
@@ -1976,8 +2102,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-332",
-              "line_start": 21665,
-              "line_end": 21665,
+              "line_start": 21677,
+              "line_end": 21677,
               "quote": "App-root-global event_id and scope-partition/event_type/idempotency_key use the existing producer-semantic digest",
               "excerpt_sha256": "92a8b420c1b63dfb6ae9a551c98b40c97574027f9b0e6262b65a53b7cd7fa873",
               "quote_check": "exact"
@@ -2074,8 +2200,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21528,
-              "line_end": 21528,
+              "line_start": 21529,
+              "line_end": 21529,
               "quote": "The source event retains SP-262's exact `RP-AUTHORITY-INDEFINITE@1.0.0` assignment:",
               "excerpt_sha256": "a779e34810dc737b01a1c7bab5a00907d4beca57742d300f9e66566646636775",
               "quote_check": "exact"
@@ -2083,8 +2209,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21533,
-              "line_end": 21533,
+              "line_start": 21534,
+              "line_end": 21534,
               "quote": "`RP-PROJECTION-3GEN@1.0.0`: current plus history, terminal-transition anchor,",
               "excerpt_sha256": "20f1cc481dd653a9a3abb69c67a628a602cba8b3eafecb71f70769c5b26f9ccb",
               "quote_check": "exact"
@@ -2092,8 +2218,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21537,
-              "line_end": 21537,
+              "line_start": 21538,
+              "line_end": 21538,
               "quote": "For this filtered binding, the terminal anchor is first durable withdrawal; set",
               "excerpt_sha256": "245c7d29b29c2d688434d937f9ffb8e0a194cb093567d7cefc03908b91038ad8",
               "quote_check": "exact"
@@ -2101,8 +2227,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21520,
-              "line_end": 21520,
+              "line_start": 21521,
+              "line_end": 21521,
               "quote": "first withdrawal plus 604800 seconds and requires complete current hold/ref",
               "excerpt_sha256": "b3ab42ccdf85c11b0aba16201af34c9469ecb8510e1d4bb05921e5c95f8c7b48",
               "quote_check": "exact"
@@ -2150,8 +2276,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21547,
-              "line_end": 21547,
+              "line_start": 21548,
+              "line_end": 21548,
               "quote": "Current Project/thread permissions, deletion tombstones and content redaction",
               "excerpt_sha256": "10e61555d02800f6456ef438fec6a2cc3b05018b887ecf1e32601d33559a099e",
               "quote_check": "exact"
@@ -2239,8 +2365,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21379,
-              "line_end": 21379,
+              "line_start": 21380,
+              "line_end": 21380,
               "quote": "`browser_workspace_reset_index_checkpoint.v1:{storage_instance_id}:{scope_partition}`;",
               "excerpt_sha256": "b398c49a1c5347244258015a3e28bc204bad13c53eb64150031db1ddf67583a4",
               "quote_check": "exact"
@@ -2248,8 +2374,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21420,
-              "line_end": 21420,
+              "line_start": 21421,
+              "line_end": 21421,
               "quote": "**2026-09-24 amendment (DL-076).** `index_read_token` stores the nine-field durable",
               "excerpt_sha256": "26bad5b38fc24da1dd8320936aeb35db2f706405a68c6ce579e22a2284eabcc9",
               "quote_check": "exact"
@@ -2257,8 +2383,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21448,
-              "line_end": 21448,
+              "line_start": 21449,
+              "line_end": 21449,
               "quote": "prior-value/cursor CAS. The global root/generation/anchor/frontier/read token,",
               "excerpt_sha256": "0cac3643021760eaa5bea0a1f70ba3e42dc6d7667046b10b26093507cfdc801e",
               "quote_check": "exact"
@@ -2266,8 +2392,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21470,
-              "line_end": 21470,
+              "line_start": 21471,
+              "line_end": 21471,
               "quote": "Rebuild this disposable checkpoint only through StorageMigrationCoordinator from",
               "excerpt_sha256": "c36ff5dac9259a704cb462012b37de8138a27893df08cce78d1453bfb8d7f31f",
               "quote_check": "exact"
@@ -2306,8 +2432,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21473,
-              "line_end": 21473,
+              "line_start": 21474,
+              "line_end": 21474,
               "quote": "invent store-version integers. There is no source-event alias/backfill transform,",
               "excerpt_sha256": "c708f78d5f7bb80f85dd125e5c1514cff19e5ddc639200d47fb0e05fcf82892e",
               "quote_check": "exact"
@@ -2315,8 +2441,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21555,
-              "line_end": 21555,
+              "line_start": 21556,
+              "line_end": 21556,
               "quote": "Writer withdrawal prevents new event-dependent reset publication and fences",
               "excerpt_sha256": "4164cc649bee14f92c3ebed745adf871d12fa8b11a33121427580fa264eaab6a",
               "quote_check": "exact"
@@ -2324,8 +2450,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21557,
-              "line_end": 21557,
+              "line_start": 21558,
+              "line_end": 21558,
               "quote": "Checkpoint-only withdrawal fences this reader without changing the independently",
               "excerpt_sha256": "38fff6b4d12fc5bcc8777a83e9bc192c84d4752ef95fa66f2ca8b25c1e9c9561",
               "quote_check": "exact"
@@ -2333,8 +2459,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21559,
-              "line_end": 21559,
+              "line_start": 21560,
+              "line_end": 21560,
               "quote": "owner-approved successor/version, install/rebuild through StorageMigrationCoordinator,",
               "excerpt_sha256": "c610d1571940313122d1e51b4179b5a32d9b3bf54f51b7fb73660c0f66295a9b",
               "quote_check": "exact"
@@ -2350,11 +2476,11 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-2 retraction: replay-only, identifier LF, eager dormant-$ref and complete guard-removal coverage not yet proved; Browser inline/reference route is inconsistent. Earlier suite success did not establish these boundaries.",
+          "finding": "This exact family has passing fresh/known-retry replay-only refusals, artifact/checkpoint LF cases, eager dormant-$ref cases, exact encoded inline boundary, resolved reference, missing/hash/size/media/encoding negatives, original-result retry and retained historical controls. PARTIAL for incomplete full legacy/source guard-removal witnesses, enumerated in ds-fix2-guard-removal.md. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/browser_workspace_reset_contract_fixtures.json",
-              "unit": "#/reset_invalid",
+              "unit": null,
               "line_start": 144,
               "line_end": 144,
               "quote": "\"reset_invalid\": [",
@@ -2363,7 +2489,7 @@
             },
             {
               "path": "tests/test_pm_browser_workspace_reset.py",
-              "unit": "test_same_generation_changed_frontier_invalidates_advance_and_disclosure",
+              "unit": null,
               "line_start": 350,
               "line_end": 350,
               "quote": "def test_same_generation_changed_frontier_invalidates_advance_and_disclosure(self):",
@@ -2372,7 +2498,7 @@
             },
             {
               "path": "tests/test_pm_browser_workspace_reset.py",
-              "unit": "test_contract_durable_token_is_the_sp278_projection",
+              "unit": null,
               "line_start": 295,
               "line_end": 295,
               "quote": "def test_contract_durable_token_is_the_sp278_projection(self):",
@@ -2381,29 +2507,65 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "unit": "SP-282",
-              "line_start": 21589,
-              "line_end": 21589,
+              "unit": null,
+              "line_start": 21590,
+              "line_end": 21590,
               "quote": "tests/test_pm_browser_workspace_reset.py",
               "excerpt_sha256": "7e95fc43470f36398a854f3e1dc98ffc06124587f4a9472427676e41ac8da486",
               "quote_check": "exact"
             },
             {
               "path": "Plans/storage-plan.md",
-              "unit": "SP-282",
-              "line_start": 21588,
-              "line_end": 21588,
+              "unit": null,
+              "line_start": 21589,
+              "line_end": 21589,
               "quote": "Synthetic schema/codec/oracle passes do not establish native authenticated resolution",
               "excerpt_sha256": "4bab0e692b42294d6a81256a6b08e33de2f5a1789a471be58cba7c8eaeb25c80",
               "quote_check": "exact"
             },
             {
               "path": "Plans/storage-plan.md",
-              "unit": "SP-262",
-              "line_start": 19609,
-              "line_end": 19609,
+              "unit": null,
+              "line_start": 19610,
+              "line_end": 19610,
               "quote": "tests/test_pm_browser_event_admission.py",
               "excerpt_sha256": "27234e83086d62f7516d1e62fd8bc2edbbae8e02dc1f949fa3820a93888a4192",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1039,
+              "line_end": 1039,
+              "quote": "### 1.2.1 DL-270 governed body-reference successor",
+              "excerpt_sha256": "eb5f93d0a7407fe504343a6a63ce01cf4dff828d1363856470d3531537752c75",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": null,
+              "line_start": 1043,
+              "line_end": 1043,
+              "quote": "The BLAKE3 domain is the entire uncompressed canonical payload byte string",
+              "excerpt_sha256": "1d03cb5a1c49146691e74d2c9d7c0243b9dc4ec51784b9d27ecb59991e0bf63e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_record_v3.schema.json",
+              "unit": null,
+              "line_start": 381,
+              "line_end": 381,
+              "quote": "\"payload_store_ref\": {",
+              "excerpt_sha256": "ca03c30c4e95f067a08e18cbeaaf0929993bdc8195fbfd8baa4a92ee1a8cd6c8",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_authority_ds_round2_fixtures.json",
+              "unit": null,
+              "line_start": 24,
+              "line_end": 24,
+              "quote": "\"browser_identifier_LF_fields\": [",
+              "excerpt_sha256": "d82a276ce62b91d6755b221aaa9938b1be0311d7a1270fa4c1ef9fafc516b68f",
               "quote_check": "exact"
             }
           ],
@@ -2417,5 +2579,5 @@
       }
     }
   ],
-  "note": "Cycle-2 retraction. No complete-depth claim for the three admission-record targets; registration and membership history preserved."
+  "note": "Honest cycle-2 regrade: producer repairs PASS; four oracle cells stay PARTIAL for incomplete full check-11 proof; terminal consumer/oracles remain PARTIAL for Jared. No registration or membership decisions change."
 }

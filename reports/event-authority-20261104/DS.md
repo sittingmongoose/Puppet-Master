@@ -1,12 +1,79 @@
 # Lane DS (stream E, batch 1): clearing the frozen seal check's blockers
 
-**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 1 (DS-FIX1) is the first section below.
-**Worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
+**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Review round 2 is current; earlier sections are historical.
+**Historical first-pass worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
 **Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
 
-## Review round 2: findings and responses (DS-FIX2)
+## Review round 2: findings and responses (DS-FIX2, current)
 
-The cycle-2 review supersedes all earlier complete-depth claims below. A receipted correction (`ds-fix2-depth-retraction.json`) retracts the three 12/12 assessments and repins the same honest assessment: compaction 11/12; Browser created/reset 10/12 each. Layout and terminal remain 10/12. Membership and registration history are preserved; no frozen validator change or substitute assessment. Technical follow-through and final grades are recorded below as completed.
+**Current fix worktree:** VM `/home/sittingmongoose/pm-worktrees/DS-fix2`, removed after the final push.
+
+**Source head:** `9f83b5ed566206585dcff5a22ac4db94feaf3cee`. **Final grade:** 54 PASS / 6 PARTIAL; no 12/12 family claim. All older grades and supersession claims below are dated history and are superseded by this section and the corrected JSON. No native execution or successful seal is claimed.
+
+| Finding / ruling | Response and verification | Commit |
+|---|---|---|
+| DS-SOL2-01 | Fixed the concrete Browser inline/reference route. Exact canonical MessagePack 16,384/16,385-byte controls, resolved references, missing/hash/size/media/encoding cases, original-result retries and retained readers pass. The separate 65,536-byte JSON body budget remains. | `2a9364409a`, `bd168f51ab` |
+| DS-SOL2-02 | Fixed full-match/end-of-input guards across the actual schema closure. Four compaction ids plus Browser artifact and checkpoint publication ids have isolated LF negatives; resolved reference positives pass. | `2a9364409a` |
+| DS-SOL2-03 | Fixed unsupported assessment/repoint claims through `ds-fix2-depth-retraction.json` and `ds-fix2-regrade-application.json`. Same honest assessment path, receipted before/after hashes, depth-only admission-record changes, explicit compaction supersession-history correction. Fresh/retry replay-only, LF and eager dormant-ref negatives are authored. Full check-11 work remains PARTIAL at the review cap. | `72abc40713`, current receipted regrade |
+| Ruling 1 | Implemented all three authorized steps: governed EventRecord 3.0.0 successor with exact prior readers/upgrader and pack custody; explicit SP-273/Home4 amendment covering writer/reader/checkpoint; complete 1,208-affected-id large-event oracle (1,200 added tabs and all originals) and complete Home4 value reference. No new tab/panel cap, truncation, omitted or split event. Producer now PASS; oracle stays PARTIAL for check 11. | `2a9364409a` |
+| Ruling 2 | Applied the review's honest baseline before repair, then upgraded only the three repaired producer cells. No registration history, Jared membership decision, registry row or frozen validator change. | `72abc40713`, current receipted regrade |
+| Cycle-1 fixes and whitespace | Kept complete-value references, exact BLAKE3 ids, terminal's non-PASS cells and all four original application records. Independent 40/100-tab and 38-length BLAKE3 probes still pass. Removed the introduced search-excerpt whitespace. | `72abc40713`; preservation checks |
+
+### Governed owner contract and exact family reuse
+
+`Contracts_V0.md` section 1.2.1 and `event_record_v3.schema.json` close object/null-inline versus null/verified-reference forms. Resolved bodies pass their registered payload schema and joins. Exact uncompressed MessagePack bytes determine size/BLAKE3; existing producer-semantic digest inputs and Storage metadata exclusions remain. Pack bytes/index precede acknowledgment, or share its durable segment group; SP-337 retains holds, retention, GC and coherent restore. StorageMigrationCoordinator installs the exact writer/reader/checkpoint paths before native activation (NOT_RUN). Original `event_record.schema.json` and payload meanings remain unchanged. A legacy string reference is never silently interpreted as the successor object.
+
+Search: `ds-fix2-binding-search.json`, base `093d102406`, live owner/schema/script/test scope excluding ledgers and generated pipelines. No pre-existing EventRecord 3.0.0 reference schema was found. Each family reuses its own emitter, consumer, projector, checkpoint, exact receipt binding and retention; none is inferred from a sibling. Browser producer evidence retains each exact SMPFS command/handler/first-AppendReceipt adoption. Newly authored technical representation only, under the user's ruling and existing DL-270/DL-045/DL-046 authority.
+
+### Family grades
+
+| Family | Unsupported branch claim | Cycle-2 review baseline | After repair |
+|---|---:|---:|---:|
+| context.compaction.completed | 12 | 11 | **11/12** |
+| browser.workspace.created | 12 | 10 | **11/12** |
+| browser.workspace.reset | 12 | 10 | **11/12** |
+| workspace.layout_changed | 10 | 10 | **11/12** |
+| terminal.workgroup_moved | 10 | 10 | **10/12** |
+
+The four oracle cells remain PARTIAL because full own-defect guard-removal witnesses are incomplete. Terminal's consumer and oracle cells remain PARTIAL for the unchanged Jared question in review round 1. Native NOT_RUN alone lowers no cell. The three admission records pin the same corrected partial assessment; those pins do not supply full-depth admission proof. The layout producer ledger cell is PASS, oracle cell FAIL; all historical dispositions, cohort pins, AUG-CP choices and provisional flags remain unchanged. Compaction's historical row keeps its evidence/disposition and explicitly retracts current complete-depth supersession proof.
+
+### Guard-removal result and follow-up at the cap
+
+`ds-fix2-guard-removal.md` contains the table and exact case-number key; the full source table is retained with its SHA-256. Boundary oracles: **24 positives / 46 negatives**, **10 guard groups witnessed / 2 incomplete**. Whole source inventory: **525 conditions**, **62 with observed flips**; complete ownership/other-negative proof remains open. Empty/exception/nonflipping rows are explicitly partial, never PASS. Every guard is restored after its in-memory mutation.
+
+The broad audit caught an impossible-calendar acceptance in the new compaction model and an audit input-wiring mistake (`store_ops` instead of fixture `payload_store_ops`). Both are fixed in `13ab3a1a91`: an invalid-calendar negative and valid leap-day positive, correct payload-store mutations, and a full baseline preflight that refuses accepted negatives before ablation. Its injected bad-negative control passes. All **194 distinct baseline negatives reject** at the final source revision. The large-panel control retains all 1,208 original/added tab ids (`f3433cc603`), without omission. The large-panel control retains all 1,208 original/added tab ids (`f3433cc603`), without omission. The shared Browser projector also explicitly retains exact 2.0.0 readers (`bd168f51ab`); paired controls prove retained replay succeeds while a fresh writer still refuses 2.0.0 and an unknown retained payload field refuses projection. The reset replay ablation targets the exact cached gate instance used by preflight, and a supplied nonflipping guard now fails the boundary suite (`9f83b5ed56`); its injected bad-proof self-test passes. The two explicit boundary follow-ups are `verified_reference_resolution` (missing/hash/size/media/encoding and layout missing/corrupt references) and `browser_historical_authenticity` (unverified-source and withdrawn-checkpoint controls for each Browser reader). The remaining table rows need isolated/coherent own-defect controls and ownership adjudication; no further blind-review loop or 12/12 assertion is opened at this cap. This is technical follow-up, not a request for a new layout decision.
+
+### Eleven standing checks
+
+| Check | Current evidence / limit |
+|---|---|
+| 1 Replay-only | Explicit fresh refusals for all four current families, known retry refusals for both Browser writers; no current writer selects replay-only. Compaction's native retry obligation remains authored/NOT_RUN. |
+| 2 App key format | These registered editions are Project-only; no app writer/key is invented. |
+| 3 Project partition | Existing Browser positives use `project~`; the generic-source/Storage-id controls remain intact. |
+| 4 Inline bound | Canonical MessagePack exact boundary and reference route for Browser/layout; bounded compaction metadata stays inline. |
+| 5 Identifier LF | Full closure uses exact end-of-input semantics; eight isolated LF controls plus valid references pass. |
+| 6 Semantic retry | Original physical body/ref pins; sequence and observed/persisted changes reuse the original. No Storage metadata added to semantic comparison. |
+| 7 Checkpoint identity | Existing family/generic token tests retain exact Storage-instance and encoded scope joins. No synthetic generic fixture is claimed as an end-to-end indexed family event. |
+| 8 Failure exit | New invalid-positive CLI returns 1; self-test requires it. Audit refuses an accepted negative before weakening. Existing family CLIs and declared suites pass. |
+| 9 Ref closure | Offline eager traversal, including dormant definitions; five broken-ref controls pass. Home closure resolves 415 refs with zero unresolved. |
+| 10 Historical validity | Exact prior envelope readers, stale-live-state-independent retained facts, deleted-thread content-free audit, forged/withdrawn refusals; terminal disclosure untouched. |
+| 11 Own-defect proof | **Incomplete**; full tables and exact outstanding source rows retained. All four affected oracle cells remain PARTIAL. |
+
+### Verification and frozen seal
+
+- Browser owner tests: **118 OK**; shared Browser admission: **38 OK**; PM7 tests: **13 OK**.
+- Browser created/v2/reset/shared checkers, Home4 checker/self-test, PM7/shared-runtime validators: exit 0. New boundary suite, CLI fault control and audit input fault control: see `ds-fix2-verification.json`.
+- Shard generation/check and PlanUnit index generation/validation: top-level pass, 99 sources / 3,093 shards / 7,422 units. Only the edited Contracts, Storage and materialized Storage registry sources changed derived shards. JSON syntax and whitespace checks pass.
+- All current exact quotes, application file/line hashes and admission pins verify. The original envelope, event registry, Decision Log, frozen validator and four original application records remain byte-identical to the reviewed head.
+- Frozen validator SHA-256 `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20`, scratch roots only: before **exit 1 / 4 categories**; after **exit 1 / 5 categories**. After retraction, only coordination.agent_registered counts as complete post-August depth. The compaction evidence-gap failure is honestly restored; registered incomplete rows are compaction, layout and terminal. DL-300 records/denominator remain open. Seal flags stay false; nothing is weakened to obtain a seal.
+
+### Open items and ids
+
+**Technical:** finish the exact guard-removal rows and adjudication listed in the table, then re-grade. No complete-depth admission or landing readiness claim. Integration still owns landing checks and governance-staleness/reseal handling. No reseal, registry append, admission or Decision Log edit was performed.
+
+**For Jared only:** terminal.workgroup_moved's existing withdrawal/read-disclosure question remains byte-unchanged; see the original question below. No terminal consumer is invented or reactivated.
+
+**Ids used:** no new PlanUnit ids. Existing SP-400 retained/amended, with existing CV-332, SP-259, SP-273 and SP-337. The unused allocated blocks stay unused.
 
 ## Review round 1: findings and responses (DS-FIX1, VM, 2026-11-04)
 
