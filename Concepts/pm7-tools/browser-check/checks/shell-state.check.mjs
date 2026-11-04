@@ -120,6 +120,7 @@ export const tests = {
     await t.check(`${look} ${id} help note visible`,await f.locator('#pm7ob-explainer').isVisible());
     const words=f.locator('#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .o55-explainer-w').first();
     await t.check(`${look} ${id} help note has rendered body text`,await words.isVisible()&&(await words.innerText()).trim().length>0);
+    if(['c-pair','s-wait'].includes(id)) await t.crop(`${look}-${id}-help`,'#pm7ob-explainer','Rendered help body stays visible on the pairing and discovery screens');
 
     await f.evaluate(() => O55.ui.close());
    }
