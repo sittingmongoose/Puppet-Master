@@ -7251,6 +7251,9 @@ canonical_text: alert.acknowledged is checked independently by python3 scripts/p
   encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
   storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
   and OS/storage durability remain NOT_RUN.
+  
+  
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -7298,6 +7301,9 @@ canonical_text: alert.dismissed is checked independently by python3 scripts/pm-a
   encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
   storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
   and OS/storage durability remain NOT_RUN.
+  
+  
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -7344,6 +7350,9 @@ canonical_text: alert.rule_muted is checked independently by python3 scripts/pm-
   encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
   storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
   and OS/storage durability remain NOT_RUN.
+  
+  
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -7390,6 +7399,9 @@ canonical_text: alert.snoozed is checked independently by python3 scripts/pm-ale
   encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
   storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
   and OS/storage durability remain NOT_RUN.
+  
+  
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -7443,7 +7455,9 @@ canonical_text: 'panel.redocked is checked independently by python3 scripts/pm-p
   The checker is a static reference oracle, not a real OS window, source-authorization, first-receipt or crash test.
   Native settlement/persistence failure, live/ended session recovery, coherent backup, original receipt authentication,
   permission/deletion/read-fence and SP-278 source/generation/CAS tests remain NOT_RUN separately for both families.
-  No static pass authorizes emission. Retention PENDING_RETENTION_DECISION.'
+  No static pass authorizes emission. Retention PENDING_RETENTION_DECISION.
+  
+  Both independent panel fixture paths include unchanged-digest settled_at_utc and interaction_transaction_id mutations, command-only digest rejection, changed-command rejection, complete command/payload hash recomputation, application@1:{hex(server_id)}:{hex(owner_operation_id)} current app keys, raw Project partition rejection, replay_only_not_appendable and trailing-LF identifier negatives. Both use their actual complete History response metadata for large valid tokens, exact 16384/16385-byte response boundaries and individually unpageable metadata/ref refusal. Alert ATS-330 through ATS-333 use the same complete-response measurement with each own token; the original ref-only plus 4096-byte allowance is retired.'
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
 split_recommended: false

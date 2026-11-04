@@ -26,6 +26,10 @@ def payload_errors(value, schema):
         partition = 'app' if project is None else 'project~' + base64.urlsafe_b64encode(project.encode()).decode().rstrip('=')
         if value['scope_partition'] != partition:
             found.append('scope mismatch')
+        if project is None:
+            key = 'application@1:' + value['server_id'].encode().hex() + ':' + value['interaction_transaction_id'].encode().hex()
+            if value['idempotency_key'] != key:
+                found.append('CV-366 application idempotency key mismatch')
         if value['origin'] == 'home_workspace' and (project is None or value['workspace_tab_id'] is None):
             found.append('missing original Home context')
         if value['new_host_revision'] != value['prior_host_revision'] + 1:
@@ -57,7 +61,7 @@ def operation_errors(value, schema, payload_schema, event_type):
     payload = value['payload']
     found += payload_errors(payload, payload_schema)
     command = value['original_command']
-    if value['request_digest'] != hashlib.sha256(packed(command)).hexdigest():
+    if value['request_digest'] != request_digest(command, payload):
         found.append('frozen command digest mismatch')
     for key in command:
         if key in payload and command[key] != payload[key]:
@@ -86,9 +90,14 @@ def operation_errors(value, schema, payload_schema, event_type):
     return found
 
 
+def request_digest(command, payload):
+    return hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
+
+
 def protocol_errors(context, original_payload, original_digest):
     """Synthetic evidence joins; real authority/OS proofs remain native obligations."""
     errors = []
+    errors += shared.writer_policy_errors(context['replay_policy'])
     if not context['admitted']:
         errors.append('family absent')
     if not context['desktop']:
@@ -118,6 +127,9 @@ def main():
         fixture = load(f'Plans/panel_event_contracts/{slug}.fixtures.json')
         schema = load(family['payload_schema'])
         Draft202012Validator.check_schema(schema)
+        for case in fixture['writer_policy_cases']:
+            assert (not shared.writer_policy_errors(case['policy'])) == case['valid']
+            count += 1
         for case in fixture['payload_cases']:
             assert (not payload_errors(case['value'], schema)) == case['valid'], (event, case['name'])
             count += 1
@@ -133,6 +145,16 @@ def main():
         operation = fixture['settled_operation']
         assert not operation_errors(operation, op_schema, schema, event)
         count += 1
+        count += shared.trailing_lf_cases(operation, op_schema)
+        for case in fixture['frozen_payload_negative_cases']:
+            altered = copy.deepcopy(operation)
+            altered['payload'][case['field']] = case['value']
+            assert 'frozen command digest mismatch' in operation_errors(altered, op_schema, schema, event), case['name']
+            count += 1
+        altered = copy.deepcopy(operation)
+        altered['request_digest'] = hashlib.sha256(packed(altered['original_command'])).hexdigest()
+        assert operation_errors(altered, op_schema, schema, event), 'old command-only digest'
+        count += 1
         for field, bad in [('app_session_id', 'other-session'), ('original_append_result_ref', None), ('event_id', 'reminted')]:
             altered = copy.deepcopy(operation)
             altered[field] = bad
@@ -144,11 +166,12 @@ def main():
         count += 1
         payload = operation['payload']
         digest = hashlib.sha256(packed(payload)).hexdigest()
-        context = dict(admitted=True, desktop=True, source_verified=True, receipt_event_id=operation['event_id'],
+        context = dict(admitted=True, desktop=True, source_verified=True, replay_policy='dedupe_by_idempotency_key', receipt_event_id=operation['event_id'],
                        original_event_id=operation['event_id'], session=payload['app_session_id'], window=payload['window_id'],
                        retry_payload=payload, publication_state='current', cursor=0, frontier=1000)
         assert not protocol_errors(context, payload, digest)
-        mutations = {'registry_absent': ('admitted', False), 'source_unverified': ('source_verified', False),
+        mutations = {'replay_only_not_appendable': ('replay_policy', 'projector_replay_only'),
+                     'registry_absent': ('admitted', False), 'source_unverified': ('source_verified', False),
                      'wrong_original_receipt': ('receipt_event_id', 'foreign'), 'prior_session': ('session', 'ended'),
                      'wrong_window': ('window', 'foreign'), 'same_key_altered_payload': ('retry_payload', {**payload, 'actor_ref': 'foreign'}),
                      'withdrawn_publication': ('publication_state', 'withdrawn'), 'cursor_beyond_frontier': ('cursor', 1001),
@@ -168,6 +191,8 @@ def main():
             count += 1
         checkpoint = fixture['checkpoint']
         assert not checkpoint_errors(checkpoint, cp_schema)
+        count += shared.trailing_lf_cases(checkpoint, cp_schema)
+        count += shared.history_response_cases(checkpoint, cp_schema, event, payload['project_id'])
         for field, bad_value in [('scope_partition', 'app'), ('storage_instance_id', 'foreign')]:
             altered = copy.deepcopy(checkpoint)
             altered[field] = bad_value
@@ -191,8 +216,11 @@ def main():
                   for i in range(fixture['history_match_count'])]
         cursor, refs, complete = 0, [], False
         while not complete:
-            page, new_cursor, complete = shared.history_page(events, event, payload['project_id'], cursor, len(events))
+            response = shared.history_page(events, event, payload['project_id'], cursor, len(events),
+                                           checkpoint['publication_id'], checkpoint['index_read_token'])
+            page, new_cursor, complete = response['event_refs'], response['after_sequence_id'], response['complete']
             assert new_cursor > cursor and len(page) <= 64
+            assert len(packed(response)) <= 16384
             refs += page
             cursor = new_cursor
         assert len(refs) == len(set(refs)) == fixture['history_match_count']

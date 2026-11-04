@@ -818,5 +818,15 @@
       "scan_limit": 256,
       "expected_matches": 0
     }
+  ],
+  "writer_policy_cases": [
+    {
+      "policy": "dedupe_by_idempotency_key",
+      "valid": true
+    },
+    {
+      "policy": "projector_replay_only",
+      "valid": false
+    }
   ]
 }

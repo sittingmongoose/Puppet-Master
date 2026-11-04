@@ -56,7 +56,10 @@
     },
     "request_digest": {
       "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+      "description": "Lowercase SHA-256 of canonical MessagePack of the exact closed object {original_command: this.original_command, candidate_payload: this.payload}; no field is omitted, normalized or regenerated on retry.",
+      "minLength": 64,
+      "maxLength": 64
     },
     "schema_id": {
       "const": "pm.storage_value.panel_redocked_operation.v1"

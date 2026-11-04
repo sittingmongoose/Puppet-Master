@@ -29701,7 +29701,7 @@ canonical_text: "Newly authored owner contract for alert.acknowledged 1.0.0 unde
   \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
   \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
   \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
-  \ input it requires a governed rebuild, never truncation or in-place relabeling."
+  \ input it requires a governed rebuild, never truncation or in-place relabeling.\n\nCurrent append and original retry select replay_policy=dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the SP-337 BLAKE3/size/media-type payload_ref, never base64 body stuffing. This does not relax the 16384-byte closed operation/checkpoint maximum: oversized metadata is refused before effects. Identifier patterns require full-string matching, including rejection of a trailing LF; no trimming or normalization. History response is exactly the closed object {publication_id, index_read_token, after_sequence_id, event_refs, complete}; index_read_token is the full nine-field durable token. Measure canonical MessagePack of that entire object for every candidate response, including an empty completion/continuation. Metadata or one matching ref that cannot individually fit returns unavailable without advancing past the match. Static large-valid-token, exact-response-boundary, unpageable-metadata and replay-only negatives do not replace native authorization/byte/CAS proofs."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -29849,7 +29849,7 @@ canonical_text: "Newly authored owner contract for alert.dismissed 1.0.0 under D
   \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
   \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
   \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
-  \ input it requires a governed rebuild, never truncation or in-place relabeling."
+  \ input it requires a governed rebuild, never truncation or in-place relabeling.\n\nCurrent append and original retry select replay_policy=dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the SP-337 BLAKE3/size/media-type payload_ref, never base64 body stuffing. This does not relax the 16384-byte closed operation/checkpoint maximum: oversized metadata is refused before effects. Identifier patterns require full-string matching, including rejection of a trailing LF; no trimming or normalization. History response is exactly the closed object {publication_id, index_read_token, after_sequence_id, event_refs, complete}; index_read_token is the full nine-field durable token. Measure canonical MessagePack of that entire object for every candidate response, including an empty completion/continuation. Metadata or one matching ref that cannot individually fit returns unavailable without advancing past the match. Static large-valid-token, exact-response-boundary, unpageable-metadata and replay-only negatives do not replace native authorization/byte/CAS proofs."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -29996,7 +29996,7 @@ canonical_text: "Newly authored owner contract for alert.rule_muted 1.0.0 under 
   \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
   \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
   \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
-  \ input it requires a governed rebuild, never truncation or in-place relabeling."
+  \ input it requires a governed rebuild, never truncation or in-place relabeling.\n\nCurrent append and original retry select replay_policy=dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the SP-337 BLAKE3/size/media-type payload_ref, never base64 body stuffing. This does not relax the 16384-byte closed operation/checkpoint maximum: oversized metadata is refused before effects. Identifier patterns require full-string matching, including rejection of a trailing LF; no trimming or normalization. History response is exactly the closed object {publication_id, index_read_token, after_sequence_id, event_refs, complete}; index_read_token is the full nine-field durable token. Measure canonical MessagePack of that entire object for every candidate response, including an empty completion/continuation. Metadata or one matching ref that cannot individually fit returns unavailable without advancing past the match. Static large-valid-token, exact-response-boundary, unpageable-metadata and replay-only negatives do not replace native authorization/byte/CAS proofs."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -30143,7 +30143,7 @@ canonical_text: "Newly authored owner contract for alert.snoozed 1.0.0 under DL-
   \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
   \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
   \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
-  \ input it requires a governed rebuild, never truncation or in-place relabeling."
+  \ input it requires a governed rebuild, never truncation or in-place relabeling.\n\nCurrent append and original retry select replay_policy=dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the SP-337 BLAKE3/size/media-type payload_ref, never base64 body stuffing. This does not relax the 16384-byte closed operation/checkpoint maximum: oversized metadata is refused before effects. Identifier patterns require full-string matching, including rejection of a trailing LF; no trimming or normalization. History response is exactly the closed object {publication_id, index_read_token, after_sequence_id, event_refs, complete}; index_read_token is the full nine-field durable token. Measure canonical MessagePack of that entire object for every candidate response, including an empty completion/continuation. Metadata or one matching ref that cannot individually fit returns unavailable without advancing past the match. Static large-valid-token, exact-response-boundary, unpageable-metadata and replay-only negatives do not replace native authorization/byte/CAS proofs."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -30204,9 +30204,7 @@ canonical_text: 'Newly authored owner contract for panel.redocked 2.0.0 under DL
   process lifetime and shared by its chat column/window, never a Home tab or a restored identifier. Host revision
   starts at zero for that session; compare the entire in-memory prior snapshot and advance exactly one for a settled
   move. Let H be lowercase SHA-256 of canonical MessagePack [storage_instance_id, server_id, scope_partition, app_session_id,
-  "panel.redocked", idempotency_key]. event_id=evt_panel_redocked_H and operation_digest=H. Request digest is SHA-256
-  of the entire frozen accepted command, including actor, actual scope/session/window, original expected revisions
-  and candidate payload. Same key with unequal command/digest is conflict before any effect. Session/scope/window
+  "panel.redocked", idempotency_key]. event_id=evt_panel_redocked_H and operation_digest=H. Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values are the complete frozen closed objects, with every field including settled_at_utc and interaction_transaction_id; omit, normalize or regenerate nothing. original_command retains actor, actual scope/session/window and original expected revisions. Neither changed payload nor changed command may reuse the original digest. Same key with unequal command/digest is conflict before any effect. Session/scope/window
   joins must match the independently read shell owner, not caller claims.
 
 
@@ -30295,7 +30293,11 @@ canonical_text: 'Newly authored owner contract for panel.redocked 2.0.0 under DL
   applied to this restart-unsaved host transition. No deletion policy is invented. Fixtures Plans/panel_event_contracts/panel_redocked.fixtures.json
   and python3 scripts/pm-panel-event-contracts-check.py supply this family''s positive/negative schema, identity,
   retry, original-custody, history boundary and withdrawal oracles. Native OS/storage atomicity, receipt authenticity,
-  SP-278 source proof, crash/recovery, permissions and backup tests remain NOT_RUN.'
+  SP-278 source proof, crash/recovery, permissions and backup tests remain NOT_RUN.
+  
+  Current append and original retry select replay_policy=dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the SP-337 BLAKE3/size/media-type payload_ref, never base64 body stuffing. This does not relax the 16384-byte closed operation/checkpoint maximum: oversized metadata is refused before effects. Identifier patterns require full-string matching, including rejection of a trailing LF; no trimming or normalization. History response is exactly the closed object {publication_id, index_read_token, after_sequence_id, event_refs, complete}; index_read_token is the full nine-field durable token. Measure canonical MessagePack of that entire object for every candidate response, including an empty completion/continuation. Metadata or one matching ref that cannot individually fit returns unavailable without advancing past the match. Static large-valid-token, exact-response-boundary, unpageable-metadata and replay-only negatives do not replace native authorization/byte/CAS proofs.
+  
+  For an application-scope invocation, CV-366 idempotency_key is exactly application@1:{hex(server_id)}:{hex(interaction_transaction_id)}. interaction_transaction_id is the original shell owner operation identity, not a retry timestamp; hex encodes the exact UTF-8 bytes in lowercase. An arbitrary caller key is refused. Project-scope original keys retain their existing format.'
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
 split_recommended: false
@@ -30364,9 +30366,7 @@ canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL
   process lifetime and shared by its chat column/window, never a Home tab or a restored identifier. Host revision
   starts at zero for that session; compare the entire in-memory prior snapshot and advance exactly one for a settled
   move. Let H be lowercase SHA-256 of canonical MessagePack [storage_instance_id, server_id, scope_partition, app_session_id,
-  "panel.undocked", idempotency_key]. event_id=evt_panel_undocked_H and operation_digest=H. Request digest is SHA-256
-  of the entire frozen accepted command, including actor, actual scope/session/window, original expected revisions
-  and candidate payload. Same key with unequal command/digest is conflict before any effect. Session/scope/window
+  "panel.undocked", idempotency_key]. event_id=evt_panel_undocked_H and operation_digest=H. Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values are the complete frozen closed objects, with every field including settled_at_utc and interaction_transaction_id; omit, normalize or regenerate nothing. original_command retains actor, actual scope/session/window and original expected revisions. Neither changed payload nor changed command may reuse the original digest. Same key with unequal command/digest is conflict before any effect. Session/scope/window
   joins must match the independently read shell owner, not caller claims.
 
 
@@ -30455,7 +30455,11 @@ canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL
   applied to this restart-unsaved host transition. No deletion policy is invented. Fixtures Plans/panel_event_contracts/panel_undocked.fixtures.json
   and python3 scripts/pm-panel-event-contracts-check.py supply this family''s positive/negative schema, identity,
   retry, original-custody, history boundary and withdrawal oracles. Native OS/storage atomicity, receipt authenticity,
-  SP-278 source proof, crash/recovery, permissions and backup tests remain NOT_RUN.'
+  SP-278 source proof, crash/recovery, permissions and backup tests remain NOT_RUN.
+  
+  Current append and original retry select replay_policy=dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the SP-337 BLAKE3/size/media-type payload_ref, never base64 body stuffing. This does not relax the 16384-byte closed operation/checkpoint maximum: oversized metadata is refused before effects. Identifier patterns require full-string matching, including rejection of a trailing LF; no trimming or normalization. History response is exactly the closed object {publication_id, index_read_token, after_sequence_id, event_refs, complete}; index_read_token is the full nine-field durable token. Measure canonical MessagePack of that entire object for every candidate response, including an empty completion/continuation. Metadata or one matching ref that cannot individually fit returns unavailable without advancing past the match. Static large-valid-token, exact-response-boundary, unpageable-metadata and replay-only negatives do not replace native authorization/byte/CAS proofs.
+  
+  For an application-scope invocation, CV-366 idempotency_key is exactly application@1:{hex(server_id)}:{hex(interaction_transaction_id)}. interaction_transaction_id is the original shell owner operation identity, not a retry timestamp; hex encodes the exact UTF-8 bytes in lowercase. An arbitrary caller key is refused. Project-scope original keys retain their existing format.'
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
 split_recommended: false

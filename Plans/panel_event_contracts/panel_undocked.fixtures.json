@@ -336,7 +336,7 @@
         "interaction_transaction_id": "fixture",
         "actor_ref": "fixture",
         "correlation_id": "fixture",
-        "idempotency_key": "fixture",
+        "idempotency_key": "application@1:736572766572:66697874757265",
         "window_id": "window",
         "owner_commit_ref": "fixture",
         "command_result_ref": "fixture",
@@ -397,6 +397,42 @@
         "workspace_layout_event_ref": null
       },
       "valid": false
+    },
+    {
+      "name": "application_key_missing_server_and_operation",
+      "value": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "server_id": "server",
+        "scope_partition": "app",
+        "app_session_id": "session",
+        "interaction_transaction_id": "fixture",
+        "actor_ref": "fixture",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "window_id": "window",
+        "owner_commit_ref": "fixture",
+        "command_result_ref": "fixture",
+        "dispatch_receipt_ref": "fixture",
+        "schema_id": "pm.event.panel_undocked.v2",
+        "schema_version": "2.0.0",
+        "project_id": null,
+        "workspace_tab_id": null,
+        "panel_id": "chat",
+        "command_id": "cmd.panel.undock",
+        "origin": "global_shell",
+        "source_host": "chat_column",
+        "target_host": "detached_window",
+        "prior_host_revision": 0,
+        "new_host_revision": 1,
+        "settled_at_utc": "2026-11-04T18:00:00Z",
+        "settled_only": true,
+        "preview_state_included": false,
+        "persisted": true,
+        "host_state_persisted": false,
+        "workspace_layout_changed_coemitted": false,
+        "workspace_layout_event_ref": null
+      },
+      "valid": false
     }
   ],
   "historical_v1": {
@@ -432,7 +468,7 @@
     "operation_digest": "6c3bd726472c6f9b77439d4a7bab65d9bd66c74a1049e3fe53a12a4b8c8f13f2",
     "event_id": "evt_panel_undocked_6c3bd726472c6f9b77439d4a7bab65d9bd66c74a1049e3fe53a12a4b8c8f13f2",
     "idempotency_key": "fixture",
-    "request_digest": "30ac1f59af004995a10db2ab1e085d7420fc6a8c1e8a420fa31db8660d96501e",
+    "request_digest": "2d9a99f87fbf9327be83412f6d4d1ec23888b6300c6ad147c444bc38242c644a",
     "schema_id": "pm.storage_value.panel_undocked_operation.v1",
     "schema_version": "1.0.0",
     "project_id": "fixture",
@@ -557,5 +593,27 @@
     16384,
     16385
   ],
-  "history_match_count": 1000
+  "history_match_count": 1000,
+  "frozen_payload_negative_cases": [
+    {
+      "name": "unchanged_digest_settled_at_utc",
+      "field": "settled_at_utc",
+      "value": "2026-11-04T19:00:00Z"
+    },
+    {
+      "name": "unchanged_digest_interaction_transaction_id",
+      "field": "interaction_transaction_id",
+      "value": "foreign-transaction"
+    }
+  ],
+  "writer_policy_cases": [
+    {
+      "policy": "dedupe_by_idempotency_key",
+      "valid": true
+    },
+    {
+      "policy": "projector_replay_only",
+      "valid": false
+    }
+  ]
 }

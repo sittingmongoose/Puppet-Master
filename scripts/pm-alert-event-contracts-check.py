@@ -53,8 +53,18 @@ def profile_errors(registry, fid, kind, group):
         return ['missing/oversized maximum']
     return []
 
-def history_page(events, event_type, project_id, after, frontier):
+def writer_policy_errors(policy):
+    if policy == 'projector_replay_only':
+        return ['replay_only_not_appendable']
+    return [] if policy == 'dedupe_by_idempotency_key' else ['unsupported current writer policy']
+
+def history_page(events, event_type, project_id, after, frontier, publication_id, index_read_token):
     """Static reference oracle for bounded read-through; not native source authentication."""
+    def response(refs, cursor):
+        return dict(publication_id=publication_id, index_read_token=index_read_token,
+                    after_sequence_id=cursor, event_refs=refs, complete=cursor == frontier)
+    if after > frontier or len(packed(response([], after))) > 16384:
+        raise ValueError('unpageable metadata or invalid cursor')
     result, scanned, cursor = [], 0, after
     for event in events:
         seq = event['sequence_id']
@@ -62,11 +72,94 @@ def history_page(events, event_type, project_id, after, frontier):
             continue
         match = event['event_type'] == event_type and event['project_id'] == project_id
         candidate = result + [event['event_ref']] if match else result
-        # A small response-metadata allowance here; the writer measures the complete response.
-        if scanned == 256 or len(candidate) > 64 or len(packed(candidate)) + 4096 > 16384:
+        if scanned == 256 or len(candidate) > 64:
+            break
+        if len(packed(response(candidate, seq))) > 16384:
+            if not result:
+                raise ValueError('individually unpageable ref/metadata')
             break
         result, scanned, cursor = candidate, scanned + 1, seq
-    return result, cursor, cursor == frontier
+    return response(result, cursor)
+
+def trailing_lf_cases(value, schema):
+    """Each currently present patterned leaf gets an independent trailing-LF regression."""
+    count = 0
+    def resolve(contract):
+        while '$ref' in contract:
+            ref = contract['$ref']
+            assert ref.startswith('#/')
+            contract = schema
+            for part in ref[2:].split('/'):
+                contract = contract[part.replace('~1', '/').replace('~0', '~')]
+        return contract
+    def visit(node, contract, path):
+        nonlocal count
+        contract = resolve(contract)
+        if isinstance(node, dict):
+            for key, child in node.items():
+                visit(child, contract.get('properties', {}).get(key, {}), path + [key])
+        elif isinstance(node, list):
+            for i, child in enumerate(node):
+                visit(child, contract.get('items', {}), path + [i])
+        elif isinstance(node, str) and 'pattern' in contract:
+            altered = copy.deepcopy(value)
+            parent = altered
+            for key in path[:-1]:
+                parent = parent[key]
+            # A full checker must refuse LF on every identifier, including embedded tokens.
+            parent[path[-1]] = node + '\n'
+            assert list(Draft202012Validator(schema).iter_errors(altered)), ('trailing LF accepted', path)
+            count += 1
+    visit(value, schema, [])
+    return count
+
+def history_response_cases(checkpoint, schema, event_type, project_id):
+    """Complete-byte boundaries with real closed checkpoint metadata; no fixed allowance."""
+    large = copy.deepcopy(checkpoint)
+    ref = large['index_read_token']['checkpoint_ref']
+    for _ in range(3):
+        ref += 'x' * max(0, 16384 - len(packed(large)))
+        large['index_read_token']['checkpoint_ref'] = ref
+        delta = 16384 - len(packed(large))
+        if delta < 0:
+            ref = ref[:delta]
+            large['index_read_token']['checkpoint_ref'] = ref
+    assert len(packed(large)) == 16384 and not checkpoint_errors(large, schema)
+    events = [dict(sequence_id=i + 1, event_type=event_type, project_id=project_id,
+                   event_ref='event_' + str(i) + '_' + 'a' * 64) for i in range(64)]
+    cursor, seen = 0, []
+    while cursor < 64:
+        page = history_page(events, event_type, project_id, cursor, 64,
+                            large['publication_id'], large['index_read_token'])
+        assert len(packed(page)) <= 16384 and page['after_sequence_id'] > cursor
+        if cursor == 0:
+            assert len(page['event_refs']) < 64
+        cursor = page['after_sequence_id']
+        seen += page['event_refs']
+    assert seen == [event['event_ref'] for event in events]
+    single = events[:1]
+    for _ in range(3):
+        page = history_page(single, event_type, project_id, 0, 1,
+                            checkpoint['publication_id'], checkpoint['index_read_token'])
+        single[0]['event_ref'] += 'x' * max(0, 16384 - len(packed(page)))
+        size = len(packed(dict(page, event_refs=[single[0]['event_ref']])))
+        if size > 16384:
+            single[0]['event_ref'] = single[0]['event_ref'][:16384 - size]
+    page = history_page(single, event_type, project_id, 0, 1,
+                        checkpoint['publication_id'], checkpoint['index_read_token'])
+    assert len(packed(page)) == 16384 and page['complete']
+    single[0]['event_ref'] += 'x'
+    for publication, token, source in [
+            (checkpoint['publication_id'], checkpoint['index_read_token'], single),
+            ('x' * 16384, checkpoint['index_read_token'], []),
+            (checkpoint['publication_id'], dict(checkpoint['index_read_token'], checkpoint_ref='x' * 16384), [])]:
+        try:
+            history_page(source, event_type, project_id, 0, len(source), publication, token)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError('unpageable metadata/ref accepted')
+    return 5
 
 def main():
     count = 0
@@ -78,6 +171,10 @@ def main():
         schema = load(family['payload_schema'])
         Draft202012Validator.check_schema(schema)
         fixtures = load(f"Plans/alert_event_contracts/{family['slug']}.fixtures.json")
+        for case in fixtures['writer_policy_cases']:
+            assert (not writer_policy_errors(case['policy'])) == case['valid']
+            count += 1
+        count += trailing_lf_cases(fixtures['payload_cases'][0]['payload'], schema)
         for case in fixtures['payload_cases']:
             actual = not errors(case['payload'], schema, case['guard'])
             assert actual == case['valid'], (family['event_type'], case['name'], actual)
@@ -86,6 +183,7 @@ def main():
             path = f"Plans/alert_event_contracts/{family[key]}.schema.json"
             value_schema = load(path)
             Draft202012Validator.check_schema(value_schema)
+            count += trailing_lf_cases(fixtures[key + '_cases'][0]['value'], value_schema)
             for case in fixtures[key + '_cases']:
                 valid = not (checkpoint_errors(case['value'], value_schema) if key == 'checkpoint'
                              else list(Draft202012Validator(value_schema).iter_errors(case['value'])))
@@ -117,14 +215,17 @@ def main():
                               for i in range(case['matches'] + case.get('nonmatches', 0))]
                     cursor, refs, complete = 0, [], False
                     while not complete:
-                        page, next_cursor, complete = history_page(events, family['event_type'], 'fixture', cursor, len(events))
+                        response = history_page(events, family['event_type'], 'fixture', cursor, len(events),
+                                                baseline['publication_id'], baseline['index_read_token'])
+                        page, next_cursor, complete = response['event_refs'], response['after_sequence_id'], response['complete']
                         assert next_cursor > cursor
-                        assert len(page) <= 64 and len(packed(page)) + 4096 <= 16384
+                        assert len(page) <= 64 and len(packed(response)) <= 16384
                         refs += page
                         cursor = next_cursor
                     assert len(refs) == len(set(refs)) == case['expected_matches']
                     assert len(packed(baseline)) < 16384 and 'event_refs' not in baseline
                     count += 1
+                count += history_response_cases(baseline, value_schema, family['event_type'], 'fixture')
             group = 'event_log' if key == 'checkpoint' else 'coordination_and_storage'
             row = next(x for x in values['families'] if x['family_id'] == family[key])
             assert not profile_errors(values, family[key], row['storage_kind'], group)
