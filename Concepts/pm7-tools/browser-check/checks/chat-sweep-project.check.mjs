@@ -1,8 +1,9 @@
 import {pathToFileURL,fileURLToPath} from 'node:url';
+import {LOOKS} from '../browser-check.config.mjs';
 import {onboardingApp} from '../helpers/onboarding-fields.mjs';
 export const tests={
  'SW02 no connected AI composer':async t=>{
-  const a=onboardingApp(t);await a.boot();await a.toSafe('Chat without AI');
+  await t.viewport(1390,900);const a=onboardingApp(t);await a.boot();await a.toSafe('Chat without AI');
   await a.click('next');
   const f=a.frame();
   for(let i=0;i<8;i++){
@@ -26,7 +27,11 @@ export const tests={
   const file=t.args.standalone||fileURLToPath(new URL('../../../chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html',import.meta.url));
   await t.page.goto(pathToFileURL(file).href+'?o55=off');
   await t.page.waitForFunction(()=>window.__PM56_BOOT_OK);
-  const r=await t.page.evaluate(()=>({kit:!!window.PMLogo,marks:[...document.querySelectorAll('.pmx-mark')].map(e=>e.querySelectorAll('path,rect,circle').length),pip:PM56_SHELL.pmxPip({mood:'idle',size:22})}));
-  t.log(JSON.stringify(r));await t.check('standalone Pip kit and nonempty mark',r.kit&&r.pip.length>0);
+  for(const look of LOOKS){
+  await t.page.evaluate(name=>{PM56_DEMO.setTheme(name);PM56_DEMO.openActivity('subagents');},look);
+  await t.page.waitForTimeout(300);
+  const r=await t.page.evaluate(()=>({rows:[...document.querySelectorAll('.pmap-agent-mark .pmx-pip')].map(e=>e.children.length),kit:!!window.PMLogo,marks:[...document.querySelectorAll('.pmx-mark')].map(e=>e.querySelectorAll('path,rect,circle').length),pip:PM56_SHELL.pmxPip({mood:'idle',size:22})}));
+  t.log(look+' '+JSON.stringify(r));await t.check(look+' standalone Pip kit and nonempty mark',r.kit&&r.pip.length>0&&r.rows.length>0&&r.rows.every(n=>n>0));
+  }
  }
 };

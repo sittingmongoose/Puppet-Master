@@ -2,7 +2,7 @@ import {LOOKS} from '../browser-check.config.mjs';
 export const tests={
  'SW13 SW19 Room controls and sheet face':async t=>{
   const f=await t.app.open();
-  for(const look of LOOKS){
+  for(const look of (t.args.looks?String(t.args.looks).split(','):LOOKS)){
    await t.app.look(look);
    await f.evaluate(()=>{PM56_COLLAB.openConfigure('chat_room');PM56_APP.ctx().openDialog({type:'collab-configure'});});
    await t.page.waitForTimeout(700);
@@ -28,6 +28,8 @@ export const tests={
   await t.emulate({reducedMotion:'reduce'});const f=await t.app.open();
   for(const look of ['basic-dark','nier-dark']){
    await t.app.look(look);
+   await f.evaluate(()=>PM56_DEMO.openActivity('subagents'));
+   t.log('working agents '+await f.evaluate(()=>PM_WORK.items({thread:PM56_APP.ctx().state.selectedThread,kind:'agent'}).filter(x=>PM_WORK.isLive(x)).length));
    const loops=await f.evaluate(()=>document.getAnimations().filter(a=>a.playState==='running'&&a.effect?.getTiming().iterations===Infinity).map(a=>({name:a.animationName,cls:a.effect.target?.className?.baseVal||a.effect.target?.className})));
    t.log(look+' '+JSON.stringify(loops));
    await t.check(look+' no targeted loops',!loops.some(x=>/thread-working-pulse|wt-dirty|thread-wt-glyph|pm6-subagent-status|subagent-dot|nx-st-working/.test(x.cls)));
