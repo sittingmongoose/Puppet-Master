@@ -10,6 +10,8 @@ import importlib.util
 from functools import lru_cache
 from jsonschema.validators import extend
 from referencing import Registry, Resource
+from referencing.exceptions import Unresolvable
+from referencing.jsonschema import DRAFT202012
 
 ROOT = Path(__file__).resolve().parents[1]
 FORMAT = jsonschema.FormatChecker()
@@ -32,23 +34,73 @@ def read(path):
 def validator(schema):
     return cached_validator(json.dumps(schema, sort_keys=True))
 
+def check_reference_closure(schema, registry):
+    """Resolve every schema reference, including unused definitions/branches.
+
+    Resource.subresources follows schema positions, preserves nested $id bases,
+    and excludes instance data such as examples. The registry has no retriever:
+    a reference outside the explicitly retained local resources fails closed.
+    """
+    root = Resource.from_contents(schema, default_specification=DRAFT202012)
+    registry = registry.with_resource(root.id() or '', root).crawl()
+
+    seen = set()
+
+    def walk(resource, resolver):
+        # The same schema may recur through $ref, or appear under another base.
+        identity = (id(resource.contents), resolver._base_uri)
+        if identity in seen:
+            return
+        seen.add(identity)
+        if isinstance(resource.contents, dict):
+            for keyword in ('$ref', '$dynamicRef'):
+                if keyword in resource.contents:
+                    target = resolver.lookup(resource.contents[keyword])
+                    walk(Resource.from_contents(target.contents, default_specification=DRAFT202012), target.resolver)
+        for child in resource.subresources():
+            walk(child, resolver.in_subresource(child))
+
+    walk(root, registry.resolver_with_root(root))
+
+@lru_cache(maxsize=1)
+def schema_registry():
+    # Allowed local resources for the adopted application-source and full-value
+    # receipt contracts. Validate the complete referenced subschema closures,
+    # without importing unrelated sibling contracts or ambient retrieval.
+    names = (
+        'application_workflow_contracts', 'application_workflow_sources',
+        'assistant_chat_contracts', 'assistant_memory_contracts',
+        'automation_authority_contracts', 'collaborative_workflows_contracts',
+        'coordination_projection_contracts', 'cross_project_access_contracts',
+        'developer_session_application_contracts', 'event_append_receipt_contracts',
+        'event_record', 'event_record_index_checkpoint', 'goal_body_custody',
+        'multi_account_contracts', 'projects_refresh_fix_contracts',
+        'section15_browser_program_contracts', 'settings_system_contracts',
+        'shared_integration_runtime', 'shared_integration_runtime_expansion_contracts',
+        'shared_runtime_command_contracts', 'source_control_contracts',
+        'working_notebook_contracts',
+    )
+    registry = Registry()
+    schemas = [read('Plans/' + name + '.schema.json') for name in names]
+    for name, schema in zip(names, schemas):
+        resource = Resource.from_contents(schema, default_specification=DRAFT202012)
+        for uri in (schema['$id'], 'https://puppetmaster.local/Plans/' + name + '.schema.json'):
+            registry = registry.with_resource(uri, resource)
+    registry = registry.crawl()
+    return registry
+
 @lru_cache(maxsize=None)
 def cached_validator(encoded):
     schema = json.loads(encoded)
     jsonschema.Draft202012Validator.check_schema(schema)
-    return StrictValidator(schema, format_checker=FORMAT)
+    registry = schema_registry()
+    check_reference_closure(schema, registry)
+    return StrictValidator(schema, registry=registry, format_checker=FORMAT)
 
 @lru_cache(maxsize=1)
 def application_source_validator():
-    registry = Registry()
-    for name in ('shared_integration_runtime', 'application_workflow_contracts', 'application_workflow_sources'):
-        schema = read('Plans/' + name + '.schema.json')
-        resource = Resource.from_contents(schema)
-        registry = registry.with_resource(schema['$id'], resource)
-        registry = registry.with_resource('https://puppetmaster.local/Plans/' + name + '.schema.json', resource)
     schema = read('Plans/application_workflow_sources.schema.json')
-    return StrictValidator({'$defs': schema['$defs'], '$ref': '#/$defs/OriginalBrowserTransitionSource'},
-                           registry=registry, format_checker=FORMAT)
+    return validator({'$ref': schema['$id'] + '#/$defs/OriginalBrowserTransitionSource'})
 
 def identity(c, payload, source=None):
     if payload.get('scope', {}).get('kind') == 'app':
@@ -127,6 +179,14 @@ def receipt_ok(d):
             and custody['event_id'] == event['event_id'] and custody['event_type'] == event['event_type']
             and custody['idempotency_key'] == event['idempotency_key']
             and custody['producer_semantic_digest'] == _codec.event_producer_semantic_digest(event))
+
+def token_matches_storage(token, storage_instance_id):
+    key = 'event_record_index_checkpoint.v1:' + storage_instance_id
+    return (token['storage_instance_id'] == storage_instance_id
+            and token['source_selection']['storage_instance_id'] == storage_instance_id
+            and token['checkpoint_key'] == key
+            and token['checkpoint_ref'] == key + '#/generations/' + token['generation_id']
+            and token['index_dataset_name'] == 'event_record_index.v2@' + token['generation_id'])
 
 def owner_text(c):
     path, uid = c['semantic_owner'].split('#')
@@ -230,10 +290,13 @@ def evaluate(c, op, d):
             return {'result': 'REFUSE', 'effects': 0}
         if p.get('outcome_ref', out['source_ref']) != out['source_ref']:
             return {'result': 'REFUSE', 'effects': 0}
-        # Only pure retained-receipt resolution is independent of retired source
-        # controls. New append recovery and publication keep the current joins.
-        if not (op == 'recover' and r is not None) and not payload_ok(c, o['payload'], x):
+        # Original transition/source validity was checked against original_context
+        # above. Retained reads and receipt recovery survive later state changes.
+        # New append recovery and publication still require the current joins.
+        if (op == 'publish' or (op == 'recover' and r is None)) and not payload_ok(c, o['payload'], x):
             return {'result': 'REFUSE', 'effects': 0}
+        if op == 'read' and (d['reader_withdrawn'] or d['reader_installed'] != c['consumer']):
+            return {'result': 'UNAVAILABLE', 'effects': 0}
         if op in ('publish', 'read') and (not d['permission_now'] or d['source_deleted_now'] or not d['share_current']
                                          or not x['owner_command_authorized']):
             return {'result': 'REFUSE' if op == 'publish' else 'UNAVAILABLE', 'effects': 0}
@@ -258,9 +321,8 @@ def evaluate(c, op, d):
                 or d['reader_withdrawn'] or not d['permission_now'] or d['source_deleted_now']
                 or cp['state'] != 'current' or token != d['selected_token']
                 or d['live_snapshot_id'] != d['current_live_snapshot_id']
-                or token['storage_instance_id'] != token['source_selection']['storage_instance_id']
+                or not token_matches_storage(token, d['storage_instance_id'])
                 or not d['share_current'] or not envelope_ok(c, d) or not receipt_ok(d)
-                or token['storage_instance_id'] != d['storage_instance_id']
                 or cp.get('project_id') != p.get('project_id') or cp.get('scope') != p.get('scope')):
             return {'result': 'REFUSE', 'effects': 0}
         if cp == d['stored_previous']:
@@ -277,6 +339,7 @@ def evaluate(c, op, d):
                 or [r['sequence'] for r in rows] != list(range(low, high + 1))
                 or cp['through_sequence_id'] != high or high != d['selected_high']
                 or (prior is not None and (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(prior))
+                    or not token_matches_storage(prior['index_read_token'], d['storage_instance_id'])
                     or any(prior['index_read_token'][key] != token[key]
                            for key in ('storage_instance_id', 'generation_id', 'generation_anchor_sha256'))
                     or prior.get('project_id') != cp.get('project_id') or prior.get('scope') != cp.get('scope')
@@ -328,6 +391,26 @@ REQUIRED = {'valid-transition', 'invalid-transition', 'envelope-mismatch', 'orig
             'publish-current-source-join-refused', 'append-recovery-current-source-join-refused',
             'append-recovery-guard-permission_now', 'append-recovery-guard-source_deleted_now',
             'append-recovery-guard-share_current'}
+REQUIRED |= {'checkpoint-foreign-root-key-and-ref', 'checkpoint-foreign-root-key',
+             'checkpoint-foreign-root-ref', 'checkpoint-ref-generation-mismatch',
+             'checkpoint-dataset-generation-mismatch', 'prior-checkpoint-foreign-root',
+             'rebuild-foreign-root-key-and-ref', 'history-after-live-state-advances',
+             'history-after-live-state-advances-denied', 'history-after-live-state-advances-deleted',
+             'history-after-live-state-advances-share-withdrawn',
+             'history-after-live-state-advances-reader-withdrawn',
+             'history-after-live-state-advances-reader-version-mismatch',
+             'history-after-live-state-advances-forged-original',
+             'history-after-live-state-advances-invalid-original-transition'}
+
+SCHEMA_REQUIRED = {'unresolved-optional-payload-ref', 'unresolved-unused-payload-definition',
+                   'unresolved-optional-checkpoint-ref', 'unresolved-unused-checkpoint-definition',
+                   'unresolved-allowed-resource-pointer', 'unresolved-unregistered-resource'}
+
+PREPARED_FAMILIES = {'doctor.custom_headless.checked', 'live.session.started', 'live.step.updated',
+                     'live.artifact.created', 'live.session.completed', 'live.session.degraded',
+                     'browser.context_captured', 'dev.session.started', 'dev.session.stopping',
+                     'dev.session.stopped', 'dev.session.restarting', 'preview.session.started',
+                     'preview.session.refreshed', 'preview.session.stopped'}
 
 def value_valid(schema_ref, value):
     if list(validator(read(schema_ref)).iter_errors(value)):
@@ -394,9 +477,11 @@ def main():
     assert commitment(shared['base_original_event'])['sha256'] == shared['commitment_sha256']
     contracts = read('Plans/ds15_event_contracts.json')
     fixtures = read('Plans/ds15_event_contract_fixtures.json')
+    assert len(contracts) == len(fixtures) == len(PREPARED_FAMILIES), 'DS15 preparation manifest cardinality changed'
+    assert {c['event_type'] for c in contracts} == {f['event_type'] for f in fixtures} == PREPARED_FAMILIES, 'DS15 prepared-family set changed'
     registry = read('Plans/event_family_registry.json')
     value_registry = read('Plans/storage_value_registry.json')
-    count = semantic_count = 0
+    count = semantic_count = schema_count = 0
     for c in contracts:
         name = c['event_type']
         assert name not in json.dumps(registry), name + ' unexpectedly admitted'
@@ -437,7 +522,19 @@ def main():
             got = evaluate(c, case['operation'], data)
             assert got == case['expected'], (name, case['id'], got, case['expected'])
             semantic_count += 1
+        schema_ids = [case['id'] for case in f['schema_cases']]
+        assert len(schema_ids) == len(set(schema_ids)) and SCHEMA_REQUIRED <= set(schema_ids), name
+        for case in f['schema_cases']:
+            schema = copy.deepcopy(read(c[case['schema']]))
+            patch(schema, case['changes'])
+            try:
+                validator(schema)
+            except Unresolvable:
+                pass
+            else:
+                raise AssertionError((name, case['id'], 'unresolved schema reference accepted'))
+            schema_count += 1
     value_cases = check_value_contracts() if (ROOT / 'Plans/ds15_value_contract_fixtures.json').exists() else 0
-    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'value_oracles':value_cases,'native_execution':'NOT_RUN'}))
+    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'value_oracles':value_cases,'native_execution':'NOT_RUN'}))
 
 if __name__ == '__main__': main()
