@@ -151,10 +151,12 @@ def run(job):
             f['valid']['archive_origin'] = 'automatic'
             f['record']['payload']['archive_origin'] = 'automatic'
             f['archive_source']['request']['origin'] = 'automatic'
-    elif name == 'B2_legal_large_inline_body':
+    elif name in ['B2_legal_large_inline_body','B2_original_review_maximum_arrays_inline']:
         for f in cases:
-            large = next(o for o in f['transport_oracles'] if o['expected_valid'] and o.get('source')
-                         and len(m.body_bytes(o['source']['body'])) > m.INLINE_LIMIT)
+            large_cases = [o for o in f['transport_oracles'] if o['expected_valid'] and o.get('source')
+                           and len(m.body_bytes(o['source']['body'])) > m.INLINE_LIMIT]
+            large = (max(large_cases,key=lambda o:len(m.body_bytes(o['source']['body'])))
+                     if name == 'B2_original_review_maximum_arrays_inline' else large_cases[0])
             f['valid'] = copy.deepcopy(large['source']['body'])
             f['record']['payload'] = copy.deepcopy(f['valid'])
             f['record']['payload_ref'] = None
@@ -213,6 +215,8 @@ def main():
     jobs += [(r['event_type'],name,0) for r in rows for name in ['9_valid_history_ref','9_valid_file_ref','9_external_document_cycle_valid']]
     jobs += [('chat.thread_archived',name,1) for name in ['F3_archive_stopped_again','F3_automatic_archive']]
     jobs += [(family,'B2_legal_large_inline_body',1) for family in ['chat.message','bundle.selection_sent_to_chat']]
+    jobs += [(family,'B2_original_review_maximum_arrays_inline',1)
+             for family in ['chat.message','bundle.selection_sent_to_chat']]
     results = []
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         for future in as_completed([pool.submit(run,job) for job in jobs]):
