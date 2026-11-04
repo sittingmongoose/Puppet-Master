@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47318-L50748
+Source lines: L47336-L50866
 
-Source SHA256: `d52da0f27c4c122cbfcd1ec6c7b5d605f6a18b4bb0bcb3802884a20abfd7cf81`
+Source SHA256: `040254e1377d7396a51ec803636efe554f78f0178b3655b5a8626fe4b086bb47`
 
 ---
 
@@ -3438,4 +3438,104 @@ preserved_exact_tokens:
 - PENDING_RETENTION_DECISION
 negative_constraints:
 - No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-704 - panel.redocked chat-only current action boundary
+
+```yaml
+plan_unit_id: F3-704
+unit_type: contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'panel.redocked: only cmd.panel.redock moves the current chat from detached_window to chat_column;
+  desktop Pop out/Dock back remain UCC-203/F3-637. CV-361/SP-330 already decide restart-unsaved host state and no
+  workspace.layout_changed. Durable audit evidence is separate from live host state: no Home revision advance, no
+  saved popped_out, no replayed OS effect or startup redock. F3-527 v1 fields are historical reader interpretation.
+  Full independent current 2.0.0 contract SP-664/CV-684 explicitly adopts SP-286/CV-339 and SP-278/DL-076. Prepared
+  without admission; retention PENDING_RETENTION_DECISION.'
+gui_related: true
+gui_classification_reason: Current chat pop-out action semantics.
+split_recommended: false
+depends_on:
+- SP-664
+- CV-684
+- F3-637
+- CV-361
+unblocks: []
+acceptance_criteria:
+- F3-704 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### F3-705 - panel.undocked chat-only current action boundary
+
+```yaml
+plan_unit_id: F3-705
+unit_type: contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'panel.undocked: only cmd.panel.undock moves the current chat from chat_column to detached_window;
+  desktop Pop out/Dock back remain UCC-203/F3-637. CV-361/SP-330 already decide restart-unsaved host state and no
+  workspace.layout_changed. Durable audit evidence is separate from live host state: no Home revision advance, no
+  saved popped_out, no replayed OS effect or startup redock. F3-527 v1 fields are historical reader interpretation.
+  Full independent current 2.0.0 contract SP-665/CV-685 explicitly adopts SP-286/CV-339 and SP-278/DL-076. Prepared
+  without admission; retention PENDING_RETENTION_DECISION.'
+gui_related: true
+gui_classification_reason: Current chat pop-out action semantics.
+split_recommended: false
+depends_on:
+- SP-665
+- CV-685
+- F3-637
+- CV-361
+unblocks: []
+acceptance_criteria:
+- F3-705 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
 ```

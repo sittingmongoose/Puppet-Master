@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L30066
+Source lines: L28057-L30386
 
-Source SHA256: `60b95568f7b171b409a2126a92fc434465f26c40265797b2d5f68c43b9e07691`
+Source SHA256: `708e6627389eaa12f14119187a1f37ac936da0988d1b8d4d3f4eb10cb6b0a054`
 
 ---
 
@@ -2017,4 +2017,324 @@ preserved_exact_tokens:
 - PENDING_RETENTION_DECISION
 negative_constraints:
 - No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### SP-664 - panel.redocked current chat-only audit and history
+
+```yaml
+plan_unit_id: SP-664
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission.
+  CV-361, SP-330, UCC-203 and F3-637 already govern the product: only the desktop chat can pop out and return, the
+  web client has no Pop out, and restart puts chat in its column without dispatching redock. cmd.panel.redock, handled
+  by handlers::panel::redock in the shared panel shell, is this family''s sole producer. Successful transition is
+  detached_window -> chat_column for panel_id=chat and the same window_id. A redock must name the currently detached
+  window; an undock must verify the actual newly settled window for this command. Refusal, stale session/revision,
+  wrong target, web unsupported, no change, preview, cancellation, failed persistence or rollback emits nothing.
+  Neither event advances a Home layout revision, saves popped-out state, writes a host into the Home record or co-emits
+  workspace.layout_changed. persisted=true describes the audit event; host_state_persisted=false is mandatory. The
+  existing expected_layout_revision command input remains a checked original Home-context precondition where supplied,
+  never a host revision or an instruction to advance layout. The current payload is Plans/event_payloads/panel_redocked_v2.schema.json,
+  schema pm.event.panel_redocked.v2; semantic route F3-704, payload route CV-684.
+
+
+  Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;
+  a global_shell invocation without a Project uses null project_id and the unchanged app partition, with actual
+  storage_instance_id/server_id under CV-366. A home_workspace origin requires original Project/workspace_tab_id.
+  No focus/main/empty-Project fallback. Envelope scope, actor_ref, correlation_id, idempotency_key and occurred_at_utc
+  join the frozen payload (settled_at_utc); thread/run/node/attempt/parent/causation are null unless independently
+  authenticated original linkage exists. app_session_id is a fresh opaque identity issued by the shell once per
+  process lifetime and shared by its chat column/window, never a Home tab or a restored identifier. Host revision
+  starts at zero for that session; compare the entire in-memory prior snapshot and advance exactly one for a settled
+  move. Let H be lowercase SHA-256 of canonical MessagePack [storage_instance_id, server_id, scope_partition, app_session_id,
+  "panel.redocked", idempotency_key]. event_id=evt_panel_redocked_H and operation_digest=H. Request digest is SHA-256
+  of the entire frozen accepted command, including actor, actual scope/session/window, original expected revisions
+  and candidate payload. Same key with unequal command/digest is conflict before any effect. Session/scope/window
+  joins must match the independently read shell owner, not caller claims.
+
+
+  Producer ordering: validate exact event registry membership before journal, window effect, append or checkpoint;
+  currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host
+  fence, freeze original command/payload and prior/candidate snapshots into panel_redocked_operation.v1:{storage_instance_id}:{scope_partition}:{app_session_id}:{operation_digest},
+  schema Plans/panel_event_contracts/panel_redocked_operation.schema.json. A prepared journal has null commit/result/receipt
+  refs. The shell may then perform this single host move and verify the actual OS/shell settled state for the same
+  session/window, holding all other host moves. Persist the authenticated original outcome and immutable candidate
+  snapshot as the committed operation with nonnull owner_commit_ref, result_ref and dispatch_receipt_ref, before
+  append. These refs resolve that operation''s original immutable evidence, never live host state after another
+  move. If the effect cannot be proven or the commit fails, keep the operation fenced; terminal success is unavailable.
+  Transient OS/shell state and redb are not claimed to share a transaction. The journal''s durable commit records
+  evidence that the transient move really settled; it is never a saved layout and never instructs restart to restore
+  it.
+
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2, including the full-value v2 successor,
+  genuine original eleven-field first AppendReceipt, retained four-field original_append_result and actual original
+  EventRecord. Append only the frozen exact event after durable original commit/readback; independently join instance,
+  identity, semantic payload, sequence, segment/offset and durability. Only then CAS committed -> settled with original_append_result_ref
+  nonnull and publish terminal success. An uncertain append fences later host mutations. Committed/settled retries
+  recover/return the original result and receipt without opening/closing/moving a window or renewing a timestamp.
+  Prepared ambiguity remains fenced while the session lives. After verified old-process termination, no transient
+  host survives: a prepared operation may become abandoned_uncommitted only with original durable-commit and append
+  absence proofs; never infer absence just from a missing window. A committed operation after restart still owes
+  append recovery under its original identity, but never restores its candidate host or dispatches a command. A
+  settled old-session result is historical evidence, never proof of a current popped-out host. No restart redock
+  event is fabricated.
+
+
+  Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate
+  host observations, immutable result/dispatch refs and first/full-value receipt custody. No raw chat text, title,
+  window geometry, credentials, account material or absolute local path enters payload/journal; server-side secret
+  screening applies to all strings. Refs grant no access. Disclosure requires current scope membership/source access,
+  deletion checks and current host/session proof for any action after returning helpers. Coherent mandatory backup
+  includes operations, source EventRecords and genuine original receipts under the same Storage recovery boundary.
+  Restored journals are historical evidence only and never input to host restoration. Missing/mixed originals fence
+  mutations and disclose unavailable. No event reader can reconstruct deleted chat bodies.
+
+
+  Newly authored projector.panel_redocked.history@1.0.0 and reader.panel_redocked.history@1.0.0 expose passive record-backed
+  History audit only; current host is independently read from the running shell. Checkpoint key panel_redocked_checkpoint.v1:{storage_instance_id}:{scope_partition},
+  schema Plans/panel_event_contracts/panel_redocked_checkpoint.schema.json. Explicitly adopt SP-278/DL-076: complete
+  CURRENT-selected generic EventRecord index, full nine-field durable token, no persisted redb_snapshot_id; rejoin/authenticate
+  actual live snapshot each scan/read/advance. Scan every source sequence through captured frontier, authenticate
+  each exact panel.redocked/scope match, and whole-value CAS prior token/publication/state/frontier/last_event_id
+  in one derived-redb transaction. Checkpoint is bounded frontier only, never an all-history event_refs array. through_sequence_id
+  is complete scanned coverage; last_event_id is last matching event or null. Corrupt/unknown/inadmissible source
+  cannot be skipped. Registry absence forbids advance.
+
+
+  Reader request binds publication_id, complete durable token and unsigned after_sequence_id (0 initially), all
+  authenticated as untrusted inputs. Verify Storage instance, server/scope and Project joins, live SP-278 source
+  selection and publication state before reading and at disclosure. At most 256 source sequences, 64 exact matching
+  refs and 16384 canonical MessagePack response bytes per page; measure the complete response, stopping before an
+  unreturned match. A single oversized ref/token is invalid metadata, never silently dropped. Continuation repeats
+  exact publication/token and last actually scanned sequence; empty filtered page is incomplete until frontier is
+  reached. No history-count or duration cap is added. Invalid/withdrawn token, cursor beyond frontier or missing
+  coverage returns unavailable, never empty success. A changed generation needs verified SP-278 translation or a
+  verified new publication and restart; no silent substitution. No History call performs a shell action. Rebuild
+  stages a separate publication from verified retained CURRENT-selected source, proves coverage then atomically
+  withdraws old/publishes new. Source deletion rebuilds retained coverage only. Derived eviction makes History unavailable
+  until rebuild; it cannot erase canonical audit.
+
+
+  Compatibility and withdrawal: immutable Plans/event_payloads/panel_redocked.schema.json is the original 1.0.0
+  reader only. Its generic hosts, durable settled_panel_state_ref, layout revisions and optional co-emission are
+  historical interpretation, never current chat authority or a new writer. Dispatch reads by the stored payload
+  schema id/version, without rewriting events or treating v1 as v2; unknown versions and unverifiable historical
+  originals remain unavailable. Current writes require only the exact 2.0.0 schema/contract and their own future
+  admission. StorageMigrationCoordinator must install exact new value schemas before activation, with no invented
+  store version. Withdrawal closes writer admission first, fences host moves, settles original in-flight obligations
+  without repeating OS effects, then CAS marks checkpoint withdrawn. Readers refuse staged/withdrawn publications
+  and stale continuations; successor versions require own contract/admission and verified rebuild, never layout
+  aliasing.
+
+
+  SP-340 physical binding: panel_redocked_operation uses canonical MessagePack in canonical redb, settings_and_layout
+  advisory canonical budget, maximum 16384 encoded bytes checked before effect/commit; panel_redocked_checkpoint
+  uses canonical MessagePack in derived redb, event_log hard derived budget, same maximum. The operation is one
+  bounded original receipt, not an accumulating host/history store; oversized metadata is invalid before effects.
+  Budget pressure never prunes canonical audit or refuses a canonical write; derived pressure evicts/rebuilds. Retention
+  remains PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt
+  versus telemetry and RP-PROJECTION-3GEN are candidates, not assignments; the saved-layout class is not silently
+  applied to this restart-unsaved host transition. No deletion policy is invented. Fixtures Plans/panel_event_contracts/panel_redocked.fixtures.json
+  and python3 scripts/pm-panel-event-contracts-check.py supply this family''s positive/negative schema, identity,
+  retry, original-custody, history boundary and withdrawal oracles. Native OS/storage atomicity, receipt authenticity,
+  SP-278 source proof, crash/recovery, permissions and backup tests remain NOT_RUN.'
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- CV-361
+- SP-330
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- SP-664 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### SP-665 - panel.undocked current chat-only audit and history
+
+```yaml
+plan_unit_id: SP-665
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission.
+  CV-361, SP-330, UCC-203 and F3-637 already govern the product: only the desktop chat can pop out and return, the
+  web client has no Pop out, and restart puts chat in its column without dispatching redock. cmd.panel.undock, handled
+  by handlers::panel::undock in the shared panel shell, is this family''s sole producer. Successful transition is
+  chat_column -> detached_window for panel_id=chat and the same window_id. A redock must name the currently detached
+  window; an undock must verify the actual newly settled window for this command. Refusal, stale session/revision,
+  wrong target, web unsupported, no change, preview, cancellation, failed persistence or rollback emits nothing.
+  Neither event advances a Home layout revision, saves popped-out state, writes a host into the Home record or co-emits
+  workspace.layout_changed. persisted=true describes the audit event; host_state_persisted=false is mandatory. The
+  existing expected_layout_revision command input remains a checked original Home-context precondition where supplied,
+  never a host revision or an instruction to advance layout. The current payload is Plans/event_payloads/panel_undocked_v2.schema.json,
+  schema pm.event.panel_undocked.v2; semantic route F3-705, payload route CV-685.
+
+
+  Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;
+  a global_shell invocation without a Project uses null project_id and the unchanged app partition, with actual
+  storage_instance_id/server_id under CV-366. A home_workspace origin requires original Project/workspace_tab_id.
+  No focus/main/empty-Project fallback. Envelope scope, actor_ref, correlation_id, idempotency_key and occurred_at_utc
+  join the frozen payload (settled_at_utc); thread/run/node/attempt/parent/causation are null unless independently
+  authenticated original linkage exists. app_session_id is a fresh opaque identity issued by the shell once per
+  process lifetime and shared by its chat column/window, never a Home tab or a restored identifier. Host revision
+  starts at zero for that session; compare the entire in-memory prior snapshot and advance exactly one for a settled
+  move. Let H be lowercase SHA-256 of canonical MessagePack [storage_instance_id, server_id, scope_partition, app_session_id,
+  "panel.undocked", idempotency_key]. event_id=evt_panel_undocked_H and operation_digest=H. Request digest is SHA-256
+  of the entire frozen accepted command, including actor, actual scope/session/window, original expected revisions
+  and candidate payload. Same key with unequal command/digest is conflict before any effect. Session/scope/window
+  joins must match the independently read shell owner, not caller claims.
+
+
+  Producer ordering: validate exact event registry membership before journal, window effect, append or checkpoint;
+  currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host
+  fence, freeze original command/payload and prior/candidate snapshots into panel_undocked_operation.v1:{storage_instance_id}:{scope_partition}:{app_session_id}:{operation_digest},
+  schema Plans/panel_event_contracts/panel_undocked_operation.schema.json. A prepared journal has null commit/result/receipt
+  refs. The shell may then perform this single host move and verify the actual OS/shell settled state for the same
+  session/window, holding all other host moves. Persist the authenticated original outcome and immutable candidate
+  snapshot as the committed operation with nonnull owner_commit_ref, result_ref and dispatch_receipt_ref, before
+  append. These refs resolve that operation''s original immutable evidence, never live host state after another
+  move. If the effect cannot be proven or the commit fails, keep the operation fenced; terminal success is unavailable.
+  Transient OS/shell state and redb are not claimed to share a transaction. The journal''s durable commit records
+  evidence that the transient move really settled; it is never a saved layout and never instructs restart to restore
+  it.
+
+
+  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2, including the full-value v2 successor,
+  genuine original eleven-field first AppendReceipt, retained four-field original_append_result and actual original
+  EventRecord. Append only the frozen exact event after durable original commit/readback; independently join instance,
+  identity, semantic payload, sequence, segment/offset and durability. Only then CAS committed -> settled with original_append_result_ref
+  nonnull and publish terminal success. An uncertain append fences later host mutations. Committed/settled retries
+  recover/return the original result and receipt without opening/closing/moving a window or renewing a timestamp.
+  Prepared ambiguity remains fenced while the session lives. After verified old-process termination, no transient
+  host survives: a prepared operation may become abandoned_uncommitted only with original durable-commit and append
+  absence proofs; never infer absence just from a missing window. A committed operation after restart still owes
+  append recovery under its original identity, but never restores its candidate host or dispatches a command. A
+  settled old-session result is historical evidence, never proof of a current popped-out host. No restart redock
+  event is fabricated.
+
+
+  Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate
+  host observations, immutable result/dispatch refs and first/full-value receipt custody. No raw chat text, title,
+  window geometry, credentials, account material or absolute local path enters payload/journal; server-side secret
+  screening applies to all strings. Refs grant no access. Disclosure requires current scope membership/source access,
+  deletion checks and current host/session proof for any action after returning helpers. Coherent mandatory backup
+  includes operations, source EventRecords and genuine original receipts under the same Storage recovery boundary.
+  Restored journals are historical evidence only and never input to host restoration. Missing/mixed originals fence
+  mutations and disclose unavailable. No event reader can reconstruct deleted chat bodies.
+
+
+  Newly authored projector.panel_undocked.history@1.0.0 and reader.panel_undocked.history@1.0.0 expose passive record-backed
+  History audit only; current host is independently read from the running shell. Checkpoint key panel_undocked_checkpoint.v1:{storage_instance_id}:{scope_partition},
+  schema Plans/panel_event_contracts/panel_undocked_checkpoint.schema.json. Explicitly adopt SP-278/DL-076: complete
+  CURRENT-selected generic EventRecord index, full nine-field durable token, no persisted redb_snapshot_id; rejoin/authenticate
+  actual live snapshot each scan/read/advance. Scan every source sequence through captured frontier, authenticate
+  each exact panel.undocked/scope match, and whole-value CAS prior token/publication/state/frontier/last_event_id
+  in one derived-redb transaction. Checkpoint is bounded frontier only, never an all-history event_refs array. through_sequence_id
+  is complete scanned coverage; last_event_id is last matching event or null. Corrupt/unknown/inadmissible source
+  cannot be skipped. Registry absence forbids advance.
+
+
+  Reader request binds publication_id, complete durable token and unsigned after_sequence_id (0 initially), all
+  authenticated as untrusted inputs. Verify Storage instance, server/scope and Project joins, live SP-278 source
+  selection and publication state before reading and at disclosure. At most 256 source sequences, 64 exact matching
+  refs and 16384 canonical MessagePack response bytes per page; measure the complete response, stopping before an
+  unreturned match. A single oversized ref/token is invalid metadata, never silently dropped. Continuation repeats
+  exact publication/token and last actually scanned sequence; empty filtered page is incomplete until frontier is
+  reached. No history-count or duration cap is added. Invalid/withdrawn token, cursor beyond frontier or missing
+  coverage returns unavailable, never empty success. A changed generation needs verified SP-278 translation or a
+  verified new publication and restart; no silent substitution. No History call performs a shell action. Rebuild
+  stages a separate publication from verified retained CURRENT-selected source, proves coverage then atomically
+  withdraws old/publishes new. Source deletion rebuilds retained coverage only. Derived eviction makes History unavailable
+  until rebuild; it cannot erase canonical audit.
+
+
+  Compatibility and withdrawal: immutable Plans/event_payloads/panel_undocked.schema.json is the original 1.0.0
+  reader only. Its generic hosts, durable settled_panel_state_ref, layout revisions and optional co-emission are
+  historical interpretation, never current chat authority or a new writer. Dispatch reads by the stored payload
+  schema id/version, without rewriting events or treating v1 as v2; unknown versions and unverifiable historical
+  originals remain unavailable. Current writes require only the exact 2.0.0 schema/contract and their own future
+  admission. StorageMigrationCoordinator must install exact new value schemas before activation, with no invented
+  store version. Withdrawal closes writer admission first, fences host moves, settles original in-flight obligations
+  without repeating OS effects, then CAS marks checkpoint withdrawn. Readers refuse staged/withdrawn publications
+  and stale continuations; successor versions require own contract/admission and verified rebuild, never layout
+  aliasing.
+
+
+  SP-340 physical binding: panel_undocked_operation uses canonical MessagePack in canonical redb, settings_and_layout
+  advisory canonical budget, maximum 16384 encoded bytes checked before effect/commit; panel_undocked_checkpoint
+  uses canonical MessagePack in derived redb, event_log hard derived budget, same maximum. The operation is one
+  bounded original receipt, not an accumulating host/history store; oversized metadata is invalid before effects.
+  Budget pressure never prunes canonical audit or refuses a canonical write; derived pressure evicts/rebuilds. Retention
+  remains PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt
+  versus telemetry and RP-PROJECTION-3GEN are candidates, not assignments; the saved-layout class is not silently
+  applied to this restart-unsaved host transition. No deletion policy is invented. Fixtures Plans/panel_event_contracts/panel_undocked.fixtures.json
+  and python3 scripts/pm-panel-event-contracts-check.py supply this family''s positive/negative schema, identity,
+  retry, original-custody, history boundary and withdrawal oracles. Native OS/storage atomicity, receipt authenticity,
+  SP-278 source proof, crash/recovery, permissions and backup tests remain NOT_RUN.'
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- CV-361
+- SP-330
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- SP-665 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
 ```

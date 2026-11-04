@@ -18190,7 +18190,7 @@
               },
               "proxy_tls": {
                 "type": "null",
-                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
+                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person\u2019s own systems; onboarding collects no TLS/certificate choice."
               },
               "source_more": {
                 "type": "boolean"
@@ -81808,7 +81808,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody — external proposal",
+            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {
@@ -127125,6 +127125,1818 @@
           }
         }
       }
+    },
+    {
+      "family_id": "panel_redocked_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "panel_redocked_operation.v1:{storage_instance_id}:{scope_partition}:{app_session_id}:{operation_digest}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.panel_redocked_operation.v1",
+      "value_schema_ref": "Plans/panel_event_contracts/panel_redocked_operation.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-664",
+      "producer": [
+        "handlers::panel::redock"
+      ],
+      "consumers": [
+        "reader.panel_redocked.history@1.0.0",
+        "handlers::panel::redock"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "app_session_id",
+        "operation_digest",
+        "event_id",
+        "idempotency_key",
+        "request_digest",
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "state",
+        "payload",
+        "prior_host_snapshot",
+        "candidate_host_snapshot",
+        "owner_commit_ref",
+        "result_ref",
+        "dispatch_receipt_ref",
+        "original_append_result_ref",
+        "original_command"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "project_id",
+        "owner_commit_ref",
+        "result_ref",
+        "dispatch_receipt_ref",
+        "original_append_result_ref"
+      ],
+      "replay_behavior": "SP-664: original identity/outcome/receipt only, no OS replay; bounded SP-278 read-through/frontier CAS; no absent-family checkpoint advance.",
+      "migration": "SP-664: exact new schemas installed by StorageMigrationCoordinator; historical v1 payload remains read-only; no guessed store version.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-664"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-664",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-664"
+        ]
+      },
+      "retention_compaction": "SP-664: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "SP-664: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
+      "legacy_canonical_crosswalk_status": "Newly authored SP-664 technical contract under DL-045; prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-664"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$id": "pm.storage_value.panel_redocked_operation.v1",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "app_session_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "schema_id",
+          "schema_version",
+          "project_id",
+          "state",
+          "payload",
+          "prior_host_snapshot",
+          "candidate_host_snapshot",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "original_command"
+        ],
+        "properties": {
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "app_session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "operation_digest": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "schema_id": {
+            "const": "pm.storage_value.panel_redocked_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "committed",
+              "settled",
+              "abandoned_uncommitted"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "server_id",
+              "scope_partition",
+              "app_session_id",
+              "interaction_transaction_id",
+              "actor_ref",
+              "correlation_id",
+              "idempotency_key",
+              "window_id",
+              "owner_commit_ref",
+              "command_result_ref",
+              "dispatch_receipt_ref",
+              "schema_id",
+              "schema_version",
+              "project_id",
+              "workspace_tab_id",
+              "panel_id",
+              "command_id",
+              "origin",
+              "source_host",
+              "target_host",
+              "prior_host_revision",
+              "new_host_revision",
+              "settled_at_utc",
+              "settled_only",
+              "preview_state_included",
+              "persisted",
+              "host_state_persisted",
+              "workspace_layout_changed_coemitted",
+              "workspace_layout_event_ref"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "server_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope_partition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "interaction_transaction_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "correlation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "window_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner_commit_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "command_result_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dispatch_receipt_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "schema_id": {
+                "const": "pm.event.panel_redocked.v2"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "workspace_tab_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "panel_id": {
+                "const": "chat"
+              },
+              "command_id": {
+                "const": "cmd.panel.redock"
+              },
+              "origin": {
+                "enum": [
+                  "home_workspace",
+                  "global_shell"
+                ]
+              },
+              "source_host": {
+                "const": "detached_window"
+              },
+              "target_host": {
+                "const": "chat_column"
+              },
+              "prior_host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551614
+              },
+              "new_host_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 18446744073709551615
+              },
+              "settled_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "settled_only": {
+                "const": true
+              },
+              "preview_state_included": {
+                "const": false
+              },
+              "persisted": {
+                "const": true
+              },
+              "host_state_persisted": {
+                "const": false
+              },
+              "workspace_layout_changed_coemitted": {
+                "const": false
+              },
+              "workspace_layout_event_ref": {
+                "const": null
+              }
+            }
+          },
+          "prior_host_snapshot": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "app_session_id",
+              "host_revision",
+              "host",
+              "window_id"
+            ],
+            "properties": {
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "host": {
+                "enum": [
+                  "chat_column",
+                  "detached_window"
+                ]
+              },
+              "window_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              }
+            }
+          },
+          "candidate_host_snapshot": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "app_session_id",
+              "host_revision",
+              "host",
+              "window_id"
+            ],
+            "properties": {
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "host": {
+                "enum": [
+                  "chat_column",
+                  "detached_window"
+                ]
+              },
+              "window_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              }
+            }
+          },
+          "owner_commit_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "dispatch_receipt_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "original_append_result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "original_command": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "server_id",
+              "project_id",
+              "workspace_tab_id",
+              "scope_partition",
+              "app_session_id",
+              "actor_ref",
+              "correlation_id",
+              "idempotency_key",
+              "origin",
+              "command_id",
+              "panel_id",
+              "prior_host_revision",
+              "expected_layout_revision",
+              "window_id",
+              "target_host"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "server_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "workspace_tab_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "scope_partition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "correlation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "enum": [
+                  "home_workspace",
+                  "global_shell"
+                ]
+              },
+              "command_id": {
+                "const": "cmd.panel.redock"
+              },
+              "panel_id": {
+                "const": "chat"
+              },
+              "prior_host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551614
+              },
+              "expected_layout_revision": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "window_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target_host": {
+                "const": "chat_column"
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "const": null
+                },
+                "result_ref": {
+                  "const": null
+                },
+                "dispatch_receipt_ref": {
+                  "const": null
+                },
+                "original_append_result_ref": {
+                  "const": null
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "abandoned_uncommitted"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "const": null
+                },
+                "result_ref": {
+                  "const": null
+                },
+                "dispatch_receipt_ref": {
+                  "const": null
+                },
+                "original_append_result_ref": {
+                  "const": null
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "committed"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "result_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dispatch_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_append_result_ref": {
+                  "const": null
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "settled"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "result_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dispatch_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_append_result_ref": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "panel_redocked_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "panel_redocked_checkpoint.v1:{storage_instance_id}:{scope_partition}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.panel_redocked_checkpoint.v1",
+      "value_schema_ref": "Plans/panel_event_contracts/panel_redocked_checkpoint.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-664",
+      "producer": [
+        "projector.panel_redocked.history@1.0.0"
+      ],
+      "consumers": [
+        "reader.panel_redocked.history@1.0.0",
+        "handlers::panel::redock"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "consumer_id",
+        "consumer_version",
+        "publication_id",
+        "state",
+        "index_read_token",
+        "through_sequence_id",
+        "last_event_id",
+        "scope_partition",
+        "server_id"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "project_id",
+        "last_event_id"
+      ],
+      "replay_behavior": "SP-664: original identity/outcome/receipt only, no OS replay; bounded SP-278 read-through/frontier CAS; no absent-family checkpoint advance.",
+      "migration": "SP-664: exact new schemas installed by StorageMigrationCoordinator; historical v1 payload remains read-only; no guessed store version.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-664"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-664",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-664"
+        ]
+      },
+      "retention_compaction": "SP-664: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "SP-664: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
+      "legacy_canonical_crosswalk_status": "Newly authored SP-664 technical contract under DL-045; prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-664"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "consumer_id",
+          "consumer_version",
+          "publication_id",
+          "state",
+          "index_read_token",
+          "through_sequence_id",
+          "last_event_id",
+          "scope_partition",
+          "server_id"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.panel_redocked_checkpoint.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "consumer_id": {
+            "const": "projector.panel_redocked.history"
+          },
+          "consumer_version": {
+            "const": "1.0.0"
+          },
+          "publication_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "current",
+              "withdrawn",
+              "staged"
+            ]
+          },
+          "index_read_token": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "checkpoint_key",
+              "checkpoint_ref",
+              "generation_id",
+              "generation_anchor_sha256",
+              "frontier_revision",
+              "frontier_sha256",
+              "index_dataset_name",
+              "source_selection"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "checkpoint_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkpoint_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$"
+              },
+              "generation_anchor_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "frontier_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frontier_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "index_dataset_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storage_instance_id",
+                  "current_ref",
+                  "current_bytes_sha256",
+                  "selected_segment_generation",
+                  "manifest_ref",
+                  "manifest_bytes_sha256",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "manifest_survivor_prefix_sha256",
+                  "retained_inventory_sha256",
+                  "durable_watermarks_sha256",
+                  "excluded_ranges_sha256",
+                  "retired_inputs_sha256"
+                ],
+                "properties": {
+                  "storage_instance_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "current_ref": {
+                    "const": "storage/seglog/CURRENT"
+                  },
+                  "current_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "selected_segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_ref": {
+                    "const": "storage/seglog/manifest.v1.msgpack"
+                  },
+                  "manifest_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "recovery_epoch": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_survivor_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retained_inventory_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "durable_watermarks_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "excluded_ranges_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retired_inputs_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          },
+          "through_sequence_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "last_event_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "$id": "pm.storage_value.panel_redocked_checkpoint.v1",
+        "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
+      }
+    },
+    {
+      "family_id": "panel_undocked_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "panel_undocked_operation.v1:{storage_instance_id}:{scope_partition}:{app_session_id}:{operation_digest}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.panel_undocked_operation.v1",
+      "value_schema_ref": "Plans/panel_event_contracts/panel_undocked_operation.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-665",
+      "producer": [
+        "handlers::panel::undock"
+      ],
+      "consumers": [
+        "reader.panel_undocked.history@1.0.0",
+        "handlers::panel::undock"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "app_session_id",
+        "operation_digest",
+        "event_id",
+        "idempotency_key",
+        "request_digest",
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "state",
+        "payload",
+        "prior_host_snapshot",
+        "candidate_host_snapshot",
+        "owner_commit_ref",
+        "result_ref",
+        "dispatch_receipt_ref",
+        "original_append_result_ref",
+        "original_command"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "project_id",
+        "owner_commit_ref",
+        "result_ref",
+        "dispatch_receipt_ref",
+        "original_append_result_ref"
+      ],
+      "replay_behavior": "SP-665: original identity/outcome/receipt only, no OS replay; bounded SP-278 read-through/frontier CAS; no absent-family checkpoint advance.",
+      "migration": "SP-665: exact new schemas installed by StorageMigrationCoordinator; historical v1 payload remains read-only; no guessed store version.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-665"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-665",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-665"
+        ]
+      },
+      "retention_compaction": "SP-665: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "SP-665: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
+      "legacy_canonical_crosswalk_status": "Newly authored SP-665 technical contract under DL-045; prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-665"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$id": "pm.storage_value.panel_undocked_operation.v1",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "app_session_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "schema_id",
+          "schema_version",
+          "project_id",
+          "state",
+          "payload",
+          "prior_host_snapshot",
+          "candidate_host_snapshot",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "original_command"
+        ],
+        "properties": {
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "app_session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "operation_digest": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "schema_id": {
+            "const": "pm.storage_value.panel_undocked_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "committed",
+              "settled",
+              "abandoned_uncommitted"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "server_id",
+              "scope_partition",
+              "app_session_id",
+              "interaction_transaction_id",
+              "actor_ref",
+              "correlation_id",
+              "idempotency_key",
+              "window_id",
+              "owner_commit_ref",
+              "command_result_ref",
+              "dispatch_receipt_ref",
+              "schema_id",
+              "schema_version",
+              "project_id",
+              "workspace_tab_id",
+              "panel_id",
+              "command_id",
+              "origin",
+              "source_host",
+              "target_host",
+              "prior_host_revision",
+              "new_host_revision",
+              "settled_at_utc",
+              "settled_only",
+              "preview_state_included",
+              "persisted",
+              "host_state_persisted",
+              "workspace_layout_changed_coemitted",
+              "workspace_layout_event_ref"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "server_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope_partition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "interaction_transaction_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "correlation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "window_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner_commit_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "command_result_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dispatch_receipt_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "schema_id": {
+                "const": "pm.event.panel_undocked.v2"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "workspace_tab_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "panel_id": {
+                "const": "chat"
+              },
+              "command_id": {
+                "const": "cmd.panel.undock"
+              },
+              "origin": {
+                "enum": [
+                  "home_workspace",
+                  "global_shell"
+                ]
+              },
+              "source_host": {
+                "const": "chat_column"
+              },
+              "target_host": {
+                "const": "detached_window"
+              },
+              "prior_host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551614
+              },
+              "new_host_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 18446744073709551615
+              },
+              "settled_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "settled_only": {
+                "const": true
+              },
+              "preview_state_included": {
+                "const": false
+              },
+              "persisted": {
+                "const": true
+              },
+              "host_state_persisted": {
+                "const": false
+              },
+              "workspace_layout_changed_coemitted": {
+                "const": false
+              },
+              "workspace_layout_event_ref": {
+                "const": null
+              }
+            }
+          },
+          "prior_host_snapshot": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "app_session_id",
+              "host_revision",
+              "host",
+              "window_id"
+            ],
+            "properties": {
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "host": {
+                "enum": [
+                  "chat_column",
+                  "detached_window"
+                ]
+              },
+              "window_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              }
+            }
+          },
+          "candidate_host_snapshot": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "app_session_id",
+              "host_revision",
+              "host",
+              "window_id"
+            ],
+            "properties": {
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "host": {
+                "enum": [
+                  "chat_column",
+                  "detached_window"
+                ]
+              },
+              "window_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              }
+            }
+          },
+          "owner_commit_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "dispatch_receipt_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "original_append_result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "original_command": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "server_id",
+              "project_id",
+              "workspace_tab_id",
+              "scope_partition",
+              "app_session_id",
+              "actor_ref",
+              "correlation_id",
+              "idempotency_key",
+              "origin",
+              "command_id",
+              "panel_id",
+              "prior_host_revision",
+              "expected_layout_revision",
+              "current_host",
+              "target_window"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "server_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "workspace_tab_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "scope_partition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "app_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "correlation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "enum": [
+                  "home_workspace",
+                  "global_shell"
+                ]
+              },
+              "command_id": {
+                "const": "cmd.panel.undock"
+              },
+              "panel_id": {
+                "const": "chat"
+              },
+              "prior_host_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551614
+              },
+              "expected_layout_revision": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "current_host": {
+                "const": "chat_column"
+              },
+              "target_window": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "const": null
+                },
+                "result_ref": {
+                  "const": null
+                },
+                "dispatch_receipt_ref": {
+                  "const": null
+                },
+                "original_append_result_ref": {
+                  "const": null
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "abandoned_uncommitted"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "const": null
+                },
+                "result_ref": {
+                  "const": null
+                },
+                "dispatch_receipt_ref": {
+                  "const": null
+                },
+                "original_append_result_ref": {
+                  "const": null
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "committed"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "result_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dispatch_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_append_result_ref": {
+                  "const": null
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "settled"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "result_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dispatch_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_append_result_ref": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "panel_undocked_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "panel_undocked_checkpoint.v1:{storage_instance_id}:{scope_partition}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.panel_undocked_checkpoint.v1",
+      "value_schema_ref": "Plans/panel_event_contracts/panel_undocked_checkpoint.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-665",
+      "producer": [
+        "projector.panel_undocked.history@1.0.0"
+      ],
+      "consumers": [
+        "reader.panel_undocked.history@1.0.0",
+        "handlers::panel::undock"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "consumer_id",
+        "consumer_version",
+        "publication_id",
+        "state",
+        "index_read_token",
+        "through_sequence_id",
+        "last_event_id",
+        "scope_partition",
+        "server_id"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "project_id",
+        "last_event_id"
+      ],
+      "replay_behavior": "SP-665: original identity/outcome/receipt only, no OS replay; bounded SP-278 read-through/frontier CAS; no absent-family checkpoint advance.",
+      "migration": "SP-665: exact new schemas installed by StorageMigrationCoordinator; historical v1 payload remains read-only; no guessed store version.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-665"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-665",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-665"
+        ]
+      },
+      "retention_compaction": "SP-665: PENDING_RETENTION_DECISION; audit/telemetry/checkpoint candidates only; no prune while pending.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "SP-665: bounded ids/enums/refs and original host observations only, no chat text/geometry/secrets/paths; current access/deletion checks at disclosure.",
+      "legacy_canonical_crosswalk_status": "Newly authored SP-665 technical contract under DL-045; prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-665"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "consumer_id",
+          "consumer_version",
+          "publication_id",
+          "state",
+          "index_read_token",
+          "through_sequence_id",
+          "last_event_id",
+          "scope_partition",
+          "server_id"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.panel_undocked_checkpoint.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "consumer_id": {
+            "const": "projector.panel_undocked.history"
+          },
+          "consumer_version": {
+            "const": "1.0.0"
+          },
+          "publication_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "current",
+              "withdrawn",
+              "staged"
+            ]
+          },
+          "index_read_token": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "checkpoint_key",
+              "checkpoint_ref",
+              "generation_id",
+              "generation_anchor_sha256",
+              "frontier_revision",
+              "frontier_sha256",
+              "index_dataset_name",
+              "source_selection"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "checkpoint_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkpoint_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$"
+              },
+              "generation_anchor_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "frontier_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frontier_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "index_dataset_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storage_instance_id",
+                  "current_ref",
+                  "current_bytes_sha256",
+                  "selected_segment_generation",
+                  "manifest_ref",
+                  "manifest_bytes_sha256",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "manifest_survivor_prefix_sha256",
+                  "retained_inventory_sha256",
+                  "durable_watermarks_sha256",
+                  "excluded_ranges_sha256",
+                  "retired_inputs_sha256"
+                ],
+                "properties": {
+                  "storage_instance_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "current_ref": {
+                    "const": "storage/seglog/CURRENT"
+                  },
+                  "current_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "selected_segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_ref": {
+                    "const": "storage/seglog/manifest.v1.msgpack"
+                  },
+                  "manifest_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "recovery_epoch": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_survivor_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retained_inventory_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "durable_watermarks_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "excluded_ranges_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retired_inputs_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          },
+          "through_sequence_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "last_event_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "$id": "pm.storage_value.panel_undocked_checkpoint.v1",
+        "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
+      }
     }
   ],
   "storage_profile": {
@@ -129397,6 +131209,34 @@
         "storage_group": "event_log",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "SP-663: bounded frontier only; paged SP-278 read-through, no event_refs",
+        "max_value_bytes": 16384
+      },
+      "panel_redocked_operation": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-664: original audit evidence; never restored host",
+        "max_value_bytes": 16384
+      },
+      "panel_redocked_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-664: bounded frontier; paged SP-278 History read-through",
+        "max_value_bytes": 16384
+      },
+      "panel_undocked_operation": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-665: original audit evidence; never restored host",
+        "max_value_bytes": 16384
+      },
+      "panel_undocked_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-665: bounded frontier; paged SP-278 History read-through",
         "max_value_bytes": 16384
       }
     },

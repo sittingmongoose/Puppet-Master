@@ -7419,3 +7419,62 @@ preserved_exact_tokens:
 negative_constraints:
 - No append, native activation, checkpoint advance or admission from this preparation.
 ```
+
+### ATS-334 - Independent current chat panel event oracles
+
+```yaml
+plan_unit_id: ATS-334
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'panel.redocked is checked independently by python3 scripts/pm-panel-event-contracts-check.py with
+  Plans/panel_event_contracts/panel_redocked.fixtures.json: valid current chat-only 2.0.0 and stored v1 read dispatch;
+  invalid generic panel, saved host, co-emission, wrong command/host, old layout fields, stale host revision, missing/foreign
+  session/scope, original receipt, retry and withdrawal; bounded checkpoint 16384 accepted/16385 refused and 1000-ref
+  source traversal. SP-664/CV-684/F3-704 bind its original settlement, journal, SP-286 recovery and SP-278 History.
+
+
+  panel.undocked is checked independently by the same checker with Plans/panel_event_contracts/panel_undocked.fixtures.json:
+  valid desktop current chat-only 2.0.0 and stored v1 read dispatch; the same listed boundaries are tested with
+  this family''s own command, hosts, window and identity, plus unsupported web/absent-family refusal. SP-665/CV-685/F3-705
+  bind its independent original settlement, journal, SP-286 recovery and SP-278 History.
+
+
+  The checker is a static reference oracle, not a real OS window, source-authorization, first-receipt or crash test.
+  Native settlement/persistence failure, live/ended session recovery, coherent backup, original receipt authentication,
+  permission/deletion/read-fence and SP-278 source/generation/CAS tests remain NOT_RUN separately for both families.
+  No static pass authorizes emission. Retention PENDING_RETENTION_DECISION.'
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- SP-664
+- SP-665
+unblocks: []
+acceptance_criteria:
+- ATS-334 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```

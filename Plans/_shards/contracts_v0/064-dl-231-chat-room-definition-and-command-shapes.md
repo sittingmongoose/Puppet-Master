@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23953-L24638
+Source lines: L23953-L24734
 
-Source SHA256: `e609f0ff501fd727f8de273135e66e29c41627896491ba0b347f16e671f299e8`
+Source SHA256: `8cb9b9c01036a345628a4ba4965902526b010f69f2d311b5bb1b190f446c51a5`
 
 ---
 
@@ -693,4 +693,100 @@ preserved_exact_tokens:
 - PENDING_RETENTION_DECISION
 negative_constraints:
 - No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-684 - panel.redocked current payload and historical reader
+
+```yaml
+plan_unit_id: CV-684
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: panel.redocked current payload 2.0.0 is the closed Plans/event_payloads/panel_redocked_v2.schema.json
+  (pm.event.panel_redocked.v2). Only cmd.panel.redock/panel_id=chat is valid. Current receipts audit a settled transient
+  host observation, host_state_persisted=false, co-emission=false, no Home revision. Immutable v1 schema stays historical-only
+  and dispatches by its own stored schema id/version. The complete independent producer, original receipt/identity/custody,
+  SP-286 full-value recovery, SP-278 bounded History, withdrawal and retention-pending contract is SP-664; semantic
+  owner F3-704. No admission or native proof.
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- SP-664
+- CV-361
+unblocks: []
+acceptance_criteria:
+- CV-684 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### CV-685 - panel.undocked current payload and historical reader
+
+```yaml
+plan_unit_id: CV-685
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: panel.undocked current payload 2.0.0 is the closed Plans/event_payloads/panel_undocked_v2.schema.json
+  (pm.event.panel_undocked.v2). Only cmd.panel.undock/panel_id=chat is valid. Current receipts audit a settled transient
+  host observation, host_state_persisted=false, co-emission=false, no Home revision. Immutable v1 schema stays historical-only
+  and dispatches by its own stored schema id/version. The complete independent producer, original receipt/identity/custody,
+  SP-286 full-value recovery, SP-278 bounded History, withdrawal and retention-pending contract is SP-665; semantic
+  owner F3-705. No admission or native proof.
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- SP-665
+- CV-361
+unblocks: []
+acceptance_criteria:
+- CV-685 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
 ```
