@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18771,
+    "depends_on_edge_count": 18795,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21979,
-    "node_count": 7424,
+    "edge_count": 22003,
+    "node_count": 7427,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T17:46:56Z",
+  "generated_at_utc": "2026-11-04T17:55:42Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -23034,8 +23034,8 @@
         "source_location": {
           "heading": "GRS-086 - Application Goal Birth Continuation And Versioned Custody",
           "heading_level": 3,
-          "heading_line": 8240,
-          "line": 8242,
+          "heading_line": 8244,
+          "line": 8246,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23045,8 +23045,8 @@
         "source_location": {
           "heading": "GRS-087 - Immutable Goal Conversion And Linked Destination Birth",
           "heading_level": 3,
-          "heading_line": 8323,
-          "line": 8325,
+          "heading_line": 8327,
+          "line": 8329,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -35013,8 +35013,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 27760,
-          "line": 27762,
+          "heading_line": 27953,
+          "line": 27955,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35024,8 +35024,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 27925,
-          "line": 27927,
+          "heading_line": 28118,
+          "line": 28120,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35035,8 +35035,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 28047,
-          "line": 28049,
+          "heading_line": 28240,
+          "line": 28242,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35046,8 +35046,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 28146,
-          "line": 28148,
+          "heading_line": 28339,
+          "line": 28341,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35057,8 +35057,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 28516,
-          "line": 28518,
+          "heading_line": 28709,
+          "line": 28711,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35068,8 +35068,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 28582,
-          "line": 28584,
+          "heading_line": 28775,
+          "line": 28777,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35079,8 +35079,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 28650,
-          "line": 28652,
+          "heading_line": 28843,
+          "line": 28845,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35090,8 +35090,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 28703,
-          "line": 28705,
+          "heading_line": 28896,
+          "line": 28898,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7424,
+  "plan_unit_count": 7427,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2746,
+      "high": 2749,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -43242,6 +43242,7 @@
       "goal_body_physical_origin_cas_retention_or_restore_authority_escape": 1,
       "goal_body_retention_and_deletion": 1,
       "goal_cancel_event_identity_drift": 1,
+      "goal_cancel_withdrawal_drift": 1,
       "goal_cancellation_original_authority_or_effect_loss": 16,
       "goal_command_owner_gap": 1,
       "goal_command_wiring_gap": 1,
@@ -43254,7 +43255,9 @@
       "goal_record_event_disposition_drift": 1,
       "goal_replanned_historical_authority_confusion": 3,
       "goal_route_retargeting": 1,
+      "goal_run_cancelled_withdrawal_drift": 1,
       "goal_run_lifecycle_event_disposition_drift": 1,
+      "goal_run_started_withdrawal_drift": 1,
       "goal_runtime_account_identity_drift": 1,
       "goal_runtime_false_success_after_canonical_loss": 1,
       "goal_runtime_host_certification_drift": 1,
@@ -45866,7 +45869,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7207,
+      "accepted": 7210,
       "retired": 194,
       "superseded": 23
     },
@@ -45955,7 +45958,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 30,
+      "storage_contract": 33,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -46051,7 +46054,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "c549ad1ef21e893e631e0b3b8336cafd7e29a7335a58c738a5da5e8444d4e06f",
+        "expected": "f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {

@@ -7092,7 +7092,7 @@ The NEW reader.goal.cancel_command_audit@1.0.0 accepts exact original Storage/pr
 
 The actual original SIR replay owner returns the exact immutable original outcome/result/response from Terminal with CV-333's existing replay decoration only (original_dispatch_id, replayed). It does not call the cancellation handler, relatch Stop, issue another receipt/event/control mutation or change terminal unknown to success. Replaying cancellation success proves original cancellation, not current body visibility, an active session or completion of a Workflow. A different user action uses a new command identity but an already cancelled Goal stays permanently noncontinuable.
 
-Amended 2026-11-04 (DL-045 depth): the goal.cancelled v3 event ID and event idempotency key follow SP-422.
+Amended 2026-11-04 (DL-045 depth): the goal.cancelled v3 event ID and event idempotency key follow SP-422; writer cutoff, reader withdrawal and rebuild fences follow SP-423.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
 
@@ -7767,6 +7767,8 @@ source_atom_ids: []
 ```
 
 
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for goal_run.started v3 follow SP-424.
+
 ### GRS-080 - Positive original cancelled-v3 semantics and bounded read roles
 
 This source adoption changes only the existing event-family-goal-run-cancelled row to revision 3.0.0, selecting the entire already canonical Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json resource, schema ID pm.goal_runtime_event.goal_run_cancelled.schema.v3, under complete outer EventRecord 2.0.0. The 42-member Event inventory and other 41 complete rows, including started-v3, remain exact. The old full cancelled-v2 payload resource and its original interpretation remain unchanged. Native execution and Event-depth qualification do not follow from this row.
@@ -7844,6 +7846,8 @@ source_lineage:
 source_atom_ids: []
 ```
 
+
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for goal_run.cancelled v3 follow SP-425.
 
 ### GRS-081 - Original Workflow Goal cancellation private current inspection
 

@@ -9572,7 +9572,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 8391,
+      "line_count": 8395,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -9744,7 +9744,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "c549ad1ef21e893e631e0b3b8336cafd7e29a7335a58c738a5da5e8444d4e06f",
+      "sha256": "f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
@@ -18578,10 +18578,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 234,
+        "False": 237,
         "True": 110
       },
-      "heading_count": 820,
+      "heading_count": 823,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18676,9 +18676,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29702,
+      "line_count": 29895,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 344,
+      "plan_unit_count": 347,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -18982,6 +18982,7 @@
         "SP-420",
         "SP-304",
         "SP-422",
+        "SP-423",
         "SP-305",
         "SP-306",
         "SP-307",
@@ -18989,7 +18990,9 @@
         "SP-309",
         "SP-310",
         "SP-311",
+        "SP-424",
         "SP-312",
+        "SP-425",
         "SP-313",
         "SP-314",
         "SP-315",
@@ -19058,9 +19061,12 @@
         "false_original_update_or_lost_accepted_effect",
         "goal_body_physical_origin_cas_retention_or_restore_authority_escape",
         "goal_cancel_event_identity_drift",
+        "goal_cancel_withdrawal_drift",
         "goal_cancellation_original_authority_or_effect_loss",
         "goal_progressed_historical_authority_confusion",
         "goal_replanned_historical_authority_confusion",
+        "goal_run_cancelled_withdrawal_drift",
+        "goal_run_started_withdrawal_drift",
         "goal_runtime_persistence_owner_gap",
         "goal_stopped_historical_authority_confusion",
         "goal_update_event_identity_drift",
@@ -19149,10 +19155,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "2027a741fd4df6dbf20b12c85e459e958142ad41a589fcb72171a893abdc5585",
+      "sha256": "0a68b015bde37e821d0a853361020f6e919b16fe40d2cc21eec38163913e7563",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 340,
+        "accepted": 343,
         "retired": 3,
         "superseded": 1
       },
@@ -19166,7 +19172,7 @@
         "requirement": 277,
         "schema_contract": 23,
         "security_contract": 1,
-        "storage_contract": 30,
+        "storage_contract": 33,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -19254,6 +19260,7 @@
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_body_custody_fixtures.json",
         "Plans/goal_cancel_command_custody.schema.json",
+        "Plans/goal_cancel_contracts/semantic-obligations.json",
         "Plans/goal_cancel_schema_resources.json",
         "Plans/goal_certification_custody.schema.json",
         "Plans/goal_certification_custody_fixtures.json",
@@ -19274,6 +19281,7 @@
         "Plans/goal_progressed_history_contract_fixtures.json",
         "Plans/goal_receipt_version_routes.json",
         "Plans/goal_replanned_history_contract_fixtures.json",
+        "Plans/goal_run_cancelled_consumer_contracts",
         "Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json",
         "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
         "Plans/goal_run_cancelled_consumer_contracts/filesafe-arguments.schema.json",
@@ -21530,7 +21538,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:46:51Z",
+  "generated_at_utc": "2026-11-04T17:55:40Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21538,13 +21546,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3633,
+      "False": 3636,
       "True": 3791
     },
-    "plan_unit_count": 7424,
+    "plan_unit_count": 7427,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7207,
+      "accepted": 7210,
       "retired": 194,
       "superseded": 23
     },
@@ -21633,7 +21641,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 30,
+      "storage_contract": 33,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,

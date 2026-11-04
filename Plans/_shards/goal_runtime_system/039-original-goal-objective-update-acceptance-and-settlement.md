@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L6505-L7205
 
-Source SHA256: `c549ad1ef21e893e631e0b3b8336cafd7e29a7335a58c738a5da5e8444d4e06f`
+Source SHA256: `f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b`
 
 ---
 
@@ -598,7 +598,7 @@ The NEW reader.goal.cancel_command_audit@1.0.0 accepts exact original Storage/pr
 
 The actual original SIR replay owner returns the exact immutable original outcome/result/response from Terminal with CV-333's existing replay decoration only (original_dispatch_id, replayed). It does not call the cancellation handler, relatch Stop, issue another receipt/event/control mutation or change terminal unknown to success. Replaying cancellation success proves original cancellation, not current body visibility, an active session or completion of a Workflow. A different user action uses a new command identity but an already cancelled Goal stays permanently noncontinuable.
 
-Amended 2026-11-04 (DL-045 depth): the goal.cancelled v3 event ID and event idempotency key follow SP-422.
+Amended 2026-11-04 (DL-045 depth): the goal.cancelled v3 event ID and event idempotency key follow SP-422; writer cutoff, reader withdrawal and rebuild fences follow SP-423.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
 

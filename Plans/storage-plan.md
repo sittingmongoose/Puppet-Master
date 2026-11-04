@@ -25447,7 +25447,7 @@ The complete method contract is `Plans/goal_cancel_contracts/methods.json`. Its 
 
 SP-214's historical cancelled-v2 event projection and checkpoints apply only to the admitted old route; they do not define a current cancelled state or a current durable projector. SP-305 supersedes only the generic execution-association/possible-assignment dependencies in these stages. Every other remaining source integration is explicit there.
 
-Amended 2026-11-04 (DL-045 depth): the v3 event ID and event idempotency key captured at C-source follow SP-422.
+Amended 2026-11-04 (DL-045 depth): the v3 event ID and event idempotency key captured at C-source follow SP-422, and writer cutoff, reader withdrawal and rebuild fences follow SP-423.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
 
@@ -25510,6 +25510,71 @@ owner_hints:
 **Use.** D is computed once at C-source, before any Stop effect, so C-stop, C-receipt, C-event and terminal recovery read the same values from SourceAudit. Dedupe, conflict and `dedupe_unavailable` follow Storage's `dedupe_by_idempotency_key`; same key and digest return the original receipt through SP-286. Under the Workflow profile SP-310's event template keeps identities as fixed terms and its sole late term is `sequence_id`, so the late assignment cannot change either value.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-045
+
+### SP-423 - Goal cancellation writer cutoff and reader withdrawal
+
+```yaml
+plan_unit_id: SP-423
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal.cancelled v3, all three original routes (no association, bound Plan, Workflow late assignment). Writer cutoff: when the StorageMigrationCoordinator withdraws the cancellation mutation role, C-source refuses every new cmd.chat.goal.cancel before any Stop effect; an operation already past C-source finishes or stays pending only through its own original stages and is never rolled back, re-dispatched or given a fresh identity. Reader withdrawal: withdrawing the audit, event-inspection or legacy_v2_reader role refuses disclosure without deleting rows, receipts or EventRecords. Rebuild fence: a reinstalled role resumes only from complete original custody captured before the withdrawal; nothing is regenerated from current state.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-304
+- SP-305
+- SP-310
+- SP-313
+- SP-287
+- SP-286
+- GRS-073
+- GRS-078
+- DL-045
+unblocks: []
+acceptance_criteria:
+- After mutation-role withdrawal, C-source refuses new cancellations with no Stop, receipt, body, event or control effect.
+- An operation admitted before the cutoff keeps its SourceAudit, progress epochs, receipts and identity; it resolves only through its original stages or stays pending.
+- Read-role withdrawal refuses disclosure and deletes nothing; the whole v2 resource stays at #/legacy_v2_reader.
+- Reinstallation needs complete pre-withdrawal custody; missing custody stays unavailable and is never rebuilt from current Goal state.
+- Unenrolled binding representations are refused at C-source until the separate SP-305 source migration admits them.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- Plans/goal_cancel_contracts/semantic-obligations.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancel_withdrawal_drift
+reasoning_tier: high
+context_scope: goal_cancel_withdrawal
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- legacy_v2_reader
+- StorageMigrationCoordinator
+negative_constraints:
+- No deletion, rollback, compensating event, replacement writer or automatic route switch on withdrawal.
+- No invented mapping for unenrolled binding representations.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the installed cancellation mutation role (SP-304's enrolled families and roles, and for the Workflow profile SP-310's three families). It is checked at C-source's final predicate, so a request admitted before the cutoff is the only kind that can still reach C-stop. Such an operation's later stages each recheck their own installed role: a stage whose role is gone stops before its effect and leaves the operation pending with every genuine earlier Stop, receipt, D05/D06 and append effect preserved (SP-304, GRS-078). It never becomes `no_effect` without the original no-effect proof, and it never gets a new event ID or idempotency key (SP-422). No other writer, the application sibling or the v2 root takes over.
+
+**Reader withdrawal.** The retained audit reader, the current-event inspection reader (SP-304; SP-313 inspector v2 for the Workflow profile) and `#/legacy_v2_reader` are separate roles. Withdrawing one refuses disclosure through it, deletes nothing, leaves the others as installed and grants no fallback reading. A withdrawn reader returns unavailable rather than a reinterpretation by another version.
+
+**Rebuild fence.** No goal.cancelled projection or family checkpoint exists to rebuild. A reinstalled writer or reader starts from the complete original custody that SP-304's coherent backup and its terminal snapshots retained before the withdrawal; missing custody stays unavailable, and nothing is regenerated from current Goal, Plan or Workflow state.
+
+**Unenrolled binding representations.** SP-305 keeps their mapping as a separate technical source-migration dependency. Until that migration admits a binding, C-source refuses a cancellation whose execution binding exists only in an unenrolled representation, before any effect; this unit defines no mapping and infers no `none`.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-305, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/storage-plan.md#SP-313, ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/Decision_Log.md#DL-045
 
 ### SP-305 - Execution binding custody and original append reservation
 
@@ -26497,6 +26562,71 @@ source_atom_ids: []
 ```
 
 
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for started-v3 follow SP-424.
+
+### SP-424 - Workflow started-v3 writer cutoff and reader withdrawal
+
+```yaml
+plan_unit_id: SP-424
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal_run.started v3. Writer cutoff: when the StorageMigrationCoordinator withdraws the original workflow_start_original.v2 publication role, no new Start reaches its append; a Start already committed to start_event_pending keeps its candidate, commit and outbox and resolves only through its own retained original custody and SP-286, never by replay or a fresh event. Reader withdrawal: each of inspect_original, read_retained_native, read_historical and read_current is withdrawn separately and refuses with unavailable; owner.goal_run.started.project_prefix.v1 stops advancing and keeps its current generation as is. Rebuild fence: after reinstallation the projector stages a new generation from genuine survivors; it never resumes a checkpoint written before the withdrawal.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-311
+- SP-312
+- SP-309
+- SP-278
+- SP-286
+- GRS-079
+- BRS-027
+- DL-045
+unblocks: []
+acceptance_criteria:
+- After publication-role withdrawal no new goal_run.started v3 is appended, and a pending Start is resolved only from its own retained original custody.
+- Each of the four readers is withdrawn on its own, returns unavailable and deletes nothing.
+- A withdrawn projector writes nothing; its current generation stays readable only through installed readers and retires under RP-PROJECTION-3GEN.
+- Reinstallation stages a new generation from a full SP-278 scan and cuts over only after revalidation; no pre-withdrawal checkpoint or frontier is reused.
+- Withdrawal switches no default view to SP-312 and admits no v2 or application writer.
+validation_surfaces:
+- Plans/goal_run_started_consumer_contracts/methods.json
+- Plans/goal_run_started_consumer_contracts/consumer.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_started_withdrawal_drift
+reasoning_tier: high
+context_scope: goal_run_started_withdrawal
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- workflow_start_original.v2
+- owner.goal_run.started.project_prefix.v1
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No replayed Start, reconstructed body, fabricated event or new publication receipt.
+- No automatic default-view switch or reinterpretation by another reader version.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the original Start publication role under `workflow_start_original.v2` (EP-120, SP-309). The Start publisher checks it at its final predicate before append. A Start whose candidate and commit are already durable (`start_event_pending`) is not rolled back: its retained original custody and SP-286 first-receipt resolution decide whether the event was issued, and an unissued one stays pending with its outbox, never replayed or given a new event value. No v2 writer, application sibling or other route appends `goal_run.started` in its place.
+
+**Reader withdrawal.** `inspect_original`, `read_retained_native`, `read_historical` and `read_current` (SP-311) are four roles. Withdrawing one makes that method return unavailable and leaves the others as installed. Withdrawing `owner.goal_run.started.project_prefix.v1` stops all projection and checkpoint writes; the current generation stays as committed and is retired under `RP-PROJECTION-3GEN` like any retired generation. No read repairs, and no default view switches to SP-312's combined projector (SP-312 already refuses an automatic switch).
+
+**Rebuild fence.** A reinstalled projector does not trust the frozen checkpoint: it reserves a slot, stages a new generation with a fresh seed and anchor over a full SP-278 global scan, and cuts over only after SP-311's source and custody revalidation. Unsupported same-run rows still halt the stage before them. The derived file stays never backed up (BRS-027); a restore rebuilds rather than restores this projection.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-311, ContractName:Plans/storage-plan.md#SP-312, ContractName:Plans/Goal_Runtime_System.md#GRS-079, ContractName:Plans/Backup_Restore_System.md#BRS-027, ContractName:Plans/Decision_Log.md#DL-045
+
 ### SP-312 - Complete cancelled-v3 source consumer and versioned combined projector
 
 This unit adopts the complete positive-D06 cancelled-v3 reader and bounded started/cancelled successor projector source. It materializes the mandatory SP214 per-project, per-Workflow-run goal_run_projection role through a separate versioned family and concrete checkpoint. GRS-080 selects only the existing cancelled Event family revision 3.0.0; the preceding started-v3 row, all other Event rows, original v2 resources and native writer registrations remain unchanged. The positive D06 source is the canonical EP118 contract, not authority inferred from started. Source selection does not establish installed native service, Event depth, runtime, readiness or governance qualification; native execution remains NOT_RUN.
@@ -26665,6 +26795,69 @@ source_lineage:
 source_atom_ids: []
 ```
 
+
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for cancelled-v3 and the combined projector follow SP-425.
+
+### SP-425 - Workflow cancelled-v3 writer cutoff and reader withdrawal
+
+```yaml
+plan_unit_id: SP-425
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal_run.cancelled v3. Writer cutoff: when the StorageMigrationCoordinator withdraws the original D06 positive-cancellation publication role (EP-118/EP-121), no new cancelled-v3 Event is appended; a cancellation whose native body change is committed resolves only from its retained original custody and SP-286, never by a second Event. Reader withdrawal: inspect_original, read_retained_native, read_historical, read_current_started and read_current_cancelled are withdrawn separately and refuse with unavailable; the versioned combined projector stops advancing. Rebuild fence: after reinstallation the combined projector stages a new generation from genuine survivors and never resumes a pre-withdrawal checkpoint; the started-only SP-311 projector is unaffected.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-312
+- SP-311
+- SP-278
+- SP-286
+- GRS-080
+- BRS-028
+- DL-045
+unblocks: []
+acceptance_criteria:
+- After D06 publication-role withdrawal no new goal_run.cancelled v3 is appended, and committed native cancellation is resolved only from retained original custody.
+- Each of the five readers is withdrawn on its own, returns unavailable and deletes nothing; the cancelled-v2 resource stays unchanged.
+- A withdrawn combined projector writes nothing; its current generation retires under RP-PROJECTION-3GEN.
+- Reinstallation stages a new generation from a full SP-278 scan and cuts over only after revalidation; no pre-withdrawal checkpoint is reused, and an old started-v3 root is never converted.
+- Withdrawal switches no default view and admits no v2 or application writer.
+validation_surfaces:
+- Plans/goal_run_cancelled_consumer_contracts
+- Plans/goal_run_cancelled_consumer_schema_resources.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_cancelled_withdrawal_drift
+reasoning_tier: high
+context_scope: goal_run_cancelled_withdrawal
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- RP-PROJECTION-3GEN
+- read_current_cancelled
+negative_constraints:
+- No second cancelled Event, replayed D06, reconstructed body or new publication receipt.
+- No conversion of a started-only root into a combined root.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the original D06 positive-cancellation publication role (EP-118, EP-121) for cancelled-v3. The publisher checks it at its final predicate before append. A run whose native body is already `cancelled` keeps that body and its D06 effects; whether its Event was issued is decided only by retained original custody and SP-286, and an unissued Event stays pending, never re-emitted with a new value. Already-terminal native runs still get no new cancelled Event (GRS-080). No v2 writer or application sibling takes over.
+
+**Reader withdrawal.** The five SP-312 methods are separate roles: withdrawing one makes it return unavailable and leaves the rest as installed. Withdrawing the combined projector stops every projection and checkpoint write; its current generation stays as committed and retires under `RP-PROJECTION-3GEN`. The started-only SP-311 projector and readers are unaffected. No default view switches because of a withdrawal.
+
+**Rebuild fence.** A reinstalled combined projector stages a new generation with a fresh anchor over a full SP-278 global scan and cuts over only after SP-312's revalidation; it never resumes a pre-withdrawal checkpoint. BRS-028 already bars converting an old started-v3 root into the combined root; a restore rebuilds this derived projection.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-312, ContractName:Plans/Goal_Runtime_System.md#GRS-080, ContractName:Plans/Backup_Restore_System.md#BRS-028, ContractName:Plans/Decision_Log.md#DL-045
 
 ### SP-313 - Whole original Workflow cancellation inspection custody
 
