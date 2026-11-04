@@ -93,7 +93,7 @@ def validate(contract, payload, context):
     return True
 
 def main():
-    from pm_executor_event_semantics import expand_fixture_literals
+    from pm_executor_event_semantics import expand_fixture_literals, mutate, canonical
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     existing = {f['event_type'] for f in registry['families']}
@@ -116,6 +116,11 @@ def main():
         assert any(x['expected'] == 'accept' for x in cases)
         assert any(x['expected'] == 'reject' for x in cases)
         for case in cases:
+            if 'seed' in case:
+                seed = case['seed']
+                validate(c, seed['payload'], seed['context'])
+                rebuilt = mutate(seed, case['defect_changes'])
+                assert canonical([rebuilt['payload'], rebuilt['context']]) == canonical([case['payload'], case['context']]), case['case']
             try:
                 validate(c, case['payload'], case['context'])
                 result = 'accept'

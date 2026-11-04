@@ -24,6 +24,54 @@ def require(condition, reason):
         raise ValueError(reason)
 
 
+# These predicates run before indexing/parsing their inputs. Keeping their exact
+# refusal boundary callable lets fixture controls prove guards without treating a
+# later missing-object exception as a duplicate or suppressing downstream checks.
+def validate_payload_map_keys(item):
+    require(all(type(key) is str for key in item), 'payload map string keys')
+
+
+def validate_pack_presence(pack):
+    require(pack is not None, 'missing payload pack')
+
+
+def validate_source_timezone(result):
+    require(result.tzinfo is not None, 'source clock timezone')
+
+
+def validate_retry_classification(classification):
+    require(classification not in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'), 'no blind retry')
+
+
+def validate_retry_policy_domain(classification, limits):
+    require(classification in limits, 'classified retry policy domain')
+
+
+def validate_retry_after_header(header):
+    require(isinstance(header, str) and bool(header), 'original Retry-After header')
+
+
+def validate_retry_after_timezone(deadline):
+    require(deadline.tzinfo is not None, 'Retry-After date timezone')
+
+
+def validate_auth_refresh(refresh):
+    require(refresh is not None and refresh['attempts'] == 1 and refresh['result'] == 'refreshed',
+            'one successful original auth refresh')
+
+
+def validate_source_record_set(records, expected_slots):
+    require(set(records) == expected_slots, 'source record set')
+
+
+def validate_transition_rules(rules):
+    require(len(rules) == 1, 'illegal predecessor')
+
+
+def validate_dependency_presence(dependency, field):
+    require(dependency is not None, 'missing dependency ' + field)
+
+
 def canonical(value):
     # Fixture domain is strings, booleans, null, safe integers, lists and objects.
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
@@ -84,6 +132,12 @@ def validate_append_policy(contract, policy):
             'family append replay policy')
 
 
+def validate_historical_policy(contract, policy):
+    # The retained-source digest below pins the original; this path has no writes.
+    require(policy in (contract['replay_policy'], 'projector_replay_only'),
+            'historical replay policy domain')
+
+
 def payload_bytes(value):
     """Case L-2 canonical MessagePack for these fixtures' integer/string domain.
 
@@ -92,7 +146,7 @@ def payload_bytes(value):
     """
     def ordered(item):
         if type(item) is dict:
-            require(all(type(key) is str for key in item), 'payload map string keys')
+            validate_payload_map_keys(item)
             return {key: ordered(item[key]) for key in sorted(item, key=lambda key: key.encode('utf-8'))}
         if type(item) is list:
             return [ordered(child) for child in item]
@@ -115,7 +169,7 @@ def validate_payload_transport(payload, envelope, packs, viewer):
     require(type(ref['byte_size']) is int and ref['byte_size'] == len(raw), 'payload ref byte size')
     require(ref['media_type'] == 'application/msgpack', 'payload ref media type')
     pack = packs.get(ref['blake3'])
-    require(pack is not None, 'missing payload pack')
+    validate_pack_presence(pack)
     stored = bytes.fromhex(pack['bytes_hex'])
     require(pack['bytes_hex'] == stored.hex(), 'exact normalized pack bytes')
     require(blake3(stored).hexdigest() == ref['blake3'], 'payload pack BLAKE3')
@@ -147,7 +201,7 @@ def source_observation(adapter, records):
 def instant(value):
     require(valid_timestamp(value), 'whole-string source timestamp')
     result = datetime.fromisoformat(value)
-    require(result.tzinfo is not None, 'source clock timezone')
+    validate_source_timezone(result)
     return result
 
 
@@ -163,7 +217,7 @@ def validate_retry(contract, payload, records):
     require(failure['attempt_id'] == records[attempt_slot]['body']['attempt_id'], 'original failed attempt')
     if name == 'run.node_retry_scheduled':
         require(retry['prior_attempt_id'] == failure['attempt_id'], 'classified prior attempt')
-    require(classification not in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'), 'no blind retry')
+    validate_retry_classification(classification)
     limits = {'provider_transient': 3, 'rate_limited': 3,
               'structured_output_invalid': 2, 'auth_expired': 1}
     policy_owner = 'Plans/Executor_Protocol.md#EP-032'
@@ -176,7 +230,7 @@ def validate_retry(contract, payload, records):
         require(retry['new_executor_attempt'] is False and retry['successor_attempt_id'] is None,
                 'Storage adapter retry cannot create an Executor attempt')
     else:
-        require(classification in limits, 'classified retry policy domain')
+        validate_retry_policy_domain(classification, limits)
         require(retry['storage_io_class'] is None and failure['storage_io_class'] is None, 'foreign Storage policy')
         limit = limits[classification]
     require(retry['policy_owner_ref'] == policy_owner, 'classified owner policy provenance')
@@ -197,17 +251,16 @@ def validate_retry(contract, payload, records):
         if header is None:
             delay = timedelta(seconds=30)
         else:
-            require(isinstance(header, str) and bool(header), 'original Retry-After header')
+            validate_retry_after_header(header)
             if header.isascii() and header.isdecimal():
                 deadline = received + timedelta(seconds=int(header))
             else:
                 deadline = parsedate_to_datetime(header)
-                require(deadline.tzinfo is not None, 'Retry-After date timezone')
+                validate_retry_after_timezone(deadline)
             delay = max(deadline - scheduled, timedelta(0))
     elif classification == 'auth_expired':
         refresh = failure['refresh']
-        require(refresh is not None and refresh['attempts'] == 1 and refresh['result'] == 'refreshed',
-                'one successful original auth refresh')
+        validate_auth_refresh(refresh)
         require(failed <= instant(refresh['completed_at_utc'])
                 <= instant(refresh['client_rebuilt_at_utc']) <= scheduled, 'refresh and client rebuild before retry')
     elif classification == 'storage_io' and failure['storage_io_class'] == 'transient_busy':
@@ -234,7 +287,7 @@ def validate_score_domain(ready, selected):
         require(valid_timestamp(score['ready_since_utc']), 'whole-string score timestamp')
 
 
-def validate_capture(contract, payload, capture):
+def validate_capture(contract, payload, capture, *, historical=False):
     """Check normalized owner reads, independently joined parents, and committed post-state.
 
     Captures are unpersisted test data. Native code must obtain the complete records
@@ -242,7 +295,10 @@ def validate_capture(contract, payload, capture):
     No caller-controlled `*_valid` flag is accepted here as authority.
     """
     schema_validate(contract['schema_ref'], payload)
-    validate_append_policy(contract, capture['envelope']['replay_policy'])
+    if historical:
+        validate_historical_policy(contract, capture['envelope']['replay_policy'])
+    else:
+        validate_append_policy(contract, capture['envelope']['replay_policy'])
     validate_payload_transport(payload, capture['envelope'], capture['payload_packs'], capture['viewer'])
     adapter = contract['semantic_adapter']
     require(capture['adapter'] == adapter['id'], 'adapter dispatch')
@@ -265,7 +321,7 @@ def validate_capture(contract, payload, capture):
             require('attempt_id' not in capture['envelope'], 'pre-attempt envelope omission')
         else:
             require(records['attempt']['body']['attempt_id'] == episode_attempt, 'episode attempt record')
-    require(set(records) == expected_slots, 'source record set')
+    validate_source_record_set(records, expected_slots)
     for slot, owner in adapter['source_records'].items():
         if slot not in expected_slots:
             continue
@@ -305,7 +361,7 @@ def validate_capture(contract, payload, capture):
     rules = [r for r in adapter['transitions']
              if transition['before'] == r['before']
              and all(payload.get(k) == v for k, v in r.get('when', {}).items())]
-    require(len(rules) == 1, 'illegal predecessor')
+    validate_transition_rules(rules)
     require(transition['after'] == rules[0]['after'], 'illegal successor')
     require(capture['post_state']['state'] == transition['after'], 'post-state')
     require(capture['post_state']['revision'] == transition['revision'] + 1, 'post-state CAS')
@@ -316,7 +372,7 @@ def validate_capture(contract, payload, capture):
         require(at(records, path) == expected, 'owner predicate ' + path)
     for field, ref in capture['dependency_refs'].items():
         dependency = capture['dependencies'].get(ref)
-        require(dependency is not None, 'missing dependency ' + field)
+        validate_dependency_presence(dependency, field)
         require(payload.get(field) == ref, 'dependency payload ref ' + field)
         require(dependency['project_id'] == payload['project_id'], 'dependency scope ' + field)
         require(dependency['storage_instance_id'] == scope['storage_instance_id'], 'dependency root ' + field)
@@ -420,7 +476,7 @@ def validate_history(contract, payload, original, retained_source_sha256, disclo
             'history Storage root')
     require(digest(original) == retained_source_sha256, 'retained original source custody')
     # Never substitute a present-day run/node/attempt/graph into this check.
-    validate_capture(contract, payload, original['capture'])
+    validate_capture(contract, payload, original['capture'], historical=True)
     return {'result': 'history_only', 'effects': 0}
 
 
@@ -515,14 +571,46 @@ def mutate(value, changes):
     return result
 
 
+def run_helper_case(case):
+    """Exercise prerequisite predicates before their dependent dereferences."""
+    name, value = case['helper'], case['value']
+    operations = {
+        'fixture_literals': lambda: expand_fixture_literals({'fixture_text_parts': value['parts']}),
+        'payload_map_keys': lambda: validate_payload_map_keys(dict(value)),
+        'pack_presence': lambda: validate_pack_presence(value),
+        'source_timezone': lambda: validate_source_timezone(datetime.fromisoformat(value)),
+        'instant': lambda: instant(value),
+        'retry_classification': lambda: validate_retry_classification(value),
+        'retry_policy_domain': lambda: validate_retry_policy_domain(value, {'provider_transient': 3, 'rate_limited': 3, 'structured_output_invalid': 2, 'auth_expired': 1}),
+        'retry_after_header': lambda: validate_retry_after_header(value),
+        'retry_after_timezone': lambda: validate_retry_after_timezone(parsedate_to_datetime(value)),
+        'auth_refresh': lambda: validate_auth_refresh(value),
+        'source_record_set': lambda: validate_source_record_set(value['records'], set(value['expected_slots'])),
+        'transition_rules': lambda: validate_transition_rules(value),
+        'dependency_presence': lambda: validate_dependency_presence(value, case['field']),
+    }
+    return operations[name]()
+
+
 def main():
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     failures = check_lane_schemas(contracts)
     if failures:
         print(json.dumps({'status': 'fail', 'schema_reference_failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
         return 1
-    families = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text()))['families']
+    fixture_doc = json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text())
+    # Deliberately invalid authoring literals are only expanded by their own case.
+    families = expand_fixture_literals(fixture_doc['families'])
+    helper_cases = fixture_doc.get('helper_cases', [])
     ref_fixtures = json.loads((ROOT / 'Plans/executor_event_schema_reference_fixtures.json').read_text())['families']
+    for case in helper_cases:
+        try:
+            run_helper_case(case)
+            result, reason = 'accept', None
+        except ValueError as error:
+            result, reason = 'reject', str(error)
+        if result != case['expected'] or reason != case.get('reason'):
+            failures.append(['helper', case['case'], result, reason])
     count, traces, score_cases, schema_cases, ref_cases, history_cases = 0, 0, 0, 0, 0, 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
@@ -532,6 +620,11 @@ def main():
         for case in family['cases']:
             count += 1
             specimen = mutate(family['baseline'], case['changes'])
+            if 'seed_changes' in case:
+                seed = mutate(family['baseline'], case['seed_changes'])
+                validate_capture(contract, seed['payload'], seed['capture'])
+                require(canonical(mutate(seed, case['defect_changes'])) == canonical(specimen),
+                        'coherent negative seed ' + case['case'])
             try:
                 validate_capture(contract, specimen['payload'], specimen['capture'])
                 result = 'accept'
@@ -546,7 +639,7 @@ def main():
             payload.update(case['event_changes'])
             try:
                 actual = validate_history(contract, payload, original,
-                                          family['retained_source_sha256'], case['disclosure'])
+                                          case.get('retained_source_sha256', family['retained_source_sha256']), case['disclosure'])
                 result = 'accept' if actual == {'result': 'history_only', 'effects': 0} else 'invalid_effects'
             except (ValueError, KeyError, jsonschema.ValidationError):
                 result = 'reject'
@@ -578,6 +671,8 @@ def main():
                 failures.append([contract['event_type'], case['case'], result])
         for case in family.get('schema_cases', []):
             schema_cases += 1
+            if 'valid_seed' in case:
+                schema_validate(contract['schema_ref'], case['valid_seed'])
             try:
                 # Test each schema's exact-end guard independently of our stricter
                 # format checker and of every relational/source comparison.
@@ -588,7 +683,7 @@ def main():
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 
