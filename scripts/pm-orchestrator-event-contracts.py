@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import rfc8785
 from pathlib import Path
 from datetime import datetime
 from jsonschema import Draft202012Validator, FormatChecker
@@ -26,9 +27,8 @@ def inline_body(value):
 
 
 def observation_component(family, payload):
-    return json.dumps(['ea-do-observation-v1', payload['operation_id'], payload['thread_id'],
-                       payload['run_id'], family, payload['occurrence']],
-                      separators=(',', ':'), ensure_ascii=False)
+    return rfc8785.dumps(['ea-do-observation-v1', payload['operation_id'], payload['thread_id'],
+                          payload['run_id'], family, payload['occurrence']]).decode('utf-8')
 
 
 def identity(family, payload):
@@ -36,8 +36,8 @@ def identity(family, payload):
     if payload['scope'] == 'project':
         partition = 'project~' + base64.urlsafe_b64encode(payload['project_id'].encode()).decode().rstrip('=')
     parts = ['ea-do-v1', partition, payload['server_id'], payload['thread_id'], payload['run_id'], family, payload['operation_id'], payload['occurrence']]
-    # Vector values are ASCII strings/positive integers, identical in RFC8785.
-    digest = hashlib.sha256(json.dumps(parts, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+    # Use the specified serializer for every accepted numeric/string representation.
+    digest = hashlib.sha256(rfc8785.dumps(parts)).hexdigest()
     key = 'do1:' + digest
     if payload['scope'] == 'application':
         key = ('application@1:' + payload['server_id'].encode().hex() + ':'
@@ -66,6 +66,8 @@ BOARD = ('crew.board_message_posted', 'crew.board_message_read', 'crew.board_mes
 def board_join_errors(case):
     """Exact source/append/run joins, using supplied canonical-source fixtures only."""
     payload, source, envelope = case['payload'], case['source'], case['envelope']
+    if oracles.number_domain_errors(payload) or oracles.number_domain_errors(envelope):
+        return ['number_domain']
     errors = []
     errors += oracles.board_source_errors(case, ROOT, UTC_FORMAT)
     app = payload['scope'] == 'application'
@@ -178,7 +180,7 @@ def board_storage_checks(schema, fixtures, storage, owner):
 
 def main():
     schema = json.loads((ROOT / 'Plans/orchestrator_event_payloads.schema.json').read_text())
-    fixtures = json.loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
+    fixtures = oracles.canonical_loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
     owner = (ROOT / 'Plans/orchestrator-subagent-integration.md').read_text()
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     storage = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
@@ -199,7 +201,7 @@ def main():
         definition = schema['$defs'][case['definition']]
         assert not oracles.reference_errors(schema, '#/$defs/' + case['definition'], oracles.selected_documents(ROOT)), 'unresolved_schema_reference'
         Draft202012Validator.check_schema(definition)
-        validator = Draft202012Validator(definition, format_checker=UTC_FORMAT)
+        validator = oracles.StrictValidator(definition, format_checker=UTC_FORMAT)
         payload = case['payload']
         validator.validate(payload)
         checks += 1

@@ -7274,6 +7274,13 @@ canonical_text: >-
   board contract, including missing/foreign fields. Application posts select CV-740/SP-723's complete
   governed V2 message/source/wrapper graph with genuine original headers/body/routing and separate
   accepted-source/stage/semantic/physical commitments; frozen Project/V1 resources remain exact.
+  All V1/V2 application board consumers require accepted original pre-publication stages and resolved
+  original stage request/result/evidence joins; refuse each refused/not-reached/unknown stage,
+  absent request/result/evidence, foreign witness/method/operation and forged accepted-source/physical hash.
+  Admission-dependent event append/first receipt stays not_reached until actual admission.
+  Every family/scope runs 1.0, -0, 1e0 and 01 number-input refusals, synchronized event/retry controls,
+  actual RFC8785 identity/observation preimages and equal-semantic JCS digest checks.
+  Apply the same canonical numeric domain before schema, source hash and retry comparison.
   Eagerly resolve every declared selected $ref, including dormant optional branches and actual stored
   compositions, with exact offline URIs and scoped JSON Pointers; unresolved resources/fragments refuse.
   Every family runs retained originally-valid history after live producer state/writer admission changes,

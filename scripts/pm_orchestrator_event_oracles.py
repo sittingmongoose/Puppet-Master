@@ -61,6 +61,64 @@ def exact_pattern(validator, pattern, instance, schema):
 StrictValidator = validators.extend(Draft202012Validator, {'pattern': exact_pattern})
 
 
+def number_domain_errors(value):
+    """One supported numeric domain before schema, hashing or retry comparison.
+
+    RFC8785 finite numbers only; integral values use safe integers, never a
+    float64 alias. Fractional floats retain the original typed source domain.
+    """
+    if isinstance(value, dict):
+        return [error for child in value.values() for error in number_domain_errors(child)]
+    if isinstance(value, list):
+        return [error for child in value for error in number_domain_errors(child)]
+    if type(value) in (int, float):
+        try:
+            rfc8785.dumps(value)
+            if type(value) is float and value.is_integer():
+                return ['number_domain']
+        except (ValueError, OverflowError):
+            return ['number_domain']
+    return []
+
+
+def number_token_errors(token):
+    try:
+        value = json.loads(token)
+        if number_domain_errors(value) or rfc8785.dumps(value).decode('utf-8') != token:
+            return ['number_token_canonical']
+    except (ValueError, OverflowError):
+        return ['number_token_canonical']
+    return []
+
+
+def canonical_loads(text):
+    def parse(token):
+        errors = number_token_errors(token)
+        if errors:
+            raise ValueError(errors[0] + ':' + token)
+        return json.loads(token)
+    return json.loads(text, parse_int=parse, parse_float=parse, parse_constant=parse)
+
+
+REQUIRED_ORIGINAL_STAGES = (
+    'original_intent', 'accepted_original_source', 'current_owner_and_stop_fence',
+    'canonical_pending_or_reservation', 'owner_commit',
+)
+
+
+def stage_witness_value(case, name):
+    source = case['source']; stage = source['stage_custody'][name]
+    evidence = stage['custody_evidence'] or {}
+    return dict({key: stage[key] for key in (
+        'status', 'original_operation_id', 'owner_method_id', 'request_ref', 'result_ref')},
+        stage=name, owner_evidence_metadata={key: evidence.get(key) for key in (
+            'owner_ref', 'revision', 'generation')},
+        original_input_semantic_sha256=source['original_input_semantic_sha256'],
+        accepted_source_ref=source['accepted_source_ref'],
+        accepted_source_sha256=source['accepted_source_sha256'], wrapper_key=case.get('wrapper_key'),
+        physical_record_sha256=case.get('physical_record_sha256'))
+
+
 def packed(value):
     """Complete canonical MessagePack payload bytes, including every member/list."""
     def ordered(v):
@@ -251,6 +309,8 @@ def selected_validators(root, format_checker):
 
 def event_errors(case, schema, identity, retry_allowed, root, formats, *, historical=False):
     event, payload = case['event'], case['logical_payload']
+    if not historical and (number_domain_errors(event) or number_domain_errors(payload)):
+        return ['number_domain']
     refs = reference_errors(schema, '#/$defs/' + case['definition'], selected_documents(root))
     if refs:
         return ['unresolved_schema_reference']
@@ -341,6 +401,25 @@ def board_source_errors(case, root, formats):
         for name, stage in source['stage_custody'].items():
             if stage['original_operation_id'] != source['original_operation_id']:
                 errors.append('source_stage_operation')
+            if stage['owner_method_id'] != source['interface_id']:
+                errors.append('source_stage_method')
+        witness = case.get('accepted_source_witness', {})
+        if (witness.get('ref') != source['accepted_source_ref'] or witness.get('value') != message
+                or source['accepted_source_sha256'] != semantic_hash('accepted_source', witness.get('value'))):
+            errors.append('accepted_original_source_join')
+        if case.get('physical_record_sha256') != hashlib.sha256(packed(wrapper)).hexdigest():
+            errors.append('wrapper_physical_digest')
+        for name in REQUIRED_ORIGINAL_STAGES:
+            stage = source['stage_custody'][name]
+            if stage['status'] != 'accepted':
+                errors.append('source_stage_status')
+            proof = stage['custody_evidence']
+            witness = case.get('stage_evidence_witnesses', {}).get(name, {})
+            if (proof is None or stage['request_ref'] is None or stage['result_ref'] is None
+                    or witness.get('ref') != (proof or {}).get('source_ref')
+                    or witness.get('value') != stage_witness_value(case, name)
+                    or (proof or {}).get('source_sha256') != semantic_hash('accepted_source', witness.get('value'))):
+                errors.append('source_stage_evidence')
         for k in ('thread_id', 'crew_id', 'run_id'):
             if message[k] != payload[k]:
                 errors.append('message_' + k)
@@ -360,15 +439,6 @@ def board_source_errors(case, root, formats):
                     errors.append('message_' + k)
             if message['receiver_agent_type'] != payload.get('to_agent_type'):
                 errors.append('message_target_type')
-            witness = case.get('accepted_source_witness', {})
-            if (witness.get('ref') != source['accepted_source_ref'] or witness.get('value') != message
-                    or source['accepted_source_sha256'] != semantic_hash('accepted_source', witness.get('value'))):
-                errors.append('accepted_original_source_join')
-            if case.get('physical_record_sha256') != hashlib.sha256(packed(case['wrapper'])).hexdigest():
-                errors.append('wrapper_physical_digest')
-            for stage in source['stage_custody'].values():
-                if stage['owner_method_id'] != source['interface_id']:
-                    errors.append('source_stage_method')
         else:
             for k in ('message_id', 'from_agent_id', 'subject', 'priority'):
                 if message.get(k) != payload.get(k):
@@ -456,6 +526,8 @@ def successor_errors(root):
 
 
 def retry_outcome(original, candidate):
+    if number_domain_errors(candidate):
+        return {'status': 'number_domain', 'appended': False, 'receipt': None}
     # Refuse replay-only even if event/key and semantic fields are identical.
     if candidate['replay_policy'] == 'projector_replay_only':
         return {'status': 'replay_only_not_appendable', 'appended': False, 'receipt': None}
@@ -581,6 +653,77 @@ def failure_oracle_errors(test):
     return [] if test.get('expected_exit_code') == 1 else ['failure_oracle_success_code']
 
 
+def refresh_stage_witnesses(case):
+    """Synchronize dependent observations in synthetic single-defect controls."""
+    source = case['source']
+    for name, witness in case.get('stage_evidence_witnesses', {}).items():
+        witness['value'] = stage_witness_value(case, name)
+        proof = source['stage_custody'][name]['custody_evidence']
+        if proof is not None:
+            proof['source_sha256'] = semantic_hash('accepted_source', witness['value'])
+    source['source_sha256'] = semantic_hash('accepted_source', {
+        key: value for key, value in source.items() if key != 'source_sha256'})
+
+
+def custody_case(base, test):
+    case = copy.deepcopy(base)
+    target = case
+    for field in test['path'][:-1]:
+        target = target[field]
+    if test.get('remove'):
+        target.pop(test['path'][-1])
+    else:
+        target[test['path'][-1]] = copy.deepcopy(test['value'])
+    if test.get('sync_stage_witnesses'):
+        refresh_stage_witnesses(case)
+    else:
+        source = case['source']
+        source['source_sha256'] = semantic_hash('accepted_source', {
+            key: value for key, value in source.items() if key != 'source_sha256'})
+    return case
+
+
+def numeric_board_original_case(base):
+    """An originally valid retained typed source is never a current input."""
+    case = copy.deepcopy(base)
+    source = case['source']; source['original_input']['source_sequence'] = 1.0
+    case['wrapper']['record'] = copy.deepcopy(source['original_input'])
+    source['original_input_semantic_sha256'] = semantic_hash('accepted_source', source['original_input'])
+    source['accepted_source_sha256'] = source['original_input_semantic_sha256']
+    case['accepted_source_witness']['value'] = copy.deepcopy(source['original_input'])
+    case['physical_record_sha256'] = hashlib.sha256(packed(case['wrapper'])).hexdigest()
+    refresh_stage_witnesses(case)
+    return case
+
+
+def numeric_history_case(base, token):
+    """A retained, originally valid JCS event; recapture every storage observation."""
+    case = copy.deepcopy(base)
+    case['logical_payload']['occurrence'] = json.loads(token)
+    event = case['event']; event['payload'] = copy.deepcopy(case['logical_payload'])
+    case['producer_semantic_digest'] = semantic_digest(event)
+    read = case['read']; node = read['checkpoint']['generations'][read['checkpoint']['current_generation_id']]
+    frontier = node['frontier']
+    read['source_event'] = copy.deepcopy(event)
+    read['source_value_sha256'] = hashlib.sha256(packed(event)).hexdigest()
+    read['row']['producer_semantic_digest'] = semantic_digest(event)
+    prefix = binding_digest({'domain': 'pm.event_index.retained_prefix.v1', 'entries': [{
+        'sequence_id': event['sequence_id'], 'event_id': event['event_id'],
+        'scope_partition': case['scope_partition'], 'source_value_sha256': read['source_value_sha256']}]})
+    node['anchor']['retained_event_prefix_sha256'] = frontier['coverage']['retained_event_prefix_sha256'] = prefix
+    node['anchor']['source_selection']['manifest_survivor_prefix_sha256'] = prefix
+    frontier['source_selection']['manifest_survivor_prefix_sha256'] = prefix
+    read['row']['publication_locator']['survivor_prefix_sha256'] = prefix
+    read['current_source_selection'] = copy.deepcopy(frontier['source_selection'])
+    read['read_token']['source_selection'] = copy.deepcopy(frontier['source_selection'])
+    frontier['index_row_set_sha256'] = binding_digest({'domain': 'pm.event_index.row_set.v1', 'entries': [
+        {'key': read['row_key'], 'value': read['row']}]})
+    read['read_token']['generation_anchor_sha256'] = binding_digest(node['anchor'])
+    read['read_token']['frontier_sha256'] = binding_digest(frontier)
+    case['historical_reader_state']['original_source_sha256'] = read['source_value_sha256']
+    return case
+
+
 def check_oracles(fixtures, schema, owner_module):
     root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
     checks = 0
@@ -636,6 +779,45 @@ def check_oracles(fixtures, schema, owner_module):
         checks += 6
     by_id = {c['case_id']: c for c in cases}
     assert len(by_id) == len(cases)
+    for test in fixtures['number_cases']:
+        base = by_id[test['case_id']]
+        token = test['token']
+        try:
+            canonical_loads('{"occurrence":' + token + '}')
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(('accepted_noncanonical_number', test['name']))
+        checks += 1
+        if token in ('1.0', '1e0'):
+            bad = copy.deepcopy(base)
+            bad['logical_payload']['occurrence'] = json.loads(token)
+            bad['event']['payload'] = copy.deepcopy(bad['logical_payload'])
+            assert owner_module.identity(base['event_type'], bad['logical_payload']) == owner_module.identity(base['event_type'], base['logical_payload'])
+            assert event_errors(bad, schema, owner_module.identity, owner_module.retry_allowed,
+                                root, formats) == ['number_domain'], test['name']
+            assert retry_outcome(base['event'], bad['event']) == {
+                'status': 'number_domain', 'appended': False, 'receipt': None}, test['name']
+            assert semantic_digest(base['event']) == semantic_digest(bad['event'])
+            retained = numeric_history_case(base, token)
+            assert not historical_read_errors(retained, schema, owner_module), test['name']
+            retry = retry_outcome(retained['event'], base['event'])
+            assert retry['status'] == 'original_result' and retry['appended'] is False
+            assert packed(retry['receipt']) == packed(retained['event']), test['name']
+            checks += 7
+    assert {(test['case_id'], test['token']) for test in fixtures['number_cases']} == {
+        (case['case_id'], token) for case in cases for token in ('1.0', '-0', '1e0', '01')}
+    for base in fixtures['board_storage_cases']:
+        if base['payload']['scope'] == 'application':
+            assert not owner_module.board_join_errors(numeric_board_original_case(base))
+            checks += 1
+    for test in fixtures['board_custody_cases']:
+        base = fixtures['board_storage_cases'][test['board_index']]
+        bad = custody_case(base, test)
+        assert owner_module.board_join_errors(bad) == [test['expected_error']], (
+            test['name'], owner_module.board_join_errors(bad))
+        assert test['expected_exit_code'] == 1
+        checks += 2
     for test in fixtures['retry_cases']:
         original = by_id[test['case_id']]['event']
         assert selected_validators(root, formats)['event'].is_valid(test['candidate']), test['name']
