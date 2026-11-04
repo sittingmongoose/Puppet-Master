@@ -6,7 +6,7 @@ pm7-build relayed this reading with the answer (not Jared's words): 4c B was pm7
 
 This branch makes that change and writes its receipt. It writes no admission record. The records for the three DL-300 families come later, once each family's contract reaches 12 of 12.
 
-**Barred from the seal.** The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The validator still checks exactly the author and lander in its receipt list; the complete exclusion is a procedural obligation.
+**Barred from the seal.** The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The validator still checks exactly the author and lander in its receipt list; the complete exclusion is a procedural obligation.
 
 **Approving entry.** DL-412 is on `plans/ea-cards1-answers-20261104` at `b6332f391a`, not yet on `main`. Its prose section (`### DL-412:`) has SHA-256 `95375f1997a193d58a3d02c82a46892e324ac0dd1cfbbc2b69efc212ae932927`, and the receipt pins that value.
 
@@ -81,32 +81,32 @@ Exactly one thing: a family registered by a registry step that added several fam
 
 | File | Change |
 |---|---|
-| The seal check (CRLF kept on every line) | Frozen validator `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` → current `74897e17da4d330e835e0d196acd8c2af6761f9fe209cec1b7689d88b7d8adf6`. The DL-412 receipt bridge, optional step branch, strict directory loader and recursive fail-closed claim analysis are the complete change. Existing output receipt behavior changes only by the new DL-412 input pin. |
+| The seal check (CRLF kept on every line) | Frozen validator `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` → current `48ab44d79d097ec921dceeb7830c267afa1aaaf0ed871e1cf10912cbf3c8f782`. The DL-412 receipt bridge, optional step branch, strict directory loader and recursive fail-closed claim analysis are the complete change. Existing output receipt behavior changes only by the new DL-412 input pin. |
 | `INDEPENDENT_EA_VALIDATOR_SPEC.md` | A DL-412 section after the DL-077 section, as DL-077 added one after Step 3's. |
 | `INDIVIDUAL_DISPOSITION_SCHEMA.md` | A note: DL-412 adds no bucket and no row field. A family accepted through a step record is treated exactly like one accepted through a one-family record. |
 | `reports/event-authority-20261104/seal-check-multifamily-step-receipt.json` | The change receipt, detailed below. |
 
-The current receipt has SHA-256 `b1b3e8cbdba25fae91def156c661017184b0cb632e1bc36a0f7cf4e0fe566fd4` (fix round 2 was `bd04156a...`) (`6c749a74...` in fix round 1; `afef45e2...` at round 0). Fix round 3 refreshes only its `validator_after_sha256` pin and aligns descriptive `record_contract_change`, `changes` and `notes` text. Every other pin, identity field and flag is unchanged. It binds:
+The current receipt has SHA-256 `bcdbc6f6c468aacc98a3a6b66c7b084ad1a3ceeaae86fdef4d0059c50fa5fafd` (fix round 3 was `b1b3e8cb...`) (fix round 2 was `bd04156a...`) (`6c749a74...` in fix round 1; `afef45e2...` at round 0). Fix round 4 refreshes only its `validator_after_sha256` pin and aligns descriptive `record_contract_change`, `changes` and `notes` text. Every other pin, identity field and flag is unchanged. It binds:
 - the DL-412 section (`95375f19...`, as pushed at `b6332f391a`);
 - Jared's answer file (`00bb608e...`) and the cards as presented (`578a6774...`);
 - the DL-077 receipt's exact bytes (`prior_receipt.sha256` `dceb7f21...`, checked by the code);
-- validator before `190a86f2...` and after `74897e17...`;
+- validator before `190a86f2...` and after `48ab44d7...`;
 - the record directory and schema;
 - the author, and `seal_applier_forbidden_tasks`, which must equal the sorted author and lander;
 - `seal_authorized`, `admission_authorized` and `contract_depth_complete`, all false.
 
-It also states what the change relaxes and what it does not. `lander_task` is `null` as committed, so the check fails closed on this receipt until the lander fills it (scenario S6 below).
+It also states what the change relaxes and what it does not. `lander_task` is `null` as committed, so multi-family step records fail closed on this receipt until the lander fills it. Legacy-only admission and holding keep their DL-077 judgment (S6 below).
 
 ### Every place that pins the validator's bytes
 
 | Pin | Before | After |
 |---|---|---|
 | Step 3 receipt `validator_after_sha256` (`step-03-holding-bucket-receipt.json`) | `bd54afff...` | unchanged. The holding check still reaches it only through the DL-077 receipt's `validator_before_sha256`. |
-| DL-077 receipt `validator_before/after_sha256` (`step-10-post-august-admission-receipt.json`) | `bd54afff...` -> `190a86f2...` | unchanged (file untouched). Its `after` is now checked against the DL-412 receipt's `before`, not the current file. |
-| DL-412 receipt `validator_before/after_sha256` (new) | none | `190a86f2...` -> `fb551b06...`, checked against the current file |
-| Chain code in the check | `post_august_receipt_state`: DL-077 `after` == current file | `post_august_receipt_state`: DL-077 `after` == `post_august_validator_pin()`, which is DL-412's `before` through a valid DL-412 receipt, else the current file. `multi_family_receipt_state`: DL-412 `after` == current file. |
+| DL-077 receipt `validator_before/after_sha256` (`step-10-post-august-admission-receipt.json`) | `bd54afff...` -> `190a86f2...` | unchanged (file untouched). Its `after` is checked at the original predicate position against the frozen DL-077 validator SHA-256 `190a86f2...`, without reading or judging the DL-412 receipt. |
+| DL-412 receipt `validator_before/after_sha256` (new) | none | `190a86f2...` -> `48ab44d79d097ec921dceeb7830c267afa1aaaf0ed871e1cf10912cbf3c8f782`, checked against the current file |
+| Chain code in the check | `post_august_receipt_state`: DL-077 `after` == current file | `post_august_receipt_state`: DL-077 `after` == frozen DL-077 validator SHA-256 through `post_august_validator_pin()`. No new receipt predicate runs inside the old one. Separately, step records require `multi_family_receipt_state`: DL-412 `before` == DL-077 `after`, prior-byte pin == DL-077 bytes, and DL-412 `after` == current file, with every new authority/identity check intact. |
 | The check's output receipt `input_pins` | holding receipt, DL-077 receipt | plus `multi_family_step_receipt_sha256` |
-| `tests/test_event_authority_holding_bucket.py` fixtures | copy the Step 3 and DL-077 receipts | must also copy the DL-412 receipt: the patch below, not committed here |
+| `tests/test_event_authority_holding_bucket.py` fixtures | copy the Step 3 and DL-077 receipts | step fixtures also copy the DL-412 receipt; legacy fixtures need no new receipt to keep their results. External patch, not committed here. |
 
 No script, Spec Lock entry, `.evidence` file, readiness artifact or currentness edition pins the validator's bytes. This was checked by search:
 - `git grep 190a86f2` finds only the DL-077 receipt and four history reports;
@@ -118,7 +118,7 @@ The reports that cite `190a86f2...` as history keep their text:
 - `step-09-coord-registered-20260925.md`;
 - `LANDING_20260924_EA_VALIDATOR_AMENDMENT.md`.
 
-## Results: the check before and after
+## Scenario contract: the check before and after
 
 Every run uses a scratch tree made by `git archive origin/main` (`5e37ffb616`) of exactly the inputs the check reads:
 - `Plans/.audits/event-authority-2026-08-12`;
@@ -140,9 +140,9 @@ The counterfactual also gives their rows twelve PASS in a scratch depth assessme
 | S2 `origin/main` +DL | unchanged | same | same 6 |
 | S4 `origin/main` +DL + receipt (lander filled) | changed | same | same 6; full output identical to S2 except the new input pin |
 | S7 the committed receipt with only the lander filled | changed | same | identical to S4 |
-| S3 `origin/main`, no DL-412, receipt | changed | none | fails closed: "DL-412 prose entry missing", `holding_bucket_invalid`, every post-August family out |
-| S5 +DL, no DL-412 receipt | changed | none | fails closed: DL-077 receipt mismatch, `holding_bucket_invalid` |
-| S6 +DL, committed receipt (`lander_task` null) | changed | none | fails closed: DL-412 receipt identity mismatch, `holding_bucket_invalid` |
+| S3 `origin/main`, no DL-412, receipt | changed | coordination.agent_registered | Same legacy judgment and six failures as the corresponding old run; DL-412 authority invalid; new input pin null. There is no step record in this scenario. |
+| S5 +DL, no DL-412 receipt | changed | coordination.agent_registered | Same legacy judgment and six failures as the corresponding old run; DL-412 receipt absent; new input pin null. There is no step record in this scenario. |
+| S6 +DL, committed receipt (`lander_task` null) | changed | coordination.agent_registered | Same legacy judgment and six failures as the corresponding old run; DL-412 lander invalid; new input pin null. There is no step record in this scenario. |
 | C1 DL-300 one-family form | unchanged | coordination.agent_registered | 6; the three fail `registry_before_after_not_exactly_one_family` |
 | C2 DL-300 one-family form | changed | same | identical to C1 except the new input pin: the one-family rule is unchanged |
 | C3 DL-300 step form | unchanged | coordination.agent_registered | 6; the three fail `implementation_receipt_sha256` and `registry_before_after_not_exactly_one_family` |
@@ -168,7 +168,7 @@ The seal stays failing in C4 for reasons this change does not touch:
 
 `tests/test_event_authority_holding_bucket.py` is tracked but not named in `.gitignore` on `main`, so this branch may not edit it. DL-413 (Card 5) approves its `.gitignore` line. That line is the one commit on `plans/ea-gitignore-ea-tests-20261104` (`66af5d0d67`), not yet on `main`. The test change is therefore delivered as a patch, `test_event_authority_holding_bucket.dl412.patch`, in the evidence folder (fix round 1: SHA-256 `fbe7bcd61b42287d3dc46eb7e15a4f8041e40fd4e5f5ffdf91c20d1acdb9f8b6`, +478/-13, applies cleanly to this branch and to `main`; the reviewed head's patch was `679a095f...`, +301/-13). It goes in as a separate commit in the same landing as the validator, after the `.gitignore` line is on `main`.
 
-The patch does five things:
+The round-1 patch did five things (round 4 supersedes its receipt-chain expectation):
 - Both fixtures copy the DL-412 receipt.
 - `PostAugustAdmissionTests` records the three DL-300 families as one multi-family step: fixture states 43 -> 46, a fixture-only decision entry `DL-999` naming them, and the families in a separate `RECORDED` list. `POST` is unchanged, so `test_pm_coordination_events`'s check that `POST[3:]` equals the admitted coordination rows still holds.
 - `HoldingBucketTests` gains `test_holding_pin_follows_the_dl412_receipt_chain`.
@@ -232,14 +232,14 @@ Positive cases:
 
 ## Landing notes
 
-- **Order.** This branch lands after DL-412 (`plans/ea-cards1-answers-20261104`), which the receipt pins. On `main` alone the check fails closed (S3). Before landing, rebase onto the tree that carries DL-412 and run the receipt writer:
+- **Order.** This branch lands after DL-412 (`plans/ea-cards1-answers-20261104`), which the receipt pins. Without DL-412, step records fail closed; no-field admission and holding still behave as before (S3). Before landing, rebase onto the tree that carries DL-412 and run the receipt writer:
 
   ```
   python3 -I write_multifamily_receipt.py <worktree> --lander <lander task>
   ```
 
   Commit the receipt. If DL-412's prose bytes changed since `b6332f391a`, the writer re-pins them in the same run.
-- **The test patch.** It lands as its own commit in the same landing, after DL-413's `.gitignore` line is on `main`. Without it, the holding-bucket test goes from 2 to 41 failure entries.
+- **The test patch.** It lands as its own commit in the same landing, after DL-413's `.gitignore` line is on `main`. It supplies the multi-family and compatibility controls; the unchanged 34-method suite retains its two pre-existing failures.
 - **Re-pin rule.** Any later change to the validator, DL-412's prose section or the DL-077 receipt bytes requires the DL-412 receipt to be rewritten. A rewritten DL-412 receipt requires every step record to be rewritten.
 - **The DL-300 records, when written later:**
   - Use the step form.
@@ -247,7 +247,7 @@ Positive cases:
   - `5375bfd2a7` (DL-300's landing) only relabeled the registry to `2026-11-04.1` (`443ae71d...`) and added no family. A record naming `2026-10-09.1@43` -> `2026-11-04.1@46` would pair two states that are not one commit's before and after. Which pair is the truthful step is the record writer's to state and the reviewers' to verify.
   - The same step (`102a7e99e8`) also changed eleven existing Goal rows (their application-scope editions). The check does not examine that, before or after this change. The records should say so in their notes.
 - **Reviews.** Sol 6.1 max, then Astra max, before landing and right after, as DL-412 and DL-400 require.
-- **The seal.** It is not applied here. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The receipt's checked list remains exactly the author and lander. The seal applier must enforce the remaining exclusions procedurally; this does not add a validator rule.
+- **The seal.** It is not applied here. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The receipt's checked list remains exactly the author and lander. The seal applier must enforce the remaining exclusions procedurally; this does not add a validator rule.
 
 ## Open items
 
@@ -304,8 +304,18 @@ Historical round-2 validator SHA-256: `fb551b066c138be4a198ed1c875edff4a71c79326
 
 Both blocking findings are fixed in `27f3912208`. The current rule above supersedes the historical flat/stringifying claim descriptions in rounds 1 and 2. Strict directory inspection rejects duplicate keys at every level, unreadable/ambiguous files and noncanonical expected hashes, including nested before/after claims. Foreign mentions of either step digest anywhere in structure invalidate the step; uninspectable claims conservatively invalidate every step they could touch. Members require their own strictly read canonical record. Legacy no-field judgments remain unchanged.
 
-The final suite passes 68 methods; the seven new class methods fail 97 entries on the reviewed validator. Astra's ten parser probes and 112 broader scenarios pass their expected outcomes. The old/new differential has 5,500 record comparisons with zero differences; all 34 old fixture methods retain their outcomes (113 of 125 normalized helper results exact; 12 authorized receipt-chain diagnostic/returned-pin differences). Check 11 passes 40 semantic variants over 73 isolated negatives (2920 cells), including the named duplicate pairs and retained baseline-reason intersections in CA-SEAL.md's full table. Shard/index checks pass; no owner-derived or governance artifact is refreshed.
+The final suite passes 68 methods; the seven new class methods fail 97 entries on the reviewed validator. Astra's ten parser probes and 112 broader scenarios pass their expected outcomes. The old/new differential has 5,500 record comparisons with zero differences; all 34 old fixture methods retain their outcomes (113 of 125 normalized helper results exact; 12 out-of-scope receipt-chain diagnostic/returned-pin differences, repaired in fix round 4). Check 11 passes 40 semantic variants over 73 isolated negatives (2920 cells), including the named duplicate pairs and retained baseline-reason intersections in CA-SEAL.md's full table. Shard/index checks pass; no owner-derived or governance artifact is refreshed.
 
-Current validator `74897e17da4d330e835e0d196acd8c2af6761f9fe209cec1b7689d88b7d8adf6`; new receipt `b1b3e8cbdba25fae91def156c661017184b0cb632e1bc36a0f7cf4e0fe566fd4`; fixture patch `54037cce41156d8c4a91b3832084c203a697d6dfb809dc75906cde1c32dbcc29`. Only the new receipt's current-validator pin and descriptive contract/change/note text change; all other pins, identities and flags are preserved. Both procedural seal-applier exclusions explicitly include CA-SEAL-FIX3.
+Round-3 validator `74897e17da4d330e835e0d196acd8c2af6761f9fe209cec1b7689d88b7d8adf6`; new receipt `b1b3e8cbdba25fae91def156c661017184b0cb632e1bc36a0f7cf4e0fe566fd4`; fixture patch `54037cce41156d8c4a91b3832084c203a697d6dfb809dc75906cde1c32dbcc29`. Only the new receipt's current-validator pin and descriptive contract/change/note text change; all other pins, identities and flags are preserved. Both procedural seal-applier exclusions explicitly include CA-SEAL-FIX3.
 
 Current evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix3/results/fix3-summary.json`, SHA-256 `5ecc849eb160a2ac06a6d63843b361803fed2e2c614fd3531432bb7f97f3483c`; guard matrix `fix3/results/guard-matrix.json`, SHA-256 `40c079be9feead3c2735e08ffe58537409024f8de1281c59103691643d04cdfd`. The fixture patch remains a separate commit in the same landing after DL-413. Family grades N/A → N/A; no new ids/bindings, admission or seal.
+
+## Review round 4: CA-SEAL-FIX4
+
+C4-01 preserves exact decimal/exponent numeric tokens for foreign claim discovery, including `.0`, `e0`, fractional and overflow forms. Numeric registry SHA fields remain noncanonical; matching own files retain ordinary parsed numeric equality.
+
+C4-02 removes the complete DL-412 receipt predicate from the old DL-077 comparison. The old predicate runs in its original order with identical messages and returned DL-077 receipt hash, observing the frozen old validator hash. Full DL-412 receipt/authority/prior-byte/current-validator integrity is checked separately for step records and adds only their own errors. With no step field anywhere, all legacy outcomes, diagnostic ordering and pins are identical except the single added output input-pin field, including missing/invalid new receipts and notes-only edits to DL-077. The twelve differences in earlier rounds were outside approved scope.
+
+C4-03 updates the current-pin table above. The validator is `48ab44d79d097ec921dceeb7830c267afa1aaaf0ed871e1cf10912cbf3c8f782`; the new receipt is `bcdbc6f6c468aacc98a3a6b66c7b084ad1a3ceeaae86fdef4d0059c50fa5fafd`. Only the new receipt's current-validator pin is refreshed; its other pins, identities and false flags are unchanged. Descriptive receipt/spec text matches the implementation. CA-SEAL-FIX4 is procedurally excluded from applying the seal in both documents.
+
+The round-4 section in `CA-SEAL.md` contains the complete evidence: **17,480 paired legacy comparisons, zero differences**, including the 125 paired calls and 108 full CLI pairs; **74 fixture methods pass**; **43 guard variants × 86 negatives = 3,698 cells** pass. Summary `fix4/results/fix4-summary.json` SHA-256 `3a01ce4e242e9cd5b1196b50a29334f3bacb24b547c1328c2a6adcc414dbb091`; guard matrix SHA-256 `ed93bc767e4335c9a1dd8ecac492b73a351c6a1572f4b1975a150492596d33be`; fixture patch SHA-256 `2d8a52894f1dc4724dbecf5ad477a4fd131f5eea5c0ee53cdc6bdc55d80268f7`. Historical round counts and superseded expectations above are retained as history. The test patch remains a separate commit in the same landing after DL-413; no family is graded or admitted and no seal is applied.
