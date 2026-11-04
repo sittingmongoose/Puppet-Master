@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17125-L18100
+Source lines: L17125-L18102
 
-Source SHA256: `ca2e7162263b2f1e0c4f771d15d984f05adc4bc4db044f819033c70597ded32b`
+Source SHA256: `70873a89670176089cd74636e7068915a3addceaa6ca4d1fd6c3c96a599b287e`
 
 ---
 
@@ -297,7 +297,7 @@ Minimum event-class defaults:
 | Runtime/run/node/attempt | 365 days after run completion; 1,000,000/run and 5,000,000/project | successor compaction |
 | Chat content | indefinite while thread exists; 250,000/thread | roll linked successor; never evict content silently |
 | Detailed usage records (`usage.event`; amended 2026-10-31, DL-270) | the `ai.usage.usage-retention` window (90 days by default); no count eviction | compact expired unheld rows from the event log and the Parquet archive; daily usage totals per account, provider and model are kept forever (SP-341, UF-108) |
-| Ordinary telemetry (not usage) | 90 days; 2,000,000/project | compact expired unheld rows |
+| Ordinary telemetry (not usage) | 90 days; 2,000,000/project | expired unheld rows only; otherwise fail closed (amended 2026-11-04, DL-401: `RP-TELEMETRY-90D@1.0.0`) |
 | `seglog.event_appended` | 7 days; 500,000/instance | compact expired unheld rows |
 | Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |
 | Released safe points | 90 days after last hold release; 64/run and 2,048/project | oldest eligible only; retained hash summary 365 days after its first durable publication (DL-069) |
@@ -317,6 +317,8 @@ The three crew board families of DL-085, `crew.board_message_posted`, `crew.boar
 The three orchestrator diagnostics of DL-086, `phase.force_completed`, `config.validation.failed` and `parser.error`, are assigned `RP-RUNTIME-365D@1.0.0` for the time their full contracts are admitted: each is kept one year after the run it explains finishes, with at most 1,000,000 records per run and 5,000,000 per Project and a successor roll past that, the rule of that run's history. This is a retention assignment only: it admits no family, defines no binding and changes no policy. The raw agent output that `parser.error` carries, at least its first 500 characters, is kept for that year; reconciling the Orchestrator's "first 500 characters" with "All raw output is preserved" stays Orchestrator owner work. Each full contract names the Run whose completion anchors its records and carries the structured `retention_policy_ref` before admission.
 
 The 18 collaborative workflow families of DL-090 and DL-091 are assigned `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-092 for the time their full contracts are admitted. They are the 17 names of `Plans/Collaborative_Workflows.md` section 13 (`collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`, `collaboration.participant_started`, `collaboration.participant_completed`, `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`, `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`, `review.finding_added`, `review.finding_dispositioned` and `review.artifact_finalized`) and `collaboration.failed`, which DL-091 adds to that section. A collaborative run's recorded events are kept as long as the run's chat exists, the lifetime of its participants' child-run history, in an application chat as in a Project chat (DL-292, which supersedes DL-092 in part and leaves this lifetime unchanged). This is a retention assignment only: it admits no family, defines no binding and covers the recorded events only. The run, transcript message, proposal and finding records are not assigned here, and DL-092 does not decide their lifetime; SP-351's `RP-RUNTIME-365D` for the application editions of the run, participant and transcript records is neither changed nor relied on here. Before its own admission landing, each full contract names the chat that governs its records (the run's definition carries it), carries the structured `retention_policy_ref` and reconciles its chat-deletion behavior; where the event carries proposal or finding text, it also says how that text is protected and deleted.
+
+**The 90-day policy object (DL-401).** Jared's Card 1 answer of 2026-11-04 (DL-401) approves a 90-day rule on exactly these terms: 90 days; at most 2,000,000 records per Project; only expired records that no hold protects are removed, and nothing is dropped early to make room; when the cap is reached before anything has expired, new records are refused, as under `RP-OPERATIONAL-2555D@1.0.0`. This is the Ordinary telemetry class of the table above, and no existing policy object carries it: `RP-TERMINAL-SESSION-90D`, `RP-LEGACY-90D` and `RP-CONFIG-CURRENT` keep 90 days at other counts and evict the oldest, and `RP-SAFEPOINT-90D-AFTER-RELEASE` and `RP-RESTOREPOINT-90D-AFTER-RELEASE` count from a reference release and evict the oldest. The class is materialized exactly as `RP-TELEMETRY-90D@1.0.0` in `Plans/storage_value_registry.json`: `fixed_ttl`, `creation` anchor, `retain_indefinitely=false`, `ttl_seconds=7776000`, `max_cardinality=2000000` with `cardinality_scope=project`, no byte cap, `fail_closed` overflow, hold eligible and `compact` expiry. A record expires inclusively at its creation plus 7,776,000 seconds; only expired unheld records are compacted, and holds and stronger references override age and count. It is the only new policy object DL-401 creates.
 
 Expiry is inclusive at `anchor + ttl`. Count order is `(retention_anchor_at_utc, sequence_id?, stable_object_id)`. Legal hold, recovery/preserved/recent-run anchor, live ref, backup, rollback, or maintenance ref overrides age/count eligibility. Latest 25 terminal runs/project receive the automatic `recent_run` anchor; becoming 26th clears only that automatic anchor.
 
