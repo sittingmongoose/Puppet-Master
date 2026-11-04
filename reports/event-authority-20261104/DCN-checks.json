@@ -1,0 +1,245 @@
+{
+  "schema_id": "pm.event_authority.dcn.check_summary.v1",
+  "source_commit": "66480989f15aa8bf48fbd6c2dd2017caadc26c50",
+  "native_execution": "NOT_RUN",
+  "index_top_level_status": "pass",
+  "derived_checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 20.87,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/shards-generate.log"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 300.49,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/index-generate.log"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 49.84,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/shards-check.log"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 66.53,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/index-validate.log"
+    }
+  ],
+  "targeted_checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_browser_event_admission.py"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 400.44,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/targeted-0.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_browser_program_semantics.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 10.28,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/targeted-1.log"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-browser-event-admission.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 70.58,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/targeted-2.log"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm_coordination_events.py"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 11.98,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/targeted-3.log"
+    }
+  ],
+  "oracles": {
+    "status": "PASS",
+    "native_execution": "NOT_RUN",
+    "admission": "ABSENT",
+    "positives": 59,
+    "negatives": 368,
+    "errors": []
+  },
+  "guard_removal_summary": [
+    {
+      "guard": "schema",
+      "negatives_that_flip": 24,
+      "other_negatives_stay_rejected": 344,
+      "restored": true
+    },
+    {
+      "guard": "scope",
+      "negatives_that_flip": 12,
+      "other_negatives_stay_rejected": 356,
+      "restored": true
+    },
+    {
+      "guard": "source",
+      "negatives_that_flip": 50,
+      "other_negatives_stay_rejected": 318,
+      "restored": true
+    },
+    {
+      "guard": "transition",
+      "negatives_that_flip": 36,
+      "other_negatives_stay_rejected": 332,
+      "restored": true
+    },
+    {
+      "guard": "double_record",
+      "negatives_that_flip": 12,
+      "other_negatives_stay_rejected": 356,
+      "restored": true
+    },
+    {
+      "guard": "replay_only",
+      "negatives_that_flip": 36,
+      "other_negatives_stay_rejected": 332,
+      "restored": true
+    },
+    {
+      "guard": "identity",
+      "negatives_that_flip": 24,
+      "other_negatives_stay_rejected": 344,
+      "restored": true
+    },
+    {
+      "guard": "first_receipt",
+      "negatives_that_flip": 12,
+      "other_negatives_stay_rejected": 356,
+      "restored": true
+    },
+    {
+      "guard": "retry",
+      "negatives_that_flip": 24,
+      "other_negatives_stay_rejected": 344,
+      "restored": true
+    },
+    {
+      "guard": "token_schema",
+      "negatives_that_flip": 24,
+      "other_negatives_stay_rejected": 344,
+      "restored": true
+    },
+    {
+      "guard": "token_join",
+      "negatives_that_flip": 36,
+      "other_negatives_stay_rejected": 332,
+      "restored": true
+    },
+    {
+      "guard": "historical",
+      "negatives_that_flip": 24,
+      "other_negatives_stay_rejected": 344,
+      "restored": true
+    },
+    {
+      "guard": "access",
+      "negatives_that_flip": 24,
+      "other_negatives_stay_rejected": 344,
+      "restored": true
+    },
+    {
+      "guard": "reader_effect",
+      "negatives_that_flip": 24,
+      "other_negatives_stay_rejected": 344,
+      "restored": true
+    },
+    {
+      "guard": "command_only",
+      "negatives_that_flip": 6,
+      "other_negatives_stay_rejected": 362,
+      "restored": true
+    }
+  ],
+  "failure_infrastructure_checks": [
+    {
+      "case": "checker_failure_has_nonzero_exit",
+      "command": [
+        "python3",
+        "scripts/pm_card2_events.py",
+        "--fixtures",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/failure-driver.json"
+      ],
+      "exit_code": 1,
+      "expected": "nonzero"
+    },
+    {
+      "case": "unresolved_schema_reference",
+      "command": [
+        "python3",
+        "-c",
+        "import importlib.util; s=importlib.util.spec_from_file_location('dcn','scripts/pm_card2_events.py'); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.load('card2_event_payloads.schema.json')['$defs']['broken']={'$ref':'#/$defs/missing'}; m.run()"
+      ],
+      "exit_code": 1,
+      "expected": "nonzero unresolved reference"
+    }
+  ],
+  "preexisting_failures": {
+    "browser_tests": {
+      "tests_run": 38,
+      "failures": 30,
+      "same_unchanged_upstream40_assertion": true,
+      "baseline_witness": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/browser-test-baseline-witness.json"
+    },
+    "coordination": {
+      "failures": 2,
+      "baseline_witness": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/coordination-baseline-witness.json"
+    }
+  },
+  "all_six_memberships_absent": true,
+  "only_edited_owner_shards_changed": true,
+  "exact_quote_evidence_cells": 72,
+  "checks_not_run": [
+    "Native/runtime/crash/restore/physical-deletion proof",
+    "Independent review",
+    "Governance reseal / aggregate integration gates"
+  ]
+}
