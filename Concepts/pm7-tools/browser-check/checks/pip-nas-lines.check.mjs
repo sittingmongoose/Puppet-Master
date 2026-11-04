@@ -127,7 +127,22 @@ export default async function (t) {
         }
     });
     if (t.args.driveOnly) return;
+    await t.step('quick SMB submission · both wordings', async () => {
+        for (let mode = 0; mode < 2; mode++) {
+            const f = await t.app.open(); await t.app.look('friendly-light');
+            if (t.args.motion === 'on') await t.emulate({ reducedMotion: 'no-preference' });
+            await openAt(t, f, 'nas-smb'); await settled(f, 'nas-smb');
+            if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+            await typeIn(t, f, 'user', 'jared'); await typeIn(t, f, 'pw', 'correct horse');
+            await watchResult(f, 'nas-smb'); await t.mark('quick smb submit ' + mode);
+            await clickIn(f, '.o55-primary');
+            await t.check('quick SMB passes', await checkIs(f, 'nas-smb', 'done'), '');
+            await resultHandoff(t, f, 'nas-smb', await line(f, 'nas-smb', 'checking'));
+            await t.mark('quick smb result ' + mode);
+        }
+    });
 
+    if (t.args.filmOnly) return;
 	for (const [i, pair] of looks.flatMap((look) => [[look, 0], [look, 1]]).entries()) {
         const [look, mode] = pair;
 		await t.step(`${look} · smb · wording ${mode}`, async () => {
