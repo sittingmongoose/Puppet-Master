@@ -14,15 +14,16 @@
       "Plans/Automated_Testing_System.md": "9c88dd5ea5794b145dda50a3454667315a2c4579b6fe7092711c06a489db7414",
       "Plans/dt_event_contracts.json": "5db3bec9a4f85679bdcca86a7eb8345cb812205714a73646b44fe5350d4e632c",
       "Plans/dt_event_contracts.schema.json": "1d366c417fb15c461e6248a79744b3aa07d36017894270aded4647b913883526"
-    }
+    },
+    "commit": "9c6132e10eeb5b2e976d0ab2b01a4114ef6b2e66"
   },
   "registry": {
     "membership": "ABSENT for all DT families; unchanged"
   },
   "status_counts": {
     "ABSENT": 25,
-    "PASS": 130,
-    "PARTIAL": 61
+    "PASS": 128,
+    "PARTIAL": 63
   },
   "native_execution": "NOT_RUN",
   "static_suites_run_by_grader": false,
@@ -3421,7 +3422,7 @@
         }
       ],
       "outcome": "register_draft_NOT_READY",
-      "pass_count": 7,
+      "pass_count": 5,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -3482,9 +3483,9 @@
           "change_reason": "First DT drafting-wave self-assessment against current branch content; no earlier survey grade carried as proof."
         },
         "closed_payload_schema": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Closed root schema at exact payload id/version; required omissions, extra root field and wrong id/version are checked.",
+          "finding": "The root is closed, but the draft is not a full UF-085 wire contract: provider cost/quota/pricing detail and exposed provider accounting fields need exact closed slots before admission.",
           "evidence": [
             {
               "path": "Plans/dt_event_contracts.schema.json",
@@ -3499,9 +3500,9 @@
           "change_reason": "First DT drafting-wave self-assessment against current branch content; no earlier survey grade carried as proof."
         },
         "scope_identity": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact family contract is explicitly authored in CV-614 and SP-594.",
+          "finding": "The identity recipe exists, but concrete fixtures do not yet prove usage_event_ref equals the computed event identity or prove complete original provider observation and settlement joins.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -3639,7 +3640,9 @@
         "PARTIAL: the exact producer/admission and SP-286 ordering are authored, but immutable source/result reference codecs and their transactional publication need per-source adoption evidence before admission.",
         "PARTIAL: exact operating consumer, typed checkpoint and SP-278 adoption are authored. Full checkpoint positive/negative values, empty-prefix coverage and withdrawal/restore vectors are not yet materialized as executable fixture cases.",
         "PARTIAL: payload positives/negatives and retry identity models pass; family-specific transition, custody, withdrawal, counting and accounting cases are authored as native obligations but lack concrete fixture vectors. This is a normative oracle gap, beyond native NOT_RUN.",
-        "RETENTION: RT must resolve PENDING_RETENTION_DECISION."
+        "RETENTION: RT must resolve PENDING_RETENTION_DECISION.",
+        "The root is closed, but the draft is not a full UF-085 wire contract: provider cost/quota/pricing detail and exposed provider accounting fields need exact closed slots before admission.",
+        "The identity recipe exists, but concrete fixtures do not yet prove usage_event_ref equals the computed event identity or prove complete original provider observation and settlement joins."
       ],
       "static_checks_seen": [
         "scripts/pm-dt-event-contracts.py: 445 checks, 17 families, pass"
