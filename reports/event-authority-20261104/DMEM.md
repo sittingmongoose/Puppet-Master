@@ -1,3 +1,201 @@
+# DMEM fix round 5 — standing check 11
+
+Branch: `plans/ea-w2-memory-maintenance-20261104`. Source head: `5e1512a7da88d62a760e00f51d86cfbf637efa67`. Base: `bc4f6fef9f1d90bd469824b16eb863e7f19281b5`. Review: Sol cycle 4 at `dc4c46c58c7462f288684a6e672febdf134e3c89`.
+
+This section supersedes the earlier worker check-11 claims and oracle grades below. It repairs B3 across the original eight families and extends the same proof to all four Card 1b families. All other review dispositions hold. The withdrawal fence, every `failed_terminal_saved` snapshot and the cutoff proposal are preserved.
+
+## Review round 5: findings and responses
+
+**B3 — fixed in `5e1512a7da88d62a760e00f51d86cfbf637efa67`. Where:** `Plans/memory_maintenance_event_fixtures.json:86846`, `Plans/memory_archive_event_fixtures.json:10016`, `scripts/pm_memory_maintenance_events.py:448`, and `scripts/pm_memory_guard_isolation.py:524`. **Cause:** one changed retained operation/body left an old commitment, so value binding and integrity failed independently. The Card 1b matrix also held the same compound prototype. **Fix:** start from an intact record, change one semantic value, update every affected operation identity/correlation/envelope copy, and recompute its commitment. Source, operation, storage identity, foreign started family and frozen time now have coherent retained records. A digest negative changes only its digest. The foreign-family witness uses a complete schema-valid start rather than an incomplete terminal body. Standalone changed-start-value retries now carry a fresh digest. Checkpoint storage negatives now keep an intact valid retained checkpoint and rebind the foreign operation, event identities, result commitments and lookup key coherently; key-only negatives use a valid foreign UUID key. ATS-315 describes the repaired inputs and executable proof.
+
+**Verification:** the reviewer’s own terminal-advance witness now accepts in 8/8 families when only value binding is removed, refuses in 8/8 when only digest is removed, and refuses with both enabled. All twelve deliberately restored compound negatives are detected by the isolation oracle. The 400 earlier-finding probes still pass. Equivalent predicate factoring preserves all six original model suites and all 224 boundary outcomes against the pre-fix checker; schemas, contracts, registry rows, states and the withdrawal owner text are unchanged.
+
+**Cycle-4 note 2 — accounted for. Where:** the four index JSON outputs with `generated_at_utc`. **Cause:** the existing generator writes the clock. **Handling:** normal regeneration is committed, including its timestamp changes; no all-byte-equality or hash-restamping claim. Only the edited Automated Testing owner has changed shards.
+
+## Family grades at this source head
+
+P/Q/A = PASS / PARTIAL / ABSENT. The first eight “before” grades are the independent cycle-4 verdict. The four Card 1b “before” grades are the existing worker grades, which had no independent cycle-4 verdict. Their oracle cells remain PASS after obtaining the new granular proof. Membership stays ABSENT, retention PARTIAL, native execution NOT_RUN. No admission or cutoff is selected.
+
+| Exact family | Before P/Q/A | After P/Q/A |
+|---|---:|---:|
+| `memory.dedup_sweep.completed` | 9/2/1 (review) | 10/1/1 |
+| `memory.dedup_sweep.started` | 9/2/1 (review) | 10/1/1 |
+| `memory.index.lexical.rebuild.completed` | 9/2/1 (review) | 10/1/1 |
+| `memory.index.lexical.rebuild.started` | 9/2/1 (review) | 10/1/1 |
+| `memory.index.semantic.rebuild.completed` | 9/2/1 (review) | 10/1/1 |
+| `memory.index.semantic.rebuild.started` | 9/2/1 (review) | 10/1/1 |
+| `memory.monthly_summary.completed` | 10/1/1 (worker) | 10/1/1 |
+| `memory.monthly_summary.started` | 10/1/1 (worker) | 10/1/1 |
+| `memory.prune_archive.completed` | 10/1/1 (worker) | 10/1/1 |
+| `memory.prune_archive.started` | 10/1/1 (worker) | 10/1/1 |
+| `memory.verification_sweep.completed` | 9/2/1 (review) | 10/1/1 |
+| `memory.verification_sweep.started` | 9/2/1 (review) | 10/1/1 |
+
+Totals: **112 PASS / 20 PARTIAL / 12 ABSENT → 120 PASS / 12 PARTIAL / 12 ABSENT**. All 416 source quotations were located again and checked at the source head.
+
+## Guard-removal proof
+
+**13,062 custody matrix cells; 14,534 negatives in the combined checker corpora.** Every negative has an intact positive control. Each row removes only its named logical predicate across repeated sites, executes the entire corpus for that checker, requires its own negatives to accept, requires every other negative to retain its exact refusal, and restores the predicate. The table records 104 guard removals and 746,356 mutation/case evaluations.
+
+Integrity, full flush, closed record fields, absence and semantic-value binding remain separate. In the archive checker, `semantic_binding` names the equivalent caller/retained producer and payload comparisons; the same full semantic value is checked at admission, retained custody and retry. These repeated value comparisons are removed together while digest, flush, shape, schema, replay, permission, cutoff, phase and CAS checks remain enabled. Normal refusal codes are preserved. The old whole-start-gate no-op was removed from the archive audit.
+
+Missing-byte and withdrawal probes call the actual shared custody gate: a reader cannot return absent bytes, and the audit fabricates none. The other custody probes use the complete phase, canonical writer, boundary or history entry point. Schema and primitive witnesses call their actual predicate endpoints. This proves the static contract model; physical custody and atomicity remain native NOT_RUN.
+
+“Flip” and “stay” below are counts of exact case ids. The full lists for every row, including every complement and restoration result, are in the SHA-pinned external `check11.json`; the compact committed `DMEM-check11-guards.json` records examples and list hashes.
+
+### maintenance checker
+
+Corpus: 9,620 negatives.
+
+| Guard removed | Negatives that flip | Negatives that stay rejected |
+|---|---:|---:|
+| `action` | 8 | 9,612 |
+| `admission` | 16 | 9,604 |
+| `artifacts` | 4 | 9,616 |
+| `boundary_acceptance` | 4 | 9,616 |
+| `boundary_payload` | 8 | 9,612 |
+| `boundary_receipts` | 12 | 9,608 |
+| `boundary_request` | 8 | 9,612 |
+| `boundary_scope` | 24 | 9,596 |
+| `boundary_snapshot` | 16 | 9,604 |
+| `boundary_terminal` | 4 | 9,616 |
+| `checkpoint_event` | 8 | 9,612 |
+| `checkpoint_key` | 8 | 9,612 |
+| `checkpoint_storage` | 8 | 9,612 |
+| `custody_binding` | 4,630 | 4,990 |
+| `custody_digest` | 926 | 8,694 |
+| `custody_flush` | 926 | 8,694 |
+| `custody_presence` | 902 | 8,718 |
+| `custody_shape` | 926 | 8,694 |
+| `effect_count` | 4 | 9,616 |
+| `effect_once` | 16 | 9,604 |
+| `envelope_schema` | 8 | 9,612 |
+| `history_event` | 8 | 9,612 |
+| `inline_cap` | 8 | 9,612 |
+| `operation_cas` | 8 | 9,612 |
+| `operation_receipt` | 8 | 9,612 |
+| `operation_result_digest` | 8 | 9,612 |
+| `operation_result_ref` | 8 | 9,612 |
+| `operation_schema` | 8 | 9,612 |
+| `original_input` | 8 | 9,612 |
+| `outcome` | 8 | 9,612 |
+| `partition` | 8 | 9,612 |
+| `payload_schema` | 8 | 9,612 |
+| `permission_or_withdrawal` | 970 | 8,650 |
+| `phase` | 8 | 9,612 |
+| `prior_selector` | 4 | 9,616 |
+| `producer_join` | 8 | 9,612 |
+| `references_resolve` | 8 | 9,612 |
+| `replay_policy` | 8 | 9,612 |
+| `request` | 8 | 9,612 |
+| `selected_target` | 4 | 9,616 |
+| `selector_cas` | 4 | 9,616 |
+| `selector_schema` | 4 | 9,616 |
+| `selector_scope` | 4 | 9,616 |
+| `source` | 8 | 9,612 |
+| `target_identity` | 4 | 9,616 |
+| `target_manifest` | 4 | 9,616 |
+| `target_order` | 4 | 9,616 |
+| `target_schema` | 4 | 9,616 |
+| `target_source` | 4 | 9,616 |
+| `terminal_custody` | 8 | 9,612 |
+
+### archive checker
+
+Corpus: 4,914 negatives.
+
+| Guard removed | Negatives that flip | Negatives that stay rejected |
+|---|---:|---:|
+| `action` | 4 | 4,910 |
+| `admission` | 12 | 4,902 |
+| `boundary_acceptance` | 2 | 4,912 |
+| `boundary_payload` | 4 | 4,910 |
+| `boundary_receipts` | 6 | 4,908 |
+| `boundary_request` | 4 | 4,910 |
+| `boundary_scope` | 12 | 4,902 |
+| `boundary_snapshot` | 8 | 4,906 |
+| `boundary_terminal` | 2 | 4,912 |
+| `checkpoint_event` | 4 | 4,910 |
+| `checkpoint_key` | 8 | 4,906 |
+| `checkpoint_storage` | 8 | 4,906 |
+| `custody_digest` | 760 | 4,154 |
+| `custody_flush` | 386 | 4,528 |
+| `custody_presence` | 374 | 4,540 |
+| `custody_shape` | 382 | 4,532 |
+| `cutoff_commitment` | 4 | 4,910 |
+| `cutoff_record` | 4 | 4,910 |
+| `cutoff_scope` | 8 | 4,906 |
+| `cutoffs_unavailable` | 328 | 4,586 |
+| `effect_once` | 12 | 4,902 |
+| `envelope_schema` | 8 | 4,906 |
+| `evidence_preserved` | 4 | 4,910 |
+| `history_event` | 4 | 4,910 |
+| `inline_cap` | 4 | 4,910 |
+| `no_extra_memories` | 4 | 4,910 |
+| `no_prune_summary` | 2 | 4,912 |
+| `operation_cas` | 8 | 4,906 |
+| `operation_receipt` | 4 | 4,910 |
+| `operation_result_digest` | 4 | 4,910 |
+| `operation_result_ref` | 4 | 4,910 |
+| `operation_schema` | 8 | 4,906 |
+| `original_input` | 4 | 4,910 |
+| `originals_preserved` | 4 | 4,910 |
+| `outcome` | 4 | 4,910 |
+| `partition` | 8 | 4,906 |
+| `payload_schema` | 82 | 4,832 |
+| `permission_or_withdrawal` | 420 | 4,494 |
+| `phase` | 4 | 4,910 |
+| `pins_preserved` | 4 | 4,910 |
+| `references_resolve` | 8 | 4,906 |
+| `replay_policy` | 8 | 4,906 |
+| `request` | 8 | 4,906 |
+| `selected_archived` | 4 | 4,910 |
+| `selection_exists` | 4 | 4,910 |
+| `selection_kind` | 2 | 4,912 |
+| `selection_pinned` | 4 | 4,910 |
+| `selection_unique` | 4 | 4,910 |
+| `semantic_binding` | 1,930 | 2,984 |
+| `source` | 8 | 4,906 |
+| `summary_provenance` | 2 | 4,912 |
+| `terminal_custody` | 8 | 4,906 |
+| `unselected_preserved` | 4 | 4,910 |
+| `versions_preserved` | 4 | 4,910 |
+
+## Checks and preserved boundaries
+
+| Check | Exit / result |
+|---|---|
+| `python3 scripts/pm_memory_guard_isolation.py --out <evidence-path>` | 0 / pass; complete table above |
+| `python3 scripts/pm_memory_maintenance_events.py` | 0 / pass; all existing eight-family oracles |
+| `python3 scripts/pm_memory_archive_events.py` | 0 / pass; four-family archive/cutoff/reader oracles and granular guard corpus |
+| Cycle-4 reviewer isolation witness | 0 / binding alone flips 8/8; digest alone flips 0/8; failed snapshots still exactly reachable |
+| Prior findings | 0 / 400 of 400 pass |
+| Restored compound controls | 0 audit / all 12 defective coverage claims detected |
+| Pre-fix/new checker equivalence | 0 / six full model suites and 224 boundaries equal |
+| Shard generate/check; index generate/validate | 0 / every parsed top-level status is pass; no failures |
+| Currentness edition | 15 of 15 SHA-256 matches before generation |
+| Regrade | 0 / every quotation exact, at most 200 characters |
+
+**Scope:** fixtures, equivalent named predicates, executable isolation audit, ATS-315, its generated shards/index and this report/self-grade. No schema, contract, registry, admission, Decision Log, cutoff, withdrawal protocol, storage owner, test file, Spec Lock, governance evidence or auto-decision is changed. No main push or landing. No new consumer/identity/checkpoint binding. The branch remains prepared without admission. Retention, native proof, the pending cutoff choice and independent review remain open as before.
+
+**IDs used:** no new PlanUnit ids. Existing `ATS-315` is updated; `ATS-316`, `AMS-100–107`, `SP-630–639`, and `CV-650–659` remain the existing twelve-family owner/adoption ids.
+
+## Evidence
+
+Raw evidence: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5`. Manifest: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5/evidence-sha256.json`, SHA-256 `26d92413b374185c7e96562dd1b555cc7dc2823a0f7ba4da39b14c7cb0e3ac48`.
+
+- Complete guard ids/complements: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5/check11.json`, SHA-256 `b4bda65b2464b301eb5c24e241f991dcfdb86cb85e6236d7ac77d50bb83a191d`.
+- Prior findings: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5/prior-findings.json`, SHA-256 `33c7b31e763174c9d0f02acd8a8b45af6c1629457b4a302c56627fb6e8edb693`.
+- Reviewer witness: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5/isolation-witness.json`, SHA-256 `85d8ebf9d3392d758ee73459acd57597e29131b3ad606da06990f9c380c84e5a`.
+- Equivalence: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5/equivalence.json`, SHA-256 `332f188ca468eb6f5f623bf21d18987c9c0bd7cdefb4e91bf7f9686e00b6f2a3`.
+- Restored compound controls: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5/compound-controls.json`, SHA-256 `632e149ed9e307f206a577c305244d741722ea517ba3561044650d4b158e6076`.
+
+Report and self-grade copies are in the parent `drafts/DMEM/` directory. The task worktree is removed after the final report push.
+
+---
+
+The earlier source-pinned report follows as lineage. Its cutoff proposal is unchanged.
+
 # DMEM fix round 4 — 2026-11-04
 
 Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source head: `e850f298670855b745b0cfe6ee75acd3cf3518f8`. Reviewed head: `009027140a5c3ecab7df7d22214b78a92b7a4ae8` (Astra round 2). Gate redesign: `74995bb921`. Standing check 9: `e850f29867`. This report and the self-grade are a report-only follow-up; the source pin is exact. Earlier reports remain in Git history.
