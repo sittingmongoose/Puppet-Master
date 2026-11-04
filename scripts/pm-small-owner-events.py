@@ -3,6 +3,7 @@
 import copy
 import hashlib
 import json
+import base64
 from datetime import datetime
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
@@ -58,9 +59,365 @@ def producer_witness_allowed(event, witness):
     return witness == required
 
 
+# These bindings are independently fixed by each owner contract, never borrowed
+# from another fixture row. All source adapters below are synthetic, NOT native.
+FAMILY_BINDINGS = {
+    'format.applied': ('timestamp', 'secret_refs_only', 'HTE formatter completion adapter'),
+    'lsp.server.lifecycle_changed': ('ts', 'no_secrets', 'LspSupervisor lifecycle adapter'),
+    'model.catalog_refreshed': ('completed_at_utc', 'secret_refs_only', 'shared model capability resolver refresh completion adapter'),
+    'subagent.context_rehydrated': ('occurred_at_utc', 'secret_refs_only', 'effective-context runtime rehydration adapter'),
+    'subagent.context_shrunk': ('occurred_at_utc', 'secret_refs_only', 'effective-context runtime shrinking adapter'),
+    'project.added': ('completed_at_utc', 'secret_refs_only', 'Project registration commit adapter'),
+    'project.created': ('completed_at_utc', 'secret_refs_only', 'Project creation composition terminal adapter'),
+    'git.clone.completed': ('completed_at_utc', 'secret_refs_only', 'ordinary Git clone terminal adapter'),
+}
+PRODUCER_FIELDS = (
+    'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
+    'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
+    'occurred_at_utc', 'producer_sequence_id', 'correlation_id', 'causation_event_id',
+    'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload', 'payload_ref',
+    'redaction_profile', 'migration',
+)
+ORIGINAL_JOINS = (
+    'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id', 'attempt_id',
+    'actor_ref', 'requested_account_ref', 'effective_account_ref',
+    'producer_sequence_id', 'correlation_id', 'causation_event_id', 'parent_event_id',
+)
+ADMISSION_GATES = (
+    'membership', 'retention_resolved', 'schema_admitted', 'writer_enabled',
+    'permission_current', 'dedupe_current', 'source_custody_available',
+    'original_intent_available', 'original_result_available', 'owner_acceptance_current',
+    'body_committed', 'lease_current', 'restore_controls_current',
+    'same_restore_occurrence', 'protected_origin_current',
+)
+REBUILD_GATES = (
+    'originals_present', 'source_current', 'coverage_complete', 'schema_supported',
+    'current_frontier_verified', 'cas_matches',
+)
+
+
+def canonical_fixture_msgpack(value):
+    """Case L-2 exact subset used here: nil/bool/integers/UTF-8/arrays/maps.
+
+    DM payloads contain no float/binary values. Refuse unsupported values instead
+    of coercing them. The complete-value recipe is checked against canon's
+    pre-existing golden preimage as well as every exact-family retained value.
+    """
+    def sized(n, small, limits):
+        if n < small[0]:
+            return bytes([small[1] + n])
+        for bound, marker, size in limits:
+            if n < bound:
+                return bytes([marker]) + n.to_bytes(size, 'big')
+        raise ValueError('fixture value outside codec range')
+    if value is None:
+        return b'\xc0'
+    if type(value) is bool:
+        return b'\xc3' if value else b'\xc2'
+    if type(value) is int:
+        if 0 <= value <= 127:
+            return bytes([value])
+        if -32 <= value < 0:
+            return bytes([value & 255])
+        if value >= 0:
+            for size, marker in [(1, 0xcc), (2, 0xcd), (4, 0xce), (8, 0xcf)]:
+                if value < 1 << (8 * size):
+                    return bytes([marker]) + value.to_bytes(size, 'big')
+        else:
+            for size, marker in [(1, 0xd0), (2, 0xd1), (4, 0xd2), (8, 0xd3)]:
+                if value >= -(1 << (8 * size - 1)):
+                    return bytes([marker]) + value.to_bytes(size, 'big', signed=True)
+        raise ValueError('integer outside codec range')
+    if type(value) is str:
+        raw = value.encode('utf-8')
+        return sized(len(raw), (32, 0xa0), [(256, 0xd9, 1), (65536, 0xda, 2), (2**32, 0xdb, 4)]) + raw
+    if type(value) is list:
+        return sized(len(value), (16, 0x90), [(65536, 0xdc, 2), (2**32, 0xdd, 4)]) + b''.join(canonical_fixture_msgpack(v) for v in value)
+    if type(value) is dict and all(type(k) is str for k in value):
+        keys = sorted(value, key=lambda k: k.encode('utf-8'))
+        return sized(len(keys), (16, 0x80), [(65536, 0xde, 2), (2**32, 0xdf, 4)]) + b''.join(canonical_fixture_msgpack(k) + canonical_fixture_msgpack(value[k]) for k in keys)
+    raise ValueError('unsupported fixture MessagePack type')
+
+
+def full_value_preimage(event):
+    return canonical_fixture_msgpack([
+        'pm.storage.original_event_value_commitment.v1', '1.0.0',
+        'pm.seglog_frame_v2.event_value.canonical_msgpack.v1',
+        event['schema_id'], event['schema_version'], event,
+    ])
+
+
+def producer_digest(event):
+    # All fixture values are integer/string/bool/null; this is RFC 8785 on that
+    # subset. No floating-point or non-ASCII object-key approximation is used.
+    selected = {k: event[k] for k in PRODUCER_FIELDS}
+    return hashlib.sha256(json.dumps(selected, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+
+
+def scope_partition(event):
+    if event['scope_kind'] == 'application':
+        return 'app'
+    return 'project~' + base64.urlsafe_b64encode(event['project_id'].encode()).decode().rstrip('=')
+
+
+def valid_event(row, event, original):
+    envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
+    payload_schema = json.loads((ROOT / row['schema']).read_text())
+    ev = Draft202012Validator(envelope, format_checker=FORMATS)
+    pv = Draft202012Validator(payload_schema, format_checker=FORMATS)
+    if not ev.is_valid(event) or not pv.is_valid(event.get('payload')):
+        return False
+    payload = event['payload']
+    time_field, profile, owner = FAMILY_BINDINGS[row['event_type']]
+    if original.get('owner') != owner or original.get('operation_id') != payload['operation_id']:
+        return False
+    if original.get('result_operation_id') != original['operation_id'] or original.get('result_payload') != payload:
+        return False
+    if not producer_witness_allowed(row['event_type'], original.get('producer_witness')):
+        return False
+    if not semantic(payload, row['scope_policy'], row['event_type']):
+        return False
+    if any(event[k] != original['envelope_joins'][k] for k in ORIGINAL_JOINS):
+        return False
+    if event['project_id'] != payload['project_id']:
+        return False
+    if event['occurred_at_utc'] != payload[time_field] or event['occurred_at_utc'] != original['completed_at_utc']:
+        return False
+    if event['event_type'] != row['event_type'] or event['payload_schema_id'] != payload_schema['$id']:
+        return False
+    if event['redaction_profile'] != profile or event['replay_policy'] != 'dedupe_by_idempotency_key':
+        return False
+    identity = digest(row['event_type'], original['storage_instance_id'], payload)
+    if event['event_id'] != 'evt_' + identity or event['idempotency_key'] != row['event_type'] + ':' + identity:
+        return False
+    if event['payload_ref'] is not None or any(v is not None for v in event['migration'].values()):
+        return False
+    if row['event_type'].startswith('subagent.') and event['run_id'] != payload['run_id']:
+        return False
+    return True
+
+
+def publication(row, state):
+    """Fixture append adapter: no owner effects are invoked or undone."""
+    outcome = {'durable_events': 0, 'receipt': None, 'terminal': False, 'owner_effects': 0}
+    if not all(state[k] for k in ADMISSION_GATES):
+        return outcome
+    original = state['original_operation']
+    if state['admission_epoch'] != original['accepted_admission_epoch'] or original['accepted_admission_epoch'] != state['current_admission_epoch']:
+        return outcome
+    if original['accepted_session_id'] != state['current_owner_session_id'] or original['restore_occurrence_id'] != state['current_restore_occurrence_id']:
+        return outcome
+    if not valid_event(row, state['event'], state['original_operation']):
+        return outcome
+    if not state['frame_written'] or not state['group_synced']:
+        return outcome
+    # A durable group commit IS first issuance. A lagging custody row is rebuilt
+    # from it; row presence is never an additional issuance phase.
+    outcome['durable_events'] = 1
+    if state['receipt_delivery']:
+        outcome['receipt'] = copy.deepcopy(state['first_append_receipt'])
+        outcome['terminal'] = state['terminal_delivery']
+    return outcome
+
+
+def resolve_original(row, incoming, authority):
+    """Immutable semantic replay can outlive owner request/source handles."""
+    schema = json.loads((ROOT / 'Plans/event_append_receipt_contracts.schema.json').read_text())
+    validator = Draft202012Validator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS)
+    if not validator.is_valid(authority['stored_custody']) or not authority['protected_authority_current']:
+        return None
+    envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
+    payload_schema = json.loads((ROOT / row['schema']).read_text())
+    if not Draft202012Validator(envelope, format_checker=FORMATS).is_valid(authority['stored_event']):
+        return None
+    if not Draft202012Validator(payload_schema, format_checker=FORMATS).is_valid(authority['stored_event']['payload']):
+        return None
+    stored, receipt, result = authority['stored_event'], authority['stored_custody']['first_append_receipt'], authority['original_append_result']
+    custody = authority['stored_custody']
+    expected_identity = (stored['event_id'], scope_partition(stored), stored['event_type'], stored['idempotency_key'], producer_digest(stored))
+    actual_identity = tuple(custody[k] for k in ['event_id', 'scope_partition', 'event_type', 'idempotency_key', 'producer_semantic_digest'])
+    if expected_identity != actual_identity or custody['storage_instance_id'] != authority['storage_instance_id']:
+        return None
+    if incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or producer_digest(incoming) != producer_digest(stored):
+        return None
+    if result != {'event_id': stored['event_id'], 'sequence_id': stored['sequence_id'], 'segment_ref': custody['original_segment_ref'], 'byte_offset': receipt['byte_offset']}:
+        return None
+    if receipt['event_id'] != stored['event_id'] or receipt['sequence_id'] != stored['sequence_id']:
+        return None
+    if receipt != authority['first_append_receipt']:
+        return None
+    return copy.deepcopy((result, receipt))
+
+
+def resolve_full_value(row, requested, authority):
+    replay = resolve_original(row, requested, authority)
+    if replay is None:
+        return None
+    commitment = authority['stored_custody']['original_event_value_commitment']
+    if commitment['sha256'] != hashlib.sha256(full_value_preimage(requested)).hexdigest() or commitment['sha256'] != hashlib.sha256(full_value_preimage(authority['stored_event'])).hexdigest():
+        return None
+    return replay
+
+
+def reader_result(row, state):
+    return 'available' if (
+        state['reader_enabled'] and state['permission_current'] and state['source_present']
+        and state['deletion_clear'] and state['hold_allows_disclosure']
+        and state['version'] == '1.0.0' and state['current_frontier_verified']
+        and state['live_token'] == state['selected_token']
+        and valid_event(row, state['event'], state['original_operation'])
+    ) else 'unavailable'
+
+
+def rebuild_publication(row, state):
+    old = copy.deepcopy(state['old_publication'])
+    if not all(state[k] for k in REBUILD_GATES):
+        return old
+    if not valid_event(row, state['event'], state['original_operation']):
+        return old
+    # One transaction publishes rows and checkpoint. No family-specific cursor.
+    return {'rows': [copy.deepcopy(state['event'])], 'checkpoint': copy.deepcopy(state['new_checkpoint'])}
+
+
+def patched(value, patches):
+    result = copy.deepcopy(value)
+    for patch in patches:
+        target = result
+        for key in patch['path'][:-1]:
+            target = target[key]
+        if patch.get('delete'):
+            del target[patch['path'][-1]]
+        else:
+            target[patch['path'][-1]] = copy.deepcopy(patch['value'])
+    return result
+
+
+def run_exact_family(row):
+    count = 0
+    def check(condition, label):
+        nonlocal count
+        assert condition, (row['event_type'], label)
+        count += 1
+
+    event, original = row['positive_event_record'], row['original_operation']
+    required = set(json.loads((ROOT / 'Plans/event_record.schema.json').read_text())['required'])
+    check(required == {c['field'] for c in row['envelope_negatives'] if c.get('delete')}, 'complete envelope deletion matrix')
+    check(set(ADMISSION_GATES) <= {c['case_id'].removeprefix('cut_') for c in row['admission_cases']}, 'complete admission cut matrix')
+    check(set(PRODUCER_FIELDS) == {c['field'] for c in row['semantic_mutations']}, 'complete semantic conflict matrix')
+    check({'pre_effect', 'pending', 'effect_complete', 'prepared_before_append'} <= {c.get('intent_stage') for c in row['withdrawal_cases']}, 'complete original-intent withdrawal stages')
+    check(valid_event(row, event, original), 'full original-operation EventRecord')
+    for case in row['envelope_negatives']:
+        bad = copy.deepcopy(event)
+        if case.get('delete'):
+            del bad[case['field']]
+        else:
+            bad[case['field']] = case['value']
+        check(not valid_event(row, bad, original), case['case_id'])
+    for case in row['original_operation_negatives']:
+        bad = copy.deepcopy(original)
+        bad[case['field']] = case['value']
+        check(not valid_event(row, event, bad), case['case_id'])
+    # Every producer-semantic field is frozen, including nulls and payload.
+    for case in row['semantic_mutations']:
+        bad = copy.deepcopy(event)
+        bad[case['field']] = case['value']
+        check(producer_digest(bad) != producer_digest(event), case['case_id'])
+        check(resolve_original(row, bad, row['receipt_authority']) is None, case['case_id'] + ': no reissue')
+
+    for variant in row['scope_variants']:
+        check(valid_event(row, variant['event'], variant['original_operation']), 'independent scope/original variant')
+    for case in row['admission_cases']:
+        state = copy.deepcopy(row['publication_positive'])
+        state.update(copy.deepcopy(case['overrides']))
+        before = copy.deepcopy(state)
+        actual = publication(row, state)
+        check(actual == case['expected'], case['case_id'])
+        check(state == before, case['case_id'] + ': no source rewriting')
+    # Actual branch admission remains absent. Fixture positives are hypothetical.
+    registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
+    check(not any(f['event_type'] == row['event_type'] for f in registry['families']), 'prepared without membership')
+
+    authority = row['receipt_authority']
+    before = copy.deepcopy(authority)
+    for case in row['receipt_cases']:
+        candidate = copy.deepcopy(authority)
+        candidate.update(copy.deepcopy(case.get('authority_overrides', {})))
+        candidate = patched(candidate, case.get('authority_patches', []))
+        incoming = copy.deepcopy(event)
+        incoming.update(copy.deepcopy(case.get('event_overrides', {})))
+        original_result = resolve_full_value(row, incoming, candidate)
+        expected = (authority['original_append_result'], authority['first_append_receipt']) if case['expected'] == 'return_original' else None
+        check(original_result == expected, case['case_id'])
+        check(authority == before, case['case_id'] + ': immutable receipt')
+    # Storage-assigned changes leave semantic replay alone but fail full-value.
+    for field in ['sequence_id', 'observed_at_utc', 'persisted_at_utc']:
+        incoming = copy.deepcopy(event)
+        incoming[field] = incoming[field] + 1 if field == 'sequence_id' else '2026-11-04T12:01:00Z'
+        check(producer_digest(incoming) == producer_digest(event), field + ': excluded from semantic digest')
+        check(resolve_original(row, incoming, authority) is not None, field + ': semantic replay')
+        check(resolve_full_value(row, incoming, authority) is None, field + ': complete value refusal')
+
+    for case in row['reader_cases']:
+        state = copy.deepcopy(row['reader_positive'])
+        state.update(copy.deepcopy(case['overrides']))
+        check(reader_result(row, state) == case['expected'], case['case_id'])
+    for case in row['rebuild_cases']:
+        state = copy.deepcopy(row['rebuild_positive'])
+        state.update(copy.deepcopy(case['overrides']))
+        before = copy.deepcopy(state)
+        result = rebuild_publication(row, state)
+        expected = state['old_publication'] if case['expected'] == 'preserve_old' else {'rows': [event], 'checkpoint': state['new_checkpoint']}
+        check(result == expected, case['case_id'])
+        check(state == before, case['case_id'] + ': no domain effects')
+    live = row['reader_positive']['live_token']
+    token_schema = json.loads((ROOT / 'Plans/event_record_index_checkpoint.schema.json').read_text())
+    check(Draft202012Validator(dict(token_schema, **{'$ref': '#/$defs/read_token'}), format_checker=FORMATS).is_valid(live), 'ten-field live read token')
+    durable = row['durable_read_token']
+    check(durable == {k: v for k, v in live.items() if k != 'redb_snapshot_id'} and len(durable) == 9, 'nine-field durable token')
+    check('redb_snapshot_id' not in durable, 'no persisted snapshot identity')
+    for case in row['withdrawal_cases']:
+        if case['role'] == 'writer':
+            state = copy.deepcopy(row['publication_positive'])
+            state.update(case['overrides'])
+            result = publication(row, state)
+            check(result['durable_events'] == case['expected_durable_events'] and result['owner_effects'] == 0, case['case_id'])
+            if result['receipt'] is not None:
+                check(result['receipt']['event_id'] == state['event']['event_id'], case['case_id'] + ': fresh receipt joins original')
+        elif case['role'] == 'issued_replay':
+            # No current owner-intent source is supplied on immutable replay.
+            check(resolve_full_value(row, event, authority) == (authority['original_append_result'], authority['first_append_receipt']), case['case_id'])
+        elif case['role'] == 'reader':
+            state = copy.deepcopy(row['reader_positive'])
+            state.update(case['overrides'])
+            check(reader_result(row, state) == case['expected'], case['case_id'])
+        elif case['role'] == 'reenable':
+            rebuild = copy.deepcopy(row['rebuild_positive'])
+            rebuild['current_frontier_verified'] = case['rebuild_current']
+            rebuild['source_current'] = case['source_current']
+            rebuilt = rebuild_publication(row, rebuild)
+            ready = case['governed_admission'] and rebuilt != rebuild['old_publication']
+            check(ready == case['expected'], case['case_id'])
+        elif case['role'] == 'global_index':
+            state = copy.deepcopy(row['rebuild_positive'])
+            check(rebuild_publication(row, state) != state['old_publication'], case['case_id'])
+        else:
+            raise AssertionError(('unknown withdrawal role', case))
+    # A profile or binding regression in ANY of the three owner copies fails.
+    for owner in row['owner_units']:
+        text = (ROOT / owner['path']).read_text().split('plan_unit_id: ' + owner['unit'] + '\n', 1)[1].split('\ngui_related:', 1)[0]
+        time_field, profile, _ = FAMILY_BINDINGS[row['event_type']]
+        check('redaction_profile=' + profile in text and 'redacted_refs_only' not in text.replace('profile (including redacted_refs_only)', ''), 'owner profile ' + owner['unit'])
+        check('occurred_at_utc equals payload.' + time_field in text and 'correlation_id is the non-empty' in text and 'actor_ref is the non-empty' in text, 'owner joins ' + owner['unit'])
+    return count
+
+
 def main():
     fixtures = json.loads((ROOT / 'Plans/small_owner_event_fixtures.json').read_text())
-    count = 0
+    assert len(fixtures['families']) == len(FAMILY_BINDINGS) and {r['event_type'] for r in fixtures['families']} == set(FAMILY_BINDINGS)
+    golden = json.loads((ROOT / 'Plans/event_append_receipt_full_value_fixtures.json').read_text())
+    assert full_value_preimage(golden['base_original_event']).hex() == golden['commitment_preimage_hex']
+    assert hashlib.sha256(full_value_preimage(golden['base_original_event'])).hexdigest() == golden['commitment_sha256']
+    count = 2
     for row in fixtures['families']:
         event = row['event_type']
         schema = json.loads((ROOT / row['schema']).read_text())
@@ -112,7 +469,8 @@ def main():
         for vector in [('new','old',True,True,False,'1.0.0'), ('c','c',False,True,False,'1.0.0'), ('c','c',True,False,False,'1.0.0'), ('c','c',True,True,True,'1.0.0'), ('c','c',True,True,False,'2.0.0')]:
             assert not read_allowed(*vector)
         count += 6
-        print(event + ': static schema/identity/read-fence vectors PASS; native NOT_RUN')
+        count += run_exact_family(row)
+        print(event + ': payload/full-envelope/original-joins/admission/receipt/withdrawal/rebuild vectors PASS; native NOT_RUN')
     print(json.dumps({'status': 'PASS', 'assertions': count, 'native_execution': 'NOT_RUN'}))
 
 
