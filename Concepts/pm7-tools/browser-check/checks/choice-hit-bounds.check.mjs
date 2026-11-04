@@ -54,6 +54,17 @@ export default async function(t) {
      if(bad.length) break;
     }
     await t.check(`FO-49 outside bounds ${look} ${motion} ${screen}`,count>0&&!bad.length,`${count} choices; ${bad.join('; ')}`);
+    // Positive controls: a disabled surface must not make all outside trials pass.
+    const inside=f.locator(sel+'.o55-on').first();
+    const control=await inside.count()?inside:f.locator(sel).first();
+    await control.scrollIntoViewIfNeeded(); await t.page.mouse.move(2,2); await f.waitForTimeout(450);
+    const rb=await control.boundingBox(); await f.evaluate(()=>window.__choiceClicks=[]);
+    await t.page.mouse.click(rb.x+rb.width/2,rb.y+rb.height/2);
+    await t.check(`FO-49 inside click ${look} ${motion} ${screen}`,(await f.evaluate(()=>window.__choiceClicks.length))===1);
+    await control.focus();
+    const focus=await control.evaluate(e=>({focused:document.activeElement===e,outline:getComputedStyle(e).outlineStyle}));
+    await t.check(`FO-49 native focus ${look} ${motion} ${screen}`,focus.focused,JSON.stringify(focus));
+
    }
   }
  }
