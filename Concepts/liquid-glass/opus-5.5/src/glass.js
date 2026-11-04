@@ -1721,7 +1721,10 @@
     var due = settleDue, list = []; settleDue = []; cvSeen = new Map();
     try {
       due.forEach(function (L) {
-        if (lenses.get(L.strip) !== L || !L.strip.isConnected || L.dragging || L.pending || !switchOn()) return;
+        /* (a strip parked since, such as a wizard screen leaving, stays out: its chip is put out at the park, and this
+           check, 480 ms after the chip's arrival, showed it again over the next screen until the following sync; a screen
+           changed just after a switch into Glass, whose chips all arrive anew: SW-24) */
+        if (lenses.get(L.strip) !== L || !L.strip.isConnected || stripParked(L.strip) || L.dragging || L.pending || !switchOn()) return;
         if (cvSkipped(L.strip)) cvSkip(L.strip); else list.push([L.cfg, L.strip]);
       });
       syncStrips(list);
