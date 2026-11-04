@@ -484,7 +484,8 @@ function glGhosts(s) {
 /* The resize handler has written the widths before this frame. Read the bar after the browser lays those
    widths out, then paint its light in this same frame; measuring in rAF forced an extra layout mid-frame. */
 function glFrame(now) {
-  if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(function () { glTick(now); });
+  var pending = glRaf;
+  if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(function () { if (glRaf === pending) glTick(now); });
   else glTick(now);
 }
 
