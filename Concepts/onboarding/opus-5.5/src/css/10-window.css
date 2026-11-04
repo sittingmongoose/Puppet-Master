@@ -224,8 +224,9 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   /* Paper theatre's orange reads 2.8:1 as words on white and under white words: words take the tag's brick, the main
      action a brick a little lighter (5.2:1 under white) */
   --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000); }
-/* SW-18: Recommended is normal-sized text; retain the Glass accent with enough ink on a selected row. */
-#pm-o55-onboarding[data-family="glass"][data-mode="dark"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 65%, var(--text-primary)); }
+/* SW-18: reserve normal-text contrast over the brightest selected Glass backing,
+   including the material exposed by scrolling a narrow pane. Keep a blue tint in the ink. */
+#pm-o55-onboarding[data-family="glass"][data-mode="dark"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 25%, var(--text-primary)); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 70%, #000); --o55-ink-wait: var(--o55-ink-tag);
   --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 94%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 88%, #000); }
 #pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000); }
