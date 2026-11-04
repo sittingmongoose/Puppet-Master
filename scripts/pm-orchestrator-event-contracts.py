@@ -243,6 +243,18 @@ def main():
         assert identity(case['event_type'], changed) == baseline and changed != payload
         checks += 1
     posted = schema['$defs']['crew_board_message_posted']
+    # Python's $ can match before a final LF. The length fence must accompany
+    # the lexical pattern in the source and its actual stored composition.
+    ref_id = posted['properties']['content_ref']['properties']['blake3_id']
+    assert ref_id['minLength'] == ref_id['maxLength'] == 71
+    checks += 1
+    for scope in ('application', 'project'):
+        for suffix in ('lf', 'cr', 'crlf', 'space', 'hex', 'nonhex', 'nul', 'unicode'):
+            name = scope + '_ref_trailing_' + suffix
+            cases = [c for c in fixtures['body_cases'] if c['name'] == name]
+            assert len(cases) == 1 and cases[0]['valid'] is False, name
+            assert cases[0]['payload']['scope'] == scope, name
+            checks += 1
     posted_validator = Draft202012Validator(posted, format_checker=UTC_FORMAT)
     stored_validator = Draft202012Validator(next(r for r in storage['families'] if r['family_id'] == 'coordination_event_records')['value_schema'], format_checker=UTC_FORMAT)
     for case in fixtures['body_cases']:

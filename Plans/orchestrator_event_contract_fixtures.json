@@ -2970,6 +2970,462 @@
         "content_base64": "aGVsbG8="
       },
       "valid": false
+    },
+    {
+      "name": "application_ref_trailing_lf",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "application_ref_trailing_cr",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "application_ref_trailing_crlf",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\n",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "application_ref_trailing_space",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "application_ref_trailing_hex",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "application_ref_trailing_nonhex",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaax",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "application_ref_trailing_nul",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\u0000",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "application_ref_trailing_unicode",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "application",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_lf",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_cr",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_crlf",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\n",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_space",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_hex",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_nonhex",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaax",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_nul",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\u0000",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "project_ref_trailing_unicode",
+      "payload": {
+        "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+        "schema_version": "1.0.0",
+        "scope": "project",
+        "storage_instance_id": "storage_instance_id-example",
+        "server_id": "server_id-example",
+        "run_id": "run_id-example",
+        "thread_id": "thread_id-example",
+        "operation_id": "operation_id-example",
+        "occurrence": 1,
+        "occurred_at_utc": "2026-11-04T00:00:00Z",
+        "crew_id": "crew_id-example",
+        "parent_run_id": "parent_run_id-example",
+        "child_run_id": "child_run_id-example",
+        "message_id": "message_id-example",
+        "from_agent_id": "from_agent_id-example",
+        "subject": "subject-example",
+        "priority": "priority-example",
+        "project_id": "project_id-example",
+        "content_ref": {
+          "blake3_id": "blake3:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
+          "byte_size": 16385,
+          "media_type": "text/plain; charset=utf-8"
+        }
+      },
+      "valid": false
     }
   ],
   "board_storage_cases": [

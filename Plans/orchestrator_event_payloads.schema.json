@@ -234,7 +234,9 @@
           "properties": {
             "blake3_id": {
               "type": "string",
-              "pattern": "^blake3:[0-9a-f]{64}$"
+              "pattern": "^blake3:[0-9a-f]{64}$",
+              "minLength": 71,
+              "maxLength": 71
             },
             "byte_size": {
               "type": "integer",
