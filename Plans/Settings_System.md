@@ -1548,7 +1548,8 @@ canonical_text: >-
 
   Named exceptions: general.visual.theme and general.visual.theme-mode are one atomic theme_pair offered Everywhere/Device/Project,
   always from one level and revision. general.visual.reduce-animations is Everywhere/Device/Project, with true
-  more careful than false, effective OR with OS preference; Computer does not add a second motion rung. general.interaction.scope-labels
+  more careful than false: OR the applicable own requests (or the factory default when all are absent) with
+  the OS preference, including before first paint. Computer does not add a second motion rung. general.interaction.scope-labels
   is Everywhere-only, default false. ai.usage.usage-retention is Everywhere-only, default 90 days with daily totals
   kept. Project-relative compose/Dockerfile/artifact paths and branching.worktrees.worktree-base-dir stay Project-only;
   branch/protected-branch defaults and planning.testing.cap-* policy are shared, while installed capabilities
@@ -1567,8 +1568,11 @@ canonical_text: >-
   from most to least careful: read_only, plan, regular, full for built-in profiles; deny, ask, allow for ternary
   permission answers; on before off for protection; true before false for Reduce motion. Custom profiles are not
   numerically ordered: when Computer and Project own choices both exist and either is custom, use Computer own
-  and explain it. Everywhere is a default that a Project can loosen, subject to D's repository-origin acceptance
-  and mandatory/parent/managed ceilings. Permission rule specificity remains Permissions-owned. Numeric capacity
+  and explain it. Everywhere/factory supplies fallback, never an additional protective comparison: compare
+  only simultaneous Computer-own and Project-own safety choices; otherwise use the most specific offered own
+  value or factory default. Everywhere is a default that a Project can loosen, subject to PS-144 repository-origin
+  acceptance and mandatory/parent/managed ceilings. Resolution alone never accepts repository-origin loosening.
+  Permission rule specificity remains Permissions-owned. Numeric capacity
   rows use computer_ceiling: min(requested Project/narrower value, Computer own cap), with no Computer own cap
   meaning no added ceiling; owner fixed limits still hold. per_item invokes the existing domain merge by stable
   name/ID and never invents structured field merges.

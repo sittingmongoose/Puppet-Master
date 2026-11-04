@@ -6208,6 +6208,1724 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-project-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "read_only",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": "regular",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "regular"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-computer-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "read_only",
+        "computer_own": "regular",
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "regular"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-computer-ceiling",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "regular",
+        "computer_own": "read_only",
+        "device_own": null,
+        "project_own": "regular",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "read_only"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-project-restricts-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "regular",
+        "computer_own": "regular",
+        "device_own": null,
+        "project_own": "read_only",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "read_only"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-everywhere-fallback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "read_only",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "read_only"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-tool-project-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.default-tool-permission",
+        "everywhere_own": "deny",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": "allow",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-tool-computer-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.default-tool-permission",
+        "everywhere_own": "deny",
+        "computer_own": "allow",
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-tool-computer-ceiling",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.default-tool-permission",
+        "everywhere_own": "allow",
+        "computer_own": "deny",
+        "device_own": null,
+        "project_own": "allow",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-tool-project-restricts-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.default-tool-permission",
+        "everywhere_own": "allow",
+        "computer_own": "allow",
+        "device_own": null,
+        "project_own": "deny",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-tool-everywhere-fallback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.default-tool-permission",
+        "everywhere_own": "deny",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-filesafe-project-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.protection.filesafe-integration",
+        "everywhere_own": "on",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": "off",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "off"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-filesafe-computer-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.protection.filesafe-integration",
+        "everywhere_own": "on",
+        "computer_own": "off",
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "off"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-filesafe-computer-ceiling",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.protection.filesafe-integration",
+        "everywhere_own": "off",
+        "computer_own": "on",
+        "device_own": null,
+        "project_own": "off",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "on"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-filesafe-project-restricts-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.protection.filesafe-integration",
+        "everywhere_own": "off",
+        "computer_own": "off",
+        "device_own": null,
+        "project_own": "on",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "on"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-filesafe-everywhere-fallback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.protection.filesafe-integration",
+        "everywhere_own": "on",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "on"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-computer-use-project-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "deny",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": "allow",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-computer-use-computer-loosens-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "deny",
+        "computer_own": "allow",
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-computer-use-computer-ceiling",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "allow",
+        "computer_own": "deny",
+        "device_own": null,
+        "project_own": "allow",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-computer-use-project-restricts-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "allow",
+        "computer_own": "allow",
+        "device_own": null,
+        "project_own": "deny",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-computer-use-everywhere-fallback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "deny",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-factory-fallback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": null,
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "regular"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-project-custom-only",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "read_only",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": "custom",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "custom"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-everywhere-custom-overridden",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "custom",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": "regular",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "regular"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-profile-project-custom-keeps-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.permission-preset",
+        "everywhere_own": "read_only",
+        "computer_own": "full",
+        "device_own": null,
+        "project_own": "custom",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "full"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-motion-factory-os-true",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": null,
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": true,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": true
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-motion-factory-os-false",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": null,
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": false
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-motion-explicit-false-os-true",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": false,
+        "computer_own": null,
+        "device_own": false,
+        "project_own": false,
+        "requested_value": 6,
+        "os_reduce_motion": true,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": true
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-motion-explicit-false-os-false",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": false,
+        "computer_own": null,
+        "device_own": false,
+        "project_own": false,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": false
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-motion-everywhere-true",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": true,
+        "computer_own": null,
+        "device_own": false,
+        "project_own": false,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": true
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-motion-device-true",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": false,
+        "computer_own": null,
+        "device_own": true,
+        "project_own": false,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": true
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-motion-project-true",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "general.visual.reduce-animations",
+        "everywhere_own": false,
+        "computer_own": null,
+        "device_own": false,
+        "project_own": true,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": true
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-missing",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "held_for_repository_acceptance"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-current",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schema_id": "pm.repository_origin_acceptance.v1",
+          "schema_version": "1.0.0",
+          "looser_rule_ids": [
+            "safety.rules.default-tool-permission"
+          ],
+          "person_decision_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "accepted_at_utc": "2026-11-04T00:00:00Z"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "requires_actual_owner_validation"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-changed-version",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v0",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schema_id": "pm.repository_origin_acceptance.v1",
+          "schema_version": "1.0.0",
+          "looser_rule_ids": [
+            "safety.rules.default-tool-permission"
+          ],
+          "person_decision_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "accepted_at_utc": "2026-11-04T00:00:00Z"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "held_for_repository_acceptance"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-changed-content",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "schema_id": "pm.repository_origin_acceptance.v1",
+          "schema_version": "1.0.0",
+          "looser_rule_ids": [
+            "safety.rules.default-tool-permission"
+          ],
+          "person_decision_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "accepted_at_utc": "2026-11-04T00:00:00Z"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "held_for_repository_acceptance"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-wrong-project",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": {
+          "project_id": "project-b",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schema_id": "pm.repository_origin_acceptance.v1",
+          "schema_version": "1.0.0",
+          "looser_rule_ids": [
+            "safety.rules.default-tool-permission"
+          ],
+          "person_decision_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "accepted_at_utc": "2026-11-04T00:00:00Z"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "held_for_repository_acceptance"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-wrong-repository",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-b",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schema_id": "pm.repository_origin_acceptance.v1",
+          "schema_version": "1.0.0",
+          "looser_rule_ids": [
+            "safety.rules.default-tool-permission"
+          ],
+          "person_decision_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "accepted_at_utc": "2026-11-04T00:00:00Z"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "held_for_repository_acceptance"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-wrong-rule",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schema_id": "pm.repository_origin_acceptance.v1",
+          "schema_version": "1.0.0",
+          "looser_rule_ids": [
+            "safety.rules.computer-use"
+          ],
+          "person_decision_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "accepted_at_utc": "2026-11-04T00:00:00Z"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "held_for_repository_acceptance"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f12-repository-origin-no-person-evidence",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "resolution": {
+          "setting_id": "safety.rules.default-tool-permission",
+          "everywhere_own": "deny",
+          "computer_own": null,
+          "device_own": null,
+          "project_own": "allow",
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        },
+        "repository_loosening": true,
+        "source": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "acceptance": {
+          "project_id": "project-a",
+          "source_repository_ref": "ref:repo-a",
+          "source_version": "v1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "schema_id": "pm.repository_origin_acceptance.v1",
+          "schema_version": "1.0.0",
+          "looser_rule_ids": [
+            "safety.rules.default-tool-permission"
+          ],
+          "person_decision_evidence": null,
+          "accepted_at_utc": "2026-11-04T00:00:00Z"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.repository_origin_resolution",
+          "expected": {
+            "resolved_value": "allow",
+            "origin_gate": "held_for_repository_acceptance"
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }
