@@ -890,6 +890,20 @@ def _json_pointer(doc: Any, pointer: str, ref: str) -> Any:
 
 
 def _python_segment(source: str, qualname: str, ref: str) -> str:
+    """The source segment of the definition `qualname` names, refused unless the name is bound
+    exactly once where it is looked up.
+
+    Binding model (what can change which object the name refers to without changing the
+    segment): everything that runs eagerly in the owning scope counts. That is every binding,
+    rebinding or deletion of the name at any block depth, walrus targets (also in
+    comprehensions), match captures, except/with/for targets, imports (a star import counts as
+    rebinding every name), type aliases, decorators, defaults and class bases evaluated there,
+    and class bodies (which run when the class is defined) that declare the name global (for a
+    module target) or nonlocal (for a function target). A qualified component is refused when
+    the body it is looked up in declares it global or nonlocal. Function and lambda bodies run
+    later, if at all, and reflective mutation (exec, globals(), setattr) is not code structure:
+    both are outside the anchor's contract.
+    """
     import ast  # noqa: PLC0415 - only pydef anchors need ast.
 
     try:
@@ -921,6 +935,8 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
         if isinstance(node, (ast.AnnAssign, ast.AugAssign, ast.For, ast.AsyncFor)):
             return target_names(node.target)
         if isinstance(node, (ast.Import, ast.ImportFrom)):
+            if any(alias.name == "*" for alias in node.names):
+                return ["*"]  # a star import may rebind any name of this scope
             return [(alias.asname or alias.name).split(".")[0] for alias in node.names]
         if isinstance(node, (ast.With, ast.AsyncWith)):
             return [n for w in node.items if w.optional_vars is not None for n in target_names(w.optional_vars)]
@@ -987,7 +1003,7 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
                     stack.extend(item.args.defaults)
                     stack.extend(d for d in item.args.kw_defaults if d is not None)
                 continue
-            if collect and name in bound_names(item):
+            if collect and ({name, "*"} & set(bound_names(item))):
                 found.append(item)
             stack.extend(ast.iter_child_nodes(item))
         return found
@@ -4155,6 +4171,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             ("pydef_comprehension_walrus_fails", "def f():\n    return 1\n[f := 2 for _ in range(1)]\n"),
             ("pydef_match_capture_fails", "def f():\n    return 1\nmatch 0:\n    case f:\n        pass\n"),
             ("pydef_del_fails", "def f():\n    return 1\ndel f\n"),
+            ("pydef_star_import_fails", "def f():\n    return 1\nfrom os.path import *\n"),
         ):
             (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
             check(name, not resolves("scripts/bind.py#pydef=f"))
