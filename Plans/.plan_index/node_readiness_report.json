@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18795,
+    "depends_on_edge_count": 18819,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22003,
-    "node_count": 7427,
+    "edge_count": 22027,
+    "node_count": 7429,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T17:55:42Z",
+  "generated_at_utc": "2026-11-04T18:04:53Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -22979,8 +22979,8 @@
         "source_location": {
           "heading": "GRS-069 - Exact historical goal.progressed contract",
           "heading_level": 3,
-          "heading_line": 6611,
-          "line": 6613,
+          "heading_line": 6613,
+          "line": 6615,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22990,8 +22990,8 @@
         "source_location": {
           "heading": "GRS-070 - Exact historical goal.replanned contract",
           "heading_level": 3,
-          "heading_line": 6708,
-          "line": 6710,
+          "heading_line": 6710,
+          "line": 6712,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23001,8 +23001,8 @@
         "source_location": {
           "heading": "GRS-071 - Exact historical goal.stopped contract",
           "heading_level": 3,
-          "heading_line": 6805,
-          "line": 6807,
+          "heading_line": 6807,
+          "line": 6809,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23012,8 +23012,8 @@
         "source_location": {
           "heading": "GRS-072 - Exact historical goal.verification_decided contract",
           "heading_level": 3,
-          "heading_line": 6901,
-          "line": 6903,
+          "heading_line": 6903,
+          "line": 6905,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23023,8 +23023,8 @@
         "source_location": {
           "heading": "GRS-073 - Current explicit Goal cancellation",
           "heading_level": 3,
-          "heading_line": 6998,
-          "line": 7000,
+          "heading_line": 7000,
+          "line": 7002,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23034,8 +23034,8 @@
         "source_location": {
           "heading": "GRS-086 - Application Goal Birth Continuation And Versioned Custody",
           "heading_level": 3,
-          "heading_line": 8244,
-          "line": 8246,
+          "heading_line": 8254,
+          "line": 8256,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23045,8 +23045,8 @@
         "source_location": {
           "heading": "GRS-087 - Immutable Goal Conversion And Linked Destination Birth",
           "heading_level": 3,
-          "heading_line": 8327,
-          "line": 8329,
+          "heading_line": 8337,
+          "line": 8339,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7427,
+  "plan_unit_count": 7429,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2749,
+      "high": 2751,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -42649,6 +42649,7 @@
       "crosswalk_owner_section_loss": 1,
       "crosswalk_runtime_authority_or_reverse_wiring_drift": 1,
       "crosswalk_scope_overreach": 1,
+      "current_goal_writer_oracle_drift": 1,
       "cursor_account_isolation": 1,
       "cursor_invocation_builder_example": 1,
       "cursor_media_route_contract_drift": 1,
@@ -43399,6 +43400,7 @@
       "historical_child_receipt_reinterpreted_as_current_authority": 1,
       "historical_goal_admission_laundering": 1,
       "historical_goal_event_source_and_checkpoint_authority": 1,
+      "historical_goal_oracle_drift": 1,
       "historical_handoff_drift": 1,
       "historical_projection_and_ghost_evidence": 1,
       "historical_reference_reactivation": 3,
@@ -45869,7 +45871,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7210,
+      "accepted": 7212,
       "retired": 194,
       "superseded": 23
     },
@@ -45939,7 +45941,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5614,
+      "requirement": 5616,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46054,7 +46056,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b",
+        "expected": "114ab69e26d6cfa38e1ddfa9636e64b53b3b409048f56e90ebb7318e829041f9",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -46066,7 +46068,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "a4b4d1f4f2e6d896cd5f61e488635e02a9f55735e5ac92a6376268a60ec17a5f",
+        "expected": "09b8dd7716bccb150e7bdb01f2977bddff6ec1afd855326a76d32f712036853c",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

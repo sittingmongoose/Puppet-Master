@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8172-L8395
+Source lines: L8180-L8405
 
-Source SHA256: `f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b`
+Source SHA256: `114ab69e26d6cfa38e1ddfa9636e64b53b3b409048f56e90ebb7318e829041f9`
 
 ---
 
@@ -53,6 +53,8 @@ acceptance_criteria:
 - Native installation, authentic original source capabilities, execution, codec/transaction/durability/recovery
   and end-to-end readiness remain NOT_RUN.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_certified_event_coordinator_contracts/protocol.md
 - Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json
 - Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json

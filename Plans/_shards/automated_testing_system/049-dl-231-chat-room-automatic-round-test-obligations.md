@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7230
+Source lines: L6715-L7356
 
-Source SHA256: `a4b4d1f4f2e6d896cd5f61e488635e02a9f55735e5ac92a6376268a60ec17a5f`
+Source SHA256: `09b8dd7716bccb150e7bdb01f2977bddff6ec1afd855326a76d32f712036853c`
 
 ---
 
@@ -524,3 +524,129 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-210 - Current Goal writer and run projector oracles
+
+```yaml
+plan_unit_id: ATS-210
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04). It names the static oracles of five current Goal writers, each with its own cases in Plans/goal_current_writer_oracle_fixtures.json, checked by python3 scripts/pm_goal_current_writer_oracles.py. goal.updated: v3 payload cases for direct Save and the approved-proposal shape, SP-421 identity vectors, SP-299 progress edges with lost-acknowledgement paths, Storage dedupe and the active-only reader. goal.cancelled: v3 payload cases, SP-422 identity vectors, payload-to-identity joins, the SP-310 late-assignment rule (only sequence_id is assigned late), dedupe and the current inspection. goal_run.started: the SP-311 started-only projector rule table. goal_run.cancelled: the SP-312 combined projector rule table. goal_run.certified: the GRS-085 mandatory prefix projection rule table. A pass shows static consistency of owner text, schemas and rule tables; no producer, projector, durability or recovery is proven, and every native obligation stays NOT_RUN.
+gui_related: false
+gui_classification_reason: Names static oracles for event contracts; no visual surface.
+split_recommended: false
+depends_on:
+- GRS-068
+- GRS-073
+- GRS-078
+- GRS-079
+- GRS-080
+- GRS-085
+- SP-299
+- SP-304
+- SP-310
+- SP-311
+- SP-312
+- SP-421
+- SP-422
+- ATS-057
+- DL-045
+unblocks: []
+acceptance_criteria:
+- python3 scripts/pm_goal_current_writer_oracles.py exits 0 with every case of the five families matching.
+- Each family's cases name only its own owner units; no case of one family is evidence for another.
+- Cases the fixture lists as not_covered stay open and are not reported as passing.
+validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
+risk_class: current_goal_writer_oracle_drift
+reasoning_tier: high
+context_scope: goal_current_writer_oracles
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_current_writer_oracle_fixtures.json
+- scripts/pm_goal_current_writer_oracles.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 10)
+preserved_exact_tokens:
+- goal_current_writer_oracle_fixtures.json
+- NOT_RUN
+negative_constraints:
+- No native, durability, recovery or readiness claim from a static pass.
+- No admission, registry change or checkpoint move.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+**Per family.** Each family's fixture section lists its owner units and its cases.
+
+| Family | Cases | Still open |
+|---|---|---|
+| `goal.updated` | 9 payload (2 positive), 6 identity, 10 progress sequences, 4 dedupe, 3 reader | The agent-proposed producer route, until the approval-owner provider exists (GRS-068) |
+| `goal.cancelled` | 4 payload (1 positive), 3 identity, 3 payload joins, 5 late-assignment, 4 dedupe, 2 inspection | Native Stop, D05/D06 and inspection evidence |
+| `goal_run.started` | 8 projector sequences | Native projector, crash and cutover evidence |
+| `goal_run.cancelled` | 7 projector sequences | Native projector, crash and cutover evidence |
+| `goal_run.certified` | 6 projector sequences | ATS-057's coordinator identity, append, commit and release cases for the v7/prepare.v2 edition, and consumer P4-P8 cases |
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/Goal_Runtime_System.md#GRS-079, ContractName:Plans/Goal_Runtime_System.md#GRS-080, ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/storage-plan.md#SP-421, ContractName:Plans/storage-plan.md#SP-422, ContractName:Plans/Decision_Log.md#DL-045
+
+### ATS-211 - Historical Goal reader oracles
+
+```yaml
+plan_unit_id: ATS-211
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04). It names the static oracles of the seven historical Goal readers, one fixture file per family (Plans/goal_<family>_history_contract_fixtures.json for child_status, degraded, scheduled, progressed, replanned, stopped and verification_decided), each answer checked against its own closed definition in Plans/goal_history_reader_outputs.schema.json by python3 scripts/pm_goal_history_reader_fixtures.py. Every family has v2 payload cases, answer cases, selector-to-record join cases, SP-420 current-canon cases (no verified_historical answer; SP-300..303 report original_admission, SP-271/277/280 return unavailable) and, for SP-300..303, current-writer refusal cases. A pass shows static consistency only; native readers stay NOT_RUN and no historical instance is claimed.
+gui_related: false
+gui_classification_reason: Names static oracles for historical event readers; no visual surface.
+split_recommended: false
+depends_on:
+- SP-271
+- SP-277
+- SP-280
+- SP-300
+- SP-301
+- SP-302
+- SP-303
+- SP-420
+- DL-045
+unblocks: []
+acceptance_criteria:
+- python3 scripts/pm_goal_history_reader_fixtures.py exits 0 with every case of the seven families matching.
+- No case admits a verified_historical answer under current canon.
+- The EA-UND-0003, 0006, 0008, 0010, 0011, 0012 and 0015 Goal pairs stay historical conditional oracles.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+risk_class: historical_goal_oracle_drift
+reasoning_tier: high
+context_scope: historical_goal_reader_oracles
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- scripts/pm_goal_history_reader_fixtures.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 7)
+preserved_exact_tokens:
+- goal_history_reader_outputs.schema.json
+- verified_historical
+negative_constraints:
+- No native reader, durability or historical-instance claim from a static pass.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-420, ContractName:Plans/storage-plan.md#SP-271, ContractName:Plans/storage-plan.md#SP-300, ContractName:Plans/Decision_Log.md#DL-045

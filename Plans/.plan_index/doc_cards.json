@@ -1871,10 +1871,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 30,
+        "False": 32,
         "True": 47
       },
-      "heading_count": 152,
+      "heading_count": 154,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -1934,6 +1934,7 @@
         "Plans/forge_backup_tsnet_acceptance.schema.json",
         "Plans/goal_certified_event_coordinator_contracts",
         "Plans/goal_certified_producer_source_contracts",
+        "Plans/goal_current_writer_oracle_fixtures.json",
         "Plans/goal_run_certified_consumer_contracts",
         "Plans/human-in-the-loop.md",
         "Plans/plans_to_code_handoff.schema.json",
@@ -1978,6 +1979,8 @@
         "scripts/pm-touch-closure-verify.py",
         "scripts/pm-working-notebook-contracts.py",
         "scripts/pm_coordination_events.py",
+        "scripts/pm_goal_current_writer_oracles.py",
+        "scripts/pm_goal_history_reader_fixtures.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
         "tests/fixtures/pm7_shared",
@@ -1986,9 +1989,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7230,
+      "line_count": 7356,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 77,
+      "plan_unit_count": 79,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2066,7 +2069,9 @@
         "ATS-082",
         "ATS-083",
         "ATS-084",
-        "ATS-085"
+        "ATS-085",
+        "ATS-210",
+        "ATS-211"
       ],
       "reasoning_tiers": [
         "high",
@@ -2084,6 +2089,7 @@
         "contract_fixture_drift_or_false_runtime_claim",
         "coordination_oracle_gap_or_false_native_claim",
         "cross_agent_browser_mutation_or_state_bleed",
+        "current_goal_writer_oracle_drift",
         "discovery_validation_gap",
         "dropped_packet_acceptance_or_false_execution_claim",
         "dry_method_validation_gap",
@@ -2099,6 +2105,7 @@
         "forge_provider_automation_security_or_evidence_layer_false_pass",
         "goal_cancellation_original_authority_or_effect_loss",
         "historical_child_receipt_reinterpreted_as_current_authority",
+        "historical_goal_oracle_drift",
         "history_validation_gap",
         "home_panels_terminal_redesign_drift",
         "implementation_readiness",
@@ -2137,10 +2144,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a4b4d1f4f2e6d896cd5f61e488635e02a9f55735e5ac92a6376268a60ec17a5f",
+      "sha256": "09b8dd7716bccb150e7bdb01f2977bddff6ec1afd855326a76d32f712036853c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 76,
+        "accepted": 78,
         "superseded": 1
       },
       "title": "Automated Testing System",
@@ -2148,7 +2155,7 @@
         "acceptance_contract": 3,
         "acceptance_gate": 6,
         "constraint": 1,
-        "requirement": 30,
+        "requirement": 32,
         "schema_contract": 3,
         "validation_contract": 1,
         "validation_criterion": 33
@@ -2191,7 +2198,9 @@
         "Plans/goal_certified_producer_source_contracts/methods.json",
         "Plans/goal_certified_producer_source_contracts/native-participants.json",
         "Plans/goal_certified_producer_source_contracts/resource-realms.json",
+        "Plans/goal_current_writer_oracle_fixtures.json",
         "Plans/goal_execution_binding_custody.schema.json",
+        "Plans/goal_history_reader_outputs.schema.json",
         "Plans/goal_receipt_version_routes.json",
         "Plans/goal_run_certified_consumer_contracts/protocol.md",
         "Plans/guided_tour_contract_fixtures.json",
@@ -2294,6 +2303,8 @@
         "python3 scripts/pm-working-notebook-contracts.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_goal_current_writer_oracles.py",
+        "python3 scripts/pm_goal_history_reader_fixtures.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-integration-packet-audit-work.py",
@@ -9572,7 +9583,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 8395,
+      "line_count": 8405,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -9744,7 +9755,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b",
+      "sha256": "114ab69e26d6cfa38e1ddfa9636e64b53b3b409048f56e90ebb7318e829041f9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
@@ -9821,6 +9832,7 @@
         "Plans/goal_child_status_history_contract_fixtures.json",
         "Plans/goal_created_reader_contracts.schema.json",
         "Plans/goal_created_reader_contracts/command-members.json",
+        "Plans/goal_current_writer_oracle_fixtures.json",
         "Plans/goal_degraded_history_contract_fixtures.json",
         "Plans/goal_execution_binding_custody.schema.json",
         "Plans/goal_handoff_contract_fixtures.json",
@@ -9932,6 +9944,7 @@
         "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "python3 scripts/pm_goal_current_writer_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
@@ -21538,7 +21551,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:55:40Z",
+  "generated_at_utc": "2026-11-04T18:04:52Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21546,13 +21559,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3636,
+      "False": 3638,
       "True": 3791
     },
-    "plan_unit_count": 7427,
+    "plan_unit_count": 7429,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7210,
+      "accepted": 7212,
       "retired": 194,
       "superseded": 23
     },
@@ -21622,7 +21635,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5614,
+      "requirement": 5616,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

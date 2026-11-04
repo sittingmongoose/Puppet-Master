@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L7208-L7928
+Source lines: L7212-L7936
 
-Source SHA256: `f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b`
+Source SHA256: `114ab69e26d6cfa38e1ddfa9636e64b53b3b409048f56e90ebb7318e829041f9`
 
 ---
 
@@ -543,6 +543,8 @@ acceptance_criteria:
 - The mandatory durable projection has complete atomic generation/checkpoint ownership.
 - Source definitions do not claim installed native authority, Event depth or runtime execution.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_run_started_consumer_contracts/consumer.schema.json
 - Plans/goal_run_started_consumer_contracts/methods.json
 - Plans/goal_run_started_consumer_contracts/physical-families.json
@@ -620,6 +622,8 @@ acceptance_criteria:
 - Existing started-v3 profiles and methods remain unchanged, with explicit fresh combined generation/cutover.
 - Source adoption does not qualify installed native authority, Event depth, runtime or governance.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json
 - Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json
 - Plans/goal_run_cancelled_consumer_contracts/goal-arguments.schema.json

@@ -6570,6 +6570,8 @@ acceptance_criteria:
 - Actual approval provider and native installation/implementation/evidence remain separate prerequisites; this composition
   creates no additional durable projector/checkpoint.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_update_command_custody.schema.json
 - Plans/goal_update_schema_resources.json
 - reports/event-authority-20260911/step-08-goal-update-validation.md
@@ -7033,6 +7035,8 @@ acceptance_criteria:
 - Historical D-R02 and its whole schema remain readable only with original historical evidence; no retrofit
   receipt or fifth current state.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_cancel_command_custody.schema.json
 - Plans/goal_execution_binding_custody.schema.json
 - Plans/goal_cancel_schema_resources.json
@@ -7740,6 +7744,8 @@ acceptance_criteria:
 - The mandatory durable projection has complete atomic generation/checkpoint ownership.
 - Source definitions do not claim installed native authority, Event depth or runtime execution.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_run_started_consumer_contracts/consumer.schema.json
 - Plans/goal_run_started_consumer_contracts/methods.json
 - Plans/goal_run_started_consumer_contracts/physical-families.json
@@ -7817,6 +7823,8 @@ acceptance_criteria:
 - Existing started-v3 profiles and methods remain unchanged, with explicit fresh combined generation/cutover.
 - Source adoption does not qualify installed native authority, Event depth, runtime or governance.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json
 - Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json
 - Plans/goal_run_cancelled_consumer_contracts/goal-arguments.schema.json
@@ -8214,6 +8222,8 @@ acceptance_criteria:
 - Native installation, authentic original source capabilities, execution, codec/transaction/durability/recovery
   and end-to-end readiness remain NOT_RUN.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_certified_event_coordinator_contracts/protocol.md
 - Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json
 - Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json

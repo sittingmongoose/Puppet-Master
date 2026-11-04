@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6505-L7205
+Source lines: L6505-L7209
 
-Source SHA256: `f50763ddc9ac4f5bc645d79f5b69afcf19ff80779e8dfe1572d18522212ef75b`
+Source SHA256: `114ab69e26d6cfa38e1ddfa9636e64b53b3b409048f56e90ebb7318e829041f9`
 
 ---
 
@@ -76,6 +76,8 @@ acceptance_criteria:
 - Actual approval provider and native installation/implementation/evidence remain separate prerequisites; this composition
   creates no additional durable projector/checkpoint.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_update_command_custody.schema.json
 - Plans/goal_update_schema_resources.json
 - reports/event-authority-20260911/step-08-goal-update-validation.md
@@ -539,6 +541,8 @@ acceptance_criteria:
 - Historical D-R02 and its whole schema remain readable only with original historical evidence; no retrofit
   receipt or fifth current state.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_cancel_command_custody.schema.json
 - Plans/goal_execution_binding_custody.schema.json
 - Plans/goal_cancel_schema_resources.json

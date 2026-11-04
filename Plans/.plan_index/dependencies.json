@@ -6574,6 +6574,7 @@
     "ARC-037",
     "T-183",
     "T-184",
+    "ATS-211",
     "CV-348",
     "ATS-050",
     "SQR-015",
@@ -7191,6 +7192,7 @@
     "F3-151",
     "F3-152",
     "G-030",
+    "ATS-210",
     "CDRY-022",
     "WM-063",
     "G-031",
@@ -15532,6 +15534,126 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "ATS-057"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "GRS-068"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "GRS-073"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "GRS-078"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "GRS-079"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "GRS-080"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "GRS-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "SP-299"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "SP-304"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "SP-310"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "SP-311"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "SP-312"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "SP-421"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-210",
+      "to": "SP-422"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-271"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-277"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-280"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-303"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-211",
+      "to": "SP-420"
     },
     {
       "edge_type": "depends_on",
@@ -117449,7 +117571,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T17:55:40Z",
+  "generated_at_utc": "2026-11-04T18:04:52Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131560,6 +131682,40 @@
       },
       "status": "accepted",
       "unit_type": "acceptance_gate"
+    },
+    {
+      "context_scope": "goal_current_writer_oracles",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-210",
+      "reasoning_tier": "high",
+      "risk_class": "current_goal_writer_oracle_drift",
+      "source_location": {
+        "heading": "ATS-210 - Current Goal writer and run projector oracles",
+        "heading_level": 3,
+        "heading_line": 7232,
+        "line": 7234,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "historical_goal_reader_oracles",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-211",
+      "reasoning_tier": "high",
+      "risk_class": "historical_goal_oracle_drift",
+      "source_location": {
+        "heading": "ATS-211 - Historical Goal reader oracles",
+        "heading_level": 3,
+        "heading_line": 7304,
+        "line": 7306,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -178712,8 +178868,8 @@
       "source_location": {
         "heading": "GRS-069 - Exact historical goal.progressed contract",
         "heading_level": 3,
-        "heading_line": 6611,
-        "line": 6613,
+        "heading_line": 6613,
+        "line": 6615,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178729,8 +178885,8 @@
       "source_location": {
         "heading": "GRS-070 - Exact historical goal.replanned contract",
         "heading_level": 3,
-        "heading_line": 6708,
-        "line": 6710,
+        "heading_line": 6710,
+        "line": 6712,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178746,8 +178902,8 @@
       "source_location": {
         "heading": "GRS-071 - Exact historical goal.stopped contract",
         "heading_level": 3,
-        "heading_line": 6805,
-        "line": 6807,
+        "heading_line": 6807,
+        "line": 6809,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178763,8 +178919,8 @@
       "source_location": {
         "heading": "GRS-072 - Exact historical goal.verification_decided contract",
         "heading_level": 3,
-        "heading_line": 6901,
-        "line": 6903,
+        "heading_line": 6903,
+        "line": 6905,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178780,8 +178936,8 @@
       "source_location": {
         "heading": "GRS-073 - Current explicit Goal cancellation",
         "heading_level": 3,
-        "heading_line": 6998,
-        "line": 7000,
+        "heading_line": 7000,
+        "line": 7002,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178797,8 +178953,8 @@
       "source_location": {
         "heading": "GRS-074 - Original execution association authority",
         "heading_level": 3,
-        "heading_line": 7099,
-        "line": 7101,
+        "heading_line": 7103,
+        "line": 7105,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178814,8 +178970,8 @@
       "source_location": {
         "heading": "GRS-075 - Current Workflow Child-Goal Retirement Admission",
         "heading_level": 3,
-        "heading_line": 7216,
-        "line": 7218,
+        "heading_line": 7220,
+        "line": 7222,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178831,8 +178987,8 @@
       "source_location": {
         "heading": "Terminal branch preservation",
         "heading_level": 4,
-        "heading_line": 7298,
-        "line": 7306,
+        "heading_line": 7302,
+        "line": 7310,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178848,8 +179004,8 @@
       "source_location": {
         "heading": "Explicit current reader and later lifecycle boundary",
         "heading_level": 4,
-        "heading_line": 7498,
-        "line": 7512,
+        "heading_line": 7502,
+        "line": 7516,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178865,8 +179021,8 @@
       "source_location": {
         "heading": "Explicit unproved installation prerequisites",
         "heading_level": 4,
-        "heading_line": 7621,
-        "line": 7627,
+        "heading_line": 7625,
+        "line": 7631,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178882,8 +179038,8 @@
       "source_location": {
         "heading": "GRS-079 - Exact original Workflow started-v3 semantics and read roles",
         "heading_level": 3,
-        "heading_line": 7698,
-        "line": 7716,
+        "heading_line": 7702,
+        "line": 7720,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178899,8 +179055,8 @@
       "source_location": {
         "heading": "GRS-080 - Positive original cancelled-v3 semantics and bounded read roles",
         "heading_level": 3,
-        "heading_line": 7772,
-        "line": 7792,
+        "heading_line": 7778,
+        "line": 7798,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178916,8 +179072,8 @@
       "source_location": {
         "heading": "GRS-081 - Original Workflow Goal cancellation private current inspection",
         "heading_level": 3,
-        "heading_line": 7852,
-        "line": 7862,
+        "heading_line": 7860,
+        "line": 7870,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178933,8 +179089,8 @@
       "source_location": {
         "heading": "GRS-082 — Fresh Standard Workflow certification original source (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 7931,
-        "line": 7933,
+        "heading_line": 7939,
+        "line": 7941,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178950,8 +179106,8 @@
       "source_location": {
         "heading": "GRS-083 — Original certified producer composition and source-only authority (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8028,
-        "line": 8030,
+        "heading_line": 8036,
+        "line": 8038,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178967,8 +179123,8 @@
       "source_location": {
         "heading": "GRS-084 — Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8088,
-        "line": 8090,
+        "heading_line": 8096,
+        "line": 8098,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178984,8 +179140,8 @@
       "source_location": {
         "heading": "GRS-085 — Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8172,
-        "line": 8174,
+        "heading_line": 8180,
+        "line": 8182,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -179001,8 +179157,8 @@
       "source_location": {
         "heading": "GRS-086 - Application Goal Birth Continuation And Versioned Custody",
         "heading_level": 3,
-        "heading_line": 8244,
-        "line": 8246,
+        "heading_line": 8254,
+        "line": 8256,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -179018,8 +179174,8 @@
       "source_location": {
         "heading": "GRS-087 - Immutable Goal Conversion And Linked Destination Birth",
         "heading_level": 3,
-        "heading_line": 8327,
-        "line": 8329,
+        "heading_line": 8337,
+        "line": 8339,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -243717,10 +243873,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18795,
+    "depends_on_edge_count": 18819,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22003,
-    "node_count": 7427,
+    "edge_count": 22027,
+    "node_count": 7429,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
