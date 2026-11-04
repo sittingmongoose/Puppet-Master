@@ -79281,7 +79281,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-attempts",
@@ -79361,7 +79361,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-result",
@@ -79441,7 +79441,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-client_rebuilt_at_utc",
@@ -79521,7 +79521,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-completed_at_utc",
@@ -79601,7 +79601,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "Storage-nonretryable-capacity_exhausted",
@@ -91941,7 +91941,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-attempts",
@@ -92037,7 +92037,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-result",
@@ -92133,7 +92133,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-client_rebuilt_at_utc",
@@ -92229,7 +92229,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "immediate-auth-policy-rejected-control-completed_at_utc",
@@ -92325,7 +92325,7 @@
             }
           ],
           "expected": "reject",
-          "valid_seed": "classified-policy-auth_expired-retry-1"
+          "valid_seed": "complete-original-transition"
         },
         {
           "case": "Storage-nonretryable-capacity_exhausted",
