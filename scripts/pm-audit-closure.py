@@ -1187,6 +1187,14 @@ def raw_registry_lines(registry_path: Path) -> dict[int, str]:
     return {n: line for n, line in enumerate(registry_path.read_text(encoding="utf-8").splitlines(), 1)}
 
 
+def packet_row_digest(row: dict[str, Any]) -> str:
+    """Digest of one review packet row: SHA-256 of its canonical JSON without its own
+    packet_row_digest field. It covers the claim, the superseded row's digest, the recheck
+    commit and every anchor's hash and text the reviewer was shown; the reviewer's output
+    echoes it, which binds the verdict to exactly that packet row."""
+    return sha256_text(canonical_json({k: v for k, v in row.items() if k != "packet_row_digest"}))
+
+
 def reaudit_record_sha256(record: dict[str, Any]) -> str:
     return sha256_text(canonical_json(record))
 
@@ -1638,6 +1646,8 @@ def validate_reaudit_record(
             judged_deps = judged.get("dependencies")
             if not _str_list(judged_deps) or set(judged_deps) != set(deps):
                 errors.append(f"{label}: worker output must rely on exactly the record's dependencies")
+            if judged.get("recheck_commit") != commit or judged.get("dependency_hashes_at_recheck") != snapshot:
+                errors.append(f"{label}: worker output must bind the record's recheck_commit and exact dependency hashes")
             # The record is assembled from the committed worker output: its judgement fields must be that output's.
             bound = list(REAUDIT_WORKER_FIELDS) + (["status_now"] if verdict == "resolved_differently" else []) \
                 + (["later_closure_id"] if verdict == "superseded_by_later_closure" else [])
@@ -1651,8 +1661,17 @@ def validate_reaudit_record(
         if shown.get("claim") != claim_view:
             errors.append(f"{label}: record.reviews.{who} packet showed a different claim than the superseded row")
         for field, expected in (("recheck_commit", commit), ("row_sha256", supersedes.get("row_sha256"))):
-            if field in shown and shown[field] != expected:
-                errors.append(f"{label}: record.reviews.{who} packet names a different {field}")
+            if shown.get(field) != expected:
+                errors.append(f"{label}: record.reviews.{who} packet row must name the record's {field}")
+        declared_digest = shown.get("packet_row_digest")
+        try:
+            content_digest = packet_row_digest(shown)
+        except AnchorError:
+            content_digest = None
+        if not _is_sha256(declared_digest) or declared_digest != content_digest:
+            errors.append(f"{label}: record.reviews.{who} packet row's packet_row_digest is missing or does not match its content")
+        elif judged.get("packet_row_digest") != declared_digest:
+            errors.append(f"{label}: record.reviews.{who} output does not echo the digest of the packet row it judged")
         anchors_shown = shown.get("dependency_anchors")
         if not isinstance(anchors_shown, list) or not anchors_shown:
             errors.append(f"{label}: record.reviews.{who} packet row shows no dependency_anchors")
@@ -3485,18 +3504,23 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             judged = {"line": rec["line"], "closure_id": target["closure_id"], "verdict": verdict, **extra}
             if who == "worker":
                 judged.update({k: rec.get(k) for k in REAUDIT_WORKER_FIELDS})
-                judged.update(row_sha256=rec["row_sha256"], dependencies=list(rec["dependencies"]), verdict=verdict)
-            path = audit_dir / "reviews" / f"{who}-{n}.jsonl"
-            path.write_text(json.dumps(judged) + "\n", encoding="utf-8")
-            review = {"model": f"fixture-{who}", "verdict": verdict, "evidence_path": rel(path), "evidence_sha256": sha256_file(path)}
+                judged.update(row_sha256=rec["row_sha256"], dependencies=list(rec["dependencies"]), verdict=verdict,
+                              recheck_commit=rec["recheck_commit"], dependency_hashes_at_recheck=dict(rec["dependency_hashes_at_recheck"]))
+            review: dict[str, Any] = {"model": f"fixture-{who}", "verdict": verdict}
             if who != "worker":
                 shown = {"line": rec["line"], "closure_id": target["closure_id"],
                          "claim": {k: v for k, v in target.items() if k not in ("hashes", "_line_no")},
+                         "row_sha256": rec["row_sha256"], "recheck_commit": rec["recheck_commit"],
                          "dependency_anchors": [{"ref": ref, "sha256": rec["dependency_hashes_at_recheck"][ref],
                                                  "text": AnchorResolver(tmp).content(ref)[1], "truncated": False} for ref in rec["dependencies"]]}
+                shown["packet_row_digest"] = packet_row_digest(shown)
                 packet = audit_dir / "reviews" / f"packet-{who}-{n}.jsonl"
                 packet.write_text(json.dumps(shown) + "\n", encoding="utf-8")
                 review.update(packet_path=rel(packet), packet_sha256=sha256_file(packet))
+                judged["packet_row_digest"] = shown["packet_row_digest"]
+            path = audit_dir / "reviews" / f"{who}-{n}.jsonl"
+            path.write_text(json.dumps(judged) + "\n", encoding="utf-8")
+            review.update(evidence_path=rel(path), evidence_sha256=sha256_file(path))
             return review
 
         counter = [0]
@@ -3507,6 +3531,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             line: int = 1,
             mutate: Any = None,
             keep_records: bool = False,
+            commit_receipts: bool = True,
             **fields: Any,
         ) -> dict[str, Any]:
             """A complete, valid re-audit of `line`, then `mutate(record)` to tamper with it. Each call
@@ -3547,7 +3572,8 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 row["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
             previous = previous_records.read_text() if keep_records and previous_records.exists() else ""
             records_path.write_text(previous + json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
-            commit_all()  # receipts count only once committed, after the recheck commit they judged
+            if commit_receipts:
+                commit_all()  # receipts count only once committed, after the recheck commit they judged
             return row
 
         def validate_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -3659,17 +3685,21 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         def set_review(who: str, **values: Any) -> Any:
             return lambda rec: rec["reviews"][who].update(values)
 
-        def rewrite_packet(rec: dict[str, Any], who: str, **values: Any) -> None:
+        def rewrite_packet(rec: dict[str, Any], who: str, redigest: bool = False, **values: Any) -> None:
             path = ROOT / rec["reviews"][who]["packet_path"]
             shown = json.loads(path.read_text())
             shown.update(values)
+            if redigest:
+                shown["packet_row_digest"] = packet_row_digest(shown)
             path.write_text(json.dumps(shown) + "\n")
             rec["reviews"][who]["packet_sha256"] = sha256_file(path)
 
-        def rewrite_output(rec: dict[str, Any], who: str, **values: Any) -> None:
+        def rewrite_output(rec: dict[str, Any], who: str, drop: tuple[str, ...] = (), **values: Any) -> None:
             path = ROOT / rec["reviews"][who]["evidence_path"]
             judged = json.loads(path.read_text())
             judged.update(values)
+            for key in drop:
+                judged.pop(key, None)
             path.write_text(json.dumps(judged) + "\n")
             rec["reviews"][who]["evidence_sha256"] = sha256_file(path)
 
@@ -3715,10 +3745,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             report = validate_rows([legacy_row(), row])
             check(name, has(report, text) and has(report, "is stale"), report["errors"])
         def same_status_receipt(rec: dict[str, Any]) -> None:
-            path = ROOT / rec["reviews"]["astra"]["evidence_path"]
-            path.write_text(json.dumps({"line": rec["line"], "closure_id": rec["closure_id"], "verdict": "resolved_differently",
-                                        "status_now": "repaired"}) + "\n")
-            rec["reviews"]["astra"]["evidence_sha256"] = sha256_file(path)
+            rewrite_output(rec, "astra", verdict="resolved_differently", status_now="repaired")
 
         row = append_with(mutate=same_status_receipt)
         check("receipt_resolved_to_same_status_counts_as_supported", not validate_rows([legacy_row(), row])["errors"])
@@ -3953,6 +3980,46 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             lost_code = cmd_refresh_hashes(argparse.Namespace(registry=str(registry), dry_run=True))
         lost_report = json.loads(out.getvalue())
         check("refresh_dry_run_reports_missing_anchor", lost_code != 0 and lost_report.get("missing_refs"), lost_report)
+
+        # A1 (V1 r4): every output is bound to exactly the packet row it judged.
+        for name, mutate, text in (
+            ("output_without_packet_digest_fails", lambda rec: rewrite_output(rec, "astra", drop=("packet_row_digest",)), "does not echo the digest of the packet row"),
+            ("packet_digest_not_matching_content_fails", lambda rec: rewrite_packet(rec, "sol", claim={"closure_id": "another claim"}), "does not match its content"),
+            ("packet_row_without_recheck_commit_fails", lambda rec: rewrite_packet(rec, "sol", redigest=True, recheck_commit=None), "packet row must name the record's recheck_commit"),
+            ("worker_output_without_snapshot_fails", lambda rec: rewrite_output(rec, "worker", drop=("dependency_hashes_at_recheck",)), "worker output must bind"),
+        ):
+            row = append_with(mutate=mutate)
+            report = validate_rows([legacy_row(), row])
+            check(name, has(report, text) and has(report, "is stale"), report["errors"])
+        # The V1 r4 A1 reproduction: original outputs, original packets and replacement packets for a
+        # newer snapshot all land in one bundle commit after that snapshot; a fresh record re-points to
+        # the newer snapshot and the replacement packets. The unchanged outputs echo the original rows.
+        row = append_with(commit_receipts=False)
+        rec = [json.loads(l) for l in records_path.read_text().splitlines() if l.strip()][-1]
+        write_doc(SELF_TEST_DOC.replace("- The repair stays.", "- The repair is forbidden and must be removed."))
+        git("add", "Plans/Fixture.md")
+        git("commit", "-q", "-m", "newer snapshot")
+        newer = git("rev-parse", "HEAD")
+        newer_hash = AnchorResolver(tmp).sha256(unit_ref)
+        replay = json.loads(json.dumps(rec))
+        replay.update(recheck_commit=newer, dependency_hashes_at_recheck={unit_ref: newer_hash})
+        for who in ("sol", "astra"):
+            shown = json.loads((ROOT / rec["reviews"][who]["packet_path"]).read_text())
+            shown.update(recheck_commit=newer, dependency_anchors=[{"ref": unit_ref, "sha256": newer_hash,
+                                                                     "text": AnchorResolver(tmp).content(unit_ref)[1], "truncated": False}])
+            shown["packet_row_digest"] = packet_row_digest(shown)
+            replacement = audit_dir / "reviews" / f"replacement-{who}.jsonl"
+            replacement.write_text(json.dumps(shown) + "\n", encoding="utf-8")
+            replay["reviews"][who].update(packet_path=rel(replacement), packet_sha256=sha256_file(replacement))
+        replay_path = audit_dir / "replayed-records.jsonl"
+        replay_path.write_text(json.dumps(replay, sort_keys=True) + "\n", encoding="utf-8")
+        row["reaudit"].update(record=rel(replay_path), recheck_commit=newer, record_sha256=reaudit_record_sha256(replay))
+        row["hashes"]["owner_evidence_hashes"] = {unit_ref: newer_hash}
+        commit_all()
+        report = validate_rows([legacy_row(), row])
+        check("outputs_repointed_to_replacement_packets_fail", has(report, "reviews.sol output does not echo the digest of the packet row it judged")
+              and has(report, "reviews.astra output does not echo the digest of the packet row it judged") and has(report, "is stale"), report["errors"])
+        write_doc()
 
         # V1 r4 regressions.
         # A2: a receipt rewritten inside a merge commit no longer counts.
