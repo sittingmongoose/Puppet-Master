@@ -1,6 +1,6 @@
 # DCN — Card 2 names, prepared without admission
 
-Base `origin/main`: `16acf7594a3fe8559af89491b895f440b314b99e`. Branch: `plans/ea-w3-card2-names-20261104`. Round 1 implementation commit: `d7421ece0b3757b5659b92cda0d1bc42569d037b` (supersedes reviewed `cf5469dca0`). Native execution: **NOT_RUN**. Prior blind Sol review: **NOT_READY** at `cf5469dca0`; this round is the implementation response, not an independent re-review.
+Base `origin/main`: `16acf7594a3fe8559af89491b895f440b314b99e`. Branch: `plans/ea-w3-card2-names-20261104`. Round 1 implementation commit: `0def7f9ac890bc3829dab891601c8ff1778912e6` (supersedes reviewed `cf5469dca0`). Native execution: **NOT_RUN**. Prior blind Sol review: **NOT_READY** at `cf5469dca0`; this round is the implementation response, not an independent re-review.
 
 **Scope count:** DCN is assigned 17 names: 7 Browser + 8 memory + 2 already-retired names. All 17 are handled. The lane also explicitly lists `chat.response_stop_requested` as **not yours**, assigned to DCH; including that held name gives 18 overall. This branch leaves that name to DCH and does not extend DCN’s scope.
 
@@ -77,145 +77,145 @@ All eleven checks pass for each of the six families in both Project and applicat
 
 ## Guard-removal table — round 1
 
-Actual whole-lane execution: **PASS**, **189 positives**, **1603 negatives**, **124 individual guards**, **135 removal rows**. Every restoration passes. The full external proof lists every flipping and still-rejected case; the self-grade retains each flipping list and a hash-pinned pointer to the complete remaining list.
+Actual whole-lane execution: **PASS**, **189 positives**, **1615 negatives**, **124 individual guards**, **135 removal rows**. Every restoration passes. The full external proof lists every flipping and still-rejected case; the self-grade retains each flipping list and a hash-pinned pointer to the complete remaining list.
 
 | Guard | Removed together | Negatives flip | Others still reject |
 |---|---|---:|---:|
-| `scenario_path` | `scenario_path` | 12 | 1591 |
-| `scenario_shape` | `scenario_shape` | 12 | 1591 |
-| `envelope_schema` | `envelope_schema` | 36 | 1567 |
-| `envelope_schema` | `envelope_schema`, `scope_project_id` | 48 | 1555 |
-| `envelope_schema` | `envelope_schema`, `storage_format_observed_at_utc` | 48 | 1555 |
-| `envelope_schema` | `envelope_schema`, `storage_format_persisted_at_utc` | 48 | 1555 |
-| `payload_schema` | `inline_size`, `payload_schema` | 24 | 1579 |
-| `payload_schema` | `payload_schema` | 12 | 1591 |
-| `payload_fullmatch` | `payload_fullmatch` | 12 | 1591 |
-| `inline_size` | `inline_size`, `payload_schema` | 24 | 1579 |
-| `inline_reference` | `inline_reference` | 12 | 1591 |
-| `scope_scope_kind` | `scope_scope_kind`, `source_scope_kind` | 24 | 1579 |
-| `scope_project_id` | `envelope_schema`, `scope_project_id` | 48 | 1555 |
-| `scope_project_id` | `scope_project_id` | 6 | 1597 |
-| `scope_thread_id` | `scope_thread_id` | 12 | 1591 |
-| `scope_schema` | `scope_schema` | 12 | 1591 |
-| `scope_partition` | `scope_partition` | 12 | 1591 |
-| `private_thread` | `private_thread` | 1 | 1602 |
-| `source_storage_instance_id` | `source_storage_instance_id` | 12 | 1591 |
-| `source_server_id` | `source_server_id` | 12 | 1591 |
-| `source_computer_id` | `source_computer_id` | 12 | 1591 |
-| `source_thread_id` | `source_thread_id` | 12 | 1591 |
-| `source_project_id` | `source_project_id` | 12 | 1591 |
-| `source_scope_kind` | `scope_scope_kind`, `source_scope_kind` | 24 | 1579 |
-| `source_scope_kind` | `source_scope_kind` | 12 | 1591 |
-| `lineage_shape` | `lineage_shape` | 12 | 1591 |
-| `lineage_run_id` | `lineage_run_id` | 12 | 1591 |
-| `lineage_node_id` | `lineage_node_id` | 12 | 1591 |
-| `lineage_attempt_id` | `lineage_attempt_id` | 12 | 1591 |
-| `source_owner_operation_id` | `source_owner_operation_id` | 12 | 1591 |
-| `source_owner_change_id` | `source_owner_change_id` | 12 | 1591 |
-| `source_revision_before` | `source_revision_before` | 10 | 1593 |
-| `source_revision_after` | `source_revision_after` | 12 | 1591 |
-| `source_before_record_ref` | `source_before_record_ref` | 10 | 1593 |
-| `source_after_record_ref` | `source_after_record_ref` | 12 | 1591 |
-| `source_subject` | `source_subject` | 12 | 1591 |
-| `source_workspace` | `source_workspace` | 10 | 1593 |
-| `source_authentic` | `source_authentic` | 36 | 1567 |
-| `source_committed` | `source_committed` | 12 | 1591 |
-| `current_stop` | `current_stop` | 12 | 1591 |
-| `record_resolution` | `record_resolution` | 12 | 1591 |
-| `record_subject_id` | `record_subject_id` | 12 | 1591 |
-| `record_storage_instance_id` | `record_storage_instance_id` | 12 | 1591 |
-| `record_server_id` | `record_server_id` | 12 | 1591 |
-| `record_computer_id` | `record_computer_id` | 12 | 1591 |
-| `record_project_id` | `record_project_id` | 12 | 1591 |
-| `record_thread_id` | `record_thread_id` | 12 | 1591 |
-| `record_scope_kind` | `record_scope_kind` | 12 | 1591 |
-| `record_run_id` | `record_run_id` | 12 | 1591 |
-| `record_node_id` | `record_node_id` | 12 | 1591 |
-| `record_attempt_id` | `record_attempt_id` | 12 | 1591 |
-| `record_revision` | `record_revision` | 12 | 1591 |
-| `record_ref` | `record_ref` | 36 | 1567 |
-| `record_workspace` | `record_workspace` | 10 | 1593 |
-| `command_source` | `command_source` | 12 | 1591 |
-| `memory_command` | `memory_command` | 1 | 1602 |
-| `revision_step` | `revision_step` | 12 | 1591 |
-| `real_change` | `real_change` | 12 | 1591 |
-| `transition` | `memory_delta`, `transition` | 30 | 1573 |
-| `transition` | `memory_fact_verification_state`, `transition` | 14 | 1589 |
-| `transition` | `transition` | 12 | 1591 |
-| `verification_support` | `verification_support` | 2 | 1601 |
-| `memory_delta` | `memory_delta` | 14 | 1589 |
-| `memory_delta` | `memory_delta`, `transition` | 30 | 1573 |
-| `memory_fact_previous_pinned` | `memory_fact_previous_pinned` | 2 | 1601 |
-| `memory_fact_pinned` | `memory_fact_pinned` | 2 | 1601 |
-| `memory_fact_previous_verification_state` | `memory_fact_previous_verification_state` | 2 | 1601 |
-| `memory_fact_verification_state` | `memory_fact_verification_state`, `transition` | 14 | 1589 |
-| `memory_fact_source` | `memory_fact_source` | 2 | 1601 |
-| `memory_fact_evidence_refs` | `memory_fact_evidence_refs` | 2 | 1601 |
-| `browser_fact_previous_session_class` | `browser_fact_previous_session_class` | 8 | 1595 |
-| `browser_fact_session_class` | `browser_fact_session_class` | 10 | 1593 |
-| `browser_fact_previous_takeover_state` | `browser_fact_previous_takeover_state` | 8 | 1595 |
-| `browser_fact_takeover_state` | `browser_fact_takeover_state` | 10 | 1593 |
-| `browser_fact_previous_lifecycle_state` | `browser_fact_previous_lifecycle_state` | 8 | 1595 |
-| `browser_fact_lifecycle_state` | `browser_fact_lifecycle_state` | 10 | 1593 |
-| `browser_delta` | `browser_delta` | 8 | 1595 |
-| `double_record` | `double_record` | 12 | 1591 |
-| `replay_only` | `replay_only` | 48 | 1555 |
-| `idempotency` | `idempotency` | 12 | 1591 |
-| `event_identity` | `event_identity` | 24 | 1579 |
-| `first_receipt` | `first_receipt` | 12 | 1591 |
-| `storage_authentic` | `storage_authentic` | 24 | 1579 |
-| `original_record` | `original_record` | 72 | 1531 |
-| `historical_record` | `historical_record` | 12 | 1591 |
-| `storage_event_id` | `storage_event_id` | 12 | 1591 |
-| `storage_sequence_id` | `storage_sequence_id` | 24 | 1579 |
-| `storage_observed_at_utc` | `storage_observed_at_utc` | 12 | 1591 |
-| `storage_persisted_at_utc` | `storage_persisted_at_utc` | 12 | 1591 |
-| `storage_format_observed_at_utc` | `envelope_schema`, `storage_format_observed_at_utc` | 48 | 1555 |
-| `storage_format_persisted_at_utc` | `envelope_schema`, `storage_format_persisted_at_utc` | 48 | 1555 |
-| `storage_receipt_issued` | `storage_receipt_issued` | 12 | 1591 |
-| `retry` | `retry` | 48 | 1555 |
-| `token_schema` | `digest_frontier`, `token_schema` | 48 | 1555 |
-| `token_schema` | `token_schema` | 12 | 1591 |
-| `token_observation` | `token_observation` | 12 | 1591 |
-| `snapshot` | `snapshot` | 12 | 1591 |
-| `token_storage` | `token_storage` | 12 | 1591 |
-| `token_source_identity` | `token_source_identity` | 12 | 1591 |
-| `token_key` | `token_key` | 12 | 1591 |
-| `token_ref` | `token_ref` | 12 | 1591 |
-| `token_dataset` | `token_dataset` | 12 | 1591 |
-| `reader_partition` | `reader_partition` | 12 | 1591 |
-| `reader_event_id` | `reader_event_id` | 12 | 1591 |
-| `reader_event_type` | `reader_event_type` | 12 | 1591 |
-| `reader_sequence_id` | `reader_sequence_id` | 12 | 1591 |
-| `digest_current_bytes_sha256` | `digest_current_bytes_sha256` | 12 | 1591 |
-| `digest_manifest_bytes_sha256` | `digest_manifest_bytes_sha256` | 12 | 1591 |
-| `digest_manifest_survivor_prefix_sha256` | `digest_manifest_survivor_prefix_sha256` | 12 | 1591 |
-| `digest_retained_inventory_sha256` | `digest_retained_inventory_sha256` | 12 | 1591 |
-| `digest_durable_watermarks_sha256` | `digest_durable_watermarks_sha256` | 12 | 1591 |
-| `digest_excluded_ranges_sha256` | `digest_excluded_ranges_sha256` | 12 | 1591 |
-| `digest_retired_inputs_sha256` | `digest_retired_inputs_sha256` | 12 | 1591 |
-| `selection_selected_segment_generation` | `selection_selected_segment_generation` | 12 | 1591 |
-| `selection_manifest_generation` | `selection_manifest_generation` | 12 | 1591 |
-| `selection_recovery_epoch` | `selection_recovery_epoch` | 12 | 1591 |
-| `digest_anchor` | `digest_anchor` | 12 | 1591 |
-| `digest_frontier` | `digest_frontier` | 12 | 1591 |
-| `digest_frontier` | `digest_frontier`, `token_schema` | 48 | 1555 |
-| `frontier_revision` | `frontier_revision` | 12 | 1591 |
-| `generation_identity` | `generation_identity` | 12 | 1591 |
-| `anchor_storage` | `anchor_storage` | 12 | 1591 |
-| `frontier_selection` | `frontier_selection` | 12 | 1591 |
-| `historical_authentic` | `historical_authentic` | 12 | 1591 |
-| `withdrawn` | `withdrawn` | 24 | 1579 |
-| `reader_withdrawn` | `reader_withdrawn` | 12 | 1591 |
-| `access` | `access` | 12 | 1591 |
-| `deleted_disclosure` | `deleted_disclosure` | 12 | 1591 |
-| `reader_effect` | `reader_effect` | 12 | 1591 |
-| `family_checkpoint` | `family_checkpoint` | 12 | 1591 |
-| `command_only_count` | `command_only_count` | 3 | 1600 |
-| `command_only_result` | `command_only_result` | 3 | 1600 |
-| `command_only_command` | `command_only_command` | 3 | 1600 |
-| `command_only_outcome` | `command_only_outcome` | 3 | 1600 |
-| `command_only_delta` | `command_only_delta` | 3 | 1600 |
+| `scenario_path` | `scenario_path` | 12 | 1603 |
+| `scenario_shape` | `scenario_shape` | 12 | 1603 |
+| `envelope_schema` | `envelope_schema` | 36 | 1579 |
+| `envelope_schema` | `envelope_schema`, `scope_project_id` | 48 | 1567 |
+| `envelope_schema` | `envelope_schema`, `storage_format_observed_at_utc` | 48 | 1567 |
+| `envelope_schema` | `envelope_schema`, `storage_format_persisted_at_utc` | 60 | 1555 |
+| `payload_schema` | `inline_size`, `payload_schema` | 24 | 1591 |
+| `payload_schema` | `payload_schema` | 12 | 1603 |
+| `payload_fullmatch` | `payload_fullmatch` | 12 | 1603 |
+| `inline_size` | `inline_size`, `payload_schema` | 24 | 1591 |
+| `inline_reference` | `inline_reference` | 12 | 1603 |
+| `scope_scope_kind` | `scope_scope_kind`, `source_scope_kind` | 24 | 1591 |
+| `scope_project_id` | `envelope_schema`, `scope_project_id` | 48 | 1567 |
+| `scope_project_id` | `scope_project_id` | 6 | 1609 |
+| `scope_thread_id` | `scope_thread_id` | 12 | 1603 |
+| `scope_schema` | `scope_schema` | 12 | 1603 |
+| `scope_partition` | `scope_partition` | 12 | 1603 |
+| `private_thread` | `private_thread` | 1 | 1614 |
+| `source_storage_instance_id` | `source_storage_instance_id` | 12 | 1603 |
+| `source_server_id` | `source_server_id` | 12 | 1603 |
+| `source_computer_id` | `source_computer_id` | 12 | 1603 |
+| `source_thread_id` | `source_thread_id` | 12 | 1603 |
+| `source_project_id` | `source_project_id` | 12 | 1603 |
+| `source_scope_kind` | `scope_scope_kind`, `source_scope_kind` | 24 | 1591 |
+| `source_scope_kind` | `source_scope_kind` | 12 | 1603 |
+| `lineage_shape` | `lineage_shape` | 12 | 1603 |
+| `lineage_run_id` | `lineage_run_id` | 12 | 1603 |
+| `lineage_node_id` | `lineage_node_id` | 12 | 1603 |
+| `lineage_attempt_id` | `lineage_attempt_id` | 12 | 1603 |
+| `source_owner_operation_id` | `source_owner_operation_id` | 12 | 1603 |
+| `source_owner_change_id` | `source_owner_change_id` | 12 | 1603 |
+| `source_revision_before` | `source_revision_before` | 10 | 1605 |
+| `source_revision_after` | `source_revision_after` | 12 | 1603 |
+| `source_before_record_ref` | `source_before_record_ref` | 10 | 1605 |
+| `source_after_record_ref` | `source_after_record_ref` | 12 | 1603 |
+| `source_subject` | `source_subject` | 12 | 1603 |
+| `source_workspace` | `source_workspace` | 10 | 1605 |
+| `source_authentic` | `source_authentic` | 36 | 1579 |
+| `source_committed` | `source_committed` | 12 | 1603 |
+| `current_stop` | `current_stop` | 12 | 1603 |
+| `record_resolution` | `record_resolution` | 12 | 1603 |
+| `record_subject_id` | `record_subject_id` | 12 | 1603 |
+| `record_storage_instance_id` | `record_storage_instance_id` | 12 | 1603 |
+| `record_server_id` | `record_server_id` | 12 | 1603 |
+| `record_computer_id` | `record_computer_id` | 12 | 1603 |
+| `record_project_id` | `record_project_id` | 12 | 1603 |
+| `record_thread_id` | `record_thread_id` | 12 | 1603 |
+| `record_scope_kind` | `record_scope_kind` | 12 | 1603 |
+| `record_run_id` | `record_run_id` | 12 | 1603 |
+| `record_node_id` | `record_node_id` | 12 | 1603 |
+| `record_attempt_id` | `record_attempt_id` | 12 | 1603 |
+| `record_revision` | `record_revision` | 12 | 1603 |
+| `record_ref` | `record_ref` | 36 | 1579 |
+| `record_workspace` | `record_workspace` | 10 | 1605 |
+| `command_source` | `command_source` | 12 | 1603 |
+| `memory_command` | `memory_command` | 1 | 1614 |
+| `revision_step` | `revision_step` | 12 | 1603 |
+| `real_change` | `real_change` | 12 | 1603 |
+| `transition` | `memory_delta`, `transition` | 30 | 1585 |
+| `transition` | `memory_fact_verification_state`, `transition` | 14 | 1601 |
+| `transition` | `transition` | 12 | 1603 |
+| `verification_support` | `verification_support` | 2 | 1613 |
+| `memory_delta` | `memory_delta` | 14 | 1601 |
+| `memory_delta` | `memory_delta`, `transition` | 30 | 1585 |
+| `memory_fact_previous_pinned` | `memory_fact_previous_pinned` | 2 | 1613 |
+| `memory_fact_pinned` | `memory_fact_pinned` | 2 | 1613 |
+| `memory_fact_previous_verification_state` | `memory_fact_previous_verification_state` | 2 | 1613 |
+| `memory_fact_verification_state` | `memory_fact_verification_state`, `transition` | 14 | 1601 |
+| `memory_fact_source` | `memory_fact_source` | 2 | 1613 |
+| `memory_fact_evidence_refs` | `memory_fact_evidence_refs` | 2 | 1613 |
+| `browser_fact_previous_session_class` | `browser_fact_previous_session_class` | 8 | 1607 |
+| `browser_fact_session_class` | `browser_fact_session_class` | 10 | 1605 |
+| `browser_fact_previous_takeover_state` | `browser_fact_previous_takeover_state` | 8 | 1607 |
+| `browser_fact_takeover_state` | `browser_fact_takeover_state` | 10 | 1605 |
+| `browser_fact_previous_lifecycle_state` | `browser_fact_previous_lifecycle_state` | 8 | 1607 |
+| `browser_fact_lifecycle_state` | `browser_fact_lifecycle_state` | 10 | 1605 |
+| `browser_delta` | `browser_delta` | 8 | 1607 |
+| `double_record` | `double_record` | 12 | 1603 |
+| `replay_only` | `replay_only` | 48 | 1567 |
+| `idempotency` | `idempotency` | 12 | 1603 |
+| `event_identity` | `event_identity` | 24 | 1591 |
+| `first_receipt` | `first_receipt` | 12 | 1603 |
+| `storage_authentic` | `storage_authentic` | 24 | 1591 |
+| `original_record` | `original_record` | 72 | 1543 |
+| `historical_record` | `historical_record` | 12 | 1603 |
+| `storage_event_id` | `storage_event_id` | 12 | 1603 |
+| `storage_sequence_id` | `storage_sequence_id` | 24 | 1591 |
+| `storage_observed_at_utc` | `storage_observed_at_utc` | 12 | 1603 |
+| `storage_persisted_at_utc` | `storage_persisted_at_utc` | 12 | 1603 |
+| `storage_format_observed_at_utc` | `envelope_schema`, `storage_format_observed_at_utc` | 48 | 1567 |
+| `storage_format_persisted_at_utc` | `envelope_schema`, `storage_format_persisted_at_utc` | 60 | 1555 |
+| `storage_receipt_issued` | `storage_receipt_issued` | 12 | 1603 |
+| `retry` | `retry` | 48 | 1567 |
+| `token_schema` | `digest_frontier`, `token_schema` | 48 | 1567 |
+| `token_schema` | `token_schema` | 12 | 1603 |
+| `token_observation` | `token_observation` | 12 | 1603 |
+| `snapshot` | `snapshot` | 12 | 1603 |
+| `token_storage` | `token_storage` | 12 | 1603 |
+| `token_source_identity` | `token_source_identity` | 12 | 1603 |
+| `token_key` | `token_key` | 12 | 1603 |
+| `token_ref` | `token_ref` | 12 | 1603 |
+| `token_dataset` | `token_dataset` | 12 | 1603 |
+| `reader_partition` | `reader_partition` | 12 | 1603 |
+| `reader_event_id` | `reader_event_id` | 12 | 1603 |
+| `reader_event_type` | `reader_event_type` | 12 | 1603 |
+| `reader_sequence_id` | `reader_sequence_id` | 12 | 1603 |
+| `digest_current_bytes_sha256` | `digest_current_bytes_sha256` | 12 | 1603 |
+| `digest_manifest_bytes_sha256` | `digest_manifest_bytes_sha256` | 12 | 1603 |
+| `digest_manifest_survivor_prefix_sha256` | `digest_manifest_survivor_prefix_sha256` | 12 | 1603 |
+| `digest_retained_inventory_sha256` | `digest_retained_inventory_sha256` | 12 | 1603 |
+| `digest_durable_watermarks_sha256` | `digest_durable_watermarks_sha256` | 12 | 1603 |
+| `digest_excluded_ranges_sha256` | `digest_excluded_ranges_sha256` | 12 | 1603 |
+| `digest_retired_inputs_sha256` | `digest_retired_inputs_sha256` | 12 | 1603 |
+| `selection_selected_segment_generation` | `selection_selected_segment_generation` | 12 | 1603 |
+| `selection_manifest_generation` | `selection_manifest_generation` | 12 | 1603 |
+| `selection_recovery_epoch` | `selection_recovery_epoch` | 12 | 1603 |
+| `digest_anchor` | `digest_anchor` | 12 | 1603 |
+| `digest_frontier` | `digest_frontier` | 12 | 1603 |
+| `digest_frontier` | `digest_frontier`, `token_schema` | 48 | 1567 |
+| `frontier_revision` | `frontier_revision` | 12 | 1603 |
+| `generation_identity` | `generation_identity` | 12 | 1603 |
+| `anchor_storage` | `anchor_storage` | 12 | 1603 |
+| `frontier_selection` | `frontier_selection` | 12 | 1603 |
+| `historical_authentic` | `historical_authentic` | 12 | 1603 |
+| `withdrawn` | `withdrawn` | 24 | 1591 |
+| `reader_withdrawn` | `reader_withdrawn` | 12 | 1603 |
+| `access` | `access` | 12 | 1603 |
+| `deleted_disclosure` | `deleted_disclosure` | 12 | 1603 |
+| `reader_effect` | `reader_effect` | 12 | 1603 |
+| `family_checkpoint` | `family_checkpoint` | 12 | 1603 |
+| `command_only_count` | `command_only_count` | 3 | 1612 |
+| `command_only_result` | `command_only_result` | 3 | 1612 |
+| `command_only_command` | `command_only_command` | 3 | 1612 |
+| `command_only_outcome` | `command_only_outcome` | 3 | 1612 |
+| `command_only_delta` | `command_only_delta` | 3 | 1612 |
 
 Named duplicate groups are deliberate: metadata schema/inline byte ceiling, a hash slot's syntax/commitment check, application Project-null shape/join, scope-kind envelope/source joins, verify target-state/source fact, pin/unpin changed-field inclusion/exact delta, and the exact same timestamp format checked by envelope and Storage. There is no stale frontier-hash or unpaired lineage case hidden in a duplicate group. Lineage joins use a valid execution-source base; frontier revision changes update its hash. Reference resolution is a prerequisite for dependent record dereferences, so missing source never throws or pretends to be a different predicate failure. No guard was weakened or left removed.
 
@@ -276,14 +276,14 @@ The exact append policy selected by each prepared companion contract is `dedupe_
 
 ## Review round 1: findings and responses
 
-- **DCN-B1 — Fixed** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `scripts/pm_card2_events.py:340`. Rebuilt all twelve foreign-checkpoint negatives as complete internally coherent foreign Storage selections. Only the single event/Storage predicate rejects; independently removing it passes all twelve.
-- **DCN-B2 — Fixed** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `scripts/pm_card2_events.py:234`. Separated append/retry candidates from historical originals. Original schema, source, withdrawal and custody checks remain; current policy and live stop state never reach retained originals.
-- **DCN-B3 — Fixed** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `scripts/pm_card2_events.py:312`. Authenticate and validate Storage originals before semantic retry comparison; compare observations strictly to Storage records and independently verify issued receipts, IDs, sequences and real timestamps. Storage metadata stays outside semantic equality.
-- **DCN-B4 — Fixed** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `scripts/pm_card2_events.py:235`. Resolve immutable before/after records; verify references, revisions, subject, workspace, storage/server/Computer, scope and all lineage fields against the original operation. Contradictory source facts refuse on append, retry and history.
-- **DCN-B5 — Fixed** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `scripts/pm_card2_events.py:350`. Recompute raw control-byte SHA-256 and existing SP-278 canonical binding hashes. Generation identity derives from the actual birth anchor, with no second caller-supplied generation recipe; frontier selection joins its source. Hash copies alone never qualify.
-- **DCN-B6 — Fixed** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `Plans/assistant-memory-subsystem.md:3231`. Complete before/after facts define the exact delta. Repair automatic/discard/new-gist positives and all redundant payload observations. All six operations in both scopes and no-event verifies are covered; the seven retirement prerequisites now hold at prepared-contract depth.
-- **DCN-S1 — Fixed** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `Plans/card2_event_contracts.json:31`. Replace SP-232 with pinned retention commit 2663667e14346235daaa561d193e959422640b6e, Case L-3 / Retention authority and defaults, exact G10 Browser and G03 memory assignments.
-- **DCN-N1 — Recorded** in `d7421ece0b3757b5659b92cda0d1bc42569d037b`; `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/targeted-checks.json`. Reproduced the same 30 Browser upstream40 assertion failures and two coordination baseline defects. No unrelated files were repaired; scope-baseline-witness.json verifies unchanged inputs.
+- **DCN-B1 — Fixed** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `scripts/pm_card2_events.py:340`. Rebuilt all twelve foreign-checkpoint negatives as complete internally coherent foreign Storage selections. Only the single event/Storage predicate rejects; independently removing it passes all twelve.
+- **DCN-B2 — Fixed** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `scripts/pm_card2_events.py:234`. Separated append/retry candidates from historical originals. Original schema, source, withdrawal and custody checks remain; current policy and live stop state never reach retained originals.
+- **DCN-B3 — Fixed** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `scripts/pm_card2_events.py:312`. Authenticate and validate Storage originals before semantic retry comparison; compare observations strictly to Storage records and independently verify issued receipts, IDs, sequences and real timestamps. Storage metadata stays outside semantic equality.
+- **DCN-B4 — Fixed** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `scripts/pm_card2_events.py:235`. Resolve immutable before/after records; verify references, revisions, subject, workspace, storage/server/Computer, scope and all lineage fields against the original operation. Contradictory source facts refuse on append, retry and history.
+- **DCN-B5 — Fixed** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `scripts/pm_card2_events.py:350`. Recompute raw control-byte SHA-256 and existing SP-278 canonical binding hashes. Generation identity derives from the actual birth anchor, with no second caller-supplied generation recipe; frontier selection joins its source. Hash copies alone never qualify.
+- **DCN-B6 — Fixed** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `Plans/assistant-memory-subsystem.md:3231`. Complete before/after facts define the exact delta. Repair automatic/discard/new-gist positives and all redundant payload observations. All six operations in both scopes and no-event verifies are covered; the seven retirement prerequisites now hold at prepared-contract depth.
+- **DCN-S1 — Fixed** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `Plans/card2_event_contracts.json:31`. Replace SP-232 with pinned retention commit 2663667e14346235daaa561d193e959422640b6e, Case L-3 / Retention authority and defaults, exact G10 Browser and G03 memory assignments.
+- **DCN-N1 — Recorded** in `0def7f9ac890bc3829dab891601c8ff1778912e6`; `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/targeted-checks.json`. Reproduced the same 30 Browser upstream40 assertion failures and two coordination baseline defects. No unrelated files were repaired; scope-baseline-witness.json verifies unchanged inputs.
 
 The implementation applies exactly E-CARDS-1 **2a A / DL-405** and **2c A / DL-407**. No finding is disputed or stopped for a product question. No admission, registry append, Decision Log entry, policy choice, main push or governance reseal occurred. The eleven disposition records remain byte-identical to the mechanically accepted reviewed head. Four prior exclusions still hold outright; the seven memory exclusions now meet DL-407's complete surviving-contract prerequisite. Pinned answer/retention integration still precedes admission.
 
@@ -316,10 +316,10 @@ Each row below was probed independently for **each of the five Browser families 
 
 ## Round 1 validation and evidence
 
-Whole-lane synthetic suite: **189 positives / 1603 negatives**, all **124 guards** proved. Independent mutation/probe driver: **466 probes, zero failures**. Shard generation/check and index generation/validation each parse top-level `pass`. Related suites reproduce only DCN-N1's baseline failures. `git diff --check` and protected/scope/baseline witnesses pass.
+Whole-lane synthetic suite: **189 positives / 1615 negatives**, all **124 guards** proved. Independent mutation/probe driver: **484 probes, zero failures**. Shard generation/check and index generation/validation each parse top-level `pass`. Related suites reproduce only DCN-N1's baseline failures. `git diff --check` and protected/scope/baseline witnesses pass.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json` — SHA-256 `7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/probes.json` — SHA-256 `2c011bd06957d9bf2de95949b1d42c100a896565dbe6dd12c118a69706ba5b67`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json` — SHA-256 `bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/probes.json` — SHA-256 `faf719bbf154e84667ae3914bfd83baec9a6ab2f367cc7ccc23b4f41eebdb41b`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/targeted-checks.json` — SHA-256 `760553429b61ee5b8fa6d57bf916c39d86a87f625f009322b8a3b3e6ee63f7bb`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/scope-baseline-witness.json` — SHA-256 `8b1705027a6ac68aa4a77d386ef43940cc533c321d5100215b61e9c73efc3aa6`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/currentness-copy.json` — SHA-256 `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84`.
@@ -327,9 +327,8 @@ Whole-lane synthetic suite: **189 positives / 1603 negatives**, all **124 guards
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/shards-check.log` — SHA-256 `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/index-generate.log` — SHA-256 `a0ce984126066b3fd966f7dcbb91481b610c8cf7a95acb66f680b158adf8e504`.
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/index-validate.log` — SHA-256 `157ab1cb7845ec32acd36d59bde614e53e61fe06f5e76d7362fd3a9848cbe82d`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/build-fixtures.py` — SHA-256 `09fc15d8e65f85c244ce224e65e52dd094b3146a0881642af4165ed2ce063f08`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/probes.py` — SHA-256 `f6db8aac966a364cb04a0266d6a7c1dc65c17d0410ff70449a95ca99c332517e`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/build-fixtures.py` — SHA-256 `746767149a48e745aea3a292888cfb738d1b7aa5a759756804ef78e2614e592e`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/probes.py` — SHA-256 `189dbe77630c78a1e0c83dca31988da84ad55e611399b6c5516e17957b74da8e`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/seed-fixtures.json` — SHA-256 `623c9dc920f991e86601517b1c7adf7c75d6b563f127459bb10940497831c90c`.
 
 IDs reused, none minted: **SMPFS-244..248, CV-780..785, SP-760..765, AMS-130, ATS-380**. Existing UCC-084 companion changes and all eleven exclusion records are preserved.
-
-Fixture regeneration source: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/seed-fixtures.json` — SHA-256 `623c9dc920f991e86601517b1c7adf7c75d6b563f127459bb10940497831c90c`; required by the preserved `build-fixtures.py` reproduction.

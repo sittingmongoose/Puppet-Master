@@ -5,8 +5,8 @@
   "assessed_tree": {
     "base_commit": "16acf7594a3fe8559af89491b895f440b314b99e",
     "branch": "plans/ea-w3-card2-names-20261104",
-    "source_commit": "d7421ece0b3757b5659b92cda0d1bc42569d037b",
-    "commit": "d7421ece0b3757b5659b92cda0d1bc42569d037b",
+    "source_commit": "0def7f9ac890bc3829dab891601c8ff1778912e6",
+    "commit": "0def7f9ac890bc3829dab891601c8ff1778912e6",
     "reviewed_before_commit": "cf5469dca011f0dc07e0566c0a6ca68f5d0bd4ef"
   },
   "rubric": {
@@ -2149,11 +2149,11 @@
         "memory.gist_state_changed/project/invalid-scenario-path",
         "memory.gist_state_changed/application/invalid-scenario-path"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2175,11 +2175,11 @@
         "memory.gist_state_changed/project/mismatched-scenario-shape",
         "memory.gist_state_changed/application/mismatched-scenario-shape"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2225,11 +2225,11 @@
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-schema_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-sequence_id"
       ],
-      "other_negatives_stay_rejected": 1567,
+      "other_negatives_stay_rejected": 1579,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2288,11 +2288,11 @@
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-schema_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-sequence_id"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2351,11 +2351,11 @@
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-observed_at_utc"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2377,39 +2377,51 @@
         "browser.session.takeover_state_changed/application/bad-envelope",
         "memory.gist_state_changed/project/bad-envelope",
         "memory.gist_state_changed/application/bad-envelope",
+        "browser.session.created/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.created/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.created/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.created/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.created/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.created/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.created/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.created/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.state_changed/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.state_changed/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.state_changed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.state_changed/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.state_changed/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.closed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.closed/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.closed/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.closed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.closed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.closed/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.closed/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.closed/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.promoted/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.promoted/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.promoted/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.promoted/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.promoted/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.promoted/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.promoted/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.promoted/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "memory.gist_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "memory.gist_state_changed/project/retry/invalid-authenticated-original-schema_id",
         "memory.gist_state_changed/project/retry/invalid-authenticated-original-sequence_id",
         "memory.gist_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "memory.gist_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-schema_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc"
@@ -2418,7 +2430,7 @@
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2453,11 +2465,11 @@
         "memory.gist_state_changed/application/extra-body",
         "memory.gist_state_changed/application/oversized-metadata"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2479,11 +2491,11 @@
         "memory.gist_state_changed/project/extra-body",
         "memory.gist_state_changed/application/extra-body"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2505,11 +2517,11 @@
         "memory.gist_state_changed/project/identifier-trailing-LF",
         "memory.gist_state_changed/application/identifier-trailing-LF"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2544,11 +2556,11 @@
         "memory.gist_state_changed/application/extra-body",
         "memory.gist_state_changed/application/oversized-metadata"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2570,11 +2582,11 @@
         "memory.gist_state_changed/project/inline-reference",
         "memory.gist_state_changed/application/inline-reference"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2609,11 +2621,11 @@
         "memory.gist_state_changed/application/foreign-source-scope_kind",
         "memory.gist_state_changed/application/envelope-scope_kind"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2672,11 +2684,11 @@
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-schema_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-sequence_id"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2692,11 +2704,11 @@
         "browser.session.takeover_state_changed/project/envelope-project_id",
         "memory.gist_state_changed/project/envelope-project_id"
       ],
-      "other_negatives_stay_rejected": 1597,
+      "other_negatives_stay_rejected": 1609,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2718,11 +2730,11 @@
         "memory.gist_state_changed/project/envelope-thread_id",
         "memory.gist_state_changed/application/envelope-thread_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2744,11 +2756,11 @@
         "memory.gist_state_changed/project/wrong-edition",
         "memory.gist_state_changed/application/wrong-edition"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2770,11 +2782,11 @@
         "memory.gist_state_changed/project/raw-or-foreign-partition",
         "memory.gist_state_changed/application/raw-or-foreign-partition"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2785,11 +2797,11 @@
       "negatives_that_flip": [
         "memory.gist_state_changed/application/missing-private-thread"
       ],
-      "other_negatives_stay_rejected": 1602,
+      "other_negatives_stay_rejected": 1614,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2811,11 +2823,11 @@
         "memory.gist_state_changed/project/foreign-source-storage_instance_id",
         "memory.gist_state_changed/application/foreign-source-storage_instance_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2837,11 +2849,11 @@
         "memory.gist_state_changed/project/foreign-source-server_id",
         "memory.gist_state_changed/application/foreign-source-server_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2863,11 +2875,11 @@
         "memory.gist_state_changed/project/foreign-source-computer_id",
         "memory.gist_state_changed/application/foreign-source-computer_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2889,11 +2901,11 @@
         "memory.gist_state_changed/project/foreign-source-thread_id",
         "memory.gist_state_changed/application/foreign-source-thread_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2915,11 +2927,11 @@
         "memory.gist_state_changed/project/foreign-source-project_id",
         "memory.gist_state_changed/application/foreign-source-project_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2954,11 +2966,11 @@
         "memory.gist_state_changed/application/foreign-source-scope_kind",
         "memory.gist_state_changed/application/envelope-scope_kind"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -2980,11 +2992,11 @@
         "memory.gist_state_changed/project/foreign-source-scope_kind",
         "memory.gist_state_changed/application/foreign-source-scope_kind"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3006,11 +3018,11 @@
         "memory.gist_state_changed/project/unpaired-source-lineage",
         "memory.gist_state_changed/application/unpaired-source-lineage"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3032,11 +3044,11 @@
         "memory.gist_state_changed/project/execution-source/invented-run_id",
         "memory.gist_state_changed/application/execution-source/invented-run_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3058,11 +3070,11 @@
         "memory.gist_state_changed/project/execution-source/invented-node_id",
         "memory.gist_state_changed/application/execution-source/invented-node_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3084,11 +3096,11 @@
         "memory.gist_state_changed/project/execution-source/invented-attempt_id",
         "memory.gist_state_changed/application/execution-source/invented-attempt_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3110,11 +3122,11 @@
         "memory.gist_state_changed/project/wrong-owner_operation_id",
         "memory.gist_state_changed/application/wrong-owner_operation_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3136,11 +3148,11 @@
         "memory.gist_state_changed/project/wrong-owner_change_id",
         "memory.gist_state_changed/application/wrong-owner_change_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3160,11 +3172,11 @@
         "memory.gist_state_changed/project/owner-before-revision",
         "memory.gist_state_changed/application/owner-before-revision"
       ],
-      "other_negatives_stay_rejected": 1593,
+      "other_negatives_stay_rejected": 1605,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3186,11 +3198,11 @@
         "memory.gist_state_changed/project/owner-after-revision",
         "memory.gist_state_changed/application/owner-after-revision"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3210,11 +3222,11 @@
         "memory.gist_state_changed/project/forged-before-ref",
         "memory.gist_state_changed/application/forged-before-ref"
       ],
-      "other_negatives_stay_rejected": 1593,
+      "other_negatives_stay_rejected": 1605,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3236,11 +3248,11 @@
         "memory.gist_state_changed/project/forged-after-ref",
         "memory.gist_state_changed/application/forged-after-ref"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3262,11 +3274,11 @@
         "memory.gist_state_changed/project/foreign-subject",
         "memory.gist_state_changed/application/foreign-subject"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3286,11 +3298,11 @@
         "browser.session.takeover_state_changed/project/foreign-workspace",
         "browser.session.takeover_state_changed/application/foreign-workspace"
       ],
-      "other_negatives_stay_rejected": 1593,
+      "other_negatives_stay_rejected": 1605,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3336,11 +3348,11 @@
         "memory.gist_state_changed/application/retry/forged-custody-source",
         "memory.gist_state_changed/application/history/forged-custody-source"
       ],
-      "other_negatives_stay_rejected": 1567,
+      "other_negatives_stay_rejected": 1579,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3362,11 +3374,11 @@
         "memory.gist_state_changed/project/source-committed",
         "memory.gist_state_changed/application/source-committed"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3388,11 +3400,11 @@
         "memory.gist_state_changed/project/stale-stop",
         "memory.gist_state_changed/application/stale-stop"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3414,11 +3426,11 @@
         "memory.gist_state_changed/project/missing-owner-record",
         "memory.gist_state_changed/application/missing-owner-record"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3440,11 +3452,11 @@
         "memory.gist_state_changed/project/contradictory-record-subject_id",
         "memory.gist_state_changed/application/contradictory-record-subject_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3466,11 +3478,11 @@
         "memory.gist_state_changed/project/contradictory-record-storage_instance_id",
         "memory.gist_state_changed/application/contradictory-record-storage_instance_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3492,11 +3504,11 @@
         "memory.gist_state_changed/project/contradictory-record-server_id",
         "memory.gist_state_changed/application/contradictory-record-server_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3518,11 +3530,11 @@
         "memory.gist_state_changed/project/contradictory-record-computer_id",
         "memory.gist_state_changed/application/contradictory-record-computer_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3544,11 +3556,11 @@
         "memory.gist_state_changed/project/contradictory-record-project_id",
         "memory.gist_state_changed/application/contradictory-record-project_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3570,11 +3582,11 @@
         "memory.gist_state_changed/project/contradictory-record-thread_id",
         "memory.gist_state_changed/application/contradictory-record-thread_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3596,11 +3608,11 @@
         "memory.gist_state_changed/project/contradictory-record-scope_kind",
         "memory.gist_state_changed/application/contradictory-record-scope_kind"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3622,11 +3634,11 @@
         "memory.gist_state_changed/project/contradictory-record-run_id",
         "memory.gist_state_changed/application/contradictory-record-run_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3648,11 +3660,11 @@
         "memory.gist_state_changed/project/contradictory-record-node_id",
         "memory.gist_state_changed/application/contradictory-record-node_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3674,11 +3686,11 @@
         "memory.gist_state_changed/project/contradictory-record-attempt_id",
         "memory.gist_state_changed/application/contradictory-record-attempt_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3700,11 +3712,11 @@
         "memory.gist_state_changed/project/record-wrong-revision",
         "memory.gist_state_changed/application/record-wrong-revision"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3750,11 +3762,11 @@
         "memory.gist_state_changed/application/retry/forged-custody-ref",
         "memory.gist_state_changed/application/history/forged-custody-ref"
       ],
-      "other_negatives_stay_rejected": 1567,
+      "other_negatives_stay_rejected": 1579,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3774,11 +3786,11 @@
         "browser.session.takeover_state_changed/project/record-wrong-workspace",
         "browser.session.takeover_state_changed/application/record-wrong-workspace"
       ],
-      "other_negatives_stay_rejected": 1593,
+      "other_negatives_stay_rejected": 1605,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3800,11 +3812,11 @@
         "memory.gist_state_changed/project/wrong-command",
         "memory.gist_state_changed/application/wrong-command"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3815,11 +3827,11 @@
       "negatives_that_flip": [
         "memory/edit/wrong-operation-command"
       ],
-      "other_negatives_stay_rejected": 1602,
+      "other_negatives_stay_rejected": 1614,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3841,11 +3853,11 @@
         "memory.gist_state_changed/project/revision-gap",
         "memory.gist_state_changed/application/revision-gap"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3867,11 +3879,11 @@
         "memory.gist_state_changed/project/no-real-change",
         "memory.gist_state_changed/application/no-real-change"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3912,11 +3924,11 @@
         "browser.session.takeover_state_changed/project/illegal-browser-transition",
         "browser.session.takeover_state_changed/application/illegal-browser-transition"
       ],
-      "other_negatives_stay_rejected": 1573,
+      "other_negatives_stay_rejected": 1585,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3941,11 +3953,11 @@
         "browser.session.takeover_state_changed/project/illegal-browser-transition",
         "browser.session.takeover_state_changed/application/illegal-browser-transition"
       ],
-      "other_negatives_stay_rejected": 1589,
+      "other_negatives_stay_rejected": 1601,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3967,11 +3979,11 @@
         "browser.session.takeover_state_changed/project/illegal-browser-transition",
         "browser.session.takeover_state_changed/application/illegal-browser-transition"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -3983,11 +3995,11 @@
         "memory.gist_state_changed/project/support-unavailable",
         "memory.gist_state_changed/application/support-unavailable"
       ],
-      "other_negatives_stay_rejected": 1601,
+      "other_negatives_stay_rejected": 1613,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4011,11 +4023,11 @@
         "memory/automatic-verified/application/omitted-real-delta",
         "memory/automatic-provenance/application/omitted-real-delta"
       ],
-      "other_negatives_stay_rejected": 1589,
+      "other_negatives_stay_rejected": 1601,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4056,11 +4068,11 @@
         "browser.session.takeover_state_changed/project/illegal-browser-transition",
         "browser.session.takeover_state_changed/application/illegal-browser-transition"
       ],
-      "other_negatives_stay_rejected": 1573,
+      "other_negatives_stay_rejected": 1585,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4072,11 +4084,11 @@
         "memory.gist_state_changed/project/contradictory-previous_pinned",
         "memory.gist_state_changed/application/contradictory-previous_pinned"
       ],
-      "other_negatives_stay_rejected": 1601,
+      "other_negatives_stay_rejected": 1613,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4088,11 +4100,11 @@
         "memory.gist_state_changed/project/contradictory-pinned",
         "memory.gist_state_changed/application/contradictory-pinned"
       ],
-      "other_negatives_stay_rejected": 1601,
+      "other_negatives_stay_rejected": 1613,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4104,11 +4116,11 @@
         "memory.gist_state_changed/project/contradictory-previous_verification_state",
         "memory.gist_state_changed/application/contradictory-previous_verification_state"
       ],
-      "other_negatives_stay_rejected": 1601,
+      "other_negatives_stay_rejected": 1613,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4133,11 +4145,11 @@
         "browser.session.takeover_state_changed/project/illegal-browser-transition",
         "browser.session.takeover_state_changed/application/illegal-browser-transition"
       ],
-      "other_negatives_stay_rejected": 1589,
+      "other_negatives_stay_rejected": 1601,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4149,11 +4161,11 @@
         "memory.gist_state_changed/project/contradictory-source",
         "memory.gist_state_changed/application/contradictory-source"
       ],
-      "other_negatives_stay_rejected": 1601,
+      "other_negatives_stay_rejected": 1613,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4165,11 +4177,11 @@
         "memory.gist_state_changed/project/contradictory-evidence_refs",
         "memory.gist_state_changed/application/contradictory-evidence_refs"
       ],
-      "other_negatives_stay_rejected": 1601,
+      "other_negatives_stay_rejected": 1613,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4187,11 +4199,11 @@
         "browser.session.takeover_state_changed/project/contradictory-previous_session_class",
         "browser.session.takeover_state_changed/application/contradictory-previous_session_class"
       ],
-      "other_negatives_stay_rejected": 1595,
+      "other_negatives_stay_rejected": 1607,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4211,11 +4223,11 @@
         "browser.session.takeover_state_changed/project/contradictory-session_class",
         "browser.session.takeover_state_changed/application/contradictory-session_class"
       ],
-      "other_negatives_stay_rejected": 1593,
+      "other_negatives_stay_rejected": 1605,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4233,11 +4245,11 @@
         "browser.session.takeover_state_changed/project/contradictory-previous_takeover_state",
         "browser.session.takeover_state_changed/application/contradictory-previous_takeover_state"
       ],
-      "other_negatives_stay_rejected": 1595,
+      "other_negatives_stay_rejected": 1607,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4257,11 +4269,11 @@
         "browser.session.takeover_state_changed/project/contradictory-takeover_state",
         "browser.session.takeover_state_changed/application/contradictory-takeover_state"
       ],
-      "other_negatives_stay_rejected": 1593,
+      "other_negatives_stay_rejected": 1605,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4279,11 +4291,11 @@
         "browser.session.takeover_state_changed/project/contradictory-previous_lifecycle_state",
         "browser.session.takeover_state_changed/application/contradictory-previous_lifecycle_state"
       ],
-      "other_negatives_stay_rejected": 1595,
+      "other_negatives_stay_rejected": 1607,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4303,11 +4315,11 @@
         "browser.session.takeover_state_changed/project/contradictory-lifecycle_state",
         "browser.session.takeover_state_changed/application/contradictory-lifecycle_state"
       ],
-      "other_negatives_stay_rejected": 1593,
+      "other_negatives_stay_rejected": 1605,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4325,11 +4337,11 @@
         "browser.session.takeover_state_changed/project/omitted-browser-delta",
         "browser.session.takeover_state_changed/application/omitted-browser-delta"
       ],
-      "other_negatives_stay_rejected": 1595,
+      "other_negatives_stay_rejected": 1607,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4351,11 +4363,11 @@
         "memory.gist_state_changed/project/duplicate-fact",
         "memory.gist_state_changed/application/duplicate-fact"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4413,11 +4425,11 @@
         "memory.gist_state_changed/project/retry/retry-replay-only",
         "memory.gist_state_changed/application/retry/retry-replay-only"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4439,11 +4451,11 @@
         "memory.gist_state_changed/project/wrong-idempotency",
         "memory.gist_state_changed/application/wrong-idempotency"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4477,11 +4489,11 @@
         "memory.gist_state_changed/project/retry/invalid-authenticated-original-event_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-event_id"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4503,11 +4515,11 @@
         "memory.gist_state_changed/project/terminal-before-receipt",
         "memory.gist_state_changed/application/terminal-before-receipt"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4541,11 +4553,11 @@
         "memory.gist_state_changed/application/retry/forged-storage",
         "memory.gist_state_changed/application/history/forged-storage"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4627,11 +4639,11 @@
         "memory.gist_state_changed/application/retry/forged-original-observed_at_utc",
         "memory.gist_state_changed/application/retry/forged-original-event_type"
       ],
-      "other_negatives_stay_rejected": 1531,
+      "other_negatives_stay_rejected": 1543,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4653,11 +4665,11 @@
         "memory.gist_state_changed/project/history/forged-historical-observation",
         "memory.gist_state_changed/application/history/forged-historical-observation"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4679,11 +4691,11 @@
         "memory.gist_state_changed/project/retry/forged-storage-receipt-event_id",
         "memory.gist_state_changed/application/retry/forged-storage-receipt-event_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4717,11 +4729,11 @@
         "memory.gist_state_changed/application/retry/forged-storage-receipt-sequence_id",
         "memory.gist_state_changed/application/retry/receipt-sequence-boolean"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4743,11 +4755,11 @@
         "memory.gist_state_changed/project/retry/forged-storage-receipt-observed_at_utc",
         "memory.gist_state_changed/application/retry/forged-storage-receipt-observed_at_utc"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4769,11 +4781,11 @@
         "memory.gist_state_changed/project/retry/forged-storage-receipt-persisted_at_utc",
         "memory.gist_state_changed/application/retry/forged-storage-receipt-persisted_at_utc"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4832,11 +4844,11 @@
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-observed_at_utc"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4858,39 +4870,51 @@
         "browser.session.takeover_state_changed/application/bad-envelope",
         "memory.gist_state_changed/project/bad-envelope",
         "memory.gist_state_changed/application/bad-envelope",
+        "browser.session.created/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.created/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.created/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.created/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.created/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.created/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.created/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.created/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.state_changed/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.state_changed/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.state_changed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.state_changed/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.state_changed/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.closed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.closed/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.closed/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.closed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.closed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.closed/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.closed/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.closed/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.promoted/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.promoted/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.promoted/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.promoted/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.promoted/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.promoted/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.promoted/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.promoted/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-schema_id",
         "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-sequence_id",
         "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-schema_id",
         "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc",
+        "memory.gist_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "memory.gist_state_changed/project/retry/invalid-authenticated-original-schema_id",
         "memory.gist_state_changed/project/retry/invalid-authenticated-original-sequence_id",
         "memory.gist_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc",
+        "memory.gist_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-schema_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-sequence_id",
         "memory.gist_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc"
@@ -4899,7 +4923,7 @@
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4921,11 +4945,11 @@
         "memory.gist_state_changed/project/retry/unissued-storage-receipt",
         "memory.gist_state_changed/application/retry/unissued-storage-receipt"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -4983,11 +5007,11 @@
         "memory.gist_state_changed/application/retry/semantic-conflict/conflict-returned-original",
         "memory.gist_state_changed/application/retry/dedupe-unavailable/unavailable-effect"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5046,11 +5070,11 @@
         "memory.gist_state_changed/application/history/persisted-live-snapshot",
         "memory.gist_state_changed/application/history/invented-frontier_sha256"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5072,11 +5096,11 @@
         "memory.gist_state_changed/project/history/persisted-live-snapshot",
         "memory.gist_state_changed/application/history/persisted-live-snapshot"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5098,11 +5122,11 @@
         "memory.gist_state_changed/project/history/frontier-changed",
         "memory.gist_state_changed/application/history/frontier-changed"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5124,11 +5148,11 @@
         "memory.gist_state_changed/project/history/snapshot-changed",
         "memory.gist_state_changed/application/history/snapshot-changed"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5150,11 +5174,11 @@
         "memory.gist_state_changed/project/history/foreign-storage-checkpoint",
         "memory.gist_state_changed/application/history/foreign-storage-checkpoint"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5176,11 +5200,11 @@
         "memory.gist_state_changed/project/history/token_source_identity-source_selection/storage_instance_id-22222222-2",
         "memory.gist_state_changed/application/history/token_source_identity-source_selection/storage_instance_id-22222222-2"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5202,11 +5226,11 @@
         "memory.gist_state_changed/project/history/wrong-checkpoint-key",
         "memory.gist_state_changed/application/history/wrong-checkpoint-key"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5228,11 +5252,11 @@
         "memory.gist_state_changed/project/history/token_ref-checkpoint_ref-foreign-re",
         "memory.gist_state_changed/application/history/token_ref-checkpoint_ref-foreign-re"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5254,11 +5278,11 @@
         "memory.gist_state_changed/project/history/token_dataset-index_dataset_name-foreign-da",
         "memory.gist_state_changed/application/history/token_dataset-index_dataset_name-foreign-da"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5280,11 +5304,11 @@
         "memory.gist_state_changed/project/history/reader_partition",
         "memory.gist_state_changed/application/history/reader_partition"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5306,11 +5330,11 @@
         "memory.gist_state_changed/project/history/reader_event_id",
         "memory.gist_state_changed/application/history/reader_event_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5332,11 +5356,11 @@
         "memory.gist_state_changed/project/history/reader_event_type",
         "memory.gist_state_changed/application/history/reader_event_type"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5358,11 +5382,11 @@
         "memory.gist_state_changed/project/history/reader_sequence_id",
         "memory.gist_state_changed/application/history/reader_sequence_id"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5384,11 +5408,11 @@
         "memory.gist_state_changed/project/history/invented-current_bytes_sha256",
         "memory.gist_state_changed/application/history/invented-current_bytes_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5410,11 +5434,11 @@
         "memory.gist_state_changed/project/history/invented-manifest_bytes_sha256",
         "memory.gist_state_changed/application/history/invented-manifest_bytes_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5436,11 +5460,11 @@
         "memory.gist_state_changed/project/history/invented-manifest_survivor_prefix_sha256",
         "memory.gist_state_changed/application/history/invented-manifest_survivor_prefix_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5462,11 +5486,11 @@
         "memory.gist_state_changed/project/history/invented-retained_inventory_sha256",
         "memory.gist_state_changed/application/history/invented-retained_inventory_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5488,11 +5512,11 @@
         "memory.gist_state_changed/project/history/invented-durable_watermarks_sha256",
         "memory.gist_state_changed/application/history/invented-durable_watermarks_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5514,11 +5538,11 @@
         "memory.gist_state_changed/project/history/invented-excluded_ranges_sha256",
         "memory.gist_state_changed/application/history/invented-excluded_ranges_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5540,11 +5564,11 @@
         "memory.gist_state_changed/project/history/invented-retired_inputs_sha256",
         "memory.gist_state_changed/application/history/invented-retired_inputs_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5566,11 +5590,11 @@
         "memory.gist_state_changed/project/history/foreign-selected_segment_generation",
         "memory.gist_state_changed/application/history/foreign-selected_segment_generation"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5592,11 +5616,11 @@
         "memory.gist_state_changed/project/history/foreign-manifest_generation",
         "memory.gist_state_changed/application/history/foreign-manifest_generation"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5618,11 +5642,11 @@
         "memory.gist_state_changed/project/history/foreign-recovery_epoch",
         "memory.gist_state_changed/application/history/foreign-recovery_epoch"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5644,11 +5668,11 @@
         "memory.gist_state_changed/project/history/invented-generation_anchor_sha256",
         "memory.gist_state_changed/application/history/invented-generation_anchor_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5670,11 +5694,11 @@
         "memory.gist_state_changed/project/history/invented-frontier_sha256",
         "memory.gist_state_changed/application/history/invented-frontier_sha256"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5733,11 +5757,11 @@
         "memory.gist_state_changed/application/history/persisted-live-snapshot",
         "memory.gist_state_changed/application/history/invented-frontier_sha256"
       ],
-      "other_negatives_stay_rejected": 1555,
+      "other_negatives_stay_rejected": 1567,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5759,11 +5783,11 @@
         "memory.gist_state_changed/project/history/coherent-wrong-frontier-revision",
         "memory.gist_state_changed/application/history/coherent-wrong-frontier-revision"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5785,11 +5809,11 @@
         "memory.gist_state_changed/project/history/foreign-generation-identity",
         "memory.gist_state_changed/application/history/foreign-generation-identity"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5811,11 +5835,11 @@
         "memory.gist_state_changed/project/history/foreign-anchor-source",
         "memory.gist_state_changed/application/history/foreign-anchor-source"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5837,11 +5861,11 @@
         "memory.gist_state_changed/project/history/foreign-frontier-source",
         "memory.gist_state_changed/application/history/foreign-frontier-source"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5863,11 +5887,11 @@
         "memory.gist_state_changed/project/history/historical_authentic",
         "memory.gist_state_changed/application/history/historical_authentic"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5901,11 +5925,11 @@
         "memory.gist_state_changed/application/retry/withdrawn-original",
         "memory.gist_state_changed/application/history/withdrawn-source"
       ],
-      "other_negatives_stay_rejected": 1579,
+      "other_negatives_stay_rejected": 1591,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5927,11 +5951,11 @@
         "memory.gist_state_changed/project/history/reader_withdrawn",
         "memory.gist_state_changed/application/history/reader_withdrawn"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5953,11 +5977,11 @@
         "memory.gist_state_changed/project/history/access",
         "memory.gist_state_changed/application/history/access"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -5979,11 +6003,11 @@
         "memory.gist_state_changed/project/history/deleted_disclosure",
         "memory.gist_state_changed/application/history/deleted_disclosure"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -6005,11 +6029,11 @@
         "memory.gist_state_changed/project/history/reader_effect",
         "memory.gist_state_changed/application/history/reader_effect"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -6031,11 +6055,11 @@
         "memory.gist_state_changed/project/history/family_checkpoint",
         "memory.gist_state_changed/application/history/family_checkpoint"
       ],
-      "other_negatives_stay_rejected": 1591,
+      "other_negatives_stay_rejected": 1603,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -6048,11 +6072,11 @@
         "memory/failed/command_only_count",
         "memory/success_without_real_change/command_only_count"
       ],
-      "other_negatives_stay_rejected": 1600,
+      "other_negatives_stay_rejected": 1612,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -6065,11 +6089,11 @@
         "memory/failed/command_only_result",
         "memory/success_without_real_change/command_only_result"
       ],
-      "other_negatives_stay_rejected": 1600,
+      "other_negatives_stay_rejected": 1612,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -6082,11 +6106,11 @@
         "memory/failed/wrong-no-event-command",
         "memory/success_without_real_change/wrong-no-event-command"
       ],
-      "other_negatives_stay_rejected": 1600,
+      "other_negatives_stay_rejected": 1612,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -6099,11 +6123,11 @@
         "memory/failed/command_only_outcome",
         "memory/success_without_real_change/command_only_outcome"
       ],
-      "other_negatives_stay_rejected": 1600,
+      "other_negatives_stay_rejected": 1612,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     },
     {
@@ -6116,11 +6140,11 @@
         "memory/failed/command_only_delta",
         "memory/success_without_real_change/command_only_delta"
       ],
-      "other_negatives_stay_rejected": 1600,
+      "other_negatives_stay_rejected": 1612,
       "restored": true,
       "complete_stayed_case_list": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/fix-round1/oracles.json",
-        "sha256": "7aa605b28c6d629940d256240db5f889c320859c44729c1cef2e815efd9367d2"
+        "sha256": "bd9fdce67d2aa9b66c65d0c9536e1fc51a4a81afebb62dc5faef0fd1eec70cbe"
       }
     }
   ],
@@ -6157,8 +6181,8 @@
       "native_execution": "NOT_RUN",
       "admission": "ABSENT",
       "positives": 189,
-      "negatives": 1603
+      "negatives": 1615
     },
-    "independent_probes": 466
+    "independent_probes": 484
   }
 }
