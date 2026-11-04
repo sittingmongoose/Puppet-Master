@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L29478
+Source lines: L28057-L30304
 
-Source SHA256: `b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db`
+Source SHA256: `2e9340b6e64231f96b9c288e9c204dba589ee49d32116c8844781dbb0680f096`
 
 ---
 
@@ -1430,3 +1430,829 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### SP-630 - memory.dedup_sweep.completed persistence and history
+
+```yaml
+plan_unit_id: SP-630
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search
+  scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json. The family
+  remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION:
+  candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count
+  eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference.
+  Operation custody has the same pending assignment, and actual native activation is fenced until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.dedup_sweep.completed"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-650.
+
+  Original operation custody is the newly authored memory_dedup_sweep_operation family, closed schema Plans/memory_maintenance_operation.schema.json#/$defs/dedup_sweep,
+  key memory_dedup_sweep_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)} in canonical
+  redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe. Admit its
+  schema through the actual StorageMigrationCoordinator before any write, never inferred store versions. No duplicate
+  command journal or gist store is created. Initial accepted row and request digest commit before append. This family
+  explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class
+  SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt, then advance operation
+  state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only proof
+  fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the unique original terminal outcome; it cannot occur before the original start or be
+  followed by another terminal result.
+
+  Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only binding
+  used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278: use reader.storage.event_record_index@1.0.0
+  and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints, key event_record_index_checkpoint.v1:{storage_instance_id},
+  closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, generation-qualified event_record_index.v2@{generation_id}.
+  The generic projector atomically CAS-advances complete rows and root frontier, never this reader. No new filtered
+  durable cursor or projection value exists. Each read joins original source bytes, exact payload and operation/result
+  custody, complete CURRENT-selected root/generation/frontier, original row birth anchor, actual permission/deletion/hold
+  state. Recheck every fence after helpers and immediately before disclosure. Missing or stale authority returns
+  unavailable; timestamps and cached views cannot substitute. Uses the ten-field live read token in its actual read
+  transaction; any durable generic token is exactly SP-278/DL-076''s nine fields, with redb_snapshot_id excluded.
+  Reader output is ephemeral and never a persisted token. Generic checkpoint retains existing RP-PROJECTION-3GEN
+  and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds from retained source and never restores
+  deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.dedup_sweep.completed.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-100
+- CV-650
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### SP-631 - memory.dedup_sweep.started persistence and history
+
+```yaml
+plan_unit_id: SP-631
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0; search
+  scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json. The family
+  remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION:
+  candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count
+  eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference.
+  Operation custody has the same pending assignment, and actual native activation is fenced until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.dedup_sweep.started"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-651.
+
+  Original operation custody is the newly authored memory_dedup_sweep_operation family, closed schema Plans/memory_maintenance_operation.schema.json#/$defs/dedup_sweep,
+  key memory_dedup_sweep_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)} in canonical
+  redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe. Admit its
+  schema through the actual StorageMigrationCoordinator before any write, never inferred store versions. No duplicate
+  command journal or gist store is created. Initial accepted row and request digest commit before append. This family
+  explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class
+  SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt, then advance operation
+  state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only proof
+  fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the acceptance transition; it may not be reinterpreted as completion.
+
+  Exact consumer reader.memory.dedup_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only binding
+  used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278: use reader.storage.event_record_index@1.0.0
+  and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints, key event_record_index_checkpoint.v1:{storage_instance_id},
+  closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, generation-qualified event_record_index.v2@{generation_id}.
+  The generic projector atomically CAS-advances complete rows and root frontier, never this reader. No new filtered
+  durable cursor or projection value exists. Each read joins original source bytes, exact payload and operation/result
+  custody, complete CURRENT-selected root/generation/frontier, original row birth anchor, actual permission/deletion/hold
+  state. Recheck every fence after helpers and immediately before disclosure. Missing or stale authority returns
+  unavailable; timestamps and cached views cannot substitute. Uses the ten-field live read token in its actual read
+  transaction; any durable generic token is exactly SP-278/DL-076''s nine fields, with redb_snapshot_id excluded.
+  Reader output is ephemeral and never a persisted token. Generic checkpoint retains existing RP-PROJECTION-3GEN
+  and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds from retained source and never restores
+  deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.dedup_sweep.started.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-101
+- CV-651
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### SP-632 - memory.index.lexical.rebuild.completed persistence and history
+
+```yaml
+plan_unit_id: SP-632
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0;
+  search scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json.
+  The family remains absent from event_family_registry.json, quarantined before append or projection. Retention
+  is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit
+  authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits
+  no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced
+  until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.index.lexical.rebuild.completed"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-652.
+
+  Original operation custody is the newly authored memory_index_lexical_rebuild_operation family, closed schema
+  Plans/memory_maintenance_operation.schema.json#/$defs/index_lexical_rebuild, key memory_index_lexical_rebuild_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}
+  in canonical redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe.
+  Admit its schema through the actual StorageMigrationCoordinator before any write, never inferred store versions.
+  No duplicate command journal or gist store is created. Initial accepted row and request digest commit before append.
+  This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,
+  append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt,
+  then advance operation state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only
+  proof fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the unique original terminal outcome; it cannot occur before the original start or be
+  followed by another terminal result.
+
+  Exact consumer reader.memory.index.lexical.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only
+  binding used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278:
+  use reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints,
+  key event_record_index_checkpoint.v1:{storage_instance_id}, closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  generation-qualified event_record_index.v2@{generation_id}. The generic projector atomically CAS-advances complete
+  rows and root frontier, never this reader. No new filtered durable cursor or projection value exists. Each read
+  joins original source bytes, exact payload and operation/result custody, complete CURRENT-selected root/generation/frontier,
+  original row birth anchor, actual permission/deletion/hold state. Recheck every fence after helpers and immediately
+  before disclosure. Missing or stale authority returns unavailable; timestamps and cached views cannot substitute.
+  Uses the ten-field live read token in its actual read transaction; any durable generic token is exactly SP-278/DL-076''s
+  nine fields, with redb_snapshot_id excluded. Reader output is ephemeral and never a persisted token. Generic checkpoint
+  retains existing RP-PROJECTION-3GEN and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds
+  from retained source and never restores deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.index.lexical.rebuild.completed.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-102
+- CV-652
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### SP-633 - memory.index.lexical.rebuild.started persistence and history
+
+```yaml
+plan_unit_id: SP-633
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0;
+  search scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json.
+  The family remains absent from event_family_registry.json, quarantined before append or projection. Retention
+  is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit
+  authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits
+  no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced
+  until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.index.lexical.rebuild.started"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-653.
+
+  Original operation custody is the newly authored memory_index_lexical_rebuild_operation family, closed schema
+  Plans/memory_maintenance_operation.schema.json#/$defs/index_lexical_rebuild, key memory_index_lexical_rebuild_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}
+  in canonical redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe.
+  Admit its schema through the actual StorageMigrationCoordinator before any write, never inferred store versions.
+  No duplicate command journal or gist store is created. Initial accepted row and request digest commit before append.
+  This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,
+  append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt,
+  then advance operation state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only
+  proof fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the acceptance transition; it may not be reinterpreted as completion.
+
+  Exact consumer reader.memory.index.lexical.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only
+  binding used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278:
+  use reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints,
+  key event_record_index_checkpoint.v1:{storage_instance_id}, closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  generation-qualified event_record_index.v2@{generation_id}. The generic projector atomically CAS-advances complete
+  rows and root frontier, never this reader. No new filtered durable cursor or projection value exists. Each read
+  joins original source bytes, exact payload and operation/result custody, complete CURRENT-selected root/generation/frontier,
+  original row birth anchor, actual permission/deletion/hold state. Recheck every fence after helpers and immediately
+  before disclosure. Missing or stale authority returns unavailable; timestamps and cached views cannot substitute.
+  Uses the ten-field live read token in its actual read transaction; any durable generic token is exactly SP-278/DL-076''s
+  nine fields, with redb_snapshot_id excluded. Reader output is ephemeral and never a persisted token. Generic checkpoint
+  retains existing RP-PROJECTION-3GEN and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds
+  from retained source and never restores deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.index.lexical.rebuild.started.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-103
+- CV-653
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### SP-634 - memory.index.semantic.rebuild.completed persistence and history
+
+```yaml
+plan_unit_id: SP-634
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;
+  search scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json.
+  The family remains absent from event_family_registry.json, quarantined before append or projection. Retention
+  is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit
+  authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits
+  no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced
+  until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.index.semantic.rebuild.completed"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-654.
+
+  Original operation custody is the newly authored memory_index_semantic_rebuild_operation family, closed schema
+  Plans/memory_maintenance_operation.schema.json#/$defs/index_semantic_rebuild, key memory_index_semantic_rebuild_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}
+  in canonical redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe.
+  Admit its schema through the actual StorageMigrationCoordinator before any write, never inferred store versions.
+  No duplicate command journal or gist store is created. Initial accepted row and request digest commit before append.
+  This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,
+  append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt,
+  then advance operation state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only
+  proof fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the unique original terminal outcome; it cannot occur before the original start or be
+  followed by another terminal result.
+
+  Exact consumer reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only
+  binding used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278:
+  use reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints,
+  key event_record_index_checkpoint.v1:{storage_instance_id}, closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  generation-qualified event_record_index.v2@{generation_id}. The generic projector atomically CAS-advances complete
+  rows and root frontier, never this reader. No new filtered durable cursor or projection value exists. Each read
+  joins original source bytes, exact payload and operation/result custody, complete CURRENT-selected root/generation/frontier,
+  original row birth anchor, actual permission/deletion/hold state. Recheck every fence after helpers and immediately
+  before disclosure. Missing or stale authority returns unavailable; timestamps and cached views cannot substitute.
+  Uses the ten-field live read token in its actual read transaction; any durable generic token is exactly SP-278/DL-076''s
+  nine fields, with redb_snapshot_id excluded. Reader output is ephemeral and never a persisted token. Generic checkpoint
+  retains existing RP-PROJECTION-3GEN and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds
+  from retained source and never restores deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-104
+- CV-654
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### SP-635 - memory.index.semantic.rebuild.started persistence and history
+
+```yaml
+plan_unit_id: SP-635
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0;
+  search scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json.
+  The family remains absent from event_family_registry.json, quarantined before append or projection. Retention
+  is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit
+  authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits
+  no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced
+  until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.index.semantic.rebuild.started"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-655.
+
+  Original operation custody is the newly authored memory_index_semantic_rebuild_operation family, closed schema
+  Plans/memory_maintenance_operation.schema.json#/$defs/index_semantic_rebuild, key memory_index_semantic_rebuild_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}
+  in canonical redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe.
+  Admit its schema through the actual StorageMigrationCoordinator before any write, never inferred store versions.
+  No duplicate command journal or gist store is created. Initial accepted row and request digest commit before append.
+  This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,
+  append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt,
+  then advance operation state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only
+  proof fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the acceptance transition; it may not be reinterpreted as completion.
+
+  Exact consumer reader.memory.index.semantic.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only
+  binding used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278:
+  use reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints,
+  key event_record_index_checkpoint.v1:{storage_instance_id}, closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  generation-qualified event_record_index.v2@{generation_id}. The generic projector atomically CAS-advances complete
+  rows and root frontier, never this reader. No new filtered durable cursor or projection value exists. Each read
+  joins original source bytes, exact payload and operation/result custody, complete CURRENT-selected root/generation/frontier,
+  original row birth anchor, actual permission/deletion/hold state. Recheck every fence after helpers and immediately
+  before disclosure. Missing or stale authority returns unavailable; timestamps and cached views cannot substitute.
+  Uses the ten-field live read token in its actual read transaction; any durable generic token is exactly SP-278/DL-076''s
+  nine fields, with redb_snapshot_id excluded. Reader output is ephemeral and never a persisted token. Generic checkpoint
+  retains existing RP-PROJECTION-3GEN and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds
+  from retained source and never restores deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.index.semantic.rebuild.started.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-105
+- CV-655
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### SP-636 - memory.verification_sweep.completed persistence and history
+
+```yaml
+plan_unit_id: SP-636
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0;
+  search scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json.
+  The family remains absent from event_family_registry.json, quarantined before append or projection. Retention
+  is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit
+  authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits
+  no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced
+  until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.verification_sweep.completed"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-656.
+
+  Original operation custody is the newly authored memory_verification_sweep_operation family, closed schema Plans/memory_maintenance_operation.schema.json#/$defs/verification_sweep,
+  key memory_verification_sweep_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)} in
+  canonical redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe.
+  Admit its schema through the actual StorageMigrationCoordinator before any write, never inferred store versions.
+  No duplicate command journal or gist store is created. Initial accepted row and request digest commit before append.
+  This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,
+  append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt,
+  then advance operation state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only
+  proof fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the unique original terminal outcome; it cannot occur before the original start or be
+  followed by another terminal result.
+
+  Exact consumer reader.memory.verification_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only
+  binding used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278:
+  use reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints,
+  key event_record_index_checkpoint.v1:{storage_instance_id}, closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  generation-qualified event_record_index.v2@{generation_id}. The generic projector atomically CAS-advances complete
+  rows and root frontier, never this reader. No new filtered durable cursor or projection value exists. Each read
+  joins original source bytes, exact payload and operation/result custody, complete CURRENT-selected root/generation/frontier,
+  original row birth anchor, actual permission/deletion/hold state. Recheck every fence after helpers and immediately
+  before disclosure. Missing or stale authority returns unavailable; timestamps and cached views cannot substitute.
+  Uses the ten-field live read token in its actual read transaction; any durable generic token is exactly SP-278/DL-076''s
+  nine fields, with redb_snapshot_id excluded. Reader output is ephemeral and never a persisted token. Generic checkpoint
+  retains existing RP-PROJECTION-3GEN and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds
+  from retained source and never restores deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.verification_sweep.completed.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-106
+- CV-656
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### SP-637 - memory.verification_sweep.started persistence and history
+
+```yaml
+plan_unit_id: SP-637
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0;
+  search scope and negative evidence are the family''s row in reports/event-authority-20261104/DMEM-search.json.
+  The family remains absent from event_family_registry.json, quarantined before append or projection. Retention
+  is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit
+  authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits
+  no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced
+  until it resolves.
+
+  Identity recipe for this family: use strict UTF-8 canonical JSON of the array ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.verification_sweep.started"]
+  with no whitespace, ensure_ascii=false; SHA-256 lower hex. event_id="evt_mem_"+digest and idempotency_key="memory-maintenance:"+digest.
+  All ids are nonempty bounded opaque owner-generated identifiers, not user content. The actual native acceptance
+  generates operation_id once, persists it before publication and retries reuse it. request_sha256 binds the exact
+  accepted command arguments and scope; a changed request under the same operation fails idempotency_conflict. Envelope
+  type, payload type, project, correlation and causation must join CV-657.
+
+  Original operation custody is the newly authored memory_verification_sweep_operation family, closed schema Plans/memory_maintenance_operation.schema.json#/$defs/verification_sweep,
+  key memory_verification_sweep_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)} in
+  canonical redb table memory_maintenance_operations. Hex is lowercase UTF-8 bytes, reversible and separator-safe.
+  Admit its schema through the actual StorageMigrationCoordinator before any write, never inferred store versions.
+  No duplicate command journal or gist store is created. Initial accepted row and request digest commit before append.
+  This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,
+  append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle original receipt,
+  then advance operation state. New issuance uses v2; resolve_full_value.v1 verifies the exact original event; missing/legacy-only
+  proof fences dependent state. Lost delivery resolves the original receipt and cannot mint another event.
+
+  The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable
+  receipt is required before started state and before any effect. Freeze the original started id. Canonical gist
+  mutation and effect_committed outcome/ref/hash commit atomically in assistant_memory.redb under its single writer;
+  partially applied sweeps resume only from recorded owner progress or roll back the transaction, never rerun committed
+  merges or verification. Derived index rebuilds prepare a source-revision-bound shadow and durably record its exact
+  target identity before swap; on recovery inspect that exact selected target and settle the same outcome under
+  the maintenance lease, never republish a different target or infer success from mtime. Recheck source revision
+  and permission before effect; stale source records a settled failure without changing gists. The completed event
+  appends only from effect_committed with its frozen succeeded/failed result. Its original receipt precedes completed
+  row and terminal disclosure. If append succeeds but row advancement crashes, recover the stored original receipt
+  and apply the same transition by CAS against exact prior row; failure before receipt cannot authorize a transition.
+  Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance.
+  This family records only the acceptance transition; it may not be reinterpreted as completion.
+
+  Exact consumer reader.memory.verification_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only
+  binding used by Memory maintenance history and audit lookup for this exact type. It explicitly adopts SP-278:
+  use reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, checkpoint table checkpoints,
+  key event_record_index_checkpoint.v1:{storage_instance_id}, closed value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint,
+  generation-qualified event_record_index.v2@{generation_id}. The generic projector atomically CAS-advances complete
+  rows and root frontier, never this reader. No new filtered durable cursor or projection value exists. Each read
+  joins original source bytes, exact payload and operation/result custody, complete CURRENT-selected root/generation/frontier,
+  original row birth anchor, actual permission/deletion/hold state. Recheck every fence after helpers and immediately
+  before disclosure. Missing or stale authority returns unavailable; timestamps and cached views cannot substitute.
+  Uses the ten-field live read token in its actual read transaction; any durable generic token is exactly SP-278/DL-076''s
+  nine fields, with redb_snapshot_id excluded. Reader output is ephemeral and never a persisted token. Generic checkpoint
+  retains existing RP-PROJECTION-3GEN and index RP-EVENT-INDEX-SOURCE; missing derived state quarantines/rebuilds
+  from retained source and never restores deleted gists.
+
+  Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore
+  boundaries; derived indexes are rebuilt, never backed up as canonical gists (DL-270). Ref resolution checks current
+  Project access, source tombstones and holds on every read; ref/hash grants no access and body unavailability is
+  disclosed without reconstructing content. Preserve original history and never retain deleted content inside audit
+  metadata. Unknown retention and operation-custody deletion remain pending, not an indefinite assignment.
+
+  Only exact version 1.0.0 has this writer/reader; unknown or incompatible editions fail closed with original bytes
+  preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance
+  and this family''s writer admission, drains or explicitly leaves unresolved existing original operations without
+  reissuing them, then under the same maintenance/read fence disables reader.memory.verification_sweep.started.history.v1@1.0.0
+  publication and invalidates live tokens. Generic index readers for other families continue. A successor must be
+  explicitly admitted and rebuild from retained authenticated source with its own version; no withdrawn reader checkpoint
+  can authorize effects. No event, policy, registry membership, readiness or native execution is admitted here.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+- AMS-107
+- CV-657
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```

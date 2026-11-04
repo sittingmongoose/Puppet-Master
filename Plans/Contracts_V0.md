@@ -24467,3 +24467,367 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+
+### CV-650 - memory.dedup_sweep.completed payload contract
+
+```yaml
+plan_unit_id: CV-650
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.dedup_sweep.completed@1.0.0 under
+  DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
+  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-630, not borrowed
+  from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-100
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-651 - memory.dedup_sweep.started payload contract
+
+```yaml
+plan_unit_id: CV-651
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.dedup_sweep.started@1.0.0 under
+  DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-631, not borrowed from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-101
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-652 - memory.index.lexical.rebuild.completed payload contract
+
+```yaml
+plan_unit_id: CV-652
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.completed@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
+  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-632, not borrowed
+  from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-102
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-653 - memory.index.lexical.rebuild.started payload contract
+
+```yaml
+plan_unit_id: CV-653
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.started@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-633, not borrowed from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-103
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-654 - memory.index.semantic.rebuild.completed payload contract
+
+```yaml
+plan_unit_id: CV-654
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
+  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-634, not borrowed
+  from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-104
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-655 - memory.index.semantic.rebuild.started payload contract
+
+```yaml
+plan_unit_id: CV-655
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.started@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-635, not borrowed from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-105
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-656 - memory.verification_sweep.completed payload contract
+
+```yaml
+plan_unit_id: CV-656
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.verification_sweep.completed@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
+  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-636, not borrowed
+  from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-106
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-657 - memory.verification_sweep.started payload contract
+
+```yaml
+plan_unit_id: CV-657
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.verification_sweep.started@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-637, not borrowed from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-107
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```

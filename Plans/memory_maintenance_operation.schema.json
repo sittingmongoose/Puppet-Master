@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json",
+  "$defs": {
+    "dedup_sweep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.memory_dedup_sweep_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.dedup_sweep"
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "started",
+            "effect_committed",
+            "completed",
+            "withdrawn"
+          ]
+        },
+        "started_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "completed_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            null,
+            "succeeded",
+            "failed"
+          ]
+        }
+      }
+    },
+    "index_lexical_rebuild": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.memory_index_lexical_rebuild_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.rebuild_lexical_index"
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "started",
+            "effect_committed",
+            "completed",
+            "withdrawn"
+          ]
+        },
+        "started_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "completed_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            null,
+            "succeeded",
+            "failed"
+          ]
+        }
+      }
+    },
+    "index_semantic_rebuild": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.memory_index_semantic_rebuild_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.rebuild_semantic_index"
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "started",
+            "effect_committed",
+            "completed",
+            "withdrawn"
+          ]
+        },
+        "started_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "completed_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            null,
+            "succeeded",
+            "failed"
+          ]
+        }
+      }
+    },
+    "verification_sweep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.memory_verification_sweep_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.verification_sweep"
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "started",
+            "effect_committed",
+            "completed",
+            "withdrawn"
+          ]
+        },
+        "started_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "completed_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            null,
+            "succeeded",
+            "failed"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -7120,6 +7120,14 @@
     "BRS-028",
     "CS-111",
     "F3-671",
+    "AMS-100",
+    "AMS-101",
+    "AMS-102",
+    "AMS-103",
+    "AMS-104",
+    "AMS-105",
+    "AMS-106",
+    "AMS-107",
     "T-187",
     "CDRY-021",
     "CS-086",
@@ -7143,6 +7151,14 @@
     "GRS-081",
     "BRS-029",
     "UCC-216",
+    "CV-650",
+    "CV-651",
+    "CV-652",
+    "CV-653",
+    "CV-654",
+    "CV-655",
+    "CV-656",
+    "CV-657",
     "WM-062",
     "CS-085",
     "UCC-172",
@@ -7167,6 +7183,14 @@
     "SP-316",
     "SIR-053",
     "WM-102",
+    "SP-630",
+    "SP-631",
+    "SP-632",
+    "SP-633",
+    "SP-634",
+    "SP-635",
+    "SP-636",
+    "SP-637",
     "UCC-175",
     "CS-103",
     "F3-606",
@@ -7176,6 +7200,7 @@
     "WM-097",
     "ATS-057",
     "SP-317",
+    "ATS-315",
     "CS-087",
     "UCC-170",
     "WM-094",
@@ -13264,6 +13289,126 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "AMS-100",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-100",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-100",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-101",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-101",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-101",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-102",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-102",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-102",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-103",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-103",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-103",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-104",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-104",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-104",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-105",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-105",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-105",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-106",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-106",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-106",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-107",
+      "to": "AMS-054"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-107",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-107",
+      "to": "UCC-085"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "APR-002",
       "to": "APR-001"
     },
@@ -15526,6 +15671,51 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-630"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-631"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-632"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-633"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-634"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-635"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-636"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-315",
+      "to": "SP-637"
     },
     {
       "edge_type": "depends_on",
@@ -25931,6 +26121,86 @@
       "edge_type": "depends_on",
       "from": "CV-368",
       "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-650",
+      "to": "AMS-100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-650",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-651",
+      "to": "AMS-101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-651",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-652",
+      "to": "AMS-102"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-652",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-653",
+      "to": "AMS-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-653",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-654",
+      "to": "AMS-104"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-654",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-655",
+      "to": "AMS-105"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-655",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-656",
+      "to": "AMS-106"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-656",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-657",
+      "to": "AMS-107"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-657",
+      "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
@@ -81994,6 +82264,206 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-630",
+      "to": "AMS-100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-630",
+      "to": "CV-650"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-630",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-630",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-630",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-631",
+      "to": "AMS-101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-631",
+      "to": "CV-651"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-631",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-631",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-631",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-632",
+      "to": "AMS-102"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-632",
+      "to": "CV-652"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-632",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-632",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-632",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-633",
+      "to": "AMS-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-633",
+      "to": "CV-653"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-633",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-633",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-633",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-634",
+      "to": "AMS-104"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-634",
+      "to": "CV-654"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-634",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-634",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-634",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-635",
+      "to": "AMS-105"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-635",
+      "to": "CV-655"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-635",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-635",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-635",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-636",
+      "to": "AMS-106"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-636",
+      "to": "CV-656"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-636",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-636",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-636",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-637",
+      "to": "AMS-107"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-637",
+      "to": "CV-657"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-637",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-637",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-637",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117208,7 +117678,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T07:47:51Z",
+  "generated_at_utc": "2026-11-04T17:37:17Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -129026,6 +129496,142 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-100",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-100 - memory.dedup_sweep.completed semantic contract",
+        "heading_level": 3,
+        "heading_line": 3152,
+        "line": 3154,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-101",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-101 - memory.dedup_sweep.started semantic contract",
+        "heading_level": 3,
+        "heading_line": 3204,
+        "line": 3206,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-102",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-102 - memory.index.lexical.rebuild.completed semantic contract",
+        "heading_level": 3,
+        "heading_line": 3256,
+        "line": 3258,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-103",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-103 - memory.index.lexical.rebuild.started semantic contract",
+        "heading_level": 3,
+        "heading_line": 3308,
+        "line": 3310,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-104",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-104 - memory.index.semantic.rebuild.completed semantic contract",
+        "heading_level": 3,
+        "heading_line": 3360,
+        "line": 3362,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-105",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-105 - memory.index.semantic.rebuild.started semantic contract",
+        "heading_level": 3,
+        "heading_line": 3412,
+        "line": 3414,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-106",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-106 - memory.verification_sweep.completed semantic contract",
+        "heading_level": 3,
+        "heading_line": 3464,
+        "line": 3466,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-107",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "AMS-107 - memory.verification_sweep.started semantic contract",
+        "heading_level": 3,
+        "heading_line": 3516,
+        "line": 3518,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "assistant_plan_runtime",
       "gui_related": true,
       "owner_doc": "Plans/Assistant_Plan_Runtime.md",
@@ -131319,6 +131925,23 @@
       },
       "status": "accepted",
       "unit_type": "acceptance_gate"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-315",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ATS-315 - Memory maintenance prepared event oracles",
+        "heading_level": 3,
+        "heading_line": 7233,
+        "line": 7235,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -144358,6 +144981,142 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-650",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-650 - memory.dedup_sweep.completed payload contract",
+        "heading_level": 3,
+        "heading_line": 24472,
+        "line": 24474,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-651",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-651 - memory.dedup_sweep.started payload contract",
+        "heading_level": 3,
+        "heading_line": 24518,
+        "line": 24520,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-652",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-652 - memory.index.lexical.rebuild.completed payload contract",
+        "heading_level": 3,
+        "heading_line": 24563,
+        "line": 24565,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-653",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-653 - memory.index.lexical.rebuild.started payload contract",
+        "heading_level": 3,
+        "heading_line": 24609,
+        "line": 24611,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-654",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-654 - memory.index.semantic.rebuild.completed payload contract",
+        "heading_level": 3,
+        "heading_line": 24654,
+        "line": 24656,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-655",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-655 - memory.index.semantic.rebuild.started payload contract",
+        "heading_level": 3,
+        "heading_line": 24700,
+        "line": 24702,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-656",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-656 - memory.verification_sweep.completed payload contract",
+        "heading_level": 3,
+        "heading_line": 24745,
+        "line": 24747,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-657",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-657 - memory.verification_sweep.started payload contract",
+        "heading_level": 3,
+        "heading_line": 24791,
+        "line": 24793,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -228068,6 +228827,142 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-630",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-630 - memory.dedup_sweep.completed persistence and history",
+        "heading_level": 3,
+        "heading_line": 29481,
+        "line": 29483,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-631",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-631 - memory.dedup_sweep.started persistence and history",
+        "heading_level": 3,
+        "heading_line": 29584,
+        "line": 29586,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-632",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-632 - memory.index.lexical.rebuild.completed persistence and history",
+        "heading_level": 3,
+        "heading_line": 29686,
+        "line": 29688,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-633",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-633 - memory.index.lexical.rebuild.started persistence and history",
+        "heading_level": 3,
+        "heading_line": 29790,
+        "line": 29792,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-634",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-634 - memory.index.semantic.rebuild.completed persistence and history",
+        "heading_level": 3,
+        "heading_line": 29893,
+        "line": 29895,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-635",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-635 - memory.index.semantic.rebuild.started persistence and history",
+        "heading_level": 3,
+        "heading_line": 29997,
+        "line": 29999,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-636",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-636 - memory.verification_sweep.completed persistence and history",
+        "heading_level": 3,
+        "heading_line": 30100,
+        "line": 30102,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DMEM_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-637",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-637 - memory.verification_sweep.started persistence and history",
+        "heading_level": 3,
+        "heading_line": 30204,
+        "line": 30206,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -243374,10 +244269,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18837,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 22045,
+    "node_count": 7446,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
