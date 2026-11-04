@@ -12,6 +12,10 @@
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const CASES = [['gitea', null], ['forgejo', null], ['github_enterprise', null], ['gitlab', 'self_managed'], ['azure_devops', 'self_managed'], ['bitbucket_cloud', 'data_center']];
 
+const settled = (f, screen) => f.waitForFunction(([L, s]) => {
+ const l = document.querySelector(L);
+ return !!l && (!s || l.getAttribute('data-screen') === s) && l.getAttribute('data-screen') === window.O55.S.sess.screen && !document.documentElement.hasAttribute('data-o55-vt') && !l.matches('.o55-hold, .o55-entering');
+}, [LAYER, screen], { timeout: 15000 });
 async function openAt(t, f, screen) {
 	await f.evaluate(() => window.O55.studio.open('onboarding'));
 	await f.waitForSelector('#pmds-sheet [data-pmds-do="open-screen"]', { timeout: 15000 });
@@ -23,7 +27,7 @@ async function openAt(t, f, screen) {
 	}
 	const row = f.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${screen}"]`);
 	await row.scrollIntoViewIfNeeded(); await row.click();
-	return f.waitForFunction((s) => window.O55.S.open && window.O55.S.sess.screen === s, screen, { timeout: 15000 }).then(() => true, () => false);
+	return settled(f, screen).then(() => true, () => false);
 }
 /* the screen as shown: its introduction, what lies under it, and the copy it is judged against */
 const READ = (L) => {
@@ -36,16 +40,17 @@ const READ = (L) => {
 		reach: ['New', 'Existing'].map((p) => { let host = si.name; try { host = new URL(window.O55.S.sess.drafts.main.forge_instance_url).host; } catch (_) {} return window.O55.talk.t('online.signin.scopes.' + si.service + '.reach' + p, { host }); }) };
 };
 async function click(t, f, sel) {
+	await settled(f);
 	const el = f.locator(`${LAYER} ${sel}`).first();
 	if (!(await el.count()) || !(await el.isVisible())) return false;
-	await el.scrollIntoViewIfNeeded(); await el.click(); await t.page.waitForTimeout(450); return true;
+	await el.scrollIntoViewIfNeeded(); await el.click(); await settled(f); return true;
 }
 /* the demo hint that works (Demo Studio's sample address or token), clicked like any button */
 async function works(t, f) {
 	const i = await f.evaluate((L) => { const w = window.O55.t('demoHint.outcome.works'); return [...document.querySelectorAll(L + ' [data-o55-do="demoHint"]')].findIndex((e) => (e.querySelector('.o55-demohint-o') || {}).textContent === w); }, LAYER);
 	if (i < 0) return false;
 	const el = f.locator(`${LAYER} [data-o55-do="demoHint"]`).nth(i);
-	await el.scrollIntoViewIfNeeded(); await el.click(); await t.page.waitForTimeout(450); return true;
+	await el.scrollIntoViewIfNeeded(); await el.click(); await settled(f); return true;
 }
 const dangles = (s) => /\bbelow\b/i.test(s) || /'s page shows/i.test(s);
 
@@ -54,11 +59,11 @@ export default async function (t) {
 	await t.step('github.com (browser)', async () => {
 		const f = await t.app.open();
 		if (!(await openAt(t, f, 'online-service'))) return t.check('online-service opens from its row', false, 'not opened', { hard: true });
-		await t.page.waitForTimeout(600);
-		await click(t, f, '[data-o55-do="pick"][data-arg="github"]');
-		await click(t, f, '.o55-primary');
+		await settled(f);
+		await t.check('GitHub picked', await click(t, f, '[data-o55-do="pick"][data-arg="github"]'), '', { hard: true });
+		await t.check('Continue is actionable', await click(t, f, '.o55-primary'), '', { hard: true });
 		await f.waitForFunction(() => window.O55.S.sess.screen === 'online-signin', null, { timeout: 10000 }).catch(() => {});
-		await t.page.waitForTimeout(700);
+		await settled(f, 'online-signin');
 		const r = await f.evaluate(READ, LAYER);
 		await t.check('github.com: the browser sign-in names the service page', r.screen === 'online-signin' && r.lead === r.leadBrowser, JSON.stringify(r));
 	});
@@ -68,14 +73,15 @@ export default async function (t) {
 		await t.step(name, async () => {
 			const f = await t.app.open();
 			if (!(await openAt(t, f, 'online-service'))) return t.check(`${name}: online-service opens from its row`, false, 'not opened', { hard: true });
-			await t.page.waitForTimeout(600);
+			await settled(f);
 			if (!(await click(t, f, `[data-o55-do="pick"][data-arg="${svc}"]`))) { await click(t, f, '[data-o55-do="others"]'); await click(t, f, `[data-o55-do="pick"][data-arg="${svc}"]`); }
-			if (variant) await click(t, f, `[data-o55-do="variant"][data-arg="${variant}"]`);
-			await works(t, f);
-			await click(t, f, '.o55-primary');
+			if (variant) await t.check(`${name}: variant picked`, await click(t, f, `[data-o55-do="variant"][data-arg="${variant}"]`), '', { hard: true });
+			await t.check(`${name}: service picked`, await f.locator(`${LAYER} [data-o55-do="pick"][data-arg="${svc}"][aria-checked="true"]`).count() === 1, '', { hard: true });
+			await t.check('working demo hint is actionable', await works(t, f), '', { hard: true });
+			await t.check('Continue is actionable', await click(t, f, '.o55-primary'), '', { hard: true });
 			const there = await f.waitForFunction(() => window.O55.S.sess.screen === 'online-signin', null, { timeout: 10000 }).then(() => true, () => false);
 			if (!(await t.check(`${name}: reaches the sign-in`, there, 'screen ' + (await f.evaluate(() => window.O55.S.sess.screen)), { hard: true }))) return;
-			await t.page.waitForTimeout(700);
+			await settled(f, 'online-signin');
 			/* a service that also signs in in the browser: its token form, by its own link */
 			await click(t, f, '[data-o55-do="tokenOn"]');
 			let r = await f.evaluate(READ, LAYER);
@@ -83,17 +89,34 @@ export default async function (t) {
 			await t.check(`${name}: the token form is on show`, field, JSON.stringify(r));
 			await t.check(`${name}: over the token form the introduction points to what the token reaches, and that note is below it`,
 				r.lead === r.leadToken && r.after.some((x) => r.reach.includes(x)), `lead "${r.lead}"; below: ${JSON.stringify(r.after.slice(0, 3))}`);
-			await works(t, f);
+			await t.check('working demo hint is actionable', await works(t, f), '', { hard: true });
 			const signed = await f.waitForFunction(() => (window.O55.S.sess.signin || {}).state === 'done', null, { timeout: 10000 }).then(() => true, () => false);
-			await t.page.waitForTimeout(600);
+			await settled(f);
 			r = await f.evaluate(READ, LAYER);
 			await t.check(`${name}: signed in with the token`, signed, JSON.stringify(r));
 			await t.check(`${name}: signed in: the introduction is the signed-in one, with no reference to anything not shown`, r.lead === r.leadTokenDone && !dangles(r.lead), `lead "${r.lead}" (${r.talk})`);
 			/* Plain English and Expert: the introduction has one version (DL-126), so it holds after the switch */
 			await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
-			await t.page.waitForTimeout(600);
+			await settled(f);
 			const r2 = await f.evaluate(READ, LAYER);
 			await t.check(`${name}: signed in, after ${r.talk} › ${r2.talk}: still the signed-in introduction`, r2.talk !== r.talk && r2.lead === r2.leadTokenDone && !dangles(r2.lead), `lead "${r2.lead}" (${r2.talk})`);
+            await t.check(`${name}: Continue to details`, await click(t, f, '.o55-primary'), '', { hard: true });
+            await settled(f, 'online-details');
+            await f.locator('#pm-o55-onboarding .o55-back').click();
+            await settled(f, 'online-service');
+            await t.check(`${name}: return to same service`, await click(t, f, '.o55-primary'), '', { hard: true });
+            await settled(f, 'online-signin');
+            for (let mode = 0; mode < 2; mode++) {
+                const known = await f.evaluate((L) => {
+                    const l = document.querySelector(L), d = window.O55.S.sess.drafts.main;
+                    return { card: !!l.querySelector('[data-o55-do="useKnown"]'), field: !!l.querySelector('[data-o55-bind="token"]'), method: d.forge_auth_method };
+                }, LAYER);
+                const r = await f.evaluate(READ, LAYER);
+                await t.check(`${name}: known account re-entry (${r.talk}) describes the card`, known.card && !known.field && known.method === 'token' && !dangles(r.lead) && !/paste|agree/i.test(r.lead), JSON.stringify({known, lead:r.lead}));
+                await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+                await settled(f, 'online-signin');
+            }
+
 		});
 	}
 }

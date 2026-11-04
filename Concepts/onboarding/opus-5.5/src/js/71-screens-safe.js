@@ -162,6 +162,8 @@
       if (same(cur) && ['waiting', 'code'].includes(cur.state)) { cur.state = 'failed'; cur.failed = true; S.save(); O55.ui.refresh(); }
     } });
   }
+  /* The introduction and body share the known-account decision (F32-1). */
+  const knownSigninAccount = (S) => { const si = SI(S); return si.kind === 'forge' && si.state === 'idle' && !si.another ? accountFor(S, si.service) : null; };
   def('online-signin', {
     seed: (S) => seedOnline(S, false),
     /* (a sign-in still waiting when the person goes Back is given up: a later Sign in starts a new attempt the old wait can
@@ -180,6 +182,7 @@
        that never opened, FO-32's variant) */
     lead: (S) => {
       const si = SI(S); if (si.kind !== 'forge') return T('online.signin.leadCloud', { name: si.name });
+      if (knownSigninAccount(S)) return T('online.signin.leadKnown', { name: si.name });
       const first = methodsOf(S, si)[0] === 'token', byToken = si.state === 'done' ? first || md(S).forge_auth_method === 'token' : first || si.state === 'token';
       return T(!byToken ? 'online.signin.lead' : si.state === 'done' ? 'online.signin.leadTokenDone' : 'online.signin.leadToken', { name: si.name });
     },
@@ -189,8 +192,8 @@
       const state = si.state === 'idle' && methods[0] === 'token' ? 'token' : si.state;
       let out = '';
       if (si.state === 'done') return `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('online.signin.signedIn', { account: si.account }))}</span></div>`;
-      const known = si.kind === 'forge' ? accountFor(S, si.service) : null;
-      if (si.state === 'idle' && known && !si.another) {
+      const known = knownSigninAccount(S);
+      if (known) {
         out += C.cards('useKnown', [{ v: known, glyph: 'person', title: T('online.signin.connected', { account: known }), sub: T('online.signin.connectedSub') }], known, {});
         out += `<div class="o55-sublinks" data-key="another">${C.link(T('online.signin.another'), 'another')}</div>`;
         return out;
