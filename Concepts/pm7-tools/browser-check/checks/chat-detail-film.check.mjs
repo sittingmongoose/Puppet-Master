@@ -1,13 +1,27 @@
 import {pathToFileURL} from 'node:url';
 export default async function(t){
  await t.emulate({reducedMotion:'no-preference'});
- await t.page.context().addInitScript(()=>{window.__shortClicks=[];for(const type of ['pointerdown','click'])window.addEventListener(type,e=>{const b=e.target.closest?.('[data-action]');__shortClicks.push({type,trusted:e.isTrusted,action:b?.dataset.action,domain:b?.dataset.domain,tag:e.target.tagName,time:e.timeStamp,wall:performance.timeOrigin+e.timeStamp,receivedWall:Date.now()});},true);});
+ await t.page.context().addInitScript(()=>{
+  window.__shortClicks=[];
+  for(const type of ['pointerdown','click'])window.addEventListener(type,e=>{
+   const b=e.target.closest?.('[data-action]');
+   const record={type,trusted:e.isTrusted,action:b?.dataset.action,domain:b?.dataset.domain,time:e.timeStamp,wall:performance.timeOrigin+e.timeStamp};
+   window.__shortClicks.push(record);
+   if(type==='click'&&e.isTrusted&&b?.dataset.action==='open-activity'){
+    const probe=()=>{
+     const p=document.querySelector('#pmRoot .activity-panel.cover');
+     if(p&&p.getBoundingClientRect().width>0)requestAnimationFrame(()=>{record.coverFrameMs=performance.now()-e.timeStamp;});
+     else if(performance.now()-e.timeStamp<2000)requestAnimationFrame(probe);
+    };requestAnimationFrame(probe);
+   }
+  },true);
+ });
  const base=/^https?:/.test(t.args.page)?t.args.page:pathToFileURL(t.args.page).href;
  const [f]=await t.openSideBySide([{url:base+'?o55=off',width:1024,height:480}],{height:480,settleMs:0});
  t.log('native film iframe bounds '+JSON.stringify(await (await f.frameElement()).boundingBox()));
  if(Number(t.args.sandbox)===1){const el=await f.frameElement();await el.evaluate(e=>e.setAttribute('sandbox','allow-scripts allow-forms allow-popups allow-downloads'));}
  for(let i=0;i<Number(t.args.reps||3);i++){
-  await f.goto(base+'?o55=off&review='+i);
+  await f.goto(base+'?o55=off&review='+i,{timeout:30000});
   await f.waitForFunction(()=>window.__PM56_BOOT_OK&&window.PM56_PORT?.ready);
   const size=await f.evaluate(()=>[innerWidth,innerHeight]);await t.equal('actual short viewport '+i,JSON.stringify(size),'[1024,480]');
   await f.locator('#o55np-reboot').waitFor({state:'detached',timeout:15000});
@@ -20,6 +34,8 @@ export default async function(t){
   const got=await f.evaluate(()=>({events:window.__shortClicks,open:PM56_APP.state.activity.open,cover:!!document.querySelector('#pmRoot .activity-panel.cover'),rect:document.querySelector('#pmRoot .activity-panel.cover')?.getBoundingClientRect().toJSON()}));
   t.log('paint region '+i+' '+JSON.stringify(got));
   await t.check('one click opens cover '+i,got.open&&got.cover,JSON.stringify(got));
+  const click=got.events.find(e=>e.type==='click'&&e.action==='open-activity');
+  await t.check('input-clock cover frame <=500ms '+i,click?.coverFrameMs<=500,JSON.stringify(click));
   await t.page.waitForTimeout(150);
  }
 
