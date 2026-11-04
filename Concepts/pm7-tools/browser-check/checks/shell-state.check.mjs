@@ -99,8 +99,8 @@ export const tests = {
   let f;
   for (const look of ['nier-light','friendly-dark']) {
    f=await t.app.open();
+   await f.evaluate(()=>O55.studio.looks.setReduced(true));await t.settle();
    await t.app.look(look); await f.locator('#o55np-reboot').waitFor({state:'hidden'});
-   await f.evaluate(()=>O55.studio.looks.setReduced(true));
    if(t.args.helpSelftest==='transparent') await f.addStyleTag({content:'#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .pst-bt-off, #pm7ob-explainer .o55-explainer-w {opacity:0!important}'});
    for (const id of ['ai','ai-none','c-review','c-pair','c-ready','s-kind','s-wait','s-confirm','s-ready','away-setup']) {
     await f.evaluate(() => O55.studio.open('onboarding'));
