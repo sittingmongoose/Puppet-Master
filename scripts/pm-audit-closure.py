@@ -494,9 +494,14 @@ def _reject_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return out
 
 
+def _reject_json_constant(name: str) -> Any:
+    raise AnchorError(f"{name} is not JSON (non-finite numbers are a Python extension)")
+
+
 def strict_json_loads(text: str) -> Any:
-    """json.loads that rejects duplicate object keys instead of keeping the last one."""
-    return json.loads(text, object_pairs_hook=_reject_duplicate_pairs)
+    """json.loads that rejects duplicate object keys instead of keeping the last one, and
+    NaN/Infinity anywhere in the source, not only in the part an anchor selects."""
+    return json.loads(text, object_pairs_hook=_reject_duplicate_pairs, parse_constant=_reject_json_constant)
 
 
 def canonical_rel_path(value: str) -> str:
@@ -644,6 +649,12 @@ class AnchorResolver:
 
     def read_bytes(self, rel_path: str) -> bytes:
         return self.path(rel_path).read_bytes()
+
+    def is_dir(self, rel_path: str) -> bool:
+        try:
+            return contained_path(self.root, rel_path).is_dir()
+        except AnchorError:
+            return False
 
     def text(self, rel_path: str) -> str:
         if rel_path not in self._text:
@@ -815,6 +826,15 @@ class CommitResolver(AnchorResolver):
     def path(self, rel_path: str) -> Path:  # pragma: no cover - commit reads never touch the tree
         raise AnchorError("CommitResolver reads git objects, not paths")
 
+    def is_dir(self, rel_path: str) -> bool:
+        try:
+            canonical_rel_path(rel_path)
+            listing = self._git("ls-tree", "-z", self.commit, "--", rel_path).split(b"\0")
+        except AnchorError:
+            return False
+        entry = next((item for item in listing if item.endswith(b"\t" + rel_path.encode())), None)
+        return entry is not None and entry.split(b"\t", 1)[0].split(b" ")[1] == b"tree"
+
     def read_bytes(self, rel_path: str) -> bytes:
         canonical_rel_path(rel_path)
         if rel_path not in self._blobs:
@@ -874,18 +894,60 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
         tree = ast.parse(source)
     except SyntaxError as exc:
         raise AnchorError(f"{ref}: source does not parse: {exc}") from exc
-    scope: list[ast.AST] = list(tree.body)
+    def target_names(target: ast.AST) -> list[str]:
+        if isinstance(target, ast.Name):
+            return [target.id]
+        if isinstance(target, (ast.Tuple, ast.List)):
+            return [name for item in target.elts for name in target_names(item)]
+        if isinstance(target, ast.Starred):
+            return target_names(target.value)
+        return []
+
+    def bindings(statements: list[ast.stmt], name: str) -> list[ast.stmt]:
+        """Every statement that binds `name` in this lexical scope, including inside if/try/
+        with/for/while/match blocks, but not inside nested function or class bodies."""
+        found: list[ast.stmt] = []
+        for item in statements:
+            if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                if item.name == name:
+                    found.append(item)
+                continue  # a nested scope: its body binds its own names
+            names: list[str] = []
+            if isinstance(item, ast.Assign):
+                names = [n for t in item.targets for n in target_names(t)]
+            elif isinstance(item, (ast.AnnAssign, ast.AugAssign)):
+                names = target_names(item.target)
+            elif isinstance(item, (ast.Import, ast.ImportFrom)):
+                names = [(alias.asname or alias.name).split(".")[0] for alias in item.names]
+            elif isinstance(item, (ast.For, ast.AsyncFor)):
+                names = target_names(item.target)
+            elif isinstance(item, (ast.With, ast.AsyncWith)):
+                names = [n for w in item.items if w.optional_vars is not None for n in target_names(w.optional_vars)]
+            if name in names:
+                found.append(item)
+            for block in ("body", "orelse", "finalbody"):
+                if isinstance(item, (ast.If, ast.For, ast.AsyncFor, ast.While, ast.With, ast.AsyncWith, ast.Try)) \
+                        or type(item).__name__ == "TryStar":
+                    found.extend(bindings(list(getattr(item, block, []) or []), name))
+            for handler in getattr(item, "handlers", []) or []:
+                if getattr(handler, "name", None) == name:
+                    found.append(item)
+                found.extend(bindings(list(handler.body), name))
+            if type(item).__name__ == "Match":
+                for case in item.cases:  # type: ignore[attr-defined]
+                    found.extend(bindings(list(case.body), name))
+        return found
+
+    scope: list[ast.stmt] = list(tree.body)
     node: ast.AST | None = None
     for part in qualname.split("."):
-        hits = [
-            item for item in scope
-            if (isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and item.name == part)
-            or (isinstance(item, ast.Assign) and [getattr(t, "id", None) for t in item.targets] == [part])
-            or (isinstance(item, ast.AnnAssign) and getattr(item.target, "id", None) == part)
-        ]
+        hits = bindings(scope, part)
         if len(hits) != 1:
-            raise AnchorError(f"{ref}: {part!r} is defined {len(hits)} times at that level; expected exactly 1")
+            raise AnchorError(f"{ref}: {part!r} is bound {len(hits)} times in that scope (control-flow blocks included); expected exactly 1")
         node = hits[0]
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Assign, ast.AnnAssign)) \
+                or node not in scope:
+            raise AnchorError(f"{ref}: {part!r} is not a plain definition or assignment at that level")
         scope = list(getattr(node, "body", []))
     assert node is not None
     lines = _lines(source)
@@ -1151,27 +1213,187 @@ def _jsonl_row_for(path: Path, line: int, closure_id: str) -> dict[str, Any] | N
 
 def _target_stale_refs(target: dict[str, Any], resolver: AnchorResolver) -> set[tuple[str, str, str]]:
     """(group, ref, stored) for each evidence ref of `target` whose content differs at `resolver`:
-    whole-file hashes for legacy rows, anchor hashes for anchor.v1 rows."""
+    whole-file hashes for legacy rows, anchor hashes for anchor.v1 rows. Evidence that is
+    missing or no longer resolves there counts as differing: the ordinary hash check reports
+    it, so a re-audit that retires that report has to account for it too. Refs the ordinary
+    check never hashes (no repository path, or a directory) are left out, as it leaves them."""
     hashes = target.get("hashes") if isinstance(target.get("hashes"), dict) else {}
     anchored = hashes.get("hash_scope") == ANCHOR_SCOPE
     out: set[tuple[str, str, str]] = set()
     for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
-        for ref, stored in sorted((hashes.get(group) or {}).items()):
+        group_hashes = hashes.get(group)
+        for ref, stored in sorted(group_hashes.items() if isinstance(group_hashes, dict) else []):
             if not isinstance(ref, str) or not isinstance(stored, str):
                 continue
-            try:
-                if anchored:
-                    current = resolver.sha256(ref)
-                else:
-                    path = evidence_path_from_ref(ref)
-                    if path is None:
-                        continue
+            if anchored:
+                try:
+                    current: str | None = resolver.sha256(ref)
+                except AnchorError:
+                    current = None
+            else:
+                path = evidence_path_from_ref(ref)
+                if path is None:
+                    continue
+                try:
                     rel_path = path.relative_to(ROOT).as_posix()
+                except ValueError:
+                    continue
+                if resolver.is_dir(rel_path):
+                    continue
+                try:
                     current = hashlib.sha256(resolver.read_bytes(rel_path)).hexdigest()
-            except (AnchorError, ValueError):
-                continue  # missing evidence is reported by the ordinary hash check, not as staleness
+                except AnchorError:
+                    current = None
             if current != stored:
                 out.add((group, ref, stored))
+    return out
+
+
+class ReceiptLedger:
+    """Git provenance of re-audit receipts: worker records, review outputs and review packets.
+
+    A receipt counts only as committed: tracked at HEAD with the bytes it has now, touched by
+    exactly one commit (added once, never rewritten), and added after the recheck commit it
+    judged, which must be a strict ancestor of that commit. A review output and the packet it
+    was shown must be added by the same commit. So an output cannot be paired later with a
+    replacement packet, and receipts cannot be replayed onto a newer snapshot."""
+
+    CHUNK = 200
+
+    def __init__(self, root: Path) -> None:
+        self.root = root
+        self._info: dict[str, dict[str, Any]] = {}
+        self._ancestor: dict[tuple[str, str], bool] = {}
+        self._prefetched: set[int] = set()
+
+    def _git(self, *args: str) -> bytes | None:
+        import subprocess  # noqa: PLC0415
+
+        proc = subprocess.run(["git", "-C", str(self.root), *args], capture_output=True)
+        return proc.stdout if proc.returncode == 0 else None
+
+    def prefetch(self, paths: Any) -> None:
+        todo = sorted({p for p in paths if isinstance(p, str) and p not in self._info})
+        if not todo:
+            return
+        head = self._git("rev-parse", "--verify", "-q", "HEAD^{commit}")
+        for start in range(0, len(todo), self.CHUNK):
+            chunk = todo[start:start + self.CHUNK]
+            blobs: dict[str, str] = {}
+            touched: dict[str, list[str]] = {path: [] for path in chunk}
+            if head:
+                for entry in (self._git("ls-tree", "-z", "HEAD", "--", *chunk) or b"").split(b"\0"):
+                    if b"\t" not in entry:
+                        continue
+                    meta, name = entry.split(b"\t", 1)
+                    mode, kind, obj = meta.split(b" ")
+                    if kind == b"blob" and mode != b"120000":
+                        blobs[name.decode()] = obj.decode()
+                log = self._git("log", "--full-history", "--no-renames", "--format=%x01%H", "--name-only", "-z", "--", *chunk) or b""
+                for part in log.split(b"\x01"):
+                    fields = part.split(b"\0")
+                    sha = fields[0].decode().strip()
+                    for name in fields[1:]:
+                        name_s = name.decode().lstrip("\n")
+                        if name_s in touched:
+                            touched[name_s].append(sha)
+            for path in chunk:
+                self._info[path] = {"head_blob": blobs.get(path), "commits": touched[path]}
+
+    def prefetch_records(self, records: dict[str, Any]) -> None:
+        if id(records) in self._prefetched:
+            return
+        self._prefetched.add(id(records))
+        paths = []
+        for record in records.values():
+            reviews = record.get("reviews") if isinstance(record, dict) else None
+            for review in (reviews.values() if isinstance(reviews, dict) else []):
+                if isinstance(review, dict):
+                    paths.extend(review.get(k) for k in ("evidence_path", "packet_path"))
+        self.prefetch(paths)
+
+    def is_strict_ancestor(self, older: str, newer: str) -> bool:
+        key = (older, newer)
+        if key not in self._ancestor:
+            self._ancestor[key] = older != newer and self._git("merge-base", "--is-ancestor", older, newer) is not None
+        return self._ancestor[key]
+
+    def check(self, path: str, recheck_commit: str) -> tuple[str | None, str | None]:
+        """(introducing commit, problem) for one receipt judged at recheck_commit."""
+        self.prefetch([path])
+        info = self._info[path]
+        try:
+            data = contained_path(self.root, path).read_bytes()
+        except (AnchorError, OSError):
+            return None, f"receipt {path} is missing"
+        blob = hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+        if info["head_blob"] != blob:
+            return None, f"receipt {path} is not committed at HEAD with its current bytes"
+        if len(info["commits"]) != 1:
+            return None, f"receipt {path} was changed after it was first committed ({len(info['commits'])} commits touch it)"
+        added = info["commits"][0]
+        if not self.is_strict_ancestor(recheck_commit, added):
+            return added, f"receipt {path} was committed at or before the recheck commit {recheck_commit[:12]} it claims to judge"
+        return added, None
+
+
+def _is_int(value: Any) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
+def _str_list(value: Any) -> bool:
+    return isinstance(value, list) and all(isinstance(item, str) for item in value)
+
+
+def reaudit_record_shape_problems(record: Any) -> list[str]:
+    """Type contract of a re-audit record, checked before any field is hashed, compared as a
+    set member or looked up, so malformed input gives diagnostics instead of exceptions.
+    Shared by validation and reaudit-append."""
+    if not isinstance(record, dict):
+        return ["a re-audit record must be an object"]
+    out: list[str] = []
+    for field in ("schema_id", "reaudit_id", "closure_id", "row_sha256", "recheck_commit", "verdict", "claim", "rationale"):
+        if not isinstance(record.get(field), str):
+            out.append(f"record.{field} must be a string")
+    if not _is_int(record.get("line")):
+        out.append("record.line must be an integer")
+    for field in ("status_now", "later_closure_id"):
+        if record.get(field) is not None and not isinstance(record.get(field), str):
+            out.append(f"record.{field} must be a string or null")
+    if record.get("fix") is not None and not isinstance(record.get("fix"), dict):
+        out.append("record.fix must be an object or null")
+    deps = record.get("dependencies")
+    if not _str_list(deps) or not deps or len(set(deps)) != len(deps):
+        out.append("record.dependencies must be a non-empty list of distinct strings")
+    snapshot = record.get("dependency_hashes_at_recheck")
+    if not isinstance(snapshot, dict) or not all(isinstance(k, str) and isinstance(v, str) for k, v in snapshot.items()):
+        out.append("record.dependency_hashes_at_recheck must map strings to strings")
+    evidence = record.get("evidence")
+    if not isinstance(evidence, list) or not all(
+        isinstance(item, dict) and isinstance(item.get("ref"), str)
+        and all(isinstance(item[k], str) for k in ("quote", "absent") if k in item)
+        for item in evidence
+    ):
+        out.append("record.evidence must be a list of objects with a string ref and string quote/absent")
+    stale = record.get("stale_hashes_at_recheck")
+    if not isinstance(stale, list) or not all(
+        isinstance(item, dict) and all(isinstance(item.get(k), str) for k in ("group", "ref", "stored")) for item in stale
+    ):
+        out.append("record.stale_hashes_at_recheck must be a list of objects with string group, ref and stored")
+    dispositions = record.get("stale_ref_dispositions")
+    if not isinstance(dispositions, list) or not all(
+        isinstance(item, dict) and isinstance(item.get("ref"), str) and isinstance(item.get("disposition"), str)
+        and ("anchors" not in item or _str_list(item["anchors"]))
+        and ("note" not in item or isinstance(item["note"], str))
+        for item in dispositions
+    ):
+        out.append("record.stale_ref_dispositions must be a list of objects with string ref, disposition, note and string-list anchors")
+    reviews = record.get("reviews")
+    if not isinstance(reviews, dict) or not all(
+        isinstance(review, dict) and all(isinstance(v, str) for v in review.values())
+        for review in reviews.values()
+    ):
+        out.append("record.reviews must map reviewers to objects of strings")
     return out
 
 
@@ -1183,6 +1405,7 @@ def validate_reaudit_record(
     resolver: AnchorResolver,
     errors: list[str],
     commit_resolvers: dict[str, CommitResolver] | None = None,
+    receipts: ReceiptLedger | None = None,
 ) -> None:
     """Integrity of a re-audit record against the text it read.
 
@@ -1194,19 +1417,14 @@ def validate_reaudit_record(
     """
     supersedes = row["supersedes"]
     reaudit = row["reaudit"]
-    verdict = record.get("verdict")
     # Shape first, so malformed records give diagnostics instead of exceptions.
-    deps = record.get("dependencies")
-    if not isinstance(deps, list) or not deps or not all(isinstance(d, str) for d in deps) or len(set(deps)) != len(deps):
-        errors.append(f"{label}: record.dependencies must be a non-empty list of distinct strings")
+    shape = reaudit_record_shape_problems(record)
+    if shape:
+        errors.extend(f"{label}: {problem}" for problem in shape)
         return
-    evidence = record.get("evidence")
-    if not isinstance(evidence, list) or not all(isinstance(e, dict) for e in evidence):
-        errors.append(f"{label}: record.evidence must be a list of objects")
-        return
-    if not isinstance(record.get("reviews"), dict):
-        errors.append(f"{label}: record.reviews must be an object")
-        return
+    verdict = record["verdict"]
+    deps = record["dependencies"]
+    evidence = record["evidence"]
     if record.get("schema_id") != REAUDIT_RECORD_SCHEMA or record.get("reaudit_id") != reaudit.get("reaudit_id"):
         errors.append(f"{label}: record schema_id or reaudit_id does not match")
     if record.get("closure_id") != supersedes.get("closure_id") or record.get("line") != supersedes.get("line"):
@@ -1238,15 +1456,25 @@ def validate_reaudit_record(
 
     snapshot = record.get("dependency_hashes_at_recheck")
     hashes = row.get("hashes") if isinstance(row.get("hashes"), dict) else {}
-    anchored: dict[str, str] = {}
-    for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
-        if isinstance(hashes.get(group), dict):
-            anchored.update(hashes[group])
     if not isinstance(snapshot, dict) or set(snapshot) != set(deps) or not all(_is_sha256(v) for v in snapshot.values()):
         errors.append(f"{label}: dependency_hashes_at_recheck must hash exactly the dependencies")
         return
-    if anchored != snapshot:
-        errors.append(f"{label}: the row's anchored hashes must equal the record's recheck snapshot")
+    # Every entry of every hash group must equal the snapshot on its own: merging the groups
+    # first would let one group's correct hash hide the other's wrong one for the same ref.
+    covered: set[str] = set()
+    for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
+        group_hashes = hashes.get(group)
+        if group_hashes is None:
+            continue
+        if not isinstance(group_hashes, dict):
+            errors.append(f"{label}: hashes.{group} must be an object")
+            continue
+        for ref, value in sorted(group_hashes.items()):
+            covered.add(ref)
+            if snapshot.get(ref) != value:
+                errors.append(f"{label}: hashes.{group}[{ref}] must equal the record's recheck snapshot")
+    if covered != set(snapshot):
+        errors.append(f"{label}: the row's anchored hashes must cover exactly the record's recheck snapshot")
     for ref in deps:
         problem = anchor_ref_problem(ref)
         if problem:
@@ -1322,6 +1550,7 @@ def validate_reaudit_record(
     # Verdicts: each bound to a committed output that judged exactly this row and these anchors.
     reviews = record["reviews"]
     claim_view = {k: v for k, v in target.items() if k not in ("hashes", "_line_no")}
+    receipts = receipts if receipts is not None else ReceiptLedger(ROOT)
     for who in REAUDIT_REVIEWERS:
         review = reviews.get(who)
         if not isinstance(review, dict) or review.get("verdict") != verdict:
@@ -1332,6 +1561,25 @@ def validate_reaudit_record(
         judged = _bound_output_row(review, "evidence", supersedes, label, who, errors)
         if judged is None:
             continue
+        # Provenance: committed as is, added once, after the recheck commit; output and packet together.
+        added: dict[str, str | None] = {}
+        for kind in ("evidence",) if who == "worker" else ("evidence", "packet"):
+            added[kind], problem = receipts.check(str(review.get(f"{kind}_path")), commit)
+            if problem:
+                errors.append(f"{label}: record.reviews.{who}: {problem}")
+        if who != "worker" and added.get("evidence") and added.get("packet") and added["evidence"] != added["packet"]:
+            errors.append(f"{label}: record.reviews.{who} output and the packet it was shown were not committed together")
+        # Bindings an output declares about itself must agree with the record.
+        if "recheck_commit" in judged and judged["recheck_commit"] != commit:
+            errors.append(f"{label}: record.reviews.{who} output names a different recheck_commit")
+        if "row_sha256" in judged and judged["row_sha256"] != supersedes.get("row_sha256"):
+            errors.append(f"{label}: record.reviews.{who} output is for a different version of the superseded row")
+        if "packet_sha256" in judged and judged["packet_sha256"] != review.get("packet_sha256"):
+            errors.append(f"{label}: record.reviews.{who} output names a different packet than the record")
+        if "dependency_hashes_at_recheck" in judged:
+            declared_hashes = judged["dependency_hashes_at_recheck"]
+            if not isinstance(declared_hashes, dict) or any(snapshot.get(k) != v for k, v in declared_hashes.items()):
+                errors.append(f"{label}: record.reviews.{who} output declares anchor hashes that differ from the record's snapshot")
         judged_verdict = judged.get("verdict")
         if judged_verdict == "resolved_differently" and judged.get("status_now") == target.get("closure_status"):
             judged_verdict = "supported"  # the status decides
@@ -1345,22 +1593,29 @@ def validate_reaudit_record(
             if judged.get("row_sha256") != supersedes.get("row_sha256"):
                 errors.append(f"{label}: worker output is for a different version of the superseded row")
             judged_deps = judged.get("dependencies")
-            if not isinstance(judged_deps, list) or not set(judged_deps) <= set(deps):
-                errors.append(f"{label}: worker output relies on anchors the record does not carry")
+            if not _str_list(judged_deps) or set(judged_deps) != set(deps):
+                errors.append(f"{label}: worker output must rely on exactly the record's dependencies")
             continue
         shown = _bound_output_row(review, "packet", supersedes, label, who, errors)
         if shown is None:
             continue
         if shown.get("claim") != claim_view:
             errors.append(f"{label}: record.reviews.{who} packet showed a different claim than the superseded row")
+        for field, expected in (("recheck_commit", commit), ("row_sha256", supersedes.get("row_sha256"))):
+            if field in shown and shown[field] != expected:
+                errors.append(f"{label}: record.reviews.{who} packet names a different {field}")
         anchors_shown = shown.get("dependency_anchors")
-        if not isinstance(anchors_shown, list):
-            errors.append(f"{label}: record.reviews.{who} packet row has no dependency_anchors")
+        if not isinstance(anchors_shown, list) or not anchors_shown:
+            errors.append(f"{label}: record.reviews.{who} packet row shows no dependency_anchors")
             continue
+        shown_refs: list[Any] = []
         for item in anchors_shown:
             ref = item.get("ref") if isinstance(item, dict) else None
-            if ref not in snapshot or item.get("sha256") != snapshot[ref]:
+            shown_refs.append(ref)
+            if not isinstance(ref, str) or ref not in snapshot or item.get("sha256") != snapshot[ref]:
                 errors.append(f"{label}: record.reviews.{who} packet showed {ref!r} at a different snapshot than the record")
+        if len(set(map(str, shown_refs))) != len(shown_refs):
+            errors.append(f"{label}: record.reviews.{who} packet shows an anchor twice")
 
 
 def _bound_output_row(
@@ -1444,7 +1699,11 @@ def validate_reaudit_row(
             digest_ok = False
         if not digest_ok:
             errors.append(f"{label}: reaudit.record_sha256 does not match the canonical record")
-        validate_reaudit_record(record, row, target, label, resolver, errors, record_cache.setdefault("__commits__", {}))
+        receipts = record_cache.setdefault("__receipts__", ReceiptLedger(ROOT))  # type: ignore[arg-type]
+        receipts.prefetch_records(records)  # type: ignore[union-attr]
+        validate_reaudit_record(
+            record, row, target, label, resolver, errors, record_cache.setdefault("__commits__", {}), receipts  # type: ignore[arg-type]
+        )
         verdict = record.get("verdict")
         status = row.get("closure_status")
         old_status = target.get("closure_status")
@@ -1611,10 +1870,21 @@ def validate_registry(registry_path: Path) -> dict[str, Any]:
         leaf = rows_by_line[current]
         return leaf.get("closure_status") not in OPEN_STATUSES and current not in stale_by_line
 
+    def leaf_of(line_no: int) -> int:
+        seen_lines = {line_no}
+        current = line_no
+        while current in superseded_by and superseded_by[current] not in seen_lines:
+            current = superseded_by[current]
+            seen_lines.add(current)
+        return current
+
     open_rows: list[dict[str, Any]] = []
     open_by_key: dict[str, list[str]] = {}
     for row in rows:
         if row.get("closure_status") in OPEN_STATUSES and not resolved(row["_line_no"]):
+            leaf = leaf_of(row["_line_no"])
+            if leaf != row["_line_no"] and rows_by_line[leaf].get("closure_status") in OPEN_STATUSES:
+                continue  # one authenticated chain, still open: its open leaf represents the finding
             open_rows.append({
                 "line": row["_line_no"],
                 "closure_id": row.get("closure_id"),
@@ -2732,9 +3002,16 @@ def cmd_refresh_hashes(args: argparse.Namespace) -> int:
         before_closure = closure_updates
         if hashes.get("hash_scope") == ANCHOR_SCOPE:
             stale_now: list[str] = []
-            validate_hashes(hashes, "", [], stale_now, AnchorResolver())
-            owner_updates += sum("owner_evidence_hashes" in item for item in stale_now)
-            closure_updates += sum("closure_evidence_hashes" in item for item in stale_now)
+            structural: list[str] = []
+            validate_hashes(hashes, f"line {row.get('_line_no')}", structural, stale_now, AnchorResolver())
+            errors.extend(structural)
+            for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
+                for ref in sorted(hashes.get(group) or {}) if isinstance(hashes.get(group), dict) else []:
+                    if any(f"{group} anchor {ref} no longer resolves" in item for item in stale_now):
+                        missing_refs.append({"line": row.get("_line_no"), "group": group, "ref": ref, "anchor": True})
+            differing = [item for item in stale_now if " is stale " in item]
+            owner_updates += sum("owner_evidence_hashes" in item for item in differing)
+            closure_updates += sum("closure_evidence_hashes" in item for item in differing)
             if owner_updates != before_owner or closure_updates != before_closure:
                 touched_rows += 1
             continue
@@ -2754,12 +3031,13 @@ def cmd_refresh_hashes(args: argparse.Namespace) -> int:
             row["updated_at"] = now
             touched_rows += 1
 
-    if missing_refs:
+    if missing_refs or errors:
         print(json.dumps({
             "schema_id": "pm.audit_closure.refresh_hashes_report.v1",
             "status": "fail",
             "path": rel(registry_path),
             "missing_refs": missing_refs,
+            "errors": errors,
         }, indent=2, sort_keys=True))
         return 1
 
@@ -2882,6 +3160,10 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
     for closure_id, record in records.items():
         if only and closure_id not in only:
             continue
+        shape = reaudit_record_shape_problems(record)
+        if shape:
+            errors.extend(f"{closure_id}: {problem}" for problem in shape)
+            continue
         try:
             record_digest = reaudit_record_sha256(record)
         except AnchorError as exc:
@@ -2926,7 +3208,10 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
         if raw and not raw.endswith(b"\n"):
             errors.append(f"{rel(registry_path)} does not end with a newline; refusing to append to an unterminated last line")
     if not errors and new_rows:
-        # Validate the registry as it would be after the append, before writing anything.
+        # Validate the registry as it would be after the append, before writing anything. Every
+        # error the candidate has that the registry does not have now blocks the append, whether
+        # it names a new line, an existing line or no line at all.
+        baseline = set(validate_registry(registry_path)["errors"])
         candidate = registry_path.with_name(".reaudit-append-candidate.jsonl")
         try:
             candidate.write_bytes(registry_path.read_bytes() + "".join(
@@ -2935,11 +3220,10 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
             report = validate_registry(candidate)
         finally:
             candidate.unlink(missing_ok=True)
-        first_new = len(raw_lines) + 1
-        new_line_labels = {f"{rel(candidate)}:{n}:" for n in range(first_new, first_new + len(new_rows))}
         for error in report["errors"]:
-            if any(error.startswith(prefix) for prefix in new_line_labels):
-                errors.append(f"candidate row would not validate: {error}")
+            as_registry = error.replace(rel(candidate), rel(registry_path))
+            if as_registry not in baseline:
+                errors.append(f"candidate registry would not validate: {as_registry}")
         superseded_now = set(report.get("superseded_lines", []))
         for row in new_rows:
             if row["supersedes"]["line"] not in superseded_now:
@@ -3192,6 +3476,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 row["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
             previous = records_path.read_text() if keep_records and records_path.exists() else ""
             records_path.write_text(previous + json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
+            commit_all()  # receipts count only once committed, after the recheck commit they judged
             return row
 
         def validate_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -3303,6 +3588,20 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         def set_review(who: str, **values: Any) -> Any:
             return lambda rec: rec["reviews"][who].update(values)
 
+        def rewrite_packet(rec: dict[str, Any], who: str, **values: Any) -> None:
+            path = ROOT / rec["reviews"][who]["packet_path"]
+            shown = json.loads(path.read_text())
+            shown.update(values)
+            path.write_text(json.dumps(shown) + "\n")
+            rec["reviews"][who]["packet_sha256"] = sha256_file(path)
+
+        def rewrite_output(rec: dict[str, Any], who: str, **values: Any) -> None:
+            path = ROOT / rec["reviews"][who]["evidence_path"]
+            judged = json.loads(path.read_text())
+            judged.update(values)
+            path.write_text(json.dumps(judged) + "\n")
+            rec["reviews"][who]["evidence_sha256"] = sha256_file(path)
+
         def rewrite_receipt(who: str, verdict: str) -> Any:
             def apply(rec: dict[str, Any]) -> None:
                 path = ROOT / rec["reviews"][who]["evidence_path"]
@@ -3314,7 +3613,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         for name, mutate, text in (
             ("reviewer_disagreement_fails", set_review("astra", verdict="not_supported"), "reviews.astra.verdict"),
             ("missing_reviewer_fails", lambda rec: rec["reviews"].pop("sol"), "reviews.sol"),
-            ("null_receipt_fields_fail", set_review("sol", model=None, evidence_sha256=None), "reviews.sol"),
+            ("null_receipt_fields_fail", set_review("sol", model=None, evidence_sha256=None), "record.reviews must map reviewers to objects of strings"),
             ("receipt_digest_mismatch_fails", set_review("worker", evidence_sha256="e" * 64), "SHA-256 differs"),
             ("receipt_file_missing_fails", set_review("sol", evidence_path="Plans/.audits/reaudit-fixture/reviews/none.jsonl"), "missing or its SHA-256"),
             ("receipt_path_traversal_fails", set_review("sol", evidence_path="Plans/.audits/../Fixture.md"), "evidence_path"),
@@ -3326,9 +3625,17 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             ("stale_disposition_missing_fails", lambda rec: rec.update(stale_ref_dispositions=[]), "cover exactly the stale refs"),
             ("stale_snapshot_unbound_fails", lambda rec: rec.update(stale_hashes_at_recheck=[{"group": "owner_evidence_hashes", "ref": "Plans/Fixture.md", "stored": "9" * 64}]), "must list exactly"),
             ("stale_lists_both_empty_fail", lambda rec: rec.update(stale_hashes_at_recheck=[], stale_ref_dispositions=[]), "must list exactly"),
-            ("unknown_recheck_commit_fails", lambda rec: rec.update(recheck_commit="b" * 40), "recheck_commit"),
+            ("mismatched_recheck_commit_fails", lambda rec: rec.update(recheck_commit="b" * 40), "equal in the row and the record"),
             ("malformed_dependencies_report_not_raise", lambda rec: rec.update(dependencies=[{}]), "distinct strings"),
             ("malformed_evidence_report_not_raise", lambda rec: rec.update(evidence=17), "list of objects"),
+            ("malformed_stale_item_reports_not_raise", lambda rec: rec.update(stale_hashes_at_recheck=[{"group": [], "ref": "x", "stored": "y"}]), "string group, ref and stored"),
+            ("malformed_disposition_reports_not_raise", lambda rec: rec.update(stale_ref_dispositions=[{"ref": [], "disposition": "dependency", "anchors": [{}]}]), "stale_ref_dispositions must be"),
+            ("malformed_verdict_reports_not_raise", lambda rec: rec.update(verdict={}), "record.verdict must be a string"),
+            ("malformed_line_reports_not_raise", lambda rec: rec.update(line={}), "record.line must be an integer"),
+            ("empty_packet_anchors_fail", lambda rec: rewrite_packet(rec, "sol", dependency_anchors=[]), "shows no dependency_anchors"),
+            ("output_naming_other_packet_fails", lambda rec: rewrite_output(rec, "astra", packet_sha256="f" * 64), "names a different packet"),
+            ("output_naming_other_commit_fails", lambda rec: rewrite_output(rec, "sol", recheck_commit="c" * 40), "different recheck_commit"),
+            ("output_declaring_other_hashes_fails", lambda rec: rewrite_output(rec, "astra", dependency_hashes_at_recheck={unit_ref: "d" * 64}), "differ from the record's snapshot"),
             ("quote_not_in_anchor_fails", lambda rec: rec.update(evidence=[{"ref": unit_ref, "quote": "text that appears nowhere in the unit"}]), "evidence quote is not in"),
             ("supported_without_quote_fails", lambda rec: rec.update(evidence=[{"ref": unit_ref, "absent": "text that appears nowhere"}]), "needs at least one verbatim quote"),
             ("absent_phrase_present_fails", lambda rec: rec["evidence"].append({"ref": unit_ref, "absent": "must stay present"}), "absent is present"),
@@ -3478,6 +3785,104 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         (tmp / "Plans/alias.jsonl").symlink_to(tmp / "Plans/.plan_index/rows.jsonl")
         check("symlinked_anchor_path_fails", not resolves("Plans/alias.jsonl#jsonl=id=x"))
 
+        # V1 r3 regressions.
+        # N10: a recheck_commit that is not in the repository (row and record agree on it).
+        row = append_with()
+        rec = [json.loads(l) for l in records_path.read_text().splitlines() if l.strip()][-1]
+        rec["recheck_commit"] = row["reaudit"]["recheck_commit"] = "b" * 40
+        row["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
+        records_path.write_text(json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
+        report = validate_rows([legacy_row(), row])
+        check("unknown_recheck_commit_fails", has(report, "is not in this repository") and has(report, "is stale"), report["errors"])
+
+        # N1: old outputs cannot be paired with replacement packets on a newer snapshot.
+        row = append_with()
+        rec = [json.loads(l) for l in records_path.read_text().splitlines() if l.strip()][-1]
+        write_doc(SELF_TEST_DOC.replace("- The repair stays.", "- The repair is forbidden and must be removed."))
+        moved_commit = commit_all()
+        moved_hash = AnchorResolver(tmp).sha256(unit_ref)
+        rec["recheck_commit"] = row["reaudit"]["recheck_commit"] = moved_commit
+        rec["dependency_hashes_at_recheck"][unit_ref] = row["hashes"]["owner_evidence_hashes"][unit_ref] = moved_hash
+        for who in ("sol", "astra"):
+            rewrite_packet(rec, who, dependency_anchors=[{"ref": unit_ref, "sha256": moved_hash}])
+            rewrite_output(rec, who, packet_sha256=rec["reviews"][who]["packet_sha256"], recheck_commit=moved_commit)
+        row["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
+        records_path.write_text(json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
+        commit_all()
+        report = validate_rows([legacy_row(), row])
+        check("old_outputs_with_replacement_packets_fail",
+              has(report, "was changed after it was first committed") and has(report, "is stale"), report["errors"])
+        write_doc()
+        # A receipt that is not committed does not count.
+        row = append_with()
+        rec = [json.loads(l) for l in records_path.read_text().splitlines() if l.strip()][-1]
+        loose = audit_dir / "reviews" / "loose-output.jsonl"
+        loose.write_text((ROOT / rec["reviews"]["astra"]["evidence_path"]).read_text(), encoding="utf-8")
+        rec["reviews"]["astra"].update(evidence_path=rel(loose), evidence_sha256=sha256_file(loose))
+        row["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
+        records_path.write_text(json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
+        report = validate_rows([legacy_row(), row])
+        check("uncommitted_receipt_fails", has(report, "is not committed at HEAD") and has(report, "is stale"), report["errors"])
+        loose.unlink()
+        # A receipt committed before the recheck commit it claims to judge does not count.
+        early = append_with()
+        rec = [json.loads(l) for l in records_path.read_text().splitlines() if l.strip()][-1]
+        later_commit = commit_all()
+        rec["recheck_commit"] = early["reaudit"]["recheck_commit"] = later_commit
+        early["reaudit"]["record_sha256"] = reaudit_record_sha256(rec)
+        records_path.write_text(json.dumps(rec, sort_keys=True) + "\n", encoding="utf-8")
+        report = validate_rows([legacy_row(), early])
+        check("receipt_older_than_recheck_commit_fails", has(report, "at or before the recheck commit") and has(report, "is stale"), report["errors"])
+
+        # N2: every hash group must equal the snapshot on its own.
+        row = append_with()
+        good = row["hashes"]["owner_evidence_hashes"][unit_ref]
+        row["hashes"]["closure_evidence_hashes"] = {unit_ref: good}
+        row["hashes"]["owner_evidence_hashes"] = {unit_ref: "f" * 64}
+        report = validate_rows([legacy_row(), row])
+        check("hash_groups_checked_separately", has(report, "hashes.owner_evidence_hashes[") and has(report, "is stale"), report["errors"])
+
+        # N3: evidence missing at the recheck commit must be accounted for.
+        gone = legacy_row(hashes={"owner_evidence_hashes": {"Plans/Missing.md": "0" * 64}, "closure_evidence_hashes": {"Plans/Fixture.md": "0" * 64}})
+        row = append_with(rows_before=[gone])
+        report = validate_rows([gone, row])
+        check("missing_evidence_with_disposition_passes", not report["errors"] and report["superseded_lines"] == [1], report["errors"])
+        row = append_with(rows_before=[gone], mutate=lambda rec: rec.update(
+            stale_hashes_at_recheck=[s for s in rec["stale_hashes_at_recheck"] if s["ref"] != "Plans/Missing.md"],
+            stale_ref_dispositions=[d for d in rec["stale_ref_dispositions"] if d["ref"] != "Plans/Missing.md"]))
+        report = validate_rows([gone, row])
+        check("missing_evidence_cannot_be_left_out", has(report, "must list exactly") and has(report, "hash ref is missing"), report["errors"])
+
+        # N4: conditional redefinitions in the same scope make a pydef anchor ambiguous.
+        (tmp / "scripts/cond.py").write_text("def f():\n    return 1\nif True:\n    def f():\n        return 2\n", encoding="utf-8")
+        check("pydef_conditional_redefinition_fails", not resolves("scripts/cond.py#pydef=f"))
+        (tmp / "scripts/cond.py").write_text("class K:\n    def m(self):\n        return 1\n    try:\n        m = None\n    except Exception:\n        pass\n", encoding="utf-8")
+        check("pydef_method_rebound_in_try_fails", not resolves("scripts/cond.py#pydef=K.m"))
+        (tmp / "scripts/cond.py").write_text("def g():\n    def f():\n        return 3\n    return f\n\ndef f():\n    return 1\n", encoding="utf-8")
+        check("pydef_nested_scope_binding_ignored", "return 1" in AnchorResolver(tmp).content("scripts/cond.py#pydef=f")[1])
+
+        # N5: rechecking a still-open finding as not_supported again is one open chain, not two findings.
+        missing_quote = [{"ref": unit_ref, "absent": "a phrase the claim needs"}]
+        reopened = append_with("not_supported", evidence=missing_quote)
+        again = append_with("not_supported", rows_before=[legacy_row(), reopened], line=2, evidence=missing_quote, keep_records=True)
+        report = validate_rows([legacy_row(), reopened, again])
+        check("open_to_open_chain_is_one_finding", not report["errors"] and [r["line"] for r in report["open_rows"]] == [3], report)
+
+        # N8: non-finite JSON numbers anywhere in the source fail the anchor.
+        (tmp / "Plans/nan.json").write_text('{"a": 1, "b": NaN}', encoding="utf-8")
+        check("json_nan_outside_anchor_fails", not resolves("Plans/nan.json#json=/a"))
+        (tmp / "Plans/nan.jsonl").write_text('{"id": "a"}\n{"id": "b", "v": Infinity}\n', encoding="utf-8")
+        check("jsonl_infinity_outside_anchor_fails", not resolves("Plans/nan.jsonl#jsonl=id=a"))
+
+        # N9: the hash report fails on an anchor that no longer resolves.
+        lost = _self_test_registry_row(closure_id="closure-fixture-lost", hashes={
+            "hash_scope": ANCHOR_SCOPE, "owner_evidence_hashes": {"Plans/Fixture.md#unit=FIX-404": "0" * 64}})
+        write_registry([lost])
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            lost_code = cmd_refresh_hashes(argparse.Namespace(registry=str(registry), dry_run=True))
+        lost_report = json.loads(out.getvalue())
+        check("refresh_dry_run_reports_missing_anchor", lost_code != 0 and lost_report.get("missing_refs"), lost_report)
+
         # F12: the hash report reads anchor rows by their scope.
         fresh = _self_test_registry_row(closure_id="closure-fixture-fresh", hashes={
             "hash_scope": ANCHOR_SCOPE, "owner_evidence_hashes": {unit_ref: AnchorResolver(tmp).sha256(unit_ref)}})
@@ -3519,6 +3924,22 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         write_registry([legacy_row()], newline=False)
         code, unterminated = run_append()
         check("reaudit_append_refuses_unterminated_registry", code != 0 and not registry.read_text().endswith("\n"), unterminated)
+        # N6: the append preflight blocks registry-level errors, not only errors on new lines.
+        prior_open = _self_test_registry_row(closure_id="closure-fixture-open", closure_status="reopened", hashes={
+            "owner_evidence_hashes": {"Plans/Fixture.md": sha256_file(doc)},
+            "reopen_hash_changes": {"Plans/Fixture.md": {"previous": "1" * 64, "current": "2" * 64}}})
+        append_with("not_supported", rows_before=[legacy_row(), prior_open], line=1, evidence=missing_quote)
+        write_registry([legacy_row(), prior_open])
+        before_bytes = registry.read_bytes()
+        code, dup = run_append()
+        check("reaudit_append_blocks_new_registry_level_error", code != 0 and dup["appended"] == 0
+              and any("duplicate open finding_key" in e for e in dup["errors"]) and registry.read_bytes() == before_bytes, dup)
+        # N7: malformed append input is diagnosed, not raised.
+        append_with(mutate=lambda rec: rec.update(dependencies=[{}]))
+        write_registry([legacy_row()])
+        code, malformed = run_append()
+        check("reaudit_append_reports_malformed_record", code != 0 and malformed["appended"] == 0
+              and any("distinct strings" in e for e in malformed["errors"]), malformed)
         # F8: an earlier append that no longer validates is reported, not skipped as done.
         append_with()
         write_registry([legacy_row()])
@@ -3531,7 +3952,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         write_registry([legacy_row()])
         with contextlib.redirect_stdout(io.StringIO()):
             refresh_code = cmd_refresh_hashes(argparse.Namespace(registry=str(registry), dry_run=False))
-        check("refresh_hashes_refuses_to_write", refresh_code != 0 and '"0000' in registry.read_text())
+        check("refresh_hashes_refuses_to_write", refresh_code != 0 and registry.read_bytes() == (json.dumps(legacy_row(), sort_keys=True) + "\n").encode())
     finally:
         ROOT = saved_root
         shutil.rmtree(tmp, ignore_errors=True)
