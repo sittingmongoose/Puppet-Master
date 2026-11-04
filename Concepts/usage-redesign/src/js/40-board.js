@@ -154,7 +154,17 @@
   /* integ3: the off-screen bodies built after a moment (no-GPU profile) go one batch per IDLE period, not per frame: they
      are not motion and nothing waits for them (a scroll or a gesture builds them at once); a frame callback per card made
      the census read Usage frame work in the settled board (HARD USAGE-RAF on Cache at 1440) */
-  function lateNext(fn) { if (window.requestIdleCallback) requestIdleCallback(function () { fn(); }, { timeout: 400 }); else setTimeout(fn, 16); }
+  function lateNext(fn) { idleStill(function () { fn(); }, 400, 16); }
+  /* idle work goes through PMConcept7's one admission when the board is hosted there (PM_BUSY.idle, 11-motion-start.js):
+     never inside a held drag of any surface, and a request made before the drag is taken back for it, so a warm build,
+     a late body or the prewarm neither runs nor re-polls during one (SW-17; Usage's warm slices re-queued an idle
+     callback in every idle period of a held drag). Standalone, the browser's own idle callback, or a timer without one. */
+  function idleStill(fn, timeout, fallbackMs) {
+    var B = window.PM_BUSY;
+    if (B && typeof B.idle === 'function') return B.idle(fn, timeout);
+    if (window.requestIdleCallback) return requestIdleCallback(fn, timeout ? { timeout: timeout } : undefined);
+    return setTimeout(function () { fn({ timeRemaining: function () { return 8; }, didTimeout: false }); }, fallbackMs == null ? 40 : fallbackMs);
+  }
   /* a build or refresh slice runs with the content fit pass deferred to the slice's end (one batched read for the cards of
      the slice, inside the slice; NOTES3-content E1, NOTES3-perf C1/Q6), never as a microtask after it */
   function fitSliced(fn) {
@@ -822,14 +832,13 @@
       if (soft) viewNow(true);   /* the mount just read the board's width: the layout is clean */
       var queue = soft ? all.filter(inView) : all, later = soft ? all.filter(function (c) { return !inView(c); }) : [];
       later.forEach(function (c) { c.setAttribute('data-late', ''); });
-      var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 8; }, didTimeout: false }); }, 40); };
-      function next() { if (warm) idle(slice, { timeout: 1500 }); else requestAnimationFrame(slice); }
+      function next() { if (warm) idleStill(slice, 1500); else requestAnimationFrame(slice); }
       function slice(deadline) {
         if (token !== buildToken) return;
         /* the warm (idle) build must not land inside a resize drag: its fit pass measures the board
-           (pass-3 tape: 300-460ms freezes when it fired mid-gesture). Re-queue; the idle timeout
-           keeps retrying and the first slice after release runs as before. Arrival builds (sync,
-           non-warm) are user-visible and never defer. */
+           (pass-3 tape: 300-460ms freezes when it fired mid-gesture). Hosted, idleStill never runs it in one; standalone,
+           re-queue: the idle timeout keeps retrying and the first slice after release runs as before. Arrival builds
+           (sync, non-warm) are user-visible and never defer. */
         if (warm && document.body && document.body.classList.contains('pm-resizing')) { next(); return; }
         var t0 = performance.now(), builtNow = [], budget = warm && deadline && deadline.timeRemaining ? Math.min(8, Math.max(1, deadline.timeRemaining())) : 8;
         fitSliced(function () {
@@ -1954,7 +1963,7 @@
       if (PREWARM_OFF || gpuNow() === false || prewarmT || prewarmEl || dead || PREWARMED[prewarmKey()]) return;
       prewarmT = setTimeout(function () {
         prewarmT = 0;
-        if (window.requestIdleCallback) requestIdleCallback(prewarm, { timeout: 2000 }); else prewarm();
+        idleStill(prewarm, 2000, 0);
       }, (ms || 1200) * speed());
     }
     function prewarm() {
