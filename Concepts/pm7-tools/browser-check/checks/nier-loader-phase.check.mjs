@@ -10,6 +10,7 @@ export default async function(t){
   t.log(JSON.stringify({look,data}));await t.mark('measure '+look);await t.page.waitForTimeout(8400);
   const phase=()=>f.locator('#pmds-sheet .pmds-ldwall [data-pip-loader]').evaluateAll(es=>es.map(e=>{const p=2800*PMLogo.clock.speed(),a=e.firstElementChild.getAnimations()[0],u=a.effect.getComputedTiming().progress;return ((u-PMLogo.clock.phase(p))%1+1)%1;}));
   const before=await phase();await f.evaluate(()=>PM_PIP_LOADER.refresh());await t.settle();const after=await phase();t.log(JSON.stringify({look,before,after}));
+  // Refresh rejoins the clock; compare each instance's offset relative to the first, independent of the common restart phase.
   if(!t.args.control){await t.check(look+' stable per-instance offsets',before.every((v,i)=>{const a=((v-before[0])%1+1)%1,b=((after[i]-after[0])%1+1)%1;return Math.min(Math.abs(a-b),1-Math.abs(a-b))<.012;}));await t.check(look+' distinct offsets',new Set(before.map(v=>Math.round(v*100))).size===before.length);}
  }
  await f.evaluate(()=>O55.studio.looks.setReduced(true));await t.settle();

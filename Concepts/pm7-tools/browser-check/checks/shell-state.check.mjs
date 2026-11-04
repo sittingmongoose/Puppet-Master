@@ -53,6 +53,7 @@ export const tests = {
  },
  async 'SW03 per-project NieR survives opaque-origin switching'(t) {
   const f=await t.app.open();
+  await t.viewport(1390,900);
   await t.page.emulateMedia({reducedMotion:'no-preference'});
   await f.evaluate(()=>O55.studio.looks.setReduced(false));
   await f.evaluate(() => O55.studio.looks.set('nier','dark'));
