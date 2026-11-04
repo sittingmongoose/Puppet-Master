@@ -1,144 +1,116 @@
-# DO — Event Authority review round 2, 2026-11-04
+# DO — fix round 3, final-review response
 
-Branch `plans/ea-w2-orchestrator-20261104`; current fix worker DO-FIX2. Round-2 response below supersedes the affected round-1 grades only. Historical round-1 account follows. Owner/code revision `644a3df9c97ffc19c76924a02641cb852852f7ef` repairs reviewed head `942679dd84606c684faa520d1f73c8e2fc6a5a43`. All 25 are self-graded prepared under the lane's retention exception: **10 PASS, retention PARTIAL, membership ABSENT per family**. This is specification preparation; native execution remains NOT_RUN. No admission, event-family append, Decision Log entry, main push or reseal.
+**Branch:** `plans/ea-w2-orchestrator-20261104`. **Assessed source tree:** `89ec4788c9612f7bbecbc1b230b47e90a0b94d07`; **code fix:** `5952a4559a5724816765783a6e702cc5bc1ee2b2`. Reviewed base: `8a002871a6858f5fd68cbf82976002edbf9dfb09`.
 
-## Review round 1: findings and responses
+**24/25 prepared under the lane's intentional membership/retention exceptions; 1 stopped.** All 25 retain membership ABSENT and retention PARTIAL. Application `crew.board_message_posted` additionally retains producer/oracles PARTIAL because its selected frozen source cannot supply subject/priority. Project preparation remains. No admission or native execution is claimed.
 
-- **DO-01 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/orchestrator-subagent-integration.md:32218`, OSI-681..683 and OSI-686..704; checker `scripts/pm-orchestrator-event-contracts.py:33`. All 22 application families explicitly use CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`, preserving the Storage lifetime tuple. Each original operation retains its own exact event observation component before append/recovery. Project keys and both scopes' event-ID recipe remain unchanged. Fixed vectors independently decode Server/operation bytes. Same-identity changed semantics is a conflict; retries do not remint. Verify `python3 scripts/pm-orchestrator-event-contracts.py`; full-checker old-application-key mutation exits 1.
-- **DO-02 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/orchestrator-subagent-integration.md:32212`, the closed posted payload and exact-family fixtures. The event itself now carries exactly one of content up to 16,384 UTF-8 bytes or closed content_ref (BLAKE3 id, full byte size, text media type), adopting OSI-299/SP-337. Original message joins remain. Body bytes/index precede append acknowledgement; both inline and referenced text retain permission/deletion/hold checks. Required custom format pm-utf8-body-16k is enforced by producer/storage validators; maxLength alone is not the byte check. Positive/negative cases test both scopes, ASCII and multibyte boundaries, both/missing representations, invalid reference fields and secrets against both the payload and actual stored member. Pack-byte/BLAKE3 truth and crash/read races remain authored native NOT_RUN. Verify the DO checker; body-missing full-checker mutation exits 1.
-- **DO-03 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/storage-plan.md:29481` (SP-720..722), OSI-681..683, coordination_event_records in Plans/storage_value_registry.json, `scripts/pm-orchestrator-event-contracts.py:112` and `scripts/pm_coordination_events.py:777`. Each board family has its own key-shape and closed member, original sole AgentCoordinator, Project/application append/source adoption, genuine Server/thread/crew/run/message joins, actual terminal-Run anchor and board-specific text protection. Original eight members and other registry rows/policies/profiles remain exact. Board history does not enter the seven-agent lifecycle reducer. Stored-message custody does not stand in for event storage. Source join vectors exercise both scope editions against the actual value composition; they are static joins, not native source authentication. The coordination checker retains strict expected-row comparison and rejects removal of each member through its full CLI. Q1 and Q3 remain retention integration items; no count interpretation or admission is chosen.
-- **DO-04 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/orchestrator-subagent-integration.md:33014`, retry payload/fixtures and `scripts/pm-orchestrator-event-contracts.py:47`. New attempts cover failure, blockage and interruption without relabelling blocked/interrupted children as failed. Retain child lineage and increment the attempt once. Terminal/superseded, permission/ceiling, Stop/deadline, no-new/skipped-attempt, resume/reroute/replacement and missing interruption-source negatives refuse. Both-scope payload positives include all causes. Verify the DO checker; deleting blockage coverage from fixtures fails its full CLI.
+**Independent Astra grades before → current self-grade:** 223 PASS / 52 PARTIAL / 25 ABSENT → **248 PASS / 27 PARTIAL / 25 ABSENT**, zero conflicts. Every non-posted family moves **9 → 10 PASS** cells; posted moves **7 → 8 PASS**. Prepared count **0 → 24**. The previous branch self-grade's 250 PASS is superseded, not the before baseline.
 
-No finding is disputed. No new product choice was supplied. Retention remains a stopped/PARTIAL cell wherever the cited dependency has unresolved prerequisites.
+## Review round 3: findings and responses
 
-## Family grades before and after
+- **DO-A01 — fixed (`5952a4559a5724816765783a6e702cc5bc1ee2b2`).** **Where:** `scripts/pm_orchestrator_event_oracles.py:177`, `scripts/pm_orchestrator_event_oracles.py:289`, `scripts/pm_orchestrator_event_oracles.py:302` and each OSI-680..704 independent static binding. **Why:** previous oracles omitted current append policy, recorded partition comparison, a real producer-semantic comparison and joined read/checkpoint data. **Fix:** 53 full EventRecord@2.0.0 vectors, 212 explicit retry candidates, all 25 encoded Project identity checks, compatibility-only refusal on append/retry, exact RFC8785 semantic field set and original full result on Storage-metadata-only retry. All 21 semantic members are independently varied; all ten read-token members, Storage identity, source value, index row, birth/frontier and a nonmatching frontier advance are checked. These are synthetic relational witnesses; native generic source verification/CAS/CRC/authentication remain assumed NOT_RUN. Each family's S1/S3/S6/S7 full CLI mutation exits 1; all three old board replay-only mutations also exit 1.
+- **DO-A02 — fixed (`5952a4559a5724816765783a6e702cc5bc1ee2b2`).** **Where:** `scripts/pm_orchestrator_event_oracles.py:106`, `scripts/pm_orchestrator_event_oracles.py:89` and each family's SP-337 paragraph. **Why:** the suite treated a valid logical schema as permission to inline arbitrarily large complete payloads. **Fix:** measure the complete canonical MessagePack inline payload including all strings/list/map overhead, enforce 16,384 bytes, preserve larger logical history intact behind the existing EventRecord string payload_ref plus closed pack-index byte-size/media witness. Validate exact BLAKE3 bytes, size, media, bytes/index durability and selected logical schema. Nested posted content refs remain separately enforced. Board source fixtures join full append vectors, and the selected SP-351 application physical wrapper has its own aggregate 16 KiB check. 325 vectors cover exact ASCII/multibyte boundaries, overflow, external success, missing/forged/undurable refs and typed ingest encoding. Literal data-URI text stays text; only an actual encoded-ingest witness requires decoding, with native ingest authentication NOT_RUN. All 25 S4 full CLI mutations and all eight application child-history oversized-body mutations exit 1. No retained body is truncated.
+- **DO-A03 — fixed (`5952a4559a5724816765783a6e702cc5bc1ee2b2`).** **Where:** `scripts/pm_orchestrator_event_oracles.py:136`, the selected producer_context in each event vector, and `Plans/orchestrator_event_payloads.schema.json` posted priority enum. **Why:** valid standalone helpers did not constrain the actual chosen phase/retry/truncation payload, and priority had no domain. **Fix:** require phase active/no completion signal and question_count > max_questions + 1, retry payload/source cause/lineage/counter equality plus current fences, original_length >= truncated_length, and the existing low/normal/high/urgent enum. Each of the review's four actual-payload mutations exits 1 through the full CLI.
+- **DO-A04 — stopped for Jared (application posted producer/oracle facet); source-shape fix in `5952a4559a5724816765783a6e702cc5bc1ee2b2`.** **Where:** `Plans/orchestrator-subagent-integration.md:32218`, `Plans/storage-plan.md:29491` and `scripts/pm_orchestrator_event_oracles.py:204`. **Why:** the frozen selected AgentMessageApplicationV1 is closed and has neither required header; its inline_text is already mapped to body. **Fix completed:** all three board contracts now use complete, version-correct closed application original-source/input/wrapper fixtures, original/stage/accepted-source fields, actual six-component SP-351 physical keys and digest/identity joins. Each contract's missing/foreign source/input/wrapper mutation exits 1, including all 18 full CLI source-shape mutations. The posted application source is explicitly refused as `application_post_subject_priority_unavailable`, never a prepared-producer positive. Expected stopped errors cannot mask a second error: negatives must add a distinct rejection. The frozen Project/application resources are unchanged. **Question for Jared:** Which canonical application board source and exact version must supply `subject` and `priority`: a governed successor to the SP-351 message/source/wrapper selection retaining those fields, or an existing source with an explicit mapping?
 
-Before is the independent DO-sol regrade, not the superseded original self-grade. After is the current self-grade at the source revision above. Every row keeps retention PARTIAL and membership ABSENT.
+No finding is disputed. The source search inspected 452 current top-level Plans Markdown/JSON files (excluding generated, pipeline, historical banks and ledgers); exact selected roots were read in full. Other textual matches do not select a successor or supply a header mapping. No header default, event-derived source or new source edition is invented.
 
-| Family | Owner units | Before | After |
-|---|---|---:|---:|
-| `config.validation.failed` | OSI-680 | 10 PASS | 10 PASS |
-| `crew.board_message_posted` | OSI-681/SP-720 | 5 PASS | 10 PASS |
-| `crew.board_message_read` | OSI-682/SP-721 | 6 PASS | 10 PASS |
-| `crew.board_messages_archived` | OSI-683/SP-722 | 6 PASS | 10 PASS |
-| `parser.error` | OSI-684 | 10 PASS | 10 PASS |
-| `phase.force_completed` | OSI-685 | 10 PASS | 10 PASS |
-| `subagent.budget_warning` | OSI-686 | 7 PASS | 10 PASS |
-| `subagent.cancelled` | OSI-687 | 7 PASS | 10 PASS |
-| `subagent.completed` | OSI-688 | 7 PASS | 10 PASS |
-| `subagent.context_warning` | OSI-689 | 7 PASS | 10 PASS |
-| `subagent.escalated` | OSI-690 | 7 PASS | 10 PASS |
-| `subagent.failed` | OSI-691 | 7 PASS | 10 PASS |
-| `subagent.message_received` | OSI-692 | 7 PASS | 10 PASS |
-| `subagent.message_sent` | OSI-693 | 7 PASS | 10 PASS |
-| `subagent.model_switched` | OSI-694 | 7 PASS | 10 PASS |
-| `subagent.output_truncated` | OSI-695 | 7 PASS | 10 PASS |
-| `subagent.paused` | OSI-696 | 7 PASS | 10 PASS |
-| `subagent.progress` | OSI-697 | 7 PASS | 10 PASS |
-| `subagent.resumed` | OSI-698 | 7 PASS | 10 PASS |
-| `subagent.retried` | OSI-699 | 6 PASS | 10 PASS |
-| `subagent.spawned` | OSI-700 | 7 PASS | 10 PASS |
-| `subagent.started` | OSI-701 | 7 PASS | 10 PASS |
-| `subagent.timeout` | OSI-702 | 7 PASS | 10 PASS |
-| `subagent.tool_called` | OSI-703 | 7 PASS | 10 PASS |
-| `subagent.tool_completed` | OSI-704 | 7 PASS | 10 PASS |
+## Earlier findings rerun
 
-**Totals:** before 179 PASS / 50 PARTIAL / 46 CONFLICT / 25 ABSENT; after 250 PASS / 25 PARTIAL / 0 CONFLICT / 25 ABSENT. Prepared-family count under the lane exception: **3/25 → 25/25**. All 300 current cell citations were re-pinned and mechanically verified. The self-grade records prior review grades per cell and individual remaining gaps; independent re-review remains required.
+| Finding | Retained repair | Current mutation result |
+|---|---|---|
+| DO-01 | CV-366 exact application keys, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | All application keys changed back to do1: full CLI exit 1; S2 separately exercised per family |
+| DO-02 | Posted body/reference, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | Removing both representations from posted positives: exit 1 |
+| DO-03 | SP-720..722/member preparation, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | Each of three members removed independently: DO CLI exit 1; coordination CLI exit 1 with a new coordination_event_records mismatch (3 failures versus 2 baseline) |
+| DO-04 | Failure/blockage/interruption retries, `644a3df9c97ffc19c76924a02641cb852852f7ef` lineage | Removing blockage coverage: exit 1; all six actual retry payload/context positives and 18 transition cases run |
+| DO-C2-01 | Exact BLAKE3 fence, `c886f97d8f1cf947e599571c9ff71cbd9d6b36d1` | LF appended to both referenced-body scope positives: exit 1; all 16 suffix vectors still run through payload and stored member (32 rejections) |
 
-## Newly authored bindings and current search evidence
+## Standing checks — every family
 
-Each of the 22 application families has its own stated observation component `JCS(["ea-do-observation-v1",operation_id,thread_id,run_id,event_type,occurrence])`, retained in its genuine original operation custody. This fills only the missing family-local effect component; CV-366 supplies the existing key format. All prior Project domains are preserved. OSI-681 newly spells the closed event content_ref and required UTF-8-byte format while preserving OSI-299/SP-337 behavior. SP-720..722 newly bind one board storage member/source/run anchor per exact family, reusing SP-320, OSI-440, CV-366, SP-351, SP-286 and SP-278. Readers remain ephemeral family-local adapters over the existing actual generic index/checkpoint; no new retained projection or checkpoint is introduced.
+**F = fixed in `5952a4559a5724816765783a6e702cc5bc1ee2b2`; P = pass.** Each cell has an authored negative named `<exact-family>:S<n>` in standing_cases and a separately recorded full CLI mutation with expected/actual exit **1** in delivery-probes/full-cli-probes.json. No row is inferred from a sibling. The table's final column is PASS-cell count before → after; membership ABSENT and retention PARTIAL remain outside that count.
 
-Per-family searches used all tracked current Plans Markdown/JSON at reviewed head 942679dd, excluding generated/pipeline/source-lineage trees. Exact hits are in per-family-current-search.json. Existing original drafting evidence remains `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/per-family-search.json`, SHA-256 `b210f7025b6efd58b4003d8246270b98d8e91dca81708413c3e84a774a1445c0`. The current search explicitly reuses shared CV-366 identity even though exact-family searches did not discover it originally. The old claim that history-reader reuse removed the need for canonical board storage members is withdrawn. Eight original composition members contain no board key; each SP unit documents that negative evidence and the original app source edition it adopts. No sibling binding or admission is inferred.
+- **S1:** current append/retry with projector_replay_only refuses replay_only_not_appendable.
+- **S2:** a do1 key in application scope refuses; † the three Project-only families instead reject an application-scope payload, since CV-366 application keys do not apply to them.
+- **S3:** recorded Project partition replaced by raw Project ID refuses.
+- **S4:** the family's inline body/aggregate grows beyond the complete 16 KiB budget and refuses; explicit external boundary/reference cases also run.
+- **S5:** an actual EventRecord event_type gets a trailing LF and refuses via a full-match guard. The posted BLAKE3 source/stored copy retains its exact 71-character fences. Original coordination's 43 patterns remain an outside-lane integration item; no frozen schema was edited.
+- **S6:** change caller semantics on a retry claiming original-result success; the comparator returns conflict and the full checker refuses that positive. Metadata-only candidates return the original full result.
+- **S7:** a foreign valid-UUID Storage identity in the actual generic checkpoint refuses; every full token field has a separate internal negative.
+- **S8:** give that family's failure oracle a success exit code 0; the full checker rejects it. These payloads have no process-result exit-code member; this is explicitly checker-level failure-oracle enforcement.
 
-## Retention dependencies and premise checks
+| Family | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | PASS cells |
+|---|---|---|---|---|---|---|---|---|---|
+| `config.validation.failed` | F | P† | F | F | F | F | F | F | 9 → 10 |
+| `crew.board_message_posted` | F | P | F | F | F | F | F | F | 7 → 8 |
+| `crew.board_message_read` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `crew.board_messages_archived` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `parser.error` | F | P† | F | F | F | F | F | F | 9 → 10 |
+| `phase.force_completed` | F | P† | F | F | F | F | F | F | 9 → 10 |
+| `subagent.budget_warning` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.cancelled` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.completed` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.context_warning` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.escalated` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.failed` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.message_received` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.message_sent` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.model_switched` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.output_truncated` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.paused` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.progress` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.resumed` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.retried` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.spawned` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.started` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.timeout` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.tool_called` | F | P | F | F | F | F | F | F | 9 → 10 |
+| `subagent.tool_completed` | F | P | F | F | F | F | F | F | 9 → 10 |
 
-Retention stays cited to `origin/plans/ea-storage-retention-20261104` at inspected `d1b0338a21da131e62a0779aa46e822f3a439843`, especially Case L-3 and report reports/event-authority-20260911/step-09-storage-retention-20261104.md section 6. This fix does not copy that branch's assignments or policies.
+## Verification, preservation and boundaries
 
-- **DL-084:** the same 19 histories still exist; OSI-440/CV-366 application support changes neither their chat lifetime nor the shared **250,000 per thread** cap. Each contract names the actual parent chat; linked successor physical form is still first-admission technical work. Immediate deletion tombstone, active purge within 24 h, backup purge within 30 d and non-disclosing holds are explicit in every child contract. Policy citation alone closes none of those prerequisites.
-- **DL-085:** all three run-internal board families remain current. Existing lane changes from “archived or deleted” to archived, unresolved blocker visibility and leaving-board-deletes-nothing remain intact. SP-720..722 now supply the missing members, text rule and first durable terminal actual-run anchor. **Q1 remains open:** Does the Storage owner/host read SP-349/SP-351's Server-wide application counterpart bound differently for application board EventRecords? This fix does not answer it or promote retention. **Q3** (carry-over of the host's September confirmation to the rebuilt retention branch) remains integration work.
-- **DL-086:** three diagnostics remain Project-only under DL-292 and join the original Orchestrator/interview Run's first durable terminal record, never their own event timestamp or a child's completion. OSI-684 keeps the first 500 sanitized Unicode characters plus the full permitted sanitized output's SP-337 reference. Policy remains RP-RUNTIME-365D on the dependency; retention PARTIAL.
-- **DL-087/088:** current Collaborative Workflows still owns lifecycle. Both Crew pointers remain, with no separate lifecycle history. None of the six retired crew lifecycle or two retired spawn-request names intersects these 25; board and subagent.spawned/completed names are preserved. Retirements dependency checked at d30028fbb943321df574cc159312c9c103d4de8c / b4ef60f0a9610a7fa64fc1e9f44674f20f31d876; no duplicate edit.
-- **DL-292/CV-366:** application availability remains relevant to 22 families. The old assumption that a new hashed do1 app key was allowed **failed**; current CV-366:24099 already governs. DO-01 applies it. The old body-only-in-message assumption **failed** against OSI-299:24161 and is corrected by DO-02. Retry's failure-only premise **failed** against Contracts:2948–2958 and is corrected by DO-04. There is no current owner conflict left for those fixes.
+| Check | Exit / result |
+|---|---|
+| Full DO checker | 0; top-level pass; 25 families / 6330 reported checks; application posted source listed stopped; native NOT_RUN |
+| Frozen final full CLI sweep | 252 invocations: 4 baseline positives exit 0 and **248 negatives exit 1**, including all **200** family/standing cells and all prior-finding mutations |
+| SP-337 / SP-351 supplemental mutations | Forged external positive, undecoded ingest, three oversized physical wrappers and eight application child bodies all exit 1 |
+| Shard generation / index generation | 0 / 0, parsed top-level pass; currentness copy SHA-equal for all 15 files |
+| Shard check / index validation | 0 / 0, parsed top-level pass |
+| Full coordination checker | 1, same 2 pre-existing failures; stdout byte-identical to pinned review baseline |
+| Runtime canon checker | 1, same 161 pre-existing failures; stdout byte-identical |
+| Storage profile checker | 1, same 41 pre-existing errors; stdout byte-identical |
+| Coordination tests | 50 tests, same 14 failures; full output equal after only root-path/elapsed-time normalization |
+| Index binding tests | 14 tests, exit 0 |
+| Source/storage preservation and ID audit | pass: no new IDs, no owner Markdown deletion, no frozen resource change; registry's only semantic change is posted priority domain |
+| Self-grade quote audit | 25 families / 300 cells, every evidence quote re-located inside its own owner unit and verified |
+| Python compile / git diff --check | 0 / 0 |
 
-**Named integration follow-ups:** original CV-267..269 / child-history DL-084 citations and original Contracts board minima carrying DL-085 remain visible owner follow-ups from the Storage report. The retention branch's linked-successor work, Q1 and Q3 are not erased by these ten-PASS rows. Q2's separate collaborative record policy, SR-04 Boot aggregates and storage_maintenance_operation are outside DO. No admission readiness is claimed.
+Only the four edited sources' shard directories changed: orchestrator-subagent-integration, storage-plan, automated_testing_system and storage_value_registry. Six global index files are generated normally; four JSON generated_at_utc fields are clock-dependent. No generated shard/evidence file was hand-edited. Frozen application source/contracts/graph, Contracts_V0 and all original coordination definitions/other storage families/policies/profiles remain exact. Main, governance locks/evidence, Decision Log, event-family registry and tests were not edited.
 
-## Shared-file hunks and IDs
+**Premise checks and open integration work.** DL-084's exact 19 chat histories, DL-085's three board histories and DL-086's three Project-only diagnostics remain current; OSI-440/CV-366 application support preserves the existing lifetime boundary and Server counterpart bucket. The retention branch was inspected at `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`; its linked-successor/assignment/admission prerequisites and Q1/Q3 are still open. The three original run-completion anchors and same-source access/deletion/hold fences remain. DL-085 archived/unresolved-blocker/leave-deletes-nothing prose and both DL-087 Collaborative_Workflows lifecycle pointers remain intact. No numeric cap or retention/deletion policy was chosen. The posted source-completeness premise failed and is now stopped, explicitly replacing the earlier false PASS. Admission, native execution and any governance reseal remain separate work.
 
-- **Orchestrator:** amend only OSI-680..704 contracts from this lane; the earlier DL-085 and two DL-087 lifecycle edits remain intact.
-- **Storage owner:** append three independent units SP-720..722. No existing prose rewritten and no retention assignment duplicated.
-- **Storage registry:** amend only coordination_event_records: three key/member additions, exact required/optional intersection/union, original append/consumer adoption, replay, run-anchor, text and prepared-state prose. All original eight payload definitions and all other family/policy/profile bytes are semantically unchanged. No new storage family is added.
-- **Testing owner:** amend ATS-360 with the exact-family regression obligations. **Checkers/companions:** two DO JSON files, DO checker and strict coordination composition expectation. No tests file edited: its ignore rule has no allowed `!` exception; regression vectors live in the allowed Plans companion and full-checker probe suite.
-- **IDs used:** original OSI-680..704 and ATS-360; new SP-720..722. New IDs were scanned across 500 fetched origin refs / 61 unique Storage blobs: no collision. SP-723..739, CV-740..759, ATS-361..369 and OSI-705..719 remain unused.
-- **Derived files:** regenerated only the edited Orchestrator, Testing, Storage and storage-value-registry shard directories plus six global plan-index files. No generated files hand-edited.
+**IDs used:** existing OSI-680..704, SP-720..722 and ATS-360 (29 existing lane IDs); **new IDs: none**. No registry append, admission record or Decision Log entry.
 
-## Verification and boundaries
-
-| Command/check | Exit | Result |
-|---|---:|---|
-| free -g / df -BG / before worktree | 0 / 0 | 15 GB available RAM; 122 GB available disk, above 6/50 GB floors |
-| Currentness edition copy and SHA-256 compare | 0 | All 15 files match shared edition before generation |
-| python3 scripts/pm-orchestrator-event-contracts.py | 0 | 25 families; 2,186 assertions; native NOT_RUN |
-| Full DO checker negative mutations | 1 expected each | Old application key, missing posted body, missing member, omitted blockage retry coverage all caught |
-| Full coordination CLI with each board member removed | 1 expected each | Additional coordination_event_records mismatch for all three individual removals |
-| python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json | 0 | Only edited owners' derived paths |
-| python3 scripts/pm-plan-index.py generate | 0 | Top-level status pass |
-| python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json | 0 | Top-level status pass |
-| python3 scripts/pm-plan-index.py validate | 0 | Parsed top-level status pass |
-| python3 scripts/pm_coordination_events.py, baseline/fixed | 1 / 1 | Exact same 2 pre-existing failures; whole stdout bytes identical |
-| python3 scripts/pm-runtime-integration-canon-validate.py validate, baseline/fixed | 1 / 1 | Exact same 161 pre-existing failures; whole stdout bytes identical |
-| python3 scripts/pm-storage-profile-check.py, baseline/fixed | 1 / 1 | Exact same 41 pre-existing errors; whole stdout bytes identical |
-| Full storage registry/schema and preservation audit | 0 | Registry validates; other rows/policies/profiles and all original members preserved |
-| git diff --check | 0 | No whitespace errors |
-
-Baseline/fixed checkers run with full read-only input overlays; only relevant baseline files are replaced with reviewed-head bytes. Scratch overlays were removed. No governance gates, admission, native run or landing was substituted for this bounded fix. A temporary integrity assertion used an incorrect underscore spelling for two shard directory names; correcting that audit expectation produced the passing four-owner preservation audit without changing product files.
-
-**Procedure disclosure:** the parallel initial startup issued read-only pm-mail inbox/who before FIX-ROUND's no-pm-mail instruction had been read. No register/send/reply occurred and no later pm-mail was used. No subagents, admission, registry append, Decision Log, governance edit or main push. Sparse detached worktree /home/sittingmongoose/pm-worktrees/DO-fix1 is removed after the pushed report/self-grade and final packet are written, as the fix-round override requires.
+**Resource/procedure record.** Before creation: 16 GiB available RAM and 118 GiB free root disk, above the 6/50 GiB floors. Sparse detached `/home/sittingmongoose/pm-worktrees/DO-fix3` came from the named branch at the reviewed head. Checks used isolated local test directories, with no subagents, browser, server, heavy build or main push. The first source staging list omitted the renamed final generated registry shard; follow-up source commit `89ec4788c9612f7bbecbc1b230b47e90a0b94d07` includes it, and a committed-tree audit verifies every checked generated file is tracked. Two intermediate test sweeps were superseded while completing the ingest/source joins; their processes and scratch were removed and only the frozen final sweep is reported. Startup inadvertently issued read-only pm-mail inbox/who before FIX-ROUND's prohibition was loaded; no registration/send/reply and no later pm-mail occurred. The pushed task worktree and final probe scratch are removed at completion as required.
 
 ## External evidence
 
-Paths plus SHA-256 below identify the retained result evidence. Raw checks, repair/search/probe scripts and this report/self-grade copy remain outside the repository in the same DO draft directory.
+All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-3/`. SHA-256 is over the complete file. Report/self-grade copies also overwrite drafts/DO/DO.md and drafts/DO/DO.self-grade.json.
 
-| Path | SHA-256 |
+| Evidence (relative to that directory) | SHA-256 |
 |---|---|
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/setup.json` | `806e7ff40beae0b680940b9d00c1e94ea06e093bae3e2164d7b853fd2383e086` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/per-family-current-search.json` | `0f459fd5a177e35c882f307b54a8ef27ad9a78a0d795349493463b27c47a1d13` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/contracts-check.json` | `7c3c5ca54f677da689b90506b86634455a3ad5cbcc79539a8e554625cfdac332` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/probe-results.json` | `b43c51cf1d024ffbfb3d020abf4cfccd13852c215fa68e4606e06ca2daab26b3` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/integrity.json` | `1758d443fdb03a0ffd674953eac3da199cf00d617a4502e3ad05b9bd805659c5` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/shard-generate.json` | `0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/index-generate.json` | `14ae5e716300a5bd14cc688998f874b37a360fe08f54a2ae6ed81fca75df082c` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/shard-check.json` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/index-validate.json` | `e171e02450dc2ac597de625533555d3701ab6f61f6a3f63ac016cfa5a64d02c5` |
-
-## Review round 2: findings and responses
-
-- **DO-C2-01 — fixed (`c886f97d8f1cf947e599571c9ff71cbd9d6b36d1`).** **Where:** `Plans/orchestrator_event_payloads.schema.json:235`, generated copy `Plans/storage_value_registry.json:11797`, fixtures and DO checker. **Why:** Python `$` matches before a final LF, so the pattern alone accepted a 72-character reference. **Fix:** the authoritative BLAKE3 field now requires both `minLength: 71` and `maxLength: 71`. Rebuilt the stored member with `pm_coordination_events.expected_svr_rows()`; no original member or other registry field changes. The checker requires the exact bounds and eight negative suffix cases per scope: LF, CR, CRLF, space, hex, nonhex, NUL and Unicode line separator. All sixteen vectors run against both the payload and the actual stored composition (32 validation assertions). No rule was weakened. Verify with `python3 scripts/pm-orchestrator-event-contracts.py`.
-
-**Affected-cell regrade only:** `crew.board_message_posted.closed_payload_schema` and `.positive_negative_oracles` each **PARTIAL → PASS**, against REVIEW-cycle2.md rather than the old self-grade. That family moves from 8 PASS / 3 PARTIAL / 1 ABSENT to 10 PASS / 1 PARTIAL / 1 ABSENT. Other 24 families and other ten posted cells are carried unchanged. Totals: **248 PASS / 27 PARTIAL / 25 ABSENT → 250 PASS / 25 PARTIAL / 25 ABSENT**, zero conflicts; prepared under the lane retention exception **24/25 → 25/25**. Membership remains ABSENT, retention PARTIAL, native NOT_RUN. No new ID, binding, admission or policy decision.
-
-**Pattern sweep:** recursively searched every definition in the DO payload schema and all three corresponding stored board definitions. Exactly two anchored-pattern occurrences (authoritative BLAKE3 field and stored copy), both now fenced at 71 characters. The inherited coordination source contains 43 anchored patterns; these belong to the original coordination families outside DO. They are recorded by JSON pointer in `pattern-audit.json` as integration follow-ups, preserving the original eight members as required by the lane. Examples include lineage platform / last_applied_event_id, path_hash, non_secret_ref and idempotency patterns. No outside-lane schema was changed.
-
-**Verification:** full DO checker exits 0, status pass, 25 families / 2,235 assertions. The review's mutation appending LF to both referenced-body `valid_payloads` now exits 1 with maxLength failure; separate application-only and Project-only mutations each exit 1 too. All mutations restored in finally blocks. Shard generation/check exit 0. Index generation/validation have parsed top-level pass. The complete coordination checker exits 1 with the same two pre-existing failures as e3a99cf338; baseline and fixed stdout are byte-identical. Integrity checks prove only the reference bounds changed in the source schema/registry, all 308 prior grade quotations still resolve, and only storage-value-registry shards changed. `git diff --check` exits 0.
-
-**Resources and procedure:** before checkout, 22 GB available RAM and 135 GB free root disk met the 6/50 GB floors. Sparse detached worktree `~/pm-worktrees/DO-fix2` from local clone at e3a99cf338; fetched origin, no pm-mail, subagents, admission, registry append, Decision Log, main push or governance edit. All 15 copied ignored currentness files verified SHA-equal before index generation. No Plans Markdown owner needed amendment: OSI-681 already specifies the exact reference. Derived registry shards and index regenerated normally. One initial baseline probe overlaid only the old registry and detected expected source/copy disagreement; rerun with both old source inputs yielded the byte-identical two-failure baseline. Final generation ran with all fixed inputs restored.
-
-**IDs used:** none new; existing OSI-681 / SP-720 / ATS-360 context only. Existing lane allocation remains OSI-680..704, SP-720..722 and ATS-360. Retention Q1/Q3 and other previously named integration obligations remain open. The pushed detached worktree is removed at completion.
-
-**Round-2 external evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-2/`; complete-byte hashes follow after verification.
-
-| Evidence filename (under the round-2 directory above) | SHA-256 |
-|---|---|
-| `contracts-check.json` | `b64dc5054fe2449a0ebedad74cc412c8d14352047c9467544b98cf7c6b454b71` |
-| `probe.py` | `0aab9c3c15ff34c624b9275316a26415baa2674631de52be3b43d66a3638e807` |
-| `probe-results.json` | `1d87528541207030c68eb675718b74f3b987ebf88a585495034fdb735911a3dc` |
-| `pattern-audit.json` | `afa6a092fc4d67c329700648f6259b883f0cc00de5681b1d1494c2b2dd3265aa` |
-| `integrity.json` | `b13d7203213dead3f93fe3d04ea9fe1b8fdaf5bd80916ed53e182219d5722732` |
-| `regrade.json` | `b9d64985e3c7acfe9e2ddbe44f05212e1848dad62fd7b4ad6673fc7bdaf5a3e0` |
-| `currentness.json` | `bff89fc88c53bba8f8f10d8c971bbaafcf44533863363b102767089c02d89e9f` |
+| `contracts-check.json` | `bdf73491682fed6bb0c5203461c408487f13a6bca17ba6546d97217d6d6cb488` |
+| `delivery-probes/full-cli-probes.json` | `e0d96d370ef8bdbf9f68d287a62f02800bf8f76af5db7a30a7755dc918dc635b` |
+| `probe-delivery-checker.py` | `d985224b2dc1fc92d1b95e2cb38d62beb644a8481d63f17a0eb34fa0364de9e4` |
+| `delivery-input-sha256.json` | `3318b60367939c7cf4f44b00c4b3a8c434796c9de209bbdb5ed5a4b428b395b7` |
+| `source-search.json` | `86e0602238f7b6f202dea3ec3001e4996de7df85bc4bffd85a7b28fc2d3dc9e9` |
+| `integrity.json` | `087577b833e8055d19d6bc9446a6d60b8259577b564bf2b192745b2274eb93f6` |
+| `committed-tree.json` | `a79e32567958f7335c736ca503b43fbac636704979ac5f900558849ad97fc77b` |
+| `regression.json` | `2925613d59c236daa1d29b4794d09712f9ff4b8f8798209d60e37d7298e6f049` |
+| `regrade.json` | `e2ba28160e709c00a5b422e19ae650407703d46afec59d73dc614a4d4e2081ca` |
+| `currentness.json` | `58c077812500478e365b9ab494e9e6b92131eb586acf86ef321b088afdff18e2` |
 | `shard-generate.json` | `0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3` |
+| `index-generate.json` | `c000cb2e59a695cf7524bcf04792bf7ec330cff12c73d45f4920d947cfef97aa` |
 | `shard-check.json` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
-| `index-generate.json` | `7f1587f916ff9ed1e3e779229fe7657def3539570b1d9c53bc5e248914329d6e` |
-| `index-validate.json` | `afb4ecf617bbcc044505b08a6fda5c9dd7575e5889df89e4db8e41852e246388` |
-| `coordination.json` | `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d` |
-| `coordination-baseline.json` | `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d` |
+| `index-validate.json` | `dc65206a412cd93006f11af3226cfc54c01a947694ca3bc407f72311e2834dfd` |
+| `coordination-tests.stderr` | `6b9345a6b5883a967bec1b3feeea557a7e4a013dc00b47a281ad136bb8424995` |
+| `index-binding-tests.stderr` | `f0360e2c365b8e2bb060de70f84866746b96f8c0d9436d84cc1a8b0fe2c8fb5d` |
