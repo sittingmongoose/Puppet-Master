@@ -905,9 +905,9 @@
     /* no place yet (a saved record that stopped applying keeps its NAS and loses the folder: FO-47, Review read "Files on"
        and a blank): the device still chosen for it and a folder still to choose */
     if (!r) {
-      const own = (n.purpose || 'source') === 'storage' ? d0.storage_mode === 'network_location' : d0.project_mode === 'existing_local' && d0.project_transport !== 'local';
-      const m = n.method || 'ssh', sh = (m === 'smb' || m === 'nfs') && (n.share === 'manual' ? n.manualShare : (S.env.shares || []).find((x) => x.id === n.share));
-      const who = !own || m === 'mounted' ? null : sh ? (S.env.devices || []).find((x) => x.id === sh.device) : dev(S);
+      const p = n.purpose || 'source', own = p === 'storage' ? d0.storage_mode === 'network_location' : p === 'source' && d0.project_mode === 'existing_local' && d0.project_transport !== 'local';
+      const m = n.method || 'ssh', share = m === 'smb' || m === 'nfs', sh = share && (n.share === 'manual' ? n.manualShare : (S.env.shares || []).find((x) => x.id === n.share));
+      const who = !own || m === 'mounted' ? null : share ? sh && (S.env.devices || []).find((x) => x.id === sh.device) : dev(S);
       return who && who.name ? T('nas.folder.notChosen', { name: who.name }) : T('nas.folder.notChosenAny');
     }
     if (n.folderLabel && ((n.purpose === 'storage' && d0.storage_location === r) || ((n.purpose || 'source') === 'source' && d0.project_source_ref === r))) return n.folderLabel;
