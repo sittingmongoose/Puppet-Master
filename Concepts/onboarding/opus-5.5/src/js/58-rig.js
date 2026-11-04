@@ -512,6 +512,8 @@
       };
       return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, v.y0, v.y1)];
     }
+    // how far Pip's drawn head reaches below the point it hangs from, in stage units (null until it has been measured)
+    pipHB() { return this.pipBB && this.vis ? (this.pipBB.h[1] + this.pipBB.h[3] - 31.5) * this.L.s : null; }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
        at a narrow window; NieR's box sits over the column): its blocks were cut at the bottom, or under NieR's words */
@@ -925,6 +927,9 @@
       // asleep: the head rests on the floor and the strings go slack
       const headH = 28 * Lay.s;
       if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
+      /* (and on the lowest floor a person can see: a narrow window's Retro tube crops the stage's floor away, FO-51) */
+      const hb = this.pipHB();
+      if (hb != null && H[1] + hb > this.vis.y1) H = [H[0], this.vis.y1 - hb];
       this.H = H; this.ang = ang;
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
