@@ -99,7 +99,6 @@ export const tests = {
   let f;
   for (const look of ['nier-light','friendly-dark']) {
    f=await t.app.open();
-   await f.evaluate(()=>O55.studio.looks.setReduced(true));await t.settle();
    await t.app.look(look); await f.locator('#o55np-reboot').waitFor({state:'hidden'});
    if(t.args.helpSelftest==='transparent') await f.addStyleTag({content:'#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .pst-bt-off, #pm7ob-explainer .o55-explainer-w {opacity:0!important}'});
    for (const id of ['ai','ai-none','c-review','c-pair','c-ready','s-kind','s-wait','s-confirm','s-ready','away-setup']) {
@@ -123,6 +122,8 @@ export const tests = {
     await t.check(`${look} ${id} help note visible`,await f.locator('#pm7ob-explainer').isVisible());
     const words=f.locator('#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .o55-explainer-w').first();
     await t.check(`${look} ${id} help note has rendered body text`,await words.isVisible()&&(await words.innerText()).trim().length>0);
+    // The four paints must sample the same completed text, rather than different typing frames.
+    await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');return e&&!e.classList.contains('typing')&&!e.querySelector('.typing');});
     const opacity=await words.evaluate(e=>{const walk=document.createTreeWalker(e,NodeFilter.SHOW_TEXT);let count=0,n;while((n=walk.nextNode())){if(!n.textContent.trim())continue;count++;for(let p=n.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}}return count>0;});
     await t.check(`${look} ${id} body text subtree has visible opacity`,opacity);
     const bodyPaint=await paintedText(words);

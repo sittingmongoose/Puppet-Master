@@ -14,6 +14,7 @@ export async function paintedText(el){
   await fill('#000');black=decodePng(await el.screenshot());
   await fill('#fff');white=decodePng(await el.screenshot());
  }finally{await el.evaluate((e,ss)=>[e,...e.querySelectorAll('*')].forEach((n,i)=>ss[i]===null?n.removeAttribute('style'):n.setAttribute('style',ss[i])),styles);}
+ if([ground,black,white].some(p=>p.width!==ink.width||p.height!==ink.height)) throw new Error('Text geometry changed between painted samples');
  const stems=[];
  for(let y=Math.max(0,Math.ceil(meta.y));y<Math.min(ink.height,Math.floor(meta.y+meta.h));y++)for(let x=Math.max(0,Math.ceil(meta.x));x<Math.min(ink.width,Math.floor(meta.x+meta.w));x++){
   const i=(y*ink.width+x)*4;
