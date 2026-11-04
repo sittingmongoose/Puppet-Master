@@ -75,7 +75,12 @@ const SAMPLE = async () => {
 			if (o > worst.prop) { worst.prop = o; who.prop = name; }
 			if (fo > worst.propFoot) { worst.propFoot = fo; who.propFoot = name; }
 			const ix = Math.min(q.r, head.r) - Math.max(q.l, head.l), iy = Math.min(q.b, head.b) - Math.max(q.t, head.t);
-			if (ix > 0 && iy > 0 && Math.min(ix, iy) > worst.propOnHead) { worst.propOnHead = Math.min(ix, iy); who.propOnHead = name; }
+			if (ix > 0 && iy > 0 && Math.min(ix, iy) > worst.propOnHead) {
+				worst.propOnHead = Math.min(ix, iy); who.propOnHead = name;
+				// (what Pip was doing then: its swing, tilt and hop, and the box the props keep off, in stage units)
+				const ps = st.ps, r2 = (v) => Math.round(v * 100) / 100;
+				who.pipState = { th: r2(ps.th), tilt: r2(ps.tilt), tiltT: r2(ps.tiltT), dy: r2(ps.dy), mood: st.moodOverride || st.curMood, keep: st.pipKeep && st.pipKeep.map(Math.round), C: [Math.round(ps.C.x), Math.round(ps.C.y)], Ct: [Math.round(ps.Ct.x), Math.round(ps.Ct.y)], prop: p.box && p.box.map(Math.round) };
+			}
 		}
 		last = { crop: [c.l, c.t, c.r, c.b].map(Math.round), pip: [pip.l, pip.t, pip.r, pip.b].map(Math.round), foot: Math.round(foot) };
 	}
@@ -106,7 +111,7 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 		await t.check(`${at}: every resting prop inside the visible crop`, r.prop <= 1, `${r.who.prop} ${r.prop} px outside; ${why}`);
 		await t.check(`${at}: every resting prop above the tube's foot (printer, command line)`, r.propFoot <= 0.5, `${r.who.propFoot} ${r.propFoot} px into it; ${why}`);
 	}
-	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}`);
+	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}${r.who.pipState ? '; pip ' + JSON.stringify(r.who.pipState) : ''}`);
 	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
 	// FO-55: drawn smaller only where the span cannot hold it (.77, Retro Light at 740, the lead's call): never under 75%
 	await t.check(`${at}: Pip drawn at no less than 75% of its size`, r.pipK >= .75, `scale ${r.pipK}`);
@@ -115,12 +120,21 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	return r;
 }
 
-// every resting prop where it will stay, settled on its spring and all but still, and Pip hanging still at its spot
-const propsAtRest = (f) => f.waitForFunction(() => {
-	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), ps = st && st.ps;
-	return !!st && [...st.props.values()].every((p) => p.state === 'out' || (p.settled && Math.abs(p.a) < .01 && Math.abs(p.lenv) < 2 && Math.abs(p.axv) < 2))
-		&& !!ps && Math.abs(ps.C.y - ps.Ct.y) < 1 && Math.abs(ps.C.vy) < 2 && Math.abs(ps.thv) < .05;
-}, null, { timeout: 9000 }).catch(() => {});
+// every resting prop where it will stay, settled on its spring and still (its swing too: a cheer kicks the prop it is
+// about, and a prop swinging through upright read as still), and Pip hanging still at its spot with no reaction playing
+// (its hop, a mood held), all of it for 0.9 s on end: a cheer after the screen opens (c-ready, a finish screen) swung
+// the laptop past Pip's head inside the sample
+const propsAtRest = async (f) => {
+	await f.evaluate(() => { window.__bcRest = 0; }).catch(() => {});
+	await f.waitForFunction(() => {
+		const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), ps = st && st.ps;
+		const still = !!st && !!ps && [...st.props.values()].every((p) => p.state === 'out' || (p.settled && Math.abs(p.a) < .01 && Math.abs(p.av) < .03 && Math.abs(p.lenv) < 2 && Math.abs(p.axv) < 2))
+			&& Math.abs(ps.C.y - ps.Ct.y) < 1 && Math.abs(ps.C.vy) < 2 && Math.abs(ps.thv) < .05 && Math.abs(ps.dyv) < 5 && !(st.moodUntil > st.t);
+		if (!still) { window.__bcRest = 0; return false; }
+		if (!window.__bcRest) window.__bcRest = performance.now();
+		return performance.now() - window.__bcRest > 900;
+	}, null, { timeout: 12000, polling: 'raf' }).catch(() => {});
+};
 
 // a person arriving: the real pointer travels over the stage, which wakes Pip (Welcome's sleep lasts until a real
 // arrival). Screens past Welcome are judged with Pip awake, as a person reaches them; Welcome with Pip asleep.
