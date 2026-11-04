@@ -1,124 +1,110 @@
-# DCW — Event Authority wave 2, 2026-11-04
+# DCW — fix round 1, Event Authority
 
-Branch: `plans/ea-w2-chain-wizard-20261104`. Base: `be4766513ff71776346fc73b84f2542990f955af` (fresh `origin/main`). Machine: `ubuntu-agent-nas1`; initial `free -g` available 10 GB. Prepared without admission. No main push, landing lock, reseal, event registry append, admission record, Decision Log edit, mail or subagent.
+Branch: `plans/ea-w2-chain-wizard-20261104`. Reviewed head: `a9c2916df1ac3e37922392dc07545a662ada2bc9`. Implementation head: `033c16f9400206b3c8842f1b448cae1212570d0e`. Final report-only follow-up preserves this assessed source tree. Worker: DCW-FIX1, VM; detached sparse worktree `/home/sittingmongoose/pm-worktrees/DCW-fix1`, local clone `/home/sittingmongoose/src/PuppetMaster`.
 
-## Outcomes and self-grade
+Prepared without admission. No mail, subagents, main push, landing, lock, reseal, event registry append, admission or Decision Log edit. Entry: 18 GB available RAM, 113 GB free disk; pre-completion: 14 GB RAM and 128 GB disk. The 6 GB memory and 50 GB disk thresholds were satisfied. The worktree is removed after the final branch push.
 
-| Exact row | Outcome | Current owner / reason | Self-grade |
+## Outcomes and before/after grades
+
+Before means the independent Sol review. PASS describes normative depth, never native execution. Membership ABSENT and retention PARTIAL are the two instructed exceptions for prepared status.
+
+| Exact family | Before | After | Outcome |
 |---|---|---|---|
-| `bundle.revision_requested` | register (prepared draft) | ACD-049/050 → NEW ACD-571, CV-590, SP-575 | 7 PASS / 4 PARTIAL / membership ABSENT |
-| `bundle.revision_started` | register (prepared draft) | ACD-049/050 → NEW ACD-572, CV-591, SP-576 | 7 PASS / 4 PARTIAL / membership ABSENT |
-| `bundle.revision_completed` | register (prepared draft) | ACD-049/050 → NEW ACD-573, CV-592, SP-577 | 7 PASS / 4 PARTIAL / membership ABSENT |
-| `bundle.revision_interrupted` | register (prepared draft) | ACD-049/050 → NEW ACD-574, CV-593, SP-578 | 7 PASS / 4 PARTIAL / membership ABSENT |
-| `wizard.blocked` | blocked on Jared | Active Contracts payload versus retired wizard lifecycle; Q1 | owner CONFLICT; 5 PARTIAL / 6 ABSENT |
-| `wizard.unblocked` | blocked on Jared | Active Contracts payload versus retired wizard lifecycle; Q1 | owner CONFLICT; 5 PARTIAL / 6 ABSENT |
-| `wizard.opened` | blocked on Jared | UCC-032 preserves old deferred-launch command/events without a current replacement success boundary; Q2 | owner CONFLICT; 5 PARTIAL / 6 ABSENT |
-| `wizard.deferred_payload.loaded` | blocked on Jared | UCC-032 preserves old deferred payload load while current planning intake uses approved packs; Q2 | owner CONFLICT; 5 PARTIAL / 6 ABSENT |
+| bundle.revision_requested | 6 PASS / 3 PARTIAL / 2 CONFLICT / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared |
+| bundle.revision_started | 6 PASS / 3 PARTIAL / 2 CONFLICT / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared |
+| bundle.revision_completed | 6 PASS / 3 PARTIAL / 2 CONFLICT / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared |
+| bundle.revision_interrupted | 6 PASS / 3 PARTIAL / 2 CONFLICT / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared |
+| wizard.opened | 6 PARTIAL / 6 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared |
+| wizard.deferred_payload.loaded | 6 PARTIAL / 6 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared |
+| wizard.blocked | 6 PARTIAL / 6 ABSENT | 6 PARTIAL / 6 ABSENT | stopped for Jared, Q1a |
+| wizard.unblocked | 6 PARTIAL / 6 ABSENT | 6 PARTIAL / 6 ABSENT | stopped for Jared, Q1b |
 
-Totals: four prepared drafts, zero exclusions, four rows blocked on product questions grouped into two cards. Zero admissions. No ledger/census exclusion applications: retirement of an owner document alone does not exclude these exact event names.
+Prepared-family passes: **0/4 drafted (0/8 assigned) → 6/6 drafted (6/8 assigned)**. Zero exclusions/admissions. All eight retention cells remain PENDING_RETENTION_DECISION. The six prepared source contracts also defer the original source lifetime to RT. No TTL or indefinite policy was selected. `DCW.self-grade.json` records every criterion with exact current source quotes; hold owner_doc cells are PARTIAL, never CONFLICT with a retired owner.
 
-The self-grade JSON is `DCW.self-grade.json`. It is deliberately not an all-PASS admission assessment. The prepared families still need verification of the physical `revision_run.v1` original evidence composition and more complete semantic fixture adapters for first-receipt/source custody, concurrent terminal publication and withdrawal. The current static checker verifies shape, identity, joins, predecessor order and resume, not native effects or transactional custody. Native obligations remain NOT_RUN. The seven PASS cells describe normative draft text, not runtime proof. Integration must resolve every PARTIAL cell before admission.
+## Review round 1: findings and responses
 
-## Current-owner reconciliation and premise checks
+1. **Fixed — appendable writer policy** (`033c16f9400206b3c8842f1b448cae1212570d0e`). Where: `Plans/Contracts_V0.md:24471` through CV-593; `scripts/pm_bundle_revision_events.py:35`. Cause: projector_replay_only is compatibility-reader-only and normal append refuses it. Fix: every bundle writer uses dedupe_by_idempotency_key with its existing frozen identity; passive consumers stay effect-free. All six full fixtures test normal append acceptance, projector_replay_only append refusal and passive compatibility reads. The original 179 checks remain; no rule was weakened to admit the old writer selection.
+2. **Fixed — original revision custody** (`033c16f9400206b3c8842f1b448cae1212570d0e`). Where: `Plans/storage-plan.md:29876`, `Plans/dcw/revision_run.schema.json`, the extracted `revision_run` storage-value row. Cause: the source key was still inside a deferred GUI inventory. Fix: remove only that key from the deferred group, materialize its closed original intent/result/phase/event/receipt value, and bind exclusive source-key/value_revision CAS, lost-ack recovery, original epoch preservation and mandatory coherent backup/restore. Every phase intent_ref resolves the same embedded immutable original intent; there is no new deferred request/receipt store. See per-family SP-575–578 adoption. Verify source/receipt/restore/terminal negative cases through the full checker.
+3. **Fixed — full oracles** (`033c16f9400206b3c8842f1b448cae1212570d0e`). Where: `Plans/dcw_event_contract_fixtures.json`, `scripts/pm_dcw_event_oracles.py`, invoked by the original full checker. Cause: local shape/predecessor checks did not exercise the physical/source composition. Fix: 629 additional full-composition cases, 808 total. They cover complete closed EventRecords, append policy, admission, original source/intent/result/document/first receipt, full-value commitments, prepared-before-append, lost ack, terminal exclusion, interrupted resume, historical earlier phases, current permissions/deletion, restore, cutoff/drain/fence, withdrawn/unsupported readers and complete replacement rebuild. The shared SP-278 checkpoint/live token is selected from the existing `event_index_consumer_adoption_fixtures.json` composite; no local replacement checkpoint contract. Native source authentication, actual sync/CAS/restore and codec adapters remain authored NOT_RUN obligations.
+4. **Fixed — false action-existence stop removed** (`033c16f9400206b3c8842f1b448cae1212570d0e`). Where: `Plans/Planning_Wizard.md:4062`, `Plans/Planning_Wizard.md:4119`, `Plans/Contracts_V0.md:24764`, `Plans/Contracts_V0.md:24833`, `Plans/storage-plan.md:29992`, `Plans/storage-plan.md:30007`. Cause: the reviewed draft omitted UCC-002/current §2.1A's explicit deferred Planning Wizard routing. Fix: two independent current contracts for the existing real Project/current intake child. Open observes the original successful open result; load observes successful canonical seed acceptance and joins the original open receipt. Every canonical PWIZ-001 seed kind has positive cases; stale/unsupported raw legacy seeds, missing child/context/original open/receipt are rejected. No Chain Wizard feature or event-name alias is introduced.
+5. **Fixed — wizard owner classification and narrowed holds** (`033c16f9400206b3c8842f1b448cae1212570d0e` plus this report-only follow-up). Current CV-233/CV-234 and intake routing survive; CWF is retired, so it is not a second live owner. The held owner cells are PARTIAL. Q2 is removed. Q1a/Q1b below identify the actual unresolved current subject and emission/resolution predicates, with review recommendations separately labeled and unapplied.
+6. **Preserved — sound bundle reconciliation** (`033c16f9400206b3c8842f1b448cae1212570d0e`). ACD-049/050 and ACD-571–574 remain the semantic owners for the existing Deep Plan targeted-revision path. No PRD/PlanningRun revision producer, automatic Multi-Pass Review or execution grant is added. The two Wizard intake observations are separately grounded in their existing current intake action.
 
-`Plans/chain-wizard.md` opening retirement notice and `Plans/chain-wizard-flexibility.md` Change Summary / Plan document status explicitly retire the old owners. Their content cannot supply current writer authority. DL-045's scope row names all eight exact DCW families under historical CWF ownership, but DL-045 explicitly says owner labels route investigation and do not override semantic/Storage authority, and excludes competing-owner product choices.
+No finding is disputed. Recommendations for blocked/unblocked remain unapplied.
 
-For EACH of the four bundle events, the current replacement behavior is independently supported by `Plans/assistant-chat-design.md` §8.7 and ACD-049/050: targeted revision, no automatic Multi-Pass Review, eligible annotation handling and interrupted revision recovery. `Plans/storage-plan.md` bundle annotation/revision audit bullet explicitly names started/completed/interrupted; `Plans/Contracts_V0.md` Cross-surface event minima explicitly names requested. `Plans/FinalGUISpec.md` §7.15 retains Resubmit with Annotations and targeted revision. This resolves the survey's retired-owner lead for these four events without reviving Chain Wizard. Current use is narrowed to the already specified Deep Plan review path; no new PRD/PlanningRun ledger producer is authorized.
+## Questions for Jared — card-ready, no answer applied
 
-The retained `revision_run.v1` spelling in Storage and `revision_run.{bundle_id}.{revision_id}` in ACD-050 are existing source-owner descriptions, not proof their original physical composition is fully materialized. This lane adds no new revision-run store or inferred checkpoint. That verification is reported as a remaining technical gap rather than a product question.
+**Q1a — wizard.blocked / current subject and emission predicate.** Under `Plans/Contracts_V0.md:14896` (CV-233) and `Plans/Contracts_V0.md:2686`, which exact existing PlanningRun or topic owner identity must `wizard_id` identify, and which existing blocked/remediation predicate emits this observation, including the current source of `round_count`? PWIZ-002 owns the current aggregate/topic model; shared route_target/blocked identity does not decide that subject or predicate.
 
-For the two wizard lifecycle events, `Plans/Contracts_V0.md` “Wizard blocked escalation events” still says they are canonical ledger events. CV routing text and ACD's blocked-notice boundary ground blocked recovery in route_target/blocked-remediation identity. However `Plans/Wiring_Matrix.md` WM-036 still names retired CWF as the wizard_status / blocked lifecycle surface; CWF §8.4 preserves clarification-round threshold and wizard_status rules as historical only. `Plans/Planning_Wizard.md` PWIZ-001/003 instead owns PlanningRun and dynamic topics. There is no exact current mapping of the legacy wizard lifecycle/round predicate to those objects. Choosing a new lifecycle would decide user-visible behavior. Do not carry over the retired three-round trigger, assume wizard_id means planning_run_id, or silently exclude the pair.
+**Review recommendation, unapplied:** retain an observation of the existing Planning Wizard blocked/remediation episode after Jared confirms its actual current subject/trigger. Use current route/blocked identity; do not resurrect a three-round threshold or separate wizard_status state machine. Subsequent identity/schema/checkpoint work is technical.
 
-For the two launch/load events, `Plans/UI_Command_Catalog.md` UCC-032 is accepted and preserves `cmd.project.chain_wizard_open_deferred`, `wizard.opened` and `wizard.deferred_payload.loaded`. The old owner is explicitly retired; current PRD Builder intake and Planning Wizard approved-pack handoff are different workflows. No exact current success boundary for the legacy action was found. Neither renaming it to a modern intake event nor excluding it is authorized by the document retirement alone.
+**Q1b — wizard.unblocked / matching current resolution predicate.** Under `Plans/Contracts_V0.md:14944` (CV-234), for that same confirmed current subject and blocked/remediation episode, which existing authorized resolution transition emits the corresponding observation, and how does `resolution_source` identify that actual resolution and preserve causality?
 
-No August/September product answer is used to select retention or resolve these four wizard rows. DL-045 is used only for its exact eight-name scope and bounded technical authority. Its premise holds for the specified Deep Plan revision behavior; its old owner routing does not establish current CWF authority. DL-076 nine-field durable-token rule and current SP-286 (including DL-270/SP-336/SP-347) are reused as they appear in today's canon, not from an old receipt. No Decision Log answer is extended.
+**Review recommendation, unapplied:** the corresponding observation when that same owner episode clears through an existing authorized resolution, preserving subject and causality. Confirm with Q1a; a route-open or replay never counts as resolution.
 
-## Per-family search and newly authored bindings
+Current supporting evidence: `Plans/assistant-chat-design.md:3524`; `Plans/Planning_Wizard.md:116`. These holds do not reopen already-decided intake action existence or choose retirement/historical-only disposition. **Jared's answers: PENDING.**
 
-Search scope: literal exact names, separately for all eight families, in every top-level `Plans/*.md`, every `Plans/event_payloads/**/*.json`, `Plans/event_family_registry.json` and `Plans/storage_value_registry.json`; inspect matching current owner passages and their referenced ACD, Contracts, Storage and Wiring units. Generated shards and ledgers are not semantic evidence. Also searched scripts/tests for the exact family names and `revision_run`; no existing event-specific checker was found before the new checker. Survey L2 and September interaction rows were read as leads only.
+## Current-canon search, premise checks and new technical bindings
 
-| Family | Existing partial definition reused | Scoped negative evidence | NEW owner contract identifiers |
-|---|---|---|---|
-| `bundle.revision_requested` | Contracts minima, ACD-049; existing SP-286 and SP-278 | No exact family emitter version, phase identity recipe or authorized passive history-reader binding was found in this scope before drafting. | `emitter.bundle_revision_requested@1.0.0`, `reader.bundle_revision_requested_history@1.0.0`, payload `pm.event_payload.bundle.revision_requested.v1@1.0.0` |
-| `bundle.revision_started` | Storage exact audit bullet; ACD-049; SP-286 and SP-278 | No exact family emitter version, phase identity recipe or authorized passive history-reader binding was found in this scope before drafting. | `emitter.bundle_revision_started@1.0.0`, `reader.bundle_revision_started_history@1.0.0`, payload `pm.event_payload.bundle.revision_started.v1@1.0.0` |
-| `bundle.revision_completed` | Storage exact audit bullet; ACD-049; SP-286 and SP-278 | No exact family emitter version, phase identity recipe or authorized passive history-reader binding was found in this scope before drafting. | `emitter.bundle_revision_completed@1.0.0`, `reader.bundle_revision_completed_history@1.0.0`, payload `pm.event_payload.bundle.revision_completed.v1@1.0.0` |
-| `bundle.revision_interrupted` | Storage exact audit bullet; ACD-050 recovery; SP-286 and SP-278 | No exact family emitter version, phase identity recipe or authorized passive history-reader binding was found in this scope before drafting. | `emitter.bundle_revision_interrupted@1.0.0`, `reader.bundle_revision_interrupted_history@1.0.0`, payload `pm.event_payload.bundle.revision_interrupted.v1@1.0.0` |
+Per-family base search: top-level Plans owner Markdown, event_payloads JSON and event/storage registries; generated shards and ledgers are excluded as semantic evidence. The original four bundle searches are retained at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/base-family-search.json` (SHA-256 `96832ddf6013b0116d2adff5ac939f365bb6928a4b2454d59435a1881d0f605a`). Before new Wizard drafting, both exact names were separately searched at the reviewed head; `fix1-wizard-search.json` records the scope, matches and bounded absence of exact emitters, schemas, identity/read/source contracts. A negative search never substitutes for source custody.
 
-Each family has its own semantic, payload and Storage unit. Each NEW identity recipe hashes the compact JSON array of that exact event type, project, thread, bundle, revision and phase_sequence; its own idempotency key includes its event type and digest. phase_sequence is newly authored technical ordering custody, not a new product feature: request zero, each phase increments the actual latest predecessor, interrupted revision resume keeps revision_id and uses a new phase sequence. Current dispatch/admission remains closed. Each family explicitly adopts original complete-value SP-286 receipt custody, independent current-source verification and its own writer cutoff / reader withdrawal / authenticated rebuild fence.
+- **Bundle reuse:** ACD-049/050, Storage's exact lifecycle audit names and Contracts' requested minimum establish the four current behaviors; ACD-571–574 keep them Deep Plan-only. Retirement of CWF does not retire them.
+- **Wizard correction:** UCC-032 and UCC-002/current §2.1A (`Plans/UI_Command_Catalog.md:330`, `Plans/UI_Command_Catalog.md:1315`) decide deferred Planning Wizard routing, real Project and actual child/current refs. PWIZ-001 (`Plans/Planning_Wizard.md:22`) decides the three traceable accepted seed families. The old draft's action-existence premise failed; no owner answer was required.
+- **Blocked hold:** current CV-233/CV-234 and ACD's shared taxonomy are live, while CWF/WM-036 old lifecycle text is compatibility-only. The missing exact current subject/predicates remain a Jared choice.
+- **Shared prerequisites:** current SP-286/CV-339 full-value v2 and SP-336/SP-347/SeglogFrameV2 are explicitly adopted; DL-076's nine-field durable token rule is preserved. No older product answer is applied to pick retention or a Wizard trigger. DL-045 supplies bounded technical scope only.
 
-Reused bindings, not newly authored: `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` / `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`, existing source-coupled index rows and RP-PROJECTION-3GEN. No per-family stored projection/checkpoint/token is introduced. Therefore no storage-value registry rows are added; all history is queried from the already registered generic index. Original source stores remain their owners' responsibility, with unresolved physical composition flagged above.
+New source contract: SP-579 materializes existing `revision_run.v1`, original intent and phase source_ref recipe (`revision_run_phase:` + compact-array SHA-256), original result joins and complete receipt/recovery/restore protocol. This closes an existing source, without installing a runner or admitting an event. Bundle emitter/read identifiers and identity recipes remain the four previously authored independent contracts, now corrected and completed.
 
-The per-family current search capture (including the newly drafted owner text) is external at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/current-family-search.json`, SHA-256 `d960c9dc32664858f4818e546e6891005e2e5455a0d32a2beb886cce0391fc8f`. Current references and exact quotes are recorded in the self-grade; the capture is audit evidence, not a canonical owner contract.
+New independent Wizard bindings: `emitter.wizard_opened@1.0.0`, `reader.wizard_opened_history@1.0.0`, `emitter.wizard_deferred_payload_loaded@1.0.0`, `reader.wizard_deferred_payload_loaded_history@1.0.0`; each exact payload schema, compact JSON/SHA-256 identity over exact event/Project/PlanningRun/intake child/request, and original source family `wizard_open_evidence` or `wizard_seed_load_evidence`. Each physical source has its own closed schema/key/result/original receipt and restore protocol under its own Storage heading, with its own materialized storage-value row. All are labeled newly authored technical contracts, never pre-existing definitions. Both reuse the current command instance and actual child/Named Plan/context and preserve all canonical seed warnings/amendments/lineage and overlapping work intents.
 
-## Retention cells
+All six independent history consumers explicitly reuse SP-278's existing generic projector/reader/checkpoint, global coverage and prior-value CAS; no per-family persisted cursor/projection/dedupe namespace is added. Permanent EventRecord identities stay with the existing global/scoped indexes. Existing index/checkpoint retention is unchanged.
 
-All eight rows leave `retention_policy_ref=PENDING_RETENTION_DECISION`. For four prepared bundle families, candidates are Case L-3's receipt/audit/source-lineage class versus Chat content (`Plans/storage-plan.md`, “Retention authority and defaults”); bundle audit vocabulary alone is not a resolved lifetime assignment for Deep Plan review history. RT must settle the exact class and original body relationship. For four unresolved wizard rows, the current product owner/lifecycle must also be established before class selection; candidate receipt/audit, operational history or planning source lineage is not an assignment. Existing shared generic checkpoint/index retention remains unchanged.
+## Shared-file hunks and IDs
 
-## Questions for Jared — unanswered
+- `Plans/Contracts_V0.md`: edit only lane units CV-590–593; append CV-594/595.
+- `Plans/storage-plan.md`: edit only lane units SP-575–578; append SP-579 and two separately named exact-family Storage custody sections. The named sections avoid minting additional SP IDs beyond the allocated block.
+- `Plans/Planning_Wizard.md`: append PWIZ-097/098. Main's maximum was PWIZ-037; neither new ID existed on the initial 501 origin refs. The final pinned scan covers 506 refs and distinguishes the expected declarations on this pushed lane from collisions elsewhere.
+- `Plans/storage_value_registry.json`: extract only revision_run from `github_bundle_note_preview_browser_families`, add its materialized original-source row and two independent Wizard original-source rows. Unrelated deferred keys remain deferred.
+- New three source schemas, two Wizard payload schemas, six-family full fixtures and the static oracle module; extend the original checker. Existing four bundle payload schemas/fixtures remain valid. No tests file is edited.
+- Derived files regenerated only for contracts_v0, planning_wizard, storage-plan, storage_value_registry and the global `.plan_index` outputs. No other owner's shard directory changes.
 
-### Q1: Which current lifecycle owns wizard blocked history?
+IDs used in this lane: **CV-590–595, SP-575–579, ACD-571–574, PWIZ-097/098**. New in round 1: **CV-594/595, SP-579, PWIZ-097/098**. The initial 501-ref scan found no existing declarations before minting; the final pinned 506-ref scan finds only this lane's expected declarations and no collision on another ref. No ATS, registry, admission, Decision Log, WorkNode or decision-card ID is minted. Q1a/Q1b are report-local unanswered labels.
 
-**Rows:** `wizard.blocked`, `wizard.unblocked`.
-
-**Question:** Should the distinct blocked/unblocked wizard lifecycle survive as active PlanningRun events? If yes, which current owner and trigger/recovery predicates replace retired wizard_status and clarification-round rules? Or should the exact old families become historical-only/retired?
-
-**Evidence:** Contracts' canonical-event requirement and WM-036's retired lifecycle route conflict with CWF's explicit retirement and PWIZ-001/003's current PlanningRun/topic ownership. Technical identity work cannot choose the user-visible blocked lifecycle. No proposed three-round threshold is carried forward.
-
-**Answer:** PENDING. No decision applied.
-
-### Q2: Does deferred Chain Wizard launch/load remain a current action?
-
-**Rows:** `wizard.opened`, `wizard.deferred_payload.loaded`.
-
-**Question:** Should opening/loading the old deferred payload remain an action in PRD Builder or Planning Wizard? If yes, identify the destination workflow and successful open/load boundary. Otherwise, may these exact families be excluded as retired?
-
-**Evidence:** UCC-032 still accepts the old command/events; CWF is retired, and the current owners define PRD intake and Approved PRD Pack handoff instead. No alias or exact replacement-success boundary was established.
-
-**Answer:** PENDING. No decision applied.
-
-## Shared-file hunks, IDs and integration boundary
-
-Only append hunks in `Plans/Contracts_V0.md`: CV-590–593, and `Plans/storage-plan.md`: SP-575–578. Append hunks in `Plans/assistant-chat-design.md`: ACD-571–574. No existing shared rows reflowed or reordered. The fixtures and four closed payload files are new. `scripts/pm_bundle_revision_events.py` is the new static checker. No tests file is edited.
-
-Allocated IDs used: CV-590, CV-591, CV-592, CV-593; SP-575, SP-576, SP-577, SP-578; ACD-571, ACD-572, ACD-573, ACD-574. ACD starts 60 above main's highest ACD-511. No other PlanUnit, admission, census, card-decision or family registry IDs minted. Q1/Q2 are report-local unanswered labels.
-
-The two mandated memory paths were absent on Nas1: `/home/sittingmongoose/.claude-t3/me/projects/-home-sittingmongoose-src-PuppetMaster/memory/pm-plan-id-allocation.md` and `pm-index-needs-currentness-edition.md`. The explicit brief's ID and currentness-copy requirements were followed; no contents were invented. All 15 copied currentness files matched SHA-256; external `currentness-sha256.txt` records the hashes.
-
-## Checks
-
-Check exit codes and final generation/validation status are appended below after completion. An intermediate diff observed broad shard churn during generation; once the generator completed, tracked shard changes were confined to the three edited owners. No unrelated document is included in the branch.
-
-ID collision check: 475 fetched origin refs, all assigned CV/SP/ACD declaration blocks searched in their owner documents; no collisions.
-
-Additional verification: four Draft 2020-12 schemas pass check_schema; all twelve new PlanUnit YAML blocks parse. New owner prose is append-only (Contracts +264/-0, Chat +192/-0, Storage +363/-0). Forbidden-path diff: empty.
-
-Every NEW binding listed above is a newly authored owner contract under DL-045; none is represented as a pre-existing definition.
-
-Base-canon per-family search was also reproduced against the unchanged starting commit, excluding every new draft binding: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/base-family-search.json`, SHA-256 `96832ddf6013b0116d2adff5ac939f365bb6928a4b2454d59435a1881d0f605a`. This provides a distinct before-draft evidence surface for every scoped negative finding above.
-
-Implementation commit: `73a678dfaa0f9f890c442eb9eb0ffe5b8f12f50f`. Report/self-grade are a separate follow-up commit; their addition does not change the assessed owner contracts.
+## Verification and limits
 
 | Check | Exit | Result |
 |---|---:|---|
-| `python3 scripts/pm_bundle_revision_events.py` | 0 | PASS, 179 static cases |
+| `python3 scripts/pm_bundle_revision_events.py` | 0 | PASS, 808 static cases, 629 full-composition cases |
+| Full storage-value registry Draft 2020-12 validation and source-schema mirror checks | 0 | PASS |
+| `python3 scripts/pm-storage-recovery-contracts.py --self-test` | 0 | top-level status pass; failures empty |
+| 13 edited/new PlanUnit YAML/token checks; path/admission/derived-owner checks | 0 | PASS |
 | `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | pass |
-| `python3 scripts/pm-plan-index.py generate` | 0 | pass |
+| `python3 scripts/pm-plan-index.py generate` | 0 | top-level pass |
 | `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass |
-| `python3 scripts/pm-plan-index.py validate` | 0 | pass |
+| `python3 scripts/pm-plan-index.py validate` | 0 | top-level pass |
+| `git diff --check` | 0 | pass |
+| Final self-grade quote verification and 506-ref ID scan | 0 | pass |
 
-`git diff --check`: exit 0. Self-grade quote verification: PASS. ID collision scan: 475 origin refs, zero collisions. All native oracles remain NOT_RUN. Full required index validation top-level status is `pass`, zero failures. No governance checks, reseal or landing were run.
+All 15 ignored currentness-edition files were copied before index generation and matched SHA-256. An intermediate index validation overlapped a later source edit and reported one stale generated readiness artifact; final regeneration/validation replaces that result. The storage checker first required its documented --self-test selector; the successful invocation above is the recorded result. No validator was weakened. No aggregate governance/landing gates or reseal were run for this unlanded drafting fix.
 
-External check evidence (path plus SHA-256):
+Static source/codec/receipt fixtures use synthetic trusted owner observations. Actual native source authentication, original issuance/sync, protected-store CAS/atomicity, backup and recovery remain NOT_RUN. Materialized here means a complete planning schema/contract, not deployed storage or Event Authority activation. Admission and RT retention remain the integration work; the two narrowed Wizard questions remain Jared's.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/contract-check.txt` — `de0a0fa533ec64fbd6d74bc7439f17d70b47fdb303ece3087caf204e833d18cf`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/shard-generate.txt` — `48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/index-generate.txt` — `9ef2e01f0b9556b35fd76b096da2caecbd2da2db129a59005aee607be3ca77dd`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/shard-check.txt` — `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/index-validate.txt` — `649ab4ca523ece13df797f76022650d37d98aaf5d814f33f3350f55b0a886a7b`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/check-results.json` — `42977f4608b8dbefae5ea67fe4906b9e242096d30a89114d5524e45f5c33c6be`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/diff-check.txt` — `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/path-audit.txt` — `16fac38a5fa3d7b5c17a454393ba003718da20d2f577196c328639153b377060`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/id-collision-check.txt` — `540eafdf353d805dfb2364371b4c9fcd52fade7be5d393ec8b7df77cb18de05d`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/currentness-sha256.txt` — `edac215a3dd1a1dcf3c6f820967258de5b4626dd3dbe6631c4b5331838161f26`
+## Retained evidence
 
-Handoff: four review drafts remain below admission depth for the technical gaps stated above; four wizard rows require Jared’s unanswered Q1/Q2. Do not treat the passing shape/index checks as a full Event Authority depth pass. All eight retention cells remain pending for RT. Leave this local worktree for lead integration.
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCW-sol/REVIEW.md`, SHA-256 `a464f0fef0d3e7f52419b3abc0b35f2f1e7816aec4e2d2621498cccaba445e07`. Full fix outputs below use directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW` plus filename and SHA-256; the report/self-grade are copied there after the final push. Scratch authoring scripts are removed, and no raw captures or logs are committed.
+
+| Evidence file | SHA-256 |
+|---|---|
+| `fix1-check-results.json` | `3cc01253dbdefc747b89416bedb09f65dcb3f070cbdb063a0781530e70957fff` |
+| `fix1-contract-check.txt` | `406c4aa137f6f4aa246a4d7883120f0d36df29bf6d89cd819206633701d781f9` |
+| `fix1-currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
+| `fix1-diff-check.txt` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `fix1-id-collision-check.json` | `b5ea43f43475f93daa36ff18081a68d052a235a726ada0ffda29339c9c664026` |
+| `fix1-index-generate.txt` | `63064fc44b7ec58d9bf002403a748696f276de638733932c91ca9295b963189b` |
+| `fix1-index-validate.txt` | `4937662c8dfcfd75243ced0cc207e035f27b67e10f53ad31e7374e3e2ca9b5d0` |
+| `fix1-quote-check.json` | `9f8144ac6a5eca1be9226f90477cf9a0db35ea02c33b595da6a589eb2f153955` |
+| `fix1-shard-check.txt` | `a715ce384c99d89a8b5576fb6a07f92786372746197d08d9bad57c619fec35c1` |
+| `fix1-shard-generate.txt` | `d7cfdf85905b1af45d5817cf77df09f8ece650942ade45163f90dd6f61b3ad68` |
+| `fix1-storage-recovery-check.txt` | `e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a` |
+| `fix1-structural-checks.json` | `b8b48bb398f00e2fdb6f0e2538b60716478bee4928e8b4cfba773a69534d4946` |
+| `fix1-wizard-search.json` | `324dffe4d7426126626a8fe31fc4262d501880855d81d357a2c4441e5621180f` |
