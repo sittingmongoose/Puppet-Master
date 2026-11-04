@@ -573,7 +573,7 @@ directory, which is why it cannot run where branches land.
 Land that separate commit through the ordinary fast-forward, shard-check, landing-check, main-push
 and worktree-removal procedure while holding the same landing lock; release it afterward.
 
-Five things that make the difference between a good baseline and a misleading one:
+Six things that make the difference between a good baseline and a misleading one:
 
 - `git sparse-checkout disable`, because a sparse tree is missing inputs the checks read and records
   failures no landing ever sees.
@@ -586,6 +586,17 @@ Five things that make the difference between a good baseline and a misleading on
   later landings will be checked against; and before the commit, so the commit it names is
   `origin/main` itself, which rule 2 needs on the history of every later base.
 - Both files in one commit, so the baseline and the run it describes never disagree.
+- Run 002 in the new run's `supersedes_run_ids`. `snapshot-current` adds
+  `pds-20260611-002-atomize-planunits` by itself whenever that run is present and complete, so the
+  recipe passes only the previous current run. The aggregate checks validate run 002
+  (`DEFAULT_PLAN_MIGRATION_RUN`), whose frozen inventory holds the 72 documents of 2026-07-03. Its
+  validator turns `doc_count_mismatch` and `inventory_doc_set_mismatch` into historical-scope warnings
+  only while a complete in-repo run declares that it supersedes run 002 and the snapshot
+  `current_run.json` names passes full live validation. Run 003 made that declaration on 2026-08-28
+  and left the repository with runs 004-016 on 2026-09-10, which stranded run 002. Every snapshot
+  inventories every live document, so it can truthfully repeat the declaration. When older snapshots
+  move out, move them oldest first: a gap leaves an older snapshot that declares run 002 as a dead end,
+  which fails as `historical_successor_lineage_divergent`.
 
 Takes about ten minutes, plus the exports of the subchecks that print only a sample (see "Subchecks
 keyed from their export"), which the baseline records so that later landings can key those
