@@ -2,7 +2,7 @@
 export const tests = {
  'SW01 first click in short window': async t => {
   await t.viewport(1024,480);
-  for(let i=0;i<10;i++) {
+  for(let i=0;i<Number(t.args.reps||10);i++) {
    const f=await t.app.open();
    await t.emulate({reducedMotion:'no-preference'});
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
