@@ -73,16 +73,16 @@ def catalogue(m, fixtures):
         envelope=json.loads((ROOT/'Plans/event_record.schema.json').read_text())
         for field in envelope['required']:
             bad=dict(e);del bad[field]
-            add('envelope.schema',family+':envelope_required_'+field,'envelope_valid',(e,),(bad,),[("return Draft202012Validator(envelope, format_checker=FORMATS).is_valid(event)",'return True')])
+            add('envelope.schema',family+':envelope_required_'+field,'envelope_valid',(e,),(bad,),[("return DMValidator(envelope, format_checker=FORMATS).is_valid(event)",'return True')])
         for field,value in [('schema_version','9.0.0'),('schema_id','pm.foreign'),('unexpected','secret')]:
-            add('envelope.schema',family+':envelope_shape_'+field,'envelope_valid',(e,),(dict(e,**{field:value}),),[("return Draft202012Validator(envelope, format_checker=FORMATS).is_valid(event)",'return True')])
+            add('envelope.schema',family+':envelope_shape_'+field,'envelope_valid',(e,),(dict(e,**{field:value}),),[("return DMValidator(envelope, format_checker=FORMATS).is_valid(event)",'return True')])
         custody=a['stored_custody']
         cs=json.loads((ROOT/'Plans/event_append_receipt_contracts.schema.json').read_text())['$defs']['custody_v2']
         for field in cs['required']:
             bad=dict(custody);del bad[field]
-            add('custody.schema',family+':custody_required_'+field,'custody_valid',(custody,),(bad,),[("return Draft202012Validator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS).is_valid(custody)",'return True')])
+            add('custody.schema',family+':custody_required_'+field,'custody_valid',(custody,),(bad,),[("return DMValidator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS).is_valid(custody)",'return True')])
         for field,value in [('schema_version','1.0.0'),('schema_id','pm.foreign'),('unexpected','secret')]:
-            add('custody.schema',family+':custody_shape_'+field,'custody_valid',(custody,),(dict(custody,**{field:value}),),[("return Draft202012Validator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS).is_valid(custody)",'return True')])
+            add('custody.schema',family+':custody_shape_'+field,'custody_valid',(custody,),(dict(custody,**{field:value}),),[("return DMValidator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS).is_valid(custody)",'return True')])
 
         def writer(guard, label, event=None, original=None, expression=None, edits=None):
             add(guard, family + ':' + label, 'valid_event', vp,
@@ -181,7 +181,7 @@ def catalogue(m, fixtures):
         for field in ['sequence_id','observed_at_utc','persisted_at_utc']:
             value=e[field]+1 if field=='sequence_id' else '2026-11-04T12:01:00Z'
             add('receipt.full_value',family+':forged_'+field,'resolve_full_value',(row,e,a),(row,dict(e,**{field:value}),a),
-                no_if("commitment['sha256'] != hashlib.sha256(full_value_preimage(requested)).hexdigest() or commitment['sha256'] != hashlib.sha256(full_value_preimage(authority['stored_event'])).hexdigest()"))
+                no_if("commitment['sha256'] != hashlib.sha256(requested_preimage).hexdigest() or commitment['sha256'] != hashlib.sha256(stored_preimage).hexdigest()"))
         add('receipt.protected_authority',family+':unprotected_original','resolve_original',(row,e,a),(row,e,dict(a,protected_authority_current=False)),
             [(" or not authority['protected_authority_current']",'')])
         fields=['event_id','scope_partition','event_type','idempotency_key','producer_semantic_digest','storage_instance_id']
@@ -190,7 +190,7 @@ def catalogue(m, fixtures):
             bad=change(a,['stored_custody',field],value)
             add('receipt.custody_identity',family+':custody_'+field,'resolve_original',(row,e,a),(row,e,bad),no_if("expected_identity != actual_identity or custody['storage_instance_id'] != authority['storage_instance_id']"))
         add('receipt.incoming_semantics',family+':incoming_actor','resolve_original',(row,e,a),(row,dict(e,actor_ref='ref:foreign'),a),
-            no_if("incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or producer_digest(incoming) != producer_digest(stored)"))
+            no_if("incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or retained_producer_digest(incoming) != retained_producer_digest(stored)"))
         for field in ['event_id','sequence_id','segment_ref','byte_offset']:
             value=a['original_append_result'][field];value=value+1 if isinstance(value,int) else value+':foreign'
             bad=change(a,['original_append_result',field],value)
@@ -313,7 +313,7 @@ def catalogue(m, fixtures):
         oversize=copy.deepcopy(e);oversize['payload']['unrecognized_inline_padding']='x'*16385
         add('payload.inline_cap',family+':oversized_inline','resolved_payload',(e,{'type':'object'}),(oversize,{'type':'object'}),no_if('len(canonical_fixture_msgpack(body)) > INLINE_LIMIT'),lambda x:x is not None)
         bad=copy.deepcopy(e);bad['payload']['schema_version']='9.0.0'
-        add('payload.schema',family+':logical_schema','resolved_payload',(e,ps),(bad,ps),[("body if Draft202012Validator(schema, format_checker=FORMATS).is_valid(body) else None",'body')],lambda x:x is not None)
+        add('payload.schema',family+':logical_schema','resolved_payload',(e,ps),(bad,ps),[("body if DMValidator(schema, format_checker=FORMATS).is_valid(body) else None",'body')],lambda x:x is not None)
         # Only the three owners whose closed schemas legally exceed the cap.
         external=next((c for c in row['payload_boundary_cases'] if c['case_id']=='external_16385'),None)
         if external:
@@ -436,7 +436,99 @@ def catalogue(m, fixtures):
         settings('dry_exclusion','exclusion:'+token,change(docs,['exclusions','notes',command],note.replace(token,'absent-token')),[("return all(token in exclusion for token in ('settings.layer.changed', 'owner-adoption', 'owner_contract_missing', 'disabled'))",'return True')])
     add('datetime.timezone','datetime:timezone','utc_datetime',('2026-11-04T12:00:00Z',),('2026-11-04T12:00:00',),[('return parsed.tzinfo is not None','return True')])
     add('datetime.parse','datetime:parse','utc_datetime',('2026-11-04T12:00:00Z',),('not-a-date',),[('except ValueError:\n        return False','except ValueError:\n        return True')])
+    numeric_catalogue(m, fixtures, add, change)
     return probes,mutants
+
+
+def numeric_catalogue(m, fixtures, add, change):
+    # The shared type callback is the same rule at schema and model boundaries.
+    # The MessagePack domain is a named duplicate on paths which serialize a
+    # complete retained value. Neither implementation is relaxed in production.
+    integer_edits = [('return type(instance) is int', "return Draft202012Validator.TYPE_CHECKER.is_type(instance, 'integer')")]
+    codec_edits = [('    if type(value) is int:\n        if 0 <= value <= 127:', '    if type(value) is float and value.is_integer():\n        value = int(value)\n    if type(value) is int:\n        if 0 <= value <= 127:')]
+    def numeric(guard, family, label, fn, positive, negative, accept=bool):
+        edits = {
+            'numeric.integer_form': integer_edits,
+            'numeric.msgpack_integer_form': codec_edits,
+            'numeric.integer_codec_duplicate': integer_edits + codec_edits,
+        }[guard]
+        add(guard, family + ':numeric:' + label, fn, positive, negative, edits, accept)
+    for row in fixtures['families']:
+        family = row['event_type']
+        for token in row['numeric_representation_cases']['upstream_aliases']:
+            alias = json.loads(token)
+            if abs(alias) > m.MAX_SAFE_JSON_INTEGER:
+                continue
+            state = m.upstream_sequence_state(row, int(alias))
+            e, o, a = state['event'], state['original_operation'], state['committed_authority']
+            bad = dict(e, producer_sequence_id=alias)
+            numeric('numeric.integer_form', family, 'writer_upstream_' + token, 'valid_event', (row,e,o), (row,bad,o))
+            numeric('numeric.integer_form', family, 'retry_upstream_' + token, 'current_retry', (row,e,a), (row,bad,a), lambda x:x[0]=='return_original_without_effect')
+            numeric('numeric.msgpack_integer_form', family, 'codec_upstream_' + token, 'msgpack_supported', (e,), (bad,))
+            numeric('numeric.integer_codec_duplicate', family, 'full_value_upstream_' + token, 'resolve_full_value', (row,e,a), (row,bad,a), lambda x:x is not None)
+            # Canonicalization itself gets an independent guard. A different
+            # actor is a true positive for different semantics; only the
+            # representation changes in the negative pair.
+            add('numeric.jcs_integer_alias', family + ':numeric:hash_' + token, 'different_producer_digest',
+                (e,dict(e,actor_ref='ref:different')), (e,bad), [('        value = int(value)\n','        value = value\n')])
+        # Every numeric leaf of the actual publication/reader/rebuild/authority
+        # inputs, not an invented sibling schema or a selection of fields.
+        for name in ('publication_positive','reader_positive','rebuild_positive','original_operation','receipt_authority'):
+            positive = row[name]
+            for path, value in m.numeric_paths(positive):
+                bad = change(positive, path, float(value))
+                numeric('numeric.integer_form', family, name + ':' + '.'.join(map(str,path)), 'integer_tree', (positive,), (bad,))
+        e, o = row['positive_event_record'], row['original_operation']
+        schema = json.loads((ROOT/row['schema']).read_text())
+        for path, value in m.numeric_paths(e['payload']):
+            bad = change(e, ['payload'] + list(path), float(value))
+            numeric('numeric.integer_form', family, 'payload_schema:' + '.'.join(map(str,path)), 'schema_valid', (schema,e['payload']), (schema,bad['payload']))
+            numeric('numeric.integer_codec_duplicate', family, 'payload_writer:' + '.'.join(map(str,path)), 'valid_event', (row,e,o), (row,bad,o))
+        for name, value, function, arguments in (
+            ('envelope',e,'envelope_valid',()),
+            ('custody',row['receipt_authority']['stored_custody'],'custody_valid',()),
+            ('token',row['durable_read_token'],'token_schema_valid',(True,)),
+        ):
+            paths = m.numeric_paths(value)
+            for path, number in paths:
+                if name == 'envelope' and path[0] == 'payload':
+                    continue  # the closed payload schema is tested above
+                bad = change(value,path,float(number))
+                numeric('numeric.integer_form', family, name + ':' + '.'.join(map(str,path)), function, (value,)+arguments, (bad,)+arguments)
+        external=next((c for c in row['payload_boundary_cases'] if c['case_id']=='external_16385'),None)
+        if external:
+            state=m.boundary_state(row,external)
+            storage=state['original_operation']['payload_storage']
+            bad=change(storage,['descriptor','byte_size'],float(storage['descriptor']['byte_size']))
+            numeric('numeric.integer_form',family,'external_descriptor_byte_size','resolved_payload',
+                    (state['event'],schema,storage),(state['event'],schema,bad),lambda x:x is not None)
+            for path,value in m.numeric_paths(storage['body']):
+                bad=change(storage,['body']+list(path),float(value))
+                numeric('numeric.integer_codec_duplicate',family,'external_body:'+'.'.join(map(str,path)),'resolved_payload',
+                        (state['event'],schema,storage),(state['event'],schema,bad),lambda x:x is not None)
+        add('numeric.jcs_nonintegral',family+':numeric:fractional_hash_refusal','producer_hash_supported',
+            (row['positive_event_record'],),(dict(row['positive_event_record'],producer_sequence_id=1.5),),
+            [('if not value.is_integer():','if False:')])
+        large = m.upstream_sequence_state(row, m.MAX_SAFE_JSON_INTEGER+2)
+        normal = m.upstream_sequence_state(row, 1)
+        add('numeric.current_exact_range', family + ':numeric:writer_unsafe_integer', 'valid_event',
+            (row,normal['event'],normal['original_operation']), (row,large['event'],large['original_operation']),
+            [('if not retained and type(value) is int and abs(value) > MAX_SAFE_JSON_INTEGER:', 'if False:')])
+        add('numeric.current_exact_range', family + ':numeric:retry_unsafe_integer', 'current_retry',
+            (row,normal['event'],normal['committed_authority']), (row,large['event'],large['committed_authority']),
+            [('if not retained and type(value) is int and abs(value) > MAX_SAFE_JSON_INTEGER:', 'if False:')], lambda x:x[0]=='return_original_without_effect')
+        for token in row['numeric_representation_cases']['current_json_negatives']:
+            if token == '-0':
+                guard='numeric.raw_negative_zero'
+                edits=[("if token == '-0':",'if False:')]
+            elif token in ('01','00','001'):
+                guard='numeric.json_single_value'
+                edits=[('return json.loads(text, parse_int=current_integer_token, parse_float=current_float_token, parse_constant=current_float_token)',
+                        'return json.JSONDecoder(parse_int=current_integer_token, parse_float=current_float_token, parse_constant=current_float_token).raw_decode(text)[0]')]
+            else:
+                guard='numeric.raw_float'
+                edits=[("raise ValueError('DM current input requires integer tokens')",'return float(token)')]
+            add(guard,family+':numeric:json_'+token,'current_json_valid',('1',),(token,),edits)
 
 
 def container_rules(fixtures, probes):
@@ -465,6 +557,21 @@ def container_rules(fixtures, probes):
 
 
 def invoke(m, probe, which):
+    if probe['function']=='producer_hash_supported':
+        try:m.producer_digest(*probe[which])
+        except ValueError:return False
+        return True
+    if probe['function']=='msgpack_supported':
+        try:m.canonical_fixture_msgpack(*probe[which])
+        except ValueError:return False
+        return True
+    if probe['function']=='current_json_valid':
+        try:m.decode_current_json(*probe[which])
+        except ValueError:return False
+        return True
+    if probe['function']=='different_producer_digest':
+        first,second=probe[which]
+        return m.producer_digest(first)!=m.producer_digest(second)
     if probe['function']=='schema_wellformed':
         try:m.assert_schema_references(*probe[which])
         except SchemaError:return False
@@ -472,7 +579,7 @@ def invoke(m, probe, which):
     if probe['function']=='schema_valid':
         schema,value=probe[which]
         schema=m.json.loads(json.dumps(schema))
-        return m.Draft202012Validator(schema,format_checker=m.FORMATS).is_valid(value)
+        return m.DMValidator(schema,format_checker=m.FORMATS).is_valid(value)
     if probe['function']=='schema_references_valid':
         try:
             m.assert_schema_references(*probe[which])
@@ -511,6 +618,19 @@ def expected_probe_ids(guard, probes, containers):
               or guard=='token.schema' and (p['guard']=='token.durable_snapshot'
                   or p['guard']=='token.generation_dataset_grammar' and ':checkpoint_generation_' in p['label'])
               or guard=='datetime.parse' and p['guard'].startswith('schema.') and p['guard'].endswith('.format')]
+    if guard=='numeric.integer_codec_duplicate':
+        expected.extend(p['id'] for p in probes if p['guard'] in ('numeric.integer_form','numeric.msgpack_integer_form'))
+    numeric_validator = {'envelope.schema':'envelope:', 'custody.schema':'custody:', 'token.schema':'token:'}.get(guard)
+    if numeric_validator:
+        expected.extend(p['id'] for p in probes if p['guard']=='numeric.integer_form'
+                        and ':numeric:'+numeric_validator in p['label'])
+    # Removing an integer type keyword also removes its strict type callback.
+    # These are the same field/type defect, not an unrelated numeric refusal.
+    payload_integer_type=re.fullmatch(r'schema\.(.+):properties\.([^.]+)\.type',guard)
+    if payload_integer_type:
+        family,field=payload_integer_type.groups()
+        expected.extend(p['id'] for p in probes if p['guard']=='numeric.integer_form'
+                        and p['label']==family+':numeric:payload_schema:'+field)
     aliases={
         'token.storage_instance_id':['operating_checkpoint_foreign_storage_instance','operating_reader_equally_foreign_storage_instance_id'],
         'token.source_storage':['operating_checkpoint_foreign_source_storage','operating_reader_equally_foreign_source_storage'],
@@ -546,9 +666,13 @@ def main():
             if name in seen:return ''
             seen.add(name)
             node=funcs[name]
-            calls=sorted({n.func.id for n in ast.walk(node) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id in funcs})
+            # Include callbacks passed as values (JSON numeric token hooks),
+            # not only syntactically direct calls.
+            calls=sorted({n.id for n in ast.walk(node) if isinstance(n,ast.Name) and n.id in funcs})
             if any(isinstance(n,ast.Name) and n.id=='FORMATS' for n in ast.walk(node)):
                 calls=sorted(set(calls)|{'utc_datetime'})
+            if any(isinstance(n,ast.Name) and n.id=='DMValidator' for n in ast.walk(node)):
+                calls=sorted(set(calls)|{'integer_type'})
             return ast.dump(node)+''.join(closure(c,seen) for c in calls)
         return {name:hashlib.sha256(closure(name).encode()).hexdigest() for name in funcs}
     for guard,edits in mutants.items():
@@ -568,7 +692,9 @@ def main():
         expected=expected_probe_ids(guard,probes,containers)
         for p in probes:
             try:
-                fn={'token_schema_valid':'read_token_validator','schema_references_valid':'assert_schema_references','schema_wellformed':'assert_schema_references','schema_valid':'resolved_payload'}.get(p['function'],p['function'])
+                fn={'token_schema_valid':'read_token_validator','schema_references_valid':'assert_schema_references','schema_wellformed':'assert_schema_references','schema_valid':'resolved_payload',
+                    'msgpack_supported':'canonical_fixture_msgpack','current_json_valid':'decode_current_json','different_producer_digest':'producer_digest',
+                    'producer_hash_supported':'producer_digest'}.get(p['function'],p['function'])
                 affected=bool(schema_edits) and any(p['label'].startswith(schema_owners[e['schema_id']]+':') for e in schema_edits) and fn in ('resolved_payload','valid_event','resolve_original','resolve_full_value','reader_result','rebuild_publication','publication','current_retry')
                 key=(p['id'],prints[fn],json.dumps(schema_edits,sort_keys=True) if affected else '')
                 if key not in observed:

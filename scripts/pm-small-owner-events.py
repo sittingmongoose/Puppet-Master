@@ -30,6 +30,74 @@ def utc_datetime(value):
 
 ROOT = Path(__file__).resolve().parents[1]
 INLINE_LIMIT = 16 * 1024
+MAX_SAFE_JSON_INTEGER = 2**53 - 1
+
+
+def integer_type(checker, instance):
+    """The DM integer-only codec domain excludes Python's integral floats."""
+    return type(instance) is int
+
+
+DMValidator = validators.extend(
+    Draft202012Validator,
+    type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', integer_type),
+)
+
+
+def integer_tree(value):
+    if type(value) is float:
+        return integer_type(None, value)
+    if isinstance(value, dict):
+        return all(integer_tree(v) for v in value.values())
+    if isinstance(value, list):
+        return all(integer_tree(v) for v in value)
+    return True
+
+
+def current_integer_token(token):
+    if token == '-0':
+        raise ValueError('noncanonical negative-zero integer token')
+    return int(token)
+
+
+def current_float_token(token):
+    raise ValueError('DM current input requires integer tokens')
+
+
+def decode_current_json(text):
+    """Current wire input only; retained JSON is decoded under its old recipe."""
+    return json.loads(text, parse_int=current_integer_token, parse_float=current_float_token, parse_constant=current_float_token)
+
+
+def canonical_json_numbers(value, *, retained=False):
+    """RFC 8785 integer subset; integral float aliases have identical bytes.
+
+    Current admission still refuses floats. This separate canonicalization
+    prevents a hash caller from ever assigning 1.0 a different digest from 1.
+    Storage's u64 metadata is outside producer semantics, not rounded to binary64.
+    """
+    if type(value) is float:
+        if not value.is_integer():
+            raise ValueError('unsupported nonintegral JSON number')
+        value = int(value)
+    if not retained and type(value) is int and abs(value) > MAX_SAFE_JSON_INTEGER:
+        raise ValueError('producer number outside exact RFC 8785 integer subset')
+    if isinstance(value, dict):
+        return {k: canonical_json_numbers(v, retained=retained) for k, v in value.items()}
+    if isinstance(value, list):
+        return [canonical_json_numbers(v, retained=retained) for v in value]
+    return value
+
+
+def current_producer_numbers(event):
+    selected = {k: event[k] for k in PRODUCER_FIELDS}
+    if not integer_tree(selected):
+        return False
+    try:
+        canonical_json_numbers(selected)
+    except ValueError:
+        return False
+    return True
 
 
 def assert_schema_references(schema, registry=None):
@@ -234,9 +302,19 @@ def full_value_preimage(event):
 
 
 def producer_digest(event):
-    # All fixture values are integer/string/bool/null; this is RFC 8785 on that
-    # subset. No floating-point or non-ASCII object-key approximation is used.
-    selected = {k: event[k] for k in PRODUCER_FIELDS}
+    # Current writers admit exact integers only. Hash aliases canonically even
+    # when this utility is called independently of writer admission.
+    selected = canonical_json_numbers({k: event[k] for k in PRODUCER_FIELDS})
+    return hashlib.sha256(json.dumps(selected, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+
+
+def retained_producer_digest(event):
+    """Verify the original integer recipe without applying a new writer bound.
+
+    Historically valid MessagePack values are integer-only, including retained
+    u64 producer sequences. Do not restamp their protected digests or bytes.
+    """
+    selected = canonical_json_numbers({k: event[k] for k in PRODUCER_FIELDS}, retained=True)
     return hashlib.sha256(json.dumps(selected, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
 
 
@@ -264,6 +342,12 @@ def payload_reference(descriptor):
 
 def resolved_payload(event, schema, storage=None):
     body = event['payload']
+    try:
+        canonical_fixture_msgpack(body)
+        if isinstance(storage, dict) and isinstance(storage.get('body'), dict):
+            canonical_fixture_msgpack(storage['body'])
+    except ValueError:
+        return None
     if event['payload_ref'] is None:
         if len(canonical_fixture_msgpack(body)) > INLINE_LIMIT:
             return None
@@ -281,24 +365,28 @@ def resolved_payload(event, schema, storage=None):
         descriptor = payload_descriptor(body)
         if descriptor['byte_size'] <= INLINE_LIMIT or storage.get('descriptor') != descriptor:
             return None
+        if not integer_tree(storage['descriptor']):
+            return None
         if event['payload_ref'] != payload_reference(descriptor):
             return None
-    return body if Draft202012Validator(schema, format_checker=FORMATS).is_valid(body) else None
+    return body if DMValidator(schema, format_checker=FORMATS).is_valid(body) else None
 
 
 def envelope_valid(event):
     envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
-    return Draft202012Validator(envelope, format_checker=FORMATS).is_valid(event)
+    return DMValidator(envelope, format_checker=FORMATS).is_valid(event)
 
 
 def custody_valid(custody):
     schema = json.loads((ROOT / 'Plans/event_append_receipt_contracts.schema.json').read_text())
-    return Draft202012Validator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS).is_valid(custody)
+    return DMValidator(dict(schema, **{'$ref': '#/$defs/custody_v2'}), format_checker=FORMATS).is_valid(custody)
 
 
 def valid_event(row, event, original):
     payload_schema = json.loads((ROOT / row['schema']).read_text())
     if not envelope_valid(event):
+        return False
+    if not current_producer_numbers(event) or not integer_tree(original):
         return False
     payload = resolved_payload(event, payload_schema, original.get('payload_storage'))
     if payload is None:
@@ -345,6 +433,8 @@ def append_policy_refusal(event):
 def publication(row, state):
     """Fixture append adapter: no owner effects are invoked or undone."""
     outcome = {'durable_events': 0, 'receipt': None, 'terminal': False, 'owner_effects': 0}
+    if not integer_tree(state):
+        return outcome
     if append_policy_refusal(state['event']) is not None:
         return outcome
     if not all(state[k] for k in ADMISSION_GATES):
@@ -376,6 +466,8 @@ def resolve_original(row, incoming, authority):
     """Immutable semantic replay can outlive owner request/source handles."""
     if not custody_valid(authority['stored_custody']) or not authority['protected_authority_current']:
         return None
+    if not integer_tree(authority) or not integer_tree({k: incoming[k] for k in PRODUCER_FIELDS}):
+        return None
     payload_schema = json.loads((ROOT / row['schema']).read_text())
     if not envelope_valid(authority['stored_event']):
         return None
@@ -383,11 +475,11 @@ def resolve_original(row, incoming, authority):
         return None
     stored, receipt, result = authority['stored_event'], authority['stored_custody']['first_append_receipt'], authority['original_append_result']
     custody = authority['stored_custody']
-    expected_identity = (stored['event_id'], scope_partition(stored), stored['event_type'], stored['idempotency_key'], producer_digest(stored))
+    expected_identity = (stored['event_id'], scope_partition(stored), stored['event_type'], stored['idempotency_key'], retained_producer_digest(stored))
     actual_identity = tuple(custody[k] for k in ['event_id', 'scope_partition', 'event_type', 'idempotency_key', 'producer_semantic_digest'])
     if expected_identity != actual_identity or custody['storage_instance_id'] != authority['storage_instance_id']:
         return None
-    if incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or producer_digest(incoming) != producer_digest(stored):
+    if incoming['event_id'] != stored['event_id'] or incoming['event_type'] != stored['event_type'] or incoming['idempotency_key'] != stored['idempotency_key'] or retained_producer_digest(incoming) != retained_producer_digest(stored):
         return None
     if result != {'event_id': stored['event_id'], 'sequence_id': stored['sequence_id'], 'segment_ref': custody['original_segment_ref'], 'byte_offset': receipt['byte_offset']}:
         return None
@@ -399,11 +491,18 @@ def resolve_original(row, incoming, authority):
 
 
 def resolve_full_value(row, requested, authority):
+    if not integer_tree(requested):
+        return None
     replay = resolve_original(row, requested, authority)
     if replay is None:
         return None
     commitment = authority['stored_custody']['original_event_value_commitment']
-    if commitment['sha256'] != hashlib.sha256(full_value_preimage(requested)).hexdigest() or commitment['sha256'] != hashlib.sha256(full_value_preimage(authority['stored_event'])).hexdigest():
+    try:
+        requested_preimage = full_value_preimage(requested)
+        stored_preimage = full_value_preimage(authority['stored_event'])
+    except ValueError:
+        return None
+    if commitment['sha256'] != hashlib.sha256(requested_preimage).hexdigest() or commitment['sha256'] != hashlib.sha256(stored_preimage).hexdigest():
         return None
     return replay
 
@@ -418,6 +517,8 @@ def current_retry(row, incoming, authority):
         return ('identity_conflict_without_effect', None, 0)
     expected_schema = json.loads((ROOT / row['schema']).read_text())['$id']
     if incoming.get('payload_schema_id') != expected_schema:
+        return ('identity_conflict_without_effect', None, 0)
+    if not current_producer_numbers(incoming):
         return ('identity_conflict_without_effect', None, 0)
     result = resolve_original(row, incoming, authority)
     return ('return_original_without_effect', result, 0) if result is not None else ('identity_conflict_without_effect', None, 0)
@@ -434,7 +535,7 @@ def read_token_validator(durable):
     def full_pattern(validator, pattern, instance, subschema):
         if isinstance(instance, str) and re.fullmatch(pattern, instance) is None:
             yield ValidationError('read-token identifier does not fully match')
-    strict = validators.extend(Draft202012Validator, {'pattern': full_pattern})
+    strict = validators.extend(DMValidator, {'pattern': full_pattern})
     return strict(schema, format_checker=FORMATS)
 
 
@@ -460,6 +561,8 @@ def token_matches_original(token, original, durable=False):
 
 def checkpoint_matches_original(state):
     checkpoint = state.get('new_checkpoint', {})
+    if not integer_tree(checkpoint):
+        return False
     token = checkpoint.get('durable_read_token')
     selected = state.get('selected_live_token')
     original = state['retained_authority']
@@ -491,7 +594,7 @@ def retained_event_valid(row, event, authority, selected):
 
 def reader_result(row, state):
     return 'available' if (
-        state['reader_enabled'] and state['permission_current'] and state['source_present']
+        integer_tree(state) and state['reader_enabled'] and state['permission_current'] and state['source_present']
         and state['deletion_clear'] and state['hold_allows_disclosure']
         and state['version'] == '1.0.0' and state['current_frontier_verified']
         and token_matches_original(state['live_token'], state['retained_authority'])
@@ -502,6 +605,8 @@ def reader_result(row, state):
 
 def rebuild_publication(row, state):
     old = copy.deepcopy(state['old_publication'])
+    if not integer_tree(state):
+        return old
     if not all(state[k] for k in REBUILD_GATES):
         return old
     if state['version'] != '1.0.0' or not retained_event_valid(row, state['event'], state['retained_authority'], state['selected_live_token']):
@@ -555,6 +660,109 @@ def boundary_state(row, case):
     custody['producer_semantic_digest'] = producer_digest(state['event'])
     custody['original_event_value_commitment']['sha256'] = hashlib.sha256(full_value_preimage(state['event'])).hexdigest()
     return patched(state, case.get('patches', []))
+
+
+def upstream_sequence_state(row, sequence):
+    """A coherent synthetic original, before changing only the incoming value."""
+    state = copy.deepcopy(row['publication_positive'])
+    state['event']['producer_sequence_id'] = sequence
+    state['original_operation']['envelope_joins']['producer_sequence_id'] = sequence
+    authority = state['committed_authority']
+    authority['stored_event'] = copy.deepcopy(state['event'])
+    authority['source_selection'] = copy.deepcopy(row['reader_positive']['retained_authority']['source_selection'])
+    authority['stored_custody']['producer_semantic_digest'] = retained_producer_digest(state['event'])
+    authority['stored_custody']['original_event_value_commitment']['sha256'] = hashlib.sha256(full_value_preimage(state['event'])).hexdigest()
+    return state
+
+
+def numeric_paths(value, path=()):
+    """All numeric leaves in the lane's actual states, excluding Boolean flags."""
+    if type(value) is int:
+        yield path, value
+    elif isinstance(value, dict):
+        for key, child in value.items():
+            yield from numeric_paths(child, path + (key,))
+    elif isinstance(value, list):
+        for key, child in enumerate(value):
+            yield from numeric_paths(child, path + (key,))
+
+
+def run_numeric_family(row):
+    count = 0
+    def check(condition, label):
+        nonlocal count
+        assert condition, (row['event_type'], 'numeric', label)
+        count += 1
+
+    cases = row['numeric_representation_cases']
+    for token in cases['current_json_negatives']:
+        try:
+            decode_current_json(token)
+        except ValueError:
+            check(True, 'raw current refusal ' + token)
+        else:
+            check(False, 'raw current refusal ' + token)
+    for number in cases['retained_upstream_integers']:
+        state = upstream_sequence_state(row, number)
+        event, authority = state['event'], state['committed_authority']
+        expected = (authority['original_append_result'], authority['first_append_receipt'])
+        before = copy.deepcopy(state)
+        safe = number <= MAX_SAFE_JSON_INTEGER
+        check(valid_event(row, event, state['original_operation']) == safe, 'integer writer ' + str(number))
+        check(publication(row, state)['terminal'] == safe, 'integer publication ' + str(number))
+        check(current_retry(row, event, authority)[0] == ('return_original_without_effect' if safe else 'identity_conflict_without_effect'), 'integer retry ' + str(number))
+        check(resolve_full_value(row, event, authority) == expected, 'original retained integer recipe ' + str(number))
+        for mode in ('reader', 'rebuild'):
+            historical = copy.deepcopy(row[mode + '_positive'])
+            historical.pop('original_operation', None)
+            historical['event'] = copy.deepcopy(event)
+            historical['retained_authority'] = copy.deepcopy(authority)
+            if mode == 'reader':
+                check(reader_result(row, historical) == 'available', 'historical reader ' + str(number))
+            else:
+                check(rebuild_publication(row, historical) != historical['old_publication'], 'historical rebuild ' + str(number))
+        check(state == before, 'immutable integer authority ' + str(number))
+    for token in cases['upstream_aliases']:
+        alias = json.loads(token)
+        check(type(alias) is float and alias.is_integer(), 'integral float stimulus ' + token)
+        state = upstream_sequence_state(row, int(alias) if abs(alias) <= MAX_SAFE_JSON_INTEGER else 1)
+        event, authority = state['event'], state['committed_authority']
+        incoming = dict(event, producer_sequence_id=alias)
+        before = copy.deepcopy((state, incoming))
+        check(not envelope_valid(incoming), 'schema representation refusal ' + token)
+        check(not valid_event(row, incoming, state['original_operation']), 'writer representation refusal ' + token)
+        lost_ack = dict(state, event=incoming, receipt_delivery=False, terminal_delivery=False)
+        check(publication(row, lost_ack)['durable_events'] == 0, 'no durable aliased append ' + token)
+        check(current_retry(row, incoming, authority) == ('identity_conflict_without_effect', None, 0), 'retry representation refusal ' + token)
+        check(resolve_full_value(row, incoming, authority) is None, 'retained alias cannot forge original ' + token)
+        if abs(alias) <= MAX_SAFE_JSON_INTEGER:
+            check(producer_digest(incoming) == producer_digest(event), 'one RFC 8785 digest ' + token)
+        else:
+            try:
+                producer_digest(incoming)
+            except ValueError:
+                check(True, 'out of exact hash domain ' + token)
+            else:
+                check(False, 'out of exact hash domain ' + token)
+        check((state, incoming) == before, 'immutable alias inputs ' + token)
+    # Historical JSON -0 already decoded to integer zero; never rewrite history.
+    zero = upstream_sequence_state(row, 0)
+    negative_zero = dict(zero['event'], producer_sequence_id=json.loads('-0'))
+    check(producer_digest(negative_zero) == producer_digest(zero['event']), 'parsed -0 one semantic hash')
+    check(full_value_preimage(negative_zero) == full_value_preimage(zero['event']), 'parsed -0 one original byte string')
+    for name in ('publication_positive', 'reader_positive', 'rebuild_positive'):
+        original = row[name]
+        for path, value in numeric_paths(original):
+            bad = patched(original, [{'path': list(path), 'value': float(value)}])
+            before = copy.deepcopy(bad)
+            if name == 'publication_positive':
+                check(publication(row, bad)['durable_events'] == 0, 'publication numeric ' + repr(path))
+            elif name == 'reader_positive':
+                check(reader_result(row, bad) == 'unavailable', 'reader numeric ' + repr(path))
+            else:
+                check(rebuild_publication(row, bad) == bad['old_publication'], 'rebuild numeric ' + repr(path))
+            check(bad == before, 'immutable numeric ' + name + repr(path))
+    return count
 
 
 def run_exact_family(row):
@@ -644,7 +852,7 @@ def run_exact_family(row):
                 check(resolve_full_value(row, state['event'], damaged) is None, case['case_id'] + ': missing external source unavailable')
     for case in row['pattern_negatives']:
         schema = json.loads((ROOT / row['schema']).read_text())
-        check(not Draft202012Validator(schema, format_checker=FORMATS).is_valid(patched(row['positive_payload'], case['patches'])), case['case_id'])
+        check(not DMValidator(schema, format_checker=FORMATS).is_valid(patched(row['positive_payload'], case['patches'])), case['case_id'])
     schema = json.loads((ROOT / row['schema']).read_text())
     def patterns(node):
         if isinstance(node, dict):
@@ -710,7 +918,7 @@ def run_exact_family(row):
     } <= checkpoint_cases, 'authored checkpoint identity refusal matrix')
     live = row['reader_positive']['live_token']
     token_schema = json.loads((ROOT / 'Plans/event_record_index_checkpoint.schema.json').read_text())
-    check(Draft202012Validator(dict(token_schema, **{'$ref': '#/$defs/read_token'}), format_checker=FORMATS).is_valid(live), 'ten-field live read token')
+    check(DMValidator(dict(token_schema, **{'$ref': '#/$defs/read_token'}), format_checker=FORMATS).is_valid(live), 'ten-field live read token')
     durable = row['durable_read_token']
     check(durable == {k: v for k, v in live.items() if k != 'redb_snapshot_id'} and len(durable) == 9, 'nine-field durable token')
     check('redb_snapshot_id' not in durable, 'no persisted snapshot identity')
@@ -803,7 +1011,7 @@ def main(guard_first=None):
         else:
             raise AssertionError((event, 'unresolved schema reference accepted'))
         count += 1
-        validator = Draft202012Validator(schema, format_checker=FORMATS)
+        validator = DMValidator(schema, format_checker=FORMATS)
         payload = row['positive_payload']
         assert validator.is_valid(payload), (event, list(validator.iter_errors(payload)))
         assert semantic(payload, row['scope_policy'], event)
@@ -851,6 +1059,7 @@ def main(guard_first=None):
             assert not read_allowed(*vector)
         count += 6
         count += run_exact_family(row)
+        count += run_numeric_family(row)
         print(event + ': payload/full-envelope/original-joins/admission/receipt/withdrawal/rebuild vectors PASS; native NOT_RUN')
     print(json.dumps({'status': 'PASS', 'assertions': count, 'native_execution': 'NOT_RUN'}))
 

@@ -10006,7 +10006,45 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_format_applied"
+      "unresolved_reference_negative": "#/$defs/missing_format_applied",
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     },
     {
       "event_type": "lsp.server.lifecycle_changed",
@@ -20118,7 +20156,45 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_lsp_server_lifecycle_changed"
+      "unresolved_reference_negative": "#/$defs/missing_lsp_server_lifecycle_changed",
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     },
     {
       "event_type": "model.catalog_refreshed",
@@ -32595,7 +32671,45 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_model_catalog_refreshed"
+      "unresolved_reference_negative": "#/$defs/missing_model_catalog_refreshed",
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     },
     {
       "event_type": "subagent.context_rehydrated",
@@ -45218,7 +45332,45 @@
           "foreign_authority": true,
           "expected": "identity_conflict_without_effect"
         }
-      ]
+      ],
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     },
     {
       "event_type": "subagent.context_shrunk",
@@ -57867,7 +58019,45 @@
           "foreign_authority": true,
           "expected": "identity_conflict_without_effect"
         }
-      ]
+      ],
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     },
     {
       "event_type": "project.added",
@@ -67787,7 +67977,45 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_project_added"
+      "unresolved_reference_negative": "#/$defs/missing_project_added",
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     },
     {
       "event_type": "project.created",
@@ -77718,7 +77946,45 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_project_created"
+      "unresolved_reference_negative": "#/$defs/missing_project_created",
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     },
     {
       "event_type": "git.clone.completed",
@@ -87813,7 +88079,45 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_git_clone_completed"
+      "unresolved_reference_negative": "#/$defs/missing_git_clone_completed",
+      "numeric_representation_cases": {
+        "upstream_aliases": [
+          "1.0",
+          "1e0",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308"
+        ],
+        "current_json_negatives": [
+          "1.0",
+          "1e0",
+          "-0",
+          "01",
+          "00",
+          "001",
+          "0.0",
+          "0e0",
+          "-0.0",
+          "9007199254740991.0",
+          "1e20",
+          "1e308",
+          "1.5",
+          "NaN",
+          "Infinity",
+          "-Infinity"
+        ],
+        "retained_upstream_integers": [
+          0,
+          1,
+          9007199254740991,
+          9007199254740993,
+          18446744073709551615
+        ],
+        "qualification": "Independent per-family non-null upstream positives. Current writer/JSON input refuses numeric aliases; RFC 8785 hash aliases agree. Retained integer values keep their original protected digest and MessagePack recipe, including u64 history beyond the current exact JSON subset."
+      }
     }
   ],
   "fixture_only": true,
