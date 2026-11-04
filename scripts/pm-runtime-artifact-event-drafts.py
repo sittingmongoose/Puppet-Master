@@ -13,11 +13,15 @@ from pathlib import Path
 import re
 import struct
 import sys
+from urllib.parse import urldefrag, urljoin
 
 from blake3 import blake3
 import msgpack
 import rfc8785
 from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
+from referencing import Registry, Resource
+from referencing.exceptions import Unresolvable
+from referencing.jsonschema import DRAFT202012
 
 from pm_event_index_binding import binding_digest
 
@@ -34,6 +38,93 @@ STORAGE_FIELDS = ('sequence_id', 'observed_at_utc', 'persisted_at_utc')
 PACK_REF = re.compile(r'pm\.payload_pack\.v1:blake3:([0-9a-f]{64}):([1-9][0-9]*):application/json\Z')
 CHECKPOINT_SCHEMA = 'Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint'
 CHECKPOINT_KEY = 'event_record_index_checkpoint.v1:{storage_instance_id}'
+PROVIDER_HASH_PATHS = {
+    'runtime_artifact.cost_usage': ('type_payload', 'authority', 'provider_payload_hash'),
+    'runtime_artifact.tool_llm_trace': ('type_payload', 'raw_payload', 'provider_payload_hash'),
+}
+
+
+class SchemaReferences:
+    """Preflight whole schema documents, including unused definitions/branches.
+
+    Resolve declared IDs, relative files, JSON pointers and anchors locally;
+    never fetch an unknown URI. Instance traversal cannot establish this rule.
+    """
+    def __init__(self):
+        self.documents = {str(p.relative_to(ROOT)): load(str(p.relative_to(ROOT)))
+                          for p in sorted((ROOT / 'Plans').glob('*.schema.json'))}
+        self.registry, self.owners = self.register(self.documents)
+
+    @staticmethod
+    def register(documents, registry=None):
+        resources, owners = [], {}
+
+        def register(resource, base, owner):
+            uri = urljoin(base, resource.id()) if resource.id() else base
+            owners[uri] = owner
+            for child in resource.subresources():
+                register(child, uri, owner)
+
+        for path, schema in documents.items():
+            uri = (ROOT / path).as_uri()
+            owners[uri] = path
+            canonical_uri = 'https://puppetmaster.local/' + path
+            owners[canonical_uri] = path
+            resource = Resource.from_contents(schema, default_specification=DRAFT202012)
+            resources.append((uri, resource))
+            resources.append((canonical_uri, resource))
+            register(resource, uri, path)
+            if resource.id():
+                resources.append((urljoin(uri, resource.id()), resource))
+        return (registry or Registry()).with_resources(resources).crawl(), owners
+
+    def errors(self, paths, overrides=None):
+        documents = dict(self.documents, **(overrides or {}))
+        registry, owners = self.registry, dict(self.owners)
+        if overrides:
+            # Remove aliases/anchors of replaced resources as well as their file
+            # routes; an old registry entry must never redeem a removed target.
+            for uri, owner in self.owners.items():
+                if owner in overrides and uri in registry:
+                    registry = registry.remove(uri)
+                    owners.pop(uri, None)
+            registry, replaced = self.register(overrides, registry)
+            owners.update(replaced)
+        errors, visited = [], set()
+
+        def visit(path):
+            if path in visited:
+                return
+            visited.add(path)
+            if path not in documents:
+                errors.append(path + ': missing schema')
+                return
+
+            def walk(node, base, pointer=''):
+                if isinstance(node, dict):
+                    if '$id' in node:
+                        base = urljoin(base, node['$id'])
+                    if '$ref' in node:
+                        ref = node['$ref']
+                        try:
+                            target = registry.resolver(base).lookup(ref)
+                            if not isinstance(target.contents, (dict, bool)):
+                                raise ValueError('reference target is not a schema')
+                            uri = urldefrag(base if ref.startswith('#') else urljoin(base, ref))[0]
+                            if uri in owners:
+                                visit(owners[uri])  # Walk its entire document, not only the fragment.
+                        except (Unresolvable, ValueError, TypeError) as error:
+                            errors.append(f'{path}{pointer}/$ref: {ref!r}: {error}')
+                    for key, child in node.items():
+                        walk(child, base, pointer + '/' + key.replace('~', '~0').replace('/', '~1'))
+                elif isinstance(node, list):
+                    for index, child in enumerate(node):
+                        walk(child, base, pointer + '/' + str(index))
+            walk(documents[path], (ROOT / path).as_uri())
+
+        for path in paths:
+            visit(path)
+        return errors
 
 
 def exact_pattern(validator_, pattern, instance, schema):
@@ -68,6 +159,18 @@ def load(path):
 
 
 def validator(schema, definition=None):
+    # CV-526/CV-537 current-writer lexical overlays. Historical schema files and
+    # explicitly versioned historical decoders retain their original contracts.
+    if schema.get('$id') in ('pm.runtime_artifact.cost_usage.schema.v1',
+                             'pm.runtime_artifact.tool_llm_trace.schema.v1'):
+        schema = copy.deepcopy(schema)
+        digest = {'type': ['string', 'null'], 'pattern': '^sha256:[0-9a-f]{64}$',
+                  'minLength': 71, 'maxLength': 71}
+        if schema['$id'] == 'pm.runtime_artifact.cost_usage.schema.v1':
+            fields = schema['$defs']['authorityFields']['properties']
+        else:
+            fields = schema['properties']['type_payload']['properties']['raw_payload']['properties']
+        fields['provider_payload_hash'] = {'allOf': [fields['provider_payload_hash'], digest]}
     if definition:
         schema = dict(schema, **{'$ref': '#/$defs/' + definition})
     return ExactValidator(schema, format_checker=FormatChecker())
@@ -499,7 +602,7 @@ def identifier_paths(value, schema):
     return sorted(set(values(value, schema)), key=str)
 
 
-def standing_oracles(check, row, full, first, fixtures):
+def standing_oracles(check, row, full, first, fixtures, references):
     event = row['event_type']
     check(event, 'S2_project_only_contract', row['scope_policy'] == 'project_only')
     for key in fixtures['application_keys']:
@@ -513,6 +616,58 @@ def standing_oracles(check, row, full, first, fixtures):
     check(event, 'S3_stored_raw_partition_refused', not full_value_matches(full,bad,bad['result'],bad['custody']))
     check(event, 'S3_raw_project_partition_refused', not checkpoint_matches(row, full, bad, fixtures['checkpoint_positives'][event]))
     check(event, 'S8_failure_oracle_rejects_success', not rejected(lambda: 0))
+
+    # Every family must catch a reference in an optional property, an unused
+    # definition and external documents/fragments, before instance traversal.
+    schema_path = row['payload_schema_ref']
+    for name, ref in fixtures['unresolved_schema_refs'].items():
+        bad_schema = copy.deepcopy(references.documents[schema_path])
+        if name == 'unused_definition':
+            bad_schema.setdefault('$defs', {})['DR_UNUSED'] = {'$ref': ref}
+        else:
+            bad_schema['properties']['actor_ref'] = {'$ref': ref}
+        check(event, 'S9_unresolved_' + name,
+              bool(references.errors([schema_path], {schema_path: bad_schema})))
+    # The referenced external document must be walked in full as well.
+    external_path = 'Plans/event_record.schema.json'
+    bad_schema = copy.deepcopy(references.documents[schema_path])
+    bad_schema['properties']['actor_ref'] = {'$ref': references.documents[external_path]['$id'] + '#/properties/event_id'}
+    check(event, 'S9_declared_external_id_positive', not references.errors([schema_path], {schema_path: bad_schema}))
+    external = copy.deepcopy(references.documents[external_path])
+    external.setdefault('$defs', {})['DR_UNUSED'] = {'$ref': '#/$defs/DR_MISSING'}
+    check(event, 'S9_unresolved_in_external_unused_definition', bool(references.errors(
+        [schema_path], {schema_path: bad_schema, external_path: external})))
+
+    for case in fixtures['history_cases']:
+        source = source_for(row, full['payload']); source.update(case['overrides'])
+        check(event, 'S10_' + case['id'], inspect(row, full['payload'], source) == case['expected'])
+
+    if event in PROVIDER_HASH_PATHS:
+        path = PROVIDER_HASH_PATHS[event]
+        adopted = validator(load(schema_path))
+        for name, digest in fixtures['provider_hash_values'].items():
+            permitted = name in ('valid', 'unknown')
+            for route in ('inline', 'packed'):
+                bad = copy.deepcopy(full); set_path(bad['payload'], path, digest)
+                check(event, 'S5_provider_hash_schema_' + name + '_' + route,
+                      adopted.is_valid(bad['payload']) == permitted)
+                packs = {}
+                if route == 'packed':
+                    bad['payload']['summary'] = 'x' * 17000
+                    bad['payload'], bad['payload_ref'] = storage_form(bad['payload'], packs)
+                check(event, 'S5_provider_hash_decode_' + name + '_' + route,
+                      rejected(lambda: decode(row, bad, packs)) != permitted)
+                model = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+                result = model.append(bad, True)
+                check(event, 'S5_provider_hash_append_' + name + '_' + route,
+                      isinstance(result, dict) == permitted and bool(model.scoped) == permitted)
+            bad = copy.deepcopy(full); set_path(bad['payload'], path, digest)
+            stored = copy.deepcopy(first); stored['event'] = bad
+            stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+            stored['custody']['original_event_value_commitment'] = commitment(bad)
+            stored['result']['original_event_value_commitment'] = commitment(bad)
+            check(event, 'S5_provider_hash_stored_' + name,
+                  full_value_matches(bad, stored, stored['result'], stored['custody']) == permitted)
 
     # All concrete identifier patterns, including original stored copies.
     for label, value, schema in [('event', full, EVENT_VALIDATOR.schema),
@@ -614,6 +769,7 @@ def observation_admissible(candidate, previous, row, packs, source):
 def main():
     document = load('Plans/runtime_artifact_event_drafts.json')
     fixtures = load('Plans/runtime_artifact_event_drafts.fixtures.json')
+    references = SchemaReferences()
     failures, counts = [], {}
     def check(family, name, passed):
         counts[family] = counts.get(family, 0) + 1
@@ -642,6 +798,12 @@ def main():
     checkpoint_policy = next(f['retention_policy_ref'] for f in registry if f['family_id'] == 'event_record_index_checkpoint')
     for row in document['rows']:
         event = row['event_type']
+        ref_errors = references.errors([row['payload_schema_ref'], 'Plans/event_record.schema.json',
+                                       'Plans/event_append_receipt_contracts.schema.json',
+                                       CHECKPOINT_SCHEMA.split('#')[0]])
+        check(event, 'S9_schema_reference_preflight' + (': ' + '; '.join(ref_errors) if ref_errors else ''), not ref_errors)
+        if ref_errors:
+            continue  # Fail closed before any payload or optional branch is visited.
         check(event, 'prepared_contract', row['outcome'] == 'register (prepared)')
         check(event, 'index_retention', row['index_retention_policy_ref'] == index_policy == 'RP-EVENT-INDEX-SOURCE')
         check(event, 'checkpoint_retention', policies_match(row, index_policy, checkpoint_policy) and checkpoint_policy == 'RP-PROJECTION-3GEN')
@@ -678,7 +840,7 @@ def main():
         check(event, 'full_first_receipt', isinstance(first, dict) and full_value_matches(full, first, first['result'], first['custody']))
         if not isinstance(first, dict):
             continue  # Invalid positive inputs must produce a structured failure, never false success.
-        standing_oracles(check, row, full, first, fixtures)
+        standing_oracles(check, row, full, first, fixtures, references)
         replay = model.append(copy.deepcopy(full), admission=True)
         check(event, 'lost_ack_exact_result', first is replay and len(model.scoped) == 1)
         alternate = copy.deepcopy(full); alternate['event_id'] += '-other-delivery'

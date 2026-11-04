@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DR full-checker mutation witnesses for all eight fix-round standing checks.
+"""DR full-checker mutation witnesses for all ten fix-round standing checks.
 
 Every trial executes main(), including the complete family checker. Mutations
 exist in memory only. This is bounded static evidence, never native execution.
@@ -112,6 +112,35 @@ def checkpoint_input(fault):
     return configure
 
 
+def unresolved_reference(location, ref):
+    def configure(m):
+        old = m.load
+        paths = {r['payload_schema_ref'] for r in old('Plans/runtime_artifact_event_drafts.json')['rows']}
+        def load(path):
+            value = old(path)
+            if path in paths:
+                if location == 'unused_definition':
+                    value.setdefault('$defs', {})['DR_UNUSED'] = {'$ref': ref}
+                else:
+                    value['properties']['actor_ref'] = {'$ref': ref}
+            return value
+        m.load = load
+    return configure
+
+
+def remove_provider_hash_guard(m):
+    def historical_validator(schema, definition=None):
+        if definition:
+            schema = dict(schema, **{'$ref': '#/$defs/' + definition})
+        return m.ExactValidator(schema, format_checker=m.FormatChecker())
+    m.validator = historical_validator
+
+
+def history_rejects_live_change(m):
+    old = m.inspect
+    m.inspect = lambda row, payload, source: 'unavailable' if source.get('current_live_state') else old(row, payload, source)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path)
@@ -133,16 +162,30 @@ def main():
         ('B2_nonexistent_schema_route',7,inputs(lambda m,p,v:[r.__setitem__('checkpoint_schema_ref','Plans/DOES_NOT_EXIST.schema.json#/$defs/checkpoint') for r in v['rows']] if p=='Plans/runtime_artifact_event_drafts.json' else None),None),
         ('B2_wrong_store_key_route',7,inputs(lambda m,p,v:[r.__setitem__('checkpoint_key','event_record_index_checkpoint.v1:22222222-2222-4222-8222-222222222222') for r in v['rows']] if p=='Plans/runtime_artifact_event_drafts.json' else None),None),
         ('S8_failure_expects_success',8,fixture(lambda m,f:[c.__setitem__('expected','metadata_and_authorized_refs') for c in f['source_cases'] if c['id']=='wrong_project']),None),
+        ('S9_remove_reference_preflight',9,lambda m:setattr(m.SchemaReferences,'errors',lambda *a,**k:[]),None),
+        ('S9_optional_property_unresolved',9,unresolved_reference('optional_property','#/$defs/DR_MISSING_ACTOR_REF'),None),
+        ('S9_unused_definition_unresolved',9,unresolved_reference('unused_definition','#/$defs/DR_MISSING_UNUSED'),None),
+        ('S9_external_document_unresolved',9,unresolved_reference('optional_property','DR_DOES_NOT_EXIST.schema.json#/$defs/missing'),None),
+        ('S9_external_fragment_unresolved',9,unresolved_reference('optional_property','https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/DR_MISSING'),None),
+        ('S10_reject_retained_history_on_live_change',10,history_rejects_live_change,None),
+        ('S10_ignore_withdrawal',10,None,source.replace("if source['withdrawn'] or not source['authorized']:","if not source['authorized']:")),
+        ('S10_ignore_forged_source',10,None,source.replace("if not source['source_valid'] or not source['receipt_valid']:",'if False:')),
+        ('earlier_B1_wrong_index_retention',None,inputs(lambda m,p,v:[r.__setitem__('index_retention_policy_ref','RP-PROJECTION-3GEN') for r in v['rows']] if p=='Plans/runtime_artifact_event_drafts.json' else None),None),
     ]
     for fault in ('wrong_store_key','wrong_checkpoint_store','wrong_token_store','wrong_source_store',
                   'wrong_anchor_store','wrong_frontier_store','wrong_token_source_store',
                   'wrong_source_selection','wrong_event','wrong_partition','wrong_locator',
                   'wrong_pointer','missing_dataset','wrong_frontier','unverified_source','wrong_live_snapshot'):
         cases.append(('B2_positive_'+fault,7,checkpoint_input(fault),None))
+    hash_families = ['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']
+    cases.append(('S5_remove_provider_hash_guard',5,remove_provider_hash_guard,None,hash_families))
+    cases.append(('earlier_B6_remove_restore_grouping_guard',None,None,source.replace(
+        "    if candidate['correlation_id'] != grouping_identity(row['event_type'], payload):\n        return False\n",''),['runtime_artifact.restore_point']))
     selected = [c for c in cases if not args.case or args.case in c[0]]
     results = []
-    for name, standing, configure, altered in selected:
-        result = run(name, standing, configure, altered or source)
+    for case in selected:
+        name, standing, configure, altered, *targets = case
+        result = run(name, standing, configure, altered or source, targets[0] if targets else None)
         results.append(result)
         print(name + ': ' + ('caught' if result['caught'] else 'SURVIVED'), file=sys.stderr, flush=True)
     report = dict(status='pass' if results and all(r['caught'] for r in results) else 'fail',
