@@ -729,7 +729,7 @@ def resolve_ref(ref: str, root_schema: dict[str, Any]) -> Any:
         if isinstance(target, list):
             # RFC 6901 array index: "0" or digits without a leading zero (2026-11-04: the guided-tour
             # application result refs the historical v3 result's allOf entries by index).
-            if not (part == "0" or (part.isdigit() and not part.startswith("0"))):
+            if re.fullmatch(r"0|[1-9][0-9]*", part, flags=re.ASCII) is None:
                 raise KeyError(f"invalid array index {part!r} in {ref}")
             target = target[int(part)]
         else:
