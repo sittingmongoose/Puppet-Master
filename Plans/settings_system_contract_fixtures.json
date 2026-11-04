@@ -5812,6 +5812,402 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-classification-computer-use",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "computer",
+          "project"
+        ],
+        "computer_key": "execution_host",
+        "combine": "more_careful",
+        "atomic_group": null,
+        "not_offered": {
+          "device": "not_about_the_screen"
+        },
+        "careful_order": [
+          "deny",
+          "ask",
+          "allow"
+        ]
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "safety.rules.computer-use"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "safety.rules.computer-use": "ask"
+        },
+        "source_by_setting_id": {
+          "safety.rules.computer-use": "explicit"
+        },
+        "setting_revisions": {
+          "safety.rules.computer-use": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "execution_host:host-a",
+          "computer_key": {
+            "kind": "execution_host",
+            "id": "host-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "safety.rules.computer-use": "ask"
+        },
+        "source_by_setting_id": {
+          "safety.rules.computer-use": "explicit"
+        },
+        "setting_revisions": {
+          "safety.rules.computer-use": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-project",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "safety.rules.computer-use": "ask"
+        },
+        "source_by_setting_id": {
+          "safety.rules.computer-use": "explicit"
+        },
+        "setting_revisions": {
+          "safety.rules.computer-use": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-device",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "safety.rules.computer-use": "ask"
+        },
+        "source_by_setting_id": {
+          "safety.rules.computer-use": "explicit"
+        },
+        "setting_revisions": {
+          "safety.rules.computer-use": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-wrong-key-domain",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "safety.rules.computer-use": "ask"
+        },
+        "source_by_setting_id": {
+          "safety.rules.computer-use": "explicit"
+        },
+        "setting_revisions": {
+          "safety.rules.computer-use": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-computer-deny",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "allow",
+        "computer_own": "deny",
+        "device_own": null,
+        "project_own": "allow",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-project-deny",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "allow",
+        "computer_own": "allow",
+        "device_own": null,
+        "project_own": "deny",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "deny"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f05-computer-use-both-allow",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "safety.rules.computer-use",
+        "everywhere_own": "allow",
+        "computer_own": "allow",
+        "device_own": null,
+        "project_own": "allow",
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "allow"
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }

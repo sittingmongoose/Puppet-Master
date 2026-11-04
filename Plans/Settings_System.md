@@ -1558,9 +1558,9 @@ canonical_text: >-
 
   Only a declared safety list uses more_careful: safety.rules.permission-preset, safety.protection.filesafe-integration
   and the three existing scalar answers safety.rules.default-tool-permission, safety.approvals.doom-loop-action,
-  safety.protection.external-dir-action, plus an explicitly admitted Computer-use answer. The proposal’s four
-  ask-or-allow wording is not an inventory of four scalar IDs: there is no fourth scalar or generic internet-use
-  ID at the pin. safety.rules.per-tool-permissions and safety.protection.web-tool-permissions remain per_item
+  safety.protection.external-dir-action, plus safety.rules.computer-use. The proposal’s four
+  ask-or-allow wording is not an inventory of four pre-existing scalar IDs: there is no fourth scalar or generic
+  internet-use ID at the starting pin. safety.rules.per-tool-permissions and safety.protection.web-tool-permissions remain per_item
   maps with the existing Permissions matching/deny semantics, not ordered scalar values or an invented internet
   toggle. F/D freeze any per-answer Computer/Project protective combination under that owner; the ordinary map
   object has no scalar careful_order. careful_order is required only for more_careful and lists actual row values
@@ -1586,9 +1586,11 @@ canonical_text: >-
   computer_key=server and default local_if_claimed_else_main; safety.rules.cross-project-read-policy,
   Everywhere/Computer with computer_key=server and default ask_once_per_chat;
   safety.rules.allow-project-reading, Project-only default true; safety.rules.incoming-chat-messages,
-  Project-only default ask_me; and safety.rules.computer-use, Computer-only with computer_key=execution_host
-  and default ask. Host-relative paths resolve only against that actual Host's home; they are never portable
-  copied paths. Earlier assistant.* spellings are source lineage, not extra rows or write aliases. The
+  Project-only default ask_me; and safety.rules.computer-use, an Everywhere default with Computer and Project
+  own values, computer_key=execution_host, combine=more_careful, careful_order deny, ask, allow and default ask.
+  This permission answer is independent of desktop capability/readiness and exact per-chat/per-app/disclosure
+  admission; an allow value alone never authorizes screen use. Host-relative paths resolve only against that
+  actual Host's home; they are never portable copied paths. Earlier assistant.* spellings are source lineage, not extra rows or write aliases. The
   permission answers map once to Permissions-owned runtime keys; registration, defaults and readiness grant
   no read, incoming-message, tool or screen-use authority.
 gui_related: true

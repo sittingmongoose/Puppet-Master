@@ -10431,8 +10431,9 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
 
   Permissions keys are: `other_projects_read` (Regular ask once per chat, explicit requested Project set;
   Everywhere/Computer defaults), `other_projects_message` (Regular each exact send, scoped Allow for this
-  chat), `incoming_chat_messages` (receiving Project Ask me/allowed/Off), `computer_use` (Computer only, per-chat/per-app
-  task admission), `outward_after_cross_project_read` (Regular ask; scoped chat grant only), `system_change`
+  chat), `incoming_chat_messages` (receiving Project Ask me/allowed/Off), `computer_use` (Everywhere default plus
+  Computer/Project own safety choices under SSYS-059 more_careful, keyed by exact execution_host Computer,
+  with independent per-chat/per-app task admission), `outward_after_cross_project_read` (Regular ask; scoped chat grant only), `system_change`
   (Regular ask, no Always), plus existing `external_directory`. Map other_projects_read once to `safety.rules.cross-project-read-policy`,
   incoming_chat_messages to `safety.rules.incoming-chat-messages`, computer_use to `safety.rules.computer-use`,
   and external_directory to the existing safety.protection.external-dir-action and safety.protection.external-dir-allowlist.
@@ -10520,7 +10521,9 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
   immediately before durable commit.
 
 
-  computer_use is off until exact task/chat/app/Computer admission. It consumes the closed T-186 executable
+  computer_use resolves safety.rules.computer-use before exact task/chat/app/Computer admission; deny refuses,
+  and ask or allow never substitutes for desktop capability/readiness or the separate current scoped screen/provider
+  disclosure grant. Screen use is off until those independent checks admit it. It consumes the closed T-186 executable
   census computer.screen, computer.pointer and computer.keys, with their sole Tools handlers and versioned
   request/result definitions; computer.* is only a family selector. The current ActiveToolNamespaceReceipt,
   supported adapter/provider/model/session, schema hashes, desktop/controller lease and generation, observation/app/window
