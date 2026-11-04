@@ -790,8 +790,12 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # DL-092): the Storage owner's reuse check did not reuse RP-GOAL-THREAD-LIFETIME and materialized the Chat content
 # class as RP-CHAT-THREAD-LIFETIME@1.0.0, so the retention-policy count moves from 27 to 28. The family, status
 # and tier counts are unchanged.
+# Re-pinned 2026-11-04 on branch plans/ea-retention-cards1-20261104 (Plans/storage-plan.md Case L-3, DL-401):
+# the Storage owner materialized the Ordinary telemetry class as RP-TELEMETRY-90D@1.0.0, the 90-day policy object
+# Jared's Card 1 answer approved, so the retention-policy count moves from 28 to 29. The family, status and tier
+# counts are unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
-STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 28
+STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 29
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "materialized": 320,
     "deferred_not_build_blocking": 23,
