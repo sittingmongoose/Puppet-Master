@@ -109,7 +109,7 @@ It also states what the change relaxes and what it does not. `lander_task` is `n
 | `tests/test_event_authority_holding_bucket.py` fixtures | copy the Step 3 and DL-077 receipts | step fixtures also copy the DL-412 receipt; legacy fixtures need no new receipt to keep their results. External patch, not committed here. |
 
 No script, Spec Lock entry, `.evidence` file, readiness artifact or currentness edition pins the validator's bytes. This was checked by search:
-- `git grep 190a86f2` finds only the DL-077 receipt and four history reports;
+- the frozen DL-077 hash remains in its receipt and historical reports; the bridge constant and new DL-412 receipt also pin it, without editing any earlier pin;
 - `Plans/Spec_Lock.json` does not name the directory;
 - the 2026-08-13 currentness edition does not list it.
 
