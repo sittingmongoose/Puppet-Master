@@ -10409,7 +10409,6 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.git.stash_drop` | retired -> `cmd.source_control.stash.drop` | destructive; row registered below |
 | `cmd.git.switch_branch` | retired -> `cmd.source_control.branch.switch` | row registered below (+ `branch.create`) |
 | `cmd.source_control.generate_commit_message` | canonical (registered below) | |
-| `panels.git_commit` | retired -> `cmd.git.commit` | row registered below |
 | `git.create_pr` | retired -> `cmd.github.pr.create` | compatibility alias normalizes to `cmd.forge.review.create {provider: github}` under DL-044 |
 | `cmd.git.worktree.open` | canonical (existing) | UCC-054 family |
 | `cmd.git.worktree.open_files` | alias-of `cmd.git.worktree.open` | open plus File Manager focus argument |
@@ -10522,7 +10521,7 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/W
 
 ### Source Control depth rows
 
-These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-family declaration into first-class commands (list/create/apply/pop/drop; pop is added because the declared family lacked it) and supply the branch selector commands the section 2.5 coverage prose promises. `cmd.git.commit` registers the commit action the prototype's `panels.git_commit` token retires into. Stash drop and pop route the shared confirm surface; all mutating rows inherit projection-freshness gating.
+These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-family declaration into first-class commands (list/create/apply/pop/drop; pop is added because the declared family lacked it) and supply the branch selector commands the section 2.5 coverage prose promises. `cmd.git.commit` registers the product commit action. Stash drop and pop route the shared confirm surface; all mutating rows inherit projection-freshness gating.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -10849,8 +10848,7 @@ canonical_text: >-
   section 2.5 coverage prose promises. cmd.source_control.stash.list, stash.create, stash.apply, stash.pop,
   and stash.drop resolve the underdefined stash.* compatibility-family declaration into first-class rows,
   adding pop which the declared family lacked; the prototype tokens cmd.git.stash_pop and cmd.git.stash_drop
-  retire into stash.pop and stash.drop. cmd.git.commit registers the commit action the prototype token
-  panels.git_commit retires into. cmd.source_control.generate_commit_message registers the AI commit-message
+  retire into stash.pop and stash.drop. cmd.git.commit registers the product commit action. cmd.source_control.generate_commit_message registers the AI commit-message
   action. Stash pop and drop use two-step confirmation through the shared confirm surface; mutating rows
   inherit projection-freshness gating.
 gui_related: true
@@ -10860,7 +10858,7 @@ unblocks: []
 acceptance_criteria:
   - Each stash flow (list, create, apply, pop, drop) resolves to exactly one first-class command row.
   - branch.switch is blocked with a reason on unsafe working trees instead of disappearing.
-  - panels.git_commit, cmd.git.stash_pop, cmd.git.stash_drop, and cmd.git.switch_branch appear nowhere in production markup.
+  - cmd.git.stash_pop, cmd.git.stash_drop, and cmd.git.switch_branch appear nowhere in production markup.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -11333,7 +11331,7 @@ owner_hints:
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum registers, at row level, the `cmd.run_debug.*` classical DAP debugger dispatch family minted by `Plans/Commands_System.md` Run & Debug Revival Addendum §7.2 (39 ids, semantics, availability and confirmation classes, and the closed disabled-reason set owned there and consumed here by reference only), registers the `cmd.run.*` orchestrator run-control trio per §7.3, records the `cmd.debug.*` production wiring-location re-home into the assistant Debug Mode investigation surface, and fixes two stale ContractRef anchors in this document (the retired 5.2.8-era debug-family anchor now targets the §7.1 Debug Mode dispatch family anchor). Every token below is adjudicated in the reconciliation table; the new rows carry the catalog row-level metadata contract (`command_kind`, availability class, confirmation class, `disabled_reasons` subsets drawn only from the closed sets at §7.2/§7.3, and owner) while family semantics, preconditions, and the debug session state machine remain owned by `Plans/Commands_System.md` §7.2/§7.3 and `Plans/FinalGUISpec.md` Run & Debug Revival Addendum F3-482..F3-496 (referenced by unit id only, never restated). The CS-009 boundary stands: `cmd.debug.*` remains the assistant-investigation family (§7.1 owns its semantics, unchanged), and classical debugger dispatch uses only `cmd.run_debug.*`. No existing PlanUnit block, preserved exact token, canonical text, retired bridge, or wiring-matrix row is edited by this addendum. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts, or production build tasks; `Concepts/**` materials remain source-lineage-only.
+This addendum registers, at row level, the `cmd.run_debug.*` classical DAP debugger dispatch family minted by `Plans/Commands_System.md` Run & Debug Revival Addendum §7.2 (39 ids, semantics, availability and confirmation classes, and the closed disabled-reason set owned there and consumed here by reference only), registers the `cmd.run.*` orchestrator run-control trio per §7.3, records the `cmd.debug.*` production wiring-location re-home into the assistant Debug Mode investigation surface, and fixes two stale ContractRef anchors in this document (the retired 5.2.8-era debug-family anchor now targets the §7.1 Debug Mode dispatch family anchor). Every token below is adjudicated in the reconciliation table; the new rows carry the catalog row-level metadata contract (`command_kind`, availability class, confirmation class, `disabled_reasons` subsets drawn only from the closed sets at §7.2/§7.3, and owner) while family semantics, preconditions, and the debug session state machine remain owned by `Plans/Commands_System.md` §7.2/§7.3 and `Plans/FinalGUISpec.md` Run & Debug Revival Addendum F3-482..F3-495 (referenced by unit id only, never restated). The CS-009 boundary stands: `cmd.debug.*` remains the assistant-investigation family (§7.1 owns its semantics, unchanged), and classical debugger dispatch uses only `cmd.run_debug.*`. No existing PlanUnit block, preserved exact token, canonical text, retired bridge, or wiring-matrix row is edited by this addendum. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts, or production build tasks; `Concepts/**` materials remain source-lineage-only.
 
 Metadata legend for the registration tables: availability classes are written cozy-style as `session_state (<precondition>)` (availability follows the debug session state machine per §7.2), `selection (<precondition>)` (requires a selected subject), and `always` (enabled whenever the owning surface is visible). Confirmation classes are `none`, `two_step`, and `strong` (destructive, dispatching only through the shared confirm surface per §7.2). `disabled_reasons` values come only from the closed sets at `Plans/Commands_System.md` §7.2 (`unsupported`, `not_configured`, `adapter_unavailable`, `session_state_mismatch`, `capability_absent`, `stale_projection`, `permission_required`) and §7.3 (`stale_projection`, `permission_required`, `unreachable`).
 
@@ -11527,7 +11525,7 @@ node_compile_hint:
 source_lineage:
   - user-decision:2026-07-27-run-debug-revival
   - "Plans/Commands_System.md (Run & Debug Revival Addendum §7.2, CS-063; referenced)"
-  - "Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)"
+  - "Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-495; referenced)"
 preserved_exact_tokens:
   - cmd.run_debug.*
   - cmd.run_debug.start
@@ -11536,7 +11534,7 @@ preserved_exact_tokens:
 negative_constraints:
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
   - Do not restate Commands_System §7.2 semantics in this unit or its tables beyond row-level metadata fields.
-  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-496 owns that canon and is referenced by unit id only.
+  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-495 owns that canon and is referenced by unit id only.
   - Do not re-scope or restate cmd.debug.* semantics; the assistant-investigation boundary per CS-009 and §7.1 stands unchanged.
 owner_hints:
   - Plans/UI_Command_Catalog.md

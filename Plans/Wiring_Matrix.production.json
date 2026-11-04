@@ -38688,7 +38688,7 @@
         "cmd.git.commit must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.git.commit must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.git.commit availability class is selection (git_available && staged_changes_present) with confirmation class none; disabled reasons come only from the closed set: blocked_state_required, stale_projection, permission_required (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
-        "Retired prototype token panels.git_commit migrates to this canonical id in concept markup."
+        "The product commit action dispatches cmd.git.commit through its existing owner route."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_git_commit.enabled",

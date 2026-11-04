@@ -3541,7 +3541,7 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 | `terminal_appearance_presets:v1` | Computer-local per-user terminal preset library; logical custody and deferred native physical storage are SP-331's (2026-10-16, DL-207) | Existing typed local Save/Rename/Delete/Undo actions; native persistence remains deferred |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
-| `glass_background_mode:v1` | Retired compatibility input since 2026-10-15; SSYS-054 owns shared Wallpaper and SP-333 owns migration of old mesh/depth/minimal values | No active writer |
+| `glass_background_mode:v1` | Retired compatibility input since 2026-10-15; SSYS-054 owns shared Wallpaper and SP-333 excludes discovered concept preferences from product migration | No active writer |
 | `glass_alpha:v1` | Glass surface alpha between its floor (Glass Dark 0.35, Glass Light 0.45) and 1, default 0.55 (SSYS-010; amended 2026-10-17, DL-228, it read: clamps 0.35-0.85 and 0.45-0.88) | On change (debounced 300ms) |
 | `editor_workspace_state.v1:{project_id}` | Canonical project-wide editor workspace state: open tabs, active tab, and per-tab scroll/cursor presentation; contains no unsaved buffer bytes | On change (debounced 500ms) |
 | `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
@@ -32513,7 +32513,7 @@ canonical_text: >-
   former glass depth background mode and its pointer parallax obligation are retired compatibility/source
   lineage; no current Wallpaper selection enables that old mode or revives its sampler. All active
   document-level pointer-move work, including the F3-465 hover driver, remains merged into a single shared
-  document pointer-move handler (`window.PM7_PMOVE` in the concept) that every consumer hooks into rather
+  document pointer-move handler that every consumer hooks into rather
   than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
   sets the active hover's reduced-motion form.
 gui_related: true
@@ -33512,8 +33512,7 @@ canonical_text: >-
   Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
   spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage
   page's own plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared
-  self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns
-  (`window.PM7_PMOVE` in the concept); no element has a pointer-move listener of its own. The driver runs only
+  self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns; no element has a pointer-move listener of its own. The driver runs only
   while a spring is unsettled, the NieR reticle travels, or a pointer or scroll change is pending, so it stops
   once a pointer resting on a box has settled, and nothing animates at idle except the explicitly approved
   Friendly breathing ring while a control is hovered. Box rects are read when the hover enters a scope and after
@@ -35699,37 +35698,23 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-496 - Run & Debug Demo Concept Integration
+### F3-496 - Retired Prototype Composition
 
 ```yaml
 plan_unit_id: F3-496
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The PMConcept7 reference shows a `panel-run` view implementing
-  F3-485 through F3-488 with fixture data: two sessions (a paused parent
-  "tastebook-api — cargo run" and a running child attach session), a populated
-  locals scope, two watches, a four-frame main thread, and line, conditional,
-  logpoint, and disabled breakpoints plus exception filter rows. The bottom Debug
-  tab in the demo implements F3-490's empty and attached states. The demo session
-  store mirrors F3-483's state machine so demo actions (start, stop, select,
-  reveal) drive both surfaces. Concepts/pm6-build/** remains illustrative
-  source-lineage only per Plans/usage-feature.md.
-  Amended 2026-10-09 (DL-180): there is no bottom zone. The demo's bottom Debug tab is a Debug Console tab in the home
-  panels. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it,
-  placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
-  (F3-630).
+  Retired under DL-260. This identifier preserves historical links only and creates no active product
+  requirement or implementation obligation. Live debugger semantics remain with F3-483 through F3-491.
 gui_related: true
-gui_classification_reason: This unit defines the demo-renderable fixture composition of the run/debug rail panel and bottom tab.
+gui_classification_reason: Retires prototype-only UI obligations.
 split_recommended: false
 depends_on: [F3-485, F3-490, DL-180]
 unblocks: []
 acceptance_criteria:
-- "The PMConcept7 demo `panel-run` view renders F3-485..F3-488 with the stated fixture data (two sessions, populated locals, two watches, four-frame main thread, four breakpoint kinds plus exception filters)."
-- "The demo bottom Debug tab renders F3-490's empty and attached states."
-- "Demo actions (start, stop, select, reveal) drive both surfaces through a demo store mirroring F3-483's state machine."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- No active product work is compiled from this retired identifier.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -35739,24 +35724,21 @@ context_scope: run_debug_revival
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: run_debug_demo_concept_integration
+  mode: retired_source_lineage_only
   create_worknodes: false
 source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 - "Concepts/pm6-build (PMConcept7 demo; source-lineage-only per Plans/usage-feature.md)"
 - "zed-industries/zed crates/debugger_ui (research lineage)"
-preserved_exact_tokens:
-- "panel-run"
-- "tastebook-api — cargo run"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not treat Concepts/pm6-build/** demo data, HTML, CSS, or class names as spec or implementation input; it stays illustrative source-lineage only per Plans/usage-feature.md."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
-compatibility_only_notes:
-- "Slint portability: demo fixtures map to static model data behind the same Slint model views used by the live surfaces."
+compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-09 (DL-180): the demo's bottom Debug tab reads as a Debug Console tab (F3-635)."
+- Prototype composition is source lineage only under DL-260.
 owner_boundary_notes:
-- "This unit owns only demo fixture composition; live panel, tab, and state-machine semantics stay owned by F3-483 through F3-491."
+- Live panel, tab and state-machine semantics remain with F3-483 through F3-491.
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35774,28 +35756,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The PMConcept7 reference shows the eight Cozy Shelves rail panels (File Manager, Search,
-  Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts). The c2 panel ids carry over verbatim
-  (panel-files/search/source/git/docker/artifacts/testing/agents); the retired
-  pm6-panel-testing and pm6-panel-agents ids migrate to panel-testing and
-  panel-agents everywhere (activity bar data-targets, panels.show, hook census).
-  Shared behaviors run on the integrated layer: the spring accordion with
-  keyboard/aria per F3-472, body-portaled rail menus per F3-480, measure-based
-  data-fit label shortening driven by a ResizeObserver on the side-panel slot,
-  one-shot panel enter per F3-480 (the slideInLeft animation on .side-panel-view
-  is removed), the --cat-* category palette per F3-474, and the File Manager
-  context menu keeping its hook id fileContextMenu. The File Manager keeps its
-  c2 explorer/changed/open segmented tabs, measured tree animator, hover quick
-  actions, multi-select, filter, hide-ignored, and worktree root menu.
+  The eight Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub Actions, Docker,
+  Testing, Agents, Runtime Artifacts) use their existing production panel destinations and command routes.
+  Prototype DOM identifiers and hook migrations are source lineage only.
+  The rail uses F3-472 shelf keyboard/accessibility behavior, F3-480 menus, measure-based label fitting
+  and one entry animation per activation, and F3-474 category colors.
+  File Manager behavior remains with its owner.
 gui_related: true
-gui_classification_reason: This unit records the user-visible integration of the winning rail panels into the PMConcept7 shell.
+gui_classification_reason: This unit records the user-visible integration of the winning rail panels in the application shell.
 split_recommended: false
 depends_on: [F3-471, F3-472, F3-474, F3-480]
 unblocks: []
 acceptance_criteria:
-- "All eight panels open from the activity bar in the PMConcept7 reference with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
-- "Accordion expand/collapse works by click and Enter/Space with aria-expanded syncing; rail menus paint above shelves and restore their home node on close."
-- "The slideInLeft animation no longer appears on .side-panel-view; panel entrance runs once per activation via .pm-panel-enter."
+- "All eight panels open from the activity bar in the application with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
+- "Accordion expand/collapse works by click and Enter/Space with aria-expanded syncing; rail menus paint above shelves and close through the shared menu owner."
+- "Panel entrance runs once per activation under F3-480; competing entrance animations do not replay."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -35811,18 +35786,14 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (winning concept; source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (winning files concept; source-lineage-only)"
 - "Concepts/ChatGuiUpdates2.md (Cozy Shelves rail concepts 2026-07-27 contracts; source-lineage-only)"
-preserved_exact_tokens:
-- "fileContextMenu"
-- "panel-testing"
-- "panel-agents"
-- "slideInLeft"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not treat Concepts/pm6-build/** as implementation authority; it remains illustrative source-lineage only."
 compatibility_only_notes:
 - "Slint portability follows F3-473: only transform/opacity/height animations, portal menus map to PopupWindow, label fitting by measure never by width class."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their appearance in the PMConcept7 reference and owns no new presentation rules."
+- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their appearance in the application and owns no new presentation rules."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35890,15 +35861,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The activity bar carries a Debug icon directly below the Tests icon as its own
-  entry (rail label "Debug", opening the Debug & Run panel per F3-482), wired
-  with data-target="panel-run", making the cmd.panel.switch run_debug
-  destination resolve to a real, reachable panel for the first time in the PMConcept7
-  reference. The Testing and Agents panel ids are canonical as panel-testing and
-  panel-agents (the retired pm6-panel-testing and pm6-panel-agents ids are gone
-  from markup, data-targets, and the hook census). Icon order and Ctrl+number
-  bindings remain user-adjustable per the existing customization contract; the
-  hotkey handler live-queries icon order and never hardcodes this icon's index.
+  The Debug activity-bar entry below Tests opens the Debug & Run panel through cmd.panel.switch
+  with panel_id run_debug (F3-482). Panel identities and shortcuts follow the shared production model.
+  Icon order and Ctrl+number bindings remain user-adjustable; shortcut assignment follows current icon order.
+  The Debug Console tool tab (debug_console, F3-635) is placed by F3-634 tool affinity, usually beside
+  terminals in the default Home layout (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the user-visible activity bar entry and panel id canon for the reactivated Debug & Run panel.
 split_recommended: false
@@ -35906,7 +35873,7 @@ depends_on: [F3-482, F3-497]
 unblocks: []
 acceptance_criteria:
 - "The Debug icon appears below Tests and opens the Debug & Run panel; cmd.panel.switch with panel_id run_debug resolves to the same view."
-- "No pm6-panel-testing or pm6-panel-agents id remains in the built document."
+- "Testing and Agents open their existing production destinations; retired prototype DOM identifiers grant no alternate route."
 - "Reordering icons by drag changes Ctrl+number assignment without code changes."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -35923,16 +35890,15 @@ source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 preserved_exact_tokens:
 - "Debug"
-- "panel-run"
 - "run_debug"
 negative_constraints:
 - "Do not pin a fixed ordinal or Ctrl+N index for the Debug icon in canonical docs."
-- "Do not resurrect the pm6-panel-testing or pm6-panel-agents ids."
+- "Prototype DOM identifiers grant no alternate production route."
 compatibility_only_notes:
 - "Slint: the activity bar model carries the same entries; hotkey assignment follows the model order, not a constant table."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-482 owns the Debug & Run panel identity and placement canon; this unit owns the PMConcept7 reference presentation and the panel id cleanup."
+- "F3-482 owns the Debug & Run panel identity and placement canon; this unit consumes that identity through the activity bar."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35945,23 +35911,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Two superseded side-panel views are retired from the PMConcept7 reference: panel-unraid
-  (a self-declared redirect stub whose destination lives in the Docker panel's
-  Publish view) and pm6-panel-notify (the Notifications side panel, retired when
-  the title-bar notification stack became the sole in-app notification
-  affordance per the 2026-07-23 promotion). Their hook-census rows, dead render
-  wiring, and prototype action registrations (panels.ack, panels.snooze,
-  panels.test_run, panels.debug_start, panels.git_commit, panels.docker_view,
-  panels.art_filter) are removed with them; ack/snooze lifecycle semantics
-  continue unchanged on the title-bar stack per F3-447/F3-460.
+  The title-bar stack remains the sole in-app notification affordance, with ack/snooze lifecycle
+  semantics owned by F3-447/F3-460. Docker Publish uses its existing product owner route.
+  Prototype hook-census and engine registrations are source lineage only.
 gui_related: true
 gui_classification_reason: This unit records the removal of user-visible panel views that canon already retired or redirected.
 split_recommended: false
 depends_on: [F3-497]
 unblocks: []
 acceptance_criteria:
-- "No panel-unraid or pm6-panel-notify view remains in the built document, and no activity-bar icon references them."
-- "The named prototype action registrations no longer exist in the demo engine registry."
+- "Notifications use only the title-bar stack. Docker Publish uses its existing product owner route."
+
 - "Notifications remain available exclusively through the title-bar stack."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -35976,16 +35936,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/FinalGUISpec.md (F3-447/F3-460 title-bar notification canon)"
-preserved_exact_tokens:
-- "panel-unraid"
-- "pm6-panel-notify"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not reintroduce a Notifications side panel; the title-bar stack is the sole notification affordance."
 - "Do not resurrect the removed prototype action ids as canonical commands."
 compatibility_only_notes:
 - "None."
 stale_retired_dispositions:
-- "The old Run & Debug demo view (panel-run markup with a launch-config dropdown and static session cards) is replaced by the Debug & Run panel per F3-485/F3-496."
+- "Prototype views create no product obligations under DL-260; Debug & Run follows F3-485."
 owner_boundary_notes:
 - "F3-447/F3-460 own the notification affordance decision; this unit records only the view removal mechanics."
 owner_hints:
@@ -38840,9 +38798,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   the run view (ACD-480). The remaining families keep the native presentation above, with Processes governed by ACD-505.
   Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
   To-Do hover preview, inside the native panel (F3-593).
-- **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
-  render findings, diagnostics, and code views without interactive mutation controls or misleading
-  active buttons, clearly labeling the static or demo nature of the content.
+- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
 
 ### 25. Settings Manager Presentation Grammar Across All 38 Managers and Projections
 
@@ -39145,7 +39101,7 @@ canonical_text: 'The Assistant wand menu structures commands into compact, organ
   command list. The chat composer strictly excludes internal-browser launch controls, preserving independent URL and
   attachment capabilities.  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
-gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
+gui_classification_reason: Governs wand menu grouping and the composer browser boundary.
 depends_on:
 - F3-531
 unblocks: []
@@ -39287,7 +39243,7 @@ canonical_text: >-
   USER-REFERENCE-LAYOUT-ROLLBACK-20260908, apart from the scoped exceptions of F3-580 (DL-122) and the
   To-Do rows of F3-593 (DL-147), superseding the reference-video flat-row and forced single-column layout
   while preserving concise hierarchy, clear progress/state grouping, and quiet action rows. Read-only
-  inspection fixtures present findings and code evidence without interactive mutation controls.
+  inspection views present findings and code evidence without interactive mutation controls.
 gui_related: true
 gui_classification_reason: Governs collaboration configuration popups, footer styling, Single Agent Review
   invariant, and all ten Activity Detail families.
@@ -39301,7 +39257,7 @@ acceptance_criteria:
 - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
 - All ten Activity Detail families apply the native card and grid presentation grammar with concise hierarchy,
   superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
-- Read-only inspection demos render findings without interactive mutation controls.
+- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: collaboration_popup_or_activity_family_grammar_drift
@@ -40781,7 +40737,7 @@ split_recommended: false
 depends_on: [ACD-469, DL-180]
 unblocks: []
 acceptance_criteria:
-  - "No demo thread overflows the transcript sideways at a 234px pane or at full width."
+  - "No product Chat transcript overflows sideways at full width or at a 234px popped-out desktop Chat pane; main-window Chat follows F3-637."
   - "Needs-you actions wrap; ledger titles ellipsize; long tokens break."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -44251,7 +44207,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-159, ContractName:Plans/Final
 
 ## DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 
-This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625. Published on 2026-10-09: `Concepts/PMConcept7.html` carries the Polish rail, built into it through the opus-5.5 build from the same concept sources the review copy uses, and the review copy `Concepts/LeftRailPMConcept7.html` keeps concepts A, B and C and "Original", the rail before Polish (still reached as `current`), for comparison. The NieR Mode kit reaches the rail through two hooks it now names, a cursor hook for rail rows and picker items and a brackets hook for chosen tabs whose box changes when chosen (F3-621); both are concept plumbing, not canon.
+This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-495, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625. Published on 2026-10-09: `Concepts/PMConcept7.html` carries the Polish rail, built into it through the opus-5.5 build from the same concept sources the review copy uses, and the review copy `Concepts/LeftRailPMConcept7.html` keeps concepts A, B and C and "Original", the rail before Polish (still reached as `current`), for comparison. The NieR Mode kit reaches the rail through two hooks it now names, a cursor hook for rail rows and picker items and a brackets hook for chosen tabs whose box changes when chosen (F3-621); both are concept plumbing, not canon.
 
 Amended 2026-10-09 (DL-180): the bottom Debug tab named above is now a tab of the Debug Console tool kind (`debug_console`, F3-635) in whichever panel holds it, placed beside the terminals by F3-634; there is no bottom zone (F3-490 as amended). Nothing else in this addendum changes.
 
@@ -45273,7 +45229,7 @@ F3-041, F3-060, F3-061, F3-066 to F3-068, F3-071, F3-072, F3-102, F3-132, F3-140
 F3-162, F3-195, F3-202, F3-205, F3-206, F3-217, F3-225, F3-234, F3-271, F3-276 to F3-278, F3-281, F3-282, F3-297,
 F3-421 to F3-423, F3-445, F3-463, F3-464, F3-466, F3-467, F3-469, F3-476, F3-516, F3-517, F3-520, F3-521, F3-540,
 F3-565 and F3-569; and, where their DL-162 notes or text name the bottom Debug tab or the bottom zone, the Run & Debug
-units F3-483, F3-484, F3-490 to F3-492, F3-495 and F3-496 and the DL-162 addendum's heading paragraph, which now point
+units F3-483, F3-484, F3-490 to F3-492, F3-495 and the DL-162 addendum's heading paragraph, which now point
 at the Debug Console tool kind. The left rail otherwise keeps its own canon (DL-162, DL-163, F3-618 to F3-625, DR-057):
 its side panels, their segmented strips, its More tray and its looks are not home panels and are not changed here. The
 terminal tab's own chrome, features, appearance, effects, faces, images and agents are F3-640 to F3-646
