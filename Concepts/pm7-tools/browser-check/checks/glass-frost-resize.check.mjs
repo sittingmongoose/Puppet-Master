@@ -39,49 +39,57 @@ async function frost(t, mode) {
 		await f.evaluate(() => window.O55.solid.set(false));
 		const frostOn = () => { const st = document.getElementById('lg-frost'), r = st && st.sheet && st.sheet.cssRules[0]; return !!(r && r.style.getPropertyValue('--lg-frost-heavy')); };
 		await t.until(`glass-${scheme} ${mode}: Glass has its first frost`, frostOn, null, { timeout: 30000, hard: true });
-		// every frost write, and whether its image had loaded at that moment
+		// every frost write, and whether its image had loaded at that moment. The page's own setter is kept as it was and put
+		// back when this look is done, on every exit (an assertion, an error), before the record is dropped: left wrapped,
+		// a late frost write after the record went threw in whatever check ran next in the same browser (Astra, 2026-11-04)
 		await f.evaluate(() => {
+			if (window.__fo38Set) return;   // (one wrapper at a time)
 			window.__fo38 = [];
-			const set = CSSStyleDeclaration.prototype.setProperty;
+			const set = window.__fo38Set = CSSStyleDeclaration.prototype.setProperty;
 			CSSStyleDeclaration.prototype.setProperty = function (name, value, pri) {
-				if (/^--lg-frost-(heavy|light)$/.test(name)) {
+				const rec = window.__fo38;
+				if (rec && /^--lg-frost-(heavy|light)$/.test(name)) {
 					const u = (String(value).match(/url\("?(.*?)"?\)/) || [])[1];
 					let loaded = null;
 					if (u) { const im = new Image(); im.src = u; loaded = im.complete && im.naturalWidth > 0; }
-					window.__fo38.push({ name, vw: innerWidth, vh: innerHeight, loaded });
+					rec.push({ name, vw: innerWidth, vh: innerHeight, loaded });
 				}
 				return set.call(this, name, value, pri);
 			};
 		});
-		await f.waitForTimeout(1500);
-		const firstLook = new Map();
-		for (const [w, h] of SIZES) {
-			const tag = `glass-${scheme} ${mode} ${w}x${h}`;
-			const mark = await f.evaluate(() => window.__fo38.length);
-			await t.viewport(w, h);
-			await t.until(`${tag}: a frost for this size`, ([n, W, H]) => window.__fo38.slice(n).some((x) => x.vw === W && x.vh === H && x.name === '--lg-frost-heavy'), [mark, w, h], { timeout: 15000 });
-			const writes = await f.evaluate((n) => window.__fo38.slice(n), mark);
-			const early = writes.filter((x) => x.loaded !== true);
-			await t.check(`${tag}: every frost was loaded when it was written`, writes.length > 0 && early.length === 0, `${writes.length} writes, ${early.length} before their image loaded: ${early.map((x) => `${x.name} at ${x.vw}x${x.vh}`).join(', ')}`);
-			await f.waitForTimeout(400);
-			// the scrim beside the window, where the window leaves room
-			const box = await f.evaluate(() => { const r = document.querySelector('#pm-o55-onboarding .o55-win').getBoundingClientRect(); return { left: r.left, top: r.top, bottom: r.bottom }; });
-			if (box.left >= 40) {
-				const off = mode === 'sandbox' ? await t.page.evaluate(() => { const r = document.querySelector('iframe').getBoundingClientRect(); return { x: r.left, y: r.top }; }) : { x: 0, y: 0 };
-				const img = await t.pixels({ x: off.x + 6, y: off.y + Math.max(40, box.top), width: Math.floor(box.left) - 14, height: Math.max(40, Math.floor(box.bottom - Math.max(40, box.top)) - 40) });
-				const rough = roughness(img);
-				await t.check(`${tag}: the scrim beside the window reads as frost (mean step ${rough.toFixed(2)} < 4)`, rough < 4, `mean step ${rough.toFixed(2)} levels`);
-				const was = firstLook.get(`${w}x${h}`);
-				if (!was) firstLook.set(`${w}x${h}`, img);
-				else {
-					let d = 0, n = 0; const N = Math.min(was.data.length, img.data.length);
-					for (let i = 0; i < N; i += 4) { d += Math.abs(was.data[i] - img.data[i]) + Math.abs(was.data[i + 1] - img.data[i + 1]) + Math.abs(was.data[i + 2] - img.data[i + 2]); n += 3; }
-					const md = n ? d / n : 0;
-					await t.check(`${tag}: back at this size, the scrim paints as at its first visit (mean difference ${md.toFixed(2)} < 3)`, was.width === img.width && was.height === img.height && md < 3, `${was.width}x${was.height} then ${img.width}x${img.height}, mean difference ${md.toFixed(2)} levels`);
+		try {
+			await f.waitForTimeout(1500);
+			const firstLook = new Map();
+			for (const [w, h] of SIZES) {
+				const tag = `glass-${scheme} ${mode} ${w}x${h}`;
+				const mark = await f.evaluate(() => window.__fo38.length);
+				await t.viewport(w, h);
+				await t.until(`${tag}: a frost for this size`, ([n, W, H]) => window.__fo38.slice(n).some((x) => x.vw === W && x.vh === H && x.name === '--lg-frost-heavy'), [mark, w, h], { timeout: 15000 });
+				const writes = await f.evaluate((n) => window.__fo38.slice(n), mark);
+				const early = writes.filter((x) => x.loaded !== true);
+				await t.check(`${tag}: every frost was loaded when it was written`, writes.length > 0 && early.length === 0, `${writes.length} writes, ${early.length} before their image loaded: ${early.map((x) => `${x.name} at ${x.vw}x${x.vh}`).join(', ')}`);
+				await f.waitForTimeout(400);
+				// the scrim beside the window, where the window leaves room
+				const box = await f.evaluate(() => { const r = document.querySelector('#pm-o55-onboarding .o55-win').getBoundingClientRect(); return { left: r.left, top: r.top, bottom: r.bottom }; });
+				if (box.left >= 40) {
+					const off = mode === 'sandbox' ? await t.page.evaluate(() => { const r = document.querySelector('iframe').getBoundingClientRect(); return { x: r.left, y: r.top }; }) : { x: 0, y: 0 };
+					const img = await t.pixels({ x: off.x + 6, y: off.y + Math.max(40, box.top), width: Math.floor(box.left) - 14, height: Math.max(40, Math.floor(box.bottom - Math.max(40, box.top)) - 40) });
+					const rough = roughness(img);
+					await t.check(`${tag}: the scrim beside the window reads as frost (mean step ${rough.toFixed(2)} < 4)`, rough < 4, `mean step ${rough.toFixed(2)} levels`);
+					const was = firstLook.get(`${w}x${h}`);
+					if (!was) firstLook.set(`${w}x${h}`, img);
+					else {
+						let d = 0, n = 0; const N = Math.min(was.data.length, img.data.length);
+						for (let i = 0; i < N; i += 4) { d += Math.abs(was.data[i] - img.data[i]) + Math.abs(was.data[i + 1] - img.data[i + 1]) + Math.abs(was.data[i + 2] - img.data[i + 2]); n += 3; }
+						const md = n ? d / n : 0;
+						await t.check(`${tag}: back at this size, the scrim paints as at its first visit (mean difference ${md.toFixed(2)} < 3)`, was.width === img.width && was.height === img.height && md < 3, `${was.width}x${was.height} then ${img.width}x${img.height}, mean difference ${md.toFixed(2)} levels`);
+					}
 				}
 			}
+		} finally {
+			// the page's own setter back first, then the record
+			await f.evaluate(() => { if (window.__fo38Set) { CSSStyleDeclaration.prototype.setProperty = window.__fo38Set; delete window.__fo38Set; } delete window.__fo38; }).catch(() => {});
 		}
-		await f.evaluate(() => { delete window.__fo38; });
 	}
 }
 
