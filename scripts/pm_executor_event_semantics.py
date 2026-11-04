@@ -9,6 +9,8 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import jsonschema
+import msgpack
+from blake3 import blake3
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -43,6 +45,51 @@ def validate_append_policy(contract, policy):
     require(policy != 'projector_replay_only', 'replay_only_not_appendable')
     require(contract['replay_policy'] == policy == 'dedupe_by_idempotency_key',
             'family append replay policy')
+
+
+def payload_bytes(value):
+    """Case L-2 canonical MessagePack for these fixtures' integer/string domain.
+
+    This is uncompressed logical payload transport, not the SP-278 digest
+    wrapper, producer-semantic digest, or a complete native EventRecord codec.
+    """
+    def ordered(item):
+        if type(item) is dict:
+            require(all(type(key) is str for key in item), 'payload map string keys')
+            return {key: ordered(item[key]) for key in sorted(item, key=lambda key: key.encode('utf-8'))}
+        if type(item) is list:
+            return [ordered(child) for child in item]
+        require(item is None or type(item) in (str, int, bool), 'unsupported fixture payload value')
+        return item
+    return msgpack.packb(ordered(value), use_bin_type=True, strict_types=True)
+
+
+def validate_payload_transport(payload, envelope, packs, viewer):
+    """Compose SP-337 with the logical source body; captures are not wire schemas."""
+    raw = payload_bytes(payload)
+    ref = envelope['payload_ref']
+    if ref is None:
+        require(envelope['payload'] == payload, 'inline logical payload join')
+        require(len(raw) <= 16 * 1024, 'oversized_inline_payload')
+        return
+    require(envelope['payload'] == {}, 'referenced payload cannot remain inline')
+    require(type(ref) is dict and set(ref) == {'blake3', 'byte_size', 'media_type'},
+            'resolved SP-337 descriptor')
+    require(type(ref['byte_size']) is int and ref['byte_size'] == len(raw), 'payload ref byte size')
+    require(ref['media_type'] == 'application/msgpack', 'payload ref media type')
+    pack = packs.get(ref['blake3'])
+    require(pack is not None, 'missing payload pack')
+    stored = bytes.fromhex(pack['bytes_hex'])
+    require(pack['bytes_hex'] == stored.hex(), 'exact normalized pack bytes')
+    require(blake3(stored).hexdigest() == ref['blake3'], 'payload pack BLAKE3')
+    require(type(pack['byte_size']) is int and len(stored) == pack['byte_size'] == ref['byte_size'],
+            'payload pack byte size')
+    require(pack['media_type'] == ref['media_type'], 'payload pack media type')
+    require(stored == raw, 'payload pack logical source body')
+    require(pack['project_id'] == payload['project_id'], 'payload pack Project custody')
+    require(pack['storage_instance_id'] == envelope['storage_instance_id'], 'payload pack Storage custody')
+    require(pack['durable'] is True, 'payload pack before referencing record')
+    require(pack['deleted_at'] is None and viewer in pack['readers'], 'payload pack disclosure custody')
 
 
 def source_observation(adapter, records):
@@ -157,6 +204,7 @@ def validate_capture(contract, payload, capture):
     """
     schema_validate(contract['schema_ref'], payload)
     validate_append_policy(contract, capture['envelope']['replay_policy'])
+    validate_payload_transport(payload, capture['envelope'], capture['payload_packs'], capture['viewer'])
     adapter = contract['semantic_adapter']
     require(capture['adapter'] == adapter['id'], 'adapter dispatch')
     require(capture['family'] == contract['event_type'], 'family dispatch')
@@ -331,6 +379,15 @@ def run_trace(contract, payload, scenario):
                 continue
             p = copy.deepcopy(payload)
             p.update(operation.get('payload_changes', {}))
+            try:
+                validate_payload_transport(p, {
+                    'payload': operation.get('inline_payload', p),
+                    'payload_ref': operation.get('payload_ref'),
+                    'storage_instance_id': 'store-001',
+                }, operation.get('payload_packs', {}), operation.get('viewer', 'viewer-001'))
+            except ValueError as error:
+                outputs.append(str(error))
+                continue
             key = identity(contract, p, 'store-001')
             if key in rows:
                 prior = rows[key]

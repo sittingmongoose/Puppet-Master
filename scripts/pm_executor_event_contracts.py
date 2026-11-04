@@ -20,8 +20,9 @@ def identity(contract, payload, storage_instance_id):
             'evt_executor_' + digest(canonical([storage_instance_id, contract['event_type'], inner])))
 
 def validate(contract, payload, context):
-    from pm_executor_event_semantics import validate_append_policy
+    from pm_executor_event_semantics import validate_append_policy, validate_payload_transport
     validate_append_policy(contract, context['envelope']['replay_policy'])
+    validate_payload_transport(payload, context['envelope'], context['payload_packs'], context['viewer'])
     schema = json.loads((ROOT / contract['schema_ref']).read_text())
     jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(payload)
     for field in ('admitted', 'source_refs_valid', 'read_authorized', 'receipt_available', 'predicate_valid'):
