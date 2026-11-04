@@ -1,55 +1,130 @@
 {
-  "dt-check.json": {
+  "baseline-dt.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/dt-check.json",
-    "assertions": 2981
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/baseline-dt.json",
+    "sha256": "77337de174fd0f8f44671a69751cc3aaf003f7e93b6c83fcea5433ed3e4b8f51"
   },
-  "registry-schema.json": {
+  "f7-dt.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/registry-schema.json"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-dt.json",
+    "sha256": "2c91fd43c1330a87eeb9718ff2e700d6cb9135d8ac1d62696d0f4c3a0441d1b2"
+  },
+  "f8-dt.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f8-dt.json",
+    "sha256": "09709628f3f4772014d5c6a82949a7cadc625c65dc16d45f746c58b1b6ceed48"
+  },
+  "dt.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/dt.json",
+    "sha256": "4da40907bf34b4181ef2f7392e0fe10630219828a698a352c100c38c3937b6ca"
+  },
+  "standing-negative-runs.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/standing-negative-runs.json",
+    "sha256": "ecc367444369331192625c7e33d6a05cc1c93104304a2b1edbcc14802b4071b2"
+  },
+  "success-exit-negative.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/success-exit-negative.json",
+    "sha256": "afa70e2a286de74b7a09c381f2165abc1285b48f48609571d573821cac9a36ff"
+  },
+  "f7-regression-rejection.json": {
+    "top_level_status": "fail",
+    "exit_code": 1,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-regression-rejection.json",
+    "sha256": "894266aa3bb446849e6a846e778c9a353cd72d6954e682baa95815898be2b346",
+    "interpretation": "Expected refusal: restoring original schemas/mirrors makes all 17 families fail; 899 failures."
+  },
+  "schema-mirrors.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/schema-mirrors.json",
+    "sha256": "a9f7291ced72da61b75ba68e7c28da974efb43345ad8d428e85ec0eb4ec1b1e0"
   },
   "storage-recovery.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/storage-recovery.json"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/storage-recovery.json",
+    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
   },
   "storage-profile.json": {
     "top_level_status": "fail",
     "exit_code": 1,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/storage-profile.json",
-    "baseline_comparison": "41 pre-existing missing profiles at 713241763c; 41 now; zero new errors."
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/storage-profile.json",
+    "sha256": "2ae3547ccf844ed510908987ec26a179e199a54365b8d75a0301b6cc392723c3",
+    "baseline_comparison": "Same 41 errors as reviewed head; zero additions/removals."
+  },
+  "profile-baseline-comparison.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/profile-baseline-comparison.json",
+    "sha256": "59877f935e4afecd5cbea5096dd2bf1c553d12737c3e6176f1f5ec78604d0ec9"
   },
   "shard-generate.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/shard-generate.json"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/shard-generate.json",
+    "sha256": "85c6c93ed2b05ff29fad6e910bc8942aad45040b97ffced72464d9606b6db6af"
   },
   "index-generate.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/index-generate.json"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/index-generate.json",
+    "sha256": "db1e2431167e5113b766b19245cfc3bb80f0bbb3051cec79ac4bb4e2b66bf769"
   },
   "shard-check.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/shard-check.json"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/shard-check.json",
+    "sha256": "d25ff82f6254b4ad8b65d081477d59b90378b722d9e0ae71ce382012e59baa06"
   },
   "index-validate.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/index-validate.json"
-  },
-  "grade-evidence-check.json": {
-    "top_level_status": "pass",
-    "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/grade-evidence-check.json",
-    "cells": 216
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/index-validate.json",
+    "sha256": "a953ff4d97d3a1b230d9d70f6728715c0137d0da5e37ede417abaa41b90af156"
   },
   "committed-shards-check.json": {
     "top_level_status": "pass",
     "exit_code": 0,
-    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/committed-shards-check.json"
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/committed-shards-check.json",
+    "sha256": "0ccab6628a30ceb82cd306f6b2de8e68a9e8c0bc0c83e3e7ca45383a2a550f1a"
+  },
+  "derived-regeneration.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/derived-regeneration.json",
+    "sha256": "8bd352a09a5d5dbec2fa8ba9aab372343f50e8f8e428ebb97981632ddbbb37b2"
+  },
+  "grade-evidence-check.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/grade-evidence-check.json",
+    "sha256": "8bb83aaca3532dc4418069eae5468c40bf0d7e8c401725921172fe69a52eec4e"
+  },
+  "current-premises.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/current-premises.json",
+    "sha256": "2beaeac9f828f5ef53cf07ea765dfe74a929c240e78ed816cb909af899db6be8"
+  },
+  "scope-audit.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/scope-audit.json",
+    "sha256": "50a1e353f94c0c5efdaaec2b87d07e61701c73ca4e0457e02ccc87bf340e27cf"
+  },
+  "check7-before-after.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/check7-before-after.json",
+    "sha256": "fc2d83e3ee29fea25a96ed75e9586c368dbe3cad89b30f53bb396bc689a3d5e1"
   }
 }

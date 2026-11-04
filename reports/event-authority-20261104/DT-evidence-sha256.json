@@ -1,39 +1,106 @@
 {
-  "implementation_head": "63759b5b631505d09e0349cfdd0d409892a8e4a3",
-  "native_execution": "NOT_RUN",
-  "contract_hashes": {
-    "Plans/Contracts_V0.md": "543ab234acd8c7e1dafdd9374054f5cf1ff6e16e1adbc7eb36dd80383ab0ac2a",
-    "Plans/storage-plan.md": "abcd09354f22eb66349adf5d1fc4c7a1c31b9cc57d2493814b7013d044972436",
-    "Plans/Automated_Testing_System.md": "0e5383bbe6c3da11ab2a9f8f6ea648717d2cfd4b512818bc124293dd4113819f",
-    "Plans/dt_event_contracts.json": "51fa8e6d97bcf6eddb5fc3441ab82243b14c65df67f4a627ee1b842c810615f5",
-    "Plans/dt_event_contracts.schema.json": "3e8dc8cd972922aa4defacd1b924f7c58b5b6c62b7c93f48bdcd150437be61c4",
-    "Plans/dt_event_contract_fixtures.json": "ee62a31b181cf880048296c0e58db40a99dfe82945a67d9611374206c421e1e0",
-    "Plans/storage_value_registry.json": "90f6ffe980d3db8ad36d00a7150a0564090b387a6dbbc83491cc7b97b9198bf1",
-    "scripts/pm-dt-event-contracts.py": "9b2368f245b70aa26992bd80cc1bf22a0d5059818c5c1c05ab2671021f6819e0"
-  },
-  "evidence_sha256": {
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/check-status.json": "5e913ed0245a8582424de15bf14d5c622d0bea9289f21addb7a475ccd70fa445",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/committed-shard-audit.json": "8ce5595a8ba0763b621ea7558a26c268b22519f2385e76b1e834d26be1f62724",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/currentness-copy.json": "630bfc3043a3e993702d0a72a37f14d75948f7021b2418d0ca41d56b07236924",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/dt-check.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/dt-check.stdout.txt": "77337de174fd0f8f44671a69751cc3aaf003f7e93b6c83fcea5433ed3e4b8f51",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/index-generate-initial.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/index-generate-initial.stdout.txt": "7a70dd2f9bf99ebd40fe80a9ce916d1ca9b4d7873c57488736aa0722f0259596",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/index-generate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/index-generate.stdout.txt": "aaa140dc94b62423794fd9797e9db5af608947bb30996280dfc31729f98d1288",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/index-validate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/index-validate.stdout.txt": "ab32010bd1a524f16021efd6f89b7291c05ef79581d3cd59baae87760dba761d",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/premise-checks.json": "e7d87578929222734be42ac7178913447307afc8d7b38995f4777163552e399a",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/profile-comparison.json": "6d4f2af4ff456688a29afc9d268a7aee47726111ae7f0fa064131c58250b0518",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/scope-schema-audit.json": "cedc1e6b251eaa452934d2297ff58916a11babd3e48db3f7ddc5cb151a9b1f7f",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/self-grade-audit.json": "5793407d378a3741fec155aaaa67033bfc9b4e211f2d0b99ba946f7a8a07d15d",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/shard-check.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/shard-check.stdout.txt": "c3cf03ef0a27993264cc276cef33df1e8efd3f047a6ece8674afe9ffce49dc9d",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/shard-generate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/shard-generate.stdout.txt": "6af6d7e935b4b18ffb80acefa5b4ba6bebb2e3ed99d46aa7a032014ac5367f13",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/storage-profile.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/storage-profile.stdout.txt": "2ae3547ccf844ed510908987ec26a179e199a54365b8d75a0301b6cc392723c3",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/storage-recovery.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix1/storage-recovery.stdout.txt": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
-  }
+  "schema_id": "pm.event_authority.dt.fix2.evidence.v1",
+  "implementation_head": "6c7135af06e1703ec83780495d6e13d1f0d20d32",
+  "artifacts": [
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/baseline-dt.json",
+      "sha256": "77337de174fd0f8f44671a69751cc3aaf003f7e93b6c83fcea5433ed3e4b8f51"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/check7-before-after.json",
+      "sha256": "fc2d83e3ee29fea25a96ed75e9586c368dbe3cad89b30f53bb396bc689a3d5e1"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/committed-shards-check.json",
+      "sha256": "0ccab6628a30ceb82cd306f6b2de8e68a9e8c0bc0c83e3e7ca45383a2a550f1a"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/current-premises.json",
+      "sha256": "2beaeac9f828f5ef53cf07ea765dfe74a929c240e78ed816cb909af899db6be8"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/currentness-copy.json",
+      "sha256": "ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/derived-regeneration.json",
+      "sha256": "8bd352a09a5d5dbec2fa8ba9aab372343f50e8f8e428ebb97981632ddbbb37b2"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/dt.json",
+      "sha256": "4da40907bf34b4181ef2f7392e0fe10630219828a698a352c100c38c3937b6ca"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-dt.json",
+      "sha256": "2c91fd43c1330a87eeb9718ff2e700d6cb9135d8ac1d62696d0f4c3a0441d1b2"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-index-generate.json",
+      "sha256": "10c308354c3d1ff3df235cc18340bb0e1c5380a081a67e77c91929ba135de1f7"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-regression-rejection.json",
+      "sha256": "894266aa3bb446849e6a846e778c9a353cd72d6954e682baa95815898be2b346"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-shard-check.json",
+      "sha256": "d25ff82f6254b4ad8b65d081477d59b90378b722d9e0ae71ce382012e59baa06"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f7-shard-generate.json",
+      "sha256": "85c6c93ed2b05ff29fad6e910bc8942aad45040b97ffced72464d9606b6db6af"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/f8-dt.json",
+      "sha256": "09709628f3f4772014d5c6a82949a7cadc625c65dc16d45f746c58b1b6ceed48"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/grade-evidence-check.json",
+      "sha256": "8bb83aaca3532dc4418069eae5468c40bf0d7e8c401725921172fe69a52eec4e"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/index-generate.json",
+      "sha256": "db1e2431167e5113b766b19245cfc3bb80f0bbb3051cec79ac4bb4e2b66bf769"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/index-validate.json",
+      "sha256": "a953ff4d97d3a1b230d9d70f6728715c0137d0da5e37ede417abaa41b90af156"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/profile-baseline-comparison.json",
+      "sha256": "59877f935e4afecd5cbea5096dd2bf1c553d12737c3e6176f1f5ec78604d0ec9"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/schema-mirrors.json",
+      "sha256": "a9f7291ced72da61b75ba68e7c28da974efb43345ad8d428e85ec0eb4ec1b1e0"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/scope-audit.json",
+      "sha256": "50a1e353f94c0c5efdaaec2b87d07e61701c73ca4e0457e02ccc87bf340e27cf"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/shard-check.json",
+      "sha256": "d25ff82f6254b4ad8b65d081477d59b90378b722d9e0ae71ce382012e59baa06"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/shard-generate.json",
+      "sha256": "85c6c93ed2b05ff29fad6e910bc8942aad45040b97ffced72464d9606b6db6af"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/standing-negative-runs.json",
+      "sha256": "ecc367444369331192625c7e33d6a05cc1c93104304a2b1edbcc14802b4071b2"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/storage-profile.json",
+      "sha256": "2ae3547ccf844ed510908987ec26a179e199a54365b8d75a0301b6cc392723c3"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/storage-recovery.json",
+      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix2/success-exit-negative.json",
+      "sha256": "afa70e2a286de74b7a09c381f2165abc1285b48f48609571d573821cac9a36ff"
+    }
+  ]
 }
