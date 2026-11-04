@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19498-L19557
+Source lines: L19498-L19558
 
-Source SHA256: `51bf01550d1d71b1920b0b10a7b69bf96503598c899e44d2850083683ffa7c13`
+Source SHA256: `15e16fce9ce19a9dc6b7a03dcca13800b2555c634ca67d9383007a6c89da185d`
 
 ---
 
@@ -46,6 +46,7 @@ acceptance_criteria:
   - "The exact consumer/projector IDs, key derivations, schema versions, currentness proof and checkpoint advance/rebuild predicates are explicit."
   - "Permanent audit retention cannot retain or recreate deleted content; static fixtures and native acceptance obligations are distinguished."
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - Plans/context_compaction_completion_contract_fixtures.json
   - reports/event-authority-20260911/step-06-contract-validation.md
 risk_class: compaction_completion_authority

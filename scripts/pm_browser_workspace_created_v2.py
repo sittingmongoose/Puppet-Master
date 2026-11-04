@@ -15,12 +15,16 @@ import json
 import re
 from datetime import datetime, timedelta
 from functools import lru_cache
+import sys
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+import pm_event_payload_route as body_route
+Draft202012Validator = body_route.StrictValidator
 SCHEMA = 'Plans/browser_workspace_created_checkpoint_v2.schema.json'
 FIXTURES = 'Plans/browser_workspace_created_checkpoint_v2_fixtures.json'
 V1_SCHEMA = 'Plans/browser_workspace_created_contracts.schema.json'
@@ -50,7 +54,8 @@ def validators(root=ROOT):
     schemas = [load(p, root) for p in (SCHEMA, V1_SCHEMA, GENERIC)]
     for schema in schemas:
         Draft202012Validator.check_schema(schema)
-    registry = Registry().with_resources((s['$id'], Resource.from_contents(s)) for s in schemas)
+    registry = body_route.schema_registry(root).with_resources((s['$id'], Resource.from_contents(s)) for s in schemas).crawl()
+    body_route.eager(registry, *schemas)
     def make(schema, definition):
         return Draft202012Validator({'$ref': schema['$id'] + '#/$defs/' + definition},
                                      registry=registry, format_checker=FormatChecker())

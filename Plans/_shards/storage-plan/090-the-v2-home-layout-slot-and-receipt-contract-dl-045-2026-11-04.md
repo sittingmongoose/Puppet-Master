@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L29493-L29594
+Source lines: L29512-L29617
 
-Source SHA256: `51bf01550d1d71b1920b0b10a7b69bf96503598c899e44d2850083683ffa7c13`
+Source SHA256: `15e16fce9ce19a9dc6b7a03dcca13800b2555c634ca67d9383007a6c89da185d`
 
 ---
 
@@ -50,6 +50,9 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Newly authored owner contract under DL-045 (2026-11-04). v2 Home layout writes use the Home4 slot and receipt contract Plans/home_layout_v2_slot_receipt.schema.json, slot and receipt schema version 4.0.0 and slot producer version 4.0.0, in the existing home_layout_transaction_slot and home_layout_operation_receipt families at their .v1 keys, with producer home.workspace_layout_commit.v1. It references pm.home_workspace_layout.v2 and the CV-361 2.0.0 payload by $ref and reuses every Home3 definition that is not typed for v1 layouts or the 1.1.0 payload, so SP-273's custody, transaction, crash convergence, retention mapping, read, deletion and withdrawal rules govern it unchanged. The binding's and owner result's command_id is the CV-361 command set; the owner result is pm.home_layout_owner_result.v1 at 2.0.0; the readback key is home_workspace_layout.v2:{project_id}:{workspace_tab_id}. A Home4 event is never migrated_from_v1 and never has a null command: the conversion appends inside SP-330's StorageMigrationCoordinator transaction without a slot operation or receipt. Under DL-270 values are canonical MessagePack. SP-340's 16,384-byte family limit bounds the complete stored value: a Home4 slot or receipt whose canonical encoding is within it is stored inline, and a larger one is stored in the payload store as its exact canonical bytes, its key holding a reference (stored_value_ref: schema id and version, Storage instance, logical key, BLAKE3 id of exactly 64 lower-case hex characters, byte size, media type application/msgpack, SHA-256) that every reader resolves and verifies before use; an unresolvable reference makes the value unavailable and fences the scope as SP-273's missing or corrupt rule says, and the referenced bytes follow SP-337's durability, reference counting, garbage collection and backup rules under the holding family's custody and retention. prior_layout_source_bytes and candidate_layout_source_bytes hold the exact source bytes as a binary field up to 16 KiB or a BLAKE3 payload-store reference above it, identity capture uses home_content_free_capture_canonical_msgpack.v1 and a prior migration core uses home_slot_migration_core_canonical_msgpack.v1. The 4.0.0 slot and receipt edges, readers and pending resolver are installed through the StorageMigrationCoordinator with post-receipt owner activation before a v2 write is admitted; unresolved Home1 to Home3 operations settle under their original authority or fence the migration. Readers dispatch 1.0.0 to 3.0.0 through Plans/home_layout_value_readers.schema.json and 4.0.0 through this contract.
+  The 2026-11-04 SP-273/Home4 amendment explicitly adopts EventRecord 3.0.0 for new events,
+  freezes its physical payload/reference in Home4, validates its complete resolved payload before semantic
+  joins and checkpoint advance, and dispatches retained inner 2.0.0 semantics without rewriting them.
 gui_related: false
 gui_classification_reason: Defines the stored custody of Home layout writes, not presentation.
 split_recommended: false
@@ -66,6 +69,7 @@ acceptance_criteria:
   - No 4.0.0 write is admitted before the 4.0.0 family edges, readers, pending resolver and owner activation are installed; unresolved Home1 to Home3 operations are never converted.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches or production build tasks are created by this unit.
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - Plans/home_layout_v2_slot_receipt.schema.json
   - Plans/home_layout_v2_slot_receipt_fixtures.json
   - python3 scripts/pm_home_layout_v2_slot_receipt.py

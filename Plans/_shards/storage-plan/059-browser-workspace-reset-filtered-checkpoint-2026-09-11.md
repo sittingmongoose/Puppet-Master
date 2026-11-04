@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21366-L22155
+Source lines: L21367-L22172
 
-Source SHA256: `51bf01550d1d71b1920b0b10a7b69bf96503598c899e44d2850083683ffa7c13`
+Source SHA256: `15e16fce9ce19a9dc6b7a03dcca13800b2555c634ca67d9383007a6c89da185d`
 
 ---
 
@@ -493,7 +493,17 @@ Define `operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_
 
 Keep the actual command idempotency key and the NEW Home domain-request RFC8785 binding digest request_sha256 in the operation receipt. Its input is the normalized Home object with exactly command_id, command_instance_id and args, without retry transport dispatch fields. The separate normalized_command_payload_sha256 preserves the actual existing SIR normalized-command payload digest, whose owner algorithm is unchanged; do not equate it with this Home-specific request digest. request_source_bytes_sha256 additionally binds the exact authenticated original request bytes and never replaces semantic idempotency. Before executing a retry, resolve the same command-instance and the scoped command-idempotency binding to the original operation, request digest, result, receipt and event. Same binding joins pending or returns the original terminal result. Different request bytes under either identity refuse without effects. Neither a repeated gesture nor a caller-selected new command instance can reuse an old command idempotency key to bypass that comparison. Event-level app-root dedupe remains separately required. An operation ID, reference or schema-valid result alone is not proof of a valid original command.
 
-The first prepared event semantic fields are immutable after readback certification. Envelope project_id equals payload project_id and the actual layout project; scope_kind=project. Thread/run/node/attempt and account refs are null for this presentation-only fact. actor_ref is the authenticated admitted command actor, not a reconstructed UI identity. correlation_id equals command/payload correlation; parent_event_id and causation_event_id are the actually admitted causal EventRecord ID or null when no such event exists. producer_sequence_id is the accepted new layout revision; occurred_at_utc equals the frozen settled_at_utc. payload_ref=null, redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes. Storage assigns event sequence and observed/persisted times. Freeze actor, correlation, causality, command refs, settled time and payload bytes before append retries; the retry does not regenerate them from current UI state.
+The first prepared event semantic fields are immutable after readback certification. Envelope project_id equals payload project_id and the actual layout project; scope_kind=project. Thread/run/node/attempt and account refs are null for this presentation-only fact. actor_ref is the authenticated admitted command actor, not a reconstructed UI identity. correlation_id equals command/payload correlation; parent_event_id and causation_event_id are the actually admitted causal EventRecord ID or null when no such event exists. producer_sequence_id is the accepted new layout revision; occurred_at_utc equals the frozen settled_at_utc. The 2026-11-04 DL-270 amendment below selects the exact EventRecord 3.0.0 inline/reference representation; redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes. Storage assigns event sequence and observed/persisted times. Freeze actor, correlation, causality, command refs, settled time and payload bytes before append retries; the retry does not regenerate them from current UI state.
+
+### DL-270 SP-273/Home4 EventRecord body amendment (2026-11-04)
+
+Newly authored technical follow-through under DL-270 and DL-045: `workspace.layout_changed` uses the governed EventRecord **3.0.0** representation in Contracts_V0 section 1.2.1. SP-273's former unconditional `payload_ref=null` now applies only to the inline case: the entire canonical MessagePack semantic body at or below 16,384 bytes. Above that exact limit, `payload=null` and the closed BLAKE3/size/media reference resolves the **complete** body. All affected-id arrays remain complete and unbounded; there is no tab/panel cap, truncation, omitted event or split event. Exactly one event is committed per admitted changed structural transaction.
+
+SP-400's Home4 slot and operation receipt freeze that inner envelope's exact version and physical payload/reference along with existing actor, command, time, result and first-AppendReceipt pins. `home_layout_v2_slot_receipt.schema.json` dispatches retained 2.0.0 event semantics without rewriting them and validates new 3.0.0 semantics as the closed successor; its decoded-body joins still apply after reference verification. The Home4 whole-value reference remains independent: it bounds the complete redb value even when decoded layouts and the resolved event body are large. Do not inline the resolved body into a redb reference wrapper. Same-identity retries resolve the original physical envelope, source bytes, result and receipt; Storage-assigned metadata alone cannot conflict. Both the slot and the event pack bytes/index must be durable under SP-337 before acknowledgment.
+
+The SP-273 event reader/projector and all three existing consumers use the same exact envelope-version dispatcher and verified resolved payload before filtering, replay or any checkpoint advance. The SP-278 nine-field token and source Storage identity remain exact joins; checkpoint values do not acquire live snapshots or payload copies. Retained historical 1.0.0/2.0.0 records remain readable under their original validating reader independent of today's layout, subject to unchanged withdrawal, forgery, access and deletion fences. Missing/corrupt payloads make history unavailable and fence checkpoint advance; no current-layout reconstruction substitutes for them. All existing RP-CONFIG-CURRENT, RP-AUTHORITY-INDEFINITE, RP-PROJECTION-3GEN, holds and coherent restore rules remain. StorageMigrationCoordinator installs the successor validating codec and all writer/reader/checkpoint paths together under its existing protected migration before enabling the producer; native installation remains NOT_RUN.
+
+Large-event, inline boundary, missing/corrupt/media/size/encoding/schema, retry, replay-only and retained historical controls: `Plans/event_authority_ds_round2_fixtures.json`, executed by `scripts/pm_event_authority_ds_round2.py`, including guard-removal witnesses.
 
 ### Exact new custody, without an alternative layout history
 
@@ -706,6 +716,11 @@ canonical_text: >-
   the SP-330 open item; this custody, transaction, crash, retention, read and withdrawal contract governs Home4 values.
   Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5, which stores the nine-field durable read
   token in every stored reader checkpoint and keeps every v4 case and count; v4 stays as lineage.
+  Amended 2026-11-04 (DL-270 technical follow-through): SP-400 supplies Home4's complete-value
+  inline/reference custody; the explicit SP-273/Home4 EventRecord amendment above selects the governed
+  EventRecord 3.0.0 representation with complete affected-id arrays, exact frozen retry pins and one event
+  per committed structural change. Its validating writer, reader and SP-278 checkpoint paths migrate
+  together; retained EventRecord 2.0.0 semantics remain exact compatibility reads.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.
@@ -758,6 +773,7 @@ acceptance_criteria:
 - Preserve lawful independent source/direct-issue/backup effects on Home refusal; retry completes the same original event/receipt/response without repeating the layout operation.
 - Preserve exact Home1 and external Home2 readers, unchanged physical keys/lifetimes/checkpoint history and original hash meanings; unresolved old pending work settles under original authority or fences migration.
 validation_surfaces:
+- "python3 scripts/pm_event_authority_ds_round2.py"
 - Plans/home_layout_event_contracts.schema.json
 - Plans/home_layout_pending_receipt.schema.json
 - Plans/home_layout_pending_receipt_v2_reader.schema.json

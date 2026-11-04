@@ -44,6 +44,8 @@ FIXTURES = "Plans/home_layout_v2_slot_receipt_fixtures.json"
 STORAGE_REGISTRY = "Plans/storage_value_registry.json"
 REFERENCED = (
     "Plans/home_layout_pending_receipt.schema.json",
+    "Plans/event_record_v3.schema.json",
+    "Plans/event_record.schema.json",
     "Plans/home_workspace_layout_v2.schema.json",
     "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
     "Plans/event_payloads/workspace_layout_changed.schema.json",
@@ -505,8 +507,16 @@ def value_limit_check(err: list[str], definition: str, value: dict[str, Any], li
                    "it is stored only by reference")
 
 
-def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d: str) -> dict[str, Any]:
-    payload = ev["payload"]
+def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d: str, store: PayloadStore = EMPTY_STORE) -> dict[str, Any]:
+    import pm_event_payload_route as body_route
+    payload, route_errors = body_route.resolved_body(ev, store.objects, historical=ev.get("schema_version") == "2.0.0")
+    err.extend("I12 " + e for e in route_errors)
+    if payload is None:
+        return {}
+    schema = load(Path(__file__).resolve().parents[1], "Plans/event_payloads/workspace_layout_changed_v2.schema.json")
+    if not body_route.validator(schema).is_valid(payload):
+        err.append("I12 resolved event body fails workspace layout payload schema")
+        return {}
     if payload["command_id"] != binding["command_id"]:
         err.append("I1 event payload command_id differs from the binding")
     if ev["project_id"] != binding["project_id"] or payload["project_id"] != binding["project_id"] \
@@ -611,7 +621,7 @@ def slot_invariants(slot: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
             err.append("I2 readback does not certify the candidate")
     ev = slot["event_semantics"]
     if ev is not None:
-        event_checks(err, ev, binding, d)
+        event_checks(err, ev, binding, d, store)
     return err
 
 
@@ -646,7 +656,9 @@ def receipt_invariants(r: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
         err.append("I4 dispatch receipt does not join the result, correlation or dispatch")
     ev = r["event_semantics"]
     if ev is not None:
-        payload = event_checks(err, ev, b, d)
+        payload = event_checks(err, ev, b, d, store)
+        if not payload:
+            return err
         if payload["command_result_ref"] != o["result_ref"] or payload["receipt_refs"] != [dr["receipt_ref"]] \
                 or payload["settled_layout_ref"] != r["settled_layout_ref"]:
             err.append("I4 event payload does not join the result, receipt or settlement")

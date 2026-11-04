@@ -9,6 +9,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import sys
 from collections import Counter
 from functools import lru_cache
 from pathlib import Path
@@ -19,6 +20,9 @@ from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+import pm_event_payload_route as body_route
+Draft202012Validator = body_route.StrictValidator
 IDENTITIES = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
 MAX_PAYLOAD_BYTES = 65536
 
@@ -343,7 +347,8 @@ def contract_context():
     # Registry lookup is deliberately offline; no remote retrieval is enabled.
     resources = [(schema["$id"], Resource.from_contents(schema)) for schema in (payloads, owner, envelope)]
     resources.append((urljoin(payloads["$id"], owner["$id"]), Resource.from_contents(owner)))
-    registry = Registry().with_resources(resources).crawl()
+    registry = body_route.schema_registry(ROOT).with_resources(resources).crawl()
+    body_route.eager(registry, payloads, owner, envelope)
     validators = {
         row["event_type"]: Draft202012Validator(
             pointer(payloads, row["payload_schema_ref"]["json_pointer"]),
@@ -439,7 +444,7 @@ def semantic_failures(payload):
 def fixture_event(case, ordinal):
     payload = copy.deepcopy(case["payload"])
     return {
-        "schema_id": "pm.event.v0", "schema_version": "2.0.0", "scope_kind": "project",
+        "schema_id": "pm.event.v0", "schema_version": "3.0.0" if case["event_type"] in body_route.ADOPTED else "2.0.0", "scope_kind": "project",
         "event_id": f"event-browser-{ordinal}", "event_type": case["event_type"],
         **{field: payload["context"][field] for field in IDENTITIES},
         "actor_ref": "actor:browser-fixture", "requested_account_ref": None, "effective_account_ref": None,
@@ -453,7 +458,7 @@ def fixture_event(case, ordinal):
     }
 
 
-def candidate_failures(event, producer_component, context):
+def candidate_failures(event, producer_component, context, *, payload_store=None, historical=False):
     """Check prepared payload semantics without granting EventRecord admission."""
     admission, _, _, envelope, validators = context
     failures = []
@@ -463,9 +468,11 @@ def candidate_failures(event, producer_component, context):
     row = rows.get(event.get("event_type"))
     if row is None:
         return ["unknown_browser_event_quarantine"]
-    if list(Draft202012Validator(envelope, format_checker=FormatChecker()).iter_errors(event)):
+    selected_envelope = load_json("Plans/event_record_v3.schema.json") if event.get("schema_version") == "3.0.0" else envelope
+    if list(body_route.validator(selected_envelope).iter_errors(event)):
         failures.append("envelope_schema")
-    payload = event.get("payload", {})
+    payload, route_errors = body_route.resolved_body(event, payload_store, historical=historical)
+    failures.extend(route_errors)
     if not isinstance(payload, dict):
         return failures + ["payload_schema"]
     if list(validators[event["event_type"]].iter_errors(payload)):
@@ -486,7 +493,7 @@ def candidate_failures(event, producer_component, context):
     if event.get("redaction_profile") != "no_secrets" or any(event.get("migration", {}).values()):
         failures.append("browser_redaction_or_unadmitted_migration")
     if len(json.dumps(payload, separators=(",", ":"), ensure_ascii=False).encode()) > MAX_PAYLOAD_BYTES:
-        failures.append("payload_byte_limit")
+        failures.append("payload_total_byte_limit")
     if "payload_schema" not in failures:
         failures.extend(semantic_failures(payload))
     return failures
@@ -527,9 +534,9 @@ def central_binding_failures(row, family, row_index):
     return failures
 
 
-def event_failures(event, producer_component, context, *, families=None):
+def event_failures(event, producer_component, context, *, families=None, payload_store=None, historical=False):
     """Admission-enforcing check, distinct from candidate shape/semantics."""
-    failures = candidate_failures(event, producer_component, context)
+    failures = candidate_failures(event, producer_component, context, payload_store=payload_store, historical=historical)
     if not isinstance(event, dict):
         return failures + ["event_not_admitted"]
     matches = [(index, row) for index, row in enumerate(context[0]["rows"]) if row["event_type"] == event.get("event_type")]
@@ -562,8 +569,8 @@ class ReplayOracle:
         self.projected_count = 0
         self.executed_effects = 0
 
-    def consume(self, event, producer, context):
-        if self.contract_failures(event, producer, context):
+    def consume(self, event, producer, context, *, payload_store=None):
+        if self.contract_failures(event, producer, context, payload_store=payload_store):
             return "quarantined_without_checkpoint_advance"
         identity = event["event_id"]
         owner = envelope_oracle()
@@ -580,7 +587,8 @@ class ReplayOracle:
         self.transition_ids[transition] = identity
         self.checkpoint = event["sequence_id"]
         self.projected_count += 1
-        subject = event["payload"]["context"]
+        body, _ = body_route.resolved_body(event, payload_store)
+        subject = body["context"]
         if subject["browser_page_id"] is not None:
             key = (subject["project_id"], subject["browser_workspace_id"], subject["browser_page_id"])
             self.page_generations[key] = max(self.page_generations.get(key, -1), subject["page_generation"])

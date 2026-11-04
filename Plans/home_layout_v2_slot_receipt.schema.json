@@ -3,7 +3,7 @@
   "$id": "https://puppetmaster.local/schemas/home_layout_v2_slot_receipt/4.0.0",
   "title": "Home slot and receipt contract for v2 Home layout writes (Home4)",
   "description": "SP-400, a newly authored owner contract under DL-045 (2026-11-04): the successor slot and receipt schema that SP-330 and SP-273 require before a native v2 Home layout writer is admitted. Same physical families, keys, producer id, custody, transaction, crash, retention, read and withdrawal rules as Home3 (SP-273). It replaces only what Home3 types for v1 layouts and the 1.1.0 payload, and the JSON and base64 encodings DL-270 retires. pm.home_workspace_layout.v2 and the CV-361 2.0.0 payload are referenced by $ref, never copied. A complete value over its family's 16 KiB limit (SP-340) is stored as a fixed-size reference to its canonical bytes in the payload store (SP-337), defined by stored_value_ref.",
-  "$comment": "Stored as canonical MessagePack (SP-339, DL-270): a property described with contentEncoding base64 is MessagePack bin in the stored value and base64 only in this JSON projection; no stored field is base64 text. Semantic invariants the schema cannot express, checked by scripts/pm_home_layout_v2_slot_receipt.py: I1 binding.command_id = owner_result.command_id = event payload command_id = the original normalized request, SIR outcome and UI response command_id; the payload change is never migrated_from_v1 (the v1-to-v2 conversion has no admitted command and stays in SP-330's StorageMigrationCoordinator transaction; SP-273: migration values never authorize making up a command or receipt). I2 binding.expected_layout_revision = receipt.prior_layout_revision = owner_result.prior_layout_revision = payload.prior_layout_revision = prior_layout.revision; for prepared and committed receipts new_layout_revision = prior + 1 = owner_result.new_layout_revision = payload.new_layout_revision = event producer_sequence_id = readback.layout_revision = candidate_layout.revision. I3 binding, slot, readback and payload name one Project and workspace tab; readback.canonical_key = home_workspace_layout.v2:{project_id}:{workspace_tab_id}; event_semantics.project_id and both layouts' project_id and workspace_tab_id equal the binding's. I4 payload.command_result_ref = owner_result.result_ref = dispatch_receipt.command_result_ref; payload.receipt_refs = [dispatch_receipt.receipt_ref]; payload.correlation_id = binding.correlation_id = event_semantics.correlation_id = dispatch_receipt.correlation_id; payload.interaction_transaction_id = binding.interaction_transaction_id; event_semantics.actor_ref = binding.actor_ref; dispatch_receipt.dispatch_ref = binding.dispatch_ref; payload.settled_layout_ref = receipt.settled_layout_ref = home_layout_settlement:{operation_digest}, and readback.layout_sha256 = settled_layout_sha256; a committed result and receipt name the event. I5 operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_id,workspace_tab_id,command_instance_id]))) and the event ID, idempotency key and home_layout_* refs are formed from it exactly as SP-273 defines. I6 SHA-256 of the exact layout source bytes (inline bytes or the resolved payload-store object) equals prior_layout_sha256 or candidate_layout_sha256 and the bytes decode to the decoded layout; inline source bytes are at most 16,384 bytes and a source payload_ref is used only above that (SP-273, SP-337). I7 each identity_capture_bytes member is the canonical MessagePack encoding of the matching original typed value, and identity_capture_bytes_sha256 is SHA-256 of those bytes; core_bytes is the canonical MessagePack encoding of core and core_sha256 its SHA-256. I8 original_command_outcome.owner_result_schema_ref (and the UI response's, when present) = {path: Plans/home_layout_v2_slot_receipt.schema.json, json_pointer: #/$defs/owner_result, schema_id: pm.home_layout_owner_result.v1}, and owner_result_sha256 = original_owner_result_sha256 = the CV-333 RFC 8785 SHA-256 of owner_result. I9 a prior migration wrapper joins the slot: logical key home_layout_transaction_slot.v1:{project_id}:{workspace_tab_id}, Storage instance and scope, and successor generation, migration, completion time and receipt key and hash equal the slot's migration_generation (SP-273). I10 the complete stored value, its canonical MessagePack encoding with every contentEncoding base64 field as bin, is at most its family's max_value_bytes in Plans/storage_value_registry.json (SP-340; 16,384 bytes) when stored inline; a larger value is stored only as stored_value_ref, and a stored_value_ref names only a larger value; the reference itself is within the limit. I11 a payload reference (a source payload_ref or a stored_value_ref's value_ref) resolves: the object exists, its bytes hash to blake3_id (BLAKE3, exactly 64 lower-case hex characters), its length equals byte_size and its media type equals media_type; for a stored_value_ref, value_sha256 is the SHA-256 of those bytes, which are exactly the canonical MessagePack encoding of a Home4 value of the named schema_id that passes this schema and I1 to I10, and the reference's logical_key and storage_instance_id equal the value's (I3). A reference that does not resolve makes the value unavailable: SP-273's missing-or-corrupt rule fences the scope. Patterns use ECMA-262 semantics: `$` is the end of the input, so no identifier accepts a trailing line break. Readers dispatch by schema_version: 1.0.0 to 3.0.0 through Plans/home_layout_value_readers.schema.json, 4.0.0 through this contract. Native installation, codecs, redb transactions, authentication and durability remain NOT_RUN.",
+  "$comment": "Stored as canonical MessagePack (SP-339, DL-270): a property described with contentEncoding base64 is MessagePack bin in the stored value and base64 only in this JSON projection; no stored field is base64 text. Semantic invariants the schema cannot express, checked by scripts/pm_home_layout_v2_slot_receipt.py: I1 binding.command_id = owner_result.command_id = event payload command_id = the original normalized request, SIR outcome and UI response command_id; the payload change is never migrated_from_v1 (the v1-to-v2 conversion has no admitted command and stays in SP-330's StorageMigrationCoordinator transaction; SP-273: migration values never authorize making up a command or receipt). I2 binding.expected_layout_revision = receipt.prior_layout_revision = owner_result.prior_layout_revision = payload.prior_layout_revision = prior_layout.revision; for prepared and committed receipts new_layout_revision = prior + 1 = owner_result.new_layout_revision = payload.new_layout_revision = event producer_sequence_id = readback.layout_revision = candidate_layout.revision. I3 binding, slot, readback and payload name one Project and workspace tab; readback.canonical_key = home_workspace_layout.v2:{project_id}:{workspace_tab_id}; event_semantics.project_id and both layouts' project_id and workspace_tab_id equal the binding's. I4 payload.command_result_ref = owner_result.result_ref = dispatch_receipt.command_result_ref; payload.receipt_refs = [dispatch_receipt.receipt_ref]; payload.correlation_id = binding.correlation_id = event_semantics.correlation_id = dispatch_receipt.correlation_id; payload.interaction_transaction_id = binding.interaction_transaction_id; event_semantics.actor_ref = binding.actor_ref; dispatch_receipt.dispatch_ref = binding.dispatch_ref; payload.settled_layout_ref = receipt.settled_layout_ref = home_layout_settlement:{operation_digest}, and readback.layout_sha256 = settled_layout_sha256; a committed result and receipt name the event. I5 operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_id,workspace_tab_id,command_instance_id]))) and the event ID, idempotency key and home_layout_* refs are formed from it exactly as SP-273 defines. I6 SHA-256 of the exact layout source bytes (inline bytes or the resolved payload-store object) equals prior_layout_sha256 or candidate_layout_sha256 and the bytes decode to the decoded layout; inline source bytes are at most 16,384 bytes and a source payload_ref is used only above that (SP-273, SP-337). I7 each identity_capture_bytes member is the canonical MessagePack encoding of the matching original typed value, and identity_capture_bytes_sha256 is SHA-256 of those bytes; core_bytes is the canonical MessagePack encoding of core and core_sha256 its SHA-256. I8 original_command_outcome.owner_result_schema_ref (and the UI response's, when present) = {path: Plans/home_layout_v2_slot_receipt.schema.json, json_pointer: #/$defs/owner_result, schema_id: pm.home_layout_owner_result.v1}, and owner_result_sha256 = original_owner_result_sha256 = the CV-333 RFC 8785 SHA-256 of owner_result. I9 a prior migration wrapper joins the slot: logical key home_layout_transaction_slot.v1:{project_id}:{workspace_tab_id}, Storage instance and scope, and successor generation, migration, completion time and receipt key and hash equal the slot's migration_generation (SP-273). I10 the complete stored value, its canonical MessagePack encoding with every contentEncoding base64 field as bin, is at most its family's max_value_bytes in Plans/storage_value_registry.json (SP-340; 16,384 bytes) when stored inline; a larger value is stored only as stored_value_ref, and a stored_value_ref names only a larger value; the reference itself is within the limit. I11 a payload reference (a source payload_ref or a stored_value_ref's value_ref) resolves: the object exists, its bytes hash to blake3_id (BLAKE3, exactly 64 lower-case hex characters), its length equals byte_size and its media type equals media_type; for a stored_value_ref, value_sha256 is the SHA-256 of those bytes, which are exactly the canonical MessagePack encoding of a Home4 value of the named schema_id that passes this schema and I1 to I10, and the reference's logical_key and storage_instance_id equal the value's (I3). A reference that does not resolve makes the value unavailable: SP-273's missing-or-corrupt rule fences the scope. Patterns use ECMA-262 semantics: `$` is the end of the input, so no identifier accepts a trailing line break. Readers dispatch by schema_version: 1.0.0 to 3.0.0 through Plans/home_layout_value_readers.schema.json, 4.0.0 through this contract. Native installation, codecs, redb transactions, authentication and durability remain NOT_RUN. I12 DL-270: exact EventRecord 3.0.0 inline/reference dispatcher; resolved complete body passes registered payload schema and I1-I5 joins before use. Retained 2.0.0 semantics are validated without rewriting. Native successor installation remains NOT_RUN.",
   "$defs": {
     "transaction_slot": {
       "type": "object",
@@ -991,128 +991,187 @@
       ]
     },
     "event_semantics": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_id",
-        "schema_version",
-        "scope_kind",
-        "event_id",
-        "event_type",
-        "project_id",
-        "thread_id",
-        "run_id",
-        "node_id",
-        "attempt_id",
-        "actor_ref",
-        "requested_account_ref",
-        "effective_account_ref",
-        "occurred_at_utc",
-        "producer_sequence_id",
-        "correlation_id",
-        "causation_event_id",
-        "parent_event_id",
-        "idempotency_key",
-        "payload_schema_id",
-        "payload",
-        "payload_ref",
-        "redaction_profile",
-        "replay_policy",
-        "migration"
-      ],
-      "properties": {
-        "schema_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/schema_id"
+      "oneOf": [
+        {
+          "$ref": "#/$defs/event_semantics_2_0_0_retained"
         },
-        "schema_version": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/schema_version"
-        },
-        "scope_kind": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/scope_kind"
-        },
-        "event_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/event_id"
-        },
-        "event_type": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/event_type"
-        },
-        "project_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/project_id"
-        },
-        "thread_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/thread_id"
-        },
-        "run_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/run_id"
-        },
-        "node_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/node_id"
-        },
-        "attempt_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/attempt_id"
-        },
-        "actor_ref": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/actor_ref"
-        },
-        "requested_account_ref": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/requested_account_ref"
-        },
-        "effective_account_ref": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/effective_account_ref"
-        },
-        "occurred_at_utc": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/occurred_at_utc"
-        },
-        "producer_sequence_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/producer_sequence_id"
-        },
-        "correlation_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/correlation_id"
-        },
-        "causation_event_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/causation_event_id"
-        },
-        "parent_event_id": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/parent_event_id"
-        },
-        "idempotency_key": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/idempotency_key"
-        },
-        "payload_schema_id": {
-          "const": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0"
-        },
-        "payload": {
-          "allOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "scope_kind",
+            "event_id",
+            "event_type",
+            "project_id",
+            "thread_id",
+            "run_id",
+            "node_id",
+            "attempt_id",
+            "actor_ref",
+            "requested_account_ref",
+            "effective_account_ref",
+            "occurred_at_utc",
+            "producer_sequence_id",
+            "correlation_id",
+            "causation_event_id",
+            "parent_event_id",
+            "idempotency_key",
+            "payload_schema_id",
+            "payload",
+            "payload_ref",
+            "redaction_profile",
+            "replay_policy",
+            "migration"
+          ],
+          "properties": {
+            "schema_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/schema_id"
+            },
+            "schema_version": {
+              "const": "3.0.0"
+            },
+            "scope_kind": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/scope_kind"
+            },
+            "event_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/event_id"
+            },
+            "event_type": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/event_type"
+            },
+            "project_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/project_id"
+            },
+            "thread_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/thread_id"
+            },
+            "run_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/run_id"
+            },
+            "node_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/node_id"
+            },
+            "attempt_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/attempt_id"
+            },
+            "actor_ref": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/actor_ref"
+            },
+            "requested_account_ref": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/requested_account_ref"
+            },
+            "effective_account_ref": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/effective_account_ref"
+            },
+            "occurred_at_utc": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/occurred_at_utc"
+            },
+            "producer_sequence_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/producer_sequence_id"
+            },
+            "correlation_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/correlation_id"
+            },
+            "causation_event_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/causation_event_id"
+            },
+            "parent_event_id": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/parent_event_id"
+            },
+            "idempotency_key": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/idempotency_key"
+            },
+            "payload_schema_id": {
+              "const": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0"
+            },
+            "payload": {
+              "oneOf": [
+                {
+                  "allOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0"
+                    },
+                    {
+                      "properties": {
+                        "change": {
+                          "not": {
+                            "const": "migrated_from_v1"
+                          }
+                        },
+                        "command_id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "payload_ref": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/3.0.0/event_record.schema.json#/$defs/payload_store_ref"
+                }
+              ]
+            },
+            "redaction_profile": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/redaction_profile"
+            },
+            "replay_policy": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/replay_policy"
+            },
+            "migration": {
+              "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/migration"
+            }
+          },
+          "oneOf": [
             {
-              "$ref": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0"
+              "properties": {
+                "payload": {
+                  "allOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0"
+                    },
+                    {
+                      "properties": {
+                        "change": {
+                          "not": {
+                            "const": "migrated_from_v1"
+                          }
+                        },
+                        "command_id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "payload_ref": {
+                  "type": "null"
+                }
+              }
             },
             {
               "properties": {
-                "change": {
-                  "not": {
-                    "const": "migrated_from_v1"
-                  }
+                "payload": {
+                  "type": "null"
                 },
-                "command_id": {
-                  "type": "string"
+                "payload_ref": {
+                  "$ref": "https://puppetmaster.local/schemas/event_record/3.0.0/event_record.schema.json#/$defs/payload_store_ref"
                 }
               }
             }
           ]
-        },
-        "payload_ref": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/payload_ref"
-        },
-        "redaction_profile": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/redaction_profile"
-        },
-        "replay_policy": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/replay_policy"
-        },
-        "migration": {
-          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/migration"
         }
-      }
+      ]
     },
     "owner_result": {
       "type": "object",
@@ -1889,6 +1948,130 @@
           }
         }
       ]
+    },
+    "event_semantics_2_0_0_retained": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "event_id",
+        "event_type",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "requested_account_ref",
+        "effective_account_ref",
+        "occurred_at_utc",
+        "producer_sequence_id",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "idempotency_key",
+        "payload_schema_id",
+        "payload",
+        "payload_ref",
+        "redaction_profile",
+        "replay_policy",
+        "migration"
+      ],
+      "properties": {
+        "schema_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/schema_id"
+        },
+        "schema_version": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/schema_version"
+        },
+        "scope_kind": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/scope_kind"
+        },
+        "event_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/event_id"
+        },
+        "event_type": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/event_type"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/project_id"
+        },
+        "thread_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/thread_id"
+        },
+        "run_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/run_id"
+        },
+        "node_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/node_id"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/attempt_id"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/actor_ref"
+        },
+        "requested_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/requested_account_ref"
+        },
+        "effective_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/effective_account_ref"
+        },
+        "occurred_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/occurred_at_utc"
+        },
+        "producer_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/producer_sequence_id"
+        },
+        "correlation_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/correlation_id"
+        },
+        "causation_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/causation_event_id"
+        },
+        "parent_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/parent_event_id"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/idempotency_key"
+        },
+        "payload_schema_id": {
+          "const": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0"
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0"
+            },
+            {
+              "properties": {
+                "change": {
+                  "not": {
+                    "const": "migrated_from_v1"
+                  }
+                },
+                "command_id": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "payload_ref": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/payload_ref"
+        },
+        "redaction_profile": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/redaction_profile"
+        },
+        "replay_policy": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/replay_policy"
+        },
+        "migration": {
+          "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/event_semantics/properties/migration"
+        }
+      }
     }
   },
   "$ref": "#/$defs/home4_value"

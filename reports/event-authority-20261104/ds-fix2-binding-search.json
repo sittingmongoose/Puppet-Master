@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.ds.fix2.owner_binding_search.v1",
+  "rows": [
+    {
+      "family": "envelope_successor",
+      "base_revision": "093d102406a3368f246eb255ecc92f3db5a0d2b7",
+      "search_scope": [
+        "Plans/**",
+        "scripts/**",
+        "tests/**"
+      ],
+      "query": "event_record_v3|pm\\.event\\.v0@3|payload_store_ref",
+      "exit_code": 1,
+      "match_count": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "representative_hits": [],
+      "adjudication": "No materialized EventRecord 3.0.0 body reference successor exists at the base; DL-270/SP-337 already select store-once payloads. Reuse all family ids, producer/consumer/projector/checkpoint names and retention. New technical envelope representation only; explicit three-family adoption without membership changes."
+    },
+    {
+      "family": "browser.workspace.created",
+      "base_revision": "093d102406a3368f246eb255ecc92f3db5a0d2b7",
+      "search_scope": [
+        "Plans/**",
+        "scripts/**",
+        "tests/**"
+      ],
+      "query": "browser.workspace.created|CV-332|SP-337",
+      "exit_code": 0,
+      "match_count": 16944,
+      "output_sha256": "c7bfed4dccea37e54020e75f2d61719d01916c66bad5d524817629619162462a",
+      "representative_hits": [
+        "093d102406:Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json:3540:      \"path\": \"Plans/_shards/storage-plan/055-browser-workspace-created-index-and-checkpoint-2026-09-11.md\",",
+        "093d102406:Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json:7586:          \"path\": \"Plans/_shards/storage-plan/055-browser-workspace-created-index-and-checkpoint-2026-09-11.md\",",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:481:{\"acceptance_unit_id\": \"ACD-075-A004\", \"context_scope\": \"threads\", \"criterion\": \"Unheld canonical message, attachment, search, and derived content (including the render-page store) is purged within 24 hours; payload-store references are released within that bound and the bytes are reclaimed by reference-counted garbage collection that honours holds and backups (SP-337). No mirror exists (SP-339).\", \"criterion_index\": 4, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/assistant-chat-design.md\", \"Plans/storage-plan.md\", \"Plans/FinalGUISpec.md\"], \"owner_doc\": \"Plans/assistant-chat-design.md\", \"plan_unit_id\": \"ACD-075\", \"reasoning_tier\": \"standard\", \"risk_class\": \"retention_integrity\", \"schema_id\": \"pm.plan_index.acceptance_unit.v1\", \"source_location\": {\"heading\": \"ACD-075 - Thread Lifecycle Persistence\", \"heading_level\": 3, \"h",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:2717:{\"acceptance_unit_id\": \"ATS-024-A004\", \"context_scope\": \"case_l_migration_restore_eventrecord_retention_testing\", \"criterion\": \"Amended 2026-10-31 (DL-270). Payload fixtures prove that output over 16 KiB is one BLAKE3 pack reference with no inline base64 and that identical outputs are stored once (SP-337). Seal-time repack fixtures prove that the zstd copy decodes to the same bytes, sequence and order before the original is retired, and that the active segment stays uncompressed (flags=0) (SP-335).\", \"criterion_index\": 4, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/Automated_Testing_System.md\", \"Plans/storage-plan.md\", \"Plans/Contracts_V0.md\", \"Plans/event_record.schema.json\", \"Plans/FileSafe.md\", \"Plans/WorktreeGitImprovement.md\", \"Plans/Executor_Protocol.md\", \"Plans/storage_value_registry.json\", \"Plans/Release_Supply",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:6027:{\"acceptance_unit_id\": \"CV-332-A001\", \"context_scope\": \"browser_eventrecord_contract\", \"criterion\": \"Validate the central envelope, registered payload schema ID and event_type pair, payload, project scope, and parity for project, thread, Run, and attempt where applicable before checkpoint advance.\", \"criterion_index\": 1, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/event_record.schema.json\", \"Plans/event_family_registry.json\", \"Plans/browser_event_admission.json\", \"Plans/browser_event_payloads.schema.json\", \"Plans/storage-plan.md\"], \"owner_doc\": \"Plans/Contracts_V0.md\", \"plan_unit_id\": \"CV-332\", \"reasoning_tier\": \"high\", \"risk_class\": \"browser_event_payload_identity_scope_or_replay_escape\", \"schema_id\": \"pm.plan_index.acceptance_unit.v1\", \"source_location\": {\"heading\": \"CV-332 - Browser Event Payload Identity Scope And ",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:6028:{\"acceptance_unit_id\": \"CV-332-A002\", \"context_scope\": \"browser_eventrecord_contract\", \"criterion\": \"Require exact Home Server, Execution Host, Environment, Source Location and row-specific workspace, session, page/generation, program, segment, ProgramWorkspace or routine context; pre-allocation identities remain null only where the selected transition permits them.\", \"criterion_index\": 2, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/event_record.schema.json\", \"Plans/event_family_registry.json\", \"Plans/browser_event_admission.json\", \"Plans/browser_event_payloads.schema.json\", \"Plans/storage-plan.md\"], \"owner_doc\": \"Plans/Contracts_V0.md\", \"plan_unit_id\": \"CV-332\", \"reasoning_tier\": \"high\", \"risk_class\": \"browser_event_payload_identity_scope_or_replay_escape\", \"schema_id\": \"pm.plan_index.acceptance_unit.v1\", \"source_loca",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:6029:{\"acceptance_unit_id\": \"CV-332-A003\", \"context_scope\": \"browser_eventrecord_contract\", \"criterion\": \"Payloads are at most 16384 UTF-8 JSON bytes (16 KiB inline body, SP-337) with at most 64 artifact refs and closed typed facts, a larger body is carried by BLAKE3 payload-store reference, and inline base64 is an admission error; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.\", \"criterion_index\": 3, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/event_record.schema.json\", \"Plans/event_family_registry.json\", \"Plans/browser_event_admission.json\", \"Plans/browser_event_payloads.schema.json\", \"Plans/storage-plan.md\"], \"owner_doc\": \"Plans/Contracts_V0.md\", \"plan_unit_id\": \"CV-332\", \"reasoning_tier\": ",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:6030:{\"acceptance_unit_id\": \"CV-332-A004\", \"context_scope\": \"browser_eventrecord_contract\", \"criterion\": \"Application-scope, mismatched scope, unknown family, stale generation, protected-auth content, unhandled inline data, mismatched schema identity and oversized payloads fail closed without checkpoint advance.\", \"criterion_index\": 4, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/event_record.schema.json\", \"Plans/event_family_registry.json\", \"Plans/browser_event_admission.json\", \"Plans/browser_event_payloads.schema.json\", \"Plans/storage-plan.md\"], \"owner_doc\": \"Plans/Contracts_V0.md\", \"plan_unit_id\": \"CV-332\", \"reasoning_tier\": \"high\", \"risk_class\": \"browser_event_payload_identity_scope_or_replay_escape\", \"schema_id\": \"pm.plan_index.acceptance_unit.v1\", \"source_location\": {\"heading\": \"CV-332 - Browser Event Payload Identity "
+      ],
+      "adjudication": "No materialized EventRecord 3.0.0 body reference successor exists at the base; DL-270/SP-337 already select store-once payloads. Reuse all family ids, producer/consumer/projector/checkpoint names and retention. New technical envelope representation only; explicit three-family adoption without membership changes."
+    },
+    {
+      "family": "browser.workspace.reset",
+      "base_revision": "093d102406a3368f246eb255ecc92f3db5a0d2b7",
+      "search_scope": [
+        "Plans/**",
+        "scripts/**",
+        "tests/**"
+      ],
+      "query": "browser.workspace.reset|CV-332|SP-337",
+      "exit_code": 0,
+      "match_count": 17179,
+      "output_sha256": "b37c4c8f83efb20deb3b51d15a03751d4cbeea5c9926a7068714ed9fafc95363",
+      "representative_hits": [
+        "093d102406:Plans/.audits/wnc-20260905/audit/logs/run_gates.log:1527:        \"orphan Touch Closure actions not found in the retained owner/concept inventories: ['cmd.agent_plugin.disable', 'cmd.agent_plugin.enable', 'cmd.agent_plugin.install', 'cmd.agent_plugin.open_details', 'cmd.agent_plugin.open_logs', 'cmd.agent_plugin.reload', 'cmd.agent_plugin.remove', 'cmd.agent_plugin.review_changes', 'cmd.agent_plugin.rollback', 'cmd.agent_plugin.scan', 'cmd.agent_plugin.update', 'cmd.agent_plugin.validate', 'cmd.artifacts.create_demonstration_video', 'cmd.artifacts.inspect_capture_provenance', 'cmd.artifacts.play_recording', 'cmd.artifacts.watch_recording', 'cmd.auth_profile.cancel', 'cmd.auth_profile.open_official_page', 'cmd.auth_profile.retry', 'cmd.auth_profile.select', 'cmd.auth_profile.sign_in', 'cmd.auth_profile.sign_out', 'cmd.auth_profile.submit_code', 'cmd.auth_profile.verify', 'cmd.au",
+        "093d102406:Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json:3556:      \"path\": \"Plans/_shards/storage-plan/059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md\",",
+        "093d102406:Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/shard_report.json:7622:          \"path\": \"Plans/_shards/storage-plan/059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md\",",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:481:{\"acceptance_unit_id\": \"ACD-075-A004\", \"context_scope\": \"threads\", \"criterion\": \"Unheld canonical message, attachment, search, and derived content (including the render-page store) is purged within 24 hours; payload-store references are released within that bound and the bytes are reclaimed by reference-counted garbage collection that honours holds and backups (SP-337). No mirror exists (SP-339).\", \"criterion_index\": 4, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/assistant-chat-design.md\", \"Plans/storage-plan.md\", \"Plans/FinalGUISpec.md\"], \"owner_doc\": \"Plans/assistant-chat-design.md\", \"plan_unit_id\": \"ACD-075\", \"reasoning_tier\": \"standard\", \"risk_class\": \"retention_integrity\", \"schema_id\": \"pm.plan_index.acceptance_unit.v1\", \"source_location\": {\"heading\": \"ACD-075 - Thread Lifecycle Persistence\", \"heading_level\": 3, \"h",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:2717:{\"acceptance_unit_id\": \"ATS-024-A004\", \"context_scope\": \"case_l_migration_restore_eventrecord_retention_testing\", \"criterion\": \"Amended 2026-10-31 (DL-270). Payload fixtures prove that output over 16 KiB is one BLAKE3 pack reference with no inline base64 and that identical outputs are stored once (SP-337). Seal-time repack fixtures prove that the zstd copy decodes to the same bytes, sequence and order before the original is retired, and that the active segment stays uncompressed (flags=0) (SP-335).\", \"criterion_index\": 4, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/Automated_Testing_System.md\", \"Plans/storage-plan.md\", \"Plans/Contracts_V0.md\", \"Plans/event_record.schema.json\", \"Plans/FileSafe.md\", \"Plans/WorktreeGitImprovement.md\", \"Plans/Executor_Protocol.md\", \"Plans/storage_value_registry.json\", \"Plans/Release_Supply",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:6027:{\"acceptance_unit_id\": \"CV-332-A001\", \"context_scope\": \"browser_eventrecord_contract\", \"criterion\": \"Validate the central envelope, registered payload schema ID and event_type pair, payload, project scope, and parity for project, thread, Run, and attempt where applicable before checkpoint advance.\", \"criterion_index\": 1, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/event_record.schema.json\", \"Plans/event_family_registry.json\", \"Plans/browser_event_admission.json\", \"Plans/browser_event_payloads.schema.json\", \"Plans/storage-plan.md\"], \"owner_doc\": \"Plans/Contracts_V0.md\", \"plan_unit_id\": \"CV-332\", \"reasoning_tier\": \"high\", \"risk_class\": \"browser_event_payload_identity_scope_or_replay_escape\", \"schema_id\": \"pm.plan_index.acceptance_unit.v1\", \"source_location\": {\"heading\": \"CV-332 - Browser Event Payload Identity Scope And ",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:6028:{\"acceptance_unit_id\": \"CV-332-A002\", \"context_scope\": \"browser_eventrecord_contract\", \"criterion\": \"Require exact Home Server, Execution Host, Environment, Source Location and row-specific workspace, session, page/generation, program, segment, ProgramWorkspace or routine context; pre-allocation identities remain null only where the selected transition permits them.\", \"criterion_index\": 2, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/event_record.schema.json\", \"Plans/event_family_registry.json\", \"Plans/browser_event_admission.json\", \"Plans/browser_event_payloads.schema.json\", \"Plans/storage-plan.md\"], \"owner_doc\": \"Plans/Contracts_V0.md\", \"plan_unit_id\": \"CV-332\", \"reasoning_tier\": \"high\", \"risk_class\": \"browser_event_payload_identity_scope_or_replay_escape\", \"schema_id\": \"pm.plan_index.acceptance_unit.v1\", \"source_loca",
+        "093d102406:Plans/.plan_index/acceptance_units.jsonl:6029:{\"acceptance_unit_id\": \"CV-332-A003\", \"context_scope\": \"browser_eventrecord_contract\", \"criterion\": \"Payloads are at most 16384 UTF-8 JSON bytes (16 KiB inline body, SP-337) with at most 64 artifact refs and closed typed facts, a larger body is carried by BLAKE3 payload-store reference, and inline base64 is an admission error; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.\", \"criterion_index\": 3, \"gui_related\": false, \"implementation_surfaces\": [\"Plans/event_record.schema.json\", \"Plans/event_family_registry.json\", \"Plans/browser_event_admission.json\", \"Plans/browser_event_payloads.schema.json\", \"Plans/storage-plan.md\"], \"owner_doc\": \"Plans/Contracts_V0.md\", \"plan_unit_id\": \"CV-332\", \"reasoning_tier\": "
+      ],
+      "adjudication": "No materialized EventRecord 3.0.0 body reference successor exists at the base; DL-270/SP-337 already select store-once payloads. Reuse all family ids, producer/consumer/projector/checkpoint names and retention. New technical envelope representation only; explicit three-family adoption without membership changes."
+    },
+    {
+      "family": "workspace.layout_changed",
+      "base_revision": "093d102406a3368f246eb255ecc92f3db5a0d2b7",
+      "search_scope": [
+        "Plans/**",
+        "scripts/**",
+        "tests/**"
+      ],
+      "query": "workspace.layout_changed|SP-273|SP-337|SP-400",
+      "exit_code": 0,
+      "match_count": 30296,
+      "output_sha256": "a6bae95064d70ab2c4d1cd5a055fd09087cafc1321b8fb65a2828635e07bace8",
+      "representative_hits": [
+        "093d102406:Plans/.audits/event-authority-2026-08-12/KNOWN37_PRESERVATION_REPORT.md:8:- August2 beyond Known37: **2** (`terminal.workgroup_moved`, `workspace.layout_changed`)",
+        "093d102406:Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_BRIEF.md:65:**Event type:** `workspace.layout_changed`",
+        "093d102406:Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_BRIEF.md:68:Affirm or veto consumer/checkpoint draft for workspace.layout_changed without inventing consumer_id/projector_id/checkpoint_key?",
+        "093d102406:Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET.json:9:      \"event_type\": \"workspace.layout_changed\",",
+        "093d102406:Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET.json:10:      \"question\": \"Affirm or veto consumer/checkpoint draft for workspace.layout_changed without inventing consumer_id/projector_id/checkpoint_key?\",",
+        "093d102406:Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET.md:13:**Event type:** `workspace.layout_changed`",
+        "093d102406:Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET.md:15:**Question:** Affirm or veto consumer/checkpoint draft for workspace.layout_changed without inventing consumer_id/projector_id/checkpoint_key?",
+        "093d102406:Plans/.audits/event-authority-2026-08-12/PHASE1_APPLY_PLAYBOOK.md:145:- `deepen/FixAugustIndivRows/` is a historical shard; canonical August rows are `individual-disposition/rows/ROW_workspace.layout_changed.json` and `ROW_terminal.workgroup_moved.json`. Do not merge the shard over the canonical rows."
+      ],
+      "adjudication": "No materialized EventRecord 3.0.0 body reference successor exists at the base; DL-270/SP-337 already select store-once payloads. Reuse all family ids, producer/consumer/projector/checkpoint names and retention. New technical envelope representation only; explicit three-family adoption without membership changes."
+    }
+  ],
+  "new_plan_unit_ids": [],
+  "scope_authority": "User cycle-2 ruling 1; DL-270 technical follow-through under existing DL-045/DL-046 bounded family scope."
+}

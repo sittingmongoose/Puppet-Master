@@ -19533,6 +19533,7 @@ acceptance_criteria:
   - "The exact consumer/projector IDs, key derivations, schema versions, currentness proof and checkpoint advance/rebuild predicates are explicit."
   - "Permanent audit retention cannot retain or recreate deleted content; static fixtures and native acceptance obligations are distinguished."
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - Plans/context_compaction_completion_contract_fixtures.json
   - reports/event-authority-20260911/step-06-contract-validation.md
 risk_class: compaction_completion_authority
@@ -21848,7 +21849,17 @@ Define `operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_
 
 Keep the actual command idempotency key and the NEW Home domain-request RFC8785 binding digest request_sha256 in the operation receipt. Its input is the normalized Home object with exactly command_id, command_instance_id and args, without retry transport dispatch fields. The separate normalized_command_payload_sha256 preserves the actual existing SIR normalized-command payload digest, whose owner algorithm is unchanged; do not equate it with this Home-specific request digest. request_source_bytes_sha256 additionally binds the exact authenticated original request bytes and never replaces semantic idempotency. Before executing a retry, resolve the same command-instance and the scoped command-idempotency binding to the original operation, request digest, result, receipt and event. Same binding joins pending or returns the original terminal result. Different request bytes under either identity refuse without effects. Neither a repeated gesture nor a caller-selected new command instance can reuse an old command idempotency key to bypass that comparison. Event-level app-root dedupe remains separately required. An operation ID, reference or schema-valid result alone is not proof of a valid original command.
 
-The first prepared event semantic fields are immutable after readback certification. Envelope project_id equals payload project_id and the actual layout project; scope_kind=project. Thread/run/node/attempt and account refs are null for this presentation-only fact. actor_ref is the authenticated admitted command actor, not a reconstructed UI identity. correlation_id equals command/payload correlation; parent_event_id and causation_event_id are the actually admitted causal EventRecord ID or null when no such event exists. producer_sequence_id is the accepted new layout revision; occurred_at_utc equals the frozen settled_at_utc. payload_ref=null, redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes. Storage assigns event sequence and observed/persisted times. Freeze actor, correlation, causality, command refs, settled time and payload bytes before append retries; the retry does not regenerate them from current UI state.
+The first prepared event semantic fields are immutable after readback certification. Envelope project_id equals payload project_id and the actual layout project; scope_kind=project. Thread/run/node/attempt and account refs are null for this presentation-only fact. actor_ref is the authenticated admitted command actor, not a reconstructed UI identity. correlation_id equals command/payload correlation; parent_event_id and causation_event_id are the actually admitted causal EventRecord ID or null when no such event exists. producer_sequence_id is the accepted new layout revision; occurred_at_utc equals the frozen settled_at_utc. The 2026-11-04 DL-270 amendment below selects the exact EventRecord 3.0.0 inline/reference representation; redaction_profile=no_secrets, replay_policy=dedupe_by_idempotency_key, and all migration fields are null for new native writes. Storage assigns event sequence and observed/persisted times. Freeze actor, correlation, causality, command refs, settled time and payload bytes before append retries; the retry does not regenerate them from current UI state.
+
+### DL-270 SP-273/Home4 EventRecord body amendment (2026-11-04)
+
+Newly authored technical follow-through under DL-270 and DL-045: `workspace.layout_changed` uses the governed EventRecord **3.0.0** representation in Contracts_V0 section 1.2.1. SP-273's former unconditional `payload_ref=null` now applies only to the inline case: the entire canonical MessagePack semantic body at or below 16,384 bytes. Above that exact limit, `payload=null` and the closed BLAKE3/size/media reference resolves the **complete** body. All affected-id arrays remain complete and unbounded; there is no tab/panel cap, truncation, omitted event or split event. Exactly one event is committed per admitted changed structural transaction.
+
+SP-400's Home4 slot and operation receipt freeze that inner envelope's exact version and physical payload/reference along with existing actor, command, time, result and first-AppendReceipt pins. `home_layout_v2_slot_receipt.schema.json` dispatches retained 2.0.0 event semantics without rewriting them and validates new 3.0.0 semantics as the closed successor; its decoded-body joins still apply after reference verification. The Home4 whole-value reference remains independent: it bounds the complete redb value even when decoded layouts and the resolved event body are large. Do not inline the resolved body into a redb reference wrapper. Same-identity retries resolve the original physical envelope, source bytes, result and receipt; Storage-assigned metadata alone cannot conflict. Both the slot and the event pack bytes/index must be durable under SP-337 before acknowledgment.
+
+The SP-273 event reader/projector and all three existing consumers use the same exact envelope-version dispatcher and verified resolved payload before filtering, replay or any checkpoint advance. The SP-278 nine-field token and source Storage identity remain exact joins; checkpoint values do not acquire live snapshots or payload copies. Retained historical 1.0.0/2.0.0 records remain readable under their original validating reader independent of today's layout, subject to unchanged withdrawal, forgery, access and deletion fences. Missing/corrupt payloads make history unavailable and fence checkpoint advance; no current-layout reconstruction substitutes for them. All existing RP-CONFIG-CURRENT, RP-AUTHORITY-INDEFINITE, RP-PROJECTION-3GEN, holds and coherent restore rules remain. StorageMigrationCoordinator installs the successor validating codec and all writer/reader/checkpoint paths together under its existing protected migration before enabling the producer; native installation remains NOT_RUN.
+
+Large-event, inline boundary, missing/corrupt/media/size/encoding/schema, retry, replay-only and retained historical controls: `Plans/event_authority_ds_round2_fixtures.json`, executed by `scripts/pm_event_authority_ds_round2.py`, including guard-removal witnesses.
 
 ### Exact new custody, without an alternative layout history
 
@@ -22061,6 +22072,11 @@ canonical_text: >-
   the SP-330 open item; this custody, transaction, crash, retention, read and withdrawal contract governs Home4 values.
   Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5, which stores the nine-field durable read
   token in every stored reader checkpoint and keeps every v4 case and count; v4 stays as lineage.
+  Amended 2026-11-04 (DL-270 technical follow-through): SP-400 supplies Home4's complete-value
+  inline/reference custody; the explicit SP-273/Home4 EventRecord amendment above selects the governed
+  EventRecord 3.0.0 representation with complete affected-id arrays, exact frozen retry pins and one event
+  per committed structural change. Its validating writer, reader and SP-278 checkpoint paths migrate
+  together; retained EventRecord 2.0.0 semantics remain exact compatibility reads.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.
@@ -22113,6 +22129,7 @@ acceptance_criteria:
 - Preserve lawful independent source/direct-issue/backup effects on Home refusal; retry completes the same original event/receipt/response without repeating the layout operation.
 - Preserve exact Home1 and external Home2 readers, unchanged physical keys/lifetimes/checkpoint history and original hash meanings; unresolved old pending work settles under original authority or fences migration.
 validation_surfaces:
+- "python3 scripts/pm_event_authority_ds_round2.py"
 - Plans/home_layout_event_contracts.schema.json
 - Plans/home_layout_pending_receipt.schema.json
 - Plans/home_layout_pending_receipt_v2_reader.schema.json
@@ -28254,6 +28271,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
+  The governed EventRecord 3.0.0 successor (Contracts_V0 section 1.2.1) materializes the exact inline/reference route; Browser created, Browser reset and workspace layout changes explicitly adopt it. The complete canonical MessagePack payload map is measured, inclusive 16384 inline, with no JSON-length approximation; resolved bodies pass their registered schemas and family invariants before append, historical read or checkpoint advance. Old envelope readers retain exact meanings; installation is StorageMigrationCoordinator-owned and native NOT_RUN.
   DL-270 card 3. An EventRecord carries at most 16 KiB of inline body. Larger tool output, file reads, images and other payloads go to a content-addressed payload store, and the record carries a reference: BLAKE3 id, byte size and media type. Base64 payloads are decoded to binary at ingest, and a base64 body inline in a record is an admission error. Payloads live in append-only pack files, not one file per payload. Identical payloads are stored once and reference-counted; garbage collection honours retention holds, legal holds and backups. Forks, summaries and conversation compaction keep parent record/payload references. Approved N13 chat conversion is the precise exception to the former universal no-event-copy move rule: preserve immutable source events/results/Usage, seal the source conversation for Undo, and materialize full destination-owned conversation records with explicit origin lineage. Same-store records share payload refs; cross-Server transfer verifies exact payload bytes before cutover. A destination copy is not a new execution, billing event or rewritten historical source. Independent Goal/Plan/Crew/schedule/permission custody follows its own source/hold/backup rules beyond chat Undo expiry. A payload's bytes and index entry are durable before any record that references it is acknowledged: the group either syncs the pack first or carries the new bytes in its own segment frames and moves them into packs at seal, so a crash never leaves a reference to missing bytes, and pack bytes no durable record references are dropped once no hold applies. Deleting content releases its references at once, and payload bytes that no live record or hold still references are physically removed within the deleting owner's deadline, 24 hours for a deleted thread, by rewriting the packs that hold them; a removal that fails is disclosed and retried. Text payloads are compressed with zstd level 3; already-compressed media is stored as is. Content-defined chunking is used only for large files that change and for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB. Evidence: images were 1.4 GB, 46% of one T3 Code user's database within a week; six Codex subagent files reached 62.8 GB, 97.8% of it repeated records; base64 was 53-67% of session bytes in this machine's samples.
 gui_related: false
 gui_classification_reason: "Defines payload storage and references; no visible surface."
@@ -28269,6 +28287,7 @@ acceptance_criteria:
   - "A crash between writing payload bytes and the referencing record never leaves a reference to missing bytes."
   - "Unheld, unreferenced payload bytes of deleted content are physically gone within the owner's deadline."
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
 risk_class: payload_duplication_and_inline_bloat
@@ -29532,6 +29551,9 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Newly authored owner contract under DL-045 (2026-11-04). v2 Home layout writes use the Home4 slot and receipt contract Plans/home_layout_v2_slot_receipt.schema.json, slot and receipt schema version 4.0.0 and slot producer version 4.0.0, in the existing home_layout_transaction_slot and home_layout_operation_receipt families at their .v1 keys, with producer home.workspace_layout_commit.v1. It references pm.home_workspace_layout.v2 and the CV-361 2.0.0 payload by $ref and reuses every Home3 definition that is not typed for v1 layouts or the 1.1.0 payload, so SP-273's custody, transaction, crash convergence, retention mapping, read, deletion and withdrawal rules govern it unchanged. The binding's and owner result's command_id is the CV-361 command set; the owner result is pm.home_layout_owner_result.v1 at 2.0.0; the readback key is home_workspace_layout.v2:{project_id}:{workspace_tab_id}. A Home4 event is never migrated_from_v1 and never has a null command: the conversion appends inside SP-330's StorageMigrationCoordinator transaction without a slot operation or receipt. Under DL-270 values are canonical MessagePack. SP-340's 16,384-byte family limit bounds the complete stored value: a Home4 slot or receipt whose canonical encoding is within it is stored inline, and a larger one is stored in the payload store as its exact canonical bytes, its key holding a reference (stored_value_ref: schema id and version, Storage instance, logical key, BLAKE3 id of exactly 64 lower-case hex characters, byte size, media type application/msgpack, SHA-256) that every reader resolves and verifies before use; an unresolvable reference makes the value unavailable and fences the scope as SP-273's missing or corrupt rule says, and the referenced bytes follow SP-337's durability, reference counting, garbage collection and backup rules under the holding family's custody and retention. prior_layout_source_bytes and candidate_layout_source_bytes hold the exact source bytes as a binary field up to 16 KiB or a BLAKE3 payload-store reference above it, identity capture uses home_content_free_capture_canonical_msgpack.v1 and a prior migration core uses home_slot_migration_core_canonical_msgpack.v1. The 4.0.0 slot and receipt edges, readers and pending resolver are installed through the StorageMigrationCoordinator with post-receipt owner activation before a v2 write is admitted; unresolved Home1 to Home3 operations settle under their original authority or fence the migration. Readers dispatch 1.0.0 to 3.0.0 through Plans/home_layout_value_readers.schema.json and 4.0.0 through this contract.
+  The 2026-11-04 SP-273/Home4 amendment explicitly adopts EventRecord 3.0.0 for new events,
+  freezes its physical payload/reference in Home4, validates its complete resolved payload before semantic
+  joins and checkpoint advance, and dispatches retained inner 2.0.0 semantics without rewriting them.
 gui_related: false
 gui_classification_reason: Defines the stored custody of Home layout writes, not presentation.
 split_recommended: false
@@ -29548,6 +29570,7 @@ acceptance_criteria:
   - No 4.0.0 write is admitted before the 4.0.0 family edges, readers, pending resolver and owner activation are installed; unresolved Home1 to Home3 operations are never converted.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches or production build tasks are created by this unit.
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - Plans/home_layout_v2_slot_receipt.schema.json
   - Plans/home_layout_v2_slot_receipt_fixtures.json
   - python3 scripts/pm_home_layout_v2_slot_receipt.py

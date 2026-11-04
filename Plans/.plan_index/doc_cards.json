@@ -4469,7 +4469,7 @@
         "False": 285,
         "True": 76
       },
-      "heading_count": 561,
+      "heading_count": 562,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4573,7 +4573,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24469,
+      "line_count": 24481,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 361,
       "plan_unit_ids": [
@@ -5298,7 +5298,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08",
+      "sha256": "af5f0e2b20ac4f85910396a21a615417c608aa91bf2270ab4523a58f25076048",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 361
@@ -18569,7 +18569,7 @@
         "False": 232,
         "True": 110
       },
-      "heading_count": 819,
+      "heading_count": 820,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18667,7 +18667,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm_home_layout_v2_slot_receipt.py"
       ],
-      "line_count": 29594,
+      "line_count": 29617,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 342,
       "plan_unit_ids": [
@@ -19136,7 +19136,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "51bf01550d1d71b1920b0b10a7b69bf96503598c899e44d2850083683ffa7c13",
+      "sha256": "15e16fce9ce19a9dc6b7a03dcca13800b2555c634ca67d9383007a6c89da185d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 338,
@@ -19420,6 +19420,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "python3 scripts/pm_browser_workspace_created_v2.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_event_authority_ds_round2.py",
         "python3 scripts/pm_home_layout_v2_slot_receipt.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
@@ -21515,7 +21516,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T20:15:28Z",
+  "generated_at_utc": "2026-11-04T21:47:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

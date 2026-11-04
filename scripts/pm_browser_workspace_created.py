@@ -15,12 +15,16 @@ import importlib.util
 import re
 from datetime import datetime
 from functools import lru_cache
+import sys
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+import pm_event_payload_route as body_route
+Draft202012Validator = body_route.StrictValidator
 CONTRACT_PATH = "Plans/browser_workspace_created_contracts.schema.json"
 FIXTURE_PATH = "Plans/browser_workspace_created_contract_fixtures.json"
 EVENT_TYPE = "browser.workspace.created"
@@ -100,6 +104,7 @@ def checkpoint_v2_bundle(root=ROOT):
     exactly the current v2 value or an unchanged retained v1 value by their schema_id discriminants.
     """
     v2, v1, generic = load(V2_SCHEMA_PATH, root), load(CONTRACT_PATH, root), load(GENERIC_PATH, root)
+    body_route.eager(body_route.schema_registry(root), v2, v1, generic)
     mapping = {V1_CHECKPOINT_ID_REF: "#/$defs/checkpoint_v1", GENERIC_LAST_FRAME_ID_REF: "#/$defs/generic_source_cursor"}
     value = _localize(copy.deepcopy(v2["$defs"]["checkpoint"]), mapping)
     defs = {name: _localize(copy.deepcopy(v2["$defs"][name]), mapping)
@@ -196,15 +201,18 @@ def expected_binding(root=ROOT):
     }
 
 
-def creation_preflight_failures(event, request, result, witness, *, root=ROOT, require_new_identity=True):
+def creation_preflight_failures(event, request, result, witness, *, root=ROOT, require_new_identity=True, payload_store=None):
     """Compare resolved-value fixtures; never trust ref text as real resolution."""
     # Reuse the shared Browser envelope/payload validator, without giving this
     # synthetic preflight or an unadmitted candidate EventRecord authority.
     if not isinstance(witness, dict):
         return ["creation_witness_schema"]
     gate, context = candidate_gate(root)
-    candidate_errors = gate.candidate_failures(event, witness.get("producer_component"), context)
-    if not isinstance(event, dict) or not isinstance(event.get("payload"), dict):
+    candidate_errors = gate.candidate_failures(event, witness.get("producer_component"), context, payload_store=payload_store)
+    if not isinstance(event, dict):
+        return candidate_errors
+    event, _ = body_route.resolved_event(event, payload_store)
+    if not isinstance(event.get("payload"), dict):
         return candidate_errors
     if not isinstance(event["payload"].get("context"), dict) or not isinstance(event["payload"].get("facts"), dict):
         return candidate_errors
@@ -291,8 +299,8 @@ class CreationOracle:
         self.append_count = 0
         self.published_count = 0
 
-    def create(self, event, request, result, witness, append_outcome, *, admitted):
-        if not admitted or creation_preflight_failures(event, request, result, witness, require_new_identity=False):
+    def create(self, event, request, result, witness, append_outcome, *, admitted, payload_store=None):
+        if not admitted or creation_preflight_failures(event, request, result, witness, require_new_identity=False, payload_store=payload_store):
             return "rejected_no_append"
         semantic = self.semantic_digest(event)
         key = (scope_partition(event["project_id"]), EVENT_TYPE, event["idempotency_key"])
@@ -303,9 +311,10 @@ class CreationOracle:
             return "original_result_no_effect" if self.committed[key]["digest"] == semantic else "idempotency_conflict"
         if key in self.pending:
             return "uncertain_original_requires_resolution"
-        if creation_preflight_failures(event, request, result, witness):
+        if creation_preflight_failures(event, request, result, witness, payload_store=payload_store):
             return "rejected_no_append"
-        workspace = (event["project_id"], event["payload"]["context"]["browser_workspace_id"])
+        resolved, _ = body_route.resolved_event(event, payload_store)
+        workspace = (event["project_id"], resolved["payload"]["context"]["browser_workspace_id"])
         if workspace in self.workspace_ids:
             return "workspace_identity_already_committed"
         if append_outcome == "failed":
@@ -393,7 +402,7 @@ class CheckpointOracle:
 
 
 def workspace_history_fact(event, subject, *, source_verified, access_allowed,
-                           deletion_allows_audit, checkpoint_read_token_valid, root=ROOT):
+                           deletion_allows_audit, checkpoint_read_token_valid, root=ROOT, payload_store=None):
     """One synthetic read join, never whole-range completeness or live state."""
     refused = {"outcome": "read_unavailable", "fact": None, "current_runtime_authority": False}
     if not all(value is True for value in (source_verified, access_allowed, deletion_allows_audit, checkpoint_read_token_valid)):
@@ -401,8 +410,9 @@ def workspace_history_fact(event, subject, *, source_verified, access_allowed,
     if not isinstance(subject, dict) or set(subject) != set(SUBJECT) or any(not isinstance(subject[field], str) or not subject[field] for field in SUBJECT):
         return refused
     gate, context = candidate_gate(root)
-    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", context) or event["event_type"] != EVENT_TYPE:
+    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", context, payload_store=payload_store, historical=True) or event["event_type"] != EVENT_TYPE:
         return refused
+    event, _ = body_route.resolved_event(event, payload_store, historical=True)
     payload = event["payload"]
     actual = {field: payload["context"][field] for field in SUBJECT}
     if actual != subject:

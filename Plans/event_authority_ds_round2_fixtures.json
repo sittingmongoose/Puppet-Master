@@ -1,0 +1,41 @@
+{
+  "schema_id": "pm.event_authority.ds.round2.fixtures.v1",
+  "native_execution": "NOT_RUN",
+  "owner_refs": [
+    "Plans/Contracts_V0.md#EventRecord",
+    "Plans/Contracts_V0.md#CV-332",
+    "Plans/storage-plan.md#SP-259",
+    "Plans/storage-plan.md#SP-273",
+    "Plans/storage-plan.md#SP-337",
+    "Plans/storage-plan.md#SP-400"
+  ],
+  "inline_boundaries": [
+    16384,
+    16385
+  ],
+  "large_layout_tab_count": 1200,
+  "large_layout_change": "panel_moved; every tab in the moved panel is named, and both exact layout captures contain it",
+  "compaction_identifier_LF_fields": [
+    "project_id",
+    "thread_id",
+    "operation_id",
+    "context_epoch_id"
+  ],
+  "browser_identifier_LF_fields": [
+    "artifact_refs",
+    "checkpoint.publication_id"
+  ],
+  "required_negative_boundaries": [
+    "projector_replay_only fresh and retry",
+    "one byte over canonical MessagePack inline limit",
+    "missing payload object",
+    "corrupt BLAKE3",
+    "wrong byte_size",
+    "wrong media_type",
+    "noncanonical MessagePack",
+    "dormant unresolved $ref",
+    "trailing LF identifiers",
+    "historical forged/withdrawn source"
+  ],
+  "proof_boundary": "Synthetic materialization of the existing valid family fixtures. No native pack, append, migration or seal proof. Guard-removal completeness is separately graded."
+}

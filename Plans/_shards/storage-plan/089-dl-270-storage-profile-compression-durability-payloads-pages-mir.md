@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28069-L29492
+Source lines: L28086-L29511
 
-Source SHA256: `51bf01550d1d71b1920b0b10a7b69bf96503598c899e44d2850083683ffa7c13`
+Source SHA256: `15e16fce9ce19a9dc6b7a03dcca13800b2555c634ca67d9383007a6c89da185d`
 
 ---
 
@@ -196,6 +196,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
+  The governed EventRecord 3.0.0 successor (Contracts_V0 section 1.2.1) materializes the exact inline/reference route; Browser created, Browser reset and workspace layout changes explicitly adopt it. The complete canonical MessagePack payload map is measured, inclusive 16384 inline, with no JSON-length approximation; resolved bodies pass their registered schemas and family invariants before append, historical read or checkpoint advance. Old envelope readers retain exact meanings; installation is StorageMigrationCoordinator-owned and native NOT_RUN.
   DL-270 card 3. An EventRecord carries at most 16 KiB of inline body. Larger tool output, file reads, images and other payloads go to a content-addressed payload store, and the record carries a reference: BLAKE3 id, byte size and media type. Base64 payloads are decoded to binary at ingest, and a base64 body inline in a record is an admission error. Payloads live in append-only pack files, not one file per payload. Identical payloads are stored once and reference-counted; garbage collection honours retention holds, legal holds and backups. Forks, summaries and conversation compaction keep parent record/payload references. Approved N13 chat conversion is the precise exception to the former universal no-event-copy move rule: preserve immutable source events/results/Usage, seal the source conversation for Undo, and materialize full destination-owned conversation records with explicit origin lineage. Same-store records share payload refs; cross-Server transfer verifies exact payload bytes before cutover. A destination copy is not a new execution, billing event or rewritten historical source. Independent Goal/Plan/Crew/schedule/permission custody follows its own source/hold/backup rules beyond chat Undo expiry. A payload's bytes and index entry are durable before any record that references it is acknowledged: the group either syncs the pack first or carries the new bytes in its own segment frames and moves them into packs at seal, so a crash never leaves a reference to missing bytes, and pack bytes no durable record references are dropped once no hold applies. Deleting content releases its references at once, and payload bytes that no live record or hold still references are physically removed within the deleting owner's deadline, 24 hours for a deleted thread, by rewriting the packs that hold them; a removal that fails is disclosed and retried. Text payloads are compressed with zstd level 3; already-compressed media is stored as is. Content-defined chunking is used only for large files that change and for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB. Evidence: images were 1.4 GB, 46% of one T3 Code user's database within a week; six Codex subagent files reached 62.8 GB, 97.8% of it repeated records; base64 was 53-67% of session bytes in this machine's samples.
 gui_related: false
 gui_classification_reason: "Defines payload storage and references; no visible surface."
@@ -211,6 +212,7 @@ acceptance_criteria:
   - "A crash between writing payload bytes and the referencing record never leaves a reference to missing bytes."
   - "Unheld, unreferenced payload bytes of deleted content are physically gone within the owner's deadline."
 validation_surfaces:
+  - "python3 scripts/pm_event_authority_ds_round2.py"
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
 risk_class: payload_duplication_and_inline_bloat
