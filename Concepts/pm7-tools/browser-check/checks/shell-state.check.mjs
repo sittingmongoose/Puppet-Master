@@ -114,8 +114,12 @@ export const tests = {
     await t.check(`${look} ${id} help control exists`,await note.count()>0);
     if(!await note.count()) throw new Error(`${look} ${id}: required help control missing`);
     await note.click();
-    await t.visible('#pm7ob-explainer',`${look} ${id} help note visible`);
-    await t.check(`${look} ${id} help note has content`,(await f.locator('#pm7ob-explainer').innerText()).trim().length>0);
+    // Help overlays intentionally pass pointer hits through their decorative areas.
+    // Judge painted visibility, rather than requiring the entire note to be a hit target.
+    await f.waitForFunction(()=>{const e=document.querySelector('#pm7ob-explainer');if(!e)return false;const r=e.getBoundingClientRect();if(!(r.width>0&&r.height>0&&r.right>0&&r.bottom>0&&r.x<innerWidth&&r.y<innerHeight))return false;for(let n=e;n;n=n.parentElement){const s=getComputedStyle(n);if(s.display==='none'||s.visibility!=='visible'||Number(s.opacity)===0)return false;}return true;});
+    await t.check(`${look} ${id} help note visible`,await f.locator('#pm7ob-explainer').isVisible());
+    const words=f.locator('#pm7ob-explainer .pst-bt-on, #pm7ob-explainer .o55-explainer-w').first();
+    await t.check(`${look} ${id} help note has rendered body text`,await words.isVisible()&&(await words.innerText()).trim().length>0);
 
     await f.evaluate(() => O55.ui.close());
    }
