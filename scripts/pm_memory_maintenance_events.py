@@ -16,6 +16,24 @@ _CODEC = importlib.util.module_from_spec(_CODEC_SPEC)
 _CODEC_SPEC.loader.exec_module(_CODEC)
 
 
+_PURE_RESULTS = {}
+
+
+def pure(function):
+    """Memoize a deterministic predicate by the exact JSON of its arguments (types stay distinct)."""
+    def wrapped(*args):
+        try:
+            key = (function.__name__, json.dumps(args, sort_keys=True, ensure_ascii=False))
+        except (TypeError, ValueError):
+            return function(*args)  # a non-JSON input is evaluated directly, never cached
+        if key not in _PURE_RESULTS:
+            _PURE_RESULTS[key] = function(*args)
+        return _PURE_RESULTS[key]
+    wrapped.__name__ = function.__name__
+    return wrapped
+
+
+@pure
 def within_value_cap(value):
     return len(_CODEC.binding_bytes(value)) <= 16384
 
@@ -58,6 +76,7 @@ def validator(path, definition):
     return Draft202012Validator(schema, format_checker=FormatChecker())
 
 
+@pure
 def valid_target(target, row):
     kind = 'lexical' if 'lexical' in row['command_id'] else 'semantic'
     if not validator('Plans/memory_maintenance_rebuild_target.schema.json', kind + '_target').is_valid(target):
@@ -71,6 +90,7 @@ def valid_target(target, row):
     return target['source_revision_sha256'] == row['source_revision_sha256'] and target['target_id'] == 'memtarget_' + h
 
 
+@pure
 def valid_selector(value, row):
     if value is None:
         return True
@@ -91,6 +111,7 @@ def result_digest(row):
                    target['target_id'] if target else None])
 
 
+@pure
 def valid_operation(row, name):
     if not validator('Plans/memory_maintenance_operation.schema.json', name).is_valid(row) or not within_value_cap(row):
         return False
@@ -163,8 +184,70 @@ def envelope_validator():
     return Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker())
 
 
+STORAGE_FIELDS = frozenset({'sequence_id', 'observed_at_utc', 'persisted_at_utc'})
+
+
+def lawful_phases(row):
+    if row['command_id'] in ('cmd.chat.memory.rebuild_lexical_index', 'cmd.chat.memory.rebuild_semantic_index'):
+        return ('accepted', 'started', 'prepared', 'effect_committed', 'completed')
+    return ('accepted', 'started', 'effect_committed', 'completed')
+
+
+def start_custody_gate(state, first_start=False, writer_event=None):
+    """The one start-custody rule of SP-630 to SP-637, adopting SP-286/CV-339 retained full-value originals.
+
+    Every path except first start admission must resolve and verify the exact original start record before it
+    appends, CAS-publishes a row or selector, settles an effect, or returns or discloses an original. First
+    start admission may lack the record only on an accepted row with no start receipt and no later original;
+    any record that is present is verified even there. Refusal is start_receipt_missing, or
+    permission_or_withdrawal under a withdrawal fence; the caller publishes nothing.
+    """
+    require(not state['withdrawn'], 'permission_or_withdrawal')
+    row = state['operation']
+    started = event_type(row, 'started'); completed = event_type(row, 'completed')
+    expected = full_value(row, 'started'); start_id = expected['event_id']
+    record = state['originals'].get(started)
+    canonical = state.get('original') if writer_event == started else None
+    terminal = state.get('original') if writer_event == completed else None
+    later = [x.get('full_value') if isinstance(x, dict) else None
+             for x in (state['originals'].get(completed), terminal) if x is not None]
+    receipt_recorded = row['phase'] != 'accepted' or row['started_event_id'] is not None
+    # Phase and receipt: only an accepted row lacks a start receipt; every later row names exactly this start.
+    require(row['phase'] in lawful_phases(row), 'start_receipt_missing')
+    require(row['started_event_id'] == (None if row['phase'] == 'accepted' else start_id), 'start_receipt_missing')
+    if receipt_recorded or later:
+        require(record is not None, 'start_receipt_missing')
+        # The started writer's own retained canonical original is the same start record; it must survive too.
+        require(writer_event != started or canonical is not None, 'start_receipt_missing')
+    elif not first_start:
+        require(record is not None or canonical is not None, 'start_receipt_missing')
+    if record is not None:
+        # Exact retained value, full-flush settled receipt, digest, identity, operation, event type and payload.
+        require(original_matches(record, expected), 'start_receipt_missing')
+    if canonical is not None:
+        value = canonical.get('full_value') if isinstance(canonical, dict) else None
+        reference = canonical_value(row, 'started')
+        require(original_matches(canonical, value) and envelope_validator().is_valid(value)
+                and all(value[k] == reference[k] for k in set(reference) - STORAGE_FIELDS)
+                and {k: value[k] for k in expected} == expected, 'start_receipt_missing')
+    for value in later:
+        # Every later retained original of this operation cites exactly this start record.
+        require(isinstance(value, dict) and value.get('causation_event_id') == start_id
+                and isinstance(value.get('payload'), dict)
+                and value['payload'].get('started_event_id') == start_id, 'start_receipt_missing')
+
+
 def append_current(before, value, event):
     """Independent current-writer boundary; append/retry never executes a maintenance effect."""
+    suffix = event.rsplit('.', 1)[1]
+    state, output = _append_current(before, value, event)
+    # Commit point: no append or original return escapes the start custody gate, before or after.
+    start_custody_gate(before, first_start=suffix == 'started', writer_event=event)
+    start_custody_gate(state, writer_event=event)
+    return state, output
+
+
+def _append_current(before, value, event):
     state = deepcopy(before); row = state['operation']
     require(envelope_validator().is_valid(value), 'invalid_event_record')
     require(value['replay_policy'] != 'projector_replay_only', 'replay_only_not_appendable')
@@ -175,8 +258,7 @@ def append_current(before, value, event):
     suffix = event.rsplit('.', 1)[1]
     expected = canonical_value(row, suffix)
     # Validate dispatch and all producer-owned joins separately from Storage's three assigned fields.
-    storage_fields = {'sequence_id', 'observed_at_utc', 'persisted_at_utc'}
-    producer_fields = set(expected) - storage_fields
+    producer_fields = set(expected) - STORAGE_FIELDS
     same_identity = (value['event_id'], value['idempotency_key']) == (expected['event_id'], expected['idempotency_key'])
     require(all(value[k] == expected[k] for k in producer_fields),
             'idempotency_conflict' if state['original'] is not None and same_identity else 'envelope_join')
@@ -185,8 +267,8 @@ def append_current(before, value, event):
     require(len(_CODEC.binding_bytes(value['payload'])) <= 16384, 'inline_payload_too_large')
     key = [scope_partition(row['project_id']), event, value['idempotency_key']]
     require(state['dedupe_key'] == key, 'scope_partition_mismatch')
-    # Terminal retries disclose an original too, so start custody must precede that return.
-    require(suffix == 'started' or custody(state, 'started'), 'start_receipt_missing')
+    # The one start custody gate; terminal and start retries disclose an original, so it precedes that return.
+    start_custody_gate(state, first_start=suffix == 'started', writer_event=event)
     if state['original'] is not None:
         original = state['original']['full_value']
         require(original_matches(state['original'], original) and envelope_validator().is_valid(original)
@@ -234,15 +316,11 @@ def accept(payload, contract, context):
                 return False
             if row['phase'] not in ('effect_committed', 'completed') or payload['started_event_id'] != context['started_event_id']:
                 return False
-            if not original_matches(originals.get(event_type(row, 'started')), full_value(row, 'started')):
-                return False
-        else:
-            if not context['acceptance_durable']:
-                return False
-            # Only the accepted pre-append phase may lack first-start custody.
-            if (row['phase'] != 'accepted' or row['started_event_id'] is not None) and not original_matches(
-                    originals.get(event), full_value(row, 'started')):
-                return False
+        elif not context['acceptance_durable']:
+            return False
+        # The same start custody gate as every writer, recovery, retry, replay and history path.
+        start_custody_gate({'operation': row, 'originals': originals, 'withdrawn': context['withdrawn']},
+                           first_start=suffix == 'started')
         original = originals.get(event)
         if original is not None and not original_matches(original, full_value(row, suffix)):
             return False
@@ -279,7 +357,7 @@ def effect_fences(state):
     row = state['operation']
     require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
     require(row['source_revision_sha256'] == state['current_source_revision_sha256'], 'source_changed')
-    require(custody(state, 'started'), 'start_receipt_missing')
+    start_custody_gate(state)
 
 
 def target_fences(state):
@@ -291,6 +369,16 @@ def target_fences(state):
 
 def transition(before, action):
     """An atomic static transition. A refusal publishes none of the tentative state."""
+    state, output = _transition(before, action)
+    if action['op'] != 'crash':
+        # Commit point of every path: no append, row/selector CAS, effect or original return escapes the gate.
+        # crash only drops volatile publication state; it appends, publishes and returns nothing.
+        start_custody_gate(before, first_start=action['op'] == 'append_started')
+        start_custody_gate(state)
+    return state, output
+
+
+def _transition(before, action):
     state = deepcopy(before); row = state['operation']; op = action['op']; output = None
     name = operation_name(event_type(row, 'started'))
     require(valid_operation(row, name), 'invalid_operation')
@@ -303,8 +391,7 @@ def transition(before, action):
         suffix = op.removeprefix('append_')
         require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
         require(row['phase'] == ('accepted' if suffix == 'started' else 'effect_committed'), 'wrong_phase')
-        if suffix == 'completed':
-            require(custody(state, 'started'), 'start_receipt_missing')
+        start_custody_gate(state, first_start=suffix == 'started')
         value = full_value(row, suffix)
         require(action['value'] == value, 'original_value_changed')
         event = event_type(row, suffix)
@@ -315,7 +402,8 @@ def transition(before, action):
         state['volatile'] = {'response': deepcopy(value)}
         output = value
     elif op == 'advance_started':
-        require(row['phase'] == 'accepted' and custody(state, 'started'), 'start_receipt_missing')
+        require(row['phase'] == 'accepted', 'start_receipt_missing')
+        start_custody_gate(state)
         row.update(phase='started', started_event_id=full_value(row, 'started')['event_id'])
     elif op == 'prepare':
         require(row['phase'] == 'started' and name.startswith('index_'), 'wrong_phase')
@@ -335,7 +423,7 @@ def transition(before, action):
         state['effect_count'] += 1; state['swap_count'] += 1
     elif op == 'settle':
         require(row['phase'] in ('started', 'prepared'), 'wrong_phase')
-        require(custody(state, 'started'), 'start_receipt_missing')
+        start_custody_gate(state)
         require(action['status'] in ('succeeded', 'failed'), 'outcome_invalid')
         if name.startswith('index_'):
             if action['status'] == 'succeeded':
@@ -355,12 +443,13 @@ def transition(before, action):
         row['result_sha256'] = result_digest(row)
     elif op == 'advance_completed':
         require(row['phase'] == 'effect_committed' and custody(state, 'completed'), 'terminal_receipt_missing')
+        start_custody_gate(state)
         row.update(phase='completed', completed_event_id=full_value(row, 'completed')['event_id'])
     elif op in ('retry', 'replay'):
         require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
         suffix = action['event_type'].rsplit('.', 1)[1]
         require(action['event_type'] == event_type(row, suffix) and custody(state, suffix), 'original_missing')
-        require(custody(state, 'started'), 'start_receipt_missing')
+        start_custody_gate(state)
         output = deepcopy(state['originals'][action['event_type']]['full_value'])
         require(action['value'] == output, 'original_value_changed')
     elif op == 'crash':
@@ -368,9 +457,8 @@ def transition(before, action):
     elif op == 'recover':
         # Restart uses only durable originals and the frozen selected target, never a replacement candidate.
         require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
-        require(custody(state, 'started'), 'start_receipt_missing')
+        start_custody_gate(state)
         if row['phase'] == 'accepted':
-            require(custody(state, 'started'), 'start_receipt_missing')
             state, _ = transition(state, {'op': 'advance_started', 'expected_operation': deepcopy(row)})
         elif row['phase'] == 'prepared':
             target_fences(state)
@@ -389,6 +477,147 @@ def transition(before, action):
         raise Refusal('unknown_action')
     require(valid_operation(state['operation'], name), 'invalid_operation_after')
     return state, output
+
+
+def read_history(before, event):
+    """Stateless history reader: a retained original verified when written is returned whatever the operation's
+    current live state (later phase, source revision, selector, counters, request); it still refuses a withdrawal
+    fence, revoked access, a forged or missing original and missing start custody. It changes no state."""
+    state = before; row = state['operation']
+    require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+    require(valid_operation(row, operation_name(event_type(row, 'started'))), 'invalid_operation')
+    suffix = event.rsplit('.', 1)[1] if event.count('.') >= 2 else ''
+    require(suffix in ('started', 'completed') and event == event_type(row, suffix), 'unknown_event')
+    start_custody_gate(state)
+    require(custody(state, suffix), 'original_missing')
+    return deepcopy(state['originals'][event]['full_value'])
+
+
+MATRIX_DEFECTS = ('missing', 'digest', 'value-unhashed', 'operation-rehashed', 'identity-rehashed',
+                  'phase-rehashed', 'payload-rehashed', 'not-flushed', 'shape', 'withdrawn')
+MATRIX_MODELS = ('phase', 'writer', 'boundary', 'reader')
+
+
+def matrix_call(fixtures, family, path, edits, contracts):
+    """Run one matrix path from its authored initial state; returns ('ok', after, output) or ('refused', code)."""
+    event = family['event_type']; model = path['model']
+    if model == 'boundary':
+        case = next(c for c in fixtures['cases'] if c['name'] == path['case'])
+        context = patch(case['context'], edits); before = deepcopy(context)
+        result = accept(case['payload'], contracts[event], context)
+        assert context == before, (path['name'], 'boundary check mutated context')
+        return ('ok', None, None) if result else ('refused', False)
+    states = {'phase': family['states'], 'reader': family['states'], 'writer': family['writer_states']}[model]
+    state = patch(states[path['initial']], edits); before = deepcopy(state)
+    try:
+        if model == 'phase':
+            action = deepcopy(path['action'])
+            if 'expected_state' in action:
+                action['expected_operation'] = deepcopy(states[action.pop('expected_state')]['operation'])
+            after, output = transition(state, action)
+        elif model == 'writer':
+            after, output = append_current(state, deepcopy(path['value']), event)
+        else:
+            output = read_history(state, path['event']); after = state
+    except Refusal as error:
+        assert state == before, (path['name'], 'refusal mutated durable state')
+        return ('refused', str(error))
+    return ('ok', after, output)
+
+
+def run_custody_matrix(fixtures, families, contracts):
+    """Every live later-phase path x every start-record defect, for every exact family, must refuse exactly."""
+    matrix = fixtures['start_custody_matrix']
+    assert tuple(matrix['defects']) == MATRIX_DEFECTS and tuple(matrix['models']) == MATRIX_MODELS
+    summary = {}
+    for family in matrix['families']:
+        event = family['event_type']; assert event in families and event not in summary
+        stateful = next(x for x in fixtures['stateful_families'] if x['event_type'] == event)
+        writer = next(x for x in fixtures['writer_families'] if x['event_type'] == event)
+        context = {'event_type': event, 'states': stateful['states'], 'writer_states': writer['states']}
+        started = event.rsplit('.', 1)[0] + '.started'
+        names = [p['name'] for p in family['paths']]; assert len(names) == len(set(names)), event
+        cells = 0; controls = 0; covered = set(); phases = set()
+        for path in family['paths']:
+            assert path['model'] in MATRIX_MODELS and path['name'].startswith(event + ':'), path['name']
+            # Positive control: the intact path is live and does exactly what its authored expectation says.
+            result = matrix_call(fixtures, context, path, [], contracts)
+            assert result[0] == 'ok', (path['name'], 'positive control refused', result)
+            if path['model'] in ('phase', 'writer'):
+                states = context['states' if path['model'] == 'phase' else 'writer_states']
+                assert result[1] == states[path['after']], (path['name'], 'wrong control state')
+                assert result[2] == path.get('output'), (path['name'], 'wrong control output')
+            elif path['model'] == 'reader':
+                assert result[2] == path['output'], (path['name'], 'wrong history output')
+            controls += 1
+            op = path['action']['op'] if path['model'] == 'phase' else path['model']
+            covered.add((path['model'], op))
+            if path['model'] != 'boundary':
+                states = context['states' if path['model'] != 'writer' else 'writer_states']
+                phases.add((path['model'], states[path['initial']]['operation']['phase']))
+            expected = False if path['model'] == 'boundary' else path['refusal']
+            for record in path['records']:
+                location = {'reduced': ['originals', started], 'canonical': ['original']}[record]
+                for defect in MATRIX_DEFECTS[:-1]:
+                    if defect == 'missing' and record in path.get('lawful_absent', []):
+                        continue  # absence is the lawful pre-append state of first start admission
+                    replacement = family['replacements'][record][defect]
+                    # A missing reduced record is an absent key; a missing writer original is the null slot.
+                    edits = [{'path': location, 'delete': True} if replacement is None and record == 'reduced'
+                             else {'path': location, 'value': replacement}]
+                    result = matrix_call(fixtures, context, path, edits, contracts)
+                    assert result == ('refused', expected), (path['name'], record, defect, result)
+                    cells += 1
+            edits = [{'path': ['withdrawn'], 'value': True}]
+            result = matrix_call(fixtures, context, path, edits, contracts)
+            assert result == ('refused', False if path['model'] == 'boundary' else 'permission_or_withdrawal'), (
+                path['name'], 'withdrawn', result)
+            cells += 1
+        index = '.index.' in event
+        required = {('phase', op) for op in ('append_started', 'advance_started', 'settle', 'append_completed',
+                                             'advance_completed', 'retry', 'replay', 'recover')}
+        required |= {('phase', 'prepare'), ('phase', 'swap')} if index else set()
+        required |= {('writer', 'writer'), ('boundary', 'boundary'), ('reader', 'reader')}
+        assert required <= covered, (event, required - covered)
+        later = {'started', 'effect_committed', 'completed'} | ({'prepared'} if index else set())
+        assert {(m, ph) for m in ('phase', 'reader') for ph in later | {'accepted'}} <= phases, (event, phases)
+        assert {('writer', ph) for ph in ({'effect_committed', 'completed'} if event.endswith('.completed')
+                                          else {'accepted', 'started', 'completed'})} <= phases, (event, phases)
+        assert cells == family['expected_cells'] and controls == len(family['paths']), (event, cells, controls)
+        summary[event] = {'paths': controls, 'negative_cells': cells}
+    assert set(summary) == set(families)
+    return summary
+
+
+def run_history(fixtures, families):
+    """Standing check 10: retained originals stay readable across live-state change; withdrawn/forged refuse."""
+    counts = {}
+    required = {'history-after-completion', 'history-source-changed', 'history-request-changed',
+                'history-counters-changed', 'history-withdrawn', 'history-permission-revoked',
+                'history-forged-hash', 'history-forged-rehashed-value', 'history-forged-identity',
+                'history-missing-start', 'history-not-yet-written', 'history-other-family',
+                'history-event-trailing-lf'}
+    for family in fixtures['history_families']:
+        event = family['event_type']; assert event in families and event not in counts
+        states = next(x for x in fixtures['stateful_families'] if x['event_type'] == event)['states']
+        names = [c['name'] for c in family['cases']]
+        assert len(names) == len(set(names)) and {event + ':' + n for n in required} <= set(names), event
+        if '.index.' in event:
+            assert event + ':history-selector-replaced' in names, event
+        counts[event] = 0
+        for case in family['cases']:
+            state = patch(states[case['initial']], case.get('edits', [])); before = deepcopy(state)
+            try:
+                output = read_history(state, case['read'])
+            except Refusal as error:
+                assert case.get('refusal') == str(error), (case['name'], str(error))
+            else:
+                assert 'refusal' not in case, (case['name'], 'expected refusal')
+                assert output == case['output'], (case['name'], 'wrong historical original')
+            assert state == before, (case['name'], 'history read mutated state')
+            counts[event] += 1
+    assert set(counts) == set(families)
+    return counts
 
 
 def patch(value, edits):
@@ -568,6 +797,8 @@ def main():
     stateful, schema_count, trace_count = run_stateful(fixtures, families)
     writers = run_writers(fixtures, families)
     checkpoints = run_checkpoint_joins(fixtures, families)
+    matrix = run_custody_matrix(fixtures, families, families)
+    history = run_history(fixtures, families)
     identifier_names = [case['name'] for case in fixtures['identifier_cases']]
     assert len(identifier_names) == len(set(identifier_names))
     assert {event.replace('.', '_') + ':' + name for event in families
@@ -600,10 +831,16 @@ def main():
             assert token in section
         for token in (contract['payload_schema_id'], contract['replay_policy'], 'replay_only_not_appendable'):
             assert token in section
+        # The one start custody gate is written in this family's own storage unit, citing SP-286 and its owners.
+        gate = section.split('Start custody gate for exactly ' + contract['event_type'] + '@1.0.0', 1)[1].split('\n\n', 1)[0]
+        for token in ('SP-286', 'CV-339', unit, contract['semantic_owner'].split('#')[1],
+                      contract['payload_owner'].split('#')[1], 'start_receipt_missing', 'permission_or_withdrawal'):
+            assert token in gate, (unit, token)
     print(json.dumps({'status': 'pass', 'families': counts, 'boundary_cases': sum(counts.values()),
                       'operation_cases': schema_count, 'stateful_traces': trace_count, 'stateful_steps': stateful,
                       'current_writer_steps': writers, 'identifier_cases': len(fixtures['identifier_cases']),
                       'generic_checkpoint_identity_cases': checkpoints,
+                      'start_custody_matrix': matrix, 'history_cases': history,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 
 
