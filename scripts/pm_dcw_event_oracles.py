@@ -417,6 +417,11 @@ def verify(row, scenario, operation, legacy_validate):
     original_event=authority['events'].get(event['event_id'])
     if operation=='compatibility_read':
         require(original_event is not None, 'original_custody_missing')
+        # Only replay_policy is a transient compatibility projection. Authenticate
+        # every supplied value before resolving the receipt-backed original; never
+        # turn a forged view into an authentic one by silently replacing it.
+        supplied_original = dict(event, replay_policy=original_event['replay_policy'])
+        require(supplied_original == original_event, 'original_full_value')
         scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=original_event
     source_storage(row, scenario)
     secret_free(scenario['source'])

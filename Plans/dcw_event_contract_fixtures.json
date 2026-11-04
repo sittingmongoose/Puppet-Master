@@ -4412,6 +4412,243 @@
               "value": 99999
             }
           ]
+        },
+        {
+          "case_id": "compatibility_forged_payload",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/payload/safe_point_id",
+              "value": "forged-original"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_actor",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/actor_ref",
+              "value": "actor:forged"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_sequence",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/sequence_id",
+              "value": 999
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/persisted_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_semantic_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/occurred_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            },
+            {
+              "path": "/event/payload/ts",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
         }
       ]
     },
@@ -11052,6 +11289,243 @@
               "value": 99999
             }
           ]
+        },
+        {
+          "case_id": "compatibility_forged_payload",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/payload/safe_point_id",
+              "value": "forged-original"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_actor",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/actor_ref",
+              "value": "actor:forged"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_sequence",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/sequence_id",
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/persisted_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_semantic_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/occurred_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            },
+            {
+              "path": "/event/payload/ts",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
         }
       ]
     },
@@ -16530,6 +17004,243 @@
               "value": 99999
             }
           ]
+        },
+        {
+          "case_id": "compatibility_forged_payload",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/payload/safe_point_id",
+              "value": "forged-original"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_actor",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/actor_ref",
+              "value": "actor:forged"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_sequence",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/sequence_id",
+              "value": 1001
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/persisted_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_semantic_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/occurred_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            },
+            {
+              "path": "/event/payload/ts",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
         }
       ]
     },
@@ -21969,6 +22680,243 @@
             {
               "path": "/retry_request/sequence_id",
               "value": 99999
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_payload",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/payload/safe_point_id",
+              "value": "forged-original"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_actor",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/actor_ref",
+              "value": "actor:forged"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_sequence",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/sequence_id",
+              "value": 1001
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/persisted_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_semantic_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/occurred_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            },
+            {
+              "path": "/event/payload/ts",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
             }
           ]
         }
@@ -27694,6 +28642,243 @@
             {
               "path": "/retry_request/sequence_id",
               "value": 99999
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_payload",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/payload/seed_version",
+              "value": "forged-original"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_actor",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/actor_ref",
+              "value": "actor:forged"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_sequence",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/sequence_id",
+              "value": 1009
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/persisted_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_semantic_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/occurred_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            },
+            {
+              "path": "/event/payload/ts",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
             }
           ]
         }
@@ -34161,6 +35346,243 @@
             {
               "path": "/retry_request/sequence_id",
               "value": 99999
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_payload",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/payload/seed_version",
+              "value": "forged-original"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_actor",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/actor_ref",
+              "value": "actor:forged"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_sequence",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/sequence_id",
+              "value": 1010
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_storage_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/persisted_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "compatibility_forged_semantic_time",
+          "operation": "compatibility_read",
+          "expected": "original_full_value",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/event/occurred_at_utc",
+              "value": "2026-11-04T18:09:00Z"
+            },
+            {
+              "path": "/event/payload/ts",
+              "value": "2026-11-04T18:09:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_read",
+          "operation": "read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_rebuild",
+          "operation": "rebuild",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
+            }
+          ]
+        },
+        {
+          "case_id": "retained_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            }
+          ]
+        },
+        {
+          "case_id": "withdrawn_after_live_writer_changes_compatibility_read",
+          "operation": "compatibility_read",
+          "expected": "reader_withdrawn",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            },
+            {
+              "path": "/control/writer_cutoff",
+              "value": true
+            },
+            {
+              "path": "/control/expected_value_revision",
+              "value": 999
+            },
+            {
+              "path": "/control/effect_state",
+              "value": "unknown"
+            },
+            {
+              "path": "/authority/writable_projects",
+              "value": []
+            },
+            {
+              "path": "/control/reader_withdrawn",
+              "value": true
             }
           ]
         }
