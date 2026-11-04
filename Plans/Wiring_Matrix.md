@@ -7644,7 +7644,7 @@ canonical_text: 'The hosted 5.6 Pro chat reuses the production-intent rows of it
   colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You
   is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette
   cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to
-  You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew
+  You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew
   diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain
   their existing meaning. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
   requirement.
@@ -7692,14 +7692,14 @@ acceptance_criteria:
   a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials
   and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
   and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings.
-  The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent
+  The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional agent
   strings and the single Pip primitive retain their existing meaning.'
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
   static closure.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
@@ -7724,6 +7724,7 @@ source_lineage:
 - 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle
   are source evidence, not native APIs.'
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou/PX_YOU/pnYou were the concept person-rendering helpers and pixel table; the shared product renderer is owned by F3-594."
 preserved_exact_tokens:
 - Keep open
 negative_constraints:
