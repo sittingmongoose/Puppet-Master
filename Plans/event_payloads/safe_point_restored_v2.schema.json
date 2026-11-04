@@ -195,5 +195,6 @@
   ],
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0",
-  "title": "safe_point.restored prepared closed payload; not admission"
+  "title": "safe_point.restored prepared closed payload; not admission",
+  "$comment": "safe_point.restored complete semantic root. Inline admission additionally measures the complete canonical UTF-8 JSON body (SP-337): at most 16384 bytes, inclusive. A larger root is resolved from the verified payload_ref; it is never retained inline. The byte rule is executable in pm_filesafe_event_contracts.py and pm_filesafe_event_authority.py, not a JSON Schema character-count constraint."
 }

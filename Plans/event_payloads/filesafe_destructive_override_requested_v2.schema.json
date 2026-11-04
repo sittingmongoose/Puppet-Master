@@ -313,5 +313,6 @@
   ],
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0",
-  "title": "filesafe.destructive_override_requested prepared closed payload; not admission"
+  "title": "filesafe.destructive_override_requested prepared closed payload; not admission",
+  "$comment": "filesafe.destructive_override_requested complete semantic root. Inline admission additionally measures the complete canonical UTF-8 JSON body (SP-337): at most 16384 bytes, inclusive. A larger root is resolved from the verified payload_ref; it is never retained inline. The byte rule is executable in pm_filesafe_event_contracts.py and pm_filesafe_event_authority.py, not a JSON Schema character-count constraint."
 }

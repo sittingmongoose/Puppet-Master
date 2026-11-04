@@ -1986,7 +1986,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7507,
+      "line_count": 7526,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 82,
       "plan_unit_ids": [
@@ -2143,7 +2143,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "207d76b13096a08d22d2d1b34ced17689656c1bc8870c41fe9dc17f2b1203446",
+      "sha256": "01df2049835ab880c837de64ae2a556fe19f5d3b869bc2b53645e7f47350567d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 81,
@@ -4581,7 +4581,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 25162,
+      "line_count": 25180,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 370,
       "plan_unit_ids": [
@@ -5316,7 +5316,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+      "sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 370
@@ -21538,7 +21538,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T19:35:02Z",
+  "generated_at_utc": "2026-11-04T20:07:37Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

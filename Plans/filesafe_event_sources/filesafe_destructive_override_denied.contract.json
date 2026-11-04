@@ -13,12 +13,12 @@
     {
       "path": "Plans/filesafe_event_sources/filesafe_destructive_override_denied.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/filesafe_destructive_override_denied/1.0.0",
-      "sha256": "971f6f699cac7a254110512dc25f2574c29220072585251cf2a1e431f2da0fa4"
+      "sha256": "b1f41788508d1e06ac88be4ca59edfe1914076bc3afa0a229ab337465f75a4e1"
     },
     {
       "path": "Plans/event_payloads/filesafe_destructive_override_denied_v2.schema.json",
       "uri": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_denied/2.0.0",
-      "sha256": "574670b6ac76421462fd167da71dbf2e084d004b8bb77c36e167d6a239b7599d"
+      "sha256": "8033da34509a6a4d7f5a1299f4fe2cecc4919ced63724dd2c7dfbd3992663f65"
     },
     {
       "path": "Plans/shared_integration_runtime.schema.json",
@@ -129,5 +129,5 @@
   "retention_policy_ref": "PENDING_RETENTION_DECISION",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "fd3de56ec7393e3770b7cc1cd1cb4d5ff62cddbbf38037715de27990924e3045"
+  "graph_sha256": "0b95fc967f4f87e96684df23668c4c149ea8fd3276ff7b83bca804c3424270b1"
 }
