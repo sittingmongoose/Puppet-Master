@@ -4,19 +4,34 @@ import copy
 import datetime
 import hashlib
 import json
+from functools import cache
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 ROOT = Path(__file__).resolve().parents[1]
 
-def identity(name, payload, scope_key):
+
+@cache
+def load_plan(path):
+    return json.loads((ROOT / path).read_text())
+
+def identity(name, payload, scope_key, server_id=None):
     preimage = [name, payload['storage_instance_id'], scope_key, payload['operation_id'], payload['revision']]
     digest = hashlib.sha256(json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
-    return 'evt_' + name.replace('.', '_') + '_' + digest, name + ':' + digest
+    scope = payload.get('scope')
+    application = scope['scope_kind'] == 'application' if scope else scope_key == 'application'
+    if application:
+        server_id = scope['server_id'] if scope else server_id
+        if not server_id:
+            raise ValueError('original_server_required')
+        key = 'application@1:' + server_id.encode().hex() + ':' + payload['operation_id'].encode().hex()
+    else:
+        key = name + ':' + digest
+    return 'evt_' + name.replace('.', '_') + '_' + digest, key
 
-def semantic(name, payload, scope_key, event_id, original=None):
+def semantic(name, payload, scope_key, event_id, original=None, server_id=None):
     if name.startswith('auth.github.') and scope_key != 'application':
         raise ValueError('scope')
-    if identity(name, payload, scope_key)[0] != event_id:
+    if identity(name, payload, scope_key, server_id)[0] != event_id:
         raise ValueError('identity')
     if original is not None and original != payload:
         raise ValueError('original_payload_conflict')
@@ -61,8 +76,11 @@ def persona_semantic(name, payload, scope_key, source):
         raise ValueError('home_scope')
     if not s['access_current']:
         raise ValueError('access')
-    if name != 'persona.exported' and not s['writer_current']:
+    # Event-writer admission is independent of the definition-write lease.
+    if not s['writer_current']:
         raise ValueError('writer')
+    if name != 'persona.exported' and not s['definition_writer_current']:
+        raise ValueError('definition_writer')
     if name in ('persona.created', 'persona.deleted', 'persona.imported', 'persona.updated'):
         if s['computer_mirror']:
             raise ValueError('mirror')
@@ -109,6 +127,17 @@ def persona_semantic(name, payload, scope_key, source):
     if name == 'persona.imported' and None in source_fields:
         raise ValueError('source_trust')
     if name == 'persona.selected':
+        override = p['persona_override_scope']
+        owner = p['persona_override_owner_id']
+        lineage = p['runtime_lineage']
+        if override is None:
+            if owner is not None or any(value is not None for value in lineage.values()):
+                raise ValueError('override_lineage')
+        elif (override not in ('thread', 'run', 'node', 'attempt', 'actor')
+              or owner is None or owner == 'tier_id' or owner != lineage[override + '_id']):
+            raise ValueError('override_lineage')
+        if lineage != s['resolution']['runtime_lineage']:
+            raise ValueError('original_source_join')
         for key in ('requested_persona', 'effective_persona', 'persona_selection_source', 'selection_reason',
                     'persona_override_scope', 'persona_override_owner_id', 'runtime_snapshot_ref', 'runtime_snapshot_sha256'):
             if p[key] != s['resolution'][key]:
@@ -158,7 +187,8 @@ def check_persona(row, schema):
         operation = {'schema_id': 'pm.storage_value.' + slug + '_operation.v1', 'schema_version': '1.0.0',
                      'event_type': name, 'scope_key': sk, 'actor_ref': 'ref:actor/one', 'payload': body,
                      'state': 'effect_committed', 'effect_receipt_ref': body['owner_result_ref'],
-                     'event_id': veid, 'idempotency_key': videm}
+                     'event_id': veid, 'idempotency_key': videm, 'server_id': body['scope']['server_id'],
+                     'replay_policy': 'dedupe_by_idempotency_key'}
         Draft202012Validator(schema['$defs'][slug + '_operation'], format_checker=FORMAT).validate(operation)
     for bad in row['invalid']:
         assert list(validator.iter_errors(bad)), (name, 'accepted negative', bad)
@@ -186,9 +216,225 @@ def check_persona(row, schema):
             'event_id_vector': eid, 'native_execution': 'NOT_RUN'}
 
 
-def run():
+def source_scope(source):
+    return source['request']['scope'] if 'request' in source else source['scope']
+
+
+def source_scope_key(source):
+    scope = source_scope(source)
+    if 'request' in source:
+        return json.dumps([scope['server_id'], scope['scope_partition']], ensure_ascii=False, separators=(',', ':'))
+    # Preserve the separately specified non-Persona Event ID recipe. The actual
+    # Server is also stored and joined independently, and enters CV-366 app keys.
+    return 'application' if scope['scope_kind'] == 'application' else 'project:' + scope['project_id']
+
+
+def semantic_record(record):
+    """CV EventRecord caller-owned semantic body; never Storage metadata."""
+    fields = ('event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
+              'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
+              'occurred_at_utc', 'producer_sequence_id', 'correlation_id', 'causation_event_id',
+              'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload', 'payload_ref',
+              'redaction_profile', 'migration')
+    return {key: record[key] for key in fields}
+
+
+def strict_patterns(value):
+    """Pair borrowed identifier patterns with an absolute end-of-input guard.
+
+    Python's `$` also matches before a final LF. Keep the shared owner resource
+    untouched while enforcing its entire identifier at this oracle boundary.
+    """
+    if isinstance(value, dict):
+        result = {key: strict_patterns(item) for key, item in value.items()}
+        if 'pattern' in result and result['pattern'].endswith('$'):
+            result['pattern'] = result['pattern'][:-1] + '(?![\\s\\S])'
+        return result
+    if isinstance(value, list):
+        return [strict_patterns(item) for item in value]
+    return value
+
+
+def transport(body_bytes, payload_ref, resolved):
+    """SP-337 byte-stage oracle, before family payload schema dispatch.
+
+    resolved is a synthetic authenticated payload-store input, not another
+    envelope field or a proposed physical payload-store schema.
+    """
+    from blake3 import blake3
+    if payload_ref is None:
+        if len(body_bytes) > 16384:
+            raise ValueError('inline_body_too_large')
+        return
+    if (resolved is None or resolved['ref'] != payload_ref or not resolved['durable']
+            or not resolved['access_current']):
+        raise ValueError('payload_ref_unavailable')
+    if (resolved['blake3_id'] != blake3(body_bytes).hexdigest()
+            or resolved['byte_size'] != len(body_bytes)
+            or resolved['media_type'] != 'application/msgpack'
+            or bytes.fromhex(resolved['bytes_hex']) != body_bytes):
+        raise ValueError('payload_ref_integrity')
+
+
+def append_contract(name, case, schema, original=None):
+    import base64
+    import rfc8785
+    from pm_event_index_binding import binding_bytes
+    p, s, e = case['payload'], case['source'], case['event_record']
+    if e.get('replay_policy') == 'projector_replay_only':
+        raise ValueError('replay_only_not_appendable')
+    if e.get('replay_policy') != 'dedupe_by_idempotency_key':
+        raise ValueError('writer_replay_policy')
+    envelope = load_plan('Plans/event_record.schema.json')
+    if list(Draft202012Validator(envelope, format_checker=FORMAT).iter_errors(e)):
+        raise ValueError('event_record_schema')
+    if list(Draft202012Validator(schema['$defs'][name.replace('.', '_')],
+                               format_checker=FORMAT).iter_errors(p)):
+        raise ValueError('payload_schema')
+    scope = source_scope(s)
+    if not s['writer_current']:
+        raise ValueError('writer')
+    if not s['access_current']:
+        raise ValueError('access')
+    if p != s['frozen_payload'] or p['storage_instance_id'] != s['storage_instance_id']:
+        raise ValueError('original_source_join')
+    if name.startswith('auth.github.') and scope['scope_kind'] != 'application':
+        raise ValueError('scope')
+    expected_partition = ('app' if scope['scope_kind'] == 'application' else
+        'project~' + base64.urlsafe_b64encode(scope['project_id'].encode()).decode().rstrip('='))
+    if scope['scope_partition'] != expected_partition or case['scope_partition'] != expected_partition:
+        raise ValueError('partition')
+    scope_schema = load_plan('Plans/shared_integration_runtime.schema.json')['$defs']['WorkflowScopeV2']
+    if list(Draft202012Validator(scope_schema).iter_errors(scope)):
+        raise ValueError('scope')
+    sk = source_scope_key(s)
+    if name.startswith('persona.'):
+        persona_semantic(name, p, sk, s)
+    else:
+        semantic(name, p, sk, e['event_id'], server_id=scope['server_id'])
+    eid, idem = identity(name, p, sk, scope['server_id'])
+    if e['event_id'] != eid:
+        raise ValueError('identity')
+    if e['idempotency_key'] != idem:
+        raise ValueError('idempotency_key')
+    if (e['event_type'] != name or e['payload_schema_id'] != schema['$id'] + '#/$defs/' + name.replace('.', '_')
+            or e['occurred_at_utc'] != p['ts'] or e['actor_ref'] != s['actor_ref']
+            or e['redaction_profile'] != 'secret_refs_only'
+            or e['scope_kind'] != scope['scope_kind'] or e['project_id'] != scope['project_id']
+            or e['requested_account_ref'] != s['requested_account_ref']
+            or e['effective_account_ref'] != s['effective_account_ref']):
+        raise ValueError('envelope_source_join')
+    lineage = p.get('runtime_lineage', {})
+    for field in ('thread_id', 'run_id', 'node_id', 'attempt_id'):
+        if e[field] != lineage.get(field):
+            raise ValueError('envelope_source_join')
+    body_bytes = binding_bytes(p)  # byte-stage input only, not the SP-278 digest domain
+    transport(body_bytes, e['payload_ref'], case['resolved_payload'])
+    if e['payload'] != (p if e['payload_ref'] is None else {}):
+        raise ValueError('payload_transport_join')
+    # This is the adopted generic read-token/storage join, not a new checkpoint.
+    token = case['durable_read_token']
+    read_schema = strict_patterns(load_plan('Plans/event_record_index_checkpoint.schema.json')['$defs']['read_token'])
+    read_schema['required'].remove('redb_snapshot_id')
+    del read_schema['properties']['redb_snapshot_id']  # DL-076: live-only, never durable
+    if list(Draft202012Validator(read_schema, format_checker=FORMAT).iter_errors(token)):
+        raise ValueError('checkpoint_schema')
+    if (token['storage_instance_id'] != p['storage_instance_id']
+            or token['source_selection']['storage_instance_id'] != p['storage_instance_id']
+            or token['checkpoint_key'] != 'event_record_index_checkpoint.v1:' + p['storage_instance_id']):
+        raise ValueError('checkpoint_storage_join')
+    digest = hashlib.sha256(rfc8785.dumps(semantic_record(e))).hexdigest()
+    if original is not None:
+        if (e['event_id'], e['idempotency_key']) != (
+                original['event_record']['event_id'], original['event_record']['idempotency_key']):
+            raise ValueError('retry_identity')
+        if semantic_record(e) != semantic_record(original['event_record']):
+            raise ValueError('idempotency_conflict')
+    return digest
+
+
+def expect_failure(call, expected, name, label):
+    try:
+        call()
+    except ValueError as exc:
+        assert str(exc) == expected, (name, label, str(exc), expected)
+    else:
+        raise AssertionError((name, 'accepted negative', label))
+
+
+def check_append_contract(row, schema):
+    name = row['event_type']
+    # The declared main positive is an independent source join too. Mutating a
+    # stock payload receipt must fail even if all added vectors are left intact.
+    main = copy.deepcopy(row['append_valid'][0])
+    main['payload'], main['source'] = row['valid'], row['source']
+    append_contract(name, main, schema)
+    for variant in row.get('valid_variants', []):
+        matching = copy.deepcopy(next(c for c in row['append_valid'] if c['label'] == variant['label']))
+        matching['payload'], matching['source'] = variant['payload'], variant['source']
+        append_contract(name, matching, schema)
+    for case in row['append_valid']:
+        append_contract(name, case, schema)
+        p, source = case['payload'], case['source']
+        operation = {'schema_id': 'pm.storage_value.' + name.replace('.', '_') + '_operation.v1',
+                     'schema_version': '1.0.0', 'event_type': name, 'scope_key': source_scope_key(source),
+                     'server_id': source_scope(source)['server_id'], 'actor_ref': source['actor_ref'],
+                     'payload': p, 'state': 'effect_committed',
+                     'effect_receipt_ref': p.get('owner_result_ref', p.get('plugin_receipt_ref', 'ref:result/auth')),
+                     'event_id': case['event_record']['event_id'],
+                     'idempotency_key': case['event_record']['idempotency_key'],
+                     'replay_policy': case['event_record']['replay_policy']}
+        op_validator = Draft202012Validator(schema['$defs'][name.replace('.', '_') + '_operation'], format_checker=FORMAT)
+        op_validator.validate(operation)
+        for field in ('idempotency_key', 'actor_ref'):
+            bad_operation = copy.deepcopy(operation)
+            bad_operation[field] += '\n'
+            assert list(op_validator.iter_errors(bad_operation)), (name, 'operation trailing LF', field)
+        withdrawn_policy = {**operation, 'replay_policy': 'projector_replay_only'}
+        assert list(op_validator.iter_errors(withdrawn_policy)), (name, 'operation replay-only accepted')
+        wrong_key = (name + ':' + '0' * 64 if source_scope(source)['scope_kind'] == 'application'
+                     else 'application@1:11:22')
+        assert list(op_validator.iter_errors({**operation, 'idempotency_key': wrong_key})), (name, 'wrong operation scope/key')
+        retry = copy.deepcopy(case)
+        retry['event_record'].update(sequence_id=999, observed_at_utc='2026-11-04T13:00:00Z',
+                                     persisted_at_utc='2026-11-04T14:00:00Z')
+        assert append_contract(name, retry, schema, original=case) == append_contract(name, case, schema)
+        # A caller-owned correlation change is shape-valid, and is not source
+        # payload metadata; it must conflict at the original semantic boundary.
+        retry['event_record']['correlation_id'] += '-changed'
+        expect_failure(lambda: append_contract(name, retry, schema, original=case),
+                       'idempotency_conflict', name, 'caller_semantic_change')
+    for case in row['append_invalid']:
+        expect_failure(lambda: append_contract(name, case, schema), case['expected_error'], name, case['label'])
+    # Each family exercises the same byte-stage cutoff before payload dispatch;
+    # these synthetic boundary bytes are not claimed as family schema positives.
+    from blake3 import blake3
+    for size in (16383, 16384, 16385):
+        body = b'x' * size
+        resolved = {'ref': 'ref:payload/boundary', 'blake3_id': blake3(body).hexdigest(),
+                    'byte_size': size, 'media_type': 'application/msgpack', 'bytes_hex': body.hex(),
+                    'durable': True, 'access_current': True}
+        if size <= 16384:
+            transport(body, None, None)
+        else:
+            expect_failure(lambda: transport(body, None, None), 'inline_body_too_large', name, '16k_plus_one')
+        transport(body, resolved['ref'], resolved)
+        for field, value, error in [('durable', False, 'payload_ref_unavailable'),
+                                    ('access_current', False, 'payload_ref_unavailable'),
+                                    ('byte_size', size + 1, 'payload_ref_integrity'),
+                                    ('media_type', 'text/plain', 'payload_ref_integrity'),
+                                    ('bytes_hex', '00', 'payload_ref_integrity'),
+                                    ('blake3_id', '0' * 64, 'payload_ref_integrity')]:
+            expect_failure(lambda field=field, value=value: transport(body, resolved['ref'], {**resolved, field: value}),
+                           error, name, 'reference_' + field)
+    return {'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
+            'replay_only_refused': True, 'transport_boundary_bytes': [16383, 16384, 16385],
+            'storage_metadata_retry': 'same_semantic_digest', 'caller_semantic_retry': 'idempotency_conflict'}
+
+
+def run(fixtures_path=None):
     schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
-    fixtures = json.loads((ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
+    fixtures = json.loads((fixtures_path or ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
     expected = {'auth.github.authenticated', 'auth.github.device_code.issued', 'auth.github.disconnected',
                 'auth.github.failed', 'auth.github.token.polling', 'plugin.hook.blocked', 'plugin.hook.error',
                 'plugin.hook.invoked', 'plugin.load_failed', 'plugin.loaded', 'plugin.permission.override',
@@ -207,14 +453,15 @@ def run():
         if name.startswith('persona.'):
             results.append(check_persona(row, schema))
             continue
-        eid, idem = identity(name, p, 'application')
+        server = row['source']['scope']['server_id']
+        eid, idem = identity(name, p, 'application', server)
         assert (eid, idem) == (row['expected_event_id'], row['expected_idempotency_key'])
-        semantic(name, p, 'application', eid)
-        semantic(name, copy.deepcopy(p), 'application', eid, original=p)
-        assert identity(name, copy.deepcopy(p), 'application') == (eid, idem)
-        probes = [('identity', lambda: semantic(name, p, 'application', 'other'))]
+        semantic(name, p, 'application', eid, server_id=server)
+        semantic(name, copy.deepcopy(p), 'application', eid, original=p, server_id=server)
+        assert identity(name, copy.deepcopy(p), 'application', server) == (eid, idem)
+        probes = [('identity', lambda: semantic(name, p, 'application', 'other', server_id=server))]
         changed = {**p, 'ts': '2026-11-04T12:01:00Z'}
-        probes.append(('original_payload_conflict', lambda: semantic(name, changed, 'application', eid, original=p)))
+        probes.append(('original_payload_conflict', lambda: semantic(name, changed, 'application', eid, original=p, server_id=server)))
         if name.startswith('auth.'):
             probes.append(('scope', lambda: semantic(name, p, 'project:other', eid)))
         else:
@@ -223,16 +470,16 @@ def run():
         if name == 'auth.github.token.polling':
             bad = {**p, 'poll_interval_seconds': p['previous_interval_seconds']}
             validator.validate(bad)  # schema-valid relational negative
-            probes.append(('cadence', lambda: semantic(name, bad, 'application', eid)))
+            probes.append(('cadence', lambda: semantic(name, bad, 'application', eid, server_id=server)))
         if name == 'plugin.hook.blocked':
             for hook in ('pre_tool_invoke', 'pre_attempt_start', 'pre_node_dispatch'):
                 valid_hook = {**p, 'hook_name': hook}
                 validator.validate(valid_hook)
-                semantic(name, valid_hook, 'application', eid)
+                semantic(name, valid_hook, 'application', eid, server_id=server)
             for hook in ('post_tool_invoke', 'post_attempt_complete'):
                 observation = {**p, 'hook_name': hook}
                 probes.append(('observation_only_hook',
-                               lambda bad=observation: semantic(name, bad, 'application', eid)))
+                               lambda bad=observation: semantic(name, bad, 'application', eid, server_id=server)))
         for reason, call in probes:
             try:
                 call()
@@ -252,7 +499,13 @@ def run():
         assert value['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
         Draft202012Validator.check_schema(value['value_schema'])
         assert value['value_schema'] == schema['$defs'][slug + '_operation']
+    for row, result in zip(fixtures['families'], results):
+        result['append_oracles'] = check_append_contract(row, schema)
     return {'status': 'pass', 'native_execution': 'NOT_RUN', 'rows': results}
 
 if __name__ == '__main__':
-    print(json.dumps(run(), indent=2))
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--fixtures', type=Path, help='Full fixture pack, including adversarial positive mutations.')
+    args = parser.parse_args()
+    print(json.dumps(run(args.fixtures), indent=2))

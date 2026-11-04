@@ -18190,7 +18190,7 @@
               },
               "proxy_tls": {
                 "type": "null",
-                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person\u2019s own systems; onboarding collects no TLS/certificate choice."
+                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
               },
               "source_more": {
                 "type": "boolean"
@@ -81808,7 +81808,7 @@
             ]
           },
           "existing_index_root": {
-            "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
+            "title": "Generic EventRecord index checkpoint custody — external proposal",
             "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations."
           },
           "existing_index_root__source_selection": {
@@ -123693,13 +123693,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -123719,13 +123721,11 @@
             "const": "auth.github.authenticated"
           },
           "scope_key": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
+            "const": "application"
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -123747,7 +123747,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -123787,7 +123787,7 @@
               },
               "credential_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "scopes": {
@@ -123830,7 +123830,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -123846,7 +123846,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -123859,7 +123869,9 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
         ]
       },
       "recovery_disposition": {
@@ -123921,13 +123933,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -123947,13 +123961,11 @@
             "const": "auth.github.device_code.issued"
           },
           "scope_key": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
+            "const": "application"
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -123975,7 +123987,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -124015,7 +124027,7 @@
               },
               "device_code_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "expires_at": {
@@ -124058,7 +124070,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -124074,7 +124086,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -124087,7 +124109,9 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
         ]
       },
       "recovery_disposition": {
@@ -124149,13 +124173,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -124175,13 +124201,11 @@
             "const": "auth.github.disconnected"
           },
           "scope_key": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
+            "const": "application"
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -124203,7 +124227,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -124243,12 +124267,12 @@
               },
               "credential_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "disconnect_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -124282,7 +124306,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -124298,7 +124322,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -124311,7 +124345,9 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
         ]
       },
       "recovery_disposition": {
@@ -124373,13 +124409,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -124399,13 +124437,11 @@
             "const": "auth.github.failed"
           },
           "scope_key": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
+            "const": "application"
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -124427,7 +124463,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -124511,7 +124547,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -124527,7 +124563,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -124540,7 +124586,9 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
         ]
       },
       "recovery_disposition": {
@@ -124602,13 +124650,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -124628,13 +124678,11 @@
             "const": "auth.github.token.polling"
           },
           "scope_key": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
+            "const": "application"
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -124656,7 +124704,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -124746,7 +124794,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -124762,7 +124810,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -124775,7 +124833,9 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
         ]
       },
       "recovery_disposition": {
@@ -124837,13 +124897,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -124865,11 +124927,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -124891,7 +124953,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -124912,7 +124974,7 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "hook_name": {
@@ -124924,12 +124986,12 @@
               },
               "invocation_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "reason_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -124960,7 +125022,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -124976,7 +125038,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.hook\\.blocked:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -124989,7 +125061,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.hook\\.blocked:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -125051,13 +125150,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -125079,11 +125180,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -125105,7 +125206,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -125126,7 +125227,7 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "hook_name": {
@@ -125136,7 +125237,7 @@
               },
               "invocation_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "error_class": {
@@ -125147,7 +125248,7 @@
               },
               "error_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -125179,7 +125280,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -125195,7 +125296,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.hook\\.error:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -125208,7 +125319,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.hook\\.error:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -125270,13 +125408,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -125298,11 +125438,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -125324,7 +125464,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -125345,7 +125485,7 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "hook_name": {
@@ -125355,7 +125495,7 @@
               },
               "invocation_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "duration_ms": {
@@ -125390,7 +125530,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -125406,7 +125546,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.hook\\.invoked:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -125419,7 +125569,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.hook\\.invoked:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -125481,13 +125658,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -125509,11 +125688,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -125535,7 +125714,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -125556,12 +125735,12 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "load_attempt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "error_class": {
@@ -125572,7 +125751,7 @@
               },
               "error_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -125603,7 +125782,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -125619,7 +125798,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.load_failed:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -125632,7 +125821,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.load_failed:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -125694,13 +125910,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -125722,11 +125940,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -125748,7 +125966,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -125769,17 +125987,17 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "load_attempt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "manifest_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               }
             },
             "required": [
@@ -125808,7 +126026,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -125824,7 +126042,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.loaded:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -125837,7 +126065,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.loaded:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -125899,13 +126154,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -125927,11 +126184,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -125953,7 +126210,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -125974,17 +126231,17 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "invocation_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "override_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "decision": {
@@ -126021,7 +126278,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -126037,7 +126294,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.permission\\.override:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -126050,7 +126317,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.permission\\.override:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -126112,13 +126406,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -126140,11 +126436,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -126166,7 +126462,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -126187,7 +126483,7 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "tool_name": {
@@ -126197,12 +126493,12 @@
               },
               "registration_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "resolution_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -126233,7 +126529,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -126249,7 +126545,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.tool\\.collision:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -126262,7 +126568,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.tool\\.collision:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -126324,13 +126657,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -126352,11 +126687,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -126378,7 +126713,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -126399,7 +126734,7 @@
               },
               "plugin_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "tool_name": {
@@ -126409,7 +126744,7 @@
               },
               "registration_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -126439,7 +126774,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -126455,7 +126790,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|plugin\\.tool\\.registered:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -126468,7 +126813,34 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_key": {
+                  "const": "application"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^plugin\\.tool\\.registered:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -126531,13 +126903,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -126559,11 +126933,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -126585,7 +126959,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -126743,7 +127117,7 @@
               },
               "home_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "home_project_id": {
@@ -126772,7 +127146,7 @@
               },
               "reach_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "source_id": {
@@ -126802,7 +127176,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -126822,21 +127196,21 @@
               },
               "content_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               },
               "owner_request_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_result_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_readback_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "client_id": {
@@ -126846,7 +127220,7 @@
               },
               "return_context_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -126911,6 +127285,17 @@
                     }
                   }
                 }
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "properties": {
+                      "scope_partition": {
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      }
+                    }
+                  }
+                }
               }
             ]
           },
@@ -126926,7 +127311,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -126942,7 +127327,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|persona\\.created:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -126955,7 +127350,42 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "payload": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^persona\\.created:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -127017,13 +127447,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -127045,11 +127477,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -127071,7 +127503,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -127223,7 +127655,7 @@
               },
               "home_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "home_project_id": {
@@ -127252,7 +127684,7 @@
               },
               "reach_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "source_id": {
@@ -127282,7 +127714,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -127302,21 +127734,21 @@
               },
               "content_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               },
               "owner_request_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_result_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_readback_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "client_id": {
@@ -127326,7 +127758,7 @@
               },
               "return_context_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -127391,6 +127823,17 @@
                     }
                   }
                 }
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "properties": {
+                      "scope_partition": {
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      }
+                    }
+                  }
+                }
               }
             ]
           },
@@ -127406,7 +127849,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -127422,7 +127865,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|persona\\.deleted:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -127435,7 +127888,42 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "payload": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^persona\\.deleted:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -127497,13 +127985,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -127525,11 +128015,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -127551,7 +128041,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -127703,7 +128193,7 @@
               },
               "home_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "home_project_id": {
@@ -127732,7 +128222,7 @@
               },
               "reach_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "source_id": {
@@ -127762,7 +128252,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -127782,21 +128272,21 @@
               },
               "content_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               },
               "owner_request_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_result_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_readback_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "client_id": {
@@ -127806,12 +128296,12 @@
               },
               "return_context_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "export_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -127877,6 +128367,17 @@
                     }
                   }
                 }
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "properties": {
+                      "scope_partition": {
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      }
+                    }
+                  }
+                }
               }
             ]
           },
@@ -127892,7 +128393,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -127908,7 +128409,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|persona\\.exported:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -127921,7 +128432,42 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "payload": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^persona\\.exported:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -127983,13 +128529,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -128011,11 +128559,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -128037,7 +128585,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -128189,7 +128737,7 @@
               },
               "home_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "home_project_id": {
@@ -128218,7 +128766,7 @@
               },
               "reach_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "source_id": {
@@ -128248,7 +128796,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -128268,21 +128816,21 @@
               },
               "content_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               },
               "owner_request_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_result_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_readback_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "client_id": {
@@ -128292,12 +128840,12 @@
               },
               "return_context_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "import_receipt_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -128363,6 +128911,17 @@
                     }
                   }
                 }
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "properties": {
+                      "scope_partition": {
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      }
+                    }
+                  }
+                }
               }
             ]
           },
@@ -128378,7 +128937,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -128394,7 +128953,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|persona\\.imported:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -128407,7 +128976,42 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "payload": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^persona\\.imported:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -128469,13 +129073,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -128497,11 +129103,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -128523,7 +129129,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -128675,7 +129281,7 @@
               },
               "home_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "home_project_id": {
@@ -128704,7 +129310,7 @@
               },
               "reach_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "source_id": {
@@ -128734,7 +129340,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -128754,21 +129360,21 @@
               },
               "content_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               },
               "owner_request_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_result_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_readback_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "client_id": {
@@ -128778,16 +129384,16 @@
               },
               "return_context_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "requested_persona": {
                 "type": "string",
-                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?![\\s\\S])"
               },
               "effective_persona": {
                 "type": "string",
-                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?![\\s\\S])"
               },
               "persona_selection_source": {
                 "type": "string",
@@ -128800,9 +129406,14 @@
                 "maxLength": 256
               },
               "persona_override_scope": {
-                "type": "string",
-                "minLength": 1,
-                "maxLength": 256
+                "enum": [
+                  null,
+                  "thread",
+                  "run",
+                  "node",
+                  "attempt",
+                  "actor"
+                ]
               },
               "persona_override_owner_id": {
                 "anyOf": [
@@ -128818,17 +129429,95 @@
               },
               "runtime_snapshot_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "runtime_snapshot_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               },
               "selection_target_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
+              },
+              "runtime_lineage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "run_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "node_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "attempt_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "actor_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "run_id",
+                  "node_id",
+                  "attempt_id",
+                  "actor_id"
+                ]
               }
             },
             "required": [
@@ -128866,7 +129555,8 @@
               "persona_override_owner_id",
               "runtime_snapshot_ref",
               "runtime_snapshot_sha256",
-              "selection_target_ref"
+              "selection_target_ref",
+              "runtime_lineage"
             ],
             "allOf": [
               {
@@ -128901,6 +129591,43 @@
                     }
                   }
                 }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "persona_override_scope": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "persona_override_owner_id": {
+                      "const": null
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "persona_override_owner_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "properties": {
+                      "scope_partition": {
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      }
+                    }
+                  }
+                }
               }
             ]
           },
@@ -128916,7 +129643,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -128932,7 +129659,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|persona\\.selected:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -128945,7 +129682,42 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "payload": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^persona\\.selected:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
@@ -129007,13 +129779,15 @@
         "state",
         "effect_receipt_ref",
         "event_id",
-        "idempotency_key"
+        "idempotency_key",
+        "server_id",
+        "replay_policy"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "effect_receipt_ref"
       ],
-      "replay_behavior": "Original owner-result and SP-286/SP-291 full-value custody only; no second effect or synthetic receipt.",
+      "replay_behavior": "dedupe_by_idempotency_key; CV-366 application@1 actual Server/original operation; projector_replay_only => replay_only_not_appendable; original SP-286/SP-291 custody only.",
       "migration": "Explicit compatible successor; no legacy native writer.",
       "retention_compaction": "PENDING_RETENTION_DECISION; no activation or destructive inference.",
       "retention_policy_ref": "PENDING_RETENTION_DECISION",
@@ -129035,11 +129809,11 @@
           "scope_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4096
           },
           "actor_ref": {
             "type": "string",
-            "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+            "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
             "maxLength": 512
           },
           "payload": {
@@ -129061,7 +129835,7 @@
               },
               "subject_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "revision": {
@@ -129213,7 +129987,7 @@
               },
               "home_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "home_project_id": {
@@ -129242,7 +130016,7 @@
               },
               "reach_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "source_id": {
@@ -129272,7 +130046,7 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
+                    "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
                   },
                   {
                     "type": "null"
@@ -129292,21 +130066,21 @@
               },
               "content_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
               },
               "owner_request_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_result_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "owner_readback_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               "client_id": {
@@ -129316,7 +130090,7 @@
               },
               "return_context_ref": {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               }
             },
@@ -129381,6 +130155,17 @@
                     }
                   }
                 }
+              },
+              {
+                "properties": {
+                  "scope": {
+                    "properties": {
+                      "scope_partition": {
+                        "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                      }
+                    }
+                  }
+                }
               }
             ]
           },
@@ -129396,7 +130181,7 @@
             "anyOf": [
               {
                 "type": "string",
-                "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+                "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
                 "maxLength": 512
               },
               {
@@ -129412,7 +130197,17 @@
           "idempotency_key": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 256
+            "maxLength": 4111,
+            "pattern": "^(?:application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+|persona\\.updated:[0-9a-f]{64})(?![\\s\\S])"
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+          },
+          "replay_policy": {
+            "const": "dedupe_by_idempotency_key"
           }
         },
         "required": [
@@ -129425,7 +130220,42 @@
           "state",
           "effect_receipt_ref",
           "event_id",
-          "idempotency_key"
+          "idempotency_key",
+          "server_id",
+          "replay_policy"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "payload": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^application@1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+(?![\\s\\S])"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "idempotency_key": {
+                  "pattern": "^persona\\.updated:[0-9a-f]{64}(?![\\s\\S])"
+                }
+              }
+            }
+          }
         ]
       },
       "recovery_disposition": {
