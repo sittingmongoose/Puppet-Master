@@ -246,7 +246,9 @@
       if (!this.ps) {
         this.ps = { C: { x: Lay.ctl[0], y: Lay.ctl[1], vx: 0, vy: 0 }, Ct: { x: Lay.ctl[0], y: Lay.ctl[1] }, th: 0, thv: 0, dy: 0, dyv: 0, tilt: 0, tiltv: 0, tiltT: 0, phi: 0, phiv: 0,
           sx: 1, sy: 1, sv: 0, look: [0, 0], lookT: [0, 0], blink: 1, nextBlink: 2, asleep: false };
+        this.pipAt = Lay.ctl; this.pipOff = [0, 0]; /* (its spot, not yet fitted to what a person can see: pipFit) */
       }
+      this.pipBB = null;
       this.gPip.innerHTML = '';
       this.pstrs = [0, 1].map(() => el('path', { class: 'pst-str', fill: 'none', 'stroke-linecap': 'round' }, this.gPip));
       this.pglow = [0, 1].map(() => el('path', { class: 'pst-power', fill: 'none', 'stroke-linecap': 'round' }, this.gPip));
@@ -491,6 +493,25 @@
       }
       return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
     }
+    /* how far Pip's spot (the hand's, at) must move for the hand and Pip, hanging at rest, to sit whole inside the pane's
+       visible span with the props' margin. Retro's tube slices the scene to fill the pane: a short window's crop left
+       Pip's spot (84 units) off the tube altogether (FO-37), and the narrow strip's cut the hand at the top. Pip's box is
+       its own drawing's (the hand's and the head's), placed as render() places them; the margin narrows where the span
+       is barely tall enough, and where it is not, the hand stays whole */
+    pipFit(at) {
+      const v = this.vis, Lay = this.L, s = Lay.s;
+      if (!v || !this.gCtl || !this.gHead) return [0, 0];
+      if (!this.pipBB) { const c = this.boxOf(this.gCtl), h = this.boxOf(this.gHead); if (!c || !c[2] || !h || !h[2]) return [0, 0]; this.pipBB = { c, h }; }
+      const { c, h } = this.pipBB;
+      const lo = Math.min(c[0], h[0]) - 32, hi = Math.max(c[0] + c[2], h[0] + h[2]) - 32;
+      const into = (a0, a1, v0, v1) => {
+        const pad = clamp((v1 - v0 - (a1 - a0)) / 2, 0, 8); let d = 0;
+        if (a1 > v1 - pad) d = v1 - pad - a1;
+        if (a0 + d < v0 + pad) d = v0 + pad - a0;
+        return d;
+      };
+      return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, v.y0, v.y1)];
+    }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
        at a narrow window; NieR's box sits over the column): its blocks were cut at the bottom, or under NieR's words */
@@ -570,7 +591,9 @@
       const at = pip.at ? (Array.isArray(pip.at) ? pip.at : { left: [Lay.ctl[0] - 30 * (Lay.s / 2.3), Lay.ctl[1]], home: Lay.ctl }[pip.at] || Lay.ctl) : Lay.ctl;
       // asleep: the hand lowers until Pip rests on the floor (kept while the wake is pending)
       const asleep = pip.pose === 'asleep' || !!this.sleepZ;
-      this.ps.Ct.x = at[0]; this.ps.Ct.y = at[1] + (asleep ? Lay.rope * .72 : 0);
+      /* (its spot fitted to what a person can see, as the props are: pipFit) */
+      const fo = this.pipOff = this.pipFit(at); this.pipAt = at;
+      this.ps.Ct.x = at[0] + fo[0]; this.ps.Ct.y = at[1] + fo[1] + (asleep ? Lay.rope * .72 : 0);
       this.ps.asleep = asleep;
       this.ps.tiltT = pip.tilt != null ? pip.tilt : this.ps.asleep ? -.2 : 0;
       this.work = !!pip.work; this.power = pip.power || 0;
@@ -757,7 +780,17 @@
       }
       /* (and the viewport: a short window can scroll the stage partly out of view) */
       vl = Math.max(vl, -r0.left / sx); vr = Math.min(vr, (window.innerWidth - r0.left) / sx); vt = Math.max(vt, -r0.top / sx); vb = Math.min(vb, (window.innerHeight - r0.top) / sx);
+      /* (and what the stage paints over the scene at its foot: Retro Light's printer, its platen, bail and head across the
+         paper, and a tube's command line. A sign at the pane's foot kept its lower line behind the roller, A3-6. Read
+         from the layout, not the painted box: the paper feeding in and the tube's degauss move them for a moment) */
+      const atop = (n) => { let y = 0; for (let e = n; e && e !== this.screen; e = e.offsetParent) y += e.offsetTop; return y; };
+      this.screen.querySelectorAll(':scope > .pst-printer, :scope > .pst-printer > *, .pst-term-cmd').forEach((n) => { if (n.offsetHeight) vb = Math.min(vb, atop(n)); });
       this.vis = k > 0 && vr > vl && vb > vt ? { x0: (vl - this.map.ox) / k, x1: (vr - this.map.ox) / k, y0: (vt - this.map.oy) / k, y1: (vb - this.map.oy) / k } : null;
+      /* Pip's spot follows the new span at once, the hand and Pip together, so a resize does not swing it (pipFit) */
+      if (this.ps && this.pipAt) {
+        const o = this.pipOff || [0, 0], f = this.pipOff = this.pipFit(this.pipAt), ps = this.ps, dx = f[0] - o[0], dy = f[1] - o[1];
+        if (dx || dy) { ps.Ct.x += dx; ps.Ct.y += dy; ps.C.x += dx; ps.C.y += dy; }
+      }
       this.nierBox = null;
       this.dirty = true; this.frameT = -1e9; if (this.svg && this.kick) this.kick(); /* (a resize redraws the props in their new room, at once: past Retro's stepped gate too) */
       this.headTo();
