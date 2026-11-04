@@ -488,7 +488,10 @@ async function pickBackWalk(A, bad, label) {
       const sheetOpen = () => A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {});
       if (s.screen === 'name' && await A.has('change')) { await A.click('change'); await sheetOpen(); await A.sleep(400); }
       if (s.screen === 'safe' && await A.has('backup')) { await A.click('backup'); await sheetOpen(); await A.sleep(400); }
-      did = await pickOther(A);
+      /* SW-41 negative: suppress only the Back-walk selector, leaving Edit picks intact.
+         --set selftest=nopick (every screen), or nopick:<screen> (one hole after real picks). */
+      did = SELFTEST === 'nopick' || SELFTEST === 'nopick:' + s.screen ? null : await pickOther(A);
+      if (!did) bad.push(`${label} ${s.screen}: nothing to pick or type on this Back-walk screen, so nothing was checked`);
       const now = (await A.snap()).screen; if (now !== s.screen) { bad.push(`${label} ${s.screen}: ${did} went on to ${now} without Continue`); break; }
     }
     await pressBack(A); let n = await look(A); if (n.screen === s.screen) { await pressBack(A); n = await look(A); } /* (the first Back closes an open sheet) */
@@ -1092,7 +1095,7 @@ export const tests = {
         }
         const start = await A.frame().evaluate(SNAP20), w = await pickBackWalk(A, bad, `21 ${kind}`);
         if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`21 ${kind}: the Back run from Review stopped on ${w.seq[w.seq.length - 1]} (${w.seq.join(' > ')})`);
-        t.log(`21 ${kind} Back with a pick on every step: ${w.picked.join(' | ')}`);
+        t.log(`21 ${kind} Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
         const back = await keepOn(A); if (back[back.length - 1] !== 'review') { bad.push(`21 ${kind}: on again from Welcome never reached Review: ${back.join(' > ')}`); return; }
         const end = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, start.draft, end.draft)).filter((k) => JSON.stringify(start.draft[k]) !== JSON.stringify(end.draft[k]));
         if (dk.length) bad.push(`21 ${kind}: after the picks taken back, on to Review again, the draft changed: ${dk.map((k) => k + ' ' + JSON.stringify(start.draft[k]).slice(0, 60) + ' > ' + JSON.stringify(end.draft[k]).slice(0, 60)).join('; ')}`);
