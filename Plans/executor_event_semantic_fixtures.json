@@ -8060,6 +8060,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "c39599b1deb0e8eece6c49476020aa740dff577e797dfa768bad9d95bbf5300e",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "attempt.started": {
@@ -16960,6 +17301,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "3f85b38a74eb87c057bc5a667922f82e4851bab537fac55103bca9895ff23039",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "98ca3e54bbe321a6e2dbb66c22518faa921d930a0edc88ad702bd7f2c1b11d49"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "started"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "0d49094c5bb93e9419f8b0e11bcd75b940e706eab8f1317e69ae41e4ab959c8c"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "node.blocked": {
@@ -24895,6 +25577,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "0f681fc90430440df28287aebab3871c2820f19133cbc6fea6f14ede3a487c1c",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "fff6a8dc18f5d7d01be9ca112d48e1c755e2edd4fba88a1d3fd121936daa8aed"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "unresolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "137cef4110a450504f7fab2457822ae24b73e7a240f4be5e2f1c62c7d1884738"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "node.completed": {
@@ -31799,6 +32822,347 @@
               "artifact-001"
             ],
             "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+          },
+          "expected": "reject"
+        }
+      ],
+      "retained_source_sha256": "e894344cbc27a67455778a0e838bf71ed0237d078170f3a1c17870f80ad7b52d",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "2369a75188dc47e7e894a1a12fcec0204658fc45fd8c7874dcfceab58adeef43"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "done"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "236269d0da0f8d9a59750c3872d57cff4e118e107ccba0052741b4351cbc1c31"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
           },
           "expected": "reject"
         }
@@ -38806,6 +40170,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "68154be3446e029cddacf802439dbc11b8dc71a20afc367ddea20f4fe767bc83",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "a03aff0a8f51f6eeac6c6bdaec3dc2e8ddb5f4c59bd98759980154f3d23aab54"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "in_progress"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3f0d6663fb9c7579f53bf60fac3dabed56caf6b33b42446255bf91e774b284a4"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "node.unblocked": {
@@ -44530,6 +46235,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "490a1a2fc4ec036c647a036aaf7aa474deb2572add8f77b6b1e8bd20058d4b89",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "1ed7d2c08816145adb30a584256f63eed734be778f2c585862dc18542a403cf8"
+            },
+            {
+              "path": "capture/records/episode/body/state",
+              "value": "resolved"
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "121b677f1e42aa6f6034dfdc56aa2eb48a5ec65c9aeec1508d42e43e65c758a1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "plan.decomposition_degraded": {
@@ -49120,6 +51166,347 @@
             "original_shape": "original_shape-001",
             "degraded_shape": "degraded_shape-001",
             "evidence_ref": "evidence_ref-001"
+          },
+          "expected": "reject"
+        }
+      ],
+      "retained_source_sha256": "c4816ab025ae96569db5268122fa549241d893be31834f2d88291b0a4295d4df",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "d09fd28d4d67b082eced7fc278d08937e6a9cbb3a8ed74c200ff8b978cc832e9"
+            },
+            {
+              "path": "capture/records/decomposition/body/state",
+              "value": "degraded_pre_lock"
+            },
+            {
+              "path": "capture/records/decomposition/sha256",
+              "value": "77dc60ac8fdba21a19e240b887d867e69cd6305aebb57202037341bdf5e0e44f"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
           },
           "expected": "reject"
         }
@@ -55619,6 +58006,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "15263651e3251c6ffc8ad7cd3e4a5925a2d80feb335940245720d271a6f72385",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0538f9269ef4a33acef031b24dae8d54eab7b62eb14d96f6e4a8caf71bb0c5e6"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "fixed"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "aed5ab768297d0420193ff2b4c062279704163cca14517dbdc98761f06b486df"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "remediation.spawned": {
@@ -61999,6 +64727,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "c127df262f5c9944220df4a858de816d42661fe0c2476a69839bcfa4631bc505",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "39c150ff65c6d1fc4828d2d66d2d37891792b66a5a27f8f754a3c42f23e8262b"
+            },
+            {
+              "path": "capture/records/lineage/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/lineage/sha256",
+              "value": "8a77c41efc1b0ae18782ea2f0370341562c748689309e5cec9d2ceb75852fb7d"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "run.completed": {
@@ -66985,6 +70054,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "dfe47ad58383460be83337d4143f13638ed98d29c10a1e3f735f4d4b59f7929a",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0a60f07dca78b73de616ce323c3b596ce671a6132534103685d2bf8f8be5959b"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "terminal"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "ed82f9812ec17ce242ffabcf0e27fc3ed2e3b03244784dc1bf496ca3bbec20b2"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "run.graph_integrity_failed": {
@@ -71522,6 +74932,347 @@
             "replan_generation": 1,
             "reason_code": "reason_code-001",
             "detail_ref": "detail_ref-001"
+          },
+          "expected": "reject"
+        }
+      ],
+      "retained_source_sha256": "209fb2f17c96218cdb8d7483f326253da93cec1860e00f79c6c6c4980b84cadc",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "5aa71e6c87b7a889fd0912012f682bf7a7f2af41f374d6688dcf747703f38106"
+            },
+            {
+              "path": "capture/records/run/body/state",
+              "value": "integrity_failed"
+            },
+            {
+              "path": "capture/records/run/sha256",
+              "value": "f6afddcabcf510eeed556d68907f6576bf045e832214f9306e19c9ac07ea39f3"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
           },
           "expected": "reject"
         }
@@ -82683,6 +86434,347 @@
             "attempt_id": "attempt_id-001",
             "replan_generation": 1,
             "failure_class": "provider_transient"
+          },
+          "expected": "reject"
+        }
+      ],
+      "retained_source_sha256": "5fd9d1e4e130eb88c19fb47389aa536acea4ec91d6984b6e740ae58dffbc9a7e",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "6700b553cac3a391355d40aa821901c59b2605243bd1fb89a93cf35503c2bd36"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "elapsed"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "b4d4f573ce653312ede9cc953a2114cc02bb0ec347b156f1ec6b927b191df09b"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
           },
           "expected": "reject"
         }
@@ -95857,6 +99949,347 @@
           },
           "expected": "reject"
         }
+      ],
+      "retained_source_sha256": "ba164faa5442cc5d5c594cc2c4fa57a680351e58dd407c34a9667437910de9e8",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "7d2d18e6f8956ff0aec352a2be5bb35419f07eebcc6a7ab5db9e2d6e03704e0a"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "active"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "bdb6da3451dd80625452de34cfa33eca89f1bf89f98a48851a57c63bdb75e0b8"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        }
       ]
     },
     "run.node_ready": {
@@ -100660,6 +105093,347 @@
             "replan_generation": 1,
             "ready_since_utc": "2026-11-04T12:00:00Z\n",
             "wake_reason": "prerequisite_resolved"
+          },
+          "expected": "reject"
+        }
+      ],
+      "retained_source_sha256": "6098805bf0d9ccab6805f346a030bfb2a32103eec6e383f785e68af911494e04",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d73377d25a5f5a35fd199be1da913b8518ec4cf5112cfebfaed966966d878d5"
+            },
+            {
+              "path": "capture/records/node/body/state",
+              "value": "ready"
+            },
+            {
+              "path": "capture/records/node/sha256",
+              "value": "3dcefcadef70422c8227ae0ce4b989a493fa76d4f9411ed3a432e84400fb98c1"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
           },
           "expected": "reject"
         }
@@ -113452,6 +118226,347 @@
             "retry_count": 1,
             "failure_class": "provider_transient",
             "safe_point_id": "safe_point_id-001"
+          },
+          "expected": "reject"
+        }
+      ],
+      "retained_source_sha256": "d94c5c3c1693aaa107485f77c722c98ae211a90433a3a99e02da73d827cd70d8",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "0747ed71975792f83007450955b9b7547cd39fa9c5693c377c580b8d22899604"
+            },
+            {
+              "path": "capture/records/retry/body/state",
+              "value": "scheduled"
+            },
+            {
+              "path": "capture/records/retry/sha256",
+              "value": "4a8927c2f6c5a26fa722c8902310abefc0a551673100bff51a59c55caf30b02e"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
           },
           "expected": "reject"
         }
@@ -142855,6 +147970,347 @@
             "coalesced_wake_reasons": [
               "capacity_available"
             ]
+          },
+          "expected": "reject"
+        }
+      ],
+      "retained_source_sha256": "8bc5aabd011d3f3bd1edbf24cf424c77afa54fa655470efeab483eb41052d0f7",
+      "history_cases": [
+        {
+          "case": "S10-history-valid-after-live-transition",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "accept"
+        },
+        {
+          "case": "S10-withdrawn-reader",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": false,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-missing-retained-source",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": false,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-deleted-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": "2026-11-04T14:00:00Z",
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-unauthorized-event",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Project",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "foreign-project",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-foreign-Storage",
+          "original_changes": [],
+          "event_changes": {},
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "foreign-store"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-forged-event",
+          "original_changes": [],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
+          },
+          "expected": "reject"
+        },
+        {
+          "case": "S10-coherently-forged-original-source",
+          "original_changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "value": "2026-11-04T14:00:00Z"
+            }
+          ],
+          "event_changes": {
+            "ts": "2026-11-04T14:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "e4c78df951338e4ee1d4f32d4808a98f78a7630f188e676ed256d1a23bdcf9fc"
+            },
+            {
+              "path": "capture/records/scheduler/body/state",
+              "value": "committed"
+            },
+            {
+              "path": "capture/records/scheduler/sha256",
+              "value": "991c37f69e052a74b4413abac5ca0f2d92f3cb7d0cf85f538b514366eccd3393"
+            }
+          ],
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001"
+            ],
+            "project_id": "project_id-001",
+            "storage_instance_id": "store-001"
           },
           "expected": "reject"
         }

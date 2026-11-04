@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 import jsonschema
+from pm_executor_schema_refs import check_lane_schemas, reference_cases
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -94,12 +95,19 @@ def validate(contract, payload, context):
 def main():
     from pm_executor_event_semantics import expand_fixture_literals
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
-    fixtures = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text()))['cases']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     existing = {f['event_type'] for f in registry['families']}
     assert len(contracts) == 16 and len({c['event_type'] for c in contracts}) == 16
-    failures = []
+    failures = check_lane_schemas(contracts)
+    if failures:
+        print(json.dumps({'status': 'fail', 'schema_reference_failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+        return 1
+    fixtures = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text()))['cases']
+    ref_fixtures = json.loads((ROOT / 'Plans/executor_event_schema_reference_fixtures.json').read_text())['families']
+    ref_cases = 0
     for c in contracts:
+        failures.extend(reference_cases(c, ref_fixtures[c['event_type']]))
+        ref_cases += len(ref_fixtures[c['event_type']])
         assert c['event_type'] not in existing, 'Draft must remain unadmitted'
         schema = json.loads((ROOT / c['schema_ref']).read_text())
         jsonschema.Draft202012Validator.check_schema(schema)
@@ -129,7 +137,7 @@ def main():
         q = copy.deepcopy(p); q['ts'] = '2026-11-04T13:00:00Z'
         assert identity(c, q, 'store-001') in stored
         assert hashlib.sha256(json.dumps(q, sort_keys=True).encode()).hexdigest() != stored[ident][0]
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(contracts), 'fixture_cases': len(fixtures), 'identity_replay_cases': len(contracts)*5, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(contracts), 'fixture_cases': len(fixtures), 'identity_replay_cases': len(contracts)*5, 'schema_reference_cases': ref_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 if __name__ == '__main__':

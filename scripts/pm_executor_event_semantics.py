@@ -10,6 +10,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import jsonschema
+from pm_executor_schema_refs import check_references, check_lane_schemas, reference_cases
 import msgpack
 from blake3 import blake3
 
@@ -62,8 +63,10 @@ def at(value, path):
     return value
 
 
-def schema_validate(path, value):
+def schema_validate(path, value, *, whole_schema_refs=True):
     schema = json.loads((ROOT / path).read_text())
+    if whole_schema_refs:
+        check_references(schema, path)
     checker = jsonschema.FormatChecker()
     checker.checks('date-time')(valid_timestamp)
     jsonschema.Draft202012Validator(schema, format_checker=checker).validate(value)
@@ -321,7 +324,10 @@ def validate_capture(contract, payload, capture):
         require(dependency['deleted_at'] is None, 'deleted dependency ' + field)
         require(capture['viewer'] in dependency['readers'], 'dependency authorization ' + field)
         if field == 'execution_unit_context_ref':
-            schema_validate('Plans/execution_unit_context.schema.json', dependency['body'])
+            # Shared dependency instances keep their existing owner validation.
+            # The DX whole-document gate owns the sixteen payloads and proof schema.
+            schema_validate('Plans/execution_unit_context.schema.json', dependency['body'],
+                            whole_schema_refs=False)
         if field in ('runtime_snapshot_ref', 'execution_unit_context_ref'):
             for key in ('project_id', 'run_id', 'thread_id', 'node_id', 'attempt_id'):
                 if key in dependency['body'] and key in payload:
@@ -396,6 +402,26 @@ def validate_capture(contract, payload, capture):
     expected_trace = ['admission', 'dependency_commit', 'body_commit', 'append', 'first_receipt', 'owner_cas', 'publish']
     require(capture['trace'] == expected_trace, 'publication ordering')
     return True
+
+
+def validate_history(contract, payload, original, retained_source_sha256, disclosure):
+    """Finite retained-source read oracle, independent of today's live lifecycle.
+
+    The hash is a test observation of immutable retained-source custody, not a new
+    persisted event field or native admission proof. Original transition predicates
+    use the original owner reads; disclosure uses current access/withdrawal fences.
+    """
+    require(disclosure['reader_active'], 'reader_withdrawn')
+    require(disclosure['source_available'], 'source_unavailable')
+    require(disclosure['event_deleted_at'] is None, 'event_deleted')
+    require(disclosure['viewer'] in disclosure['event_readers'], 'event access')
+    require(disclosure['project_id'] == payload['project_id'], 'history Project')
+    require(disclosure['storage_instance_id'] == original['capture']['scope']['storage_instance_id'],
+            'history Storage root')
+    require(digest(original) == retained_source_sha256, 'retained original source custody')
+    # Never substitute a present-day run/node/attempt/graph into this check.
+    validate_capture(contract, payload, original['capture'])
+    return {'result': 'history_only', 'effects': 0}
 
 
 def run_trace(contract, payload, scenario):
@@ -491,11 +517,18 @@ def mutate(value, changes):
 
 def main():
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
+    failures = check_lane_schemas(contracts)
+    if failures:
+        print(json.dumps({'status': 'fail', 'schema_reference_failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+        return 1
     families = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text()))['families']
-    failures, count, traces, score_cases, schema_cases = [], 0, 0, 0, 0
+    ref_fixtures = json.loads((ROOT / 'Plans/executor_event_schema_reference_fixtures.json').read_text())['families']
+    count, traces, score_cases, schema_cases, ref_cases, history_cases = 0, 0, 0, 0, 0, 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
         family = families[contract['event_type']]
+        failures.extend(reference_cases(contract, ref_fixtures[contract['event_type']]))
+        ref_cases += len(ref_fixtures[contract['event_type']])
         for case in family['cases']:
             count += 1
             specimen = mutate(family['baseline'], case['changes'])
@@ -506,6 +539,29 @@ def main():
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
+        for case in family.get('history_cases', []):
+            history_cases += 1
+            original = mutate(family['baseline'], case['original_changes'])
+            payload = copy.deepcopy(family['baseline']['payload'])
+            payload.update(case['event_changes'])
+            try:
+                actual = validate_history(contract, payload, original,
+                                          family['retained_source_sha256'], case['disclosure'])
+                result = 'accept' if actual == {'result': 'history_only', 'effects': 0} else 'invalid_effects'
+            except (ValueError, KeyError, jsonschema.ValidationError):
+                result = 'reject'
+            if result != case['expected']:
+                failures.append([contract['event_type'], case['case'], result])
+            # The same event must fail current-writer predicates using the later
+            # live source; passing history cannot be an accidental ignored check.
+            live = mutate(family['baseline'], case['live_changes'])
+            try:
+                validate_capture(contract, payload, live['capture'])
+                current_result = 'accept'
+            except (ValueError, KeyError, jsonschema.ValidationError):
+                current_result = 'reject'
+            if current_result != 'reject':
+                failures.append([contract['event_type'], case['case'] + '-live-control', current_result])
         for scenario in family['traces']:
             traces += 1
             actual = run_trace(contract, family['baseline']['payload'], scenario)
@@ -532,7 +588,7 @@ def main():
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 
