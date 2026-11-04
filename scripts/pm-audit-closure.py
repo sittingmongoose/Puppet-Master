@@ -508,6 +508,8 @@ def canonical_rel_path(value: str) -> str:
     """A repository-relative POSIX path: no absolute path, '.', '..', empty segment or backslash."""
     if not isinstance(value, str) or not value or value.startswith("/") or "\\" in value:
         raise AnchorError(f"path {value!r} must be repository-relative")
+    if any(ord(ch) < 0x20 or ord(ch) == 0x7F for ch in value):
+        raise AnchorError(f"path {value!r} must not contain control characters")
     parts = value.split("/")
     if any(part in {"", ".", ".."} for part in parts):
         raise AnchorError(f"path {value!r} must not contain empty, '.' or '..' segments")
@@ -934,41 +936,67 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
             return target_names(node.name)  # type: ignore[attr-defined]
         return []
 
-    def bindings(statements: list[ast.stmt], name: str) -> list[ast.AST]:
+    def declares(statements: list[ast.stmt], name: str, kind: type) -> bool:
+        """Whether a class body declares `name` global/nonlocal (blocks included, nested
+        function and lambda bodies excluded: they run later, if at all)."""
+        stack: list[ast.AST] = list(statements)
+        while stack:
+            item = stack.pop()
+            if isinstance(item, kind) and name in item.names:  # type: ignore[attr-defined]
+                return True
+            if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
+                continue
+            stack.extend(ast.iter_child_nodes(item))
+        return False
+
+    def bindings(statements: list[ast.stmt], name: str, target_kind: str = "module", collect: bool = True) -> list[ast.AST]:
         """Every node that binds, rebinds or deletes `name` in this lexical scope: definitions,
         assignments, imports, loop/with/except targets, walrus targets (including inside
         comprehensions, which bind in the enclosing scope), match captures, del and type
-        aliases, at any depth of if/try/with/for/while/match blocks. Nested function, class and
-        lambda bodies are their own scopes and are not searched."""
+        aliases, at any depth of if/try/with/for/while/match blocks. Nested function and lambda
+        bodies are their own scopes and run later, if at all; they are not searched. A class body
+        runs when the class is defined: if it declares the name `global` (module target) or
+        `nonlocal` (function target), its bindings of the name count here; nested class bodies run
+        with it and follow the same rule. With collect=False only nested class bodies are searched."""
         found: list[ast.AST] = []
         stack: list[ast.AST] = list(statements)
         while stack:
             item = stack.pop()
-            if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-                if item.name == name:
-                    found.append(item)
-                # Decorators, defaults and bases are evaluated in this scope.
-                stack.extend(item.decorator_list)
-                if isinstance(item, ast.ClassDef):
+            if isinstance(item, ast.ClassDef):
+                if collect:
+                    if item.name == name:
+                        found.append(item)
+                    # Decorators, bases and keywords are evaluated in this scope.
+                    stack.extend(item.decorator_list)
                     stack.extend(item.bases)
                     stack.extend(k.value for k in item.keywords)
-                else:
+                declaration = {"module": ast.Global, "function": ast.Nonlocal}.get(target_kind)
+                if declaration is not None:
+                    found.extend(bindings(item.body, name, target_kind, collect=declares(item.body, name, declaration)))
+                continue
+            if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                if collect:
+                    if item.name == name:
+                        found.append(item)
+                    stack.extend(item.decorator_list)
                     stack.extend(item.args.defaults)
                     stack.extend(d for d in item.args.kw_defaults if d is not None)
                 continue
             if isinstance(item, ast.Lambda):
-                stack.extend(item.args.defaults)
-                stack.extend(d for d in item.args.kw_defaults if d is not None)
+                if collect:
+                    stack.extend(item.args.defaults)
+                    stack.extend(d for d in item.args.kw_defaults if d is not None)
                 continue
-            if name in bound_names(item):
+            if collect and name in bound_names(item):
                 found.append(item)
             stack.extend(ast.iter_child_nodes(item))
         return found
 
     scope: list[ast.stmt] = list(tree.body)
+    scope_kind = "module"
     node: ast.AST | None = None
     for part in qualname.split("."):
-        hits = bindings(scope, part)
+        hits = bindings(scope, part, scope_kind)
         if len(hits) != 1:
             raise AnchorError(f"{ref}: {part!r} is bound {len(hits)} times in that scope (control-flow blocks included); expected exactly 1")
         node = hits[0]
@@ -976,6 +1004,7 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
                 or node not in scope:
             raise AnchorError(f"{ref}: {part!r} is not a plain definition or assignment at that level")
         scope = list(getattr(node, "body", []))
+        scope_kind = "class" if isinstance(node, ast.ClassDef) else "function"
     assert node is not None
     lines = _lines(source)
     start = min([node.lineno] + [d.lineno for d in getattr(node, "decorator_list", [])]) - 1
@@ -1311,7 +1340,13 @@ class ReceiptLedger:
         return proc.stdout if proc.returncode == 0 else None
 
     def prefetch(self, paths: Any) -> None:
-        todo = sorted({p for p in paths if isinstance(p, str) and p not in self._info})
+        todo = []
+        for p in sorted({p for p in paths if isinstance(p, str) and p not in self._info}):
+            try:
+                canonical_rel_path(p)
+                todo.append(p)
+            except AnchorError:
+                self._info[p] = {"head_blob": None, "adders": [], "added_blob": None, "unsafe": True}
         if not todo:
             return
         head = self._git("rev-parse", "--verify", "-q", "HEAD^{commit}")
@@ -1343,9 +1378,11 @@ class ReceiptLedger:
                 if queries:
                     out = self._git("cat-file", "--batch-check=%(objectname) %(objecttype)",
                                     stdin="".join(f"{c}:{p}\n" for p, c in queries).encode()) or b""
-                    for (path, _), line in zip(queries, out.decode().splitlines()):
-                        obj, _, kind = line.partition(" ")
-                        added_blob[path] = obj if kind == "blob" else None
+                    answers = out.decode().splitlines()
+                    if len(answers) == len(queries):  # one answer per query, or none is trusted
+                        for (path, _), line in zip(queries, answers):
+                            obj, _, kind = line.partition(" ")
+                            added_blob[path] = obj if kind == "blob" else None
             for path in chunk:
                 self._info[path] = {"head_blob": blobs.get(path), "adders": adders[path], "added_blob": added_blob.get(path)}
 
@@ -1371,6 +1408,8 @@ class ReceiptLedger:
         """(adding commit, problem) for one receipt judged at recheck_commit."""
         self.prefetch([path])
         info = self._info[path]
+        if info.get("unsafe"):
+            return None, f"receipt path {path!r} is not a safe repository-relative path"
         try:
             data = contained_path(self.root, path).read_bytes()
         except (AnchorError, OSError):
@@ -4020,6 +4059,36 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         check("outputs_repointed_to_replacement_packets_fail", has(report, "reviews.sol output does not echo the digest of the packet row it judged")
               and has(report, "reviews.astra output does not echo the digest of the packet row it judged") and has(report, "is stale"), report["errors"])
         write_doc()
+
+        # V1 r5 regressions.
+        # B1: a newline in a receipt path cannot misframe git's batch lookups.
+        newline_path = "Plans/.audits/reaudit-fixture/reviews/x.jsonl\nPlans/Fixture.md"
+        check("receipt_path_with_newline_refused", ReceiptLedger(tmp).check(newline_path, git("rev-parse", "HEAD"))[1] is not None)
+        check("anchor_path_with_control_character_refused", anchor_ref_problem("Plans/Fix\nture.md#unit=FIX-001") is not None)
+        row = append_with(mutate=set_review("sol", evidence_path="Plans/.audits/reaudit-fixture/reviews/sol\nx.jsonl"))
+        report = validate_rows([legacy_row(), row])
+        check("review_receipt_path_with_newline_fails", has(report, "control characters") and has(report, "is stale"), report["errors"])
+        row = append_with()
+        row["reaudit"]["record"] = rel(records_path) + "\nPlans/Fixture.md"
+        report = validate_rows([legacy_row(), row])
+        check("record_path_with_newline_fails", has(report, "control characters") and has(report, "is stale"), report["errors"])
+        # B2: a class body that declares the name global/nonlocal rebinds it when the class is defined.
+        for name, source, ref in (
+            ("pydef_class_global_assignment_fails", "def f():\n    return 1\nclass C:\n    global f\n    f = 2\n", "f"),
+            ("pydef_class_global_del_fails", "def f():\n    return 1\nclass C:\n    global f\n    del f\n", "f"),
+            ("pydef_class_global_walrus_fails", "def f():\n    return 1\nclass C:\n    global f\n    x = (f := 2)\n", "f"),
+            ("pydef_nested_class_global_fails", "def f():\n    return 1\nclass A:\n    class B:\n        global f\n        f = 3\n", "f"),
+            ("pydef_class_nonlocal_fails", "def outer():\n    def f():\n        return 1\n    class C:\n        nonlocal f\n        f = 2\n    return f\n", "outer.f"),
+        ):
+            (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
+            check(name, not resolves(f"scripts/bind.py#pydef={ref}"))
+        for name, source in (
+            ("pydef_class_local_binding_ignored", "def f():\n    return 1\nclass C:\n    f = 2\n"),
+            ("pydef_class_global_of_other_name_ignored", "def f():\n    return 1\nclass C:\n    global g\n    f = 2\n"),
+            ("pydef_inner_class_without_global_ignored", "def f():\n    return 1\nclass A:\n    global f\n    class B:\n        f = 5\n"),
+        ):
+            (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
+            check(name, resolves("scripts/bind.py#pydef=f") and "return 1" in AnchorResolver(tmp).content("scripts/bind.py#pydef=f")[1])
 
         # V1 r4 regressions.
         # A2: a receipt rewritten inside a merge commit no longer counts.
