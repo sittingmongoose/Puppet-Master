@@ -1103,7 +1103,9 @@ canonical_text: 'debug.investigation.context_item_added@1.0.0 independently adop
   Newly authored owner contract: reader.debug.investigation.instrumentation_state_changed@1.0.0, with
   the two CV-574 named operating consumers; no durable family projection is materialized. retention_policy_ref
   = PENDING_RETENTION_DECISION; Case L-3 operational, authority and Chat-content candidate classes require
-  RT/Jared adjudication. Preparing this family grants no append admission.
+  RT/Jared adjudication. This family is HELD_FOR_JARED under CV-574 and not prepared: field/domain
+  mapping and transition predicates remain unanswered. The reader and checkpoint bindings are conditional
+  draft work only; no positive transition or append is authorized by this adoption.
 
 
   debug.investigation.started@1.0.0 independently adopts its own CV-575 full producer, identity, custody,
