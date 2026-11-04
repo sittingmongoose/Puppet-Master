@@ -7234,3 +7234,214 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-275 - filesafe.command_denied, filesafe.destructive_override_denied oracles
+
+```yaml
+plan_unit_id: ATS-275
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-550
+- CV-551
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.command_denied`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `filesafe.destructive_override_denied`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+### ATS-276 - filesafe.destructive_override_granted, filesafe.destructive_override_requested oracles
+
+```yaml
+plan_unit_id: ATS-276
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-552
+- CV-553
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.destructive_override_granted`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `filesafe.destructive_override_requested`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+### ATS-277 - filesafe.guard_init_failed, filesafe.path_denied oracles
+
+```yaml
+plan_unit_id: ATS-277
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-554
+- CV-555
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.guard_init_failed`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `filesafe.path_denied`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+### ATS-278 - filesafe.policy_degraded oracles
+
+```yaml
+plan_unit_id: ATS-278
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-556
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `filesafe.policy_degraded`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
+
+
+
+### ATS-279 - safe_point.created, safe_point.restored oracles
+
+```yaml
+plan_unit_id: ATS-279
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each listed family has its own static payload and identity cases;
+  native custody/advance/withdrawal oracles are authored NOT_RUN.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- CV-557
+- CV-558
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+- `safe_point.created`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `safe_point.restored`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+
+`python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
