@@ -243,6 +243,7 @@ MATRIX_REQUIRED_FIELDS = {
     "registry_closure_id",
 }
 ISO_UTC_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
 def rel(path: Path) -> str:
@@ -430,7 +431,7 @@ def sha256_file(path: Path) -> str:
 #                             `A > B` names a heading B nested under heading A
 #   json=<JSON pointer>       a subtree of a JSON document (RFC 6901), canonical JSON
 #   jsonl=<field>=<value>     the one JSONL row whose field equals value, canonical JSON
-#   pydef=<qualname>          a Python function or class source segment
+#   pydef=<qualname>          a Python function, class or NAME = ... assignment source segment
 #
 # A ref with no anchor still hashes the whole file. Legacy rows keep whole-file
 # semantics for every ref, including refs that contain '#', so their history
@@ -700,7 +701,9 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
     for part in qualname.split("."):
         hits = [
             item for item in scope
-            if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and item.name == part
+            if (isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and item.name == part)
+            or (isinstance(item, ast.Assign) and [getattr(t, "id", None) for t in item.targets] == [part])
+            or (isinstance(item, ast.AnnAssign) and getattr(item.target, "id", None) == part)
         ]
         if len(hits) != 1:
             raise AnchorError(f"{ref}: {part!r} is defined {len(hits)} times at that level; expected exactly 1")
@@ -862,7 +865,19 @@ def validate_reopened_proof(row: dict[str, Any], prior_closed: list[dict[str, An
         # checks the record, its three not_supported verdicts and the superseded row.
         return
     reopen_changes = hashes.get("reopen_hash_changes")
-    if isinstance(reopen_changes, dict) and reopen_changes:
+    if reopen_changes is not None:
+        # Each entry must show a real change: previous and current SHA-256 values that differ.
+        # A non-empty object alone proves nothing (closure re-audit 2026-11-04, batch B01).
+        if not isinstance(reopen_changes, dict) or not reopen_changes:
+            errors.append(f"{path_label}: reopen_hash_changes must be a non-empty object of ref -> previous/current")
+            return
+        for ref, change in sorted(reopen_changes.items()):
+            previous = change.get("previous") if isinstance(change, dict) else None
+            current = change.get("current") if isinstance(change, dict) else None
+            if not (isinstance(previous, str) and SHA256_RE.match(previous) and isinstance(current, str) and SHA256_RE.match(current)):
+                errors.append(f"{path_label}: reopen_hash_changes[{ref}] needs previous and current SHA-256 values")
+            elif previous == current:
+                errors.append(f"{path_label}: reopen_hash_changes[{ref}] shows no change (previous equals current)")
         return
     paired_fields = (
         ("previous_source_atom_hashes", "source_atom_hashes"),
@@ -2551,7 +2566,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         records_path = tmp / "Plans/.audits/reaudit-fixture/reaudit_records.jsonl"
         (tmp / "Plans/fixture.json").write_text(json.dumps({"a": {"b/c": [1, {"d": "deep value"}]}}), encoding="utf-8")
         (tmp / "Plans/fixture.jsonl").write_text('{"id": "r1", "v": "row one"}\n{"id": "r2", "v": "row two"}\n', encoding="utf-8")
-        (tmp / "scripts/fixture.py").write_text("class K:\n    def m(self):\n        return 1\n\ndef f():\n    return 2\n", encoding="utf-8")
+        (tmp / "scripts/fixture.py").write_text("CONST = ('fixture constant',)\n\nclass K:\n    def m(self):\n        return 1\n\ndef f():\n    return 2\n", encoding="utf-8")
         unit_ref = "Plans/Fixture.md#unit=FIX-001"
 
         def check(name: str, condition: bool, detail: Any = None) -> None:
@@ -2712,6 +2727,20 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         row["finding_key"] = other_key["finding_key"]
         report = validate_rows([legacy_row(), row])
         check("reaudit_must_keep_finding_key", has(report, "keep the finding_key"), report["errors"])
+
+        # A legacy reopened row must prove a real hash change.
+        reopen_base = legacy_row()
+        for name, changes, ok in (
+            ("reopen_proof_with_real_change_passes", {"Plans/Fixture.md": {"previous": "1" * 64, "current": "2" * 64}}, True),
+            ("reopen_proof_with_unchanged_hash_fails", {"Plans/Fixture.md": {"previous": "1" * 64, "current": "1" * 64}}, False),
+            ("reopen_proof_with_malformed_entry_fails", {"Plans/Fixture.md": "changed"}, False),
+        ):
+            reopened = _self_test_registry_row(closure_id="closure-fixture-reopen", closure_status="reopened", hashes={
+                "owner_evidence_hashes": {"Plans/Fixture.md": sha256_file(doc)}, "reopen_hash_changes": changes})
+            report = validate_rows([reopen_base, reopened])
+            proof_errors = [e for e in report["errors"] if "reopen_hash_changes" in e]
+            check(name, (not proof_errors) if ok else bool(proof_errors), report["errors"])
+        check("pydef_constant_resolves", "fixture constant" in AnchorResolver(tmp).content("scripts/fixture.py#pydef=CONST")[1])
 
         # resolved_differently changes status only to the record's status_now.
         row = append_with(record("resolved_differently", status_now="false_positive"))
