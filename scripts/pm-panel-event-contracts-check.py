@@ -94,8 +94,9 @@ def request_digest(command, payload):
     return hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
 
 
-def protocol_errors(context, original_payload, original_digest):
+def protocol_errors(context, original_operation):
     """Synthetic evidence joins; real authority/OS proofs remain native obligations."""
+    original_payload = original_operation['payload']
     errors = []
     errors += shared.writer_policy_errors(context['replay_policy'])
     if not context['admitted']:
@@ -110,7 +111,7 @@ def protocol_errors(context, original_payload, original_digest):
         errors.append('prior session cannot act')
     if context['window'] != original_payload['window_id']:
         errors.append('wrong window')
-    if hashlib.sha256(packed(context['retry_payload'])).hexdigest() != original_digest:
+    if request_digest(context['retry_command'], context['retry_payload']) != original_operation['request_digest']:
         errors.append('retry changed')
     if context['publication_state'] != 'current' or context['cursor'] > context['frontier']:
         errors.append('unavailable publication/cursor')
@@ -142,6 +143,7 @@ def main():
         cp_schema = load(f"Plans/panel_event_contracts/{family['checkpoint']}.schema.json")
         for value_schema in (op_schema, cp_schema):
             Draft202012Validator.check_schema(value_schema)
+            count += shared.pattern_leaf_cases(value_schema)
         operation = fixture['settled_operation']
         assert not operation_errors(operation, op_schema, schema, event)
         count += 1
@@ -165,22 +167,22 @@ def main():
         assert operation_errors(altered, op_schema, schema, event)
         count += 1
         payload = operation['payload']
-        digest = hashlib.sha256(packed(payload)).hexdigest()
         context = dict(admitted=True, desktop=True, source_verified=True, replay_policy='dedupe_by_idempotency_key', receipt_event_id=operation['event_id'],
                        original_event_id=operation['event_id'], session=payload['app_session_id'], window=payload['window_id'],
-                       retry_payload=payload, publication_state='current', cursor=0, frontier=1000)
-        assert not protocol_errors(context, payload, digest)
+                       retry_command=operation['original_command'], retry_payload=payload, publication_state='current', cursor=0, frontier=1000)
+        assert not protocol_errors(context, operation)
         mutations = {'replay_only_not_appendable': ('replay_policy', 'projector_replay_only'),
                      'registry_absent': ('admitted', False), 'source_unverified': ('source_verified', False),
                      'wrong_original_receipt': ('receipt_event_id', 'foreign'), 'prior_session': ('session', 'ended'),
                      'wrong_window': ('window', 'foreign'), 'same_key_altered_payload': ('retry_payload', {**payload, 'actor_ref': 'foreign'}),
+                     'same_key_altered_command': ('retry_command', {**operation['original_command'], 'expected_layout_revision': 8}),
                      'withdrawn_publication': ('publication_state', 'withdrawn'), 'cursor_beyond_frontier': ('cursor', 1001),
                      'web_unsupported': ('desktop', False)}
         assert set(fixture['negative_protocol_cases']) <= mutations.keys()
         for name, (key, bad) in mutations.items():
             altered = copy.deepcopy(context)
             altered[key] = bad
-            assert protocol_errors(altered, payload, digest), name
+            assert protocol_errors(altered, operation), name
             count += 1
         for key, value_schema in [('operation', op_schema), ('checkpoint', cp_schema)]:
             fid = family[key]

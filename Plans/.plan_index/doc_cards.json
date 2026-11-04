@@ -1995,7 +1995,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7488,
+      "line_count": 7500,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 82,
       "plan_unit_ids": [
@@ -2152,7 +2152,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "c50bc402a5f8d23378ed85121a3cc70c66e7036421e133a4758a75931c150c47",
+      "sha256": "9dbd857c598b3e574bef5e9a31714ad87031e4124463fda24c63bc2871d739f6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 81,
@@ -4484,10 +4484,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 291,
+        "False": 292,
         "True": 76
       },
-      "heading_count": 567,
+      "heading_count": 568,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4542,12 +4542,14 @@
         "Plans/chain-wizard.md",
         "Plans/collaborative_workflows_contract_fixtures.json",
         "Plans/collaborative_workflows_contracts.schema.json",
+        "Plans/concern_created_contracts/",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_family_registry.json",
         "Plans/event_payloads/attention/alert_acknowledged.schema.json",
         "Plans/event_payloads/attention/alert_dismissed.schema.json",
         "Plans/event_payloads/attention/alert_rule_muted.schema.json",
         "Plans/event_payloads/attention/alert_snoozed.schema.json",
+        "Plans/event_payloads/concern/concern_created.schema.json",
         "Plans/event_payloads/terminal_workgroup_moved.schema.json",
         "Plans/event_payloads/workspace_layout_changed.schema.json",
         "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
@@ -4600,9 +4602,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24734,
+      "line_count": 24793,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 367,
+      "plan_unit_count": 368,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4970,7 +4972,8 @@
         "CV-682",
         "CV-683",
         "CV-684",
-        "CV-685"
+        "CV-685",
+        "CV-686"
       ],
       "reasoning_tiers": [
         "high",
@@ -5332,17 +5335,17 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "8cb9b9c01036a345628a4ba4965902526b010f69f2d311b5bb1b190f446c51a5",
+      "sha256": "d43025ce72dcf2e5140ab96aca9be9a35cec86f71b55a11a81e57843420e72b6",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 367
+        "accepted": 368
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 32,
         "constraint": 58,
         "consumer_requirement": 1,
-        "contract": 6,
+        "contract": 7,
         "future_scope_decision": 1,
         "integration_contract": 3,
         "interface_contract": 6,
@@ -5472,6 +5475,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-browser-event-admission.py",
+        "python3 scripts/pm-concern-created-contracts-check.py",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-panel-event-contracts-check.py",
@@ -13591,7 +13595,7 @@
         "future Orchestrator History tab",
         "future Orchestrator run details and routes"
       ],
-      "line_count": 2977,
+      "line_count": 2981,
       "path": "Plans/Orchestrator_Page.md",
       "plan_unit_count": 38,
       "plan_unit_ids": [
@@ -13678,7 +13682,7 @@
         "source_control_boundary_drift",
         "untruthful_projection"
       ],
-      "sha256": "3f0bd0e3fa8398a8ea4ed1b9d08656f9a51c268a9326c2bf4cf027986172829e",
+      "sha256": "a0841855cac3cb8cc9d51237aa4b492aa657269eb5b68e69f7df35b73fda52a1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37,
@@ -18619,10 +18623,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 237,
+        "False": 238,
         "True": 110
       },
-      "heading_count": 823,
+      "heading_count": 824,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18660,12 +18664,14 @@
         "Plans/browser_event_payloads.schema.json",
         "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/collaborative_workflows_contracts.schema.json",
+        "Plans/concern_created_contracts/",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_family_registry.json",
         "Plans/event_payloads/attention/alert_acknowledged.schema.json",
         "Plans/event_payloads/attention/alert_dismissed.schema.json",
         "Plans/event_payloads/attention/alert_rule_muted.schema.json",
         "Plans/event_payloads/attention/alert_snoozed.schema.json",
+        "Plans/event_payloads/concern/concern_created.schema.json",
         "Plans/event_record.schema.json",
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_certified_event_coordinator_contracts",
@@ -18726,9 +18732,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 30390,
+      "line_count": 30588,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 347,
+      "plan_unit_count": 348,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19076,7 +19082,8 @@
         "SP-662",
         "SP-663",
         "SP-664",
-        "SP-665"
+        "SP-665",
+        "SP-666"
       ],
       "reasoning_tiers": [
         "high",
@@ -19200,10 +19207,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4dd80b4e9a5e6a1e01155764ec217c36482e8d0188b0cd942741184eb60eb16f",
+      "sha256": "5dce931ce85647c27fde3e5cb2bf9a9ce8aa03bf16f2e92379950260df2bc680",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 343,
+        "accepted": 344,
         "retired": 3,
         "superseded": 1
       },
@@ -19211,7 +19218,7 @@
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "constraint": 4,
-        "contract": 6,
+        "contract": 7,
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
@@ -19464,6 +19471,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-browser-event-admission.py",
+        "python3 scripts/pm-concern-created-contracts-check.py",
         "python3 scripts/pm-implementation-readiness.py self-test",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-implementation-readiness.py validate-case-l",
@@ -21578,7 +21586,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T19:11:59Z",
+  "generated_at_utc": "2026-11-04T19:27:18Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21586,13 +21594,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3647,
+      "False": 3649,
       "True": 3797
     },
-    "plan_unit_count": 7444,
+    "plan_unit_count": 7446,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7227,
+      "accepted": 7229,
       "retired": 194,
       "superseded": 23
     },
@@ -21622,7 +21630,7 @@
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
-      "contract": 24,
+      "contract": 26,
       "contract_requirement": 3,
       "data_contract": 8,
       "decision": 174,

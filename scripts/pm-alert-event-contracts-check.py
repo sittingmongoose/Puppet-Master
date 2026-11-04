@@ -3,6 +3,7 @@
 import copy
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
@@ -18,6 +19,7 @@ def load(path):
 
 def errors(payload, schema, guard):
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
+    found += writer_policy_errors(guard.get('replay_policy', 'dedupe_by_idempotency_key'))
     if not found:
         if payload['result_revision'] != payload['prior_revision'] + 1:
             found.append('non-successor')
@@ -113,6 +115,27 @@ def trailing_lf_cases(value, schema):
     visit(value, schema, [])
     return count
 
+def pattern_leaf_cases(schema):
+    """Exercise every pattern, including identifiers absent from the positive sample."""
+    count = 0
+    def visit(node):
+        nonlocal count
+        if isinstance(node, dict):
+            if 'pattern' in node:
+                validator = Draft202012Validator(node)
+                samples = ('fixture', 'pmref:test:fixture', 'a' * 64, 'eig_' + 'a' * 64)
+                sample = next((s for s in samples if re.fullmatch(node['pattern'], s) and not list(validator.iter_errors(s))), None)
+                assert sample is not None, ('missing pattern positive', node)
+                assert list(validator.iter_errors(sample + '\n')), ('trailing LF accepted', node)
+                count += 2
+            for child in node.values():
+                visit(child)
+        elif isinstance(node, list):
+            for child in node:
+                visit(child)
+    visit(schema)
+    return count
+
 def history_response_cases(checkpoint, schema, event_type, project_id):
     """Complete-byte boundaries with real closed checkpoint metadata; no fixed allowance."""
     large = copy.deepcopy(checkpoint)
@@ -173,8 +196,11 @@ def main():
         fixtures = load(f"Plans/alert_event_contracts/{family['slug']}.fixtures.json")
         for case in fixtures['writer_policy_cases']:
             assert (not writer_policy_errors(case['policy'])) == case['valid']
+            guard = dict(fixtures['payload_cases'][0]['guard'], replay_policy=case['policy'])
+            assert (not errors(fixtures['payload_cases'][0]['payload'], schema, guard)) == case['valid']
             count += 1
         count += trailing_lf_cases(fixtures['payload_cases'][0]['payload'], schema)
+        count += pattern_leaf_cases(schema)
         for case in fixtures['payload_cases']:
             actual = not errors(case['payload'], schema, case['guard'])
             assert actual == case['valid'], (family['event_type'], case['name'], actual)
@@ -183,6 +209,7 @@ def main():
             path = f"Plans/alert_event_contracts/{family[key]}.schema.json"
             value_schema = load(path)
             Draft202012Validator.check_schema(value_schema)
+            count += pattern_leaf_cases(value_schema)
             count += trailing_lf_cases(fixtures[key + '_cases'][0]['value'], value_schema)
             for case in fixtures[key + '_cases']:
                 valid = not (checkpoint_errors(case['value'], value_schema) if key == 'checkpoint'

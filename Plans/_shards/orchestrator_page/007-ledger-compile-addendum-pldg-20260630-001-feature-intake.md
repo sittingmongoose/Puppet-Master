@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L462-L1479
+Source lines: L462-L1483
 
-Source SHA256: `8e52e94127f5b4f633ce1318ba4657387074733a183c7ef1e6d7809e1f7f09f2`
+Source SHA256: `a0841855cac3cb8cc9d51237aa4b492aa657269eb5b68e69f7df35b73fda52a1`
 
 ---
 
@@ -136,6 +136,10 @@ status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
   Concern is a first-class durable record with exact lifecycle states, resolution_kind values, owner/creator/resolver separation, source-event/record/projection layers, required minimum fields, and explicit authority direction.
+  concern.created preparation reuses OP-002's five authorized creators and worker nomination-only boundary.
+  Its independent technical contract is SP-666/CV-686; closed original record/operation/checkpoint schemas
+  and oracles do not grant another creator or settle any other concern-action authority question.
+
 gui_related: false
 gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
 split_recommended: true

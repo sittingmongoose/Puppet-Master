@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23953-L24734
+Source lines: L23953-L24793
 
-Source SHA256: `8cb9b9c01036a345628a4ba4965902526b010f69f2d311b5bb1b190f446c51a5`
+Source SHA256: `d43025ce72dcf2e5140ab96aca9be9a35cec86f71b55a11a81e57843420e72b6`
 
 ---
 
@@ -789,4 +789,63 @@ preserved_exact_tokens:
 negative_constraints:
 - No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
   native execution proof.
+```
+
+### CV-686 - concern.created closed current payload and authority route
+
+```yaml
+plan_unit_id: CV-686
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: concern.created current 1.0.0 selects the existing closed Plans/event_payloads/concern/concern_created.schema.json,
+  pm.concern_event.concern_created.schema.v1. OP-002/OP-004 and Executor_Protocol authorize only runtime, package
+  overseer, seam overseer, corroboration outcome and graph-patch logic; workers nominate. Owner-kind User/External
+  Resource/Recovery labels confer no creator grant. Absent -> active, revision one, creator separate from owner/resolver,
+  source event distinct from canonical record and projection. Semantic owner remains Orchestrator_Page; SP-666 is
+  the independently authored full original command/identity/digest/producer ordering/SP-286 full-value receipt/custody/SP-278
+  consumer/checkpoint/replay/withdrawal/physical-value contract. The complete digest binds original_command, candidate_payload
+  and candidate_record without omissions. Record body summary/title and evidence stay authenticated immutable refs
+  with SP-337 addressing for large detail. Project-only EventRecord 2.0.0 and encoded project~ partition; dedupe_by_idempotency_key
+  current append/retry, projector_replay_only refuses replay_only_not_appendable. No additional direct creator,
+  confirmation policy, sibling concern action, admission, retention assignment or native execution proof is authorized.
+  Event membership ABSENT; event/operation/checkpoint retention PENDING_RETENTION_DECISION. Static positive and
+  negative oracles are independently python3 scripts/pm-concern-created-contracts-check.py and this family's fixture;
+  native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Event identity, authority, custody and storage contract; existing GUI action model is
+  preserved.
+split_recommended: false
+depends_on:
+- OP-004
+- SP-666
+unblocks: []
+acceptance_criteria:
+- concern.created is prepared without admission; no writer/checkpoint/effect while absent.
+- No additional creator or sibling action authority; retention pending and native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-concern-created-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_created
+implementation_surfaces:
+- Plans/concern_created_contracts/
+- Plans/event_payloads/concern/concern_created.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Orchestrator_Page.md#OP-002
+- Plans/Orchestrator_Page.md#OP-004
+- Plans/Executor_Protocol.md
+- Plans/UI_Command_Catalog.md#UCC-147
+preserved_exact_tokens:
+- concern.created
+- SP-278
+- SP-286
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No creator expansion, worker direct creation, admission, sibling action grants, retention decision or native proof.
 ```

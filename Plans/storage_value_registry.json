@@ -8050,69 +8050,379 @@
     {
       "family_id": "concern_record",
       "storage_kind": "redb",
-      "status": "deferred_not_build_blocking",
+      "status": "materialized",
       "tier": "later_gui_or_feature_projection",
       "key_shape": "concern_record.v1:{project_id}:{concern_id}",
+      "compatibility_key_shapes": [],
       "value_schema_id": "pm.storage_value.concern_record.v1",
-      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/concern_record",
-      "owner_doc": "Plans/storage-plan.md#concern-record-and-lifecycle-canon",
+      "value_schema_ref": "Plans/concern_created_contracts/concern_record.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-666",
       "producer": [
-        "review and attention projectors"
+        "handlers::concern::create"
       ],
       "consumers": [
-        "Orchestrator",
-        "Runtime Artifacts panel"
+        "reader.concern_created.history@1.0.0",
+        "Orchestrator direct-record reader"
       ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
-        "schema_version"
-      ],
-      "optional_fields": [
+        "schema_id",
+        "schema_version",
+        "record_id",
+        "record_kind",
         "concern_id",
         "project_id",
-        "status"
+        "revision",
+        "concern_category",
+        "severity",
+        "status",
+        "owner_kind",
+        "owner_ref",
+        "creator_ref",
+        "created_by_kind",
+        "created_by_ref",
+        "subject_ref",
+        "source_event_refs",
+        "evidence_refs",
+        "artifact_refs",
+        "lineage_refs",
+        "summary",
+        "created_at",
+        "updated_at",
+        "visibility_level",
+        "attention_level",
+        "chatworthy",
+        "blocking_effect_ref",
+        "resolution_kind",
+        "resolver_ref",
+        "resolved_at",
+        "run_ref",
+        "scope_ref",
+        "redaction_profile"
       ],
-      "nullable_fields": [],
-      "replay_behavior": "Deferred lifecycle record; not on launch-critical Approve And Build path.",
-      "migration": "Must preserve active/acknowledged/resolved/dismissed semantics.",
-      "retention_compaction": "Retain while linked source events or blocked episodes remain.",
-      "redaction_no_secret_rule": "Evidence bodies are ref-only or redacted.",
-      "legacy_canonical_crosswalk_status": "canonical_key_deferred_value_schema",
-      "deferred_owner": "Plans/storage-plan.md",
-      "deferred_reason": "Concern lifecycle is not Tier 0C-2 storage launch-critical.",
-      "reopen_condition": "Reopen when concern lifecycle enters implementation-readiness scope.",
-      "compatibility_key_shapes": [],
-      "recovery_disposition": {
-        "authority_class": "compatibility_or_deferred",
-        "strategy": "deferred_owner_contract",
-        "source_family_ids": [],
-        "source_refs": [
-          "Plans/storage-plan.md#concern-record-and-lifecycle-canon"
-        ],
-        "backup_required": false,
-        "data_loss_if_unavailable": true,
-        "user_disclosure_required": true
-      },
+      "optional_fields": [],
+      "nullable_fields": [
+        "blocking_effect_ref",
+        "resolver_ref",
+        "run_ref",
+        "scope_ref"
+      ],
+      "replay_behavior": "SP-666: original creation receipt/record only; no recreation, sibling action or projection-authorized mutation; full SP-278 checkpoint CAS.",
+      "migration": "SP-666: StorageMigrationCoordinator exact schema installation before writer activation, unsupported version fences; no guessed store-version.",
       "migration_disposition": {
-        "mode": "deferred_owner_contract",
+        "mode": "store_coordinator",
         "canonical_write_key_only": true,
         "compatibility_keys_read_only": false,
         "ambiguity_policy": "not_applicable",
         "source_refs": [
-          "Plans/storage-plan.md#concern-record-and-lifecycle-canon"
+          "Plans/storage-plan.md#SP-666"
         ]
       },
       "restore_disposition": {
-        "mode": "deferred_owner_contract",
+        "mode": "mandatory_backup",
         "transaction_family_id": null,
-        "outcome_owner_ref": null,
-        "mutation_fence_on_unresolved": false,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-666",
+        "mutation_fence_on_unresolved": true,
         "source_refs": [
-          "Plans/storage-plan.md#concern-record-and-lifecycle-canon"
+          "Plans/storage-plan.md#SP-666"
         ]
       },
-      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE"
+      "retention_compaction": "SP-666: preserve the existing concern_record RP-AUTHORITY-INDEFINITE assignment and linked source/blocked-episode holds; event/operation/checkpoint remain independently pending RT.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "SP-666: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-666; prepared only, not a native installation or event admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-666"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$id": "pm.storage_value.concern_record.v1",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "record_id",
+          "record_kind",
+          "concern_id",
+          "project_id",
+          "revision",
+          "concern_category",
+          "severity",
+          "status",
+          "owner_kind",
+          "owner_ref",
+          "creator_ref",
+          "created_by_kind",
+          "created_by_ref",
+          "subject_ref",
+          "source_event_refs",
+          "evidence_refs",
+          "artifact_refs",
+          "lineage_refs",
+          "summary",
+          "created_at",
+          "updated_at",
+          "visibility_level",
+          "attention_level",
+          "chatworthy",
+          "blocking_effect_ref",
+          "resolution_kind",
+          "resolver_ref",
+          "resolved_at",
+          "run_ref",
+          "scope_ref",
+          "redaction_profile"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.concern_record.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "record_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_kind": {
+            "const": "concern"
+          },
+          "concern_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 18446744073709551615
+          },
+          "concern_category": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 96,
+            "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+          },
+          "severity": {
+            "enum": [
+              "info",
+              "warning",
+              "error",
+              "critical"
+            ]
+          },
+          "status": {
+            "enum": [
+              "active",
+              "acknowledged",
+              "resolved",
+              "dismissed"
+            ]
+          },
+          "owner_kind": {
+            "enum": [
+              "Runtime",
+              "Package Overseer",
+              "Seam Overseer",
+              "Corroboration",
+              "Graph Patch",
+              "Recovery",
+              "User",
+              "External Resource"
+            ]
+          },
+          "owner_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "creator_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "created_by_kind": {
+            "enum": [
+              "Runtime",
+              "Package Overseer",
+              "Seam Overseer",
+              "Corroboration",
+              "Graph Patch"
+            ]
+          },
+          "created_by_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "subject_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "source_event_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "maxItems": 64,
+            "uniqueItems": true,
+            "minItems": 1
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "artifact_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "lineage_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "visibility_level": {
+            "type": "string",
+            "minLength": 1
+          },
+          "attention_level": {
+            "type": "string",
+            "minLength": 1
+          },
+          "chatworthy": {
+            "type": "boolean"
+          },
+          "blocking_effect_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resolution_kind": {
+            "enum": [
+              null,
+              "fixed",
+              "accepted_risk",
+              "superseded",
+              "merged",
+              "split",
+              "invalidated",
+              "obsoleted_by_patch",
+              "obsoleted_by_recovery"
+            ]
+          },
+          "resolver_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resolved_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "run_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scope_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "redaction_profile": {
+            "const": "secret_refs_only"
+          }
+        }
+      }
     },
     {
       "family_id": "runtime_artifact_projector_families",
@@ -128943,6 +129253,1272 @@
         "$id": "pm.storage_value.panel_undocked_checkpoint.v1",
         "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
       }
+    },
+    {
+      "family_id": "concern_created_operation",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "concern_created_operation.v1:{project_id}:{operation_digest}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.concern_created_operation.v1",
+      "value_schema_ref": "Plans/concern_created_contracts/concern_created_operation.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-666",
+      "producer": [
+        "handlers::concern::create"
+      ],
+      "consumers": [
+        "reader.concern_created.history@1.0.0",
+        "handlers::concern::create"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "operation_digest",
+        "event_id",
+        "idempotency_key",
+        "request_digest",
+        "state",
+        "original_command",
+        "payload",
+        "prior_record",
+        "candidate_record",
+        "owner_commit_ref",
+        "result_ref",
+        "dispatch_receipt_ref",
+        "original_append_result_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "prior_record",
+        "owner_commit_ref",
+        "result_ref",
+        "dispatch_receipt_ref",
+        "original_append_result_ref"
+      ],
+      "replay_behavior": "SP-666: original creation receipt/record only; no recreation, sibling action or projection-authorized mutation; full SP-278 checkpoint CAS.",
+      "migration": "SP-666: StorageMigrationCoordinator exact schema installation before writer activation, unsupported version fences; no guessed store-version.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-666"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-666",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-666"
+        ]
+      },
+      "retention_compaction": "SP-666: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "SP-666: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-666; prepared only, not a native installation or event admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-666"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$id": "pm.storage_value.concern_created_operation.v1",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "scope_partition",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "original_command",
+          "payload",
+          "prior_record",
+          "candidate_record",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.concern_created_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "operation_digest": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request_digest": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "committed",
+              "settled"
+            ]
+          },
+          "original_command": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "handler_target",
+              "project_id",
+              "actor_ref",
+              "creator_kind",
+              "authority_basis_ref",
+              "permission_snapshot_ref",
+              "currentness_basis_ref",
+              "title_ref",
+              "subject_ref",
+              "scope_ref",
+              "run_ref",
+              "severity",
+              "category",
+              "owner_kind",
+              "owner_ref",
+              "source_refs",
+              "evidence_refs",
+              "artifact_refs",
+              "lineage_refs",
+              "visibility_level",
+              "attention_level",
+              "chatworthy",
+              "blocking_effect_ref",
+              "origin",
+              "correlation_id",
+              "idempotency_key",
+              "ts"
+            ],
+            "properties": {
+              "command_id": {
+                "const": "cmd.concern.create"
+              },
+              "handler_target": {
+                "const": "handlers::concern::create"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "creator_kind": {
+                "enum": [
+                  "Runtime",
+                  "Package Overseer",
+                  "Seam Overseer",
+                  "Corroboration",
+                  "Graph Patch"
+                ]
+              },
+              "authority_basis_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "permission_snapshot_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "currentness_basis_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "title_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "subject_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "scope_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 320,
+                    "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "run_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 320,
+                    "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "severity": {
+                "enum": [
+                  "info",
+                  "warning",
+                  "error",
+                  "critical"
+                ]
+              },
+              "category": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 96,
+                "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+              },
+              "owner_kind": {
+                "enum": [
+                  "Runtime",
+                  "Package Overseer",
+                  "Seam Overseer",
+                  "Corroboration",
+                  "Graph Patch",
+                  "Recovery",
+                  "User",
+                  "External Resource"
+                ]
+              },
+              "owner_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "source_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true,
+                "minItems": 1
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true
+              },
+              "artifact_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true
+              },
+              "lineage_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true
+              },
+              "visibility_level": {
+                "type": "string",
+                "minLength": 1
+              },
+              "attention_level": {
+                "type": "string",
+                "minLength": 1
+              },
+              "chatworthy": {
+                "type": "boolean"
+              },
+              "blocking_effect_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 320,
+                    "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "origin": {
+                "enum": [
+                  "orchestrator",
+                  "concern_center",
+                  "dashboard",
+                  "api"
+                ]
+              },
+              "correlation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "payload": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$comment": "Static payload shape only. The owner/runtime must prove the source sighting is authoritative and actor_ref equals the authorized creator identity. This schema grants no append or dispatch authority.",
+            "title": "concern.created payload",
+            "description": "Closed project-scoped payload that creates one durable concern record at revision one from explicit source references.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "project_id",
+              "concern_id",
+              "concern_revision",
+              "concern_record_ref",
+              "actor_ref",
+              "created_by_ref",
+              "currentness_basis_ref",
+              "source_refs",
+              "state",
+              "category",
+              "severity",
+              "owner_kind",
+              "owner_ref",
+              "origin",
+              "handler_target",
+              "command_id",
+              "correlation_id",
+              "idempotency_key",
+              "ts"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.concern_event.concern_created.schema.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": {
+                "$ref": "#/$defs/payload_non_empty_id"
+              },
+              "concern_id": {
+                "$ref": "#/$defs/payload_non_empty_id"
+              },
+              "concern_revision": {
+                "const": 1
+              },
+              "concern_record_ref": {
+                "$ref": "#/$defs/payload_non_secret_ref"
+              },
+              "actor_ref": {
+                "$ref": "#/$defs/payload_non_secret_ref"
+              },
+              "created_by_ref": {
+                "$ref": "#/$defs/payload_non_secret_ref"
+              },
+              "currentness_basis_ref": {
+                "$ref": "#/$defs/payload_non_secret_ref"
+              },
+              "source_refs": {
+                "$ref": "#/$defs/payload_non_empty_ref_array"
+              },
+              "evidence_refs": {
+                "$ref": "#/$defs/payload_ref_array"
+              },
+              "state": {
+                "const": "active"
+              },
+              "reason_code": {
+                "$ref": "#/$defs/payload_reason_code"
+              },
+              "category": {
+                "$ref": "#/$defs/payload_reason_code"
+              },
+              "severity": {
+                "enum": [
+                  "info",
+                  "warning",
+                  "error",
+                  "critical"
+                ]
+              },
+              "owner_kind": {
+                "$ref": "#/$defs/payload_owner_kind"
+              },
+              "owner_ref": {
+                "$ref": "#/$defs/payload_non_secret_ref"
+              },
+              "scope_ref": {
+                "$ref": "#/$defs/payload_non_secret_ref"
+              },
+              "run_ref": {
+                "$ref": "#/$defs/payload_non_secret_ref"
+              },
+              "origin": {
+                "$ref": "#/$defs/payload_origin"
+              },
+              "handler_target": {
+                "const": "handlers::concern::create"
+              },
+              "command_id": {
+                "const": "cmd.concern.create"
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/payload_non_empty_id"
+              },
+              "idempotency_key": {
+                "$ref": "#/$defs/payload_non_empty_id"
+              },
+              "ts": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "prior_record": {
+            "type": "null"
+          },
+          "candidate_record": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "record_id",
+              "record_kind",
+              "concern_id",
+              "project_id",
+              "revision",
+              "concern_category",
+              "severity",
+              "status",
+              "owner_kind",
+              "owner_ref",
+              "creator_ref",
+              "created_by_kind",
+              "created_by_ref",
+              "subject_ref",
+              "source_event_refs",
+              "evidence_refs",
+              "artifact_refs",
+              "lineage_refs",
+              "summary",
+              "created_at",
+              "updated_at",
+              "visibility_level",
+              "attention_level",
+              "chatworthy",
+              "blocking_effect_ref",
+              "resolution_kind",
+              "resolver_ref",
+              "resolved_at",
+              "run_ref",
+              "scope_ref",
+              "redaction_profile"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.concern_record.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "record_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "record_kind": {
+                "const": "concern"
+              },
+              "concern_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 18446744073709551615
+              },
+              "concern_category": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 96,
+                "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+              },
+              "severity": {
+                "enum": [
+                  "info",
+                  "warning",
+                  "error",
+                  "critical"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "active",
+                  "acknowledged",
+                  "resolved",
+                  "dismissed"
+                ]
+              },
+              "owner_kind": {
+                "enum": [
+                  "Runtime",
+                  "Package Overseer",
+                  "Seam Overseer",
+                  "Corroboration",
+                  "Graph Patch",
+                  "Recovery",
+                  "User",
+                  "External Resource"
+                ]
+              },
+              "owner_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "creator_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "created_by_kind": {
+                "enum": [
+                  "Runtime",
+                  "Package Overseer",
+                  "Seam Overseer",
+                  "Corroboration",
+                  "Graph Patch"
+                ]
+              },
+              "created_by_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "subject_ref": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "source_event_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true,
+                "minItems": 1
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true
+              },
+              "artifact_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true
+              },
+              "lineage_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "maxItems": 64,
+                "uniqueItems": true
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "visibility_level": {
+                "type": "string",
+                "minLength": 1
+              },
+              "attention_level": {
+                "type": "string",
+                "minLength": 1
+              },
+              "chatworthy": {
+                "type": "boolean"
+              },
+              "blocking_effect_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 320,
+                    "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "resolution_kind": {
+                "enum": [
+                  null,
+                  "fixed",
+                  "accepted_risk",
+                  "superseded",
+                  "merged",
+                  "split",
+                  "invalidated",
+                  "obsoleted_by_patch",
+                  "obsoleted_by_recovery"
+                ]
+              },
+              "resolver_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 320,
+                    "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "resolved_at": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "run_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 320,
+                    "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "scope_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 320,
+                    "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "redaction_profile": {
+                "const": "secret_refs_only"
+              }
+            }
+          },
+          "owner_commit_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "result_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dispatch_receipt_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "original_append_result_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 320,
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "$defs": {
+          "payload_non_empty_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+          },
+          "payload_non_secret_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "payload_reason_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 96,
+            "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+          },
+          "payload_origin": {
+            "enum": [
+              "orchestrator",
+              "concern_center",
+              "dashboard",
+              "api"
+            ]
+          },
+          "payload_owner_kind": {
+            "enum": [
+              "Runtime",
+              "Package Overseer",
+              "Seam Overseer",
+              "Corroboration",
+              "Graph Patch",
+              "Recovery",
+              "User",
+              "External Resource"
+            ]
+          },
+          "payload_ref_array": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/payload_non_secret_ref"
+            },
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "payload_non_empty_ref_array": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/payload_non_secret_ref"
+            },
+            "minItems": 1,
+            "maxItems": 64,
+            "uniqueItems": true
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "type": "null"
+                },
+                "result_ref": {
+                  "type": "null"
+                },
+                "dispatch_receipt_ref": {
+                  "type": "null"
+                },
+                "original_append_result_ref": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "committed"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "result_ref": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "dispatch_receipt_ref": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "original_append_result_ref": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "settled"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_commit_ref": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "result_ref": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "dispatch_receipt_ref": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                "original_append_result_ref": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 320,
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "concern_created_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "concern_created_checkpoint.v1:{project_id}:{storage_instance_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.concern_created_checkpoint.v1",
+      "value_schema_ref": "Plans/concern_created_contracts/concern_created_checkpoint.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-666",
+      "producer": [
+        "projector.concern_created.history@1.0.0"
+      ],
+      "consumers": [
+        "reader.concern_created.history@1.0.0",
+        "handlers::concern::create"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "consumer_id",
+        "consumer_version",
+        "publication_id",
+        "state",
+        "index_read_token",
+        "through_sequence_id",
+        "last_event_id",
+        "scope_partition"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id"
+      ],
+      "replay_behavior": "SP-666: original creation receipt/record only; no recreation, sibling action or projection-authorized mutation; full SP-278 checkpoint CAS.",
+      "migration": "SP-666: StorageMigrationCoordinator exact schema installation before writer activation, unsupported version fences; no guessed store-version.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-666"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-666",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-666"
+        ]
+      },
+      "retention_compaction": "SP-666: PENDING_RETENTION_DECISION; candidate Case L-3 audit authority or ordinary telemetry; no destructive cleanup or admission until RT binds event and value policy.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "SP-666: refs/ids/enums only; secret validation on every string; no raw reason, source body, credentials, account material or absolute local path. Refs grant no access.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract under DL-045; SP-666; prepared only, not a native installation or event admission.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-666"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "consumer_id",
+          "consumer_version",
+          "publication_id",
+          "state",
+          "index_read_token",
+          "through_sequence_id",
+          "last_event_id",
+          "scope_partition"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.concern_created_checkpoint.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "consumer_id": {
+            "const": "projector.concern_created.history"
+          },
+          "consumer_version": {
+            "const": "1.0.0"
+          },
+          "publication_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "current",
+              "withdrawn",
+              "staged"
+            ]
+          },
+          "index_read_token": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "checkpoint_key",
+              "checkpoint_ref",
+              "generation_id",
+              "generation_anchor_sha256",
+              "frontier_revision",
+              "frontier_sha256",
+              "index_dataset_name",
+              "source_selection"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "checkpoint_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkpoint_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
+              },
+              "generation_anchor_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+              },
+              "frontier_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frontier_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+              },
+              "index_dataset_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storage_instance_id",
+                  "current_ref",
+                  "current_bytes_sha256",
+                  "selected_segment_generation",
+                  "manifest_ref",
+                  "manifest_bytes_sha256",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "manifest_survivor_prefix_sha256",
+                  "retained_inventory_sha256",
+                  "durable_watermarks_sha256",
+                  "excluded_ranges_sha256",
+                  "retired_inputs_sha256"
+                ],
+                "properties": {
+                  "storage_instance_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "current_ref": {
+                    "const": "storage/seglog/CURRENT"
+                  },
+                  "current_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+                  },
+                  "selected_segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_ref": {
+                    "const": "storage/seglog/manifest.v1.msgpack"
+                  },
+                  "manifest_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "recovery_epoch": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_survivor_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+                  },
+                  "retained_inventory_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+                  },
+                  "durable_watermarks_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+                  },
+                  "excluded_ranges_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+                  },
+                  "retired_inputs_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+                  }
+                }
+              }
+            }
+          },
+          "through_sequence_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "last_event_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "$id": "pm.storage_value.concern_created_checkpoint.v1",
+        "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
+      }
     }
   ],
   "storage_profile": {
@@ -131243,6 +132819,20 @@
         "storage_group": "event_log",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "SP-665: bounded frontier; paged SP-278 History read-through",
+        "max_value_bytes": 16384
+      },
+      "concern_created_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-666: original concern creation custody",
+        "max_value_bytes": 16384
+      },
+      "concern_created_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-666: bounded frontier",
         "max_value_bytes": 16384
       }
     },
