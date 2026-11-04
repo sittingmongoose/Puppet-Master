@@ -1676,9 +1676,9 @@ acceptance_criteria:
   focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never
   authorize work.
 - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection
-  queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}`
-  through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible
-  route.
+  queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local` through
+  Project System with the exact reviewed `project_setup_binding` and selected Git or Jujutsu backend under PJCT-009.
+  Tests reject no-history setup and `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
 - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null`
   and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none|null`
   axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never
@@ -1805,9 +1805,10 @@ acceptance_criteria:
   resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
 - Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current
   prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content,
-  and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe
-  checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the
-  earliest unsatisfied prerequisite, and never replay domain work.
+  and lands without starting work on the owner-approved real Project Planning Wizard or, for N15 Later, the No project
+  chat. Restoration failure remains recoverable, never completed. Safe checkpoint tests revalidate owner state on
+  Close/reload/resume, reject stale/secret-bearing records, return to the earliest unsatisfied prerequisite,
+  and never replay domain work.
 - Reload tests prove that Skip or Finish after a reload still restores through the layout owner's snapshot ref; that
   a checkpoint which cannot be revalidated restores whatever of its basis is still resolvable, never adopts the temporary
   arrangement as the new starting point, and starts a fresh session with a plain notice instead of a dead-end recovery
@@ -6840,8 +6841,8 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
 - scripts/pm-projects-refresh-contracts.py
 risk_class: missing_scope_semantics_or_false_certification
@@ -6907,10 +6908,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -6979,10 +6981,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -7046,10 +7049,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -7114,10 +7118,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -7174,7 +7179,7 @@ canonical_text: |-
 
   Scenario evidence covers all changed Settings rows/panel/managers/copy; Split Projects/New Project and owner recovery; No project/draft/folder/Computer/offline; explicit read coverage/incoming requests; both conversions/report/Undo; app Goal/Crew/Plan/Deep Plan/Build At/Schedule Manager/pause; grant review/live targets/Stop/Undo; and allowed computer-use strip/Stop. Check all ten look variants, effective Reduced Motion, narrow/long-content reflow, accessible labels/reasons, keyboard/pointer equivalence, stale/late returns and stable focus. Keep the one Assistant node, board/rail/menu/hover/overlay/sound/loader owners, all PM7 Glass/FO-22/service-refusal rules and native source/composer capture-return fences. Cached/partial/offline/unknown data never presents healthy/zero/none or completed effects.
 
-  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Phase 2 runs focused checks after interface/companion freeze, serial derived-file generation and authorized full-tree aggregates; no raw capture, baseline excuse or governance reseal is introduced here.
+  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Run the adopted static contract, Settings, wiring and touch checks against the current owner and companion editions; these checks provide no new runtime proof, and no raw capture, baseline excuse or governance reseal is introduced here.
 gui_related: true
 gui_classification_reason: This unit governs visible controls, context, feedback, accessibility or visual acceptance.
 depends_on:
@@ -7192,10 +7197,14 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
+- scripts/pm-plans-verify.py
+- scripts/pm7-build-check.py
+- scripts/pm7-canon-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

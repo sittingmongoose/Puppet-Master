@@ -753,9 +753,9 @@ canonical_text: >-
   main Computer; phone/web always names where work runs. A native Client without a ready local service says which
   Computer will work and offers Set up Puppet Master here via protected claim/bootstrap. Dormant local capability
   is never silently claimed. The place may change before first message; after that work Computer is fixed. Continue
-  on another computer makes a new linked chat, and chat conversion uses C/PSB's preview/copy/check/fence/cutover
-  with fresh destination authority. Existing running processes, provider profiles, credentials and timers do not
-  move by changing focus or copying a transcript.
+  on another computer makes a new linked chat, and chat conversion uses the CV-367/PSB-007 and ACD-510/511
+  preview/copy/check/fence/cutover contracts with fresh destination authority. Existing running processes,
+  provider profiles, credentials and timers do not move by changing focus or copying a transcript.
 
   The actual Server owns timers and occurrence-idempotency; closing/sleeping a Client or switching Projects does
   not fire, cancel or relocate them. An offline Computer remains listed by name/status; loaded cached history
@@ -975,7 +975,7 @@ ContractRef: ContractName:Plans/Server_System.md#SRV-018, ContractName:Plans/Mul
 
 #### SRV-018 exact command and data contract
 
-All four definitions below are new version 1.0.0 resources in `Plans/server_system_contracts.schema.json`; they preserve every existing definition and close `additionalProperties`. Logical IDs are respectively `pm.server.ssh_host_trust.request.v1`, `pm.server.ssh_host_trust.result.v1`, `pm.server.ssh_public_key_install.request.v1` and `pm.server.ssh_public_key_install.result.v1`. F-d materializes the exact owner data/source contracts; F-b registers both primaries with their sole planned handlers, producer/return/disabled profiles and Touch rows. No alias is admitted.
+All four definitions below are new version 1.0.0 resources in `Plans/server_system_contracts.schema.json`; they preserve every existing definition and close `additionalProperties`. Logical IDs are respectively `pm.server.ssh_host_trust.request.v1`, `pm.server.ssh_host_trust.result.v1`, `pm.server.ssh_public_key_install.request.v1` and `pm.server.ssh_public_key_install.result.v1`. The schema defines the exact owner data/source contracts; `Plans/projects_refresh_command_bindings.json` binds both primaries to their sole planned handlers and producer/return/disabled profiles, and `Plans/touch_closure.json` records their source-extracted Touch rows. No alias is admitted.
 
 | Primary and sole handler | Request | Result |
 |---|---|---|

@@ -3234,7 +3234,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
   files, or source code are created by this PlanUnit.
 - Project restore_point_record keeps rp:{project_id}:{restore_point_id}/pm.storage_value.restore_point_record.v1
-  unchanged; F admits a distinct scope-aware app key/schema variant with the same closed status available,
+  unchanged; CV-366/SP-349 select the distinct scope-aware app key/schema variant with the same closed status available,
   expired, deleted, corrupt.
 - Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused
   and failed create none.
