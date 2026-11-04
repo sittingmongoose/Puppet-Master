@@ -41,7 +41,10 @@ const RECORDER = () => {
 			j.pending=false; j.cancelled=true; pending.delete(id);
 		};
 	}
-	R.release = () => { R.gated=false; for(const j of pending.values()) if(!j.native) ask(j); };
+	R.release = () => { R.gated=false; for(const j of pending.values()) if(!j.native) ask(j);
+		// Independent native deadline proves this hold actually offered idle delivery.
+		ric.call(window, () => { R.opportunity = {at:performance.now(),drag:inDrag()}; }, {timeout:500});
+	};
 	R.pending = () => R.jobs.filter(j=>j.pending).map(({id,stack})=>({id,stack}));
 	window.setTimeout = function (fn, ms, ...a) {
 		if (typeof fn !== 'function') return st.call(window, fn, ms, ...a);
@@ -86,6 +89,7 @@ async function holdDrag(t, f, sel, label) {
 	for (let k = 0; k < HOLD_MS / 100; k++) { await t.page.mouse.move(...at(-32 + (k % 2 ? 1 : -1))); await t.page.waitForTimeout(100); }
 	const ended = await f.evaluate(() => performance.now());
 	await t.check(`${label}: drag remains held`, await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag())), 'the whole measurement must be a held drag');
+	await t.check(`${label}: native idle delivery was eligible during hold`, await f.evaluate(() => !!window.__pmIdleRec.opportunity?.drag), 'independent native deadline inside the real held gesture');
 	await t.mark(label + ' released');
 	await t.page.mouse.up();
 	return { began, ended, queued };
