@@ -2741,8 +2741,8 @@ Handoff rules:
 ### 29.5 Wizard launch behavior from chat handoff
 
 Launch behavior depends on available project context:
-- if the current thread already has an active project/path, open the Planning Wizard in the preloaded `EnhanceRewriteAdd` flow with imported context ready for requirements/interview review
-- if the current thread lacks required project context, open the Planning Wizard with the imported context preserved and land on the project-setup review path first
+- if the current thread already has a real active Project and admitted path, open the Planning Wizard in the preloaded `EnhanceRewriteAdd` flow with imported context ready for requirements/interview review
+- from No project, preserve the imported context and first offer **Make a project from this chat** and **Move this chat into a project** as equal choices with neither preselected, or select a real Project under F3-325/ACD-510. Complete any conversion and actual Project registration/listing before opening the preloaded `EnhanceRewriteAdd` flow. The Wizard says **Needs a project** and cannot start intake while the handoff is unbound
 
 The interviewer must not start cold:
 - imported context is available before the first interview question
@@ -4029,8 +4029,8 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Assistant workflow identity stays ask, agent, debug, plan and deep_plan; only runtime posture normalizes
   to the run-envelope mode. ACD-508 and AI-069 admit genuine app chat, Goal, Crew, Plan/Deep Plan and
-  scheduled-message/task workflows. Requires a project is a workflow gate only for Planning Wizard, PRD
-  Builder and Orchestrator. Other actions validate their actual permitted
+  scheduled-message/task workflows. The stored token Requires a project is rendered Needs a project and gates only Planning
+  Wizard, PRD Builder and Orchestrator. Other actions validate their actual permitted
   folder/file/history/connection/target and capability, never infer a Project from focus.
 gui_related: true
 gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
@@ -4038,11 +4038,11 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - "Debug and deep_plan mint no extra runtime mode."
-  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Requires a project."
+  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Needs a project."
   - "Missing actual resource/authority remains a typed refusal without automatic conversion."
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: runtime_mode_drift
 reasoning_tier: standard
 context_scope: assistant_chat_window_001
@@ -6641,7 +6641,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Automatic retrieval is local: current Project chat/code/log sources for a Project thread, or the app
   thread's own messages and permitted chat-folder/working-root sources for No project. Explicit projects.*
-  reads use T-185/ACD-509 and D's source/time/provider grants, never ambient index or private-memory
+  reads use T-185/ACD-509 and PS-145 source/time/provider grants, never ambient index or private-memory
   merge. After the recorded grant or task-scoped YOLO admission, an explicit question about my projects or
   my tasks may request all permitted Projects; every empty/partial result states coverage. An unspecified
   cross-Project scope never silently falls back to current Project.
@@ -6653,8 +6653,8 @@ acceptance_criteria:
   - "Auto-retrieval stays within the owning Project or app thread/roots; explicit cross-Project T-185 reads require recorded scope/authority and coverage."
   - "External or cross-project retrieval requires explicit user request."
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: retrieval_scope
 reasoning_tier: high
 context_scope: auto_retrieval
@@ -18176,19 +18176,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Wizard launch opens preloaded `EnhanceRewriteAdd` when project/path context
-  exists, or preserves imported context and lands on project-setup review first
-  when required project context is missing.
+  Wizard launch opens preloaded `EnhanceRewriteAdd` only with a real active Project and admitted path. A
+  No project handoff preserves imported context and first offers Make a project from this chat and Move this
+  chat into a project as equal choices with neither preselected, or selects a real Project through F3-325/ACD-510.
+  Conversion and actual Project registration/listing complete before Wizard launch or intake; the unbound
+  handoff shows Needs a project and never starts the Wizard's own setup as a bypass.
 gui_related: true
-gui_classification_reason: Wizard launch path and project-setup review landing are visible workflow UI.
+gui_classification_reason: Wizard launch and the prerequisite Project conversion or selection are visible workflow UI.
 depends_on: [ACD-309]
 unblocks: [ACD-313, ACD-314]
 acceptance_criteria:
-  - Threads with active project/path open the preloaded `EnhanceRewriteAdd` flow.
-  - Threads missing required project context preserve imported context and land on project-setup review first.
+  - Threads with a real active Project and admitted path open the preloaded `EnhanceRewriteAdd` flow.
+  - No project handoffs preserve imported context, offer both conversion choices or real Project selection, and enter the Wizard only after actual Project admission.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: wizard_launch
 reasoning_tier: standard
 context_scope: gui
@@ -18203,7 +18205,10 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0142
 preserved_exact_tokens:
   - "EnhanceRewriteAdd"
-  - "project-setup review path"
+  - "No project"
+  - "Make a project from this chat"
+  - "Move this chat into a project"
+  - "Needs a project"
 negative_constraints: []
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -25253,7 +25258,7 @@ canonical_text: >-
   transition or recovery rechecks active/redacted/revoked/blocked/expired/omitted evidence and
   target/worktree/session drift before reuse; raw logs and media remain artifacts. Thread restore and
   model change never silently rebind a notebook to a different target; provider-hidden content is never
-  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes B's app scratch scope and
+  shown as PM-authored notes (WNC-N17). No-project notebook eligibility consumes WN-021 app scratch scope and
   actual thread/Computer. Model changes/recovery retain the same canonical roots and evidence; conversion
   explicitly re-homes through PSB-007 without a fabricated Vault before cutover.
 gui_related: true
@@ -25266,7 +25271,7 @@ acceptance_criteria:
 - Old debug notes never reactivate revoked evidence or imply cleanup occurred.
 - Thread recovery rehydrates notebook access without rebinding to a different target.
 validation_surfaces:
-- python3 scripts/pm-plans-verify.py run-gates
+- scripts/pm-plans-verify.py
 risk_class: evidence_staleness
 reasoning_tier: high
 context_scope: assistant_chat
@@ -25868,7 +25873,7 @@ The following contract establishes the previously missing bindings under Jared's
 
 **Membership and producer.** `event-family-context-compaction-completed@1.0.0` has the sole exact event type `context.compaction.completed` and closed payload `pm.context_compaction_completed.schema.v1`, version `1.0.0`, in `Plans/event_payload_context_compaction_completed.schema.json`. Define producer binding ID `assistant_chat.compaction_commit.v1` for the existing bounded compaction transaction's commit step. Manual `cmd.chat.compact_context` reaches it through `handlers::chat::compact_context`; automatic and eligible micro-compaction reach the same commit step under PP-078. UI click, helper return, local progress and command-result rendering are not independent emitters.
 
-**Identity and scope.** `context.compaction.completed` has explicit original Project and newly admitted application editions. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec. An app thread binds null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer; Worktree-unbound Project is a different case, not a prohibition of genuine app completion. Both outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit; generic app work cannot emit Chat completion. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses; replay/checkpoint uses the explicitly adopted app sibling without changing original Project history.
+**Identity and scope.** `context.compaction.completed` remains `project_only` in `Plans/event_family_registry.json`; DL-300 admits no application edition of this family. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec; a worktree-unbound Project remains a Project form. Outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses. Application compaction keeps null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer in its owner operation/result receipts; those receipts do not become EventRecords or enter the Project event replay/checkpoint. App event emission remains `missing_event_registration` and non-emitting until a separate Event Authority admission and complete payload/source/append/read/checkpoint/retention adoption. Missing owner receipt/source custody leaves that app operation unavailable; no synthetic Project or app completion event is permitted.
 
 **Commit and state meaning.** A completion means a candidate passed every PP-078 fence and useful-gain predicate and the Storage commit marker durably committed. Input/output context revisions are monotonic integers; `output_context_revision > input_context_revision`, `input_tokens - output_tokens = reclaimed_tokens > 0`, and configured `min_reclaim_tokens` must also be met. The detailed CompactionReceipt records branch/head, retained obligations, redaction, hashes, artifacts, fences and policy proof; its opaque reference must resolve to this exact operation/thread/revision pair at commit. The permanent EventRecord is a bounded audit projection of that receipt, containing no transcript, summary, prompt, tool output, content-derived hash, title or arbitrary message. Required token/byte counts are measurements, not billed Usage. No-op, soft-defer, cancellation, stale/late result, policy denial, helper failure and precommit interruption emit no completion. `context.compaction.started` and `context.compaction.failed` remain unregistered, independently visible through existing result/receipt state.
 
@@ -25885,14 +25890,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Successful committed compaction produces one content-free context.compaction.completed EventRecord under
-  the explicit owner contract above. The focused-thread detail consumer uses the existing replay path;
-  retained transcript search and thread-deletion behavior remain unchanged. The app completion sibling
-  uses explicit application scope/null Project and the same content-free commit/result, original
-  operation, thread/deletion/head/generation fence, complete replay/checkpoint and unavailable-input
-  rules. The original Project Event/codec remains exact. Worktree-unbound Project completion and genuine
-  app completion are separately admitted forms; neither authorizes arbitrary generic app operations to
-  emit Chat completion.
+  Successful committed Project compaction produces one content-free context.compaction.completed EventRecord
+  under the explicit owner contract above. The focused-thread detail consumer uses the existing Project
+  replay path; retained transcript search and thread-deletion behavior remain unchanged. The registry keeps
+  this family project_only and DL-300 admits no application payload. Application compaction uses its owner
+  operation/result receipts with explicit null Project, actual thread/Computer/writer and original
+  operation/currentness/deletion fences, without emitting this EventRecord or advancing its Project
+  event checkpoint. Missing receipt/source custody is unavailable. App event emission remains
+  missing_event_registration/non-emitting until separate Event Authority admission and complete owner
+  adoption. The original Project Event/codec and worktree-unbound Project form remain exact.
 gui_related: true
 gui_classification_reason: This unit binds the visible focused-thread completion history to durable authority.
 depends_on: []
@@ -25900,7 +25906,7 @@ unblocks: []
 acceptance_criteria:
   - "ACD-461 binds the exact producer, consumer, projector, project/thread identity, closed payload, commit-only transition and compatibility/withdrawal behavior."
   - "SP-259 and SIR-038 provide append durability, idempotency, concrete checkpoint key/version, replay fencing and indefinite content-free retention."
-  - "Started, failed, cancelled, no-op, stale and deferred operations have no completion EventRecord; schema and semantic negatives reject invalid identity, gains, payloads and commit claims."
+  - "Started, failed, cancelled, no-op, stale and deferred operations have no completion EventRecord; application operations remain non-emitting without separate family admission. Schema and semantic negatives reject invalid identity, gains, payloads and commit claims."
   - "Replaying a completion cannot resurrect a deleted thread or change transcript/search authority."
 validation_surfaces:
   - Plans/context_compaction_completion_contract_fixtures.json
@@ -27664,15 +27670,15 @@ split_recommended: false
 depends_on: [ACD-010, DL-126, F3-572]
 unblocks: [F3-581, ATS-065]
 acceptance_criteria:
-  - "A chat with an override uses it; a chat without one uses the project default; a project without one uses the app default."
+  - "Resolution follows This chat → Project → Computer → Everywhere → factory; an app chat skips Project and each missing override falls through to the next applicable level."
   - "After a switch, every earlier reply keeps its text and no reply is re-sent, regenerated or rewritten."
   - "A reply streaming during a switch finishes in the style it started with."
   - "Explain this reply simply adds exactly one reply, leaves the explained reply unchanged and changes no ELI5 setting."
   - "cmd.chat.eli5.explain_reply is refused for a reply that is still streaming."
   - "No helper line under a control has an Expert and an ELI5 variant."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: eli5_second_response_or_rewrite
 reasoning_tier: high
 context_scope: chat_eli5
@@ -27696,7 +27702,7 @@ source_lineage:
   - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "DL-138"
-  - "the chat override, otherwise the project default, otherwise the app default"
+  - "This chat → Project → Computer → Everywhere → factory"
   - "general.interaction.chat-eli5"
   - "general.interaction.eli5-default"
   - "Explain Terms Everywhere"
@@ -27718,7 +27724,7 @@ negative_constraints:
   - "Do not let ELI5 change code, plans, files or generated documents."
   - "Do not define the Settings project scope here; Settings owns it."
 stale_retired_dispositions:
-  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by the three-level resolution in this unit (DL-126)."
+  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by this unit's Settings-owned layered resolution (DL-281); DL-126's forward-only reply behavior remains."
   - "FinalGUISpec 2026-09-03 section 14's 'ELI5 is a wand check' is superseded by the ELI5 sheet and the quick dot (FinalGUISpec F3-581)."
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -28770,7 +28776,7 @@ canonical_text: 'No project is a first-class chat place with project_id=null, sc
   rung. Selected account_resolution uses MA-074 on the exact work Computer. No Basic Dark flash or no-project Settings
   write ban. N15 Set up a project later still performs protected AI setup on that Computer in app scope, then lands
   in No project chat; Guided Tour Finish/Skip returns to that exact app chat/layout without a practice Project or
-  claiming an unexecuted Project step completed. Computer use consumes T-186/D policy: named Computer, task-allowed
+  claiming an unexecuted Project step completed. Computer use consumes T-186/PS-145 policy: named Computer, task-allowed
   apps, separate provider screen disclosure and protected-auth exclusion, with a visible session-bound strip/Stop
   and existing double-Esc stop; it is no root grant or hidden desktop access. Delivery stages are chat/Goals/Crew/Plan/Deep
   Plan/schedules/conversion, then cross-project reads/requests, then computer use/continue elsewhere/cross-computer
@@ -28848,7 +28854,7 @@ canonical_text: Every chat may explicitly read permitted Projects and request wo
   One coverage formatter records requested, looked_in, not_looked_in with reasons and partial with missing ranges;
   empty/partial replies and empty/filtered UI always disclose coverage, with a quiet expandable line. Archived Projects
   are skipped unless named. Notebooks, private memory, credentials, safe copies and denied files remain excluded.
-  An outgoing request shows exact target, task text and effect before Regular Send or D-admitted YOLO dispatch.
+  An outgoing request shows exact target, task text and effect before Regular Send or YOLO dispatch under PS-145.
   Sender authority never changes receiver mode; Off refuses, and unseen Regular Ask me requests remain read/answer-only
   until accepted. A person-reviewed send may satisfy that message's receiving choice, but is never fabricated for
   YOLO. Delivery is ordered at a safe turn boundary, distinct from the person's two-slot composer queue; request
