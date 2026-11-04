@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24514-L27214
+Source lines: L24514-L27208
 
-Source SHA256: `4b4ea7b4b6dc4ab03905bc3919e3f64d2381fc6efffb423a324221cea3950c8a`
+Source SHA256: `766a752a876a25d16a5e6447036af63a0c4c510f91a68447dd0a3e2ca1f2de0c`
 
 ---
 
@@ -2371,9 +2371,6 @@ split_recommended: false
 depends_on:
 - SP-286
 - SP-278
-- SP-428
-- EP-200
-- GRS-200
 - CV-420
 - DL-080
 - DL-045
@@ -2439,9 +2436,6 @@ split_recommended: false
 depends_on:
 - SP-286
 - SP-278
-- SP-428
-- EP-200
-- GRS-201
 - CV-421
 - DL-080
 - DL-045

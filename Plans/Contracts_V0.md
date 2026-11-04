@@ -24503,9 +24503,6 @@ gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
 depends_on:
-- GRS-200
-- SP-426
-- EP-200
 - CV-287
 - DL-080
 - DL-045
@@ -24559,9 +24556,6 @@ gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
 depends_on:
-- GRS-201
-- SP-427
-- EP-200
 - CV-287
 - DL-080
 - DL-045

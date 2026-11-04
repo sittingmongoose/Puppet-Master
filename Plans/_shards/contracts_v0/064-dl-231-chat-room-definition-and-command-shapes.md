@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23975-L24603
+Source lines: L23975-L24597
 
-Source SHA256: `505f9e4a9db854daac17a192b795dabf792b54f030edd3b46870401157b9fd78`
+Source SHA256: `39aa814b30178ae0f2bb047fdc0fb8237bbeafcefabcfa920c6b5175969afa6a`
 
 ---
 
@@ -539,9 +539,6 @@ gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
 depends_on:
-- GRS-200
-- SP-426
-- EP-200
 - CV-287
 - DL-080
 - DL-045
@@ -595,9 +592,6 @@ gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
 depends_on:
-- GRS-201
-- SP-427
-- EP-200
 - CV-287
 - DL-080
 - DL-045

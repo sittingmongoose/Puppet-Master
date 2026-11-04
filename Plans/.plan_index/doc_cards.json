@@ -4594,7 +4594,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24603,
+      "line_count": 24597,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 363,
       "plan_unit_ids": [
@@ -5323,7 +5323,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "505f9e4a9db854daac17a192b795dabf792b54f030edd3b46870401157b9fd78",
+      "sha256": "39aa814b30178ae0f2bb047fdc0fb8237bbeafcefabcfa920c6b5175969afa6a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 363
@@ -6922,7 +6922,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 9183,
+      "line_count": 9181,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 130,
       "plan_unit_ids": [
@@ -7096,7 +7096,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "371c9478ed536ea6ca97c77b742e6791567ae2fb326fd892a4bd8b0925803bba",
+      "sha256": "b9791ffd5a1fbb0d1329e21e37500f4db8c6a1ee11d4deaf620ebbc628799e59",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 130
@@ -9607,7 +9607,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 8606,
+      "line_count": 8603,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 88,
       "plan_unit_ids": [
@@ -9785,7 +9785,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "ea1a5a69582be42ca373ff79d334f62edad3dcc675ed3800f306541e204d801a",
+      "sha256": "bdd7b936e4da3985dd9ce43f3826855399d736b01208720d71486a32e4b9c7e9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 79,
@@ -18723,7 +18723,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 30100,
+      "line_count": 30094,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 350,
       "plan_unit_ids": [
@@ -19208,7 +19208,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4b4ea7b4b6dc4ab03905bc3919e3f64d2381fc6efffb423a324221cea3950c8a",
+      "sha256": "766a752a876a25d16a5e6447036af63a0c4c510f91a68447dd0a3e2ca1f2de0c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 346,
@@ -21595,7 +21595,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T18:13:53Z",
+  "generated_at_utc": "2026-11-04T18:19:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L8828-L9183
+Source lines: L8828-L9181
 
-Source SHA256: `371c9478ed536ea6ca97c77b742e6791567ae2fb326fd892a4bd8b0925803bba`
+Source SHA256: `b9791ffd5a1fbb0d1329e21e37500f4db8c6a1ee11d4deaf620ebbc628799e59`
 
 ---
 
@@ -301,8 +301,6 @@ depends_on:
 - EP-118
 - EP-119
 - EP-124
-- GRS-200
-- GRS-201
 - SP-286
 - SP-309
 - SP-426

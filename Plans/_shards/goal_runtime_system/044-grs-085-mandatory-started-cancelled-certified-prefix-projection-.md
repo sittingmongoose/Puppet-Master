@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8180-L8606
+Source lines: L8180-L8603
 
-Source SHA256: `ea1a5a69582be42ca373ff79d334f62edad3dcc675ed3800f306541e204d801a`
+Source SHA256: `bdd7b936e4da3985dd9ce43f3826855399d736b01208720d71486a32e4b9c7e9`
 
 ---
 
@@ -100,7 +100,6 @@ depends_on:
 - GRS-075
 - GRS-080
 - GRS-085
-- GRS-202
 - EP-200
 - CV-420
 - SP-426
@@ -167,7 +166,6 @@ depends_on:
 - GRS-080
 - GRS-085
 - GRS-086
-- GRS-202
 - EP-200
 - CV-421
 - SP-427
@@ -237,7 +235,6 @@ depends_on:
 - EP-200
 - SP-312
 - SP-317
-- SP-428
 - SP-278
 - DL-080
 - DL-045
