@@ -107,7 +107,7 @@ Changed content paths this round: `scripts/pm-filemanager-event-contracts.py` an
 
 ## Resources, evidence and handback
 
-VM resource gates passed before checkout: 19 GiB available memory and 89 GB free root disk; later samples stayed at or above 15 GiB / 89 GB, above the 6 GiB / 50 GB floors. Sparse detached worktree: `/home/sittingmongoose/pm-worktrees/DFM-fix3`, created from the exact assigned branch. No pm-mail, delegate, subagent, browser or server was used. The branch is pushed; the worktree is removed at handback.
+VM resource gates passed before checkout: 19 GiB available memory and 89 GB free root disk; verification samples stayed at or above 15 GiB / 89 GB, and the handback memory sample was 11 GiB available, above the 6 GiB / 50 GB floors. Sparse detached worktree: `/home/sittingmongoose/pm-worktrees/DFM-fix3`, created from the exact assigned branch. No pm-mail, delegate, subagent, browser or server was used. The branch is pushed; the worktree is removed at handback.
 
 Evidence is under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DFM/fix3/`; the report/self-grade overwrite their parent DFM copies. Reproduction scripts are retained beside the result evidence. `SHA256SUMS` pins final outputs. Selected pins:
 
