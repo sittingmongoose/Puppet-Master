@@ -47,6 +47,16 @@ def resolve_definition(ref: str, schema: dict[str, Any]) -> str:
         if name not in app_schema['$defs']:
             raise ValueError('missing selected app facade schema: ' + name)
         return name
+    # Review fix 9 (2026-11-04): cmd.thread.await keeps its handler and wait owner but selects the
+    # application-or-Project scope edition; its legacy Project request stays a compatibility branch inside it.
+    fix_prefix = 'Plans/projects_refresh_fix_contracts.schema.json#/$defs/'
+    fix_names = {'ThreadAwaitRequestScopeV2', 'ThreadAwaitResultScopeV2'}
+    if ref.startswith(fix_prefix) and ref[len(fix_prefix):] in fix_names:
+        fix_schema = read_json(PLANS / 'projects_refresh_fix_contracts.schema.json')
+        name = ref[len(fix_prefix):]
+        if name not in fix_schema['$defs']:
+            raise ValueError('missing selected await scope schema: ' + name)
+        return name
     prefix = "Plans/shared_runtime_command_contracts.schema.json#/$defs/"
     if not ref.startswith(prefix):
         raise ValueError(f"unsupported command schema ref {ref}")
