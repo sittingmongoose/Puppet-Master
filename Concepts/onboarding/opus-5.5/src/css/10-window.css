@@ -203,17 +203,19 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
    transform transitions cancel the visual lift throughout the transition, not just at its end.
    Children are paint only; keyboard focus and activation remain on the native button. */
 .o55-card { position: relative; }
+:is(.o55-card, .o55-tile) { --o55-hit-inset: -1px; }
+#pm-o55-onboarding:is([data-family="friendly"], [data-family="retro"]) .o55-card { --o55-hit-inset: -2px; }
+html[data-lg="on"][data-theme^="glass"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hit-inset: 0px; }
 :is(.o55-card, .o55-tile), :is(.o55-card, .o55-tile) * { pointer-events: none; }
 :is(.o55-card, .o55-tile)::before {
-  content: ''; position: absolute; left: 50%; top: 50%; width: 100%; height: 100%;
-  box-sizing: content-box; border: inherit; border-color: transparent; border-radius: inherit;
-  pointer-events: auto; transform: translate(-50%, -50%) translateY(0); transition: inherit;
+  content: ''; position: absolute; inset: var(--o55-hit-inset); border-radius: inherit;
+  pointer-events: auto; transform: translateY(0); transition: inherit;
 }
-.o55-card:hover::before { transform: translate(-50%, -50%) translateY(1px); }
-.o55-tile:hover::before { transform: translate(-50%, -50%) translateY(2px); }
+.o55-card:hover::before { transform: translateY(1px); }
+.o55-tile:hover::before { transform: translateY(2px); }
 #pm-o55-onboarding[data-family="retro"] .o55-card:hover::before,
 html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-card, .o55-tile):hover::before,
-.o55-card.o55-card-parent:hover::before { transform: translate(-50%, -50%) translateY(0); }
+.o55-card.o55-card-parent:hover::before { transform: translateY(0); }
 .o55-card.o55-on { border-color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 11%, var(--o55-card-bg)); box-shadow: inset 0 0 0 1px var(--o55-accent); }
 .o55-card[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
 .o55-glyph { display: grid; place-items: center; width: 42px; height: 42px; border-radius: calc(var(--o55-card-r) * 0.8); color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 13%, transparent); flex: none; }
