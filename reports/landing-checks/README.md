@@ -468,7 +468,8 @@ calls such a run clean. In `--json` the timed-out subchecks are listed under `in
 `elapsed_seconds` and `limit_seconds`, beside the `subcheck_timeout_seconds` the run used.
 
 The landing check hands the aggregates a bound of 600 seconds by default, where it used to hand them
-180. The measured case: `lint-contractrefs` takes about 199 seconds in the shared checkout on the
+180. Since 2026-11-04 `pm-plans-verify.py` uses the same 600 seconds when `run-gates`,
+`audit-governance` or a standalone validator runs without `--subcheck-timeout-seconds`. The measured case: `lint-contractrefs` takes about 199 seconds in the shared checkout on the
 network mount, and finds nothing when run on its own (0 failures at `e44b9186fb`). At the
 terminal.workgroup_moved landing of 2026-09-24 the 180-second bound killed it in both aggregates, and
 the two timeout rows read as new failures and lifted two subcheck totals from 0 to 1.
@@ -595,8 +596,12 @@ Six things that make the difference between a good baseline and a misleading one
   `current_run.json` names passes full live validation. Run 003 made that declaration on 2026-08-28
   and left the repository with runs 004-016 on 2026-09-10, which stranded run 002. Every snapshot
   inventories every live document, so it can truthfully repeat the declaration. When older snapshots
-  move out, move them oldest first: a gap leaves an older snapshot that declares run 002 as a dead end,
-  which fails as `historical_successor_lineage_divergent`.
+  move out, move them oldest first, and never move out a run that a remaining snapshot names in its
+  own `supersedes_run_ids`: the snapshot `current_run.json` names must keep its direct predecessor's
+  summary (`superseded_run_final_summary_missing` otherwise), and a gap leaves an older snapshot that
+  declares run 002 as a dead end, which fails as `historical_successor_lineage_divergent`. The
+  declaration makes run 002's validation fully validate the current snapshot as well, about 150 to
+  180 seconds on local disk instead of about 32.
 
 Takes about ten minutes, plus the exports of the subchecks that print only a sample (see "Subchecks
 keyed from their export"), which the baseline records so that later landings can key those
