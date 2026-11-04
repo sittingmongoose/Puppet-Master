@@ -415,7 +415,7 @@ def accounting_totals(p):
 
 
 def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False, *, historical=False):
-    if event['replay_policy'] != 'dedupe_by_idempotency_key' and not (historical and event['replay_policy'] == 'projector_replay_only'):
+    if not historical and event['replay_policy'] != 'dedupe_by_idempotency_key':
         return 'replay_only_not_appendable' if event['replay_policy'] == 'projector_replay_only' else 'join_refused'
     if event['payload_ref'] is None:
         try:
@@ -629,6 +629,13 @@ def historical_results(c, f, schemas):
     replay_context = dict(context, authenticated_original={'prepared': prepared, 'completed': completed, 'event': replay_event})
     results['replay_only_changed_live_state'] = read(e=replay_event, ctx=replay_context)
     results['replay_only_live_state_unavailable'] = read(e=replay_event, ctx=dict(replay_context, live_before=None))
+    for policy in ['append_once', 'dedupe_by_event_id']:
+        retained = dict(event, replay_policy=policy)
+        retained_ctx = dict(context, authenticated_original={'prepared': prepared, 'completed': completed, 'event': retained})
+        results[policy + '_history'] = read(e=retained, ctx=retained_ctx)
+    invalid_policy = dict(event, replay_policy='forged_replay_policy')
+    invalid_ctx = dict(context, authenticated_original={'prepared': prepared, 'completed': completed, 'event': invalid_policy})
+    results['invalid_replay_policy'] = read(e=invalid_policy, ctx=invalid_ctx)
     # Also cover all Project/application/operation positives with frozen originals.
     results['variants'] = []
     for variant in f['positive_variants']:
@@ -732,6 +739,11 @@ def recovery_mutations(c, f):
             if field == 'event_id':
                 bad['first_append_receipt']['event_id'] = value
                 bad['recovery_original']['receipt'] = copy.deepcopy(bad['first_append_receipt'])
+                if c['event_type'] == 'usage.event':
+                    bad['completed_source']['payload']['usage_event_ref'] = value
+                    bad['event_record']['payload']['usage_event_ref'] = value
+                    bad['recovery_original']['completed'] = copy.deepcopy(bad['completed_source'])
+                    bad['recovery_original']['event'] = copy.deepcopy(bad['event_record'])
             yield stage['case'] + '/' + field, bad, stage['input']
         bad = copy.deepcopy(f); bad['completed_source']['prepared_sha256'] = 'f' * 64
         bad['recovery_original']['completed'] = copy.deepcopy(bad['completed_source'])
@@ -783,7 +795,7 @@ def technical_checks(c, f, schemas, check):
                 check(refused, name + ': oversized source decode ' + stage)
         # Historical reader accepts every supported original replay policy in
         # both scopes, including after all live state has disappeared.
-        for policy in ['dedupe_by_idempotency_key', 'projector_replay_only']:
+        for policy in ['append_once', 'dedupe_by_event_id', 'dedupe_by_idempotency_key', 'projector_replay_only']:
             a, b, e = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']]); e['replay_policy'] = policy
             ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
                        authenticated_original={'prepared': a, 'completed': b, 'event': e})

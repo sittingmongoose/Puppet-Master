@@ -270,6 +270,9 @@ def other_corpus(dt, c, f, schemas):
     invalid_event = dict(e, sequence_id='invalid-sequence')
     invalid_ctx = dict(ctx, authenticated_original={'prepared': a, 'completed': b, 'event': invalid_event})
     result.append(('history/envelope_schema', lambda: dt.historical_read(c, a, b, invalid_event, schemas, invalid_ctx)['result'], 'retained'))
+    invalid_policy = dict(e, replay_policy='forged_replay_policy')
+    policy_ctx = dict(ctx, authenticated_original={'prepared': a, 'completed': b, 'event': invalid_policy})
+    result.append(('history/replay_policy_domain', lambda: dt.historical_read(c, a, b, invalid_policy, schemas, policy_ctx)['result'], 'retained'))
     invalid_payload_event = copy.deepcopy(e); invalid_payload_event['payload']['schema_version'] = 'wrong'
     invalid_payload_ctx = dict(ctx, authenticated_original={'prepared': a, 'completed': b, 'event': invalid_payload_event})
     result.append(('history/source_contract', lambda: dt.historical_read(c, a, b, invalid_payload_event, schemas, invalid_payload_ctx)['result'], 'retained'))

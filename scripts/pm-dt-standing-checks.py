@@ -155,6 +155,8 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
             if c['event_type'] == name:
                 if reader_fault == 'replay_history' and e['replay_policy'] == 'projector_replay_only':
                     return {'result': 'unavailable', 'value': None, 'external_effects': 0, 'append_count': 0}
+                if reader_fault == 'compatibility_history' and e['replay_policy'] in ['append_once', 'dedupe_by_event_id']:
+                    return {'result': 'unavailable', 'value': None, 'external_effects': 0, 'append_count': 0}
                 if reader_fault == 'live_state' and context['live_before'] is not None and not dt.transition(name, b['payload'], context['live_before'], b['owner_result']):
                     return {'result': 'unavailable', 'value': None, 'external_effects': 0, 'append_count': 0}
                 return weakened_historical(c, a, b, e, schemas, context)
@@ -265,7 +267,7 @@ def main():
                     row[number]['status'] = 'fail'
             if number == '10':
                 reader_faults = {}
-                for reader_fault in ['withdrawn', 'forged', 'replay_history']:
+                for reader_fault in ['withdrawn', 'forged', 'replay_history', 'compatibility_history']:
                     child_code, child = run_fault(name, number, reader_fault=reader_fault)
                     passed = (child_code == 1 and child['status'] == 'fail'
                               and child['checks'] == baseline_result['checks']
@@ -287,7 +289,7 @@ def main():
         print(name + ': ' + ', '.join(k + '=' + v['status'] for k, v in row.items()), file=sys.stderr, flush=True)
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(targets),
                       'checker_families': len(families),
-                      'full_checker_runs': 1 + 16 * len(targets), 'per_family': results,
+                      'full_checker_runs': 1 + 17 * len(targets), 'per_family': results,
                       'reference_controls': controls,
                       'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return int(bool(failures))
