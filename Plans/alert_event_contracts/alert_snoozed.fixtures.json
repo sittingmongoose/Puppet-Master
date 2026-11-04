@@ -771,8 +771,8 @@
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           }
         },
-        "through_sequence_id": 0,
-        "last_event_id": null
+        "through_sequence_id": 1,
+        "last_event_id": "fixture"
       },
       "valid": true
     },
@@ -1059,5 +1059,494 @@
       },
       "same_digest": false
     }
-  ]
+  ],
+  "history": {
+    "event": {
+      "event_type": "alert.snoozed",
+      "event_id": "fixture",
+      "event_ref": "pmref:event:fixture",
+      "sequence_id": 1,
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "project_id": "fixture",
+      "scope_partition": "project~Zml4dHVyZQ",
+      "payload": {
+        "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "alert_id": "fixture",
+        "alert_record_ref": "pmref:test:fixture",
+        "actor_ref": "pmref:test:fixture",
+        "prior_revision": 1,
+        "result_revision": 2,
+        "currentness_basis_ref": "pmref:test:fixture",
+        "prior_alert_state": "unacknowledged",
+        "result_alert_state": "snoozed",
+        "snooze_until": "2026-11-05T00:00:00Z",
+        "snooze_reason_code": "fixture",
+        "origin": "notification_center",
+        "handler_target": "handlers::alert::snooze",
+        "command_id": "cmd.alert.snooze",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "receipt": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "event_id": "fixture",
+        "sequence_id": 1,
+        "original_append_result_ref": "pmref:test:original",
+        "first_append_receipt": {
+          "event_id": "fixture",
+          "sequence_id": 1,
+          "segment_generation": 0,
+          "segment_name": "segment-0",
+          "byte_offset": 0,
+          "commit_group_id": "history-original-group",
+          "durability_class": "ordinary",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 0,
+          "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+        },
+        "original_append_result": {
+          "event_id": "fixture",
+          "sequence_id": 1,
+          "segment_ref": "pmref:segment:original",
+          "byte_offset": 0
+        }
+      },
+      "source_selection": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "current_ref": "storage/seglog/CURRENT",
+        "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "selected_segment_generation": 0,
+        "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+        "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "manifest_generation": 0,
+        "recovery_epoch": 0,
+        "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "state": "current",
+      "valid_when_written": true
+    },
+    "expected": {
+      "event": {
+        "event_type": "alert.snoozed",
+        "event_id": "fixture",
+        "event_ref": "pmref:event:fixture",
+        "sequence_id": 1,
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_snoozed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "snoozed",
+          "snooze_until": "2026-11-05T00:00:00Z",
+          "snooze_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::snooze",
+          "command_id": "cmd.alert.snooze",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "receipt": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "event_id": "fixture",
+          "sequence_id": 1,
+          "original_append_result_ref": "pmref:test:original",
+          "first_append_receipt": {
+            "event_id": "fixture",
+            "sequence_id": 1,
+            "segment_generation": 0,
+            "segment_name": "segment-0",
+            "byte_offset": 0,
+            "commit_group_id": "history-original-group",
+            "durability_class": "ordinary",
+            "durable_end_offset": 1024,
+            "durability_state": "synced",
+            "manifest_generation": 0,
+            "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+          },
+          "original_append_result": {
+            "event_id": "fixture",
+            "sequence_id": 1,
+            "segment_ref": "pmref:segment:original",
+            "byte_offset": 0
+          }
+        },
+        "source_selection": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "selected_segment_generation": 0,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "manifest_generation": 0,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "state": "current",
+        "valid_when_written": true
+      },
+      "checkpoint": {
+        "schema_id": "pm.storage_value.alert_snoozed_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "consumer_id": "projector.alert_snoozed.history",
+        "consumer_version": "1.0.0",
+        "publication_id": "fixture",
+        "state": "current",
+        "index_read_token": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_key": "fixture",
+          "checkpoint_ref": "fixture",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frontier_revision": 0,
+          "frontier_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "index_dataset_name": "fixture",
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "through_sequence_id": 1,
+        "last_event_id": "fixture"
+      }
+    },
+    "disclosure": {
+      "permission_allowed": true,
+      "deleted": false,
+      "withdrawn": false,
+      "membership_allowed": true,
+      "source_access_allowed": true
+    },
+    "live": {
+      "current": true,
+      "owner_revision": 1
+    },
+    "cases": [
+      {
+        "name": "retained_after_superseded_revision",
+        "path": [
+          "live",
+          "owner_revision"
+        ],
+        "value": 99,
+        "valid": true
+      },
+      {
+        "name": "retained_after_live_owner_stale",
+        "path": [
+          "live",
+          "current"
+        ],
+        "value": false,
+        "valid": true
+      },
+      {
+        "name": "withdrawn_checkpoint",
+        "path": [
+          "checkpoint",
+          "state"
+        ],
+        "value": "withdrawn",
+        "guard": "checkpoint_publication",
+        "valid": false
+      },
+      {
+        "name": "staged_checkpoint",
+        "path": [
+          "checkpoint",
+          "state"
+        ],
+        "value": "staged",
+        "guard": "checkpoint_publication",
+        "valid": false
+      },
+      {
+        "name": "forged_checkpoint_publication",
+        "path": [
+          "checkpoint",
+          "publication_id"
+        ],
+        "value": "forged-publication",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_checkpoint_storage",
+        "path": [
+          "checkpoint",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "forged_checkpoint_token",
+        "path": [
+          "checkpoint",
+          "index_read_token",
+          "checkpoint_ref"
+        ],
+        "value": "forged-checkpoint",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_checkpoint_consumer",
+        "path": [
+          "checkpoint",
+          "consumer_id"
+        ],
+        "value": "projector.foreign.history",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "withdrawn_event",
+        "path": [
+          "event",
+          "state"
+        ],
+        "value": "withdrawn",
+        "guard": "event_publication",
+        "valid": false
+      },
+      {
+        "name": "staged_event",
+        "path": [
+          "event",
+          "state"
+        ],
+        "value": "staged",
+        "guard": "event_publication",
+        "valid": false
+      },
+      {
+        "name": "forged_event_ref",
+        "path": [
+          "event",
+          "event_ref"
+        ],
+        "value": "pmref:event:forged",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "forged_event_id",
+        "path": [
+          "event",
+          "event_id"
+        ],
+        "value": "evt_forged_original",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_event_storage",
+        "path": [
+          "event",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_event_project",
+        "path": [
+          "event",
+          "project_id"
+        ],
+        "value": "foreign-project",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "forged_schema_valid_payload",
+        "path": [
+          "event",
+          "payload",
+          "correlation_id"
+        ],
+        "value": "forged-correlation",
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "forged_schema_invalid_payload",
+        "path": [
+          "event",
+          "payload",
+          "unexpected_forged_field"
+        ],
+        "value": true,
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "unknown_historical_version",
+        "path": [
+          "event",
+          "payload",
+          "schema_version"
+        ],
+        "value": "99.0.0",
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "forged_receipt_event",
+        "path": [
+          "event",
+          "receipt",
+          "first_append_receipt",
+          "event_id"
+        ],
+        "value": "evt_foreign",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "foreign_receipt_storage",
+        "path": [
+          "event",
+          "receipt",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "forged_original_result",
+        "path": [
+          "event",
+          "receipt",
+          "original_append_result",
+          "segment_ref"
+        ],
+        "value": "pmref:segment:forged",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "forged_source_selection",
+        "path": [
+          "event",
+          "source_selection",
+          "manifest_bytes_sha256"
+        ],
+        "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "guard": "original_source",
+        "valid": false
+      },
+      {
+        "name": "foreign_source_storage",
+        "path": [
+          "event",
+          "source_selection",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "original_source",
+        "valid": false
+      },
+      {
+        "name": "not_valid_when_written",
+        "path": [
+          "event",
+          "valid_when_written"
+        ],
+        "value": false,
+        "guard": "original_admission",
+        "valid": false
+      },
+      {
+        "name": "current_permission_denied",
+        "path": [
+          "disclosure",
+          "permission_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      },
+      {
+        "name": "source_deleted",
+        "path": [
+          "disclosure",
+          "deleted"
+        ],
+        "value": true,
+        "guard": "source_retained",
+        "valid": false
+      },
+      {
+        "name": "current_withdrawal",
+        "path": [
+          "disclosure",
+          "withdrawn"
+        ],
+        "value": true,
+        "guard": "current_withdrawal",
+        "valid": false
+      },
+      {
+        "name": "current_membership_denied",
+        "path": [
+          "disclosure",
+          "membership_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      },
+      {
+        "name": "current_source_access_denied",
+        "path": [
+          "disclosure",
+          "source_access_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      }
+    ],
+    "native": "NOT_RUN; independent fixture evidence is synthetic, never native source authentication",
+    "case_checkpoint_ref": "fixture"
+  }
 }

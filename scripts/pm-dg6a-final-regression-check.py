@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REVIEWED = 'b6ddf461659e979362f9f58d8781733a23737a42'
+REVIEWED = 'de28e8be91b347e209f8b75e25838ef3bf686f73'
 GRADE = 'reports/event-authority-20261104/DG6A.self-grade.json'
 
 
@@ -182,6 +182,38 @@ def run_suite(output):
                     fixture_case('9', 'valid nonempty optional ' + field,
                                  lambda v, field=field: operation(v, kind)['payload'].update({field: ['pmref:source:fixture']}), 0)
 
+            # Mutate the actual traversed checkpoint or candidate original, keeping
+            # independently expected publication/payload/receipt/source untouched.
+            for case in fixture['history']['cases']:
+                if case['valid']:
+                    continue
+                def history_defect(v, case=case):
+                    request = dict(checkpoint=checkpoint(v, kind), event=v['history']['event'],
+                                   disclosure=v['history']['disclosure'])
+                    shared.history_patch(request, case)
+                fixture_case('10', case['name'], history_defect)
+            payload_schema, cp_schema = load(family['payload_schema']), load(cp_schema_path)
+            if kind == 'alert':
+                reader = lambda request, expected: shared.historical_alert_page(request, expected, family, payload_schema, cp_schema)
+                history_shared = shared
+            elif kind == 'panel':
+                historical_schema = load('Plans/event_payloads/' + family['slug'] + '.schema.json')
+                reader = lambda request, expected: panel.historical_panel_page(request, expected, family, payload_schema, historical_schema, cp_schema)
+                history_shared = panel.shared
+            else:
+                reader = lambda request, expected: concern.historical_concern_page(request, expected, payload_schema, cp_schema)
+                history_shared = concern.shared
+            datasets = [('current-schema', fixture, checkpoint(fixture, kind))]
+            if kind == 'panel':
+                legacy = dict(history=fixture['historical_history'])
+                datasets.append(('historical-v1', legacy, legacy['history']['expected']['checkpoint']))
+            for version, dataset, cp in datasets:
+                observations = []
+                history_shared.historical_reader_cases(dataset, cp, reader, observations)
+                for observation in observations:
+                    results.append(dict(family=event, check='11' if not observation['valid'] else '10',
+                                        version=version, **observation))
+
             for fid in (family['operation'], family['checkpoint']):
                 cli(event, 'A1', 'missing mandatory profile ' + fid, script, 'Plans/storage_value_registry.json',
                     lambda v, fid=fid: v['storage_profile']['family_profiles'].pop(fid))
@@ -196,6 +228,10 @@ def run_suite(output):
                         v['checkpoint_size_cases'].append(dict(name='final_exact_16384', encoded_bytes=size, valid=True))
                     else:
                         resize_checkpoint(checkpoint(v, kind), size, shared.packed)
+                        if size == 16384:
+                            # A legitimate new token ref has its own independent
+                            # publication witness; do not forge the old witness.
+                            v['history']['expected']['checkpoint']['index_read_token']['checkpoint_ref'] = checkpoint(v, kind)['index_read_token']['checkpoint_ref']
                 fixture_case('A2', 'complete checkpoint boundary ' + str(size),
                              checkpoint_boundary, 0 if size == 16384 else 1)
             if kind == 'panel':
@@ -233,6 +269,7 @@ def run_suite(output):
     for path, digest in restored.items():
         assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest, ('input not restored', path)
     data = dict(status='pass' if all(r['passed'] for r in results) else 'fail', reviewed_head=REVIEWED,
+                executed_head=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                 cases=len(results), results=results, restored_sha256=restored)
     if output:
         Path(output).write_text(json.dumps(data, indent=2) + '\n')

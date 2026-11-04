@@ -575,8 +575,8 @@
         "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
     },
-    "through_sequence_id": 0,
-    "last_event_id": null,
+    "through_sequence_id": 1,
+    "last_event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
     "scope_partition": "project~Zml4dHVyZQ",
     "server_id": "server"
   },
@@ -662,5 +662,1019 @@
       },
       "same_digest": false
     }
-  ]
+  ],
+  "history": {
+    "event": {
+      "event_type": "panel.redocked",
+      "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+      "event_ref": "pmref:event:evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+      "sequence_id": 1,
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "project_id": "fixture",
+      "scope_partition": "project~Zml4dHVyZQ",
+      "payload": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "server_id": "server",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "app_session_id": "session",
+        "interaction_transaction_id": "fixture",
+        "actor_ref": "fixture",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "window_id": "window",
+        "owner_commit_ref": "fixture",
+        "command_result_ref": "fixture",
+        "dispatch_receipt_ref": "fixture",
+        "schema_id": "pm.event.panel_redocked.v2",
+        "schema_version": "2.0.0",
+        "project_id": "fixture",
+        "workspace_tab_id": "home",
+        "panel_id": "chat",
+        "command_id": "cmd.panel.redock",
+        "origin": "home_workspace",
+        "source_host": "detached_window",
+        "target_host": "chat_column",
+        "prior_host_revision": 0,
+        "new_host_revision": 1,
+        "settled_at_utc": "2026-11-04T18:00:00Z",
+        "settled_only": true,
+        "preview_state_included": false,
+        "persisted": true,
+        "host_state_persisted": false,
+        "workspace_layout_changed_coemitted": false,
+        "workspace_layout_event_ref": null
+      },
+      "receipt": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+        "sequence_id": 1,
+        "original_append_result_ref": "original_append",
+        "first_append_receipt": {
+          "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+          "sequence_id": 1,
+          "segment_generation": 0,
+          "segment_name": "segment-0",
+          "byte_offset": 0,
+          "commit_group_id": "history-original-group",
+          "durability_class": "ordinary",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 0,
+          "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+        },
+        "original_append_result": {
+          "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+          "sequence_id": 1,
+          "segment_ref": "pmref:segment:original",
+          "byte_offset": 0
+        }
+      },
+      "source_selection": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "current_ref": "storage/seglog/CURRENT",
+        "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "selected_segment_generation": 0,
+        "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+        "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "manifest_generation": 0,
+        "recovery_epoch": 0,
+        "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "state": "current",
+      "valid_when_written": true
+    },
+    "expected": {
+      "event": {
+        "event_type": "panel.redocked",
+        "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+        "event_ref": "pmref:event:evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+        "sequence_id": 1,
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "payload": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "server_id": "server",
+          "scope_partition": "project~Zml4dHVyZQ",
+          "app_session_id": "session",
+          "interaction_transaction_id": "fixture",
+          "actor_ref": "fixture",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "window_id": "window",
+          "owner_commit_ref": "fixture",
+          "command_result_ref": "fixture",
+          "dispatch_receipt_ref": "fixture",
+          "schema_id": "pm.event.panel_redocked.v2",
+          "schema_version": "2.0.0",
+          "project_id": "fixture",
+          "workspace_tab_id": "home",
+          "panel_id": "chat",
+          "command_id": "cmd.panel.redock",
+          "origin": "home_workspace",
+          "source_host": "detached_window",
+          "target_host": "chat_column",
+          "prior_host_revision": 0,
+          "new_host_revision": 1,
+          "settled_at_utc": "2026-11-04T18:00:00Z",
+          "settled_only": true,
+          "preview_state_included": false,
+          "persisted": true,
+          "host_state_persisted": false,
+          "workspace_layout_changed_coemitted": false,
+          "workspace_layout_event_ref": null
+        },
+        "receipt": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+          "sequence_id": 1,
+          "original_append_result_ref": "original_append",
+          "first_append_receipt": {
+            "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+            "sequence_id": 1,
+            "segment_generation": 0,
+            "segment_name": "segment-0",
+            "byte_offset": 0,
+            "commit_group_id": "history-original-group",
+            "durability_class": "ordinary",
+            "durable_end_offset": 1024,
+            "durability_state": "synced",
+            "manifest_generation": 0,
+            "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+          },
+          "original_append_result": {
+            "event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+            "sequence_id": 1,
+            "segment_ref": "pmref:segment:original",
+            "byte_offset": 0
+          }
+        },
+        "source_selection": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "selected_segment_generation": 0,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "manifest_generation": 0,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "state": "current",
+        "valid_when_written": true
+      },
+      "checkpoint": {
+        "schema_id": "pm.storage_value.panel_redocked_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "consumer_id": "projector.panel_redocked.history",
+        "consumer_version": "1.0.0",
+        "publication_id": "fixture",
+        "state": "current",
+        "index_read_token": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_key": "fixture",
+          "checkpoint_ref": "fixture",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frontier_revision": 0,
+          "frontier_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "index_dataset_name": "fixture",
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "through_sequence_id": 1,
+        "last_event_id": "evt_panel_redocked_eb8e4bfb1984a28d54f71bf1af09272787591f5445aa35e8e2cd13fec7c2c044",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "server_id": "server"
+      }
+    },
+    "disclosure": {
+      "permission_allowed": true,
+      "deleted": false,
+      "withdrawn": false,
+      "membership_allowed": true,
+      "source_access_allowed": true
+    },
+    "live": {
+      "session": "session",
+      "window": "window"
+    },
+    "cases": [
+      {
+        "name": "retained_after_session_ended",
+        "path": [
+          "live",
+          "session"
+        ],
+        "value": "ended-session",
+        "valid": true
+      },
+      {
+        "name": "retained_after_window_closed",
+        "path": [
+          "live",
+          "window"
+        ],
+        "value": null,
+        "valid": true
+      },
+      {
+        "name": "withdrawn_checkpoint",
+        "path": [
+          "checkpoint",
+          "state"
+        ],
+        "value": "withdrawn",
+        "guard": "checkpoint_publication",
+        "valid": false
+      },
+      {
+        "name": "staged_checkpoint",
+        "path": [
+          "checkpoint",
+          "state"
+        ],
+        "value": "staged",
+        "guard": "checkpoint_publication",
+        "valid": false
+      },
+      {
+        "name": "forged_checkpoint_publication",
+        "path": [
+          "checkpoint",
+          "publication_id"
+        ],
+        "value": "forged-publication",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_checkpoint_storage",
+        "path": [
+          "checkpoint",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "forged_checkpoint_token",
+        "path": [
+          "checkpoint",
+          "index_read_token",
+          "checkpoint_ref"
+        ],
+        "value": "forged-checkpoint",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_checkpoint_consumer",
+        "path": [
+          "checkpoint",
+          "consumer_id"
+        ],
+        "value": "projector.foreign.history",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "withdrawn_event",
+        "path": [
+          "event",
+          "state"
+        ],
+        "value": "withdrawn",
+        "guard": "event_publication",
+        "valid": false
+      },
+      {
+        "name": "staged_event",
+        "path": [
+          "event",
+          "state"
+        ],
+        "value": "staged",
+        "guard": "event_publication",
+        "valid": false
+      },
+      {
+        "name": "forged_event_ref",
+        "path": [
+          "event",
+          "event_ref"
+        ],
+        "value": "pmref:event:forged",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "forged_event_id",
+        "path": [
+          "event",
+          "event_id"
+        ],
+        "value": "evt_forged_original",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_event_storage",
+        "path": [
+          "event",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_event_project",
+        "path": [
+          "event",
+          "project_id"
+        ],
+        "value": "foreign-project",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "forged_schema_valid_payload",
+        "path": [
+          "event",
+          "payload",
+          "correlation_id"
+        ],
+        "value": "forged-correlation",
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "forged_schema_invalid_payload",
+        "path": [
+          "event",
+          "payload",
+          "unexpected_forged_field"
+        ],
+        "value": true,
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "unknown_historical_version",
+        "path": [
+          "event",
+          "payload",
+          "schema_version"
+        ],
+        "value": "99.0.0",
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "forged_receipt_event",
+        "path": [
+          "event",
+          "receipt",
+          "first_append_receipt",
+          "event_id"
+        ],
+        "value": "evt_foreign",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "foreign_receipt_storage",
+        "path": [
+          "event",
+          "receipt",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "forged_original_result",
+        "path": [
+          "event",
+          "receipt",
+          "original_append_result",
+          "segment_ref"
+        ],
+        "value": "pmref:segment:forged",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "forged_source_selection",
+        "path": [
+          "event",
+          "source_selection",
+          "manifest_bytes_sha256"
+        ],
+        "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "guard": "original_source",
+        "valid": false
+      },
+      {
+        "name": "foreign_source_storage",
+        "path": [
+          "event",
+          "source_selection",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "original_source",
+        "valid": false
+      },
+      {
+        "name": "not_valid_when_written",
+        "path": [
+          "event",
+          "valid_when_written"
+        ],
+        "value": false,
+        "guard": "original_admission",
+        "valid": false
+      },
+      {
+        "name": "current_permission_denied",
+        "path": [
+          "disclosure",
+          "permission_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      },
+      {
+        "name": "source_deleted",
+        "path": [
+          "disclosure",
+          "deleted"
+        ],
+        "value": true,
+        "guard": "source_retained",
+        "valid": false
+      },
+      {
+        "name": "current_withdrawal",
+        "path": [
+          "disclosure",
+          "withdrawn"
+        ],
+        "value": true,
+        "guard": "current_withdrawal",
+        "valid": false
+      },
+      {
+        "name": "current_membership_denied",
+        "path": [
+          "disclosure",
+          "membership_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      },
+      {
+        "name": "current_source_access_denied",
+        "path": [
+          "disclosure",
+          "source_access_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      }
+    ],
+    "native": "NOT_RUN; independent fixture evidence is synthetic, never native source authentication",
+    "case_checkpoint_ref": "fixture"
+  },
+  "historical_history": {
+    "event": {
+      "event_type": "panel.redocked",
+      "event_id": "evt_legacy_panel_redocked",
+      "event_ref": "pmref:event:evt_legacy_panel_redocked",
+      "sequence_id": 1,
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "project_id": "fixture",
+      "scope_partition": "project~Zml4dHVyZQ",
+      "payload": {
+        "schema_id": "pm.event.panel_redocked.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "workspace_tab_id": "fixture",
+        "panel_id": "fixture",
+        "command_id": "cmd.panel.redock",
+        "interaction_transaction_id": "fixture",
+        "origin": "home_workspace",
+        "correlation_id": "fixture",
+        "idempotency_key": "fixture",
+        "command_result_ref": "fixture",
+        "dispatch_receipt_ref": "fixture",
+        "prior_layout_revision": 0,
+        "new_layout_revision": 1,
+        "source_window_id": "fixture",
+        "target_host": "home_main",
+        "target_slot_index": null,
+        "settled_panel_state_ref": "fixture",
+        "settled_at_utc": "2026-11-04T18:00:00Z",
+        "settled_only": true,
+        "preview_state_included": false,
+        "persisted": true,
+        "workspace_layout_changed_coemitted": false,
+        "workspace_layout_event_ref": null
+      },
+      "receipt": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "event_id": "evt_legacy_panel_redocked",
+        "sequence_id": 1,
+        "original_append_result_ref": "pmref:append:legacy-panel_redocked",
+        "first_append_receipt": {
+          "event_id": "evt_legacy_panel_redocked",
+          "sequence_id": 1,
+          "segment_generation": 0,
+          "segment_name": "segment-0",
+          "byte_offset": 0,
+          "commit_group_id": "history-original-group",
+          "durability_class": "ordinary",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 0,
+          "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+        },
+        "original_append_result": {
+          "event_id": "evt_legacy_panel_redocked",
+          "sequence_id": 1,
+          "segment_ref": "pmref:segment:original",
+          "byte_offset": 0
+        }
+      },
+      "source_selection": {
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "current_ref": "storage/seglog/CURRENT",
+        "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "selected_segment_generation": 0,
+        "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+        "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "manifest_generation": 0,
+        "recovery_epoch": 0,
+        "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "state": "current",
+      "valid_when_written": true
+    },
+    "expected": {
+      "event": {
+        "event_type": "panel.redocked",
+        "event_id": "evt_legacy_panel_redocked",
+        "event_ref": "pmref:event:evt_legacy_panel_redocked",
+        "sequence_id": 1,
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "payload": {
+          "schema_id": "pm.event.panel_redocked.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "workspace_tab_id": "fixture",
+          "panel_id": "fixture",
+          "command_id": "cmd.panel.redock",
+          "interaction_transaction_id": "fixture",
+          "origin": "home_workspace",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "command_result_ref": "fixture",
+          "dispatch_receipt_ref": "fixture",
+          "prior_layout_revision": 0,
+          "new_layout_revision": 1,
+          "source_window_id": "fixture",
+          "target_host": "home_main",
+          "target_slot_index": null,
+          "settled_panel_state_ref": "fixture",
+          "settled_at_utc": "2026-11-04T18:00:00Z",
+          "settled_only": true,
+          "preview_state_included": false,
+          "persisted": true,
+          "workspace_layout_changed_coemitted": false,
+          "workspace_layout_event_ref": null
+        },
+        "receipt": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "event_id": "evt_legacy_panel_redocked",
+          "sequence_id": 1,
+          "original_append_result_ref": "pmref:append:legacy-panel_redocked",
+          "first_append_receipt": {
+            "event_id": "evt_legacy_panel_redocked",
+            "sequence_id": 1,
+            "segment_generation": 0,
+            "segment_name": "segment-0",
+            "byte_offset": 0,
+            "commit_group_id": "history-original-group",
+            "durability_class": "ordinary",
+            "durable_end_offset": 1024,
+            "durability_state": "synced",
+            "manifest_generation": 0,
+            "acknowledged_at_utc": "2026-11-04T18:00:00Z"
+          },
+          "original_append_result": {
+            "event_id": "evt_legacy_panel_redocked",
+            "sequence_id": 1,
+            "segment_ref": "pmref:segment:original",
+            "byte_offset": 0
+          }
+        },
+        "source_selection": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "current_ref": "storage/seglog/CURRENT",
+          "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "selected_segment_generation": 0,
+          "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+          "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "manifest_generation": 0,
+          "recovery_epoch": 0,
+          "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "state": "current",
+        "valid_when_written": true
+      },
+      "checkpoint": {
+        "schema_id": "pm.storage_value.panel_redocked_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "consumer_id": "projector.panel_redocked.history",
+        "consumer_version": "1.0.0",
+        "publication_id": "fixture",
+        "state": "current",
+        "index_read_token": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_key": "fixture",
+          "checkpoint_ref": "fixture",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frontier_revision": 0,
+          "frontier_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "index_dataset_name": "fixture",
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "through_sequence_id": 1,
+        "last_event_id": "evt_legacy_panel_redocked",
+        "scope_partition": "project~Zml4dHVyZQ",
+        "server_id": "server"
+      }
+    },
+    "disclosure": {
+      "permission_allowed": true,
+      "deleted": false,
+      "withdrawn": false,
+      "membership_allowed": true,
+      "source_access_allowed": true
+    },
+    "live": {
+      "session": "session",
+      "window": "window"
+    },
+    "cases": [
+      {
+        "name": "retained_after_session_ended",
+        "path": [
+          "live",
+          "session"
+        ],
+        "value": "ended-session",
+        "valid": true
+      },
+      {
+        "name": "retained_after_window_closed",
+        "path": [
+          "live",
+          "window"
+        ],
+        "value": null,
+        "valid": true
+      },
+      {
+        "name": "withdrawn_checkpoint",
+        "path": [
+          "checkpoint",
+          "state"
+        ],
+        "value": "withdrawn",
+        "guard": "checkpoint_publication",
+        "valid": false
+      },
+      {
+        "name": "staged_checkpoint",
+        "path": [
+          "checkpoint",
+          "state"
+        ],
+        "value": "staged",
+        "guard": "checkpoint_publication",
+        "valid": false
+      },
+      {
+        "name": "forged_checkpoint_publication",
+        "path": [
+          "checkpoint",
+          "publication_id"
+        ],
+        "value": "forged-publication",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_checkpoint_storage",
+        "path": [
+          "checkpoint",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "forged_checkpoint_token",
+        "path": [
+          "checkpoint",
+          "index_read_token",
+          "checkpoint_ref"
+        ],
+        "value": "forged-checkpoint",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_checkpoint_consumer",
+        "path": [
+          "checkpoint",
+          "consumer_id"
+        ],
+        "value": "projector.foreign.history",
+        "guard": "checkpoint_original",
+        "valid": false
+      },
+      {
+        "name": "withdrawn_event",
+        "path": [
+          "event",
+          "state"
+        ],
+        "value": "withdrawn",
+        "guard": "event_publication",
+        "valid": false
+      },
+      {
+        "name": "staged_event",
+        "path": [
+          "event",
+          "state"
+        ],
+        "value": "staged",
+        "guard": "event_publication",
+        "valid": false
+      },
+      {
+        "name": "forged_event_ref",
+        "path": [
+          "event",
+          "event_ref"
+        ],
+        "value": "pmref:event:forged",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "forged_event_id",
+        "path": [
+          "event",
+          "event_id"
+        ],
+        "value": "evt_forged_original",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_event_storage",
+        "path": [
+          "event",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "foreign_event_project",
+        "path": [
+          "event",
+          "project_id"
+        ],
+        "value": "foreign-project",
+        "guard": "event_original",
+        "valid": false
+      },
+      {
+        "name": "forged_schema_valid_payload",
+        "path": [
+          "event",
+          "payload",
+          "correlation_id"
+        ],
+        "value": "forged-correlation",
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "forged_schema_invalid_payload",
+        "path": [
+          "event",
+          "payload",
+          "unexpected_forged_field"
+        ],
+        "value": true,
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "unknown_historical_version",
+        "path": [
+          "event",
+          "payload",
+          "schema_version"
+        ],
+        "value": "99.0.0",
+        "guard": "historical_payload",
+        "valid": false
+      },
+      {
+        "name": "forged_receipt_event",
+        "path": [
+          "event",
+          "receipt",
+          "first_append_receipt",
+          "event_id"
+        ],
+        "value": "evt_foreign",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "foreign_receipt_storage",
+        "path": [
+          "event",
+          "receipt",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "forged_original_result",
+        "path": [
+          "event",
+          "receipt",
+          "original_append_result",
+          "segment_ref"
+        ],
+        "value": "pmref:segment:forged",
+        "guard": "original_receipt",
+        "valid": false
+      },
+      {
+        "name": "forged_source_selection",
+        "path": [
+          "event",
+          "source_selection",
+          "manifest_bytes_sha256"
+        ],
+        "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "guard": "original_source",
+        "valid": false
+      },
+      {
+        "name": "foreign_source_storage",
+        "path": [
+          "event",
+          "source_selection",
+          "storage_instance_id"
+        ],
+        "value": "00000000-0000-4000-8000-000000000002",
+        "guard": "original_source",
+        "valid": false
+      },
+      {
+        "name": "not_valid_when_written",
+        "path": [
+          "event",
+          "valid_when_written"
+        ],
+        "value": false,
+        "guard": "original_admission",
+        "valid": false
+      },
+      {
+        "name": "current_permission_denied",
+        "path": [
+          "disclosure",
+          "permission_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      },
+      {
+        "name": "source_deleted",
+        "path": [
+          "disclosure",
+          "deleted"
+        ],
+        "value": true,
+        "guard": "source_retained",
+        "valid": false
+      },
+      {
+        "name": "current_withdrawal",
+        "path": [
+          "disclosure",
+          "withdrawn"
+        ],
+        "value": true,
+        "guard": "current_withdrawal",
+        "valid": false
+      },
+      {
+        "name": "current_membership_denied",
+        "path": [
+          "disclosure",
+          "membership_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      },
+      {
+        "name": "current_source_access_denied",
+        "path": [
+          "disclosure",
+          "source_access_allowed"
+        ],
+        "value": false,
+        "guard": "current_permission",
+        "valid": false
+      }
+    ],
+    "native": "NOT_RUN; independent fixture evidence is synthetic, never native source authentication",
+    "case_checkpoint_ref": "fixture"
+  }
 }

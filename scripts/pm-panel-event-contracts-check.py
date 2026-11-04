@@ -118,6 +118,13 @@ def protocol_errors(context, original_operation):
     return errors
 
 
+def historical_panel_page(request, expected, family, payload_schema, historical_schema, cp_schema):
+    # V1 remains read-only; its original generic/layout semantics never enter v2 validation.
+    schemas = {(payload_schema['properties']['schema_id']['const'], '2.0.0'): payload_schema,
+               (historical_schema['properties']['schema_id']['const'], '1.0.0'): historical_schema}
+    return shared.historical_page(request, expected, schemas, cp_schema, checkpoint_errors, family['event_type'])
+
+
 def main():
     count = 0
     admitted = {row['event_type'] for row in load('Plans/event_family_registry.json')['families']}
@@ -196,6 +203,17 @@ def main():
             count += 1
         checkpoint = fixture['checkpoint']
         assert not checkpoint_errors(checkpoint, cp_schema, operation)
+        reader = lambda request, expected: historical_panel_page(request, expected, family, schema, historical, cp_schema)
+        count += shared.historical_reader_cases(fixture, checkpoint, reader)
+        legacy = dict(history=fixture['historical_history'])
+        count += shared.historical_reader_cases(legacy, legacy['history']['expected']['checkpoint'], reader)
+        for case in fixture['history']['cases']:
+            if case['valid'] and case['path'][0] == 'live':
+                request = shared.history_request(fixture, checkpoint)
+                shared.history_patch(request, case)
+                current = dict(context, session=request['live']['session'], window=request['live']['window'])
+                assert protocol_errors(current, operation), ('live writer should refuse', case['name'])
+                count += 1
         count += shared.checkpoint_context_cases(checkpoint, cp_schema, operation, checkpoint_errors)
         count += shared.trailing_lf_cases(checkpoint, cp_schema)
         count += shared.history_response_cases(checkpoint, cp_schema, event, payload['project_id'], operation)

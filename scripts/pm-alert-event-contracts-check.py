@@ -187,6 +187,188 @@ def history_page(events, event_type, project_id, after, frontier, publication_id
         result, scanned, cursor = candidate, scanned + 1, seq
     return response(result, cursor)
 
+class HistoryUnavailable(ValueError):
+    def __init__(self, guards):
+        self.guards = guards
+        super().__init__('historical read unavailable: ' + ', '.join(guards))
+
+
+def historical_guards(request, expected, payload_schemas, cp_schema, cp_checker):
+    """Synthetic retained-original evidence, independent of current writer predicates.
+
+    Expected event/receipt/source/publication are separately supplied fixture evidence,
+    never reconstructed from the candidate being checked. This is not native auth.
+    Each guard owns one distinct binding so its negative can be isolated and killed.
+    """
+    cp, event = request['checkpoint'], request['event']
+    original = expected['event']
+    publication = {k: v for k, v in cp.items() if k != 'state'}
+    expected_publication = {k: v for k, v in expected['checkpoint'].items() if k != 'state'}
+    identity_fields = set(original) - {'payload', 'receipt', 'source_selection', 'state', 'valid_when_written'}
+    payload = event['payload']
+    schema = payload_schemas.get((payload.get('schema_id'), payload.get('schema_version')))
+    payload_valid = schema is not None and not list(
+        Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
+    return {
+        'checkpoint_publication': cp['state'] == 'current',
+        'checkpoint_original': not cp_checker(cp, cp_schema, original) and publication == expected_publication,
+        'event_publication': event['state'] == 'current',
+        'event_original': set(event) == set(original) and all(event[k] == original[k] for k in identity_fields),
+        'historical_payload': payload_valid and payload == original['payload'],
+        'original_receipt': event['receipt'] == original['receipt'],
+        'original_source': event['source_selection'] == original['source_selection'],
+        'original_admission': original['valid_when_written'] is True and event['valid_when_written'] is True,
+        'current_permission': all(request['disclosure'][key] is True for key in
+                                  ('permission_allowed', 'membership_allowed', 'source_access_allowed')),
+        'source_retained': request['disclosure']['deleted'] is False,
+        'current_withdrawal': request['disclosure']['withdrawn'] is False,
+    }
+
+
+def historical_page(request, expected, payload_schemas, cp_schema, cp_checker, event_type):
+    """Admit the actual checkpoint and original before feeding refs to byte paging."""
+    def validate():
+        guards = historical_guards(request, expected, payload_schemas, cp_schema, cp_checker)
+        failed = [name for name, valid in guards.items() if not valid]
+        if failed:
+            raise HistoryUnavailable(failed)
+    validate()
+    cp, event = request['checkpoint'], request['event']
+    # The gate has already authenticated exact family/scope membership. Pass its
+    # accepted ref into paging; the byte helper is not a second authority filter.
+    accepted = dict(sequence_id=event['sequence_id'], event_type=event_type,
+                    project_id=expected['event']['project_id'], event_ref=event['event_ref'])
+    response = history_page([accepted], event_type, expected['event']['project_id'], request['after_sequence_id'],
+                            cp['through_sequence_id'], cp['publication_id'], cp['index_read_token'])
+    # Returning a helper must not bypass current permission/deletion/publication fences.
+    validate()
+    return response
+
+
+def history_request(fixture, checkpoint):
+    history = fixture['history']
+    return dict(checkpoint=copy.deepcopy(checkpoint), event=copy.deepcopy(history['event']),
+                disclosure=copy.deepcopy(history['disclosure']), live=copy.deepcopy(history['live']),
+                after_sequence_id=0)
+
+
+def history_patch(request, case):
+    parent = request
+    for key in case['path'][:-1]:
+        parent = parent[key]
+    parent[case['path'][-1]] = copy.deepcopy(case['value'])
+
+
+def changed_leaves(left, right):
+    if isinstance(left, dict) and isinstance(right, dict) and left.keys() == right.keys():
+        return sum(changed_leaves(left[k], right[k]) for k in left)
+    return int(left != right)
+
+
+def historical_reader_cases(fixture, checkpoint, reader, observations=None):
+    """Check 10 composition and check 11 one-defect/guard-weakening witnesses."""
+    base = history_request(fixture, checkpoint)
+    expected = fixture['history']['expected']
+    original = expected['event']
+    assert original['state'] == expected['checkpoint']['state'] == 'current'
+    assert original['receipt']['event_id'] == original['event_id']
+    assert original['receipt']['sequence_id'] == original['sequence_id']
+    assert original['receipt']['storage_instance_id'] == original['storage_instance_id']
+    assert original['source_selection'] == expected['checkpoint']['index_read_token']['source_selection']
+    assert 0 < original['sequence_id'] <= expected['checkpoint']['through_sequence_id']
+    before = copy.deepcopy(base)
+    response = reader(base, expected)
+    assert response['event_refs'] == [original['event_ref']] and response['complete']
+    assert base == before, 'historical read mutated its inputs'
+    # Keep the ACTUAL checkpoint baseline above, including exact-16-KiB positives.
+    # Isolated negatives use a separately declared compact publication witness:
+    # changing "current" to "withdrawn" must not ALSO exceed the physical cap.
+    # This alternate synthetic ref is supplied by the fixture, not by the candidate.
+    base = copy.deepcopy(base)
+    expected = copy.deepcopy(expected)
+    case_ref = fixture['history']['case_checkpoint_ref']
+    base['checkpoint']['index_read_token']['checkpoint_ref'] = case_ref
+    expected['checkpoint']['index_read_token']['checkpoint_ref'] = case_ref
+    assert reader(base, expected)['event_refs'] == [original['event_ref']]
+    count = 2
+    for case in fixture['history']['cases']:
+        request = copy.deepcopy(base)
+        history_patch(request, case)
+        assert changed_leaves(base, request) == 1, ('non-isolated history case', case['name'])
+        if case['valid']:
+            assert reader(request, expected)['event_refs'] == [original['event_ref']], case['name']
+        else:
+            try:
+                reader(request, expected)
+            except HistoryUnavailable as error:
+                assert error.guards == [case['guard']], (case['name'], error.guards)
+            else:
+                raise AssertionError(('historical negative accepted', case['name']))
+            # Deliberately weaken precisely its owning guard, then use the SAME
+            # reader and pagination entry point. Every negative must now disclose.
+            complete_guards = historical_guards
+            def weakened(*args):
+                guards = complete_guards(*args)
+                del guards[case['guard']]
+                return guards
+            try:
+                globals()['historical_guards'] = weakened
+                page = reader(request, expected)
+                assert page['event_refs'] == [request['event']['event_ref']], case['name']
+            finally:
+                globals()['historical_guards'] = complete_guards
+            count += 1
+        if observations is not None:
+            observations.append(dict(name=case['name'], valid=case['valid'], changed_leaves=1,
+                                     guard=case.get('guard'), isolated_rejection=not case['valid'],
+                                     weakened_guard_discloses=not case['valid'], passed=True))
+        assert checkpoint == before['checkpoint'], 'reader changed persisted checkpoint'
+        count += 1
+    # Model access/deletion/withdrawal changing while the read helper returns.
+    for section, field, denied, guard in [('disclosure', 'permission_allowed', False, 'current_permission'),
+                                          ('disclosure', 'deleted', True, 'source_retained'),
+                                          ('disclosure', 'withdrawn', True, 'current_withdrawal'),
+                                          ('checkpoint', 'state', 'withdrawn', 'checkpoint_publication'),
+                                          ('event', 'state', 'staged', 'event_publication')]:
+        request = copy.deepcopy(base)
+        byte_pager = history_page
+        def returning_helper(*args):
+            page = byte_pager(*args)
+            request[section][field] = denied
+            return page
+        try:
+            globals()['history_page'] = returning_helper
+            try:
+                reader(request, expected)
+            except HistoryUnavailable as error:
+                assert error.guards == [guard], (field, error.guards)
+            else:
+                raise AssertionError(('disclosed after returning helper revoked access', field))
+            assert changed_leaves(base, request) == 1
+            complete_guards = historical_guards
+            def weakened(*args):
+                guards = complete_guards(*args)
+                del guards[guard]
+                return guards
+            try:
+                globals()['historical_guards'] = weakened
+                assert reader(request, expected)['event_refs'] == [original['event_ref']]
+            finally:
+                globals()['historical_guards'] = complete_guards
+        finally:
+            globals()['history_page'] = byte_pager
+        if observations is not None:
+            observations.append(dict(name='after_helper_' + section + '_' + field, valid=False, changed_leaves=1, guard=guard,
+                                     isolated_rejection=True, weakened_guard_discloses=True, passed=True))
+        count += 2
+    return count
+
+
+def historical_alert_page(request, expected, family, payload_schema, cp_schema):
+    # Each manifest row selects only its own historical payload schema and family.
+    schemas = {(payload_schema['properties']['schema_id']['const'], '1.0.0'): payload_schema}
+    return historical_page(request, expected, schemas, cp_schema, checkpoint_errors, family['event_type'])
+
 def trailing_lf_cases(value, schema):
     """Each currently present patterned leaf gets an independent trailing-LF regression."""
     count = 0
@@ -328,6 +510,17 @@ def main():
                 count += operation_size_cases(original_context, value_schema, fixtures['operation_size_cases'])
             if key == 'checkpoint':
                 baseline = copy.deepcopy(fixtures['checkpoint_cases'][0]['value'])
+                count += historical_reader_cases(fixtures, baseline, lambda request, expected:
+                    historical_alert_page(request, expected, family, schema, value_schema))
+                for case in fixtures['history']['cases']:
+                    if case['valid'] and case['path'][0] == 'live':
+                        request = history_request(fixtures, baseline)
+                        history_patch(request, case)
+                        original_payload = request['event']['payload']
+                        guard = dict(fixtures['payload_cases'][0]['guard'], current=request['live']['current'] and
+                                     request['live']['owner_revision'] == original_payload['prior_revision'])
+                        assert errors(original_payload, schema, guard), ('live writer should refuse', case['name'])
+                        count += 1
                 count += checkpoint_context_cases(baseline, value_schema, original_context)
                 regression = copy.deepcopy(baseline)
                 regression['event_refs'] = ['event_' + str(i) + '_' + 'a' * 64 for i in range(1000)]

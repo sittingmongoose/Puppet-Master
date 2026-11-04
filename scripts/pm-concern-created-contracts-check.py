@@ -100,6 +100,11 @@ def checkpoint_errors(value, schema, original_context):
     return found
 
 
+def historical_concern_page(request, expected, payload_schema, cp_schema):
+    schemas = {(payload_schema['properties']['schema_id']['const'], '1.0.0'): payload_schema}
+    return shared.historical_page(request, expected, schemas, cp_schema, checkpoint_errors, 'concern.created')
+
+
 def main():
     fixture = load('Plans/concern_created_contracts/concern_created.fixtures.json')
     family = load('Plans/concern_created_contracts/manifest.json')['families'][0]
@@ -195,6 +200,14 @@ def main():
     count += shared.trailing_lf_cases(original['payload'], payload_schema)
     checkpoint = fixture['checkpoint']
     assert not checkpoint_errors(checkpoint, cp_schema, original)
+    count += shared.historical_reader_cases(fixture, checkpoint, lambda request, expected:
+        historical_concern_page(request, expected, payload_schema, cp_schema))
+    for case in fixture['history']['cases']:
+        if case['valid'] and case['path'][0] == 'live':
+            request = shared.history_request(fixture, checkpoint)
+            shared.history_patch(request, case)
+            assert protocol_errors(dict(context, **request['live']), original), ('live writer should refuse', case['name'])
+            count += 1
     count += shared.checkpoint_context_cases(checkpoint, cp_schema, original, checkpoint_errors)
     count += shared.trailing_lf_cases(checkpoint, cp_schema)
     for field, bad in [('scope_partition', 'fixture'), ('event_refs', ['event'] * 1000)]:
