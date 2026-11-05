@@ -160,56 +160,21 @@ def sha(value):
     return hashlib.sha256(canonical(value)).hexdigest()
 
 
-def retained_schema(schema):
-    """Restore only the declared earlier numeric bounds; keep every other guard."""
-    if isinstance(schema, list):
-        return [retained_schema(v) for v in schema]
-    if not isinstance(schema, dict):
-        return schema
-    result = {k: retained_schema(v) for k, v in schema.items() if k != 'x-dt-retained-number-bounds'}
-    for key, value in schema.get('x-dt-retained-number-bounds', {}).items():
-        if key not in ['minimum', 'maximum']:
-            continue
-        if value is None:
-            result.pop(key, None)
-        else:
-            result[key] = value
-    return result
-
-
-def current_numbers_valid(value):
-    """Equivalent to dt_number_domain.schema.json, including finite decimals."""
-    if isinstance(value, dict):
-        return all(current_numbers_valid(v) for v in value.values())
-    if isinstance(value, list):
-        return all(current_numbers_valid(v) for v in value)
-    if type(value) in [int, float, Decimal]:
-        return -9007199254740991 <= value <= 9007199254740991
-    return value is None or type(value) in [str, bool]
 
 
 def unsigned_integer_valid(value):
-    return type(value) in [int, float] and current_numbers_valid(value) and value >= 0 and int(value) == value
+    # Preserve the owner-admitted domain; only reject wrong types/nonintegers.
+    return Draft202012Validator({'type': 'integer', 'minimum': 0}).is_valid(value)
 
 
 def producer_semantic_bytes(event):
     """CV-EventRecord's exact caller-owned projection and RFC 8785 hash domain.
 
-    Current caller numbers are finite and within +/- (2**53 - 1). The source
-    custody codec and historical identities retain earlier exact integers.
+    This retry oracle's fixtures use RFC 8785's representable numeric domain;
+    pm.dt.source.json.v1 remains the separate exact-u64 source custody codec.
     """
-    projection = {key: event[key] for key in PRODUCER_FIELDS}
-    if not current_numbers_valid(projection):
-        raise ValueError('numeric_domain_refused')
-    return rfc8785.dumps(projection)
+    return rfc8785.dumps({key: event[key] for key in PRODUCER_FIELDS})
 
-
-def semantic_digest_defined(event):
-    try:
-        producer_semantic_bytes(event)
-        return True
-    except (ValueError, TypeError):
-        return False
 
 
 def producer_semantic_digest(event):
@@ -312,11 +277,7 @@ def source_bytes(value):
     return application_bytes(value) if value['envelope_context']['scope_kind'] == 'application' else canonical(value)
 
 
-def identity(contract, payload, partition='project~cHJvamVjdC0x', application=None, *, historical=False):
-    if type(historical) is not bool:
-        raise ValueError('schema_refused')
-    if not historical and not current_numbers_valid(payload):
-        raise ValueError('numeric_domain_refused')
+def identity(contract, payload, partition='project~cHJvamVjdC0x', application=None):
     if 'blocked_sequence' in contract['identity_fields'] and not Draft202012Validator({'type': 'integer', 'minimum': 0}).is_valid(payload['blocked_sequence']):
         raise ValueError('schema_refused')
     # JSON Schema's integer domain includes 1.0. The exact source codec already
@@ -493,11 +454,9 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     source_definition = slug + ('_application_source' if source_is_app else '_source')
     if source_definition not in schemas:
         return 'scope_refused'
-    validator = Draft202012Validator(retained_schema(schemas[source_definition]) if historical else schemas[source_definition], format_checker=FormatChecker())
+    validator = Draft202012Validator(schemas[source_definition], format_checker=FormatChecker())
     if list(validator.iter_errors(prepared)) or list(validator.iter_errors(completed)):
         return 'schema_refused'
-    if not historical and (not current_numbers_valid(event) or not semantic_digest_defined(event)):
-        return 'numeric_domain_refused'
     if len(source_bytes(prepared)) > 1048576:
         return 'source_stage_too_large'
     if len(source_bytes(completed)) > 1048576:
@@ -532,7 +491,7 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     if any(canonical(p[k]) != canonical(completed['subject'][k]) for k in c['identity_fields']):
         return 'join_refused'
     try:
-        key, eid = identity(c, p, partition, completed if partition == 'app' else None, historical=historical)
+        key, eid = identity(c, p, partition, completed if partition == 'app' else None)
     except ValueError:
         return 'identity_refused'
     if key != event['idempotency_key'] or eid != event['event_id'] or key != completed['idempotency_key'] or eid != completed['event_id']:
@@ -611,7 +570,7 @@ def recovery(c, f, case, schemas=None):
 
 
 def checkpoint_result(c, old, proposed, context, schema):
-    if old is not None and not Draft202012Validator(retained_schema(schema), format_checker=FormatChecker()).is_valid(old):
+    if old is not None and not Draft202012Validator(schema, format_checker=FormatChecker()).is_valid(old):
         return 'schema_refused'
     if type(context['governed_rebuild']) is not bool:
         return 'unavailable'
@@ -726,7 +685,7 @@ def historical_results(c, f, schemas):
     return results
 
 
-def recommit(c, values, *, historical=False):
+def recommit(c, values):
     """Update observational identity copies after one semantic fixture change."""
     a, b, e = values
     if b['scope_partition'] == 'app':
@@ -734,7 +693,7 @@ def recommit(c, values, *, historical=False):
                     for k in c['identity_fields']]
         operation = sha([c['event_type'], b['original_owner_operation_id']] + subjects)
         a['owner_operation_id'] = b['owner_operation_id'] = operation
-    key, eid = identity(c, b['payload'], b['scope_partition'], b if b['scope_partition'] == 'app' else None, historical=historical)
+    key, eid = identity(c, b['payload'], b['scope_partition'], b if b['scope_partition'] == 'app' else None)
     for value in [a, b, e]:
         value['idempotency_key'] = key; value['event_id'] = eid
     if c['event_type'] == 'usage.event':
@@ -945,10 +904,10 @@ def technical_checks(c, f, schemas, check):
                 if isinstance(value, list):
                     return [replace_sequence(v, number) for v in value]
                 return value
-            a, b, e = recommit(c, replace_sequence(values, integer), historical=True)
-            check(source_valid(c, a, b, e, schemas, historical=True) == 'accepted', name + ': retained exact u64 identity ' + str(integer))
+            a, b, e = recommit(c, replace_sequence(values, integer))
+            check(source_valid(c, a, b, e, schemas) == 'accepted', name + ': exact u64 identity ' + str(integer))
             decoded = [decode_source(canonical(v)) for v in [a, b, e]]
-            check(source_valid(c, *decoded, schemas, historical=True) == 'accepted', name + ': retained exact u64 round trip ' + str(integer))
+            check(source_valid(c, *decoded, schemas) == 'accepted', name + ': exact u64 round trip ' + str(integer))
             if integer == 1:
                 aa, bb, ee = recommit(c, replace_sequence(values, 1.0))
                 check(source_valid(c, aa, bb, ee, schemas) == 'accepted', name + ': schema-valid float integer source')
@@ -961,18 +920,27 @@ def technical_checks(c, f, schemas, check):
                 check(not Draft202012Validator(schemas[slug], format_checker=FormatChecker()).is_valid(replace_sequence(e['payload'], 1.25)), name + ': fractional identity refused')
         for integer in [9007199254740992, 18446744073709549568]:
             values = [f[k] for k in ['prepared_source', 'completed_source', 'event_record']]
-            integers = recommit(c, replace_sequence(values, integer), historical=True)
-            floats = recommit(c, replace_sequence(values, float(integer)), historical=True)
-            check(identity(c, integers[1]['payload'], historical=True) == identity(c, floats[1]['payload'], historical=True), name + ': large equal integer representation identity ' + str(integer))
-            check(source_valid(c, *floats, schemas, historical=True) == 'accepted', name + ': retained large float integer source ' + str(integer))
-            check(source_valid(c, *[decode_source(canonical(v)) for v in floats], schemas, historical=True) == 'accepted', name + ': retained large float integer persisted round trip ' + str(integer))
+            integers = recommit(c, replace_sequence(values, integer))
+            floats = recommit(c, replace_sequence(values, float(integer)))
+            check(identity(c, integers[1]['payload']) == identity(c, floats[1]['payload']), name + ': large equal integer representation identity ' + str(integer))
+            check(source_valid(c, *floats, schemas) == 'accepted', name + ': large float integer source ' + str(integer))
+            check(source_valid(c, *[decode_source(canonical(v)) for v in floats], schemas) == 'accepted', name + ': large float integer persisted round trip ' + str(integer))
             check([canonical(v) for v in floats] == [canonical(v) for v in integers], name + ': large equal integer canonical bytes ' + str(integer))
 
 
 def schema_value_kind(schema):
     kinds = schema.get('type', [])
     kinds = [kinds] if isinstance(kinds, str) else kinds
-    return next((kind for kind in ['integer', 'number', 'boolean'] if kind in kinds), None)
+    declared = next((kind for kind in ['integer', 'number', 'boolean'] if kind in kinds), None)
+    if declared is not None:
+        return declared
+    values = [schema['const']] if 'const' in schema else schema.get('enum', [])
+    values = [value for value in values if value is not None]
+    if values and all(type(value) is bool for value in values):
+        return 'boolean'
+    if values and all(type(value) in [int, float] for value in values):
+        return 'integer' if all(type(value) is int for value in values) else 'number'
+    return None
 
 
 def typed_values(schema, value, path=()):
@@ -1004,7 +972,7 @@ def schema_type_cases(c, f, schemas):
     for index, (definition, value) in enumerate(variants):
         for path, original, rule in typed_values(schemas[definition], value):
             for replacement in ['false', '0', 'true', '1', [], {}, [False], {'value': False},
-                                1 if schema_value_kind(rule) == 'boolean' else True]:
+                                *( [0, 1] if schema_value_kind(rule) == 'boolean' else [False, True] )]:
                 changed = copy.deepcopy(value); set_path(changed, path, replacement)
                 label = definition + '/' + str(index) + '/' + '/'.join(map(str, path)) + '/' + repr(replacement)
                 if label in seen:
@@ -1014,13 +982,6 @@ def schema_type_cases(c, f, schemas):
                 # Null is tested at each nonnullable leaf and every authority
                 # adapter, rather than misclassified at nullable union fields.
                 yield definition, label, changed
-            if schema_value_kind(rule) in ['integer', 'number']:
-                for replacement in [2**53, -(2**53), 2**60, -(2**60)]:
-                    changed = copy.deepcopy(value); set_path(changed, path, replacement)
-                    label = definition + '/' + str(index) + '/' + '/'.join(map(str, path)) + '/bound/' + str(replacement)
-                    if label not in seen:
-                        seen.add(label)
-                        yield definition, label, changed
 
 
 def round6_corpus(c, f, schemas):
@@ -1052,13 +1013,26 @@ def round6_corpus(c, f, schemas):
         ref = dict(e, payload={}, payload_ref='payload:fixture-verified-pack-body')
         cases.append(('type/payload_ref_verified/' + token,
                       lambda replacement=replacement, ref=ref: source_valid(c, a, b, ref, schemas, b['payload'], replacement), 'accepted'))
+    # A boolean True type mutation must start at numeric one, rather than
+    # introducing a second value mismatch for families whose base counter is 2+.
+    type_a, type_b, type_e = copy.deepcopy([a, b, e])
+    type_a['envelope_context']['producer_sequence_id'] = type_b['envelope_context']['producer_sequence_id'] = type_e['producer_sequence_id'] = 1
+    type_b['prepared_sha256'] = hashlib.sha256(source_bytes(type_a)).hexdigest()
+    assert source_valid(c, type_a, type_b, type_e, schemas) == 'accepted'
     for replacement in [True, '1', [], {}, [1], {'value': 1}]:
-        bad = dict(e, producer_sequence_id=replacement)
+        bad = dict(type_e, producer_sequence_id=replacement)
         cases.append(('type/envelope/producer_sequence_id/' + repr(replacement),
-                      lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
+                      lambda bad=bad: source_valid(c, type_a, type_b, bad, schemas), 'accepted'))
+    zero_a, zero_b, zero_e = copy.deepcopy([a, b, e])
+    zero_a['envelope_context']['producer_sequence_id'] = zero_b['envelope_context']['producer_sequence_id'] = zero_e['producer_sequence_id'] = 0
+    zero_b['prepared_sha256'] = hashlib.sha256(source_bytes(zero_a)).hexdigest()
+    assert source_valid(c, zero_a, zero_b, zero_e, schemas) == 'accepted'
+    zero_bad = dict(zero_e, producer_sequence_id=False)
+    cases.append(('type/envelope/producer_sequence_id/False',
+                  lambda: source_valid(c, zero_a, zero_b, zero_bad, schemas), 'accepted'))
     bad = dict(e, unexpected='refused')
     cases.append(('type/envelope/extra_property', lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
-    for replacement in [True, '1', None, [], {}, -1]:
+    for replacement in [False, True, '1', None, [], {}, -1]:
         bad = dict(e, sequence_id=replacement)
         cases.append(('type/envelope/sequence_id/' + repr(replacement),
                       lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
@@ -1066,7 +1040,7 @@ def round6_corpus(c, f, schemas):
     prior = cp['previous']
     if prior is not None:
         paths = set()
-        for path, value, rule in typed_values(retained_schema(schemas[slug + '_checkpoint']), prior):
+        for path, value, rule in typed_values(schemas[slug + '_checkpoint'], prior):
             if path in paths:
                 continue
             paths.add(path)
@@ -1112,36 +1086,6 @@ def round6_corpus(c, f, schemas):
         bad['context']['verified_prefix']['row_set_sha256'] = sha(value)
         cases.append(('type/empty_prefix_container/' + repr(value),
                       lambda bad=bad: checkpoint_result(c, bad['previous'], bad['proposed'], bad['context'], schemas[slug + '_checkpoint']), 'published'))
-    # Sequence_id is Storage-owned: no caller/source copy is stale here.
-    for number in [2**53, 2**53 + 1, 2**60, 2**64 - 1, -(2**53), -(2**60)]:
-        bad = dict(e, sequence_id=number)
-        cases.append(('numeric/writer/sequence_id/' + str(number),
-                      lambda bad=bad: source_valid(c, a, b, bad, schemas), 'accepted'))
-        bad = dict(e, producer_sequence_id=number)
-        def digest(bad=bad):
-            try:
-                producer_semantic_digest(bad)
-                return True
-            except ValueError:
-                return False
-        cases.append(('numeric/digest/' + str(number), digest, True))
-        floating = dict(e, producer_sequence_id=float(number))
-        def float_digest(floating=floating):
-            try:
-                producer_semantic_digest(floating)
-                return True
-            except ValueError:
-                return False
-        cases.append(('numeric/digest_float/' + str(number), float_digest, True))
-        if name.startswith('approval.') and number >= 0:
-            payload = dict(b['payload'], blocked_sequence=number)
-            def key(payload=payload):
-                try:
-                    identity(c, payload)
-                    return True
-                except ValueError:
-                    return False
-            cases.append(('numeric/identity/' + str(number), key, True))
     if name.startswith('approval.'):
         for replacement in [True, '1', -1, 1.25, None, [], {}]:
             payload = dict(b['payload'], blocked_sequence=replacement)
@@ -1199,21 +1143,8 @@ def round6_corpus(c, f, schemas):
     for mode in ['false', 0, None, [], {}]:
         cases.append(('type/historical_mode/' + repr(mode),
                       lambda mode=mode: source_valid(c, a, b, e, schemas, historical=mode), 'accepted'))
-        def identity_mode(mode=mode):
-            try:
-                identity(c, b['payload'], historical=mode)
-                return True
-            except ValueError:
-                return False
-        cases.append(('type/identity_mode/' + repr(mode), identity_mode, True))
-    metadata_probe = {'type': 'boolean', 'x-dt-retained-number-bounds': {'type': None}}
-    assert Draft202012Validator(retained_schema(metadata_probe)).is_valid(False)
-    cases.append(('type/retained_metadata_preserves_non_numeric_guards',
-                  lambda: Draft202012Validator(retained_schema(metadata_probe)).is_valid(0), True))
-    for value in [True, -1, 1.25, 2**53]:
-        cases.append(('numeric/unsigned_integer/' + repr(value), lambda value=value: unsigned_integer_valid(value), True))
-    for value in [2**53, -(2**53), 2**60, -(2**60), float('nan')]:
-        cases.append(('numeric/domain/' + repr(value), lambda value=value: current_numbers_valid(value), True))
+    for value in [True, '0', None, [], {}, -1, 1.25]:
+        cases.append(('type/unsigned_integer/' + repr(value), lambda value=value: unsigned_integer_valid(value), True))
     return cases
 
 
@@ -1224,46 +1155,6 @@ def round6_checks(c, f, schemas, check):
         check(actual not in accepting if isinstance(accepting, set) else actual != accepting, name + ': round6 ' + label)
     for definition, label, value in schema_type_cases(c, f, schemas):
         check(not Draft202012Validator(schemas[definition], format_checker=FormatChecker()).is_valid(value), name + ': numeric/boolean schema ' + label)
-    # Full coherent caller counters, both accepted safe boundary and refused
-    # unsafe boundaries. Exact old history remains authenticated and readable.
-    variants = [dict(prepared=f['prepared_source'], completed=f['completed_source'], event=f['event_record'])]
-    variants += [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application'][:1]
-    for variant in variants:
-        for number in [2**53 - 1, 2**53, 2**53 + 1, 2**60, 2**64 - 1, -(2**53 - 1), -(2**53), -(2**60)]:
-            for value in [number, float(number)]:
-                a, b, e = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']])
-                a['envelope_context']['producer_sequence_id'] = b['envelope_context']['producer_sequence_id'] = e['producer_sequence_id'] = value
-                b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
-                safe = 0 <= value <= 2**53 - 1
-                check((source_valid(c, a, b, e, schemas) == 'accepted') == safe, name + ': coherent numeric counter ' + str(value))
-                try:
-                    digest = producer_semantic_digest(e); digested = True
-                except ValueError as exc:
-                    digested = False
-                    check(str(exc) == 'numeric_domain_refused', name + ': structured numeric refusal')
-                # Digest domain itself permits signed numbers, while the
-                # counter's source schema additionally requires nonnegative.
-                check(digested == (abs(value) <= 2**53 - 1), name + ': retry numeric domain ' + str(value))
-                if value >= 0:
-                    ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
-                               authenticated_original={'prepared': a, 'completed': b, 'event': e})
-                    check(historical_read(c, a, b, e, schemas, ctx)['result'] == 'retained', name + ': retained old counter ' + str(value))
-        if name.startswith('approval.'):
-            for number in [2**53 - 1, 2**53, 2**53 + 1, 2**60, 2**64 - 1]:
-                a, b, e = copy.deepcopy([variant[k] for k in ['prepared', 'completed', 'event']])
-                for value in [a['subject'], b['subject'], a['before'], b['before'], b['payload'], e['payload']]:
-                    if 'blocked_sequence' in value:
-                        value['blocked_sequence'] = number
-                a, b, e = recommit(c, [a, b, e], historical=True)
-                check((source_valid(c, a, b, e, schemas) == 'accepted') == (number <= 2**53 - 1), name + ': approval numeric writer ' + str(number))
-                ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
-                           authenticated_original={'prepared': a, 'completed': b, 'event': e})
-                check(historical_read(c, a, b, e, schemas, ctx)['result'] == 'retained', name + ': retained approval integer ' + str(number))
-    # The generic schema also closes arbitrary nested EventRecord payload data.
-    for number in [2**53 - 1, -(2**53 - 1), 2**53, -(2**53), 2**60, -(2**60)]:
-        good = abs(number) <= 2**53 - 1
-        for v in [number, float(number), {'nested': [number]}]:
-            check(current_numbers_valid(v) == good, name + ': signed recursive numeric schema ' + repr(v))
 
 
 def checker_exit_code(failures):
@@ -1434,8 +1325,7 @@ def main():
             failures.append(message)
     event_schema = load('Plans/event_record.schema.json')
     documents = {'Plans/dt_event_contracts.schema.json': schema_document,
-                 'Plans/event_record.schema.json': event_schema,
-                 'Plans/dt_number_domain.schema.json': load('Plans/dt_number_domain.schema.json')}
+                 'Plans/event_record.schema.json': event_schema}
     mirrors = [(row['family_id'], row['value_schema'], ref) for ref, row in storage_schemas.items()
                if ref.startswith('Plans/dt_event_contracts.schema.json#')]
     reference_errors = schema_reference_errors(documents, mirrors)

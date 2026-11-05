@@ -19,19 +19,34 @@ def function_mutants(dt):
     functions = ['source_valid', 'checkpoint_result', 'recovery', 'historical_read',
                  'transition', 'gate_score_join', 'tool_request_join',
                  'usage_values_valid', 'batch_join', 'denial_emission', 'append_model', 'identity', 'decode_source',
-                 'producer_semantic_bytes', 'current_numbers_valid', 'accounting_totals', 'unsigned_integer_valid', 'retained_schema']
+                 'producer_semantic_bytes', 'accounting_totals', 'unsigned_integer_valid']
     for name in functions:
         tree = ast.parse(inspect.getsource(getattr(dt, name)))
         function = tree.body[0]
+        if name == 'unsigned_integer_valid':
+            # The actual helper uses the owner-declared integer/minimum rules.
+            # Cut each keyword separately; no Python comparison exception can
+            # mask a malformed value after its explicit type rule is removed.
+            for keyword in ['type', 'minimum']:
+                mutant = copy.deepcopy(tree)
+                rule = next(node for node in ast.walk(mutant) if isinstance(node, ast.Dict))
+                keep = [i for i, key in enumerate(rule.keys) if key.value != keyword]
+                rule.keys = [rule.keys[i] for i in keep]; rule.values = [rule.values[i] for i in keep]
+                namespace = {}
+                exec(compile(ast.fix_missing_locations(mutant), '<DT unsigned one schema keyword>', 'exec'), dt.__dict__, namespace)
+                line = inspect.getsourcelines(getattr(dt, name))[1]
+                predicate = 'owner_integer_schema/' + keyword
+                yield {'id': name + ':' + str(line) + ':' + predicate, 'function': name,
+                       'line': line, 'predicate': predicate, 'replacement': 'remove only ' + keyword,
+                       'callable': namespace[name]}
+            continue
         edits = []
         for node in ast.walk(function):
-            if name == 'retained_schema' and isinstance(node, ast.If) and node.body and isinstance(node.body[0], ast.Continue):
-                edits.append((node.test, False))
             if name in ['append_model', 'accounting_totals'] and isinstance(node, ast.If) and 'type(' in ast.unparse(node.test):
                 edits.append((node.test, False))
             if name == 'accounting_totals' and isinstance(node, ast.If) and 'Draft202012Validator' in ast.unparse(node.test):
                 edits.append((node.test, False))
-            if name in ['identity', 'producer_semantic_bytes'] and isinstance(node, ast.If) and ('current_numbers_valid' in ast.unparse(node.test) or 'type(historical)' in ast.unparse(node.test) or "'blocked_sequence' in contract" in ast.unparse(node.test)):
+            if name in ['identity', 'producer_semantic_bytes'] and isinstance(node, ast.If) and ("'blocked_sequence' in contract" in ast.unparse(node.test)):
                 edits.append((node.test, False))
             if name == 'decode_source' and isinstance(node, ast.If) and ast.unparse(node.test) == 'len(raw) > 1048576':
                 edits.append((node.test, False))
@@ -57,7 +72,7 @@ def function_mutants(dt):
             if isinstance(node, ast.Return) and isinstance(node.value, ast.BoolOp) and isinstance(node.value.op, ast.And):
                 # Remove a single clause, retaining every other clause/helper.
                 edits.extend((value, True) for value in node.value.values)
-            if isinstance(node, ast.Return) and isinstance(node.value, ast.Compare) and name in ['batch_join', 'gate_score_join', 'current_numbers_valid']:
+            if isinstance(node, ast.Return) and isinstance(node.value, ast.Compare) and name in ['batch_join', 'gate_score_join']:
                 edits.append((node.value, True))
         for expression, replacement in edits:
             original = ast.unparse(expression)
@@ -500,8 +515,18 @@ def schema_table(dt, c, f, schemas):
     if c['scope_policy'] == 'project_only':
         bad = copy.deepcopy(f['prepared_source']); bad['envelope_context']['scope_kind'] = 'application'
         add(slug + '_source', 'scope/forbidden_application', bad)
+    # The old bare-score regression removes three context fields. Keep it
+    # in the complete checker, but do not claim it as a one-field witness.
+    # Replace its isolation claim with one missing context member at a time.
+    for variant in f['positive_variants']:
+        if variant['case'] != 'scored_gate_dispatch_context':
+            continue
+        definition = slug + ('_application_source' if variant['event']['scope_kind'] == 'application' else '_source')
+        for field in ['dispatch_score_ref', 'dispatch_score_tuple', 'node_id']:
+            value = copy.deepcopy(variant['completed']); del value['payload'][field]
+            add(definition, 'dispatch_context/missing/' + field, value)
     for case in f.get('source_join_negatives', []):
-        if case['expected'] != 'schema_refused':
+        if case['expected'] != 'schema_refused' or case['case'] == 'bare_scores_without_source_context':
             continue
         definition = slug + ('_application_source' if case['event']['scope_kind'] == 'application' else '_source')
         for stage in ['prepared', 'completed']:
@@ -509,7 +534,7 @@ def schema_table(dt, c, f, schemas):
             if not dt.Draft202012Validator(schemas[definition], format_checker=dt.FormatChecker()).is_valid(value):
                 add(definition, 'source_join/' + case['case'] + '/' + stage, value)
     for definition, label, value in dt.schema_type_cases(c, f, schemas):
-        if label.endswith('/True') or label.endswith('/1') or '/bound/' in label:
+        if label.endswith(('/False', '/True', '/0', '/1')):
             add(definition, 'numeric_boolean/' + label, value)
     validator = lambda schema: dt.Draft202012Validator(schema, format_checker=dt.FormatChecker())
     guards = {}; failures = []
@@ -577,31 +602,28 @@ def schema_table(dt, c, f, schemas):
         # Alternatives contain type-dispatch diagnostics as well as the actual
         # failed grammar. Only a rule with an accepting witness is a guard row.
         if flips:
+            individual = []
+            for selected_path in paths:
+                one = copy.deepcopy(schemas[definition]); target = one
+                for part in selected_path[:-1]:
+                    target = target[part]
+                if keyword == 'required':
+                    target[keyword].remove(missing)
+                elif keyword == 'additionalProperties':
+                    target.setdefault('properties', {})['redb_snapshot_id' if instance_path == ('index_read_token',) else 'unexpected'] = {}
+                else:
+                    del target[keyword]
+                one_flips = [label for candidate, label, value in cases if candidate == definition and validator(one).is_valid(value)]
+                individual.append({'rule_path': selected_path, 'negatives_that_flip': one_flips,
+                                   'negatives_that_stay_rejected': [label for candidate, label, _ in cases if label not in one_flips]})
+            duplicate_witnesses = [label for label in flips if all(label not in site['negatives_that_flip'] for site in individual)]
             rows.append({'guard': definition + '/' + '/'.join(map(str, logical_path)) + (('/' + missing) if missing else ''),
                          'rule_value': json.loads(rule_value),
-                         'duplicate_set': 'equivalent nullable/stage payload schema copies' if len(paths) > 1 else None,
+                         'duplicate_set': 'same property and keyword in equivalent nullable/completed wrappers' if len(paths) > 1 and duplicate_witnesses else None,
+                         'individual_site_results': individual,
+                         'own_duplicate_witnesses': duplicate_witnesses,
+                         'single_site_witnesses': sorted({label for site in individual for label in site['negatives_that_flip']}),
                          'rule_paths': paths, 'negatives_that_flip': flips, 'negatives_that_stay_rejected': stayed})
-    # The numeric-gate context is one conditional required rule with three
-    # fields, repeated in the nullable/stage payload copies. Remove only that
-    # rule's context members, preserving all ordinary required fields.
-    for definition, label, value in cases:
-        if label in covered or 'bare_scores_without_source_context' not in label:
-            continue
-        weakened = copy.deepcopy(schemas[definition]); paths = []
-        context_fields = {'dispatch_score_ref', 'dispatch_score_tuple', 'node_id'}
-        for target, path in matching_rules(weakened, ('payload',), 'required'):
-            if context_fields.issubset(target['required']):
-                target['required'] = [key for key in target['required'] if key not in context_fields]
-                paths.append(list(path))
-        flips = []; stayed = []
-        for candidate, candidate_label, candidate_value in cases:
-            if candidate == definition and validator(weakened).is_valid(candidate_value):
-                flips.append(candidate_label); covered.add(candidate_label)
-            else:
-                stayed.append(candidate_label)
-        if flips:
-            rows.append({'guard': definition + '/payload/conditional_dispatch_context_required', 'rule_paths': paths,
-                         'negatives_that_flip': flips, 'negatives_that_stay_rejected': stayed})
     failures.extend(label + ': no single schema guard admits negative' for _, label, _ in cases if label not in covered)
     return rows, failures
 
@@ -676,66 +698,107 @@ def prove_family(dt, c, f, schemas):
                 'after_predicate_removal': cascade, 'status': 'pass' if ok else 'fail'})
         else:
             guards_without_cases.append(guard['id'])
-    def duplicate_proof(label, selections, *, rfc_integer=False):
-        guards = list(function_mutants(dt)); selected = []
-        for function, fragment in selections:
-            matches = [g for g in guards if g['function'] == function and fragment in g['predicate']]
-            assert len(matches) == 1, (label, function, fragment, len(matches))
-            selected.extend(matches)
+    def field_duplicate_proof(label, field, keyword, sites, witnesses, *, typed_join=False):
+        # One property/keyword only. Every other schema property, conditional,
+        # required member and runtime comparison remains enabled.
+        event_schema = copy.deepcopy(dt.load('Plans/event_record.schema.json'))
+        rule = copy.deepcopy(event_schema['properties'][field])
+        if '$ref' in rule:
+            rule = copy.deepcopy(event_schema['$defs'][rule['$ref'].rsplit('/', 1)[1]])
+        if typed_join:
+            target = next((branch for branch in rule.get('anyOf', []) if branch.get('type') == 'integer'), rule)
+            kinds = target['type']
+            target['type'] = ([kinds] if isinstance(kinds, str) else kinds) + ['boolean']
+        else:
+            del rule[keyword]
+        event_schema['properties'][field] = rule
+        all_guards = list(function_mutants(dt)); selected = []
         replacements = {}
-        for function in {g['function'] for g in selected}:
-            tree = ast.parse(inspect.getsource(getattr(dt, function)))
-            expressions = {g['predicate'] for g in selected if g['function'] == function}
-            changed = 0
-            for node in ast.walk(tree):
-                if isinstance(node, ast.If) and ast.unparse(node.test) in expressions:
-                    node.test = ast.Constant(False); changed += 1
-            assert changed == len(expressions)
+        for function in sites:
+            fragment = "for k in b if k != 'scope_kind'" if function == 'typed_envelope_join' else "load('Plans/event_record.schema.json')"
+            name = 'source_valid' if function == 'typed_envelope_join' else function
+            guard = [g for g in all_guards if g['function'] == name and fragment in g['predicate']]
+            assert len(guard) == 1, (label, name, fragment)
+            selected.extend(guard)
+            tree = ast.parse(inspect.getsource(getattr(dt, name))); changed = 0
+            class Narrow(ast.NodeTransformer):
+                def visit_Call(self, node):
+                    nonlocal changed
+                    if function != 'typed_envelope_join' and ast.unparse(node) == "load('Plans/event_record.schema.json')":
+                        changed += 1
+                        return ast.copy_location(ast.Name('_dt_single_field_schema', ast.Load()), node)
+                    return self.generic_visit(node)
+                def visit_Compare(self, node):
+                    nonlocal changed
+                    if function == 'typed_envelope_join' and ast.unparse(node) == 'canonical(event[k]) != canonical(b[k])':
+                        changed += 1
+                        # Remove only boolean-versus-number type distinction
+                        # on this field. Its numeric value still must equal the
+                        # original, and every peer retains typed comparison.
+                        expr = "event[k] != b[k] if k == 'producer_sequence_id' and type(event[k]) is bool and type(b[k]) in [int, float] else canonical(event[k]) != canonical(b[k])"
+                        return ast.copy_location(ast.parse(expr, mode='eval').body, node)
+                    return self.generic_visit(node)
+            tree = Narrow().visit(tree); assert changed == 1, (label, function, changed)
             namespace = {}
-            exec(compile(ast.fix_missing_locations(tree), '<DT named duplicate removal>', 'exec'), dt.__dict__, namespace)
-            replacements[function] = namespace[function]
-        ids = [g['id'] for g in selected]
-        with contextlib.ExitStack() as stack:
-            for function, replacement in replacements.items():
-                stack.enter_context(replace_function(dt, function, replacement))
-            if rfc_integer:
-                import rfc8785._impl as impl
-                tree = ast.parse(inspect.getsource(impl.dump)); found = 0
-                for node in ast.walk(tree):
-                    if isinstance(node, ast.If) and ast.unparse(node.test) == 'obj < _INT_MIN or obj > _INT_MAX':
-                        node.test = ast.Constant(False); found += 1
-                assert found == 1
-                namespace = {}
-                exec(compile(ast.fix_missing_locations(tree), '<only RFC8785 duplicate integer-bound guard>', 'exec'), impl.__dict__, namespace)
-                stack.enter_context(replace_function(impl, 'dump', namespace['dump']))
-                ids.append('rfc8785._impl.dump:obj < _INT_MIN or obj > _INT_MAX')
-            flips = []; stayed = []; changed_rejections = []
-            for candidate, call, expected in corpus:
-                value = safe_call(call)
-                if accepts(value, expected):
-                    flips.append(candidate); covered.add(candidate)
-                else:
-                    stayed.append(candidate)
-                    if value != baseline[candidate]:
-                        changed_rejections.append({'case': candidate, 'before': baseline[candidate], 'after': value})
-        if not flips:
-            failures.append(label + ': named duplicate set has no witness')
-        rows.append({'guard': label, 'duplicate_set': ids, 'negatives_that_flip': flips,
-                     'negatives_that_stay_rejected': stayed, 'changed_rejections': changed_rejections})
-    schema_expression = "load('Plans/event_record.schema.json')"
-    duplicate_proof('source_valid/schema_and_typed_envelope_join', [
-        ('source_valid', schema_expression), ('source_valid', "for k in b if k != 'scope_kind'")])
-    if c['scope_policy'] != 'project_only':
-        duplicate_proof('source_valid/schema_and_captured_scope_join', [
-            ('source_valid', schema_expression),
-            ('source_valid', "event['scope_kind'] != completed['envelope_context']['scope_kind']")])
-    for function in ['recovery', 'historical_read']:
-        duplicate_proof(function + '/schema_and_source_schema', [
-            ('source_valid', schema_expression), (function, schema_expression)])
-    duplicate_proof('source_valid/source_and_identity_mode_type', [
-        ('source_valid', 'type(historical) is not bool'), ('identity', 'type(historical) is not bool')])
-    duplicate_proof('producer_semantic_bytes/DT_and_RFC8785_integer_bounds', [
-        ('producer_semantic_bytes', 'not current_numbers_valid(projection)')], rfc_integer=True)
+            exec(compile(ast.fix_missing_locations(tree), '<DT one field/predicate mutation>', 'exec'), dt.__dict__, namespace)
+            replacements[function] = (name, namespace[name])
+        outcomes = {}
+        previous = dt.__dict__.get('_dt_single_field_schema', None)
+        dt._dt_single_field_schema = event_schema
+        try:
+            for removed in [[site] for site in sites] + [list(sites)]:
+                key = '+'.join(removed); flips = []; stays = []
+                with contextlib.ExitStack() as stack:
+                    if typed_join and len(removed) == 2:
+                        # Both mutations target source_valid; apply the schema
+                        # argument edit to its field-specific join mutant.
+                        original_fn = replacements['typed_envelope_join'][1]
+                        tree = ast.parse(inspect.getsource(dt.source_valid))
+                        class Both(ast.NodeTransformer):
+                            def visit_Call(self, node):
+                                if ast.unparse(node) == "load('Plans/event_record.schema.json')":
+                                    return ast.copy_location(ast.Name('_dt_single_field_schema', ast.Load()), node)
+                                return self.generic_visit(node)
+                            def visit_Compare(self, node):
+                                if ast.unparse(node) == 'canonical(event[k]) != canonical(b[k])':
+                                    return ast.copy_location(ast.parse("event[k] != b[k] if k == 'producer_sequence_id' and type(event[k]) is bool and type(b[k]) in [int, float] else canonical(event[k]) != canonical(b[k])", mode='eval').body, node)
+                                return self.generic_visit(node)
+                        tree = Both().visit(tree); namespace = {}
+                        exec(compile(ast.fix_missing_locations(tree), '<DT both sites one type predicate>', 'exec'), dt.__dict__, namespace)
+                        stack.enter_context(replace_function(dt, 'source_valid', namespace['source_valid']))
+                    else:
+                        for site in removed:
+                            name, replacement = replacements[site]
+                            stack.enter_context(replace_function(dt, name, replacement))
+                    for candidate, call, expected in corpus:
+                        if accepts(safe_call(call), expected): flips.append(candidate)
+                        else: stays.append(candidate)
+                outcomes[key] = {'negatives_that_flip': flips, 'negatives_that_stay_rejected': stays}
+        finally:
+            if previous is None: dt.__dict__.pop('_dt_single_field_schema', None)
+            else: dt._dt_single_field_schema = previous
+        combined = outcomes['+'.join(sites)]
+        proved = [candidate for candidate in witnesses if candidate in combined['negatives_that_flip'] and all(candidate in outcomes[site]['negatives_that_stay_rejected'] for site in sites)]
+        ok = set(proved) == set(witnesses) and bool(proved)
+        if not ok: failures.append(label + ': per-site same-field proof failed')
+        covered.update(combined['negatives_that_flip'])
+        rows.append({'guard': label, 'duplicate_set': [g['id'] for g in selected],
+                     'field': field, 'predicate': keyword, 'mutation': 'Only this property/keyword or its boolean-number comparison facet; peers unchanged',
+                     'individual_site_results': {site: outcomes[site] for site in sites},
+                     'own_duplicate_witnesses': proved,
+                     'negatives_that_flip': combined['negatives_that_flip'],
+                     'negatives_that_stay_rejected': combined['negatives_that_stay_rejected'],
+                     'status': 'pass' if ok else 'fail'})
+    field_duplicate_proof('source_valid/producer_sequence_id_boolean_type',
+        'producer_sequence_id', 'type', ['source_valid', 'typed_envelope_join'],
+        ['type/envelope/producer_sequence_id/False', 'type/envelope/producer_sequence_id/True'], typed_join=True)
+    recovery_witnesses = [label for label, _, _ in corpus if label.startswith('recovery_custody/') and label.endswith('/envelope_schema')]
+    field_duplicate_proof('recovery/sequence_id_type', 'sequence_id', 'type',
+        ['source_valid', 'recovery'], recovery_witnesses)
+    field_duplicate_proof('historical_read/sequence_id_type', 'sequence_id', 'type',
+        ['source_valid', 'historical_read'], ['history/envelope_schema'])
+    field_duplicate_proof('historical_read/replay_policy_enum', 'replay_policy', 'enum',
+        ['source_valid', 'historical_read'], ['history/replay_policy_domain'])
     paired_ids = {identifier for row in rows if isinstance(row.get('duplicate_set'), list) for identifier in row['duplicate_set']}
     guards_without_cases = [identifier for identifier in guards_without_cases if identifier not in paired_ids]
     # Schema refusals are proven against that validator; retain the full-path
@@ -754,7 +817,8 @@ def prove_family(dt, c, f, schemas):
     return {'status': 'pass' if not failures else 'fail', 'model_negatives': len(corpus) - len(unused_candidates),
             'schema_negatives': len({label for row in schema_rows for label in row['negatives_that_flip']}),
             'guard_removal_table': rows, 'schema_guard_removal_table': schema_rows,
-            'schema_boundary_cases': sorted(schema_only), 'guard_inventory_without_witness': guards_without_cases,
+            'schema_boundary_cases': sorted(schema_only),
+            'compound_regressions_kept_in_full_checker_not_isolation': [x['case'] for x in f.get('source_join_negatives', []) if x['case'] == 'bare_scores_without_source_context'], 'guard_inventory_without_witness': guards_without_cases,
             'failures': failures}
 
 
