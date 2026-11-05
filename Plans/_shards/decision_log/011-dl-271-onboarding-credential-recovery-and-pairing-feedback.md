@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L28788
+Source lines: L26794-L28789
 
-Source SHA256: `35ce7ec425a2a53d0baa42c31e0022cfc71cb79960471fb01700d2e2bd397969`
+Source SHA256: `7c0742de1bfdf17b8abd06e1270daa45737667be0807cea72eebedad5e7c0caf`
 
 ---
 
@@ -1864,7 +1864,7 @@ owner_hints:
 
 ### DL-337 - Independent Review Stays A Free Choice, On By Default
 
-Jared answered stream C's card 1 on 2026-11-05 ("on by default, always free"): users may turn off independent review on any work, including high-risk work. The Settings toggle stays on by default and always free. GRS-027's rule scaling independent review to the risk tier is retired. The Models System floor on the verifier model stays.
+Jared answered stream C's card 1 on 2026-11-05 ("on by default, always free"): users may turn off independent review of their own work, including high-risk work. The Settings toggle stays on by default and always free. GRS-027's rule scaling independent review to the risk tier is retired. The Models System floor on the verifier model stays.
 
 ```yaml
 plan_unit_id: DL-337
@@ -1872,16 +1872,17 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-337 records Jared's answer of 2026-11-05 to stream C's card 1, "Can users turn off independent review on high-risk work?": "on by default, always free." Independent review stays a user choice on every piece of work: Settings planning.verification.independent-review ("Never let the builder grade its own work") remains on by default and always free to turn off, including on high-risk work. The superseded GRS-027 requirement that independent review scale with the risk or certification tier is retired; GRS-049 stands, so review is chosen by its owner rather than imposed by Goal. MS-128's rule that the verifier or adjudicator model cannot be downgraded below the risk tier stays in force: it governs the model a review uses when a review runs, not whether one runs.
+  DL-337 records Jared's answer of 2026-11-05 to stream C's card 1, "Can users turn off independent review on high-risk work?": "on by default, always free." Independent review stays a user choice on every piece of work: Settings planning.verification.independent-review ("Never let the builder grade its own work") remains on by default and always free to turn off, including on high-risk work. The superseded GRS-027 requirement that independent review scale with the risk or certification tier is retired; GRS-049 stands, so review is chosen by its owner rather than imposed by Goal. MS-128's rule that the verifier or adjudicator model cannot be downgraded below the risk tier stays in force: it governs the model a review uses when a review runs, not whether one runs. This decision covers the review of a user's own work: the Orchestrator and Executor verification that GRS-027's risk-tier rule described, and the Settings toggle. It does not change the evidence rules for Puppet Master's own deliverables, such as F3-524's two independent reviews of high-risk campaign spans, which certify the product's GUI evidence rather than a user's run.
   OSI-428's cost-control sentence now reads that cost controls cannot disable required verification, receipts, independent review where its owner requires it, or certification gates. Ledger correction corr-0011 retires atom-0055's risk-tiered independent-review requirement without editing the atom record.
 gui_related: false
 gui_classification_reason: Records a product decision about an existing Settings toggle; no GUI contract changes.
 split_recommended: false
-depends_on: [GRS-049, MS-128, OSI-428]
+depends_on: [F3-524, GRS-049, MS-128, OSI-428]
 unblocks: []
 acceptance_criteria:
   - Settings planning.verification.independent-review stays a toggle, on by default, that the user may turn off on any work.
-  - No active owner requires independent review scaled to the risk or certification tier.
+  - No active Orchestrator or Executor owner requires the independent review of a user's run to scale with the risk or certification tier.
+  - Evidence rules for Puppet Master's own deliverables, including F3-524's reviews of high-risk campaign spans, are unchanged.
   - OSI-428 says cost controls cannot disable independent review where its owner requires it.
   - MS-128's verifier and adjudicator model floor is unchanged.
 validation_surfaces:
