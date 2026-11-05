@@ -1,5 +1,17 @@
 # DCW round 8 — complete guard-removal table
 
+**Round 9 status: historical export; not a valid complete check-11 proof.**
+Cycle 9 B3 shows that this export merges distinct row/source and row-digest
+predicates and cuts compound currentness rules wholesale. Its counts and named
+duplicate sets do not establish predicate isolation. Per FIX-ROUND's 04:45Z
+instruction, the shared `scripts/pm_guard_isolation.py` from
+`plans/ea-guardtool-20261105` replaces this machinery in the cross-lane sweep.
+Round 9 does not rebuild or rerun this proof script. Focused B1 controls in
+`scripts/pm_dcw_registered_regressions.py` establish only their stated cases;
+they make no whole-lane inventory or duplicate-set claim. See DCW.md, "Review
+round 9: findings and responses". The original claims below are retained as
+review lineage and are superseded by this notice.
+
 Implementation `77ef39ba6630838ed5839f4e4f35d1952858a785`; reviewed `cdc9d4a94878868c9a2c67439bdf28ea5e5168f0`.
 
 **146/146 require sites; 4656/4656 negatives; 1152 configurations; 906,471 comparisons. Zero unrelated acceptances or unrelated refusal changes.**

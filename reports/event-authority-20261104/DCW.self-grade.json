@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-FIX8-20261105",
+  "assessment_id": "EA-W2-DCW-FIX9-20261105",
   "assessment_kind": "worker_self_grade_after_blind_review",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "commit": "77ef39ba6630838ed5839f4e4f35d1952858a785",
-    "reviewed_head": "cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
-    "read_method": "Owner prose/schemas/registries unchanged; six full CLI suites, whole-corpus guard-removal proofs, source joins, mandatory formats and independent review counterexamples rerun serially. Report-only follow-up changes no implementation."
+    "commit": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+    "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+    "read_method": "Exact current owner citations rechecked; six family, standing, focused registered-schema and independent reviewer suites run serially. B2/B3/number findings recorded for shared sweep; no complete guard proof claimed."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -34,7 +34,7 @@
       "disposition": "UNDISPOSITIONED",
       "prepared_disposition": "CURRENT_WRITER",
       "outcome": "register_prepared_without_admission",
-      "prepared_pass": true,
+      "prepared_pass": false,
       "disposition_evidence": [
         {
           "path": "Plans/assistant-chat-design.md",
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "owner_doc": {
           "status": "PASS",
@@ -99,11 +99,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "producer": {
           "status": "PASS",
@@ -154,11 +154,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -188,11 +188,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "scope_identity": {
           "status": "PASS",
@@ -215,11 +215,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -242,11 +242,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "retention": {
           "status": "PARTIAL",
@@ -262,11 +262,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -303,11 +303,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "transitions": {
           "status": "PASS",
@@ -323,16 +323,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -357,16 +357,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
+          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -388,19 +388,26 @@
               "line_start": 471,
               "line_end": 473,
               "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-253",
+              "line_start": 15894,
+              "line_end": 15906,
+              "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
-            "status": "PASS"
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+            "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "Six complete family suites and focused isolated B1 schema-ID/version/reference negatives pass. B3 invalidates the old whole-lane guard proof; shared guard-isolation adoption and timestamp sweep remain pending. No complete check-11 PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -481,16 +488,19 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "carried",
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
-        "PENDING_RETENTION_DECISION for event and original source; RT decision required."
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
+        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
+        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
@@ -499,9 +509,10 @@
         "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
-        "scripts/pm_dcw_index_fixtures.py"
+        "scripts/pm_dcw_index_fixtures.py",
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_requested"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -530,6 +541,16 @@
         ],
         "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
         "full_contract_cases": 764
+      },
+      "review_round_9": {
+        "implementation": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+        "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+        "B1": "fixed",
+        "B2": "sweep",
+        "B3": "sweep",
+        "SW-N1": "sweep",
+        "registered_outcomes": 213,
+        "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix9/bundle_revision_requested-registered.json"
       }
     },
     {
@@ -539,7 +560,7 @@
       "disposition": "UNDISPOSITIONED",
       "prepared_disposition": "CURRENT_WRITER",
       "outcome": "register_prepared_without_admission",
-      "prepared_pass": true,
+      "prepared_pass": false,
       "disposition_evidence": [
         {
           "path": "Plans/assistant-chat-design.md",
@@ -577,11 +598,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "owner_doc": {
           "status": "PASS",
@@ -604,11 +625,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "producer": {
           "status": "PASS",
@@ -659,11 +680,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -693,11 +714,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "scope_identity": {
           "status": "PASS",
@@ -720,11 +741,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -747,11 +768,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "retention": {
           "status": "PARTIAL",
@@ -767,11 +788,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -808,11 +829,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "transitions": {
           "status": "PASS",
@@ -828,16 +849,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -862,16 +883,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
+          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -893,19 +914,26 @@
               "line_start": 471,
               "line_end": 473,
               "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-253",
+              "line_start": 15894,
+              "line_end": 15906,
+              "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
-            "status": "PASS"
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+            "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "Six complete family suites and focused isolated B1 schema-ID/version/reference negatives pass. B3 invalidates the old whole-lane guard proof; shared guard-isolation adoption and timestamp sweep remain pending. No complete check-11 PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -986,16 +1014,19 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "carried",
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
-        "PENDING_RETENTION_DECISION for event and original source; RT decision required."
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
+        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
+        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
@@ -1004,9 +1035,10 @@
         "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
-        "scripts/pm_dcw_index_fixtures.py"
+        "scripts/pm_dcw_index_fixtures.py",
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_started"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -1035,6 +1067,16 @@
         ],
         "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
         "full_contract_cases": 769
+      },
+      "review_round_9": {
+        "implementation": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+        "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+        "B1": "fixed",
+        "B2": "sweep",
+        "B3": "sweep",
+        "SW-N1": "sweep",
+        "registered_outcomes": 213,
+        "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix9/bundle_revision_started-registered.json"
       }
     },
     {
@@ -1044,7 +1086,7 @@
       "disposition": "UNDISPOSITIONED",
       "prepared_disposition": "CURRENT_WRITER",
       "outcome": "register_prepared_without_admission",
-      "prepared_pass": true,
+      "prepared_pass": false,
       "disposition_evidence": [
         {
           "path": "Plans/assistant-chat-design.md",
@@ -1082,11 +1124,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1109,11 +1151,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "producer": {
           "status": "PASS",
@@ -1164,11 +1206,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1198,11 +1240,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1225,11 +1267,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1252,11 +1294,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1272,11 +1314,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1313,11 +1355,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "transitions": {
           "status": "PASS",
@@ -1333,16 +1375,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1367,16 +1409,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
+          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1398,19 +1440,26 @@
               "line_start": 471,
               "line_end": 473,
               "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-253",
+              "line_start": 15894,
+              "line_end": 15906,
+              "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
-            "status": "PASS"
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+            "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "Six complete family suites and focused isolated B1 schema-ID/version/reference negatives pass. B3 invalidates the old whole-lane guard proof; shared guard-isolation adoption and timestamp sweep remain pending. No complete check-11 PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1491,16 +1540,19 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "carried",
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
-        "PENDING_RETENTION_DECISION for event and original source; RT decision required."
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
+        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
+        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
@@ -1509,9 +1561,10 @@
         "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
-        "scripts/pm_dcw_index_fixtures.py"
+        "scripts/pm_dcw_index_fixtures.py",
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_completed"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -1540,6 +1593,16 @@
         ],
         "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
         "full_contract_cases": 770
+      },
+      "review_round_9": {
+        "implementation": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+        "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+        "B1": "fixed",
+        "B2": "sweep",
+        "B3": "sweep",
+        "SW-N1": "sweep",
+        "registered_outcomes": 213,
+        "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix9/bundle_revision_completed-registered.json"
       }
     },
     {
@@ -1549,7 +1612,7 @@
       "disposition": "UNDISPOSITIONED",
       "prepared_disposition": "CURRENT_WRITER",
       "outcome": "register_prepared_without_admission",
-      "prepared_pass": true,
+      "prepared_pass": false,
       "disposition_evidence": [
         {
           "path": "Plans/assistant-chat-design.md",
@@ -1587,11 +1650,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1614,11 +1677,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "producer": {
           "status": "PASS",
@@ -1669,11 +1732,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1703,11 +1766,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1730,11 +1793,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1757,11 +1820,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1777,11 +1840,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1818,11 +1881,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "transitions": {
           "status": "PASS",
@@ -1838,16 +1901,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1872,16 +1935,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
+          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1903,19 +1966,26 @@
               "line_start": 471,
               "line_end": 473,
               "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-253",
+              "line_start": 15894,
+              "line_end": 15906,
+              "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
-            "status": "PASS"
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+            "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "Six complete family suites and focused isolated B1 schema-ID/version/reference negatives pass. B3 invalidates the old whole-lane guard proof; shared guard-isolation adoption and timestamp sweep remain pending. No complete check-11 PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1996,16 +2066,19 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "carried",
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
-        "PENDING_RETENTION_DECISION for event and original source; RT decision required."
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
+        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
+        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
@@ -2014,9 +2087,10 @@
         "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
-        "scripts/pm_dcw_index_fixtures.py"
+        "scripts/pm_dcw_index_fixtures.py",
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_interrupted"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -2045,6 +2119,16 @@
         ],
         "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
         "full_contract_cases": 768
+      },
+      "review_round_9": {
+        "implementation": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+        "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+        "B1": "fixed",
+        "B2": "sweep",
+        "B3": "sweep",
+        "SW-N1": "sweep",
+        "registered_outcomes": 213,
+        "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix9/bundle_revision_interrupted-registered.json"
       }
     },
     {
@@ -2385,7 +2469,7 @@
       "disposition": "UNDISPOSITIONED",
       "prepared_disposition": "CURRENT_WRITER",
       "outcome": "register_prepared_without_admission",
-      "prepared_pass": true,
+      "prepared_pass": false,
       "disposition_evidence": [
         {
           "path": "Plans/Planning_Wizard.md",
@@ -2422,11 +2506,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2449,11 +2533,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "producer": {
           "status": "PASS",
@@ -2511,11 +2595,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2552,11 +2636,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2579,11 +2663,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2606,11 +2690,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2626,11 +2710,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2674,11 +2758,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "transitions": {
           "status": "PASS",
@@ -2694,16 +2778,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2728,16 +2812,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
+          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2759,19 +2843,26 @@
               "line_start": 471,
               "line_end": 473,
               "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-253",
+              "line_start": 15894,
+              "line_end": 15906,
+              "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
-            "status": "PASS"
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+            "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "Six complete family suites and focused isolated B1 schema-ID/version/reference negatives pass. B3 invalidates the old whole-lane guard proof; shared guard-isolation adoption and timestamp sweep remain pending. No complete check-11 PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -2866,16 +2957,19 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "carried",
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
-        "PENDING_RETENTION_DECISION for event and original source; RT decision required."
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
+        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
+        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
@@ -2885,9 +2979,10 @@
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_opened_custody_cases.py",
         "scripts/pm_dcw_index_cases.py",
-        "scripts/pm_dcw_index_fixtures.py"
+        "scripts/pm_dcw_index_fixtures.py",
+        "scripts/pm_dcw_registered_regressions.py --family wizard.deferred_payload.loaded"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -2916,6 +3011,16 @@
         ],
         "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
         "full_contract_cases": 1318
+      },
+      "review_round_9": {
+        "implementation": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+        "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+        "B1": "fixed",
+        "B2": "sweep",
+        "B3": "sweep",
+        "SW-N1": "sweep",
+        "registered_outcomes": 213,
+        "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix9/wizard_deferred_payload_loaded-registered.json"
       }
     },
     {
@@ -2925,7 +3030,7 @@
       "disposition": "UNDISPOSITIONED",
       "prepared_disposition": "CURRENT_WRITER",
       "outcome": "register_prepared_without_admission",
-      "prepared_pass": true,
+      "prepared_pass": false,
       "disposition_evidence": [
         {
           "path": "Plans/Planning_Wizard.md",
@@ -2962,11 +3067,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2989,11 +3094,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "producer": {
           "status": "PASS",
@@ -3044,11 +3149,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3085,11 +3190,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3112,11 +3217,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3139,11 +3244,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3159,11 +3264,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3200,11 +3305,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "transitions": {
           "status": "PASS",
@@ -3220,16 +3325,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "Current exact owner evidence and unchanged contract are rechecked against this tree."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3254,16 +3359,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "upgraded",
+          "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
+          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3285,19 +3390,26 @@
               "line_start": 471,
               "line_end": 473,
               "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-253",
+              "line_start": 15894,
+              "line_end": 15906,
+              "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
-            "status": "PASS"
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+            "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PASS, prepared static contract: complete authenticated captured-source/index/event/receipt composition and isolated index/format negatives pass. Native adapters, CRC/redb/fences and writer activation remain NOT_RUN/unadmitted.",
+          "finding": "Six complete family suites and focused isolated B1 schema-ID/version/reference negatives pass. B3 invalidates the old whole-lane guard proof; shared guard-isolation adoption and timestamp sweep remain pending. No complete check-11 PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -3378,16 +3490,19 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md at cdc9d4a94878868c9a2c67439bdf28ea5e5168f0",
+            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "promoted",
-          "change_reason": "Round-eight complete row/source/token and mandatory-format proof; unchanged canonical ownership, admission/retention exceptions and held decisions."
+          "change": "carried",
+          "change_reason": "B2/B3 remain explicit sweep limitations."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
-        "PENDING_RETENTION_DECISION for event and original source; RT decision required."
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
+        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
+        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
@@ -3396,9 +3511,10 @@
         "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
-        "scripts/pm_dcw_index_fixtures.py"
+        "scripts/pm_dcw_index_fixtures.py",
+        "scripts/pm_dcw_registered_regressions.py --family wizard.opened"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -3427,6 +3543,16 @@
         ],
         "implementation": "77ef39ba6630838ed5839f4e4f35d1952858a785",
         "full_contract_cases": 780
+      },
+      "review_round_9": {
+        "implementation": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+        "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+        "B1": "fixed",
+        "B2": "sweep",
+        "B3": "sweep",
+        "SW-N1": "sweep",
+        "registered_outcomes": 213,
+        "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix9/wizard_opened-registered.json"
       }
     },
     {
@@ -3763,34 +3889,23 @@
   ],
   "summary": {
     "prepared_before": 0,
-    "prepared_after": 6,
+    "prepared_after": 0,
     "assigned": 8,
+    "b1_fixed_families": 6,
     "stopped_for_Jared": 2,
     "admissions": 0,
     "native_execution": "NOT_RUN",
-    "full_contract_cases": 5169,
-    "total_static_cases": 5348,
-    "standing_checks_per_drafted_family": 11,
-    "standing_regression_cases": 1328,
-    "checks_fixed_this_round": [
-      7,
-      11
+    "full_contract_cases": 5295,
+    "total_static_cases": 5474,
+    "registered_regression_outcomes": 1278,
+    "independent_outcomes": 2052,
+    "current_evidence_quotes": 304,
+    "sweep_items": [
+      "B2/CV-1101",
+      "B3/shared guard isolation",
+      "SW-N1/CV-1100/SP-1100/SP-1101"
     ],
-    "guard_ablation_witnesses": 4656,
-    "standing_guard_ablation_witnesses": 264,
-    "require_sites_proved": 146,
-    "legacy_semantic_assertions": 15,
-    "legacy_negative_cases": 182,
-    "full_guard_cross_tests": 906471,
-    "legacy_cross_tests": 8356,
-    "current_evidence_quotes": 298,
-    "grade_mutants_rejected": 11,
-    "review_counterexamples_refused": 78,
-    "new_index_format_negatives": 1818,
-    "astra_classes_fixed_this_round": [
-      1,
-      12
-    ]
+    "complete_check11": "UNPROVED_PENDING_SHARED_TOOL"
   },
   "round5_verification": {
     "require_sites": 131,
@@ -3876,6 +3991,37 @@
       "grade_mutants_rejected": 11,
       "new_opened_custody_negatives": 508,
       "review_counterexamples_refused": 103
+    },
+    "round8_superseded_by_cycle9": {
+      "prepared_before": 0,
+      "prepared_after": 6,
+      "assigned": 8,
+      "stopped_for_Jared": 2,
+      "admissions": 0,
+      "native_execution": "NOT_RUN",
+      "full_contract_cases": 5169,
+      "total_static_cases": 5348,
+      "standing_checks_per_drafted_family": 11,
+      "standing_regression_cases": 1328,
+      "checks_fixed_this_round": [
+        7,
+        11
+      ],
+      "guard_ablation_witnesses": 4656,
+      "standing_guard_ablation_witnesses": 264,
+      "require_sites_proved": 146,
+      "legacy_semantic_assertions": 15,
+      "legacy_negative_cases": 182,
+      "full_guard_cross_tests": 906471,
+      "legacy_cross_tests": 8356,
+      "current_evidence_quotes": 298,
+      "grade_mutants_rejected": 11,
+      "review_counterexamples_refused": 78,
+      "new_index_format_negatives": 1818,
+      "astra_classes_fixed_this_round": [
+        1,
+        12
+      ]
     }
   },
   "round8_verification": {
@@ -3957,5 +4103,116 @@
     "native": "NOT_RUN",
     "retention": "PENDING_RETENTION_DECISION",
     "ids_added": []
+  },
+  "round9_verification": {
+    "implementation": "a6e652c86c3df3f93efa6530cf6a93b48a49028d",
+    "reviewed_head": "92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
+    "per_family": [
+      {
+        "family": "bundle.revision_requested",
+        "before": {
+          "ABSENT": 1,
+          "PASS": 7,
+          "PARTIAL": 4
+        },
+        "after": {
+          "ABSENT": 1,
+          "PASS": 8,
+          "PARTIAL": 3
+        },
+        "full_contract_cases": 785,
+        "total_static_cases": 822,
+        "registered_outcomes": 213,
+        "independent_outcomes": 334
+      },
+      {
+        "family": "bundle.revision_started",
+        "before": {
+          "ABSENT": 1,
+          "PASS": 7,
+          "PARTIAL": 4
+        },
+        "after": {
+          "ABSENT": 1,
+          "PASS": 8,
+          "PARTIAL": 3
+        },
+        "full_contract_cases": 790,
+        "total_static_cases": 838,
+        "registered_outcomes": 213,
+        "independent_outcomes": 334
+      },
+      {
+        "family": "bundle.revision_completed",
+        "before": {
+          "ABSENT": 1,
+          "PASS": 7,
+          "PARTIAL": 4
+        },
+        "after": {
+          "ABSENT": 1,
+          "PASS": 8,
+          "PARTIAL": 3
+        },
+        "full_contract_cases": 791,
+        "total_static_cases": 838,
+        "registered_outcomes": 213,
+        "independent_outcomes": 334
+      },
+      {
+        "family": "bundle.revision_interrupted",
+        "before": {
+          "ABSENT": 1,
+          "PASS": 7,
+          "PARTIAL": 4
+        },
+        "after": {
+          "ABSENT": 1,
+          "PASS": 8,
+          "PARTIAL": 3
+        },
+        "full_contract_cases": 789,
+        "total_static_cases": 836,
+        "registered_outcomes": 213,
+        "independent_outcomes": 334
+      },
+      {
+        "family": "wizard.deferred_payload.loaded",
+        "before": {
+          "ABSENT": 1,
+          "PASS": 7,
+          "PARTIAL": 4
+        },
+        "after": {
+          "ABSENT": 1,
+          "PASS": 8,
+          "PARTIAL": 3
+        },
+        "full_contract_cases": 1339,
+        "total_static_cases": 1339,
+        "registered_outcomes": 213,
+        "independent_outcomes": 382
+      },
+      {
+        "family": "wizard.opened",
+        "before": {
+          "ABSENT": 1,
+          "PASS": 7,
+          "PARTIAL": 4
+        },
+        "after": {
+          "ABSENT": 1,
+          "PASS": 8,
+          "PARTIAL": 3
+        },
+        "full_contract_cases": 801,
+        "total_static_cases": 801,
+        "registered_outcomes": 213,
+        "independent_outcomes": 334
+      }
+    ],
+    "execution_order": "one family/checker at a time; resource starts in commands.json",
+    "ids_added": 0,
+    "prior_guard_proof": "Superseded: distinct predicates were merged; do not carry its PASS/count claims forward."
   }
 }

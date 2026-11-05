@@ -1,121 +1,81 @@
-# DCW — fix round 8, Event Authority
+# DCW — fix round 9, Event Authority
 
-Branch `plans/ea-w2-chain-wizard-20261104`; implementation `77ef39ba6630838ed5839f4e4f35d1952858a785`; Astra 3 reviewed `cdc9d4a94878868c9a2c67439bdf28ea5e5168f0`. **0/6 prepared static passes before Astra 3 → 6/6 after this repair.** Membership ABSENT, retention PENDING_RETENTION_DECISION, native execution NOT_RUN. `wizard.blocked` and `wizard.unblocked` remain held for Jared.
+Branch `plans/ea-w2-chain-wizard-20261104`; implementation `0f0a41de7ff79a1d9c097284a514138abc899ae6`; final focused controls `a6e652c86c3df3f93efa6530cf6a93b48a49028d`; reviewed head `92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d`. Scope B1. All six B1 family repairs pass. Membership ABSENT, retention PARTIAL and native NOT_RUN remain. Full technical prepared PASS is withheld while B2/B3 sweep evidence is incomplete; both held Wizard families remain held.
 
-## Review round 8: findings and responses
+## Review round 9: findings and responses
 
-- **F1 — fixed (77ef39ba6630838ed5839f4e4f35d1952858a785). Where:** `scripts/pm_dcw_event_oracles.py:353`, `:785`, `:864`; every family’s `positive.index`/`positive.reader` in `Plans/dcw_event_contract_fixtures.json`; `scripts/pm_dcw_index_cases.py`. **Why:** the old readers used an unrelated generic fixture and compared supplied digests/tokens without authenticating its rows to the returned event. **Fix:** every read, rebuild and compatibility read verifies the actual captured complete source: exact canonical source/control bytes, Project partition, row keys/values, source/publication locators, payload and semantic digests, row-set binding, generation/anchor/frontier hashes, source coverage and boundary, snapshot/transaction and recovery epoch. The exact returned original joins that same source; its full event/receipt custody is independently mandatory before disclosure. All six positives now contain their genuine events and retained predecessors. Astra’s **54/54** substitutions refuse; fresh rehashed foreign Project, swapped row, stale digest, wrong-family, absent/out-of-boundary and source/token forgeries refuse. Rehashed cases expose the source join independently of the row-set hash. Verify the six full CLIs, independent probes and complete guard table.
-- **S1 — fixed (77ef39ba6630838ed5839f4e4f35d1952858a785); item 12 applies this round. Where:** `scripts/pm_dcw_event_oracles.py:688` and `:709`. **Why:** optional `date-time` support was absent despite a FormatChecker object. **Fix:** mandatory local full-match RFC3339 shape plus calendar/range validation, without an optional package. Missing zones, separators, impossible dates/times, LF, invalid offsets, leap seconds and empty fractions refuse. Valid calendar dates, arbitrary nonempty decimal fractions and RFC3339 envelope zones/spellings remain exact; family payload UTC-Z rules still apply. **1,296** malformed full-composition timestamp cases cover shared observed/persisted fields and one current payload/result timestamp fact with its required original copies, on all six operations. Astra’s **24/24** cases refuse. The six unadmitted candidate families have no admitted earlier edition: no historic recipe is invented, tightened silently, or selected through a caller-controlled downgrade. Retained valid originals still survive live writer changes; forged earlier editions refuse.
+- **B1 — fixed (0f0a41de7ff79a1d9c097284a514138abc899ae6; controls a6e652c86c3df3f93efa6530cf6a93b48a49028d). Where:** `scripts/pm_dcw_event_oracles.py:804–807` called an embedded `payload_schema` on the ordinary registered `run.started` row. **Why:** the registry's actual contract is `payload_schema_ref.path/json_pointer/schema_id`; complete global captures necessarily contain nonmatching families and Projects. **Fix:** `scripts/pm_dcw_registered_schemas.py:108` resolves that exact path and RFC6901 pointer, checks both registered and selected schema IDs, validates with the offline resource registry, and eagerly checks the full closure at `:77`, including unused definitions in external documents. Exact scope/ID editions are selected from registry metadata; the seven owner-supported historical pointers are explicitly bound to Storage's existing v1-reader table (`Plans/storage-plan.md:18130–18144`). No lexical version fallback or arbitrary `$defs` discovery grants support. The generic scan preserves and validates originals; it does not emit a transient run-start consumer view or run its upgrader. The run-start-specific consumer retains its separate upgrade obligations (`:19831`). All captured records remain in coverage and row/source joins; no skip or registry field was added.
+- **B2 — sweep, unmodified by instruction. Where:** `scripts/pm_dcw_event_oracles.py:688–709`, its format uses at `:45–52`, `:205`, `:801`, and round-8 positives `scripts/pm_dcw_index_cases.py:164–172`. **Why:** non-Z persisted offsets pass despite CV-253 (`Plans/Contracts_V0.md:2895,15894–15906`); the valid `1990-12-31T23:59:60Z` fails, including retained originals. **Fix owner:** adopt shared CV-1101 on `plans/ea-numrule-20261105`; preserve exact original strings, permitted fractions and historical dispatch. No local timestamp grammar, cap, uppercase-T rule or historical normalizer was added. The independent replay retains the offset/leap-second observations; they are not credited as fixes.
+- **B3 — sweep, unmodified proof machinery by instruction. Where:** `scripts/pm_dcw_index_cases.py:46–53`, `scripts/pm_dcw_event_isolation.py:497–526`, and the old guard table. **Why:** row/source equality and row-set digest integrity are different fields/predicates; a common refusal code or compound enforcement site does not make them duplicates. **Fix owner:** adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105`. The report/table now withdraw the old complete check-11 claim. No proof script is rebuilt or re-run. New B1 baseline negatives and single-fact repairs exercise the full checker. Diagnostic cuts in the focused runner include a shared-code dispatch selector; neither those cuts nor the old script receive predicate-isolation credit. Shared-tool adoption also replaces that diagnostic selector; no whole-lane inventory is claimed. Existing round-8 unrehashed stress cases are not credited as isolated proof. Their coherent rehashed variants remain the source-join witnesses. Any fixture masking exposed during shared-tool adoption must be repaired, not relabelled a duplicate.
+- **SW-N1 — number-domain sweep. Where:** `scripts/pm_dcw_event_oracles.py:97–132,147–149,628–661,796,818–820`; `Plans/event_record.schema.json:94–100,200–205`, shared receipt/checkpoint and lane source/payload numeric positions. Adopt CV-1100/SP-1100/SP-1101 at each actual semantic, physical and authenticated historical recipe boundary. The independent replay records `1`, `1.0`, `1e0`, `-0`, `01` and wide integers. No new cap/serializer was added. Preserve full uint64 Storage metadata, physical floats and signed zero. This is nonblocking sweep work, not a local type-equality exemption.
 
-The complete separately owned opened-source validator from round 7 is preserved. Every previous authored case ID, operation, expected result and non-index semantic mutation remains; immutable owner/schema/registry text, native obligations and original-custody functions are unchanged. Existing witnesses now reissue only their captured index observations when their original event or recovery epoch changes. Production readers never construct or repair an index from a requested event. Storage receipt/scope/sequence/semantic authentication remains in `original_receipt`; exact frame equality joins that already verified custody transitively.
+## Mixed-source positives and isolated new negatives
+
+`scripts/pm_dcw_registered_cases.py:33` imports the genuine `run.started@2.0.0` original from `Plans/event_index_consumer_adoption_fixtures.json#/positive/both_full_owner_joins/generic/current_source/frames`. Only its synthetic Storage-order sequence is placed immediately after the DCW originals. Its payload, original identity, Project and timestamps stay exact. Both Projects use their encoded `project~` partitions. Complete source bytes, rows, manifest/anchor/frontier, transactions and tokens are issued coherently before each mutation.
+
+**18/18 genuine v2 positives accept**: six families × read/rebuild/compatibility_read. **18/18 separate synthetic v1 original-reader positives accept** through the exact owner-supported pointer; they claim no native historical admission or v2 upgrade. **90/90 new event negatives refuse**: wrong schema ID, unsupported version ID, wrong payload version, extra current payload property and extra historical payload property, on all three paths for all six families. Each changes one fact and reissues dependent capture bindings.
+
+The focused runner adds **342 full-CLI reference/closure observations**: 90 positives (a real external schema closure, an escaped non-root pointer, a definition carrying `properties.schema_id.const`, an array pointer and exact scope-edition selection), plus 252 expected refusals (reference schema ID, path, missing/malformed-prefix pointer, foreign scope edition, malformed pointer escape with an otherwise present target, selected `$id`/schema-ID constant, signed/leading-zero array indices, unused local/external references, a transitive unused reference and actual external-target validation). **252 single-fact repair controls accept**; 54 unused-reference closure-cut controls accept. The dispatch/version/additional-property diagnostic cuts are retained as observations only, with zero check-11 proof credit; B3 governs predicate isolation. Overall focused evidence: **1278 outcomes**, all matched. The full CLI is fixture-selected for these input perturbations; no product semantic guard, preflight or native obligation is bypassed in its negative runs.
+
+The six adapted independent reviewer programs additionally reproduce **18/18 B1 current registered-source accepts**, zero unmatched expectations, all previous identity/custody/byte-boundary counterexamples, and the unchanged B2/B3 observations. Counts overlap the family suites and are not independent native campaigns.
 
 ## Family grades before and after
 
-| Family | Before (Astra 3) | After |
-|---|---|---|
-| `bundle.revision_requested` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `bundle.revision_started` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `bundle.revision_completed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `bundle.revision_interrupted` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `wizard.blocked` | 6 PARTIAL / 6 ABSENT | unchanged; held for Jared |
-| `wizard.deferred_payload.loaded` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `wizard.opened` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `wizard.unblocked` | 6 PARTIAL / 6 ABSENT | unchanged; held for Jared |
+Before is the cycle-9 independent re-grade, not the superseded fix8 self-grade. After restores only `consumers_checkpoints` for B1. `compatibility_withdrawal` remains PARTIAL for B2; `positive_negative_oracles` remains PARTIAL for B2/B3. Retention is still PARTIAL and membership ABSENT. All other normative cells retain their current supported grade.
 
-Precisely `consumers_checkpoints` and `positive_negative_oracles` recover PARTIAL → PASS for each prepared family: twelve cells. All 96 cells retain current evidence; 298 exact quotations are rechecked. Prepared PASS is a static contract judgment, with no admission or native execution inferred.
+| Family | Before cycle 9 | After round 9 | Full / total static cases |
+|---|---|---|---:|
+| `bundle.revision_requested` | 7 PASS / 4 PARTIAL / 1 ABSENT | 8 PASS / 3 PARTIAL / 1 ABSENT | 785 / 822 |
+| `bundle.revision_started` | 7 PASS / 4 PARTIAL / 1 ABSENT | 8 PASS / 3 PARTIAL / 1 ABSENT | 790 / 838 |
+| `bundle.revision_completed` | 7 PASS / 4 PARTIAL / 1 ABSENT | 8 PASS / 3 PARTIAL / 1 ABSENT | 791 / 838 |
+| `bundle.revision_interrupted` | 7 PASS / 4 PARTIAL / 1 ABSENT | 8 PASS / 3 PARTIAL / 1 ABSENT | 789 / 836 |
+| `wizard.deferred_payload.loaded` | 7 PASS / 4 PARTIAL / 1 ABSENT | 8 PASS / 3 PARTIAL / 1 ABSENT | 1339 / 1339 |
+| `wizard.opened` | 7 PASS / 4 PARTIAL / 1 ABSENT | 8 PASS / 3 PARTIAL / 1 ABSENT | 801 / 801 |
+| `wizard.blocked` | 6 PARTIAL / 6 ABSENT | unchanged; held for Jared | not run |
+| `wizard.unblocked` | 6 PARTIAL / 6 ABSENT | unchanged; held for Jared | not run |
 
-## Eleven standing checks and guard table
+All 96 cells are retained in the self-grade; **304 exact current quotations** are rechecked at their cited line spans. No all-criteria prepared PASS, admission or native execution is inferred from static success.
 
-| Check | How the class is ruled out for all six families |
+## Checks and limits
+
+| Check | Exit/result |
 |---|---|
-| 1 Replay-only writers | Every valid append/publish/retry variant has its independent policy-negative control; passive retained source interpretation never enables append. |
-| 2 Application keys | Exact CV-366 application keys and malformed keys both refuse these Project-only writers; no application support claimed. |
-| 3 Project scope | `project~` is recomputed from the actual UTF-8 Project; raw/foreign partitions and rehashed foreign Project rows refuse. |
-| 4 Full byte limits | Independent source and event MessagePack limits, inline 16,384/16,385 boundaries, verified SP-337 packs and restore inventories remain mandatory. Fresh UTF-8 expansion controls refuse. |
-| 5 Full matches | Exact identifier/digest comparisons and source/row-key LF cases refuse; the date-time grammar also uses fullmatch. |
-| 6 Retry body | Caller-semantic-only comparison remains unchanged; Storage metadata authenticates separately against the original. |
-| 7 Actual checkpoint joins | All actual rows/source bytes, complete frontier, Project/family/event identity and selected original/receipt join the same snapshot; Astra’s 54 counterexamples and rehashed variants refuse. |
-| 8 Failure exits | The real family CLI rejects a false success outcome; weakening only its exact expectation assertion returns success. |
-| 9 Eager references | Unused local/external source and payload dangling references fail the full CLI; only the exact preflight mutant flips. |
-| 10 History | Live write CAS, cutoff, effect state and write permission do not invalidate retained originals. Withdrawal, forged originals, missing custody and fake older editions still refuse. |
-| 11 Isolation | Every negative flips under its exact guard/set; all other negatives retain their own invariant. Complete JSON lists exact flips, rejected complements and named duplicates. |
+| Six sequential full family CLIs | 0 each; 5295 full / 5474 total cases |
+| Six sequential standing suites | 0 each; authored 66/66 cells remain subject to the independent B2/B3 overrides |
+| Six final focused registered-schema suites | 0 each; 1278 matched outcomes |
+| Six independent reviewer replays | 0 each; 2052 recorded outcomes; zero unmatched |
+| Storage recovery self-test | 0; top-level pass |
+| Shard check | 0; top-level pass |
+| Plan index validate | fail; 23 diagnostics; no clean-index claim |
+| Quotation/preservation/diff checks | pass; canon, schemas, fixtures and all previous cases unchanged |
 
-**146/146 require sites; 4,656/4,656 negatives; 1152 configurations; 906,471 comparisons; zero unrelated acceptances or unrelated refusal changes.** The [complete guard table](DCW.guard-removal.md) names every guard, duplicate schema keyword/set, sample flipping IDs and exact rejected-ID complements. Six family exports remain explicitly partial until the strict aggregate proves the entire lane. Legacy: 15 assertions, 182 negatives, 8,356 comparisons; no unrelated acceptances. No full validator, schema, source chain or verify call is bypassed.
+The index readiness diagnostic raised in cycle 9 remains an integration item. The ignored currentness edition was copied and hash-matched; no index generation, governance repair or baseline change is used to excuse the diagnostic. This lane does not land. The grade and report carry the limitation.
 
-## Recurring Astra classes — fresh probes and limits
+Standing checks 1–6 and 8 retain their full serial regressions. Check 7 now includes the actual registered mixed source; check 9 includes selected schemas' full reference closure. Check 10 retains its B2 qualification and check 11 its B3 qualification. Prior claims of 146 sites/4,656 negatives/906,471 comparisons are historical, superseded proof claims. Recurring forged identity, assigned metadata, contradictory joins, multiple readings, unused references, complete stored-value sizes, custody and wrong-type regressions are retained and rerun. Number spellings/history recipes remain SW-N1. Formats remain B2. The new single-defect fixtures and focused controls do not certify the old proof inventory.
 
-| Item | Result and evidence |
+Synthetic source adapters, CURRENT/manifest codecs, frame CRC, real redb snapshots/CAS/fences and native authentication remain NOT_RUN. Unsupported versions refuse complete coverage; supported nonmatching records are never dropped. No history read performs a writer effect.
+
+## Holds, authority and IDs
+
+**wizard.blocked:** Jared still must identify the actual current PlanningRun/topic subject and blocked/remediation emission predicate, including the source of `round_count` (CV-233, `Contracts_V0.md:14896`; `Planning_Wizard.md:116`; `assistant-chat-design.md:3524`). **wizard.unblocked:** for that same episode, Jared must identify the matching authorized resolution boundary and its `resolution_source`/causality mapping (CV-234, `Contracts_V0.md:14944`). Answers remain PENDING. No three-round threshold or retired wizard-status lifecycle is revived.
+
+DL-045/current owner, SP-278/DL-076 and SP-286/CV-339 premises remain unchanged. Initial per-family search lineage is in `drafts/DCW/base-family-search.json` and `fix1-wizard-search.json`; this fix authors no producer, consumer, checkpoint or other product binding. Existing IDs only: **CV-590–595, SP-575–579, ACD-571–574, PWIZ-097/098 (17); no new PlanUnit IDs.** `round9_*` names identify fixture cases only.
+
+No owner Markdown/schema/registry/fixture, Decision Log, admission, Spec Lock, generated shards/index/evidence, frozen validator, test file or .gitignore was changed. Owner Markdown was unchanged, so no derived regeneration was required. No mailbox, subagent, browser, server, main push, landing lock or reseal. Disk was 60 GB free and memory 16 GB available before worktree creation; checker starts and pauses are recorded in commands.json. All checkers ran serially. Push only the assigned branch; remove `/home/sittingmongoose/pm-worktrees/DCW-fix9` with a literal-path worktree removal after the final push.
+
+## Review lineage and evidence
+
+Round 8's report and self-grade remain in git at `92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d` and externally in `drafts/DCW/fix8/`. Its guard claims are superseded by cycle 9 and this report. Round 9 raw evidence is outside the repository at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix9`; all final files are bound by SHA256SUMS. Adapted reviewer code changes only ROOT and output location.
+
+| Evidence under fix9/ | SHA-256 |
 |---|---|
-| 1 Forged/contradictory input | Astra’s exact row substitutions plus independently rehashed Project/family/digest, swapped/missing rows, source and generation/frontier mutants refuse. Every binding is recomputed from its source. |
-| 2 Storage-assigned metadata | Fresh valid-shaped original Storage timestamp and numeric-sequence substitutions refuse exact original-value authentication; removing only the named authenticity guard/set flips them. |
-| 3 Historical readers | Fresh read/rebuild/compatibility controls survive all live writer changes; withdrawn or forged history still refuses. |
-| 4 Multiple readings | Fresh uppercase payload hashes remain invalid after coherent hash reissue; exact typed/canonical comparisons prevent reinterpretation. |
-| 5 Unvisited refs | Full CLI unused-definition local/external source/payload mutations reject, with exact preflight controls. |
-| 6 Partial sizes | Fresh complete source byte-boundary and one UTF-8-scalar expansion controls exercise the real size predicate. Event/source packs remain independent. Earlier contradictory owner prose stays removed. |
-| 7 Custody on every path | Fresh missing-original custody refuses with its frozen-original ablation control. The complete opened source/receipt/restore chain remains enforced on all six loaded operations. |
-| 8 Masked negatives | The whole-pool table proves every own negative and complete rejected complement; current payload timestamp probes change only that result fact and its required copies. Integrity audit rejects omitted guards/cases. |
-| 9 Inflated grades | Twelve cells recover only after full current proofs; integrity mutations reject fabricated PASS counts, held-family promotion and incomplete evidence. |
-| 10 Number spellings | Fresh 1/1.0/1e0/-0/01 canonical-domain probes and full-reader integral-float original substitutions enforce the existing integer recipe without new identities. |
-| 11 Wrong types | Fresh array-valued withdrawal controls refuse with their exact guard-removal control; the retained numeric/type corpus covers string booleans/numbers, null, arrays, nested objects and bool/float aliases. |
-| 12 Skipped formats | Required date-time validator is the local mandatory function; package absence cannot disable it. All 1,296 malformed cases plus 24 independent review cases refuse; fraction/calendar/zone positives remain. |
-| 10a History recipes | No admitted earlier edition exists for these prepared candidates. Authentic v1 retained controls survive writer changes; coherent forged earlier editions refuse. No caller-selected weak recipe, reissued native history or product migration is introduced. |
-
-## Questions for Jared — card-ready, no answer applied
-
-
-
-**Q1a — wizard.blocked / current subject and emission predicate.** Under `Plans/Contracts_V0.md:14896` (CV-233) and `Plans/Contracts_V0.md:2686`, which exact existing PlanningRun or topic owner identity must `wizard_id` identify, and which existing blocked/remediation predicate emits this observation, including the current source of `round_count`? PWIZ-002 owns the current aggregate/topic model; shared route_target/blocked identity does not decide that subject or predicate.
-
-**Review recommendation, unapplied:** retain an observation of the existing Planning Wizard blocked/remediation episode after Jared confirms its actual current subject/trigger. Use current route/blocked identity; do not resurrect a three-round threshold or separate wizard_status state machine. Subsequent identity/schema/checkpoint work is technical.
-
-**Q1b — wizard.unblocked / matching current resolution predicate.** Under `Plans/Contracts_V0.md:14944` (CV-234), for that same confirmed current subject and blocked/remediation episode, which existing authorized resolution transition emits the corresponding observation, and how does `resolution_source` identify that actual resolution and preserve causality?
-
-**Review recommendation, unapplied:** the corresponding observation when that same owner episode clears through an existing authorized resolution, preserving subject and causality. Confirm with Q1a; a route-open or replay never counts as resolution.
-
-Current supporting evidence: `Plans/assistant-chat-design.md:3524`; `Plans/Planning_Wizard.md:116`. These holds do not reopen already-decided intake action existence or choose retirement/historical-only disposition. **Jared's answers: PENDING.**
-
-
-
-
-
-## Scope, resources and IDs
-
-No owner Markdown, payload/source schema, registry, Decision Log, admission, exclusion/application record, Spec Lock, governance evidence/auto-decision, frozen validator, test file or .gitignore change. No new product behavior, retention/deletion answer or PlanUnit. Existing IDs only: **CV-590–595, SP-575–579, ACD-571–574, PWIZ-097/098** (17); **no new IDs**. The canonical DL-045/current owner, SP-278/DL-076 and SP-286/CV-339 premises remain unchanged. No owner Markdown changed, so no shard/index regeneration was needed; the shard body/path check still passes. The currentness edition’s 15 files were copied and SHA-matched before index validation.
-
-Final proofs ran one family/checker at a time, and one guard or named duplicate set at a time, checking available memory before every checker. The 6 GB memory floor and 50 GB disk floor were respected. One early overlapping proof attempt was cancelled and excluded; all final exports are serial. One read-only startup mailbox check overlapped the initial brief read; after its prohibition was read there was no further mailbox use, registration or sending. No subagents, browsers or servers. Push only the assigned branch, copy report/grade/table to drafts/DCW, remove the literal detached sparse worktree after the final push. No main push, landing lock or reseal.
-
-This is synthetic static composition. Native CURRENT/manifest codecs, frame CRC, real redb snapshots/CAS/fences and source authentication remain NOT_RUN. Direct verified source/rebuild snapshots are exercised; a translation-dependent capture requires its actual owner proof or governed rebuild, never an opaque locator. No native adapter authenticity is inferred from a self-consistent synthetic capture.
-
-## Commands and results
-
-| Check | Exit | Result |
-|---|---:|---|
-| Six sequential full family CLIs | 0 | 5,169 full / 5,348 total static cases |
-| Six sequential standing checks | 0 | 1,328 outcomes; 66/66 family/check cells |
-| Six isolation exports plus strict merge | 0 | 146 guards; 4,656 negatives; 906,471 comparisons |
-| Four fixed legacy proofs | 0 | 15 assertions; 182 negatives; 8,356 comparisons |
-| Six independent probes | 0 | 150 outcomes, including all 54 F1 and 24 S1 review cases; 36 fresh ablation controls |
-| Storage recovery self-test | 0 | top-level pass |
-| Shard check | 0 | top-level pass |
-| Plan index validate | 1 | top-level fail; 22 diagnostics; 0 added versus reviewed index evidence |
-| Preservation / quotation / integrity audit; diff check | 0 | Old cases, native obligations, owner text, protected custody functions and both holds preserved |
-
-Index diagnostics are classified in `index-comparison.json`; they are reported without weakening a guard, editing a baseline, regenerating unrelated documents or resealing governance.
-
-## Evidence
-
-External evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix8`. Every raw output remains outside the repository. Source closure binds every checker/builder plus fixtures; the complete guard JSON binds every flip/reject complement.
-
-| Evidence | SHA-256 |
-|---|---|
-| `isolation-final.json` | `205a0772af02c87359227397be8f36e089b3877fdea04b66159efdb8b4b31677` |
-| `legacy-summary.json` | `82d4c22b960afda8811631d7c9511c3d6eef6e561eb8d08f05303154424ba907` |
-| `independent-summary.json` | `4dc2a484f0287095b4ca1de5c6b9ea7b76a9973ce77c3a73e40c760af013f722` |
-| `source-closure.json` | `2bb6989e38ce5d3330c85fb54be613ae8bc8812778c4ebd5a3ff604b2b23d610` |
-| `preservation.json` | `640f6189fcb93c7d9bde8776aeaf4ee3550dc68d7be37be77e6718b381451e9a` |
-| `currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
-| `index-comparison.json` | `1b1ac10a12e00c6316c4ada10b2cc7af128d1e680bd783280024d04f20cefdeb` |
-| `storage-check.log` | `e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a` |
+| `commands.json` | `6cdb77c3f37ecf79e2a3ae5a8b345ba93a0ae6873163a2fda458852e94eb41b0` |
+| `summary.json` | `d90760a074f37049fb7256d8d123696a5f8c131ccb5d1cb4ed3f39592c26e945` |
+| `source-closure.json` | `9ab2140956289b390a845daf1180852c8023633beba67523525e6f1a5bf3c74c` |
+| `regrade-citations.json` | `e76c6366d3a98f9e3ed16599159604a01e379b2b7f700cdf6316124633bca198` |
+| `currentness-sha256.json` | `ce7bebfff8362953a3ebb92fba9e37235d771ca442f282a4ac1d40d9644a69ab` |
+| `index-comparison.json` | `87989a1469468331a7ab8fc6ccdfb0b770594bd47d6d01939ab96ecbeb39189f` |
+| `index-validate.log` | `118696124108a2f4bdff1d08084c421a1a985517d35c2f401e418a66a308990e` |
 | `shard-check.log` | `353b434b8f99c23e82801aee68941ecef36e9fc71638a6bce463523cd6b01ade` |
-| `index-validate.log` | `a3a574555012a1823bca20b76e4b0c4d23292b4dbf01eee3d90c9f6aaddce0ab` |
-| `integrity-controls.json` | `cd47c400ff182d779b2ad7971958953f416a55c0860b00914129d54d4b08fa40` |
+| `storage-check.log` | `e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a` |
+| `preservation.json` | `a2e59fb79dc526b88c3de14be164f4acafb0590c8eb305e71213bdfeaf2d38d6` |
