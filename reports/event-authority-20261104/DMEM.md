@@ -1,3 +1,104 @@
+# DMEM fix round 11 — exact preservation and policy instants
+
+**Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Assessed implementation commit:** `7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27`. **Reviewed head:** `9374fdea031beec5553c9f859fe7c2313b8a2567`. **Independent baseline:** `reviews/DMEM-sol/REVIEW-cycle9.md`, compared with `origin/main` `73f2231a9ec1c93190adafcdde51030f028c8c2d`.
+
+**Worker result:** twelve families prepared without admission, pending independent review. All twelve complete exact-family checker runs exit 0. The six blocked oracle cells upgrade PARTIAL → PASS; every other cell is carried after checking its current citations. Membership remains ABSENT, retention PARTIAL, native execution NOT_RUN. Card 6's applied DL-444..DL-447 answers remain byte-exact in all product owner documents. Earlier reports below are source-pinned lineage, including superseded complete-local-proof and open-cutoff claims.
+
+## Review round 11: findings and responses
+
+- **B1 — fixed (`7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27`). Where:** `scripts/pm_memory_policy.py:18`, `:73`, `:108`, `:152`; `scripts/pm_memory_archive_events.py:148`. **Cause:** Python equality accepted Boolean/integer aliases in preserved fields and complete expected results. **Fix:** compare exact primitive types before values recursively, including nested original fields, evidence, versions, merge lineage, pins, unselected originals and expected outputs. Validate every dedup input flag, including unselected/protected originals, as an exact Boolean. Dedup output flags either compare to exact Boolean inputs or use Boolean identity for the permitted archive disposition. Archive post-state score preservation is type-sensitive. Fixture-only typed literal edits retain intentional float mistakes without changing current/historical number ingestion or any identity serializer. **Verify:** 145 new one-field type-negative templates (290 exact-phase executions), including Boolean/numeric aliases, floats, strings, null, arrays, objects and nested metadata; 12 complete wrong Boolean/float expected-result processes exit 1; 6 restored-equality processes exit 1.
+- **B2 — fixed (`7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27`). Where:** `scripts/pm_memory_policy.py:29`, `:64` and both survivor comparisons. **Cause:** datetime discarded valid fractional digits beyond microseconds, changing the oldest survivor and exact elapsed 90/180-day decisions. **Fix:** parse whole-second calendar/zone separately, then compare exact rational seconds using every admitted fractional digit. Decimal construction and Fraction conversion introduce no context rounding, timestamp precision cap or integer-string digit limit. Original spellings, retained originals, hashes and history recipes are untouched. **Verify:** 90 new precision templates: early/equal/late boundaries for edit, access, creation fallback and capture at 9/18/40 digits; creation ordering and stable-ID ties at the same precisions; coherently wrong-survivor negatives. Eight direct precision probes reach 10,001 digits, preserve zone equivalence and exact cutoffs. Six restored-microsecond complete processes exit 1.
+- **B3 — fixed (`7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27`). Where:** `Plans/memory_card6_policy_fixtures.json:7783`. **Cause:** null snapshot Project disagreed with selected originals. **Fix:** every memory Project observation is coherently null in this input. The independent one-field foreign-Project negative is preserved. **Verify:** remove only local Project validity: only `dedup_sweep:no-project` flips; remove only the Project join: only `dedup_sweep:foreign-project` flips. Each removal leaves all other 149 dedup negatives at their exact refusal, all 15 positive controls passing, and restoration rejects again.
+- **B4 — fixed (`7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27`). Where:** `scripts/pm_memory_policy.py:79`; `Plans/memory_card6_policy_fixtures.json:8749` and the following unique/existing-group cases. **Cause:** no authored negative exercised eligible-group validity. **Fix:** retain the same refusal and split its three predicates into consecutive minimum-size, uniqueness and existence guards. Dereference resolved originals only after validating the complete requested group, without changing the caller's selection. Add one intact control and separate minimal negatives. **Verify:** remove each predicate alone with every peer enabled: exactly its own negative flips, all 149 other dedup negatives retain their refusal, all 15 positives pass, and restoration rejects. Both full exact dedup phases fail when any one of the three guards is removed (6 intended assertion exits 1). No merged removal set is used.
+- **N1 — fixed in the same implementation commit. Where:** `Plans/Automated_Testing_System.md:7263`, ATS-315. The stale “No cutoff values are selected” sentence now states that Card 6 supplies DL-446/DL-447's values. Independent admission, operation/result retention and authenticated binding gates remain. ATS-315/316 also name the new typed/precision/isolated-group oracles.
+- **N2 — integration item.** Actual index validation exits 1, top-level `fail`, with the same exact 22 inherited failures as round ten: main-only DL-302 and 21 untouched legacy-ledger format records. Decision_Log.md is unchanged. Preserve current main at integration and rerun; no unrelated ledger edits.
+- **N3 — accounted for.** Normal regeneration changes generated clocks; no literal all-byte identity claim is made for those fields. Only Automated_Testing_System owner shards change. Fifteen currentness files were copied and SHA-256 matched before index generation; the frozen copied input is retained in `fix11/frozen-currentness/` and is the comparison source.
+
+No blocking finding is disputed. No new product choice is made.
+
+## New cases and check-11 boundary
+
+**242 appended templates:** 61 positives and 181 negatives. The existing 123 templates remain unchanged except for B3's Project copies. Total policy corpus: **365 templates**, executed through both exact phases as **192 positives / 538 negatives**. Every invalid post-state/selection reports exactly its authored predicate; input group cases have intact passing controls. New case IDs are `dedup_sweep:fix11-*`, `monthly_summary:fix11-*` and `prune_archive:fix11-*`; the full 242-ID inventory is `fix11/fixture-additions.json`.
+
+| Predicate removed alone | Only negative that flips | Other negatives keep exact refusal | Positives / restoration |
+|---|---|---:|---|
+| `scope-local` | `dedup_sweep:no-project` | 149 | 15 / yes |
+| `scope-join` | `dedup_sweep:foreign-project` | 149 | 15 / yes |
+| `group-minimum` | `dedup_sweep:fix11-minimum-group` | 149 | 15 / yes |
+| `group-unique` | `dedup_sweep:fix11-unique-group` | 149 | 15 / yes |
+| `group-exists` | `dedup_sweep:fix11-existing-group` | 149 | 15 / yes |
+
+This is a targeted five-predicate witness for B3/B4, with all dedup policy complements. It is not a new whole-lane check-11 completion claim. The lane-local proof script is byte-preserved. Incomplete inventory, compound cuts and duplicate-site machinery remain S4 for the shared tool; no unrelated predicates are claimed as duplicates.
+
+## Sweep items S1–S4
+
+1. **S1 — CV-1100 current grammar/range dispatch. Where:** core `json_numbers`/`canonical_numbers` (lines 62/74), producer schemas/registry mirrors, all twelve numeric owner paragraphs and ATS-315. Adopt shared current token/type grammar and field-owner ranges; keep full Storage uint64 and historical alternatives. No local cap/serializer is added.
+2. **S2 — SP-1100/CV-1100 physical, semantic and local commitment profiles. Where:** core `canonical_numbers`, `digest`, `historical_numbers`, `historical_digest`, `retained`, `retained_digest`, `within_value_cap`, `_CODEC.binding_bytes` calls and full-value owner paragraphs. Adopt distinct shared profiles. Never normalize physical floats, erase signed zero or rewrite old commitments.
+3. **S3 — SP-1101 authenticated original recipe selection. Where:** core `HISTORY_RECIPES`, `historical_envelope_matches`, `historical_matches`, `read_canonical_history`, frozen definitions and numeric owner paragraphs. Adopt authentic immutable original issuance/registry selection with unknown/ambiguous/downgrade negatives. Preserve old results/bytes and custody/access/withdrawal fences.
+4. **S4 — shared check-11 proof tool. Where:** `scripts/pm_memory_guard_isolation.py:74–94,626–690,833–912`, its inventory/report, the policy suite and archive guard inventory. Adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105`, with full per-predicate inventory, site-by-site true-duplicate witnesses and complete complement/restoration checks. No lane-local proof rebuild. B3's stale input and B4's missing negatives are repaired here rather than deferred.
+
+These sweep items do not independently reduce preparation grades. They remain OPEN_SHARED_SWEEP in the self-grade.
+
+## Twelve-family re-grade
+
+P/Q/A = PASS/PARTIAL/ABSENT. Before is the independent cycle-9 review. All after vectors are `A P P P P P Q P P P P P` in rubric order; membership/retention/native boundaries remain.
+
+| Exact family | Checker exit | Policy positives / negatives | Before P/Q/A | After P/Q/A |
+|---|---:|---:|---:|---:|
+| `memory.dedup_sweep.completed` | 0 | 15 / 150 | 9/2/1 | 10/1/1 |
+| `memory.dedup_sweep.started` | 0 | 15 / 150 | 9/2/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.completed` | 0 | unchanged policy | 10/1/1 | 10/1/1 |
+| `memory.index.lexical.rebuild.started` | 0 | unchanged policy | 10/1/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.completed` | 0 | unchanged policy | 10/1/1 | 10/1/1 |
+| `memory.index.semantic.rebuild.started` | 0 | unchanged policy | 10/1/1 | 10/1/1 |
+| `memory.monthly_summary.completed` | 0 | 39 / 60 | 9/2/1 | 10/1/1 |
+| `memory.monthly_summary.started` | 0 | 39 / 60 | 9/2/1 | 10/1/1 |
+| `memory.prune_archive.completed` | 0 | 42 / 59 | 9/2/1 | 10/1/1 |
+| `memory.prune_archive.started` | 0 | 42 / 59 | 9/2/1 | 10/1/1 |
+| `memory.verification_sweep.completed` | 0 | unchanged policy | 10/1/1 | 10/1/1 |
+| `memory.verification_sweep.started` | 0 | unchanged policy | 10/1/1 | 10/1/1 |
+
+Totals: **114 PASS / 18 PARTIAL / 12 ABSENT → 120 PASS / 12 PARTIAL / 12 ABSENT**. All 144 current cells have exact current-source evidence; **646 citations** re-located and mechanically validated at the assessed implementation commit. The six unaffected families retain all twelve grades.
+
+## Verification, authority and limits
+
+- **Complete family checks:** twelve exact `--family` processes, one at a time, all exit 0. Original phase/writer/reader, custody, checkpoint, schema-reference, full Storage uint64, legacy integer/binary64 and enforced-format suites remain enabled. All old fixture files except the named Card 6 repair are byte-preserved.
+- **Failure detection:** 30 sequential complete processes exit 1 at intended AssertionErrors: 12 wrong typed expected outputs, 6 restored ordinary-equality defects, 6 restored fractional-truncation defects and 6 removed-group-predicate defects. Syntax/import/resource errors and KeyErrors are not counted as successful refusal evidence.
+- **Standing checks / Astra own probes:** 840 direct observations at this head, zero unexpected results. Own mutations cover forged identity/source/ref contradictions, caller-only Storage metadata retry returning the exact original, replay-only current refusal, required envelope fields, encoded Project partitions, history after live changes and its access/withdrawal/forgery fences, representation/case/space/LF errors, dormant schema refs, whole payload/operation limits and both-outcome original-start custody. Old reduced-reader canonical-envelope expectations are omitted because canonical history has its own full endpoint and complete suite; no invalid reduced-reader claim is made. Native Storage receipt authentication remains NOT_RUN. Items 10/10a remain S1–S3, with all retained-old/full-uint64 suites still running. B1's typed and B2's exact-format arithmetic probes address items 4/11/12 without changing format syntax or historical recipes. B3/B4 address new masked/missing negatives; the general proof issue remains S4.
+- **Derived checks:** shard generate/check and index generate exit 0, top-level `pass`. Index validation exits 1, top-level `fail`; exact same 22 inherited failures, no new failures. `git diff --check` exits 0. Only ATS owner shards and ordinary generated index outputs change; generated clocks are qualified.
+- **Card 6 and custody preservation:** assistant-memory-subsystem.md, storage-plan.md, Contracts_V0.md, Decision_Log.md, the event-family registry and the lane-local proof script are byte-identical to the reviewed head. No retained-original or identity/hash/number function changes. No new timestamp precision limit, number cap, serializer, admission, registry append, Decision Log entry, governance reseal, landing or main push.
+- **Resources:** creation gate 116 GB disk free and 8 GB RAM available. Family/probe checks run sequentially with the 6 GB pause / 7 GB resume rule and two-minute rechecks. No resource pause was needed in the recorded family/probe gates. No pm-mail, subagent, browser or server.
+- **IDs used:** no new PlanUnit, Decision Log, schema, consumer, checkpoint, identity or recipe ID. Existing AMS-100..107, SP-630..639, CV-650..659, ATS-315/316 and DL-402/403/444..447 remain owner/adoption/answer references. This round edits only ATS-315/316 prose among owner units; the 242 fixture case IDs are listed separately.
+- **Remaining:** independent review; S1–S4 shared adoption; current-main/index reconciliation; per-family admission; unresolved operation/result retention and cited unlanded decision/retention integration; native receipt/transaction/flush/crash/backup/GUI/race proof. No outside-Project execution permission is supplied.
+
+## Round-eleven evidence
+
+All cited paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix11/`.
+
+| File | SHA-256 |
+|---|---|
+| `family-results.json` | `16719434b4a1c4c9901b68bafc4e00e98877e5b24fa23d040591abe8dadeda24` |
+| `fixture-additions.json` | `1127702c18ccaa89f689391f09ccb6505c605602112d93975f40f3fb2ef44092` |
+| `targeted-probes.json` | `f97869095e38e377037e89db15fa6c63a34953a4c0daa42d782cf71d248981cf` |
+| `full-checker-probes.json` | `caad07fce59d61d86d223f98e27d55ef39131907b2158f77fa36ef542250129d` |
+| `standing-astra-probes.json` | `3f9a8bc8434a17daebb6c8525d7a2e6bc12cd8151b7002afa57241c669fb50ce` |
+| `checks.json` | `27dca6b7913f2881a05dc7c6aa2f238050c5973f9f447070a5e9c839e0d1371e` |
+| `currentness-copy.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
+| `shard-generate.json` | `73df7255d834ada9869ec0dab6c959e585d0ea0f2f754c0f5a67268ed6d7a48f` |
+| `shard-check.json` | `a471f4cd29bb5aeac3bf0eb27f14f6ee4baeec39bd3cb3a866aea09768adca69` |
+| `index-generate.json` | `a75c283fa76269c7f59ec1c3bb675849c7cdb1a7c6fa6f63d2d6a24b1672b270` |
+| `index-validate.json` | `0f990c07da34646f84843a0e2420165c783683fac548054ced1f769353b1353e` |
+| `index-baseline-comparison.json` | `88217c8a9e6f39073fc1e0b565b6b1d5f21439957a629ee42a086791c4afa1b2` |
+| `regrade-validation.json` | `2f7cb99cfb933222b44173cb50e4be77e3f2a3374ed5af71c238223dacf60175` |
+| `resources.json` | `2de3218471acc3f65180936f5ccc4f5cd428f920220b78ef7c838f99f6dcaab4` |
+| `probe-resources.json` | `415e02ef893b09db46b80cdb7efa90c9fb425271a78731cbaee7bd36205095ff` |
+
+Report and self-grade copies overwrite `drafts/DMEM/DMEM.md` and `drafts/DMEM/DMEM-self-grade.json`. Reproduction scripts and a complete SHA-256 manifest remain in fix11; redundant outputs are removed. The sparse worktree `/home/sittingmongoose/pm-worktrees/DMEM-fix11` is removed with a literal-path `git worktree remove --force` after both commits are pushed.
+
+---
+
+Earlier source-pinned reports follow as lineage.
+
 # Round 10: deck-2 Card 6 applied
 
 **Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Assessed implementation commit:** `66e99fd527764dd8bdc2399718cba4f5d796f316`. **Starting head:** `2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7`. This round applies Jared's answers; it is not a review fix.

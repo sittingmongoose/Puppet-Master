@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-R10-CARD6-SELF-GRADE-20261105",
+  "assessment_id": "EA-W2-DMEM-FIX11-SELF-GRADE-20261105",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -21,7 +21,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+    "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
     "base": "be4766513ff71776346fc73b84f2542990f955af"
   },
   "registry": {
@@ -78,11 +78,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -112,11 +112,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -139,11 +139,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -159,11 +159,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -186,11 +186,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -234,11 +234,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -254,11 +254,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -302,11 +302,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -343,11 +343,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -370,11 +370,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -404,16 +404,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -521,13 +521,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.dedup_sweep.completed:compatibility-replay-only\",",
@@ -614,8 +607,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 108,
-              "line_end": 108,
+              "line_start": 152,
+              "line_end": 152,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -624,36 +617,96 @@
               "line_start": 5021,
               "line_end": 5021,
               "quote": "\"name\": \"dedup_sweep:creation-time-tie-stable-id\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "same",
+              "quote": "if type(left) is not type(right):",
+              "line_start": 20,
+              "line_end": 20
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "instant",
+              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
+              "line_start": 43,
+              "line_end": 43
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-creation-40digits-late\",",
+              "line_start": 27957,
+              "line_end": 27957
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-minimum-group\",",
+              "line_start": 8749,
+              "line_end": 8749
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-unique-group\",",
+              "line_start": 8830,
+              "line_end": 8830
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-existing-group\",",
+              "line_start": 8913,
+              "line_end": 8913
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
-            "status": "PASS"
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change": "upgraded",
+          "change_reason": "B1-B4 policy defects now have passing exact-family controls, typed/precision negatives, individual predicate witnesses and full-checker failure probes."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table",
-        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json"
+        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json",
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.dedup_sweep.started",
@@ -698,11 +751,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -732,11 +785,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -759,11 +812,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -779,11 +832,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -806,11 +859,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -854,11 +907,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -874,11 +927,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -922,11 +975,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -970,11 +1023,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -997,11 +1050,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1031,16 +1084,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1148,13 +1201,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.dedup_sweep.started:compatibility-replay-only\",",
@@ -1241,8 +1287,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 108,
-              "line_end": 108,
+              "line_start": 152,
+              "line_end": 152,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -1251,36 +1297,96 @@
               "line_start": 5021,
               "line_end": 5021,
               "quote": "\"name\": \"dedup_sweep:creation-time-tie-stable-id\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "same",
+              "quote": "if type(left) is not type(right):",
+              "line_start": 20,
+              "line_end": 20
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "instant",
+              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
+              "line_start": 43,
+              "line_end": 43
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-creation-40digits-late\",",
+              "line_start": 27957,
+              "line_end": 27957
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-minimum-group\",",
+              "line_start": 8749,
+              "line_end": 8749
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-unique-group\",",
+              "line_start": 8830,
+              "line_end": 8830
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"dedup_sweep:fix11-existing-group\",",
+              "line_start": 8913,
+              "line_end": 8913
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
-            "status": "PASS"
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change": "upgraded",
+          "change_reason": "B1-B4 policy defects now have passing exact-family controls, typed/precision negatives, individual predicate witnesses and full-checker failure probes."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table",
-        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json"
+        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json",
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.index.lexical.rebuild.completed",
@@ -1325,11 +1431,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1352,11 +1458,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -1386,11 +1492,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1406,11 +1512,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1433,11 +1539,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1488,11 +1594,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1508,11 +1614,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1556,11 +1662,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -1597,11 +1703,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1624,11 +1730,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1658,16 +1764,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1775,13 +1881,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:compatibility-replay-only\",",
@@ -1857,35 +1956,53 @@
               "quote": "def run(m, contexts):",
               "line_start": 48,
               "line_end": 48
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.index.lexical.rebuild.started",
@@ -1930,11 +2047,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1957,11 +2074,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -1991,11 +2108,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2011,11 +2128,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2038,11 +2155,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2093,11 +2210,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2113,11 +2230,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2161,11 +2278,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -2209,11 +2326,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2236,11 +2353,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2270,16 +2387,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2387,13 +2504,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.index.lexical.rebuild.started:compatibility-replay-only\",",
@@ -2469,35 +2579,53 @@
               "quote": "def run(m, contexts):",
               "line_start": 48,
               "line_end": 48
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.index.semantic.rebuild.completed",
@@ -2542,11 +2670,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2569,11 +2697,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -2603,11 +2731,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2623,11 +2751,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2650,11 +2778,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2705,11 +2833,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2725,11 +2853,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2773,11 +2901,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -2814,11 +2942,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2841,11 +2969,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2875,16 +3003,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2992,13 +3120,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:compatibility-replay-only\",",
@@ -3074,35 +3195,53 @@
               "quote": "def run(m, contexts):",
               "line_start": 48,
               "line_end": 48
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.index.semantic.rebuild.started",
@@ -3147,11 +3286,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3174,11 +3313,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -3208,11 +3347,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3228,11 +3367,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3255,11 +3394,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3310,11 +3449,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3330,11 +3469,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3378,11 +3517,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -3426,11 +3565,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3453,11 +3592,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3487,16 +3626,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3604,13 +3743,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.index.semantic.rebuild.started:compatibility-replay-only\",",
@@ -3686,35 +3818,53 @@
               "quote": "def run(m, contexts):",
               "line_start": 48,
               "line_end": 48
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.verification_sweep.completed",
@@ -3759,11 +3909,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3786,11 +3936,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -3813,11 +3963,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3833,11 +3983,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3860,11 +4010,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3908,11 +4058,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3928,11 +4078,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3976,11 +4126,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -4010,11 +4160,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4037,11 +4187,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4071,16 +4221,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4188,13 +4338,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.verification_sweep.completed:compatibility-replay-only\",",
@@ -4270,35 +4413,53 @@
               "quote": "def run(m, contexts):",
               "line_start": 48,
               "line_end": 48
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.verification_sweep.started",
@@ -4343,11 +4504,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4370,11 +4531,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -4397,11 +4558,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4417,11 +4578,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4444,11 +4605,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4492,11 +4653,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4512,11 +4673,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4560,11 +4721,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -4601,11 +4762,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4628,11 +4789,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4662,16 +4823,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4779,13 +4940,6 @@
               "line_end": 1302
             },
             {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
-            },
-            {
               "path": "Plans/memory_canonical_history_fixtures.json",
               "unit": "#/canonical_history_families",
               "quote": "\"name\": \"memory.verification_sweep.started:compatibility-replay-only\",",
@@ -4861,35 +5015,53 @@
               "quote": "def run(m, contexts):",
               "line_start": 48,
               "line_end": 48
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7265,
+              "line_end": 7265
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-315",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7265,
+              "line_end": 7265
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table"
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items.",
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
-      }
+      },
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.monthly_summary.completed",
@@ -4912,7 +5084,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
       },
       "current_owner_units": [
@@ -4939,11 +5111,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4966,11 +5138,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -4986,11 +5158,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5006,11 +5178,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5026,11 +5198,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5046,11 +5218,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5066,11 +5238,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5086,11 +5258,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -5113,11 +5285,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5133,11 +5305,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5160,16 +5332,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5177,13 +5349,6 @@
               "line_start": 30070,
               "line_end": 30070,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -5272,7 +5437,7 @@
             {
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
-              "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
+              "quote": "yield 'memory_flags', memory_flags(before['memories']) and memory_flags(after['memories'])",
               "line_start": 149,
               "line_end": 149
             },
@@ -5307,8 +5472,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 108,
-              "line_end": 108,
+              "line_start": 152,
+              "line_end": 152,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -5317,32 +5482,71 @@
               "line_start": 231,
               "line_end": 231,
               "quote": "\"name\": \"monthly_summary:score-at-threshold\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "same",
+              "quote": "if type(left) is not type(right):",
+              "line_start": 20,
+              "line_end": 20
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "instant",
+              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
+              "line_start": 43,
+              "line_end": 43
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"monthly_summary:fix11-age-updated_at-40digits-late\",",
+              "line_start": 26211,
+              "line_end": 26211
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
-            "status": "PASS"
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change": "upgraded",
+          "change_reason": "B1-B4 policy defects now have passing exact-family controls, typed/precision negatives, individual predicate witnesses and full-checker failure probes."
         }
       },
       "remaining_gaps": [
         "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table",
-        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json"
+        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json",
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items."
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.monthly_summary.started",
@@ -5365,7 +5569,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
       },
       "current_owner_units": [
@@ -5392,11 +5596,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5419,11 +5623,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -5439,11 +5643,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5459,11 +5663,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5479,11 +5683,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5499,11 +5703,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5519,11 +5723,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5539,11 +5743,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -5566,11 +5770,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5586,11 +5790,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5613,16 +5817,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5630,13 +5834,6 @@
               "line_start": 30216,
               "line_end": 30216,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -5725,7 +5922,7 @@
             {
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
-              "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
+              "quote": "yield 'memory_flags', memory_flags(before['memories']) and memory_flags(after['memories'])",
               "line_start": 149,
               "line_end": 149
             },
@@ -5760,8 +5957,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 108,
-              "line_end": 108,
+              "line_start": 152,
+              "line_end": 152,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -5770,32 +5967,71 @@
               "line_start": 231,
               "line_end": 231,
               "quote": "\"name\": \"monthly_summary:score-at-threshold\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "same",
+              "quote": "if type(left) is not type(right):",
+              "line_start": 20,
+              "line_end": 20
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "instant",
+              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
+              "line_start": 43,
+              "line_end": 43
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"monthly_summary:fix11-age-updated_at-40digits-late\",",
+              "line_start": 26211,
+              "line_end": 26211
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
-            "status": "PASS"
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change": "upgraded",
+          "change_reason": "B1-B4 policy defects now have passing exact-family controls, typed/precision negatives, individual predicate witnesses and full-checker failure probes."
         }
       },
       "remaining_gaps": [
         "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table",
-        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json"
+        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json",
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items."
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.prune_archive.completed",
@@ -5818,7 +6054,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
       },
       "current_owner_units": [
@@ -5845,11 +6081,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5872,11 +6108,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -5892,11 +6128,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5912,11 +6148,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5932,11 +6168,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5952,11 +6188,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5972,11 +6208,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5992,11 +6228,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -6019,11 +6255,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6039,11 +6275,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6066,16 +6302,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6083,13 +6319,6 @@
               "line_start": 24936,
               "line_end": 24936,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -6178,7 +6407,7 @@
             {
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
-              "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
+              "quote": "yield 'memory_flags', memory_flags(before['memories']) and memory_flags(after['memories'])",
               "line_start": 149,
               "line_end": 149
             },
@@ -6213,8 +6442,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 108,
-              "line_end": 108,
+              "line_start": 152,
+              "line_end": 152,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -6223,32 +6452,71 @@
               "line_start": 2525,
               "line_end": 2525,
               "quote": "\"name\": \"prune_archive:score-at-threshold\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "same",
+              "quote": "if type(left) is not type(right):",
+              "line_start": 20,
+              "line_end": 20
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "instant",
+              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
+              "line_start": 43,
+              "line_end": 43
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"prune_archive:fix11-age-updated_at-40digits-late\",",
+              "line_start": 26811,
+              "line_end": 26811
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
-            "status": "PASS"
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change": "upgraded",
+          "change_reason": "B1-B4 policy defects now have passing exact-family controls, typed/precision negatives, individual predicate witnesses and full-checker failure probes."
         }
       },
       "remaining_gaps": [
         "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table",
-        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json"
+        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json",
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items."
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     },
     {
       "event_type": "memory.prune_archive.started",
@@ -6271,7 +6539,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "66e99fd527764dd8bdc2399718cba4f5d796f316",
+        "commit": "7a1b9624d437de5f29c96cfd2c51bae8dfc2fd27",
         "base": "be4766513ff71776346fc73b84f2542990f955af"
       },
       "current_owner_units": [
@@ -6298,11 +6566,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6325,11 +6593,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "producer": {
           "status": "PASS",
@@ -6345,11 +6613,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6365,11 +6633,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6385,11 +6653,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6405,11 +6673,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6425,11 +6693,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6445,11 +6713,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "transitions": {
           "status": "PASS",
@@ -6472,11 +6740,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6492,11 +6760,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6519,16 +6787,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Complete exact-family checker passes serially with original lifecycle, custody, replay, retained-history and numeric/format suites. New Card 6 policy cases require each negative to have one named defect. Native NOT_RUN; shared guard-tool adoption is pending.",
+          "finding": "Exact-family checker passes with lifecycle/custody/history, format and full uint64 suites. Typed preservation and exact fractional policies pass; B3/B4 predicates have isolated witnesses. Native NOT_RUN; general proof-tool adoption remains S4.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6536,13 +6804,6 @@
               "line_start": 25079,
               "line_end": 25079,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "scripts/pm_memory_guard_isolation.py",
-              "unit": "prove_complete",
-              "line_start": 755,
-              "line_end": 755,
-              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None, guards=None):"
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -6631,7 +6892,7 @@
             {
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
-              "quote": "guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))",
+              "quote": "yield 'memory_flags', memory_flags(before['memories']) and memory_flags(after['memories'])",
               "line_start": 149,
               "line_end": 149
             },
@@ -6666,8 +6927,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 108,
-              "line_end": 108,
+              "line_start": 152,
+              "line_end": 152,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -6676,39 +6937,78 @@
               "line_start": 2525,
               "line_end": 2525,
               "quote": "\"name\": \"prune_archive:score-at-threshold\","
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-316",
+              "quote": "this round does not claim a complete check-11 proof from that local tool",
+              "line_start": 7322,
+              "line_end": 7322
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "same",
+              "quote": "if type(left) is not type(right):",
+              "line_start": 20,
+              "line_end": 20
+            },
+            {
+              "path": "scripts/pm_memory_policy.py",
+              "unit": "instant",
+              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
+              "line_start": 43,
+              "line_end": 43
+            },
+            {
+              "path": "Plans/memory_card6_policy_fixtures.json",
+              "unit": "#/cases",
+              "quote": "\"name\": \"prune_archive:fix11-age-updated_at-40digits-late\",",
+              "line_start": 26811,
+              "line_end": 26811
             }
           ],
           "prior": {
-            "source": "DMEM round-9 self-grade at 2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7",
-            "status": "PASS"
+            "source": "DMEM-sol cycle-9 independent review at 9374fdea031beec5553c9f859fe7c2313b8a2567",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Card 6 resolves the policy choices; membership and retention grades remain unchanged."
+          "change": "upgraded",
+          "change_reason": "B1-B4 policy defects now have passing exact-family controls, typed/precision negatives, individual predicate witnesses and full-checker failure probes."
         }
       },
       "remaining_gaps": [
         "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
-        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission."
+        "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
+        "S1: CV-1100 current grammar/range dispatch remains OPEN_SHARED_SWEEP.",
+        "S2: SP-1100/CV-1100 separate profiles remains OPEN_SHARED_SWEEP.",
+        "S3: SP-1101 authenticated original selection remains OPEN_SHARED_SWEEP.",
+        "S4: Shared check-11 proof tool remains OPEN_SHARED_SWEEP."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_memory_maintenance_events.py",
-        "scripts/pm_memory_guard_isolation.py",
         "Plans/memory_canonical_history_fixtures.json",
-        "round8: frozen write recipes, enforced formats, full guard table and restored defects",
-        "round9: full uint64 current writers/retries, typed negatives, site-wise Storage proof and complete lane guard table",
-        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json"
+        "Card 6 policy cases via each exact family checker; scripts/pm_memory_policy.py and Plans/memory_card6_policy_fixtures.json",
+        "Round 11: exact --family checker exits 0; retained history/format/full Storage uint64 and original custody suites remain enabled.",
+        "Round 11: targeted B3/B4 per-predicate witnesses; full-checker wrong Boolean/float oracles and restored equality/precision defects fail. General local proof remains S4."
       ],
-      "notes": "Round-10 implementation self-grade. Twelve families prepared without admission. No new retention or native proof; shared number/format recipe work and guard-tool adoption remain sweep items."
+      "notes": "Round-11 worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. S1-S4 shared sweep and independent review/admission remain open.",
+      "prepared_verdict": "PREPARED_WITH_NOTES"
     }
   ],
-  "review_round": 10,
-  "review_scope": "Applies E-CARDS-2 Card 6 A, DL-444..447; not a review fix. All twelve exact family checkers run serially.",
+  "review_round": 11,
+  "review_scope": "Cycle-9 B1-B4 and N1 fixed; twelve family checkers rerun one family at a time; S1-S4 remain shared sweep items.",
   "review_baseline_prepared_status_counts": {
-    "PASS": 120,
-    "PARTIAL": 12,
+    "PASS": 114,
+    "PARTIAL": 18,
     "ABSENT": 12
   },
   "prepared_status_counts": {
@@ -6720,26 +7020,37 @@
     {
       "id": "S1",
       "location": "scripts/pm_memory_maintenance_events.py json_numbers/canonical_numbers; current schemas/registry mirrors; SP-630..639/CV-658..659/ATS-315",
-      "status": "OPEN_SHARED_SWEEP"
+      "status": "OPEN_SHARED_SWEEP",
+      "title": "CV-1100 current grammar/range dispatch",
+      "action": "Adopt CV-1100 token/type grammar and field-owner ranges; keep full Storage uint64 and historical alternatives.",
+      "review_source": "DMEM-sol/REVIEW-cycle9.md"
     },
     {
       "id": "S2",
       "location": "scripts/pm_memory_maintenance_events.py digest/canonical_numbers/retained/retained_digest/within_value_cap; twelve full-value paragraphs",
-      "status": "OPEN_SHARED_SWEEP"
+      "status": "OPEN_SHARED_SWEEP",
+      "title": "SP-1100/CV-1100 separate profiles",
+      "action": "Adopt separate physical, semantic and local commitment profiles; never normalize physical floats, erase signed zero or rewrite old commitments.",
+      "review_source": "DMEM-sol/REVIEW-cycle9.md"
     },
     {
       "id": "S3",
       "location": "scripts/pm_memory_maintenance_events.py HISTORY_RECIPES/historical_envelope_matches/retained_digest/read_canonical_history; frozen definitions; twelve numeric paragraphs",
-      "status": "OPEN_SHARED_SWEEP"
+      "status": "OPEN_SHARED_SWEEP",
+      "title": "SP-1101 authenticated original selection",
+      "action": "Adopt authentic immutable original edition/recipe selection and unknown/ambiguous/downgrade negatives; preserve old results and custody/access/withdrawal fences.",
+      "review_source": "DMEM-sol/REVIEW-cycle9.md"
     },
     {
       "id": "S4",
       "location": "scripts/pm_memory_guard_isolation.py and scripts/pm_memory_archive_events.py run_guards",
       "status": "OPEN_SHARED_SWEEP",
-      "action": "Adopt scripts/pm_guard_isolation.py from plans/ea-guardtool-20261105; no lane-local proof rebuild."
+      "action": "Adopt scripts/pm_guard_isolation.py from plans/ea-guardtool-20261105; complete per-predicate/site inventory, exact duplicate witnesses, complement/restoration checks. No lane-local proof rebuild.",
+      "title": "Shared check-11 proof tool",
+      "review_source": "DMEM-sol/REVIEW-cycle9.md"
     }
   ],
-  "prior_reviewed_head": "0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee",
+  "prior_reviewed_head": "9374fdea031beec5553c9f859fe7c2313b8a2567",
   "round10_decisions": {
     "Jared_verbatim": "i approve all of it",
     "mapping": "presented deck fast-reply rule maps approve all to option A",
@@ -6781,9 +7092,9 @@
     "full_proof_sha256": "d243a1a551e83be8647fc5e069e52f00a70a3b7e02a95d84d69581286484d846"
   },
   "check11_evidence": {
-    "current_policy_negatives": "one failed named predicate per post-state/selection negative; candidate failures mutate one source invariant; full-family checkers pass",
+    "current_policy_negatives": "All 538 policy negative executions retain exactly their authored refusal; input/output type cases are explicit typed literals.",
     "new_policy_fixture": "Plans/memory_card6_policy_fixtures.json",
-    "existing_archive_guard_rows": "existing runtime guard/complement checks remain enabled with appended selection cases",
-    "proof_machinery": "shared-tool adoption remains S4; prior complete lane-local proof is lineage, not a new round-10 proof claim"
+    "targeted_predicates": "fix11/targeted-probes.json: local Project, Project join, group minimum/unique/existing; one flips, 149 negatives retain exact refusal, 15 positives and restoration pass per row.",
+    "proof_machinery": "S4 remains OPEN_SHARED_SWEEP. Earlier complete local-proof claims are lineage; no whole-lane check-11 completion is claimed in round 11."
   }
 }
