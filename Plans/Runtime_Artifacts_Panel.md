@@ -2665,7 +2665,7 @@ Amended 2026-10-31 (DL-270): `runtime_artifact.cost_usage` rows and their `usage
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum closes the cross-cutting "debug adapter model" deferral recorded in this document's consume-list by pointing contract ownership at `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496, referenced by unit id only, never restated). It introduces no artifact schema changes and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+This addendum closes the cross-cutting "debug adapter model" deferral recorded in this document's consume-list by pointing contract ownership at `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-495, referenced by unit id only, never restated). It introduces no artifact schema changes and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
 
 ### RAP-053 - Debug Adapter Model Deferral Closure
 

@@ -4,7 +4,7 @@ Source: `Plans/agent-rules-context.md`
 
 Source lines: L52-L73
 
-Source SHA256: `4678a9510ad12ec8ecb86b8035f2180b66caf762f79ad23e77d2f24722ff87a0`
+Source SHA256: `239ee9829dfe15dd51e8664b8363b46c63f10b843f88fe43aeedc72ad954280d`
 
 ---
 
@@ -15,7 +15,7 @@ The normative model is not a Phase/Task/Subtask/Iteration hierarchy and does not
 ### Application-Level Rules (Puppet Master)
 - **Scope:** every agent run under Puppet Master, regardless of whether the work is Assistant, Interview, Orchestrator, or a delegated child run
 - **Purpose:** global policies that apply everywhere
-- **Storage:** owner record `app.agent_rules.application_markdown` at the Everywhere home, with applicable Computer application context and source revisions; F binds exact scope-aware storage refs without a second rule writer
+- **Storage:** owner record `app.agent_rules.application_markdown` at the Everywhere home, with applicable Computer application context and source revisions; the storage owner binds exact scope-aware storage refs without a second rule writer
 - **Bootstrap:** if empty, seed from the Puppet Master repo `AGENTS.md`
 
 ### Project-Level Rules

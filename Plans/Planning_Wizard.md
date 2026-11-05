@@ -11,7 +11,7 @@ Planning Wizard is the finished-product planning workspace that consumes an Appr
 
 ## 1. Ownership And Consumers
 
-Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile readiness, ApprovedPlanPack authority, Planning Wizard GUI states, and the Approve And Build transition. It consumes PRD Builder, Assistant Chat, Goal Runtime, Plan Document System, Plan To Node Compilation, Automated Testing, Executor, Contracts, source-control, permissions, Final GUI, Orchestrator, and HITL contracts without owning low-level runtime execution after Executor activation.
+Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile readiness, ApprovedPlanPack authority, Planning Wizard GUI states, `wizard_status` and the wizard `attention_required` / `blocked` lifecycle (PWIZ-038), and the Approve And Build transition. It consumes PRD Builder, Assistant Chat, Goal Runtime, Plan Document System, Plan To Node Compilation, Automated Testing, Executor, Contracts, source-control, permissions, Final GUI, Orchestrator, and HITL contracts without owning low-level runtime execution after Executor activation.
 
 Planning Wizard may self-initiate web/search/fetch/extract/research/deep-research/crawl/map (`websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`) and Site Reader/browser evidence through the shared PM WebOperation/BrowserAction dispatcher when current external facts, docs, issues, PRs, URLs, visual/dynamic pages, project context, comparative research, or source authority materially changes planning. The resulting read receipts, extract receipts, citations, browser artifacts, source-selection reasons, research closure states, and failure states are planning evidence only until explicit approval; they may flow into Planning Context Capsules, topic ledgers, topic plans, audit findings, Final Plan Pack source refs, and ApprovedPlanPack lineage, but they do not create WorkNodes, NodeSeeds, executable queues, runtime code, implementation files, production build tasks, or Plan Compile authority by themselves. Retired Chain Wizard wording remains compatibility/search lineage only and does not become a dependency or product term.
 
@@ -1664,7 +1664,7 @@ plan_unit_id: PWIZ-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Planning Wizard and PRD Builder workspaces embed Assistant Chat instances per topic conversation and per PRD discovery interview. Each embedded instance is the same Assistant Chat component and message pipeline as the global chat panel, rendered from one template and state source in a chrome-reduced embedded mode: the message stream, composer, and quick-reply chips remain, send stays gated by conversation state, and panel-level chrome such as the thread rail, thread search, issues and worktree indicators, persona and model selectors, the mode strip, and panel toggles is omitted. Stream, footer, and suggestion content resolve per thread, and context boxes are thread-scoped. Embedded instances are additive: the separate global Assistant Chat side panel remains the canonical #chatPanel surface, so embedding inside the wizard workspace does not replace or remove the separate chat side panel.'
+canonical_text: 'Planning Wizard and PRD Builder workspaces embed Assistant Chat instances per topic conversation and per PRD discovery interview. Each embedded instance is the same Assistant Chat component and message pipeline as the global chat panel, rendered from one template and state source in a chrome-reduced embedded mode: the message stream, composer, and quick-reply chips remain, send stays gated by conversation state, and panel-level chrome such as the thread rail, thread search, issues and worktree indicators, persona and model selectors, the mode strip, and panel toggles is omitted. Stream, footer, and suggestion content resolve per thread, and context boxes are thread-scoped. Embedded instances are additive: the separate global Assistant Chat side panel remains the canonical global chat surface, so embedding inside the wizard workspace does not replace or remove the separate chat side panel.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: [PWIZ-013, F3-131, F3-357]
@@ -1675,8 +1675,8 @@ acceptance_criteria:
 - The separate global Assistant Chat side panel remains available while embedded instances are active.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this unit.
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-shard-plans.py --check
+  - scripts/pm-plan-index.py
+  - scripts/pm-shard-plans.py
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: planning_wizard_embedded_chat_instances
@@ -1692,6 +1692,7 @@ source_lineage:
 - source_ref:concept:pm6-build-2026-07-11
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
 - Plans/FinalGUISpec.md#F3-420
+- "DL-260 source lineage only (no product selector or implementation obligation): #chatPanel named the concept global chat container; embedding remains additive to the separate global Assistant Chat side panel."
 source_atom_ids: []
 decision_refs:
 - dec-2026-07-11-pm6-concept-promotion-planunits-seal
@@ -1700,7 +1701,6 @@ preserved_exact_tokens:
 - Assistant Chat
 - embedded
 - quick-reply chips
-- '#chatPanel'
 negative_constraints:
 - Do not replace or remove the separate Assistant Chat side panel; embedded instances are additive to the separate panel surface.
 - Embedded chat chrome must not require arbitrary-content backdrop blur or SVG filters; color styling must be precomputed rather than runtime color mixing, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset.
@@ -1780,7 +1780,7 @@ Before opening, approving, compiling or handing off a Plan-scoped child, the Nam
 
 ## Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-10)
 
-This addendum supersedes PWIZ-017's four-screen/provider-first choreography and the 2026-08-31 seven-stage Onboarding and five-chapter Guided Tour proposal. PWIZ-021 through PWIZ-023 retain their PlanUnit identities and source refs while carrying the current design below. Product Onboarding is a distinct pre-application state machine owned here; Installation/Deployment, Server Claim/Bootstrap, Discovery/Pairing/Remote Access, provider installation/authentication, Project registration/content movement, Source Control, updates, backup/restore, and Doctor retain their own engines. Planning Wizard receives the final setup handoff but is not the Onboarding state store. `Plans/product_onboarding_contracts.schema.json`, `Plans/guided_tour_contracts.schema.json`, and their fixtures are downstream machine-contract consumers: Onboarding's predecessor seven/nine-stage and no-current-`simple_path` values and both predecessor tour controllers are migration inputs, not current authority. For Guided Tour, the September 3 correction below and PWIZ-023 own Chat-first/Planning-final, default restoration or explicit Keep, and safe-step resume. The v3 tour schema materializes these static obligations; predecessor v2 values cannot override them, and v3 validity does not prove a durable adapter or native recovery.
+This addendum supersedes PWIZ-017's four-screen/provider-first choreography and the 2026-08-31 seven-stage Onboarding and five-chapter Guided Tour proposal. PWIZ-021 through PWIZ-023 retain their PlanUnit identities and source refs while carrying the current design below. Product Onboarding is a distinct pre-application state machine owned here; Installation/Deployment, Server Claim/Bootstrap, Discovery/Pairing/Remote Access, provider installation/authentication, Project registration/content movement, Source Control, updates, backup/restore, and Doctor retain their own engines. Planning Wizard receives the final setup handoff but is not the Onboarding state store. `Plans/product_onboarding_contracts.schema.json`, `Plans/guided_tour_contracts.schema.json`, and their fixtures are downstream machine-contract consumers: Onboarding's predecessor seven/nine-stage and no-current-`simple_path` values and both predecessor tour controllers are migration inputs, not current authority. For Guided Tour, the September 3 correction below and PWIZ-023 own Chat-first/Planning-final, default restoration or explicit Keep, and safe-step resume. The tour schema materializes these static obligations through its closed Project-v3/application-v1 terminal-result union; historical Project results retain their exact shape, and the application result returns to No project chat on its captured Server/thread. Predecessor v2 values cannot override current obligations, and schema validity does not prove a durable adapter or native recovery.
 
 ### Product-design law — September 3 draft-first correction
 
@@ -1800,13 +1800,13 @@ The semantic dependency graph is owned once by `Plans/product_onboarding_contrac
 10. `free_models_setup` — offer the explicit optional Set Up Free Models continuation after the paid-provider prompt, including after Skip. It stays inside Onboarding and delegates to the existing underlying provider/account/model owners.
 11. `ready` — present the truthful handoff, Enter Puppet Master, and optional Guided Tour. It does not certify skipped/failed work or start Goals, Plans, agents, provider requests, or builds. With a committed Project, Enter Puppet Master without the Tour and successful Tour completion open Planning Wizard. Without one, both land in a No project chat on the named Computer. This explicitly supersedes the September 3 packet's normal-finish Assistant Chat default. Planning Wizard itself requires a real Project and, for Plan-scoped child work, the actual Named Plan binding. A no-project finish never opens a fake practice Project or starts Wizard/PRD/Orchestrator work.
 
-These are dependency stages, not a requirement to render eleven equally complex screens. Hide irrelevant controls, not prerequisites; progress describes the actual applicable journey. `connect_existing_stage_order` retains the exact six-stage welcome/simple_path/remote_access_setup/review_setup_plan/automatic_preparation/ready shortcut. It does not fabricate a first Project or silently execute omitted setup. An explicit `project_disposition=deferred` on the guided path uses `deferred_project_stage_order`, leaves `project_id` and commit proof absent, and admits provider_setup and optional free_models_setup on the named Computer under application scope. Do not turn later/Skip into a fake Project identity or a provider-readiness claim.
+These are dependency stages, not a requirement to render eleven equally complex screens. Hide irrelevant controls, not prerequisites; progress describes the actual applicable journey. `connect_existing_stage_order` retains the exact six-stage welcome/simple_path/remote_access_setup/review_setup_plan/automatic_preparation/ready shortcut. It does not fabricate a first Project or silently execute omitted setup. An explicit `project_disposition=deferred` on the guided path uses `deferred_project_stage_order`, leaves `project_id` and commit proof absent, and admits provider_setup and optional free_models_setup on the named Computer under application scope. The closed application_provider/application_free_models phases carry app_auth_binding_ref to the actual Multi-Account AppFirstTimeAuthBindingV1; the existing account owner, current reviewed draft, named Server/Host/Environment, initiating active Client and exact return must join before dispatch. Historical postcommit_provider/postcommit_free_models request and result branches keep their Project binding. Skipping AI requires no sign-in and cannot claim readiness. Do not turn later/Skip into a fake Project identity or a provider-readiness claim.
 
 ### Reversible draft, Settings-owned copy, and precommit source access
 
 The durable session stores one closed setup_draft choice snapshot, not merely an unresolved pointer or a raw plan body. Its canonical bytes, draft identity and revision match the queued/reviewed plan binding; continuation/return projections keep references rather than duplicate the choices. The durable draft has its own `project_draft_ref` and revision, separate from any `project_id`, and remains `planned_only=true`, `applied=false`, and `project_created=false`. Before commit it may cache selections, read current Project metadata, browse folders/source listings, validate names/paths/permissions/free space/reachability/compatibility, resolve Server/storage/sync choices, and render Settings-owner transfer previews. Bounded owner reads and selected-source authentication are explicit exceptions to the predecessor blanket no-owner-work-before-Review rule. They do not permit destination creation/population, history initialization, repository creation, clone/import, Settings apply, Project sync/backup binding, or broad provider/agent work.
 
-Start like another Project? appears only while creating a new Project and at least one eligible existing source Project is available; opening an already registered Project, connect-existing and Project Later do not offer or apply a copy. Your usual settings is the default, and eligible Projects are ordered by recent use and compatibility. A selected source renders a short Settings-owned preview; Choose settings optionally opens the same canonical category selector. Onboarding never owns a second group list or copy engine. `SSYS-007` and `SSYS-036` own exact eligible IDs, source and draft revisions, proposed values, provenance, exclusions, explicit-choice precedence, validation, expiry, destination rebind, rollback and readback. New explicit Project choices win over copied defaults. Accounts/routes copy only where that contract permits; credentials stay with their owner. An account unavailable on the selected Host retains the intended route and a truthful later setup action, never an invented replacement. Files, history, Goals, Plans, and later source changes remain independent.
+Start like another Project? appears only while creating a new Project and at least one eligible existing source Project is available; opening an already registered Project, connect-existing and Project Later do not offer or apply a copy. Your usual settings is the default, and eligible Projects are ordered by recent use and compatibility. A selected source renders a short Settings-owned preview; Advanced: choose what to copy optionally opens the same canonical category selector. Onboarding never owns a second group list or copy engine. `SSYS-007` and `SSYS-036` own exact eligible IDs, source and draft revisions, proposed values, provenance, exclusions, explicit-choice precedence, validation, expiry, destination rebind, rollback and readback. New explicit Project choices win over copied defaults. Accounts/routes copy only where that contract permits; credentials stay with their owner. An account unavailable on the selected Host retains the intended route and a truthful later setup action, never an invented replacement. Files, history, Goals, Plans, and later source changes remain independent.
 
 `ui.onboarding.open_owner_flow` before commit requires a current `onboarding_precommit_authorization`, an exact owner request/hash, selected source, draft/revision, permission/capability/consent refs, Server/Host/Environment, initiating active Client, return focus, expiry, and continuation generation. `owner_phase=read_only_preflight` permits only the admitted read-only owner request. `owner_phase=selected_source_auth` permits only authentication or verified official-page navigation necessary for that selected source. It does not open the full provider manager or ask about unrelated AI accounts. The owner must validate actual request semantics and authenticate the referenced fences; a structurally valid authorization value is not authority.
 
@@ -1862,7 +1862,7 @@ Amended 2026-10-10 (DL-186): the widget action is now adding the Usage widget Up
 
 Workspace practice explains page navigation and panels, then follows PWIZ-035: open from the plus menu, open a file from the rail, split by drag, and add Upcoming resets. Chat stays a fixed column (F3-637). Amended 2026-10-17: the Chat move or dock step is retired. Manual practice and `Show Me` use the same mounted owner handler and success predicate. Every important action first brings its target into view, explains one outcome, offers Try it and visible Show Me, and acknowledges the observed result. Show Me adds interruptible pre-cue, visible travel, destination reaction, and settle around that handler; timers, narration, screenshot substitution, a second mutation implementation, and generic Next never satisfy an action checkpoint.
 
-Planning Wizard is about half of meaningful actions and meaningful dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then. It opens through its visible route; the local book-club practice goal becomes three outcomes (next meeting, current book, how to join). The learner answers who may update the meeting and book, can read why shared sign-in/editing depends on that answer, reviews outcomes/decisions/assumptions/unresolved choices, and edits one answer. Only the affected shared-access consequence changes; unaffected outcomes retain their identity and position. `I’m not sure yet` remains unresolved, never an implicit denial of shared access or a completed decision. The current real Wizard names and modes apply; example controls are scoped fixtures, not a replacement planning engine. Finish lands on the real Planning Wizard with the committed Project selected, removes the practice surface, and starts no live work. Tour completion does not grant approval or create a second approval fence.
+Planning Wizard is about half of meaningful actions and meaningful dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then. It opens through its visible route; the local book-club practice goal becomes three outcomes (next meeting, current book, how to join). The learner answers who may update the meeting and book, can read why shared sign-in/editing depends on that answer, reviews outcomes/decisions/assumptions/unresolved choices, and edits one answer. Only the affected shared-access consequence changes; unaffected outcomes retain their identity and position. `I’m not sure yet` remains unresolved, never an implicit denial of shared access or a completed decision. The current real Wizard names and modes apply; example controls are scoped fixtures, not a replacement planning engine. Finish removes the practice surface and starts no live work, landing on the real Planning Wizard with the committed Project selected when one exists, otherwise in No project chat on the named Computer (DL-287). Tour completion does not grant approval or create a second approval fence.
 
 The exact current typed tour actions are `ui.guided_tour.start`, `ui.guided_tour.next`, `ui.guided_tour.show_me`, `ui.guided_tour.back`, `ui.guided_tour.pause`, `ui.guided_tour.resume`, `ui.guided_tour.skip`, `ui.guided_tour.focus_route`, `ui.guided_tour.toggle_eli5`, `ui.guided_tour.finish`, and `ui.guided_tour.replay`. `focus_route` changes only the mounted application's visible page/focus; `show_me` orchestrates the current action rather than becoming its domain command. `next`/`back` move through valid story state but cannot satisfy required practice. `finish` carries the layout disposition, defaulting to `restore`; `keep` requires an explicit user selection, never an inferred default. This parameter does not revive separate `ui.guided_tour.restore_layout` or `ui.guided_tour.keep_layout` actions. Those predecessor tokens and `ui.guided_tour.toggle_reduced_motion` remain retired. Assistant Chat reuses `cmd.persona.select`, `cmd.chat.send`, `cmd.chat.eli5.set` (the quick dot), and `cmd.chat.eli5.explain_reply` (DL-126); concept-local `ui.assistant_chat.select_persona`, `ui.assistant_chat.send`, and `ui.assistant_chat.toggle_eli5` must not become competing production commands. The Tour bar's Look menu and sound control are shared chrome, not tour actions: their changes compose `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply`, and Adjust NieR opens the NieR Mode editor through `ui.settings.nier_editor.open` (`Plans/Settings_System.md#SSYS-043`, DL-153).
 
@@ -2487,7 +2487,7 @@ canonical_text: 'Guided Tour is an optional Onboarding handoff in exact Assistan
   Reduced Motion, measured callouts, and focused headings remain usable. Run Onboarding Again resets the tour completely,
   and Settings offers Resume Guided Tour and Replay Guided Tour as separate entries. Skip restores captured state; Finish
   restores temporary layout by default or keeps it only on explicit selection, then lands on the real Planning Wizard
-  with the committed Project selected. While any restore runs, the application''s own notices about it stay quiet in
+  with the committed Project selected when one exists, otherwise in No project chat on the named Computer (DL-287). While any restore runs, the application''s own notices about it stay quiet in
   every look and the Tour''s closing note says what was put back (F3-521, DL-153). Both predecessor controllers remain
   source lineage only. Guided example/Teacher presentation is F3-656''s; resume prompts and page notes consume F3-447''s
   under-bell staging. The F3-447 reading interval or interaction elsewhere tucks the prompt into F3-453''s shared inbox;
@@ -2530,7 +2530,8 @@ acceptance_criteria:
 - Every scene heading receives programmatic focus, and every callout measures, clamps, and remeasures its actual target
   across resize, scale, localization, movement, and route changes.
 - Skip is always available and restores layout, Chat state, and focus; Finish defaults to restoration, accepts Keep only
-  by explicit selection, and lands on the real Planning Wizard with the committed Project selected.
+  by explicit selection, and lands on the real Planning Wizard with a committed Project selected when one exists,
+  otherwise in No project chat on the named Computer, without starting work or inventing a practice Project (DL-287).
 - While a restore runs, the application's own notices about it (a widget removed, a persona applied from the next turn)
   stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153).
 - Close/reload resumes the last safe checkpoint after owner-state revalidation without replaying work; checkpoints carry
@@ -3977,11 +3978,8 @@ acceptance_criteria:
   SSH prerequisites use the exact Server request/result and captured return context; changed fingerprints, stale key/target, weak keys, uncertain installs and missing handlers cannot be rendered trusted or installed.
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
-- Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandRequestV1
-- Plans/server_system_contracts.schema.json#/$defs/SshHostTrustCommandResultV1
-- Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandRequestV1
-- Plans/server_system_contracts.schema.json#/$defs/SshPublicKeyInstallCommandResultV1
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- Plans/server_system_contracts.schema.json
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_pwiz_037
@@ -4057,3 +4055,94 @@ stale_retired_dispositions:
 ```
 
 ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-037, ContractName:Plans/Plan_Document_System.md#PDS-003
+
+## Wizard status and blocked lifecycle owner addendum (DL-330, 2026-11-05)
+
+Jared's answer of 2026-11-05 ("approve all") to closure question 2 makes this document the owner of `wizard_status` and of the wizard `attention_required` and `blocked` states, their transitions, the blocked record and the blocked clear rule. Retired `Plans/chain-wizard-flexibility.md` defined them in §2.2, §15.2 and the 2026-03-08/09 blocked-state addenda; those sections are now source lineage only. The semantics move here unchanged; only the names follow current canon (PRD Builder for the retired Requirements Doc Builder, and the Auditor validation loop for the retired fixed validation passes). `Plans/Decision_Policy.md` keeps the clarification-round limits (§6.5, DP-064) and the requirements-quality check (§6.4). `Plans/Contracts_V0.md` keeps the `wizard.blocked` / `wizard.unblocked` event payloads, `Plans/storage-plan.md` the durable storage binding, and `Plans/FinalGUISpec.md` the `wizard_attention_required` / `wizard_blocked` card presentation.
+
+### PWIZ-038 - Wizard Status And Blocked Lifecycle
+
+```yaml
+plan_unit_id: PWIZ-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Planning Wizard owns wizard_status, the wizard''s own lifecycle enum: setup (wizard instance and project setup are being prepared), requirements (requirements upload, PRD Builder, or canonical requirements merge is active), interview (adaptive interview phase is active), validating (Contract Unification and the Auditor validation loop are running), attention_required (the current clarification or review loop can still resolve the issue set), blocked (automatic progress cannot continue without new input, recovery, or replan), ready_to_execute (validated package is ready to launch execution), complete (wizard finished successfully), and cancelled (user cancelled). Builder bundle state, agent activity run state, and executor node status are separate state families and are not conflated with wizard_status.
+  attention_required means the current clarification cycle can continue and answering the current questions may unblock progress; blocked means clarification rounds are exhausted or progress otherwise cannot continue automatically. A Debug investigation budget trip may surface as failed or attention_required depending on whether user recovery is meaningful, but its stop_reason_code stays investigation.budget_exhausted and carries budget_kind. When the requirements-quality check of Decision_Policy §6.4 ends with non-empty needs_user_clarification[], the wizard becomes attention_required: Proceed and Start Run are disabled and the step that triggered the issue shows a lock icon or warning badge. It returns to its normal state only when every needs_user_clarification[] entry is answered and the re-run with those answers injected produces verdict PASS with an empty needs_user_clarification[]. The wizard stays attention_required while the current clarification or review loop can still resolve the issue set, and escalates to blocked when clarification_round_count reaches the Decision_Policy §6.5 cap (DP-064, 3 cycles) without clearing the blocking issues, or when the next required action can no longer be completed inside the current flow (for example auth recovery, explicit user correction outside the inline form, or replan approval). The wizard UX distinguishes clarification still pending (attention_required), blocked on user correction, auth, approval, or integrity (blocked), and degraded but still usable draft structure before graph lock.
+  In blocked, Proceed and Start Run stay disabled, the UI copy explains that repeated clarification attempts did not resolve the issue set, the latest canonical quality report is preserved, and requirements are not rewritten automatically without new explicit user input. Blocked persistence uses wizard_status = blocked with blocked_reason_code. A wizard blocked record persists wizard_id, wizard_step, blocked_reason_code, clarification_round_count, report_ref, resume_url?, decomposition_degraded, degradation_reason?, replan_generation?, and attempted_recovery_action_ids[]; wizard state also carries attention_required_reason and attention_required_report_path, the latest blocking requirements quality report. The legacy blocked field names is_blocked, blocked_info, blocked_state, and blocked_episode_ref are non-canonical aliases and are not introduced in new wizard state. A wizard leaves blocked only when materially new user input creates a new issue set, the external prerequisite named by blocked_reason_code is actually resolved, a new replan_generation begins for the wizard context, or the wizard is cancelled; reopening the same blocked wizard without one of those changes does not clear blocked and does not reset clarification_round_count. Wizard packets support both wizard_attention_required and wizard_blocked with the shared fields wizard_id, wizard_step, report_ref, resume_url, thread_id?, and status, so Dashboard, thread, and resume deep-link behavior works for both states.'
+gui_related: true
+gui_classification_reason: Defines user-visible wizard state behavior, including disabled Proceed and Start Run, step badges, blocked copy, and resume for both states.
+split_recommended: false
+depends_on:
+- DP-064
+unblocks: []
+acceptance_criteria:
+- wizard_status has exactly the nine values setup, requirements, interview, validating, attention_required, blocked, ready_to_execute, complete, and cancelled, and blocked is a canonical persisted state distinct from attention_required.
+- attention_required and blocked use distinct semantics and user copy, and resume and deep links work for both states.
+- A wizard leaves blocked only on one of the four clear conditions; reopening it alone neither clears blocked nor resets clarification_round_count.
+- No live Plans unit routes wizard_status or the wizard blocked lifecycle to retired Plans/chain-wizard-flexibility.md.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+risk_class: wizard_lifecycle_owner_drift
+reasoning_tier: high
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Decision_Policy.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: wizard_status_blocked_lifecycle_owner
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-330
+- Plans/chain-wizard-flexibility.md#CWF-013 (retired source lineage, section 2.2 canonical wizard_status definition)
+- Plans/chain-wizard-flexibility.md#CWF-014 (retired source lineage, blocked persistence aliases)
+- Plans/chain-wizard-flexibility.md#CWF-103 (retired source lineage, section 15.2 wizard state transition)
+- Plans/chain-wizard-flexibility.md#CWF-129 (retired source lineage, attention_required versus blocked)
+- Plans/chain-wizard-flexibility.md#CWF-130 (retired source lineage, blocked controls and rewrite stop)
+- Plans/chain-wizard-flexibility.md#CWF-131 (retired source lineage, attention and blocked resume packet)
+- Plans/chain-wizard-flexibility.md#CWF-135 (retired source lineage, wizard status UX differentiation)
+- Plans/chain-wizard-flexibility.md#CWF-136 (retired source lineage, block escalation thresholds)
+- Plans/chain-wizard-flexibility.md#CWF-137 (retired source lineage, canonical wizard blocked record)
+- Plans/chain-wizard-flexibility.md#CWF-138 (retired source lineage, blocked clear and counter preservation)
+preserved_exact_tokens:
+- wizard_status
+- setup
+- requirements
+- interview
+- validating
+- attention_required
+- blocked
+- ready_to_execute
+- complete
+- cancelled
+- blocked_reason_code
+- clarification_round_count
+- attempted_recovery_action_ids[]
+- attention_required_report_path
+- wizard_attention_required
+- wizard_blocked
+- is_blocked
+- blocked_info
+- blocked_state
+- blocked_episode_ref
+- investigation.budget_exhausted
+- budget_kind
+- DL-330
+negative_constraints:
+- Do not conflate wizard_status with Builder bundle state, agent activity run state, or executor node status.
+- Do not collapse blocked into attention_required.
+- Do not introduce the legacy blocked field aliases in new wizard state.
+- Do not route wizard_status or the wizard blocked lifecycle back to retired Plans/chain-wizard-flexibility.md.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Decision_Policy.md
+- Plans/Contracts_V0.md
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-038, ContractName:Plans/Decision_Policy.md#DP-064, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md

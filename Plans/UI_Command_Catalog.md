@@ -93,7 +93,7 @@ The following command IDs are development-preview and automated-test controls on
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
 | `cmd.gui_dev_preview.reload` | Reload GUI preview | Reloads the local static web route or native preview surface after a configured dev/test rebuild. | `dev_preview_enabled && explicit_dev_or_test_build` | `domain_action` |
-| `cmd.gui_dev_preview.fixture_mode.set` | Set GUI fixture mode | Selects an approved deterministic fixture state for GUI smoke tests, screenshots, state hooks, or replay. | `dev_preview_enabled && fixture_mode_available && explicit_dev_or_test_build` | `domain_action` |
+| `cmd.gui_dev_preview.fixture_mode.set` | Set GUI fixture mode | Selects isolated labelled deterministic developer/test state for GUI smoke tests, screenshots, state hooks or replay; no prototype scenario picker, product run mode, production admission, readiness or production receipt credit. | `dev_preview_enabled && fixture_mode_available && explicit_dev_or_test_build` | `domain_action` |
 | `cmd.gui_dev_preview.capture_state` | Capture GUI state | Captures screenshot, visible state, and deterministic state-hook output for browser/native GUI smoke evidence. | `dev_preview_enabled && state_capture_available && explicit_dev_or_test_build` | `domain_action` |
 | `cmd.gui_dev_preview.daemon_capabilities.inspect` | Inspect daemon capabilities | Shows trusted local daemon capability probe results, degraded reasons, and test-hook availability without enabling a capability. | `dev_preview_enabled && trusted_local_daemon_probe_available && explicit_dev_or_test_build` | `shell_view` |
 
@@ -3035,7 +3035,7 @@ plan_unit_id: UCC-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Project management and deferred wizard command IDs cover adding/opening projects, creating local or GitHub-backed projects, and opening deferred chain wizard payloads with the required args, events, and affected surfaces.
+canonical_text: Project management and deferred wizard command IDs cover adding/opening projects, creating local or GitHub-backed projects, and opening deferred Planning Wizard handoff payloads with the required args, events, and affected surfaces.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -3076,7 +3076,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/GitHub_Integration.md#d-project-management-flows-no-chain-wizard-required, ContractName:Plans/chain-wizard-flexibility.md'
-compatibility_only_notes: []
+compatibility_only_notes:
+- '`cmd.project.chain_wizard_open_deferred` and chain wizard deferred payloads are legacy compatibility names only; current surfaces route the deferred handoff to Planning Wizard.'
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md
@@ -7932,9 +7933,10 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   ui.onboarding.choose_first_project, ui.onboarding.finish, and ui.onboarding.choose_look. These are local
   UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
   and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local look
-  preview, and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look on screen for
-  settings_rerun): neither dispatches cmd.theme.* or a Settings transaction, and the look is written with the
-  Project at commit. Every request consumes PWIZ-021''s closed, normalized, secret-free local_context, including
+  preview. ui.onboarding.start uses the one Settings-resolved saved look for first_run, including without a
+  Project, with Basic Dark only as the factory/pre-claim fallback; settings_rerun keeps the look on screen.
+  Neither dispatches cmd.theme.* or a Settings transaction; the look commits once at the accepted application/Computer
+  or real-Project boundary (DL-286). Every request consumes PWIZ-021''s closed, normalized, secret-free local_context, including
   phase-specific draft/preflight/commit bindings as defined by the owner schema; arbitrary/raw payload fields
   and secret-bearing values are rejected. An action that launches owner work carries a typed owner route or
   intent and maps to that owner''s existing canonical command and sole handler. The command-era reference to
@@ -8431,9 +8433,8 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   GUI development-preview command controls are limited to cmd.gui_dev_preview.reload,
   cmd.gui_dev_preview.fixture_mode.set, cmd.gui_dev_preview.capture_state, and
-  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only,
-  are compiled out or disabled in production unless explicitly configured, and must not be reused as production
-  runtime, terminal, filesystem, browser automation, CEF, tray, native-window, or process/container commands.
+  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only and
+  must not be reused as production runtime, terminal, filesystem, browser automation, CEF, tray, native-window or process/container commands. Other development-preview controls are compiled out or disabled in production unless explicitly configured; cmd.gui_dev_preview.fixture_mode.set is always compiled out of production. It selects isolated labelled deterministic developer/test state only. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 gui_related: true
 gui_classification_reason: This unit defines user-visible development-preview GUI controls and command IDs.
 depends_on:
@@ -8441,13 +8442,14 @@ depends_on:
 - F3-417
 unblocks: []
 acceptance_criteria:
-- Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection.
-- Production builds disable or omit these controls unless explicit configuration enables the matching dev/test surface.
-- The commands do not grant OS-owned capabilities and do not replace production runtime command families.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created.
+- "Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection."
+- "Production builds disable or omit other dev-preview controls unless explicit configuration enables the matching dev/test surface; fixture mode is always absent and no production configuration enables it."
+- "The commands do not grant OS-owned capabilities and do not replace production runtime command families."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created."
+- "The fixture command selects isolated labelled developer/test data only, without a prototype scenario picker, product run-mode switch, production admission, readiness or production receipt credit."
 validation_surfaces:
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-plans-verify.py"
+- "scripts/pm-plan-index.py"
 risk_class: dev_preview_command_authority_leak
 reasoning_tier: high
 context_scope: gui_platform_currentness_repair
@@ -8469,6 +8471,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not invent production runtime commands for dev-preview workflow."
 - "Do not let dev-preview commands grant PTY, filesystem, process/container, CEF, tray, native-window, or browser automation authority."
+- "Do not let fixture_mode.set select prototype scenarios, enable a product run mode, admit fixture data to production or produce readiness/production receipt credit."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/FinalGUISpec.md
@@ -10408,7 +10411,6 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.git.stash_drop` | retired -> `cmd.source_control.stash.drop` | destructive; row registered below |
 | `cmd.git.switch_branch` | retired -> `cmd.source_control.branch.switch` | row registered below (+ `branch.create`) |
 | `cmd.source_control.generate_commit_message` | canonical (registered below) | |
-| `panels.git_commit` | retired -> `cmd.git.commit` | row registered below |
 | `git.create_pr` | retired -> `cmd.github.pr.create` | compatibility alias normalizes to `cmd.forge.review.create {provider: github}` under DL-044 |
 | `cmd.git.worktree.open` | canonical (existing) | UCC-054 family |
 | `cmd.git.worktree.open_files` | alias-of `cmd.git.worktree.open` | open plus File Manager focus argument |
@@ -10521,7 +10523,7 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/W
 
 ### Source Control depth rows
 
-These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-family declaration into first-class commands (list/create/apply/pop/drop; pop is added because the declared family lacked it) and supply the branch selector commands the section 2.5 coverage prose promises. `cmd.git.commit` registers the commit action the prototype's `panels.git_commit` token retires into. Stash drop and pop route the shared confirm surface; all mutating rows inherit projection-freshness gating.
+These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-family declaration into first-class commands (list/create/apply/pop/drop; pop is added because the declared family lacked it) and supply the branch selector commands the section 2.5 coverage prose promises. `cmd.git.commit` registers the product commit action. Stash drop and pop route the shared confirm surface; all mutating rows inherit projection-freshness gating.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -10848,8 +10850,7 @@ canonical_text: >-
   section 2.5 coverage prose promises. cmd.source_control.stash.list, stash.create, stash.apply, stash.pop,
   and stash.drop resolve the underdefined stash.* compatibility-family declaration into first-class rows,
   adding pop which the declared family lacked; the prototype tokens cmd.git.stash_pop and cmd.git.stash_drop
-  retire into stash.pop and stash.drop. cmd.git.commit registers the commit action the prototype token
-  panels.git_commit retires into. cmd.source_control.generate_commit_message registers the AI commit-message
+  retire into stash.pop and stash.drop. cmd.git.commit registers the product commit action. cmd.source_control.generate_commit_message registers the AI commit-message
   action. Stash pop and drop use two-step confirmation through the shared confirm surface; mutating rows
   inherit projection-freshness gating.
 gui_related: true
@@ -10859,7 +10860,7 @@ unblocks: []
 acceptance_criteria:
   - Each stash flow (list, create, apply, pop, drop) resolves to exactly one first-class command row.
   - branch.switch is blocked with a reason on unsafe working trees instead of disappearing.
-  - panels.git_commit, cmd.git.stash_pop, cmd.git.stash_drop, and cmd.git.switch_branch appear nowhere in production markup.
+  - cmd.git.stash_pop, cmd.git.stash_drop, and cmd.git.switch_branch appear nowhere in production markup.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -11332,7 +11333,7 @@ owner_hints:
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum registers, at row level, the `cmd.run_debug.*` classical DAP debugger dispatch family minted by `Plans/Commands_System.md` Run & Debug Revival Addendum §7.2 (39 ids, semantics, availability and confirmation classes, and the closed disabled-reason set owned there and consumed here by reference only), registers the `cmd.run.*` orchestrator run-control trio per §7.3, records the `cmd.debug.*` production wiring-location re-home into the assistant Debug Mode investigation surface, and fixes two stale ContractRef anchors in this document (the retired 5.2.8-era debug-family anchor now targets the §7.1 Debug Mode dispatch family anchor). Every token below is adjudicated in the reconciliation table; the new rows carry the catalog row-level metadata contract (`command_kind`, availability class, confirmation class, `disabled_reasons` subsets drawn only from the closed sets at §7.2/§7.3, and owner) while family semantics, preconditions, and the debug session state machine remain owned by `Plans/Commands_System.md` §7.2/§7.3 and `Plans/FinalGUISpec.md` Run & Debug Revival Addendum F3-482..F3-496 (referenced by unit id only, never restated). The CS-009 boundary stands: `cmd.debug.*` remains the assistant-investigation family (§7.1 owns its semantics, unchanged), and classical debugger dispatch uses only `cmd.run_debug.*`. No existing PlanUnit block, preserved exact token, canonical text, retired bridge, or wiring-matrix row is edited by this addendum. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts, or production build tasks; `Concepts/**` materials remain source-lineage-only.
+This addendum registers, at row level, the `cmd.run_debug.*` classical DAP debugger dispatch family minted by `Plans/Commands_System.md` Run & Debug Revival Addendum §7.2 (39 ids, semantics, availability and confirmation classes, and the closed disabled-reason set owned there and consumed here by reference only), registers the `cmd.run.*` orchestrator run-control trio per §7.3, records the `cmd.debug.*` production wiring-location re-home into the assistant Debug Mode investigation surface, and fixes two stale ContractRef anchors in this document (the retired 5.2.8-era debug-family anchor now targets the §7.1 Debug Mode dispatch family anchor). Every token below is adjudicated in the reconciliation table; the new rows carry the catalog row-level metadata contract (`command_kind`, availability class, confirmation class, `disabled_reasons` subsets drawn only from the closed sets at §7.2/§7.3, and owner) while family semantics, preconditions, and the debug session state machine remain owned by `Plans/Commands_System.md` §7.2/§7.3 and `Plans/FinalGUISpec.md` Run & Debug Revival Addendum F3-482..F3-495 (referenced by unit id only, never restated). The CS-009 boundary stands: `cmd.debug.*` remains the assistant-investigation family (§7.1 owns its semantics, unchanged), and classical debugger dispatch uses only `cmd.run_debug.*`. No existing PlanUnit block, preserved exact token, canonical text, retired bridge, or wiring-matrix row is edited by this addendum. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts, or production build tasks; `Concepts/**` materials remain source-lineage-only.
 
 Metadata legend for the registration tables: availability classes are written cozy-style as `session_state (<precondition>)` (availability follows the debug session state machine per §7.2), `selection (<precondition>)` (requires a selected subject), and `always` (enabled whenever the owning surface is visible). Confirmation classes are `none`, `two_step`, and `strong` (destructive, dispatching only through the shared confirm surface per §7.2). `disabled_reasons` values come only from the closed sets at `Plans/Commands_System.md` §7.2 (`unsupported`, `not_configured`, `adapter_unavailable`, `session_state_mismatch`, `capability_absent`, `stale_projection`, `permission_required`) and §7.3 (`stale_projection`, `permission_required`, `unreachable`).
 
@@ -11526,7 +11527,7 @@ node_compile_hint:
 source_lineage:
   - user-decision:2026-07-27-run-debug-revival
   - "Plans/Commands_System.md (Run & Debug Revival Addendum §7.2, CS-063; referenced)"
-  - "Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)"
+  - "Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-495; referenced)"
 preserved_exact_tokens:
   - cmd.run_debug.*
   - cmd.run_debug.start
@@ -11535,7 +11536,7 @@ preserved_exact_tokens:
 negative_constraints:
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
   - Do not restate Commands_System §7.2 semantics in this unit or its tables beyond row-level metadata fields.
-  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-496 owns that canon and is referenced by unit id only.
+  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-495 owns that canon and is referenced by unit id only.
   - Do not re-scope or restate cmd.debug.* semantics; the assistant-investigation boundary per CS-009 and §7.1 stands unchanged.
 owner_hints:
   - Plans/UI_Command_Catalog.md
@@ -11569,7 +11570,7 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   ui.guided_tour.focus_route is a typed local presentation action with
   route_target.page_id, mounted-router availability, accessible disabled
-  reason, and an exact no-domain/no-persistence result. cmd.nav.focus_route is
+  reason, and the exact pm.guided_tour.focus_route_result.v1 no-domain/no-persistence result. cmd.nav.focus_route is
   an unadopted migration candidate with no catalog registration, alias,
   handler, EventRecord, or production wiring row.
 gui_related: true
@@ -11577,9 +11578,9 @@ gui_classification_reason: Binds the visible Guided Tour route control to its ex
 depends_on: [CS-072, PWIZ-023, UCC-147]
 unblocks: [WM-049]
 acceptance_criteria:
-  - The Guided Tour control carries exactly data-ui-action-id=ui.guided_tour.focus_route and no data-command-id.
+  - The Guided Tour control binds exactly the typed local action ui.guided_tour.focus_route through the Guided Tour owner, with no domain-command binding or dispatch.
   - route_target.page_id is required by the closed action schema.
-  - Missing router state remains focusable, described, hover-bound, and non-activating.
+  - Missing router state remains focusable with aria-disabled=true, described, hover-bound, and non-activating.
   - cmd.nav.focus_route is exclusions-only and absent from the production matrix.
 validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json]
 risk_class: guided_tour_catalog_alias_or_inaccessible_unavailable_state
@@ -11590,6 +11591,7 @@ node_compile_hint: {mode: guided_tour_local_action_catalog_disposition, create_w
 source_lineage:
   - Plans/Planning_Wizard.md#PWIZ-023
   - Concepts/pm7-tools/guided_tour_source.py
+  - "DL-260/DL-280 source lineage only (no product DOM obligation): data-ui-action-id and data-command-id were concept census attributes, not the product binding interface."
 preserved_exact_tokens: [ui.guided_tour.focus_route, route_target.page_id, pm.guided_tour.focus_route_result.v1, cmd.nav.focus_route, aria-disabled=true]
 negative_constraints:
   - Do not add a primary catalog or wiring row for cmd.nav.focus_route.
@@ -14675,7 +14677,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 
 | Surface | What it is | Rows it produces |
 |---|---|---|
-| `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, PM_WORK items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
+| `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, owner-projected Work items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
 | `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume`, `cmd.collaboration.research_lead` (DL-218) |
 | `questionnaire_card` | The existing questionnaire host's question and What we agreed cards; this surface ID is newly registered by UCC-206 under DL-218. | `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.grill_me.wrap_up`, `cmd.questionnaire.grill_me.confirm`, `cmd.questionnaire.grill_me.keep_going` |
 | `memory_proposal_line` | The one in-chat line that proposes a memory for review (AMS-047). | `cmd.chat.teach.open_memory` |
@@ -17552,7 +17554,7 @@ canonical_text: 'The chat port adds producers to existing commands and local act
   kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
   shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
   or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
-  puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
+  puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional
   agent strings and the single Pip primitive retain their existing meaning.'
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local
@@ -17587,12 +17589,11 @@ acceptance_criteria:
   own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
   head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
-  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer owned by F3-594 serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
   retain their existing meaning.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: hosted_chat_owner_drift
 reasoning_tier: high
 context_scope: chat56_pmconcept7_port
@@ -17613,6 +17614,7 @@ source_lineage:
   source; not native or final visual verification)
 - 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
   source evidence, not native APIs.'
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou/PX_YOU/pnYou were the concept person-rendering helpers and pixel table; the shared product renderer is owned by F3-594."
 preserved_exact_tokens:
 - cmd.agents.open_thread
 - cmd.editor.close_tab
@@ -17712,8 +17714,7 @@ canonical_text: >-
   web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or
   controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass
   plate; unavailable owner navigation says why. G6 confines Clear finished producers to the thread Processes
-  view and panel Processes tab. PM7_WORK_UI and PM_WORK demonstrate these routes in the concept; they are
-  adapters to the stable catalog identities, not replacement native commands or Event Authority admission.
+  view and panel Processes tab. All Work consumers use the stable catalog identities without a replacement command family or implicit Event Authority admission.
   D2/D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): composer run_dock Review/Show is
   an additional producer of cmd.chat.processes.open for a process or scheduled item, preserving
   Project/thread/work identity and selecting that item in Processes. Agent Review selects the existing Subagents
@@ -17731,7 +17732,7 @@ canonical_text: >-
   is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation through the
   terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for
   restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner
-  routes. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live
+  routes. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live
   process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that
   thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or
   returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
@@ -17756,12 +17757,12 @@ acceptance_criteria:
   - "The nine work/navigation command IDs match the closed schema enum and each has exactly one canonical production-intent handler."
   - "Navigation/view-local clear are distinguished from runtime mutations; no stop_all alias or delete-record Clear Finished appears."
   - "Existing terminal/owner/schedule routes preserve exact identities, and deferred Home/shortcut/event producers stay absent."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -17774,6 +17775,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
+- "DL-260 source lineage only (no product API): PM7_WORK_UI/PM_WORK, clearFinished platform/thread:<id> and canSendInput/answer were concept route/view adapters; native owners retain exact command, view, prompt, generation and permission checks."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
@@ -18193,8 +18196,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_settings
@@ -18406,8 +18409,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_projects
@@ -18794,8 +18797,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_no_project
@@ -19164,8 +19167,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_automation
@@ -19323,8 +19326,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_goal_crew
@@ -19487,8 +19490,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_plan_schedule

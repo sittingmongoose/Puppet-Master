@@ -2054,7 +2054,7 @@ status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: >-
   Project notebook/checkpoint records remain in the one Project Vault under its existing lease/topology
-  authority. B's app notebook/checkpoint edition lives in the actual Server app store with thread/Computer
+  authority. WN-021's app notebook/checkpoint edition lives in the actual Server app store with thread/Computer
   and app writer/lease, no Vault before conversion. PSB-006/007 fences old holders and stale
   renewal/release/mutation; destination access/route/currentness verifies before resume. N25 maps carried
   canonical records explicitly, preserving independently retained source history. Notes carry no raw
@@ -3241,7 +3241,7 @@ canonical_text: Application ordinary chat, Goal, Crew, Assistant Plan and schedu
   use {scope_partition}:{thread_id}:{generation}; a new versioned wrapper/checkpoint covers the app variant while
   exact Project historical bindings remain readable. Compaction/revert/recovery and ObservableWork/ProcessFacts/Resources
   preserve actual source scope and generation. Cross-project reads execute on the source Computer through existing
-  route/trust custody plus D's narrow read authority, never settings.follow or discovery authority. Full Server
+  route/trust custody plus Plans/Permissions_System.md's narrow read authority, never settings.follow or discovery authority. Full Server
   Backup retains coherent canonical app bodies, history/control, notebook, Plan, schedule, consent and occurrence
   custody under their owners; disposable projections stay rebuildable. Conversion consumes PSB-007 and the exact
   destination bindings, re-admits dispatch and attributes only later work to the destination; old Usage and original
@@ -3259,9 +3259,9 @@ acceptance_criteria:
 - Concurrent app and Project work obey one governor and scope-fenced detail publication.
 - Client close does not stop Server work; owner outage cannot create a second writer or optimistic completion.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

@@ -1585,87 +1585,8 @@
       ]
     },
     "PluginCopyConfigurationRequest": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "command_id",
-        "context",
-        "source_id",
-        "source_revision",
-        "source_sha256",
-        "destination_home_ref",
-        "destination_project_id",
-        "expected_destination_revision",
-        "selected_switch_ids",
-        "reach_ref",
-        "source_trust_evidence"
-      ],
-      "properties": {
-        "command_id": {
-          "const": "cmd.plugin.copy_configuration"
-        },
-        "context": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
-        },
-        "source_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "source_revision": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "source_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "destination_home_ref": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "destination_project_id": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "expected_destination_revision": {
-          "anyOf": [
-            {
-              "type": "integer",
-              "minimum": 0
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "selected_switch_ids": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 256
-          },
-          "uniqueItems": true
-        },
-        "reach_ref": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "source_trust_evidence": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
-        }
-      }
+      "description": "Current phase-bound v2 owner request; PluginCopyConfigurationRequestLegacyV1 preserves the original historical shape for exact reading/replay only and grants no current copy-apply authority.",
+      "$ref": "#/$defs/PluginCopyConfigurationRequestV2"
     },
     "PluginCopyConfigurationResult": {
       "type": "object",
@@ -1775,6 +1696,291 @@
           "maxLength": 256
         }
       }
+    },
+    "PluginCopyConfigurationRequestLegacyV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "destination_home_ref",
+        "destination_project_id",
+        "expected_destination_revision",
+        "selected_switch_ids",
+        "reach_ref",
+        "source_trust_evidence"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.plugin.copy_configuration"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_home_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_destination_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_switch_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "reach_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      }
+    },
+    "PluginCopyConfigurationRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "destination_home_ref",
+        "destination_project_id",
+        "expected_destination_revision",
+        "selected_switch_ids",
+        "reach_ref",
+        "source_trust_evidence",
+        "schema_id",
+        "schema_version",
+        "phase",
+        "settings_preview_id",
+        "settings_preview_sha256",
+        "expected_destination_absent"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.plugin.copy_configuration"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_home_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_destination_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_switch_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "reach_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "schema_id": {
+          "const": "pm.plugin.copy_configuration.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "phase": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "settings_preview_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_preview_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_destination_absent": {
+          "type": "boolean"
+        }
+      },
+      "description": "Versioned owner contribution to the one Settings preview/apply transaction. Apply consumes the exact Settings preview_id/hash, source revision/hash and destination revision or explicit absent-key CAS. Null expected_destination_revision never authorizes an unconditional write. Preview is read-only. The owner rechecks source/target authority, trust and preview currentness and contributes readback/eligible compensation; this shape grants no install or executable trust.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "apply"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "settings_preview_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "settings_preview_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "apply"
+              },
+              "expected_destination_absent": {
+                "const": true
+              }
+            },
+            "required": [
+              "phase",
+              "expected_destination_absent"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expected_destination_revision": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "apply"
+              },
+              "expected_destination_absent": {
+                "const": false
+              }
+            },
+            "required": [
+              "phase",
+              "expected_destination_absent"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expected_destination_revision": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

@@ -261,7 +261,7 @@ function o55SyncThemeControls() {
   ['general.visual.theme', 'general.visual.theme-mode'].forEach(id => {
     const found = findSettingGlobal(id); if (!found) return;
     root.querySelectorAll(`select[data-setting="${id}"]`).forEach(sel => {
-      sel.value = settingValue(found.setting);
+      sel.value = id === 'general.visual.theme' ? String(settingValue(found.setting)).split(/\s+/)[0] : settingValue(found.setting);
       const label = sel.closest('.pm51-dd')?.querySelector('.pm51-dd-value'), option = sel.options[sel.selectedIndex];
       if (label && option) label.textContent = option.textContent;
     });
@@ -279,6 +279,10 @@ const o55GlassMinPercent = () => /-light$/.test(document.documentElement.getAttr
 const o55GlassShownAlpha = () => window.PM7_SETTINGS_TOME.clampGlassAlpha(state.settings, PM51.value(O55_GLASS_ALPHA_ID));
 const o55LookControl = renderControl;
 renderControl = function (setting, value) {
+  if (setting && setting.id === 'general.visual.theme') {
+    const family = String(value || 'Basic Dark').split(/\s+/)[0];
+    return PM51.dropdown(family, ['Basic', 'Friendly', 'Retro', 'Glass', 'NieR'], { action: 'change-setting', data: { setting: setting.id }, label: setting.label });
+  }
   if (setting && setting.id === O55_GLASS_ALPHA_ID) value = window.PM7_SETTINGS_TOME.clampGlassAlpha(state.settings, value);
   const control = o55LookControl.call(this, setting, value);
   if (!setting || setting.id !== O55_GLASS_ALPHA_ID) return control;

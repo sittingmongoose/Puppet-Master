@@ -607,6 +607,18 @@
     podHold(false);
     if (cold && !cold.opened) { cold.opened = true; play('open'); }
   }
+  /* a cold open cut short: the look left NieR Mode in the middle of it, so its screen is shown in another look. Its state
+     goes as a snap's does (openSnap), the log with it. Left on the window, NieR's cold rules (11-window-nier.css) matched
+     again when the look came back: the opening played once more, the window collapsing to its line, and under Reduced
+     Motion the header's controls stayed at opacity 0 (FO-60) */
+  function coldCut(cold) {
+    const R = runState(), r = rootEl();
+    cold.snapped = true; cold.asleep = false;
+    if (cold.log) cold.log.cancel();
+    if (r) { r.classList.remove('o55-opening'); ['data-o55nw-cold', 'data-o55nw-go'].forEach((a) => r.removeAttribute(a)); r.querySelectorAll('.o55-layer[data-o55nw-cold]').forEach((l) => l.removeAttribute('data-o55nw-cold')); }
+    if (R.cold === cold) R.cold = null;
+    podHold(false);
+  }
 
   /* ------------------------------------------------------------------ a screen's entrance under NieR Mode */
   function draw(layer, dir, def, pr, F, o) {
@@ -857,7 +869,7 @@
       R.maxIdx = Math.max(R.maxIdx, O55.stages.progress(s, def).index);
       const claim = R.claim, cold = dir === 'open' ? R.cold : null;
       R.claim = null;
-      if (!painted() || !layer || !layer.isConnected) { if (s.railHold) { s.railHold = null; O55.ui.renderRail(); } return false; }
+      if (!painted() || !layer || !layer.isConnected) { if (cold) coldCut(cold); if (s.railHold) { s.railHold = null; O55.ui.renderRail(); } return false; }
       point(null);
       cancelAll();
       if (O55.nierFx && O55.nierFx.pod) O55.nierFx.pod.hush(); /* none left after leaving(); the opening has no old screen */

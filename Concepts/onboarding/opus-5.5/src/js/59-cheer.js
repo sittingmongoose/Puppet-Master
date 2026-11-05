@@ -106,7 +106,9 @@
       const mk = (html) => { const e = el('g', { class: 'pst-p', opacity: '0' }, this.gFx); e.innerHTML = html; return e; };
       const ring = mk(`<circle r="11" fill="none" stroke="${w.accent}" stroke-width="1.5"/>`);
       const chk = mk(`<circle r="11" fill="${w.accent}" stroke="${w.bg}" stroke-width="2"/><path d="M-5 .5L-1.6 3.9L5.2 -3.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>`);
-      [[ring, 'ring', .8], [chk, 'check', 1.5]].forEach(([e, kind, max]) => this.fx.push({ e, kind, x: at[0] + off[0], y: at[1] + off[1], vx: 0, vy: 0, r: 0, vr: 0, life: 0, max, g: 0, follow: pr || null, off }));
+      /* both keep the check's whole reach (r 11 and its 2 px edge, at its 1.18 pop) inside the visible stage, on one centre;
+         the ring spreads as far as the room there allows (r 11, its 1.5 px line, per unit of its growth): 58-rig.js keepIn */
+      [[ring, 'ring', .8], [chk, 'check', 1.5]].forEach(([e, kind, max]) => { const p = { e, kind, x: at[0] + off[0], y: at[1] + off[1], vx: 0, vy: 0, r: 0, vr: 0, life: 0, max, g: 0, follow: pr || null, off, reach: 12 * 1.18, ringR: kind === 'ring' ? 11.75 : 0 }; this.keepIn(p); this.fx.push(p); });
     },
     confetti(n) {
       if (this.reduced || this.famName === 'nier' || !H.part('cheers')) return;

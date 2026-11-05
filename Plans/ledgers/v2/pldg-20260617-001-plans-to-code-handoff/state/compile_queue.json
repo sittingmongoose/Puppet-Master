@@ -2,8 +2,8 @@
   "schema_id": "pm.plan_compile_queue.v1",
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
   "status": "compiled_plans_to_code_handoff_governance_sealed",
-  "updated_at_utc": "2026-06-18T13:39:57Z",
-  "last_event_id": "evt-0018",
+  "updated_at_utc": "2026-11-05T03:30:34Z",
+  "last_event_id": "evt-0019",
   "governance_status": "sealed",
   "candidate_compile_plan": {
     "active": false,
@@ -340,7 +340,7 @@
   ],
   "notes": "Plans-to-code handoff ledger compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, final reference repair docs, and metadata-only governance registration. PlanCompile runtime remains disabled; WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, production build tasks, and runtime dispatch were not created.",
   "last_compile_event_id": "evt-0014",
-  "terminal_ledger_event_id": "evt-0018",
+  "terminal_ledger_event_id": "evt-0019",
   "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }

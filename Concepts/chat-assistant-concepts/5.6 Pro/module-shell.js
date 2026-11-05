@@ -707,7 +707,9 @@
     var signStr = fam === 'retro' ? '' : '<path d="M' + R(tip[0] - 1) + ' ' + R(tip[1] + 1) + 'L78 32" stroke="' + (fam === 'nier' ? '@ink' : '@str') + '" stroke-width="' + (fam === 'nier' ? 1 : 1.3) + '" fill="none"/>';
     if (fam === 'retro') {
       /* pixel Pip: the kit's 24 cells at 2.5 units each; its strings and the sign's string in square steps */
-      var cells = K.pixelRects(K.spriteRows(24, mood), { c: '@ctl', b: '@back', s: '@str', h: '@head', k: '@cheek' });
+      var rows = K.spriteRows(24, mood);
+      var cells = K.pixelRects(rows, { c: '@ctl', b: '@back', s: '@str' }) +
+        '<g class="pmx-pip-face">' + K.pixelRects(rows, { h: '@head', k: '@cheek' }) + '</g>';
       pup = '<g class="pmx-pip-pup pmx-pip-px" transform="translate(2 2) scale(2.5)" shape-rendering="crispEdges">' + cells + '</g>';
       strings = '<path d="M58 9H78V32" stroke="@str" stroke-width="2.5" fill="none" shape-rendering="crispEdges"/>';
     } else if (fam === 'nier') {
@@ -727,7 +729,7 @@
     if (!pipOn('strings')) { strings = ''; ctl = ''; signStr = ''; }
     var body = '<g class="pmx-pip-card">' + signStr + sign + '</g>' + strings + pup + ctl;
     v = '<span class="pmx-pip-host" data-k="pip-host" data-pip-kind="' + esc(kind) + '" data-pip-mood="' + esc(mood) + '" aria-hidden="true">' +
-      '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" data-sway="' + (pipOn('sway-and-physics') ? 1 : 0) + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
+      '<svg class="pmx-pip-host-svg pmx-pip" data-fam="' + fam + '" data-sway="' + (pipOn('sway-and-physics') ? 1 : 0) + '" data-shine="' + (pipOn('cheeks-and-shine') ? 1 : 0) + '" viewBox="0 0 ' + PIP_HOST.w + ' ' + PIP_HOST.h + '" width="' + R(PIP_HOST.w * PIP_HOST.k) + '" height="' + R(PIP_HOST.h * PIP_HOST.k) + '" overflow="visible" focusable="false">' +
       '<g class="pmx-pip-lift"><g class="pmx-pip-rig">' + body + '</g></g></svg></span>';
     v = K.roleStyles(v);
     if (++pipMemoN > 800) { pipMemo = Object.create(null); pipMemoN = 0; }

@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L3087-L3252
 
-Source SHA256: `3899744314444527ed5abfa724f4abdb67822efa4d7b3852a2db461438fffebe`
+Source SHA256: `f6a28414ac01dc77d88272b6115e2257fd8fdc72f26efa73bd0920aefbf120e1`
 
 ---
 
@@ -97,8 +97,8 @@ negative_constraints:
 - Do not rely on adjacent addendum order as wiring precedence.
 - Do not make Wiring_Matrix a general runtime schema owner.
 compatibility_only_notes:
-- Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage
-  surface for wizard.blocked / wizard.unblocked; WM-036 only wires canonical event/action identities.
+- Plans/Planning_Wizard.md#PWIZ-038 owns wizard_status and the wizard blocked lifecycle behind wizard.blocked /
+  wizard.unblocked (DL-330; retired chain-wizard-flexibility is lineage only); WM-036 only wires canonical event/action identities.
 - Cited wiring addenda sections are compatibility/source-lineage sections; named wiring PlanUnits and Contracts_V0
   event identities carry precedence.
 owner_hints:

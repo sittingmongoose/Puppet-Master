@@ -223,3 +223,15 @@ html[data-o55-nier-parts~="empty"] :is(.pmx-empty, .collab-empty).pmx-empty-line
 .tx-pending-pip { display: inline-flex; align-self: center; width: 16px; height: 16px; margin-right: 1px; line-height: 0; }
 .tx-pending-pip > .pml-ld { --pml-size: 16px; }
 .tx-pending-pip > .pml-ld[hidden] { display: none; }
+
+/* Glass sheet-head depth (SW20). CSS filters keep the shared head id-free, so
+   morph/exit copies and repeated sheet hosts never resolve another SVG's defs. */
+body[data-theme^="glass"] .pmx-pip-host .pmx-pip-pup {
+  filter: drop-shadow(0 1.6px 1.6px var(--pip-drop));
+}
+body[data-theme^="glass"] .pmx-pip-host-svg[data-shine="1"] .pmx-pip-pup {
+  filter: drop-shadow(0 1.6px 1.6px var(--pip-drop)) drop-shadow(0 0 1.6px rgb(255 255 255 / .55));
+}
+body[data-theme="glass-light"] .pmx-pip-host-svg[data-shine="1"] .pmx-pip-pup {
+  filter: drop-shadow(0 1.6px 1.6px var(--pip-drop)) drop-shadow(0 0 1.6px rgb(255 255 255 / .7));
+}

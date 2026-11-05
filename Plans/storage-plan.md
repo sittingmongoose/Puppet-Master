@@ -18265,7 +18265,7 @@ owner_hints: [Plans/storage-plan.md, Plans/home_workspace_layout.schema.json, Pl
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum registers the project-scoped persistence key family for classical debugger workspace state (launch profiles, breakpoints, watch expressions) consumed by the rail "Debug & Run" panel and bottom-zone Debug tab whose layout and field schema canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496, referenced by unit id only, never restated). It owns only keys, lifetimes, and migration rules, and it creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+This addendum registers the project-scoped persistence key family for classical debugger workspace state (launch profiles, breakpoints, watch expressions) consumed by the rail "Debug & Run" panel and bottom-zone Debug tab whose layout and field schema canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-495, referenced by unit id only, never restated). It owns only keys, lifetimes, and migration rules, and it creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
 
 ### SP-244 - Debug Workspace Persistence Keys
 
@@ -18300,7 +18300,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - user-decision:2026-07-27-run-debug-revival
-- Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+- Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-495; referenced)
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.debug.launch_profiles:v1, pm.debug.breakpoints:v1, pm.debug.watches:v1]
@@ -18509,7 +18509,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
-  The current Usage workspace persists exactly nine current-value-only view/layout families: active `room`, disclosure `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state, per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (2026-10-09, Plans/Decision_Log.md#DL-177, Plans/usage-feature.md#UF-095), a view-only preference that is Live by default, decides only whether arriving projection updates are shown at once or held, and is never a Settings value. These are configuration/view records with no event history and no Settings-owned policy values. The layout family persists only through `widget_layout:v1:usage` and the existing typed widget commands after a settled commit; pointer move, held-resize preview, configuration preview, ghost, placeholder, animation state, and per-frame drafts never write storage. A vanished room, scope, widget, or unsupported geometry migrates or evicts to its documented current safe default. The U11 keys `u11:disclosure`, `u11:scope`, `u11:range`, `u11:settingsView`, `u11:parked`, `u11:seeded`, `pmw:<pageId>`, and `pm.theme`, together with the PMConcept7 key family `pm7:usage:v10:*`, are prototype/import lineage only and are not canonical key names. The redesigned concept stores its prototype envelope under the product's own layout key name `widget_layout:v1:usage`, which stays this family's canonical key; only the envelope's schema id `pm.usage.widget_layout.v1` and the concept's Live key `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage, and that schema id is not a product schema. When that envelope is absent the concept considers the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11 envelope, as a one-time import source, and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted. None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing dual-read source. Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining eight families persist as above. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
+  The current Usage workspace persists exactly nine current-value-only view/layout families: active `room`, disclosure `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state, per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (2026-10-09, Plans/Decision_Log.md#DL-177, Plans/usage-feature.md#UF-095), a view-only preference that is Live by default, decides only whether arriving projection updates are shown at once or held, and is never a Settings value. These are RP-CONFIG-CURRENT configuration/view records with no event history and no Settings-owned policy values. The layout family persists only through `widget_layout:v1:usage` and the existing typed widget commands after a settled commit; pointer move, held-resize preview, configuration preview, ghost, placeholder, animation state, and per-frame drafts never write storage. A vanished room, scope, widget, or unsupported geometry migrates or evicts to its documented current safe default. Prototype envelopes and keys are non-product source lineage; they create no runtime import, persistence or migration obligation. Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining eight families persist as above. The stated Project key/schema/codec is the preserved Project edition. For an owner-admitted app record, SP-349/351/352 and CV-366 select a distinct application family/key/source graph; they do not relax this edition or imply that every family named here is app-capable. Actual Project-native SCM, WorkNode, PRD, Wizard and Orchestrator records remain Project-bound. Same canonical-versus-derived classification, limits, holds, writer/maintenance leases and coherent backup apply; no empty Project or focus/main fallback.
 gui_related: true
 gui_classification_reason: These records decide what the Usage page shows on reopen, including disclosure level, scope, range, and widget layout.
 depends_on: [SP-222, UF-092, WS-016]
@@ -18520,7 +18520,7 @@ acceptance_criteria:
   - Usage view-state records are current-value-only configuration records and do not inherit the ninety-day provider-attempt retention policy.
   - Layout writes use widget_layout:v1:usage and existing typed widget commands after settled commit; pointer/preview/ghost/placeholder/animation frames cannot write storage.
   - Missing or unsupported room, scope, widget, or geometry references migrate or evict to a named current safe default.
-  - U11 and PMConcept7 prototype key names remain import/source-lineage shims and never become canonical key names; the redesigned concept's pm.usage.widget_layout.v1 envelope and pm7:usage:live:v1 remain demo-only and noncanonical, v12 (else v11) is considered only as their prior one-time import source, and v10 is bounded rather than maintained as a dual-read path.
+  - Prototype keys and schemas are non-product source lineage only; product persistence follows its actual storage owner.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shared-runtime-storage-materialize.py check
@@ -18564,8 +18564,6 @@ preserved_exact_tokens:
   - order
   - live
   - widget_layout:v1:usage
-  - pm.usage.widget_layout.v1
-  - pm7:usage:live:v1
   - RP-CONFIG-CURRENT
 negative_constraints:
   - Do not persist a Settings-owned policy value in the Usage view-state surface.
@@ -18575,7 +18573,7 @@ negative_constraints:
   - Do not promote v12, v11, or `pm7:usage:v10:*` prototype lineage to canonical storage or maintain a continuing dual-read path.
   - Do not promote `pm.usage.widget_layout.v1` or `pm7:usage:live:v1` to a product schema or key, or store the Live / Paused choice as a Settings value or in a widget layout record.
 compatibility_only_notes:
-  - "u11:disclosure, u11:scope, u11:range, u11:settingsView, u11:parked, u11:seeded, pmw:<pageId>, pm.theme, pm7:usage:v10:*, pm7:usage:prototype:workspace:v11, pm7:usage:prototype:workspace:v12, the redesigned concept's pm.usage.widget_layout.v1 envelope and pm7:usage:live:v1 are demo/import/source-lineage shims only; the v12 (else v11) import into the redesigned envelope is one-time and v10 is a bounded fallback import."
+  - Prototype keys and schemas are non-product source lineage only; product persistence follows its actual storage owner.
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Widget_System.md
@@ -27929,7 +27927,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
-  Editor appearance overrides are optional appearance fields inside the existing editor tab state of SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created. Absent fields fall through to SSYS-059’s effective code.editing result for the actual field-offered Everywhere, Computer or Device, and optional Project context per SSYS-059 and then F3-651’s defaults. The token-colors map is keyed by scheme/kind and overlays the effective base map per entry; null in a field patch clears that override, never copies all effective defaults into the tab. A tab-scoped appearance command returns a bounded receipt and saves/readbacks this nonstructural state without a layout revision advance or workspace.layout_changed event. All editors and All terminals target Everywhere through the same Settings transactions; explicitly chosen narrower edits use their exact offered level. Compatibility editor/terminal keys authorize no independent writer. The customizer's remembered tab scope is view state separate from the appearance fields; entering from Settings is temporary and does not overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same resolver-owned general.visual.wallpaper value at its offered level; assets are immutable packaged catalog assets, not copied into settings. For the migration admitted by the 2026-10-15 publication, an old concept wallpaper preference may seed the current Project only when its canonical value is absent and its id is valid; an explicit Project choice wins and no other Project is modified. Old glass_background_mode:v1 and Mesh/Depth/Minimal do not map to images; they retire to look when no new choice exists. Legacy keys are cleared only after successful owner write/readback, never before, and no-Project rendering performs no migration write. Import remains SP-331's parsed scheme/asset custody; this unit adds no secret, session, event family or governance authority. SSYS-054’s most-recent-change rule uses the actual level/setting transaction revision as its order: a NieR background edit commits its background value and wallpaper=look together; a later gallery edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store is created. The older concept preference migration remains explicit and Project-targeted only; it never seeds Everywhere/Computer from discovered concept data. SP-348 owns current level custody. App tab appearance uses SP-349 without another buffer or wallpaper store.
+  Editor appearance overrides are optional appearance fields inside the existing editor tab state of SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created. Absent fields fall through to SSYS-059’s effective code.editing result for the actual field-offered Everywhere, Computer or Device, and optional Project context per SSYS-059 and then F3-651’s defaults. The token-colors map is keyed by scheme/kind and overlays the effective base map per entry; null in a field patch clears that override, never copies all effective defaults into the tab. A tab-scoped appearance command returns a bounded receipt and saves/readbacks this nonstructural state without a layout revision advance or workspace.layout_changed event. All editors and All terminals target Everywhere through the same Settings transactions; explicitly chosen narrower edits use their exact offered level. Compatibility editor/terminal keys authorize no independent writer. The customizer's remembered tab scope is view state separate from the appearance fields; entering from Settings is temporary and does not overwrite it. No preview, sample, dock position or hover color is stored. Wallpaper is the same resolver-owned general.visual.wallpaper value at its offered level; assets are immutable packaged catalog assets, not copied into settings. Preserve actual owner-committed wallpaper choices and Settings inheritance. Discovered concept preferences cannot seed a product Project or another Settings level. Import remains SP-331's parsed scheme/asset custody; this unit adds no secret, session, event family or governance authority. SSYS-054’s most-recent-change rule uses the actual level/setting transaction revision as its order: a NieR background edit commits its background value and wallpaper=look together; a later gallery edit commits the chosen wallpaper id. The existing NieR background preference is retained beneath an explicit gallery choice. No timestamp record, extra inheritance layer or second wallpaper store is created. SP-348 owns current level custody. App tab appearance uses SP-349 without another buffer or wallpaper store.
 gui_related: true
 gui_classification_reason: Storage binding across offered Settings levels; visible presentation remains FinalGUISpec-owned.
 split_recommended: false
@@ -27938,7 +27936,7 @@ unblocks: []
 acceptance_criteria:
 - One resolver/transaction owns level values; tab map overlay and reset semantics remain.
 - No-Project app writes require the actual offered level/writer, not a Project.
-- Wallpaper/currentness and old explicitly admitted concept migration preserve source and readback.
+- Wallpaper choices preserve actual owner-committed values, source and readback; discovered concept preferences cannot seed product settings.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -28955,8 +28953,8 @@ acceptance_criteria:
 - Sparse row/head/snapshot/mirror/index storage has one value authority and same-key revision maps.
 - Join Undo/backup/retention is explicit and contains no secrets or offline writes.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -29008,7 +29006,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Application work uses the same seglog, two redb files, payload packs, render pages/index engines and storage lock/maintenance/backup owners as Project counterparts, under SP-345’s app-data root and actual Server. App scope is not a Project Vault and holds no project_home_server_id before conversion. The attached table is the exclusive physical app key map for ordinary chat/root/recovery/UI/notebook/browser/runtime records; version/schema/source selection is CV-366. Raw missing Project interpolation, main-root fallback, per-thread infinite app buckets and new live JSON are forbidden. Source/context authority uses exact Host/Environment/roots, not the configured display path alone.
   Place/folder records bind actual Server/Host/Environment and canonical path identity/currentness, draft_id before first message and thread_id thereafter. Concurrent first save/command adopts one folder exactly once. Visible chat folders live outside PM data in the Computer’s configured no-project chat root; no talk-only folder, rename relocation or implicit delete. Disconnected chat metadata remains named/read-only; continuation needs the real current writer. Request/outbox continuity remains the existing thread owner; facade preview is local and does not create its own storage family. Client close does not stop the Server’s admitted work.
-  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart is a required F-d resolution to the existing named policy/anchor, never a new policy ID or a production registration.
+  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart must resolve through Plans/storage_value_registry.json to the existing named policy/anchor, never a new policy ID or a production registration.
   One app index builder/publication slot and source token/checkpoint domain preserve exact Server/thread/root/generation. Source read, compaction, restore/revert and FileSafe use actual absolute Host/root and all canonical source/currentness/permission/writer/Stop/recovery gates; replay rebuilds only derived views, never canonical authority. App notebook keeps its five existing parent kinds and 16 KiB inline/64 KiB request, 512-token/2 KiB capsule, 1,024-token/4 KiB combined injection limits. Memory stays thread-private with 350-token capsule and existing verification/evidence; public_safe taught rules remain distinct. Cross-read grants never authorize notebook/private-memory access.
   Browser creation/reset, Eval, terminal and layout adopt their whole app CV-366 source graphs or remain unavailable. Protected auth is not app browser automation, capture, restore or export content. Live PTY/process/kernel/controller/ports remain on original Computer through conversion; future sessions re-resolve. App Home/panels/boards use exact Server/app/workspace keys, named layouts/presets stay per person, board snapshots match saved scope/Server only, and converted Project UI loads independently. Canonical app records/held payloads join coherent Full Server Backup, derived pages/indexes rebuild; counterpart source/dedupe/rollback/retention and deletion deadlines remain. Chat Undo expiry cannot purge independently retained notebook/checkpoint/task/audit authority.
   Developer-session application families are dev_session_record_application and eval_session_record_application, using DebugSessionRecordStorageApplicationV1 and EvalSessionRecordStorageApplicationV1 in Plans/developer_session_application_contracts.schema.json. They inherit the Project counterpart tier later_gui_or_feature_projection, RP-DEBUG-30D, mandatory canonical backup/restore and independent holds. The source graph selects the actual debugger/evaluator broker for lifecycle, source/lease/generation, read/checkpoint and retention. BRS-033 restores exact history/session metadata as stopped or reconciliation-required, never a live adapter/kernel/lease or current permission grant. No browser family is their custody and no second engine is introduced.
@@ -29027,8 +29025,8 @@ acceptance_criteria:
 - App buckets match counterpart bounds; held canonical source never evicts as a cache.
 - No root/Host/thread aliasing, canonical reconstruction or unsupported native-source fallback.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -29153,8 +29151,8 @@ acceptance_criteria:
 - Failure/restart/resume/cancel/Undo preserve settled effects, original source and target authority.
 - Backups and retention avoid dual-live restoration or early independent authority purge.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -29228,8 +29226,8 @@ acceptance_criteria:
 - Original Project/historical/certified graph remains unchanged and ordinary bindings immutable.
 - Canonical task/audit and Stop survive moves, restore and chat Undo expiry with counterpart limits.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -29345,8 +29343,8 @@ acceptance_criteria:
 - Pause physical birth/key/wrapper/CAS/epochs/read/backup/refusal are coherent and separate from Project.
 - Stop/conversion/timer/restore races cannot double-run or clear a newer latch.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -29434,8 +29432,8 @@ acceptance_criteria:
 - Restore/conversion preserves old evidence without transferring authority or clearing Stop/holds.
 - Action list reads existing receipts and no new live JSON/event engine.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows

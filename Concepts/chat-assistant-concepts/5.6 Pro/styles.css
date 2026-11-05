@@ -376,7 +376,7 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .chat-stage[data-shell="6"] .composer-tools{overflow-x:auto;scrollbar-width:none}.chat-stage[data-shell="6"] .selector-button{padding:0 9px;background:var(--surface-3);border-radius:8px}.chat-stage[data-shell="6"] .composer-box{border-radius:11px}
 .chat-stage[data-shell="7"] .composer-box{background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 7%,var(--surface-2)),var(--surface-2));border-radius:18px;overflow:hidden}.chat-stage[data-shell="7"] .composer-input{min-height:72px}.chat-stage[data-shell="7"] .composer-tools{border-top:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));background:color-mix(in srgb,var(--surface-3) 50%,transparent)}
 
-.activity-panel { min-width:0;min-height:0;display:grid;grid-template-rows:auto auto minmax(0,1fr);border-right:1px solid var(--border);background:var(--surface-2);overflow:hidden;animation:panel-pin var(--spring) both; }
+.activity-panel { min-width:0;min-height:0;display:grid;grid-template-rows:auto auto minmax(0,1fr);border-right:1px solid var(--border);background:var(--surface-2);overflow:hidden;animation:panel-pin var(--spring) both;animation-duration:520ms; }
 /* renderChat places header, Context Lens dock, then transcript in the first
    three rows. Bind the floating detail to the transcript, not the potentially
    zero-height Lens row. The transcript's grid cell also tracks composer growth. */

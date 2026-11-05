@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24614-L25012
+Source lines: L24619-L24996
 
-Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
+Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
 
 ---
 
@@ -19,30 +19,8 @@ plan_unit_id: ACD-439
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector
-  popouts, the header chrome menus, and the context status module - share one corner-origin
-  sprout motion contract: each popout sprouts from and collapses into the corner or edge
-  nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform
-  closed scale and closing in roughly 220ms with opacity held until late followed by a short
-  fade. Search-driven size changes in the model and persona popouts spring the height with
-  overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent,
-  Debug, Plan, and Deep Plan options with no search field, while model and persona popouts
-  keep search. Under reduced motion, open and close render as instant show/hide. The
-  single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single sprout
-  implementation for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it. This build
-  removes their former duplicates while retaining this unit’s visible motion/focus contract. L8 B, PM7 Step4,
-  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
-  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
-  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
-  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
-  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
-  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
-  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
-  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
-  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
-  flight. DR-079 also owns the shared origin/shown/instant/fade inputs and Home's morph geometry adapter;
-  chat does not recreate those operations. Shared presentation APIs create no new product command or saved key.
+canonical_text: |-
+  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
@@ -55,8 +33,8 @@ acceptance_criteria:
   - "At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-  - "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: chat_header_contract_drift
 reasoning_tier: standard
 context_scope: assistant_chat_header
@@ -69,6 +47,7 @@ source_lineage:
   - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
   - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
   - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PM7 used window.PM6_SPROUT, pm7-sprout.js/css, pm7-sprout-js/css, open/close/isOpen/aim/resize/morph/bounce/keep/reduced, --pm6-sprout-* inputs and the menu adapters listed in DR-079. These source spellings do not define product APIs."
 preserved_exact_tokens:
   - "corner-origin"
   - "sprout"

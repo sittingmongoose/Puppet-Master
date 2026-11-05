@@ -2203,18 +2203,25 @@
     "complete",
     "idle"
   ],
+  "source_lineage": [
+    "DL-260: PMLogo.STATUS_FACE was the concept platform-status adapter; product states and decorative surface differences remain owned by F3-658/F3-660."
+  ],
   "surface_status_face_scopes": {
     "agents": "Chat agent rows (PIP_STATE_MOOD). Public working renders as internal dots; reviewing/recovering remain think.",
-    "platform": "Platform rows use PMLogo.STATUS_FACE; working/reviewing/recovering use working/dots, mixed oops, skipped idle. Same status keys, deliberate decorative surface differences."
+    "platform": "Platform rows use the shared platform-status presentation owner (F3-658/F3-660); working/reviewing/recovering use working/dots, mixed oops, skipped idle. Same status keys, deliberate decorative surface differences."
   },
   "qa2_actor_presentation": {
     "owner_ref": "Plans/FinalGUISpec.md#F3-594",
     "you": {
-      "primitive_names": [
-        "ppYou",
-        "PX_YOU",
-        "pnYou"
+      "presentation_owner_ref": "Plans/FinalGUISpec.md#F3-594",
+      "shared_person_silhouette": true,
+      "shared_consumers": [
+        "crew diagrams",
+        "cast plates",
+        "run cards",
+        "rosters"
       ],
+      "source_lineage": "DL-260: ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product APIs or required primitive names.",
       "silhouette": "person_alone",
       "marionette_cross": false,
       "puppet_strings": false,

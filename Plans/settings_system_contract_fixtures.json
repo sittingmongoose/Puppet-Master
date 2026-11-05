@@ -1855,7 +1855,7 @@
       "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "project-defaults-templates": {
-      "title": "Saved setups and Starters",
+      "title": "Saved setups",
       "purpose": "Project creation defaults and reusable template settings without cross-Project inheritance.",
       "owner_refs": [
         "Plans/Settings_System.md",
@@ -3197,6 +3197,703 @@
           "general.visual.reduce-animations"
         ]
       }
+    },
+    {
+      "case_id": "valid-sweep-l2-historical-owner-contribution-v1-readable",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v1",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:valid-sweep-l2-historical-owner-contribution-v1-readable",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": null,
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "previewed"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-owner-preview-no-applied-evidence",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:valid-sweep-l2-owner-preview-no-applied-evidence",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": null,
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "previewed",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-owner-done-complete-evidence",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:valid-sweep-l2-owner-done-complete-evidence",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": "restore:owner-part",
+        "after_ref": "result:owner-part",
+        "readback_ref": "readback:owner-part",
+        "rollback_ref": "rollback:owner-part",
+        "status": "done",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-owner-rolled-back-readback",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:valid-sweep-l2-owner-rolled-back-readback",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": "restore:owner-part",
+        "after_ref": "result:owner-part",
+        "readback_ref": "readback:owner-part",
+        "rollback_ref": "rollback:owner-part",
+        "status": "rolled_back",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-owner-recovery-does-not-claim-readback",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:valid-sweep-l2-owner-recovery-does-not-claim-readback",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": "restore:owner-part",
+        "after_ref": null,
+        "readback_ref": null,
+        "rollback_ref": "rollback:owner-part",
+        "status": "recovery_required",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-owner-not-reached-no-effects",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:valid-sweep-l2-owner-not-reached-no-effects",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": null,
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "not_reached",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-owner-refused-no-effects",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:valid-sweep-l2-owner-refused-no-effects",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": null,
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "refused",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-live-owner-copy-preview",
+      "schema_ref": "#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v3",
+        "schema_version": "3.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "copy",
+        "source_target": null,
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": [
+          {
+            "owner_ref": "owner:owner_ref",
+            "operation_id": "owner:operation_id",
+            "command_id": "owner:command_id",
+            "source_id": "owner:source_id",
+            "destination_target_ref": "owner:destination_target_ref",
+            "source_revision": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "expected_destination_revision": 1,
+            "own_value_basis": "own_values",
+            "selected_ids": [
+              "thing-a"
+            ],
+            "excluded_field_ids": [],
+            "before_ref": null,
+            "after_ref": null,
+            "readback_ref": null,
+            "rollback_ref": null,
+            "status": "previewed",
+            "schema_id": "pm.owner_thing_copy_contribution.v2",
+            "schema_version": "2.0.0",
+            "preview_ref": "preview:owner-thing",
+            "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-live-historical-empty-owner-request",
+      "schema_ref": "#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": []
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-live-owner-copy-preview-result",
+      "schema_ref": "#/$defs/settings_transaction_preview_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.v3",
+        "schema_version": "3.0.0",
+        "request": {
+          "schema_id": "pm.settings.layered.preview.request.v3",
+          "schema_version": "3.0.0",
+          "command_id": "cmd.settings.transaction.preview",
+          "context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "person-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "expected_generation": 1,
+            "return_context_ref": "return-a",
+            "origin": {
+              "kind": "settings_surface",
+              "initiating_client_id": "client-a",
+              "route_ref": "settings",
+              "focus_ref": "control-a",
+              "context_revision": 1
+            }
+          },
+          "operation": "copy",
+          "source_target": null,
+          "destination_target": {
+            "level": "everywhere",
+            "level_key": "everywhere",
+            "computer_key": null,
+            "project_id": null,
+            "client_id": null,
+            "provider_id": null,
+            "account_id": null
+          },
+          "copy_basis": "own_values",
+          "selectors": [],
+          "picked_setting_ids": [
+            "general.interaction.mode"
+          ],
+          "include_project_only": false,
+          "proposed_values": {
+            "general.interaction.mode": "eli5"
+          },
+          "expected_setting_revisions": {
+            "general.interaction.mode": 1
+          },
+          "owner_thing_previews": [
+            {
+              "owner_ref": "owner:owner_ref",
+              "operation_id": "owner:operation_id",
+              "command_id": "owner:command_id",
+              "source_id": "owner:source_id",
+              "destination_target_ref": "owner:destination_target_ref",
+              "source_revision": 1,
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "expected_destination_revision": 1,
+              "own_value_basis": "own_values",
+              "selected_ids": [
+                "thing-a"
+              ],
+              "excluded_field_ids": [],
+              "before_ref": null,
+              "after_ref": null,
+              "readback_ref": null,
+              "rollback_ref": null,
+              "status": "previewed",
+              "schema_id": "pm.owner_thing_copy_contribution.v2",
+              "schema_version": "2.0.0",
+              "preview_ref": "preview:owner-thing",
+              "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ]
+        },
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "generation": 1,
+        "expires_at_utc": "2026-11-04T23:00:00Z",
+        "selector_sets": {
+          "appearance_workspace": [],
+          "assistant_chat": [
+            "general.interaction.mode"
+          ],
+          "providers_accounts_models_routing": [],
+          "planning_goal": [],
+          "orchestrator_automation": [],
+          "tools_integrations": [],
+          "testing_browser_devices": [],
+          "permissions_security": [],
+          "memory_retention_history": [],
+          "notifications_usage_budgets": [],
+          "project_only_rows": []
+        },
+        "resolved_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "account_resolution": [],
+        "exclusions": [],
+        "blockers": [],
+        "owner_validation_refs": [
+          "settings-owner-check-a"
+        ],
+        "confirmation_required": false
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-live-owner-copy-result",
+      "schema_ref": "#/$defs/settings_transaction_result_v2",
+      "record": {
+        "schema_id": "pm.settings_layered_result.v2",
+        "schema_version": "2.0.0",
+        "operation_id": "operation:valid-sweep-l2-live-owner-copy-result",
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "done",
+        "targets": [
+          {
+            "target": {
+              "level": "everywhere",
+              "level_key": "everywhere",
+              "computer_key": null,
+              "project_id": null,
+              "client_id": null,
+              "provider_id": null,
+              "account_id": null
+            },
+            "outcome": "done",
+            "result_ref": "result-everywhere",
+            "reason_ref": null
+          }
+        ],
+        "owner_results": [
+          {
+            "owner_ref": "owner:owner_ref",
+            "operation_id": "owner:operation_id",
+            "command_id": "owner:command_id",
+            "source_id": "owner:source_id",
+            "destination_target_ref": "owner:destination_target_ref",
+            "source_revision": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "expected_destination_revision": 1,
+            "own_value_basis": "own_values",
+            "selected_ids": [
+              "thing-a"
+            ],
+            "excluded_field_ids": [],
+            "before_ref": "restore:owner-part",
+            "after_ref": "result:owner-part",
+            "readback_ref": "readback:owner-part",
+            "rollback_ref": "rollback:owner-part",
+            "status": "done",
+            "schema_id": "pm.owner_thing_copy_contribution.v2",
+            "schema_version": "2.0.0",
+            "preview_ref": "preview:owner-thing",
+            "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "readback_refs": [
+          "readback-everywhere"
+        ],
+        "undo_ref": "undo-everywhere",
+        "return_context_ref": "return-a"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-live-historical-empty-owner-result",
+      "schema_ref": "#/$defs/settings_transaction_result_v2",
+      "record": {
+        "schema_id": "pm.settings_layered_result.v1",
+        "schema_version": "1.0.0",
+        "operation_id": "operation:valid-sweep-l2-live-historical-empty-owner-result",
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "done",
+        "targets": [
+          {
+            "target": {
+              "level": "everywhere",
+              "level_key": "everywhere",
+              "computer_key": null,
+              "project_id": null,
+              "client_id": null,
+              "provider_id": null,
+              "account_id": null
+            },
+            "outcome": "done",
+            "result_ref": "result-everywhere",
+            "reason_ref": null
+          }
+        ],
+        "owner_results": [],
+        "readback_refs": [
+          "readback-everywhere"
+        ],
+        "undo_ref": "undo-everywhere",
+        "return_context_ref": "return-a"
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-settings-transfer-draft-preview-request-eleven-selectors",
+      "schema_ref": "#/$defs/settings_transfer_draft_preview_request",
+      "record": {
+        "record_type": "settings_transfer_draft_preview_request",
+        "schema_id": "pm.settings_transfer_draft_preview_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "request_id": "request:settings-draft-preview-1",
+        "idempotency_key": "idempotency:settings-draft-preview-1",
+        "actor_ref": "actor:user-1",
+        "permission_snapshot_ref": "permission:source-project-read-1",
+        "requested_at_utc": "2026-09-10T12:00:00Z",
+        "source_project_id": "project:source-1",
+        "expected_source_revision": 7,
+        "destination_draft": {
+          "draft_ref": "draft:onboarding-project-1",
+          "draft_revision": 3,
+          "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "destination_project_id": null
+        },
+        "selector_ids": [
+          "appearance_workspace",
+          "assistant_chat",
+          "providers_accounts_models_routing",
+          "planning_goal",
+          "orchestrator_automation",
+          "tools_integrations",
+          "testing_browser_devices",
+          "permissions_security",
+          "memory_retention_history",
+          "notifications_usage_budgets",
+          "project_only_rows"
+        ],
+        "explicit_choice_setting_ids": [
+          "general.interaction.hide-ignored-files"
+        ],
+        "read_only": true
+      }
+    },
+    {
+      "case_id": "valid-sweep-l2-settings-transfer-draft-preview-eleven-selectors",
+      "schema_ref": "#/$defs/settings_transfer_draft_preview",
+      "record": {
+        "record_type": "settings_transfer_draft_preview",
+        "schema_id": "pm.settings_transfer_draft_preview.v1",
+        "schema_version": "1.0.0",
+        "preview_id": "preview:settings-draft-1",
+        "source_project_id": "project:source-1",
+        "source_revision": 7,
+        "destination_draft": {
+          "draft_ref": "draft:onboarding-project-1",
+          "draft_revision": 3,
+          "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "destination_project_id": null
+        },
+        "inventory_schema_version": "1.0.0",
+        "selector_ids": [
+          "appearance_workspace",
+          "assistant_chat",
+          "providers_accounts_models_routing",
+          "planning_goal",
+          "orchestrator_automation",
+          "tools_integrations",
+          "testing_browser_devices",
+          "permissions_security",
+          "memory_retention_history",
+          "notifications_usage_budgets",
+          "project_only_rows"
+        ],
+        "exact_setting_ids": [
+          "general.interaction.language-detection"
+        ],
+        "proposed_values_by_setting_id": {
+          "general.interaction.language-detection": true
+        },
+        "explicit_choice_setting_ids": [
+          "general.interaction.hide-ignored-files"
+        ],
+        "excluded_settings": [],
+        "redacted_summary_ref": "summary:settings-draft-1",
+        "owner_validation_refs": [
+          "validation:settings-eligible-ids-1"
+        ],
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "created_at_utc": "2026-09-10T12:00:00Z",
+        "expires_at_utc": "2026-09-10T13:00:00Z",
+        "read_only": true,
+        "settings_applied": false,
+        "project_created": false,
+        "source_link_retained": false,
+        "availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "settings.transaction.apply.allowed",
+          "evaluated_at_utc": "2026-08-31T12:01:01Z",
+          "projection_generation": 8
+        }
+      }
     }
   ],
   "negative_cases": [
@@ -4110,6 +4807,1018 @@
         "nier_mode": true
       },
       "expected_keyword": "additionalProperties"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-preview-missing-preview-ref",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-preview-missing-preview-ref",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": null,
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "previewed",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-preview-missing-preview-sha256",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-preview-missing-preview-sha256",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": null,
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "previewed",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing"
+      },
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-preview-forbids-after-ref",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-preview-forbids-after-ref",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": "ref:premature",
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "previewed",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-preview-forbids-readback-ref",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-preview-forbids-readback-ref",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": null,
+        "readback_ref": "ref:premature",
+        "rollback_ref": null,
+        "status": "previewed",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-done-requires-before-ref",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-done-requires-before-ref",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": "result:owner-part",
+        "readback_ref": "readback:owner-part",
+        "rollback_ref": "rollback:owner-part",
+        "status": "done",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-done-requires-after-ref",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-done-requires-after-ref",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": "restore:owner-part",
+        "after_ref": null,
+        "readback_ref": "readback:owner-part",
+        "rollback_ref": "rollback:owner-part",
+        "status": "done",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-done-requires-readback-ref",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-done-requires-readback-ref",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": "restore:owner-part",
+        "after_ref": "result:owner-part",
+        "readback_ref": null,
+        "rollback_ref": "rollback:owner-part",
+        "status": "done",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-done-requires-rollback-ref",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-done-requires-rollback-ref",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": "restore:owner-part",
+        "after_ref": "result:owner-part",
+        "readback_ref": "readback:owner-part",
+        "rollback_ref": null,
+        "status": "done",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-rolled-back-needs-readback",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-rolled-back-needs-readback",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": "restore:owner-part",
+        "after_ref": "result:owner-part",
+        "readback_ref": null,
+        "rollback_ref": "rollback:owner-part",
+        "status": "rolled_back",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-not-reached-forbids-after",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-not-reached-forbids-after",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": "result:forbidden",
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "not_reached",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-owner-refused-forbids-after",
+      "schema_ref": "#/$defs/owner_thing_copy_contribution_v2",
+      "record": {
+        "owner_ref": "owner:owner_ref",
+        "operation_id": "operation:invalid-sweep-l2-owner-refused-forbids-after",
+        "command_id": "owner:command_id",
+        "source_id": "owner:source_id",
+        "destination_target_ref": "owner:destination_target_ref",
+        "source_revision": 1,
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_destination_revision": 1,
+        "own_value_basis": "own_values",
+        "selected_ids": [
+          "thing-a"
+        ],
+        "excluded_field_ids": [],
+        "before_ref": null,
+        "after_ref": "result:forbidden",
+        "readback_ref": null,
+        "rollback_ref": null,
+        "status": "refused",
+        "schema_id": "pm.owner_thing_copy_contribution.v2",
+        "schema_version": "2.0.0",
+        "preview_ref": "preview:owner-thing",
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-sweep-l2-preview-slot-forbids-done",
+      "schema_ref": "#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v3",
+        "schema_version": "3.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "copy",
+        "source_target": null,
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": [
+          {
+            "owner_ref": "owner:owner_ref",
+            "operation_id": "owner:operation_id",
+            "command_id": "owner:command_id",
+            "source_id": "owner:source_id",
+            "destination_target_ref": "owner:destination_target_ref",
+            "source_revision": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "expected_destination_revision": 1,
+            "own_value_basis": "own_values",
+            "selected_ids": [
+              "thing-a"
+            ],
+            "excluded_field_ids": [],
+            "before_ref": "restore:owner-part",
+            "after_ref": "result:owner-part",
+            "readback_ref": "readback:owner-part",
+            "rollback_ref": "rollback:owner-part",
+            "status": "done",
+            "schema_id": "pm.owner_thing_copy_contribution.v2",
+            "schema_version": "2.0.0",
+            "preview_ref": "preview:owner-thing",
+            "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-sweep-l2-live-rejects-weak-historical-owner-request",
+      "schema_ref": "#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": [
+          {
+            "owner_ref": "owner:owner_ref",
+            "operation_id": "owner:operation_id",
+            "command_id": "owner:command_id",
+            "source_id": "owner:source_id",
+            "destination_target_ref": "owner:destination_target_ref",
+            "source_revision": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "expected_destination_revision": 1,
+            "own_value_basis": "own_values",
+            "selected_ids": [
+              "thing-a"
+            ],
+            "excluded_field_ids": [],
+            "before_ref": null,
+            "after_ref": null,
+            "readback_ref": null,
+            "rollback_ref": null,
+            "status": "previewed"
+          }
+        ]
+      },
+      "expected_keyword": "const"
+    },
+    {
+      "case_id": "invalid-sweep-l2-live-rejects-weak-historical-preview-result",
+      "schema_ref": "#/$defs/settings_transaction_preview_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.v2",
+        "schema_version": "2.0.0",
+        "request": {
+          "schema_id": "pm.settings.layered.preview.request.v2",
+          "schema_version": "2.0.0",
+          "command_id": "cmd.settings.transaction.preview",
+          "context": {
+            "scope": {
+              "schema_id": "pm.workflow_scope.v2",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "scope_partition": "app",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "server_id": "server-a"
+            },
+            "storage_instance_id": "storage-a",
+            "command_instance_id": "command-a",
+            "idempotency_key": "idempotency-a",
+            "actor_ref": "person-a",
+            "permission_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "writer_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "expected_generation": 1,
+            "return_context_ref": "return-a",
+            "origin": {
+              "kind": "settings_surface",
+              "initiating_client_id": "client-a",
+              "route_ref": "settings",
+              "focus_ref": "control-a",
+              "context_revision": 1
+            }
+          },
+          "operation": "edit",
+          "source_target": null,
+          "destination_target": {
+            "level": "everywhere",
+            "level_key": "everywhere",
+            "computer_key": null,
+            "project_id": null,
+            "client_id": null,
+            "provider_id": null,
+            "account_id": null
+          },
+          "copy_basis": "own_values",
+          "selectors": [],
+          "picked_setting_ids": [
+            "general.interaction.mode"
+          ],
+          "include_project_only": false,
+          "proposed_values": {
+            "general.interaction.mode": "eli5"
+          },
+          "expected_setting_revisions": {
+            "general.interaction.mode": 1
+          },
+          "owner_thing_previews": [
+            {
+              "owner_ref": "owner:owner_ref",
+              "operation_id": "owner:operation_id",
+              "command_id": "owner:command_id",
+              "source_id": "owner:source_id",
+              "destination_target_ref": "owner:destination_target_ref",
+              "source_revision": 1,
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "expected_destination_revision": 1,
+              "own_value_basis": "own_values",
+              "selected_ids": [
+                "thing-a"
+              ],
+              "excluded_field_ids": [],
+              "before_ref": null,
+              "after_ref": null,
+              "readback_ref": null,
+              "rollback_ref": null,
+              "status": "previewed"
+            }
+          ]
+        },
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "generation": 1,
+        "expires_at_utc": "2026-11-04T23:00:00Z",
+        "selector_sets": {
+          "appearance_workspace": [],
+          "assistant_chat": [
+            "general.interaction.mode"
+          ],
+          "providers_accounts_models_routing": [],
+          "planning_goal": [],
+          "orchestrator_automation": [],
+          "tools_integrations": [],
+          "testing_browser_devices": [],
+          "permissions_security": [],
+          "memory_retention_history": [],
+          "notifications_usage_budgets": [],
+          "project_only_rows": []
+        },
+        "resolved_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "account_resolution": [],
+        "exclusions": [],
+        "blockers": [],
+        "owner_validation_refs": [
+          "settings-owner-check-a"
+        ],
+        "confirmation_required": false
+      },
+      "expected_keyword": "const"
+    },
+    {
+      "case_id": "invalid-sweep-l2-live-owner-result-needs-readback",
+      "schema_ref": "#/$defs/settings_transaction_result_v2",
+      "record": {
+        "schema_id": "pm.settings_layered_result.v2",
+        "schema_version": "2.0.0",
+        "operation_id": "operation:invalid-sweep-l2-live-owner-result-needs-readback",
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "done",
+        "targets": [
+          {
+            "target": {
+              "level": "everywhere",
+              "level_key": "everywhere",
+              "computer_key": null,
+              "project_id": null,
+              "client_id": null,
+              "provider_id": null,
+              "account_id": null
+            },
+            "outcome": "done",
+            "result_ref": "result-everywhere",
+            "reason_ref": null
+          }
+        ],
+        "owner_results": [
+          {
+            "owner_ref": "owner:owner_ref",
+            "operation_id": "owner:operation_id",
+            "command_id": "owner:command_id",
+            "source_id": "owner:source_id",
+            "destination_target_ref": "owner:destination_target_ref",
+            "source_revision": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "expected_destination_revision": 1,
+            "own_value_basis": "own_values",
+            "selected_ids": [
+              "thing-a"
+            ],
+            "excluded_field_ids": [],
+            "before_ref": "restore:owner-part",
+            "after_ref": "result:owner-part",
+            "readback_ref": null,
+            "rollback_ref": "rollback:owner-part",
+            "status": "done",
+            "schema_id": "pm.owner_thing_copy_contribution.v2",
+            "schema_version": "2.0.0",
+            "preview_ref": "preview:owner-thing",
+            "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "readback_refs": [
+          "readback-everywhere"
+        ],
+        "undo_ref": "undo-everywhere",
+        "return_context_ref": "return-a"
+      },
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-sweep-l2-result-slot-forbids-previewed",
+      "schema_ref": "#/$defs/settings_transaction_result_v2",
+      "record": {
+        "schema_id": "pm.settings_layered_result.v2",
+        "schema_version": "2.0.0",
+        "operation_id": "operation:invalid-sweep-l2-result-slot-forbids-previewed",
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "done",
+        "targets": [
+          {
+            "target": {
+              "level": "everywhere",
+              "level_key": "everywhere",
+              "computer_key": null,
+              "project_id": null,
+              "client_id": null,
+              "provider_id": null,
+              "account_id": null
+            },
+            "outcome": "done",
+            "result_ref": "result-everywhere",
+            "reason_ref": null
+          }
+        ],
+        "owner_results": [
+          {
+            "owner_ref": "owner:owner_ref",
+            "operation_id": "owner:operation_id",
+            "command_id": "owner:command_id",
+            "source_id": "owner:source_id",
+            "destination_target_ref": "owner:destination_target_ref",
+            "source_revision": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "expected_destination_revision": 1,
+            "own_value_basis": "own_values",
+            "selected_ids": [
+              "thing-a"
+            ],
+            "excluded_field_ids": [],
+            "before_ref": null,
+            "after_ref": null,
+            "readback_ref": null,
+            "rollback_ref": null,
+            "status": "previewed",
+            "schema_id": "pm.owner_thing_copy_contribution.v2",
+            "schema_version": "2.0.0",
+            "preview_ref": "preview:owner-thing",
+            "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "readback_refs": [
+          "readback-everywhere"
+        ],
+        "undo_ref": "undo-everywhere",
+        "return_context_ref": "return-a"
+      },
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-sweep-l2-live-rejects-weak-historical-owner-result",
+      "schema_ref": "#/$defs/settings_transaction_result_v2",
+      "record": {
+        "schema_id": "pm.settings_layered_result.v1",
+        "schema_version": "1.0.0",
+        "operation_id": "operation:invalid-sweep-l2-live-rejects-weak-historical-owner-result",
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "done",
+        "targets": [
+          {
+            "target": {
+              "level": "everywhere",
+              "level_key": "everywhere",
+              "computer_key": null,
+              "project_id": null,
+              "client_id": null,
+              "provider_id": null,
+              "account_id": null
+            },
+            "outcome": "done",
+            "result_ref": "result-everywhere",
+            "reason_ref": null
+          }
+        ],
+        "owner_results": [
+          {
+            "owner_ref": "owner:owner_ref",
+            "operation_id": "owner:operation_id",
+            "command_id": "owner:command_id",
+            "source_id": "owner:source_id",
+            "destination_target_ref": "owner:destination_target_ref",
+            "source_revision": 1,
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "expected_destination_revision": 1,
+            "own_value_basis": "own_values",
+            "selected_ids": [
+              "thing-a"
+            ],
+            "excluded_field_ids": [],
+            "before_ref": null,
+            "after_ref": null,
+            "readback_ref": null,
+            "rollback_ref": null,
+            "status": "done"
+          }
+        ],
+        "readback_refs": [
+          "readback-everywhere"
+        ],
+        "undo_ref": "undo-everywhere",
+        "return_context_ref": "return-a"
+      },
+      "expected_keyword": "const"
+    },
+    {
+      "case_id": "invalid-sweep-l2-settings-transfer-draft-preview-request-unknown-selector",
+      "schema_ref": "#/$defs/settings_transfer_draft_preview_request",
+      "record": {
+        "record_type": "settings_transfer_draft_preview_request",
+        "schema_id": "pm.settings_transfer_draft_preview_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "request_id": "request:settings-draft-preview-1",
+        "idempotency_key": "idempotency:settings-draft-preview-1",
+        "actor_ref": "actor:user-1",
+        "permission_snapshot_ref": "permission:source-project-read-1",
+        "requested_at_utc": "2026-09-10T12:00:00Z",
+        "source_project_id": "project:source-1",
+        "expected_source_revision": 7,
+        "destination_draft": {
+          "draft_ref": "draft:onboarding-project-1",
+          "draft_revision": 3,
+          "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "destination_project_id": null
+        },
+        "selector_ids": [
+          "appearance_workspace",
+          "assistant_chat",
+          "providers_accounts_models_routing",
+          "planning_goal",
+          "orchestrator_automation",
+          "tools_integrations",
+          "testing_browser_devices",
+          "permissions_security",
+          "memory_retention_history",
+          "notifications_usage_budgets",
+          "unknown_selector"
+        ],
+        "explicit_choice_setting_ids": [
+          "general.interaction.hide-ignored-files"
+        ],
+        "read_only": true
+      },
+      "expected_keyword": "enum"
+    },
+    {
+      "case_id": "invalid-sweep-l2-settings-transfer-draft-preview-request-duplicate-selector",
+      "schema_ref": "#/$defs/settings_transfer_draft_preview_request",
+      "record": {
+        "record_type": "settings_transfer_draft_preview_request",
+        "schema_id": "pm.settings_transfer_draft_preview_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "request_id": "request:settings-draft-preview-1",
+        "idempotency_key": "idempotency:settings-draft-preview-1",
+        "actor_ref": "actor:user-1",
+        "permission_snapshot_ref": "permission:source-project-read-1",
+        "requested_at_utc": "2026-09-10T12:00:00Z",
+        "source_project_id": "project:source-1",
+        "expected_source_revision": 7,
+        "destination_draft": {
+          "draft_ref": "draft:onboarding-project-1",
+          "draft_revision": 3,
+          "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "destination_project_id": null
+        },
+        "selector_ids": [
+          "project_only_rows",
+          "project_only_rows"
+        ],
+        "explicit_choice_setting_ids": [
+          "general.interaction.hide-ignored-files"
+        ],
+        "read_only": true
+      },
+      "expected_keyword": "uniqueItems"
+    },
+    {
+      "case_id": "invalid-sweep-l2-settings-transfer-draft-preview-unknown-selector",
+      "schema_ref": "#/$defs/settings_transfer_draft_preview",
+      "record": {
+        "record_type": "settings_transfer_draft_preview",
+        "schema_id": "pm.settings_transfer_draft_preview.v1",
+        "schema_version": "1.0.0",
+        "preview_id": "preview:settings-draft-1",
+        "source_project_id": "project:source-1",
+        "source_revision": 7,
+        "destination_draft": {
+          "draft_ref": "draft:onboarding-project-1",
+          "draft_revision": 3,
+          "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "destination_project_id": null
+        },
+        "inventory_schema_version": "1.0.0",
+        "selector_ids": [
+          "appearance_workspace",
+          "assistant_chat",
+          "providers_accounts_models_routing",
+          "planning_goal",
+          "orchestrator_automation",
+          "tools_integrations",
+          "testing_browser_devices",
+          "permissions_security",
+          "memory_retention_history",
+          "notifications_usage_budgets",
+          "unknown_selector"
+        ],
+        "exact_setting_ids": [
+          "general.interaction.language-detection"
+        ],
+        "proposed_values_by_setting_id": {
+          "general.interaction.language-detection": true
+        },
+        "explicit_choice_setting_ids": [
+          "general.interaction.hide-ignored-files"
+        ],
+        "excluded_settings": [],
+        "redacted_summary_ref": "summary:settings-draft-1",
+        "owner_validation_refs": [
+          "validation:settings-eligible-ids-1"
+        ],
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "created_at_utc": "2026-09-10T12:00:00Z",
+        "expires_at_utc": "2026-09-10T13:00:00Z",
+        "read_only": true,
+        "settings_applied": false,
+        "project_created": false,
+        "source_link_retained": false,
+        "availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "settings.transaction.apply.allowed",
+          "evaluated_at_utc": "2026-08-31T12:01:01Z",
+          "projection_generation": 8
+        }
+      },
+      "expected_keyword": "enum"
+    },
+    {
+      "case_id": "invalid-sweep-l2-settings-transfer-draft-preview-duplicate-selector",
+      "schema_ref": "#/$defs/settings_transfer_draft_preview",
+      "record": {
+        "record_type": "settings_transfer_draft_preview",
+        "schema_id": "pm.settings_transfer_draft_preview.v1",
+        "schema_version": "1.0.0",
+        "preview_id": "preview:settings-draft-1",
+        "source_project_id": "project:source-1",
+        "source_revision": 7,
+        "destination_draft": {
+          "draft_ref": "draft:onboarding-project-1",
+          "draft_revision": 3,
+          "draft_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "destination_project_id": null
+        },
+        "inventory_schema_version": "1.0.0",
+        "selector_ids": [
+          "project_only_rows",
+          "project_only_rows"
+        ],
+        "exact_setting_ids": [
+          "general.interaction.language-detection"
+        ],
+        "proposed_values_by_setting_id": {
+          "general.interaction.language-detection": true
+        },
+        "explicit_choice_setting_ids": [
+          "general.interaction.hide-ignored-files"
+        ],
+        "excluded_settings": [],
+        "redacted_summary_ref": "summary:settings-draft-1",
+        "owner_validation_refs": [
+          "validation:settings-eligible-ids-1"
+        ],
+        "preview_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "created_at_utc": "2026-09-10T12:00:00Z",
+        "expires_at_utc": "2026-09-10T13:00:00Z",
+        "read_only": true,
+        "settings_applied": false,
+        "project_created": false,
+        "source_link_retained": false,
+        "availability": {
+          "state": "available",
+          "reason_code": null,
+          "human_reason": null,
+          "selector_ref": "settings.transaction.apply.allowed",
+          "evaluated_at_utc": "2026-08-31T12:01:01Z",
+          "projection_generation": 8
+        }
+      },
+      "expected_keyword": "uniqueItems"
     }
   ],
   "projects_refresh_cases": [

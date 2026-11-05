@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-03T23:25:29Z",
+  "generated_at_utc": "2026-11-04T23:00:49Z",
   "index_path": "Plans/_shards/settings_inventory.schema/00-index.md",
-  "index_sha256": "369c841e9c27d3b739d7d88d04db1e0c743d841e87377b43a3bb7a55f4828058",
+  "index_sha256": "446c1ec4c20326ec7a0a9e120ebdd7288eed70c79413ceb9862a209db01c2ba6",
   "manifest_path": "Plans/_shards/settings_inventory.schema/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Lines 1-200",
       "path": "Plans/_shards/settings_inventory.schema/001-lines-1-200.md",
-      "sha256": "1205e514180ecde8e195cd5806d9f1fea1e0501a658203e2f0013bb5ca6b1251",
+      "sha256": "134c02d603aad920c304e8b0b7e74579af52b89e76fd375eb0ac8cf8162b4a05",
       "shard_id": "001",
       "source_line_end": 200,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Lines 201-221",
       "path": "Plans/_shards/settings_inventory.schema/002-lines-201-221.md",
-      "sha256": "a53f4f91162bb307f6ccdf29cd549fbe56ddf7c1890051138330ff37e0739011",
+      "sha256": "501b53f425ff1106d3c01dd56e27b68c1fdd9fcfaa28290c33b5aedb8c78bf48",
       "shard_id": "002",
       "source_line_end": 221,
       "source_line_start": 201,
@@ -26,7 +26,7 @@
     {
       "heading": "Lines 222-421",
       "path": "Plans/_shards/settings_inventory.schema/003-lines-222-421.md",
-      "sha256": "c9da58009402b39073bd6af27a8aa9eafc2a372f8a588b9ab2e8b5a1b2c7855b",
+      "sha256": "7f78d72dbbaa53e4ddb4e217f00be9d76e06a7a7955742481012274cda316116",
       "shard_id": "003",
       "source_line_end": 421,
       "source_line_start": 222,
@@ -35,16 +35,25 @@
     {
       "heading": "Lines 422-569",
       "path": "Plans/_shards/settings_inventory.schema/004-lines-422-569.md",
-      "sha256": "efc6f12989131939cc0213a50fe283543cb87fb1d60f0713682267e938de5f22",
+      "sha256": "e4cf3e5cf97c86f5fb8744316135566dc8a2b860995b7c0c5af0c1bdfb985e73",
       "shard_id": "004",
       "source_line_end": 569,
       "source_line_start": 422,
       "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 570-579",
+      "path": "Plans/_shards/settings_inventory.schema/005-lines-570-579.md",
+      "sha256": "30a19b8317d1e8ae96a93b1a650c1b532941a91f3f0804d483d8ed73db6224fe",
+      "shard_id": "005",
+      "source_line_end": 579,
+      "source_line_start": 570,
+      "split_rule": "line-count-200"
     }
   ],
   "source": {
-    "line_count": 569,
+    "line_count": 579,
     "path": "Plans/settings_inventory.schema.json",
-    "sha256": "7e082dde9e45e5ae99686fdfa4331c844e628392c6fd2daad9afa32f021bf68f"
+    "sha256": "30e8251d98cc3e7caa6d6afce7e3b39403a0d553fcce938c10ddbb6921fd689c"
   }
 }

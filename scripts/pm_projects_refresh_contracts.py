@@ -678,10 +678,8 @@ def semantic_outcome(predicate, record, corpus, pack, case):
         from pm_project_forge_contract import setup_scenario_outcome
         return setup_scenario_outcome(predicate, record)
     if predicate == 'forge.admitted_profile_setup':
-        admitted = {'github_dotcom', 'github_enterprise', 'gitlab_dotcom', 'gitlab_self_managed',
-                    'azure_devops_services', 'azure_devops_server', 'bitbucket_cloud',
-                    'bitbucket_data_center', 'forgejo_self_managed', 'gitea_self_managed'}
-        return 'accept_with_provider_specific_fields' if record['admitted_profile'] in admitted else 'refuse'
+        profile = corpus.validator('Plans/forge_integration_contracts.schema.json#/$defs/create_api_profile_v1')
+        return 'accept_with_provider_specific_fields' if profile.is_valid(record['admitted_profile']) else 'refuse'
     if predicate == 'assistant_plan.backend_strategy':
         expected = 'ledger_bound' if record['strategy'] in {'deep_thorough', 'deep_exhaustive', 'deep_brainstorm'} else 'direct'
         return 'accept' if record['backend'] == expected else 'refuse'

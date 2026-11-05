@@ -157,7 +157,7 @@ html[data-o55-nier-parts~="diamonds"] :is(.o55-spin, .o55-ph-active .o55-phmark)
 /* The system loader (W5, L7; glyph-system src/logo/pm-loader.js, pm-loader.css): in NieR its one part is the plain ink
    ring, and with this part installed it is the hollow diamond, sized to the loader (1em by default), turning only while
    the loader owner has it armed (data-pml-run="on": on screen, tab shown, no drag), at Animation speed (--pml-k), in
-   the shared clock's phase (--pml-ndelay). Reduced Motion: it stands still and breathes in opacity (L3; !important,
+   the shared clock with its stable per-instance phase offset (--pml-ndelay). Reduced Motion: it stands still and breathes in opacity (L3; !important,
    past the page's global reduced rule). */
 html[data-o55-nier-parts~="diamonds"] .pml-ld > .pml-nier {
   width: 100%; height: 100%; margin: 0; border-radius: 0; border: max(1px, .07em) solid currentColor;

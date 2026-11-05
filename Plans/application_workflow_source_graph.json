@@ -48,7 +48,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json",
       "path": "Plans/shared_integration_runtime.schema.json",
-      "whole_resource_sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008",
+      "whole_resource_sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/OwnerEvidenceRefV1",
@@ -60,7 +60,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json",
       "path": "Plans/application_workflow_contracts.schema.json",
-      "whole_resource_sha256": "1b64728552d4b7b4d514ebb3dd870d784dd7b2b69ad6b3cf1fb46d852764bdf0",
+      "whole_resource_sha256": "79275341460c3779f5f82bf3063b1c433d64b7db34a007d09e02377040436ea4",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/AgentMessageApplicationV1",
@@ -158,7 +158,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/schemas/assistant_chat_contracts/1.0.0/schema.json",
       "path": "Plans/assistant_chat_contracts.schema.json",
-      "whole_resource_sha256": "3cbcc5c9a13d3fe725b9638ad33ea1edb11e5bae15521617795e2455ca86d572",
+      "whole_resource_sha256": "4875933d6850018e3b4aba0eec5ca0186c473ccb4dc51b9d5d886a84dff39995",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/ChatMoveAssociationV1"
@@ -2128,5 +2128,5 @@
       "adoption_disposition": "specified_unimplemented"
     }
   ],
-  "graph_sha256": "ff188b13c910f4ff3b10fee4227fecf07c1a39e7d7a9d09749c38b0df37285b8"
+  "graph_sha256": "5456a65ed9162db8a595279d82d680ab3ccae6e81ba865713eb803157c353bc7"
 }

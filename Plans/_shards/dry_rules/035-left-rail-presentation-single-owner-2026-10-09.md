@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3362-L3419
+Source lines: L3367-L3424
 
-Source SHA256: `dd347352cddb25f2be08d51b81df50cec81d13a55f6543ff71176a198f390d58`
+Source SHA256: `ec31e72135a20b97f0cf6eb893d2b7ddfedd51dcbc640599df316eb2a454ab3e`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: |-
-  The left rail's presentation grammar has exactly one GUI owner, FinalGUISpec F3-618 to F3-622 and F3-625 with F3-472, F3-473 and F3-480, and F3-623's fit rule for the two Source Control strips: the geometry and radii, the shelf tints, the type ladder, the status glyphs and words, plain counts, fitting by layout, the rail dropdown style and the motion of each theme family (DL-162). The panel owner documents (FileManager, Source_Control_System, Jujutsu_Integration, WorktreeGitImprovement, GitHub_Integration and the Forge owners, Containers_Registry_and_Unraid, Automated_Testing_System, Runtime_Artifacts_Panel, and the Run & Debug and Agents units of FinalGUISpec) supply content, state vocabularies and behaviour only, and never restate, fork or restyle that grammar; a chip, pill or badge named by a panel owner is a status or a count drawn through F3-619, the rail's instance of the shell-wide rule against side stripes, emoji and pills (DR-069). Every rail dropdown is the one chat picker primitive with ACD-439's sprout, with no second dropdown style and no native select. F3-658 now owns the shared glyph vocabulary and fitted inks (D44, DL-201); F3-619 and F3-585 consume it while their domain meanings remain with their owners. DL-162's earlier unification question is settled. L8 B, PM7 Step4, 2026-10-30: rail menus and filter resizing delegate to DR-079’s PM6_SPROUT lifecycle, keeping placement, rows, focus and routes with the rail; no private height/bounce/cleanup implementation remains.
+  The left rail's presentation grammar has exactly one GUI owner, FinalGUISpec F3-618 to F3-622 and F3-625 with F3-472, F3-473 and F3-480, and F3-623's fit rule for the two Source Control strips: the geometry and radii, the shelf tints, the type ladder, the status glyphs and words, plain counts, fitting by layout, the rail dropdown style and the motion of each theme family (DL-162). The panel owner documents (FileManager, Source_Control_System, Jujutsu_Integration, WorktreeGitImprovement, GitHub_Integration and the Forge owners, Containers_Registry_and_Unraid, Automated_Testing_System, Runtime_Artifacts_Panel, and the Run & Debug and Agents units of FinalGUISpec) supply content, state vocabularies and behaviour only, and never restate, fork or restyle that grammar; a chip, pill or badge named by a panel owner is a status or a count drawn through F3-619, the rail's instance of the shell-wide rule against side stripes, emoji and pills (DR-069). Every rail dropdown is the one chat picker primitive with ACD-439's sprout, with no second dropdown style and no native select. F3-658 now owns the shared glyph vocabulary and fitted inks (D44, DL-201); F3-619 and F3-585 consume it while their domain meanings remain with their owners. DL-162's earlier unification question is settled. L8 B, PM7 Step4, 2026-10-30: rail menus and filter resizing delegate to DR-079’s shared menu lifecycle, keeping placement, rows, focus and routes with the rail; no private height/bounce/cleanup implementation remains.
 
   Application Files/Search/Agents/Processes and No project pickers consume the same rail, sprout, opening, hover and glyph primitives with exact Computer/thread context and domain-owned unavailable reasons. Setup's source/service/Computer pickers reuse the shared choice/help owner and preserve FO-22 current-answer navigation. This adds no style, picker engine or rail-owned execution authority.
 gui_related: true
@@ -33,8 +33,8 @@ acceptance_criteria:
   or motion voice.
 - Every rail dropdown is the chat picker primitive.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: duplicate_presentation_authority
 reasoning_tier: high
 context_scope: left_rail_polish
