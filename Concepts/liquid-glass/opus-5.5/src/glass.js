@@ -1649,7 +1649,10 @@
       prewarmIdle = 0; var q = Array.from(prewarmQ); prewarmQ.clear();
       q.forEach(function (e) { var L = e[1][0]; if (L.lens.isConnected && lenses.get(e[0]) === L) prewarm(L, e[1][1], e[0]); });
     };
-    prewarmIdle = window.requestIdleCallback ? requestIdleCallback(run, { timeout: 500 }) : setTimeout(run, 100);
+    // A resize can begin after this prewarm is queued. Shared admission withdraws it until release.
+    prewarmIdle = window.PM_BUSY && typeof window.PM_BUSY.idle === 'function'
+      ? window.PM_BUSY.idle(run, 500)
+      : window.requestIdleCallback ? requestIdleCallback(run, { timeout: 500 }) : setTimeout(run, 100);
   }
   function prewarm(L, cfg, strip) {
     if (!gpu() || !isGlass() || cfg.under) return;
