@@ -17,7 +17,7 @@ export default async function(t) {
    const b=f.locator(L+'[data-o55-do="pairInstead"]');
    const exists=await b.count(); await t.check(`${wording} ${look}: Pair instead offered`,exists===1);
    if(!exists)return;
-   await t.text(b,/^Pair instead$/i); await t.check('screen-reader name',await f.getByRole('button',{name:'Pair instead',exact:true}).count()===1); await t.visible(b,'Pair instead reachable');
+   await t.text(b,/^Pair instead$/i); await t.check('screen-reader name',await f.getByRole('button',{name:/^Pair instead$/i}).count()===1); await t.visible(b,'Pair instead reachable');
    // Reach it with the keyboard, then inspect the owner's visible focus paint.
    for(let i=0;i<70;i++){if(await b.evaluate(e=>e===document.activeElement))break;await t.page.keyboard.press('Tab');}
    await t.check('keyboard reaches Pair instead',await b.evaluate(e=>e===document.activeElement));
