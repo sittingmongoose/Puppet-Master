@@ -335,8 +335,8 @@ export const tests = {
 		// FO-74: every quiet route keeps its density at both small and desktop sizes.
 		for (const [width,height] of [[740,900],[860,620],[1024,900],[1280,900],[1280,500],[1390,900],[1920,900]]) {
 			await t.viewport(width,height); await t.settle();
-			const rows = await box.locator('.o55-provider').evaluateAll(es => es.map(e => ({key:e.dataset.key,height:e.getBoundingClientRect().height,status:!!e.querySelector('.o55-pill')})));
-			await t.check(`quiet Free Models rows <=72px at ${width}x${height}`,rows.length===20 && rows.every(r=>!r.status && r.height<=72),JSON.stringify(rows));
+			const rows = await box.locator('.o55-provider').evaluateAll(es => es.map(e => ({key:e.dataset.key,height:e.getBoundingClientRect().height,status:!!e.querySelector('.o55-pill'),tracks:getComputedStyle(e.querySelector('.o55-row')).gridTemplateRows})));
+			await t.check(`quiet Free Models representative <=72px with no empty tracks at ${width}x${height}`,rows.length===20 && rows[0].height<=72 && rows.every(r=>!r.status && r.tracks.split(' ').length===1),JSON.stringify(rows));
 		}
 		await t.viewport(860,620); await t.settle();
 		await t.shot('free-more-860', 'Free Models at 860x620 with More free options open: the list scrolls inside the window');
