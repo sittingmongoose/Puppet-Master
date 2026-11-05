@@ -794,6 +794,40 @@ def expect_failure(call, expected, name, label):
         raise AssertionError((name, 'accepted negative', label))
 
 
+def complete_append_contract(name, case, schema, original=None):
+    """One complete current family path, including physical operation custody.
+
+    Retry originals are independently checked before candidate comparison.
+    Retained history continues to use history_contract's at-write boundary.
+    """
+    if original is not None:
+        append_contract(name, original, schema)
+    digest = append_contract(name, case, schema, original=original)
+    if original is not None and not name.startswith('persona.'):
+        scope = source_scope(case['source'])
+        semantic(name, case['payload'], source_scope_key(case['source']), case['event_record']['event_id'],
+                 original=original['payload'], server_id=scope['server_id'])
+    if name == 'persona.selected':
+        definition, registry = persona_io_definition(case['payload']['command_id'], 'result')
+        selected_result_contract(case['source']['result'],
+                                 {'$defs': {'persona_select_result_v2': definition}}, registry)
+    logical = make_operation(name, case)
+    value, resolved = store_operation(logical)
+    operation_contract(name, value, resolved, logical, schema)
+    return digest
+
+
+def check_complete_negatives(row, schema):
+    from pm_dg6b_full_oracles import family_probes, expected_error
+    probes = family_probes(globals(), row)
+    for probe in probes:
+        probe.call(globals(), schema, positive=True)
+        expect_failure(lambda: probe.call(globals(), schema), expected_error(probe),
+                       row['event_type'], probe.id)
+    return {'complete_path_negatives': len(probes), 'valid_pre_mutation_controls': len(probes),
+            'schema_only_proof_cases': 0}
+
+
 def check_append_contract(row, schema):
     name = row['event_type']
     # The declared main positive is an independent source join too. Mutating a
@@ -884,7 +918,8 @@ def check_append_contract(row, schema):
                                     ('blake3_id', '0' * 64, 'payload_ref_integrity')]:
             expect_failure(lambda field=field, value=value: transport(body, resolved['ref'], {**resolved, field: value}),
                            error, name, 'reference_' + field)
-    return {'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
+    complete = check_complete_negatives(row, schema)
+    return {**complete, 'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
             'replay_only_refused': True, 'transport_boundary_bytes': [16383, 16384, 16385],
             'operation_cases': len(row['operation_cases']), 'history_cases': len(row['history_cases']),
             'storage_metadata_retry': 'same_semantic_digest', 'caller_semantic_retry': 'idempotency_conflict'}
@@ -910,7 +945,7 @@ def preparation_contract(expected, fixtures, grade, registry, values, schema):
             raise ValueError('operation_schema_binding')
 
 
-def run(fixtures_path=None):
+def run(fixtures_path=None, family=None):
     schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
     resolved_references = resolve_schema_graph(schema)
     fixtures = strict_json((fixtures_path or ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
@@ -926,7 +961,10 @@ def run(fixtures_path=None):
     values = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
     preparation_contract(expected, fixtures, grade, registry, values, schema)
     results = []
-    for row in fixtures['families']:
+    family_rows = [row for row in fixtures['families'] if family is None or row['event_type'] == family]
+    if not family_rows:
+        raise ValueError('unknown_family')
+    for row in family_rows:
         name, p = row['event_type'], row['valid']
         slug = name.replace('.', '_')
         validator = Draft202012Validator(schema['$defs'][slug], format_checker=FORMAT)
@@ -973,7 +1011,7 @@ def run(fixtures_path=None):
                 raise AssertionError((name, 'accepted semantic negative', reason))
         results.append({'event_type': name, 'payload_negatives': len(row['invalid']),
                         'relational_negatives': len(probes), 'event_id_vector': eid, 'status': 'pass'})
-    for row, result in zip(fixtures['families'], results):
+    for row, result in zip(family_rows, results):
         result['append_oracles'] = check_append_contract(row, schema)
     return {'status': 'pass', 'native_execution': 'NOT_RUN',
             'resolved_schema_references': resolved_references, 'rows': results}
@@ -982,5 +1020,6 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fixtures', type=Path, help='Full fixture pack, including adversarial positive mutations.')
+    parser.add_argument('--family', help='Run one complete family serially.')
     args = parser.parse_args()
-    print(json.dumps(run(args.fixtures), indent=2))
+    print(json.dumps(run(args.fixtures, args.family), indent=2))

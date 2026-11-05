@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Prove DG6B negative isolation by removing one logical guard in memory.
+"""Prove DG6B guards through complete family calls, one family at a time.
 
-No production file is patched. Repeated checks of one invariant (for example
-original custody in append and Persona semantics) form one guard, and every
-source location is exported. Each negative must flip only for its own guard;
-all other negatives must retain their exact original refusal.
+Every mutant calls Probe.call again. Schema removals edit exact keywords in
+otherwise unchanged definitions; no captured instance is validated separately.
+A surviving target, an unrelated flip, a different refusal, a missing positive,
+or an unclassified second guard fails the proof. No production guard changes.
 """
 import argparse
 import ast
@@ -12,518 +12,290 @@ import copy
 import hashlib
 import json
 from functools import cache
-from jsonschema import Draft202012Validator
 from pathlib import Path
 
-from blake3 import blake3
-from pm_event_index_binding import binding_bytes
+from jsonschema import Draft202012Validator as MetaValidator
+from pm_dg6b_full_oracles import family_probes, changes
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKER = ROOT / 'scripts/pm-dg6b-event-contracts.py'
 
 
-@cache
-def checked_schema(serialized):
-    # Memoize only the actual upstream pure schema check, never instance
-    # validation, reference lookup, or a mutant outcome.
-    return Draft202012Validator.check_schema(json.loads(serialized))
-
-
-class SchemaCheckCache:
-    def __new__(cls, *args, **kwargs):
-        return Draft202012Validator(*args, **kwargs)
-
-    @staticmethod
-    def check_schema(schema):
-        return checked_schema(json.dumps(schema, sort_keys=True))
-
-
-SCHEMA_GUARDS = {'payload_schema', 'payload_types', 'event_record_schema', 'checkpoint_schema',
-                 'operation_schema', 'resolution_schema', 'resolution_storage_schema',
-                 'selected_result_schema', 'source_io_schema', 'adapter_schema'}
-
-
 def reason(node):
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 'ValueError':
         arg = node.args[0]
-        if isinstance(arg, ast.Constant):
-            return arg.value
-        if isinstance(arg, ast.BinOp) and isinstance(arg.left, ast.Constant):
-            return arg.left.value.rstrip(': ')
-    return None
+        if isinstance(arg, ast.Constant): return arg.value
+        if isinstance(arg, ast.BinOp) and isinstance(arg.left, ast.Constant): return arg.left.value.rstrip(': ')
 
 
 def guard_name(error):
-    # Both refusal paths enforce the same sole current-writer policy. Keep
-    # both original production predicates intact and remove the invariant's
-    # repeated enforcement together, as for other repeated guard sites.
-    return 'current_writer_policy' if error in ('replay_only_not_appendable', 'writer_replay_policy') else error
+    return 'current_writer_policy' if error in ('replay_only_not_appendable','writer_replay_policy') else error
 
 
 def guard_inventory(source):
-    guards = {}
-    for function in ast.parse(source).body:
-        if not isinstance(function, ast.FunctionDef):
-            continue
-        for node in ast.walk(function):
-            if isinstance(node, ast.Raise) and reason(node.exc):
-                guards.setdefault(guard_name(reason(node.exc)), []).append({'function': function.name, 'line': node.lineno})
-    guards['failure_oracle'] = [{'function': 'expect_failure', 'line': next(n.lineno for f in ast.parse(source).body if isinstance(f, ast.FunctionDef) and f.name == 'expect_failure' for n in ast.walk(f) if isinstance(n, ast.Raise))}]
-    guards['failure_error_reason'] = [{'function': 'expect_failure', 'line': next(n.lineno for f in ast.parse(source).body if isinstance(f, ast.FunctionDef) and f.name == 'expect_failure' for n in ast.walk(f) if isinstance(n, ast.Assert))}]
-    return guards
+    result={}
+    for fn in ast.parse(source).body:
+        if not isinstance(fn,ast.FunctionDef): continue
+        for node in ast.walk(fn):
+            if isinstance(node,ast.Raise) and reason(node.exc):
+                result.setdefault(guard_name(reason(node.exc)),[]).append({'function':fn.name,'line':node.lineno})
+    return result
 
 
-def module_for(source, disabled=None, capture=None):
-    class Remove(ast.NodeTransformer):
-        function = None
-
-        def visit_FunctionDef(self, node):
-            previous, self.function = self.function, node.name
-            result = self.generic_visit(node)
-            self.function = previous
-            return result
-
-        def visit_Assert(self, node):
-            if self.function == 'expect_failure' and disabled == 'failure_error_reason':
-                return ast.copy_location(ast.Pass(), node)
-            return node
-
-        def visit_If(self, node):
-            # Do not remove the block containing a whole subtree of rules.
-            if len(node.body) == 1 and isinstance(node.body[0], ast.Raise) and guard_name(reason(node.body[0].exc)) == disabled:
-                node.test = ast.Constant(False)
-                return node
-            return self.generic_visit(node)
-
-        def visit_Raise(self, node):
-            # Eager resolution's exception barrier and exhaustive dispatch.
-            if (guard_name(reason(node.exc)) == disabled
-                    or (self.function == 'expect_failure' and disabled == 'failure_oracle'
-                        and isinstance(node.exc, ast.Call) and isinstance(node.exc.func, ast.Name)
-                        and node.exc.func.id == 'AssertionError')):
-                return ast.copy_location(ast.Pass(), node)
-            return node
-
-    tree = ast.parse(source)
-    if disabled:
-        tree = Remove().visit(tree)
-    ast.fix_missing_locations(tree)
-    namespace = {'__file__': str(CHECKER), '__name__': 'dg6b_guard_mutant'}
-    exec(compile(tree, str(CHECKER), 'exec'), namespace)
-    actual_validator = namespace['Draft202012Validator']
-    class ExactValidator:
-        def __new__(cls, definition, *args, **kwargs):
-            actual = actual_validator(definition, *args, **kwargs)
-            if capture is None:
-                return actual
-            class Observed:
-                def iter_errors(self, instance):
-                    errors = list(actual.iter_errors(instance))
-                    if errors:
-                        capture.append((copy.deepcopy(definition), copy.deepcopy(instance), kwargs, errors))
-                    return iter(errors)
-                def __getattr__(self, key):
-                    return getattr(actual, key)
-            return Observed()
-        @staticmethod
-        def check_schema(schema):
-            return checked_schema(json.dumps(schema, sort_keys=True))
-    namespace['Draft202012Validator'] = ExactValidator
-    return namespace
+def digest(value):
+    return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
 
-def outcome(call, namespace, schema):
-    try:
-        call(namespace, schema)
-    except Exception as exc:
-        return type(exc).__name__ + ': ' + str(exc)
-    return 'accepted'
+@cache
+def checked_schema(serialized):
+    return MetaValidator.check_schema(json.loads(serialized))
 
 
-def build_probes(stock, schema, fixtures):
-    probes = []
-
-    def add(family, label, guard, call):
-        probes.append({'id': family + ':' + label, 'family': family, 'guard': guard_name(guard), 'error': guard, 'call': call})
-
-    for row in fixtures['families']:
-        name = row['event_type']
-        slug = name.replace('.', '_')
-        payload = row['valid']
-        server = stock['source_scope'](row['source'])['server_id']
-        eid = row['expected_event_id']
-        for index, bad in enumerate(row['invalid']):
-            case = {'stage': 'payload_schema', 'payload': bad}
-            add(name, 'payload_schema/' + str(index), 'payload_schema',
-                lambda m, s, c=case, n=name: m['stage_contract'](n, c, s))
-        for kind in ('append_invalid', 'operation_cases', 'resolution_cases', 'history_cases', 'retry_cases', 'semantic_invalid', 'stage_cases'):
-            for c in row.get(kind, []):
-                if 'expected_error' not in c:
-                    continue
-                guard = c['expected_error']
-                if kind == 'append_invalid':
-                    fn = lambda m, s, c=c, n=name: m['append_contract'](n, c, s)
-                elif kind == 'operation_cases':
-                    fn = lambda m, s, c=c, n=name: m['operation_contract'](n, c['value'], c['resolved'], c['logical'], s)
-                elif kind == 'resolution_cases':
-                    fn = lambda m, s, c=c: m['resolution_storage_contract'](c['value'], c['resolved'], c['logical'], s)
-                elif kind == 'history_cases':
-                    fn = lambda m, s, c=c, n=name: m['history_contract'](n, c, s)
-                elif kind == 'retry_cases':
-                    fn = lambda m, s, c=c, n=name: m['append_contract'](n, c['candidate'], s, original=c['original'])
-                elif kind == 'semantic_invalid':
-                    fn = lambda m, s, c=c, n=name: m['persona_semantic'](n, c['payload'], c['scope_key'], c['source'])
-                else:
-                    fn = lambda m, s, c=c, n=name: m['stage_contract'](n, c, s)
-                add(name, kind + '/' + c.get('label', c.get('case_id')), guard, fn)
-
-        if name.startswith('persona.') and name != 'persona.exported':
-            bad_source = copy.deepcopy(row['source'])
-            bad_source['definition_writer_current'] = False
-            add(name, 'extra/definition_writer', 'definition_writer',
-                lambda m, s, n=name, p=payload, sk=row['scope_key'], src=bad_source: m['persona_semantic'](n, p, sk, src))
-        wrong_type = {**payload, 'revision': '1'}
-        add(name, 'extra/payload_types', 'payload_types',
-            lambda m, s, n=name, p=wrong_type: m['payload_type_contract'](n, p))
-        if name.startswith('persona.'):
-            bad_source = copy.deepcopy(row['source'])
-            bad_source['request']['unknown_field'] = True
-            add(name, 'extra/source_io_schema', 'source_io_schema',
-                lambda m, s, n=name, p=payload, sk=row['scope_key'], src=bad_source: m['persona_semantic'](n, p, sk, src))
-        if name == 'persona.created':
-            variant = next(v for v in row['valid_variants'] if v['payload']['command_id'] == 'cmd.persona.duplicate')
-            bad = copy.deepcopy(variant)
-            bad['payload']['source_id'] = bad['payload']['persona_id']
-            bad['source']['frozen_payload']['source_id'] = bad['payload']['source_id']
-            bad['source']['request']['source_id'] = bad['payload']['source_id']
-            add(name, 'extra/creation_source', 'creation_source',
-                lambda m, s, n=name, b=bad: m['persona_semantic'](n, b['payload'], m['persona_scope_key'](b['payload']), b['source']))
-
-        if name == 'persona.selected':
-            from referencing import Registry, Resource
-            shared = stock['load_plan']('Plans/shared_integration_runtime.schema.json')
-            resource = Resource.from_contents(shared)
-            resource_registry = Registry().with_resources([(shared['$id'], resource),
-                ('https://puppetmaster.local/Plans/shared_integration_runtime.schema.json', resource)])
-            for alias in ('requested_persona_id', 'effective_persona_id'):
-                bad = {**row['source']['result'], alias: 'forbidden'}
-                add(name, 'selected_result/' + alias, 'selected_result_schema',
-                    lambda m, s, b=bad, sh=shared, rr=resource_registry: m['selected_result_contract'](b, sh, rr))
-                bad = {**row['source']['resolution'], alias: 'forbidden'}
-                add(name, 'resolution/' + alias, 'resolution_schema',
-                    lambda m, s, b=bad: m['resolution_contract'](b, s))
-            for key in ('requested_persona', 'effective_persona', 'runtime_snapshot_ref', 'runtime_snapshot_sha256'):
-                bad = {k: v for k, v in row['source']['resolution'].items() if k != key}
-                add(name, 'resolution/missing/' + key, 'resolution_schema',
-                    lambda m, s, b=bad: m['resolution_contract'](b, s))
-
-        # All generated negatives in the production checker, including LF,
-        # policy/key schema controls, caller retry fields and byte stages.
-        for case in row['append_valid']:
-            op = stock['make_operation'](name, case)
-            for field in ('idempotency_key', 'actor_ref'):
-                bad = copy.deepcopy(op)
-                bad[field] += '\n'
-                add(name, 'operation_schema/' + case['label'] + '/LF/' + field, 'operation_schema',
-                    lambda m, s, b=bad, n=name: m['stage_contract'](n, {'stage': 'operation_schema', 'value': b}, s))
-            for field, value, label in (
-                ('replay_policy', 'projector_replay_only', 'replay_only'),
-                ('idempotency_key', name + ':' + '0' * 64 if stock['source_scope'](case['source'])['scope_kind'] == 'application'
-                 else 'application@1:11:22', 'wrong_scope_key')):
-                bad = {**op, field: value}
-                add(name, 'operation_schema/' + case['label'] + '/' + label, 'operation_schema',
-                    lambda m, s, b=bad, n=name: m['stage_contract'](n, {'stage': 'operation_schema', 'value': b}, s))
-            retry = copy.deepcopy(case)
-            retry['event_record'].update(sequence_id=999, observed_at_utc='2026-11-04T13:00:00Z', persisted_at_utc='2026-11-04T14:00:00Z')
-            retry['event_record']['correlation_id'] += '-changed'
-            add(name, 'caller_semantic_change/' + case['label'], 'idempotency_conflict',
-                lambda m, s, c=retry, o=case, n=name: m['append_contract'](n, c, s, original=o))
-        if not name.startswith('persona.'):
-            add(name, 'semantic/identity', 'identity',
-                lambda m, s, n=name, p=payload, sv=server: m['semantic'](n, p, 'application', 'other', server_id=sv))
-            changed = {**payload, 'ts': '2026-11-04T12:01:00Z'}
-            add(name, 'semantic/original_payload', 'original_payload_conflict',
-                lambda m, s, n=name, p=changed, o=payload, e=eid, sv=server: m['semantic'](n, p, 'application', e, original=o, server_id=sv))
-            # Application-only scope gets a coherent Project identity. Plugin
-            # identity substitution deliberately retains the old identity.
-            target_eid = stock['identity'](name, payload, 'project:other')[0] if name.startswith('auth.') else eid
-            add(name, 'semantic/scope', 'scope' if name.startswith('auth.') else 'identity',
-                lambda m, s, n=name, p=payload, e=target_eid: m['semantic'](n, p, 'project:other', e))
-            if name == 'auth.github.token.polling':
-                bad = {**payload, 'poll_interval_seconds': payload['previous_interval_seconds']}
-                add(name, 'semantic/cadence', 'cadence',
-                    lambda m, s, n=name, p=bad, e=eid, sv=server: m['semantic'](n, p, 'application', e, server_id=sv))
-            if name == 'plugin.hook.blocked':
-                for hook in ('post_tool_invoke', 'post_attempt_complete'):
-                    bad = {**payload, 'hook_name': hook}
-                    add(name, 'semantic/' + hook, 'observation_only_hook',
-                        lambda m, s, n=name, p=bad, e=eid, sv=server: m['semantic'](n, p, 'application', e, server_id=sv))
-        for size in (16383, 16384, 16385):
-            body = b'x' * size
-            resolved = {'ref': 'ref:payload/boundary', 'blake3_id': blake3(body).hexdigest(), 'byte_size': size,
-                        'media_type': 'application/msgpack', 'bytes_hex': body.hex(), 'durable': True, 'access_current': True}
-            if size > 16384:
-                add(name, 'transport/16k_plus_one', 'inline_body_too_large',
-                    lambda m, s, b=body: m['transport'](b, None, None))
-            for field, value, error in (
-                ('durable', False, 'payload_ref_unavailable'), ('access_current', False, 'payload_ref_unavailable'),
-                ('byte_size', size + 1, 'payload_ref_integrity'), ('media_type', 'text/plain', 'payload_ref_integrity'),
-                ('bytes_hex', '00', 'payload_ref_integrity'), ('blake3_id', '0' * 64, 'payload_ref_integrity')):
-                add(name, 'transport/' + str(size) + '/' + field, error,
-                    lambda m, s, b=body, r={**resolved, field: value}, ref=resolved['ref']: m['transport'](b, ref, r))
-
-        # Guards with no old fixture: independently valid controls mutated in
-        # exactly one input at the actual full contract boundary.
-        base = row['append_valid'][0]
-        bad = copy.deepcopy(base)
-        bad['event_record']['schema_version'] = '9.0.0'
-        add(name, 'extra/event_record_schema', 'event_record_schema',
-            lambda m, s, c=bad, n=name: m['append_contract'](n, c, s))
-        bad = copy.deepcopy(base)
-        bad['event_record']['payload']['subject_ref'] = 'ref:subject/different'
-        add(name, 'extra/payload_transport_join', 'payload_transport_join',
-            lambda m, s, c=bad, n=name: m['append_contract'](n, c, s))
-        original = copy.deepcopy(base)
-        original['event_record']['event_id'] += '-other'
-        add(name, 'extra/retry_identity', 'retry_identity',
-            lambda m, s, c=base, o=original, n=name: m['append_contract'](n, c, s, original=o))
-        dangling = copy.deepcopy(schema)
-        dangling['$defs'][slug]['allOf'] = [{'if': {'properties': {'operation_id': {'const': 'uncovered-operation'}}},
-                                          'then': {'$ref': '#/$defs/REVIEW_MISSING'}}]
-        add(name, 'schema_graph/dormant_ref', 'unresolved_schema_ref',
-            lambda m, s, d=dangling: m['resolve_schema_graph'](d))
-        for keyword in ('$ref', '$dynamicRef'):
-            dangling = copy.deepcopy(schema)
-            dangling['$defs']['unused_' + slug] = {keyword: '#/$defs/REVIEW_MISSING'}
-            add(name, 'schema_graph/unused/' + keyword, 'unresolved_schema_ref',
-                lambda m, s, d=dangling: m['resolve_schema_graph'](d))
-    # Preparation guards are tested on each exact single-family projection.
-    # Each projection is itself accepted before its one mutation.
-    grade = stock['load_plan']('reports/event-authority-20261104/DG6B.self-grade.json')
-    registry = stock['load_plan']('Plans/event_family_registry.json')
-    values = stock['load_plan']('Plans/storage_value_registry.json')
-    for row in fixtures['families']:
-        n = row['event_type']
-        g = {'rows': [next(r for r in grade['rows'] if r['event_type'] == n)]}
-        v = {'families': [next(r for r in values['families'] if r['family_id'] == n.replace('.', '_') + '_operation')]}
-        f = {'families': [row]}
-        stock['preparation_contract']({n}, f, g, registry, v, schema)
-        for guard in ('fixture_family_coverage', 'grade_family_coverage', 'unadmitted_disposition',
-                      'prepared_membership', 'retention_pending', 'operation_schema_binding'):
-            ff, gg, rr, vv = f, g, registry, v
-            if guard == 'fixture_family_coverage': ff = {'families': [row, row]}
-            if guard == 'grade_family_coverage': gg = {'rows': []}
-            if guard == 'unadmitted_disposition': gg = {'rows': [{**g['rows'][0], 'disposition': 'CURRENT_WRITER'}]}
-            if guard == 'prepared_membership': rr = {'families': registry['families'] + [{'event_type': n}]}
-            if guard == 'retention_pending': vv = {'families': [{**v['families'][0], 'retention_policy_ref': 'UNAUTHORIZED_POLICY'}]}
-            if guard == 'operation_schema_binding': vv = {'families': [{**v['families'][0], 'value_schema': {}}]}
-            add(n, 'preparation/' + guard, guard,
-                lambda m, s, n=n, ff=ff, gg=gg, rr=rr, vv=vv: m['preparation_contract']({n}, ff, gg, rr, vv, s))
-    add('shared', 'original_server_required', 'original_server_required',
-        lambda m, s: m['original_server_required'](None))
-    add('shared', 'unknown_adapter_kind', 'unknown_adapter_kind',
-        lambda m, s: m['adapter_schema']('unknown'))
-    add('shared', 'duplicate_json_key', 'duplicate_json_key',
-        lambda m, s: m['strict_json']('{"x":1,"x":2}'))
-    add('shared', 'invalid_json', 'invalid_json',
-        lambda m, s: m['strict_json']('{"x":01}'))
-    add('shared', 'unknown_oracle_stage', 'unknown_oracle_stage',
-        lambda m, s: m['stage_contract']('', {'stage': 'unknown'}, s))
-    add('shared', 'success_cannot_prove_failure', 'failure_oracle',
-        lambda m, s: m['expect_failure'](lambda: None, 'wanted', 'shared', 'success'))
-    def wrong_reason(m, s):
-        def reject():
-            raise ValueError('different')
-        m['expect_failure'](reject, 'wanted', 'shared', 'reason')
-    add('shared', 'wrong_reason_cannot_prove_failure', 'failure_error_reason', wrong_reason)
-    return probes
+def expand_refs(node, resolver):
+    if isinstance(node,dict):
+        if '$ref' in node:
+            resolved=resolver.lookup(node['$ref'])
+            return {**expand_refs(resolved.contents,resolved.resolver),
+                    **expand_refs({k:v for k,v in node.items() if k!='$ref'},resolver)}
+        return {k:expand_refs(v,resolver) for k,v in node.items()}
+    if isinstance(node,list): return [expand_refs(v,resolver) for v in node]
+    return node
 
 
-def schema_leaves(error, value):
-    """Select the actual carrier branch; retain every check inside that branch."""
-    if error.validator == 'oneOf' and error.context:
-        branch = 1 if isinstance(value, dict) and 'payload_ref' in value else 0
-        children = [e for e in error.context if list(e.schema_path)[0] == branch]
-        return [leaf for child in children for leaf in schema_leaves(child, value)]
-    if error.validator == 'anyOf' and error.context:
-        # A union rejects through each alternative. Removing either alternative's
-        # exact type rule is an independent test of that union's same-field guard.
-        return [leaf for child in error.context for leaf in schema_leaves(child, value)]
+def leaves(error,value):
+    if error.validator=='oneOf' and error.context:
+        branch=1 if isinstance(value,dict) and 'payload_ref' in value else 0
+        return [e for child in error.context if list(child.schema_path)[0]==branch for e in leaves(child,value)]
+    if error.validator=='anyOf' and error.context:
+        return [e for child in error.context for e in leaves(child,value)]
     return [error]
 
 
-def schema_guard_proof(source, schema, probes):
-    """Remove actual schema keywords, never the whole validation function.
+@cache
+def compiled_module(source, runtime):
+    class Remove(ast.NodeTransformer):
+        function = None
+        def visit_FunctionDef(self,node):
+            previous,self.function=self.function,node.name
+            result=self.generic_visit(node)
+            self.function=previous
+            return result
+        def selected(self,node):
+            return f"{guard_name(reason(node.exc))}@{self.function}:{node.lineno}" in runtime
+        def visit_If(self,node):
+            if len(node.body)==1 and isinstance(node.body[0],ast.Raise) and self.selected(node.body[0]):
+                node.test=ast.Constant(False)
+                return node
+            return self.generic_visit(node)
+        def visit_Raise(self,node):
+            if self.selected(node): return ast.copy_location(ast.Pass(),node)
+            return node
+    tree=Remove().visit(ast.parse(source)); ast.fix_missing_locations(tree)
+    return compile(tree,str(CHECKER),'exec')
 
-    Complete-path rejection is checked first. Flip/stay proof runs at the exact
-    failing validator boundary, retaining all unrelated fields and keywords.
-    Unchanged schema resources are hash-compared, not disabled or substituted.
+
+EXPANDED = {}
+PURE_HELPERS = {}
+
+def module_for(source, runtime=(), keywords=(), capture=None):
+    m={'__file__':str(CHECKER),'__name__':'dg6b_full_guard_mutant'}
+    exec(compiled_module(source,tuple(sorted(runtime))),m)
+    # Cache immutable schema construction and file parsing only. Every call
+    # still runs instance validation, joins, byte encoding and all semantics.
+    for name in ('load_plan','payload_type_definition','workflow_scope_schema','durable_token_schema','persona_io_definition'):
+        if name not in PURE_HELPERS: PURE_HELPERS[name]=m[name]
+        else: m[name]=PURE_HELPERS[name]
+    actual=m['Draft202012Validator']
+    class Validator:
+        def __new__(cls,definition,*args,**kwargs):
+            # All schemas still execute at their original production callsite.
+            import sys
+            role=sys._getframe(1).f_code.co_name
+            key=json.dumps(definition,sort_keys=True,separators=(',',':'))
+            if key not in EXPANDED:
+                from referencing import Registry, Resource
+                from referencing.jsonschema import DRAFT202012
+                registry=kwargs.get('registry',Registry())
+                resolver=registry.resolver_with_root(Resource.from_contents(definition,default_specification=DRAFT202012))
+                expanded=expand_refs(definition,resolver)
+                EXPANDED[key]=(expanded,digest(expanded))
+            expanded,resource=EXPANDED[key]
+            selected=[tuple(k['path']) for k in keywords if k['role']==role and k['schema_sha256']==resource]
+            patched=expanded
+            if selected:
+                patched=json.loads(json.dumps(expanded))
+                for path in sorted(set(selected),key=repr):
+                    node=patched
+                    for segment in path[:-1]: node=node[segment]
+                    del node[path[-1]]
+            validator=actual(patched,*args,**kwargs)
+            if capture is None: return validator
+            class Observed:
+                def iter_errors(self,value):
+                    errors=list(validator.iter_errors(value))
+                    if errors:
+                        capture.append({'role':role,'schema_sha256':resource,'definition':expanded,
+                            'errors':[{'path':list(e.absolute_schema_path),'field':list(e.absolute_path),
+                                       'keyword':e.validator} for error in errors for e in leaves(error,value)]})
+                    return iter(errors)
+                def __getattr__(self,key): return getattr(validator,key)
+            return Observed()
+        @staticmethod
+        def check_schema(schema): return checked_schema(json.dumps(schema,sort_keys=True))
+    m['Draft202012Validator']=Validator
+    return m
+
+
+def outcome(probe,m,schema,positive=False,refusals=None):
+    try: probe.call(m,schema,positive)
+    except Exception as exc:
+        if refusals is not None:
+            tb=exc.__traceback__
+            selected=None
+            while tb:
+                if tb.tb_frame.f_code.co_filename==str(CHECKER):
+                    selected=f"{guard_name(str(exc))}@{tb.tb_frame.f_code.co_name}:{tb.tb_lineno}"
+                tb=tb.tb_next
+            refusals.append(selected)
+        return type(exc).__name__+': '+str(exc)
+    return 'accepted'
+
+
+def available_memory():
+    for line in Path('/proc/meminfo').read_text().splitlines():
+        if line.startswith('MemAvailable:'): return int(line.split()[1])//(1024*1024)
+    raise RuntimeError('MemAvailable unavailable')
+
+
+def discover(source,schema,probe):
+    """Follow only exact schema duplicates and this named runtime invariant.
+
+    Discovery always restarts the whole callback. It never removes a second
+    unrelated runtime refusal, so stale-copy masks cannot be hidden here.
     """
-    captured = []
-    observer = module_for(source, capture=captured)
-    records, failures = [], []
+    runtime=set(); keywords={}; trace=[]
+    allowed_fields={part for path in changes(probe.positive,probe.negative) for part in path if isinstance(part,str)}
+    if 'revision' in allowed_fields: allowed_fields.add('owner_revision')
+    if probe.guard in ('scope','partition'): allowed_fields.add('scope_key')
+    if probe.guard=='original_server_required': allowed_fields.add('idempotency_key')
+    for _ in range(24):
+        captured=[]
+        m=module_for(source,runtime,list(keywords.values()),captured)
+        refusals=[]
+        result=outcome(probe,m,schema,refusals=refusals)
+        trace.append(result)
+        if result=='accepted':
+            return {'runtime':sorted(runtime),'keywords':list(keywords.values()),'trace':trace}
+        if captured:
+            for error in captured[-1]['errors']:
+                observation=captured[-1]
+                item={'role':observation['role'],'schema_sha256':observation['schema_sha256'],
+                      'path':error['path'],'field':error['field'],'keyword':error['keyword']}
+                if error['field'] and not any(part in allowed_fields for part in error['field']):
+                    return {'error':'unrelated schema field masks the target','actual':result,'field':error['field'],'allowed_fields':sorted(allowed_fields),'trace':trace}
+                key=json.dumps([item['role'],item['schema_sha256'],item['path']])
+                keywords[key]=item
+        elif result.startswith('ValueError: ') and guard_name(result[12:]) in (
+                {'retry_identity','idempotency_conflict','original_payload_conflict'} if probe.guard=='retry_immutability' else {probe.guard}):
+            if not refusals or refusals[-1] is None:
+                return {'error':'no exact runtime refusal site','actual':result,'trace':trace}
+            runtime.add(refusals[-1])
+        else:
+            return {'error':'complete-path target is masked','actual':result,'runtime':sorted(runtime),
+                    'keywords':list(keywords.values()),'trace':trace}
+    return {'error':'duplicate discovery did not converge','trace':trace}
+
+
+def run_family(row,source,schema):
+    stock=module_for(source)
+    probes=family_probes(stock,row)
+    failures=[]; groups={}; positives=[]; stock_results={}
     for p in probes:
-        if p['guard'] not in SCHEMA_GUARDS:
-            continue
-        captured.clear()
-        actual = outcome(p['call'], observer, schema)
-        if actual != p['stock'] or not captured:
-            failures.append({'id': p['id'], 'phase': 'schema_capture', 'actual': actual})
-            continue
-        definition, value, kwargs, errors = captured[-1]
-        # A bare selected-owner reference has no other local constraints.
-        # Resolve it through the actual selected registry before keyword edits.
-        while set(definition) == {'$ref'}:
-            definition = kwargs['registry'].resolver().lookup(definition['$ref']).contents
-        digest = hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
-        leaves = [leaf for error in errors for leaf in schema_leaves(error, value)]
-        records.append({'id': p['id'], 'schema_sha256': digest, 'definition': definition,
-                        'value': value, 'kwargs': kwargs, 'leaves': leaves})
-    groups = {}
-    links = {}
-    for r in records:
-        by_field = {}
-        for e in r['leaves']:
-            path = tuple(e.absolute_schema_path)
-            key = (r['schema_sha256'], path)
-            groups.setdefault(key, {'record': r, 'path': path})
-            by_field.setdefault(tuple(e.absolute_path), []).append(key)
-        for keys in by_field.values():
-            # Same-field duplicate enforcement only: e.g. root/scope key
-            # patterns and the maximum UTF-8 key bound. Different fields never
-            # form a removal set (the seven old Persona masks must fail here).
-            for key in keys:
-                links.setdefault(key, set()).update(keys)
-    components, visited = [], set()
-    for key in groups:
-        if key in visited:
-            continue
-        pending, component = [key], set()
-        while pending:
-            item = pending.pop()
-            if item in component:
-                continue
-            component.add(item)
-            pending.extend(links.get(item, ()))
-        visited.update(component)
-        components.append(component)
-    table = []
-    validator = observer['JsonSchemaValidator']
-    exact = observer['Draft202012Validator']
-    for component in sorted(components, key=repr):
-        digest, path = sorted(component, key=repr)[0]
-        group = groups[(digest, path)]
-        # Break Python construction aliases: editing one JSON schema location
-        # must never edit another property that reused the same Python dict.
-        definition = json.loads(json.dumps(group['record']['definition']))
-        paths = [item[1] for item in sorted(component, key=repr)]
-        try:
-            for location in paths:
-                node = definition
-                for key in location[:-1]:
-                    node = node[key]
-                del node[location[-1]]
-        except (KeyError, TypeError):
-            failures.append({'phase': 'schema_path', 'schema_sha256': digest, 'path': list(path)})
-            continue
-        flips, stays, wrong, evaluations = [], [], [], 0
-        targets = {r['id'] for r in records if r['schema_sha256'] == digest
-                   and any(tuple(e.absolute_schema_path) in paths for e in r['leaves'])}
-        for r in records:
-            if r['schema_sha256'] != digest:
-                stays.append(r['id'])
-                continue
-            evaluations += 1
-            errors = list(exact(definition, **r['kwargs']).iter_errors(r['value']))
-            if not errors:
-                if r['id'] in targets:
-                    flips.append(r['id'])
-                else:
-                    wrong.append({'id': r['id'], 'error': 'unrelated schema negative accepted'})
-            elif r['id'] in targets:
-                wrong.append({'id': r['id'], 'error': 'masked schema negative',
-                              'remaining': [{'field': list(e.absolute_path), 'guard': list(e.absolute_schema_path)} for e in errors]})
-            else:
-                stays.append(r['id'])
-        row = {'guard': 'schema:' + digest[:12] + ':' + '/'.join(map(str, path)),
-               'schema_sha256': digest, 'removed_keywords': [list(location) for location in paths],
-               'duplicate_reason': ('Same-field duplicate enforcement; every exact keyword is named.'
-                                    if len(paths) > 1 else None),
-               'negatives_that_flip': flips, 'negatives_that_stay_rejected': stays,
-               'boundary_evaluations': evaluations, 'unchanged_resource_proofs': len(records)-evaluations,
-               'unexpected': wrong}
-        table.append(row)
-        failures.extend({'guard': row['guard'], **w} for w in wrong)
-    return table, failures, len(records)
-
-
-def run():
-    paths = [CHECKER, Path(__file__).resolve(), ROOT / 'Plans/dg6b_event_contract_fixtures.json',
-             ROOT / 'Plans/dg6b_event_contracts.schema.json',
-             ROOT / 'reports/event-authority-20261104/DG6B.self-grade.json']
-    inputs = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
-    source = CHECKER.read_text()
-    inventory = guard_inventory(source)
-    stock = module_for(source)
-    schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
-    fixtures = json.loads((ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
-    probes = build_probes(stock, schema, fixtures)
-    failures = []
-    for probe in probes:
-        actual = outcome(probe['call'], stock, schema)
-        probe['stock'] = actual
-        expected = 'ValueError: ' + probe['error']
-        if not ((probe['guard'] in ('failure_oracle', 'failure_error_reason') and actual.startswith('AssertionError: ')) or actual == expected or (probe['guard'] == 'unresolved_schema_ref' and actual.startswith(expected + ': '))):
-            failures.append({'id': probe['id'], 'phase': 'stock', 'expected': expected, 'actual': actual})
-    table = []
-    covered = {p['guard'] for p in probes}
-    for guard in sorted(inventory):
-        if guard not in covered:
-            failures.append({'guard': guard, 'phase': 'inventory', 'error': 'no negative'})
-            continue
-        if guard in SCHEMA_GUARDS:
-            # Tested below by actual keyword removal, never broad erasure.
-            continue
-        mutant = module_for(source, guard)
-        flips, stays, wrong = [], [], []
+        if available_memory()<6: raise RuntimeError('pause: available RAM under 6 GB')
+        good=outcome(p,stock,schema,True)
+        bad=outcome(p,stock,schema)
+        positives.append({'id':p.id,'outcome':good,'input_changes':changes(p.positive,p.negative),'defect':p.defect,'mode':p.mode})
+        stock_results[p.id]=bad
+        if good!='accepted': failures.append({'id':p.id,'phase':'positive','actual':good})
+        if bad=='accepted': failures.append({'id':p.id,'phase':'stock','actual':bad})
+        removal=discover(source,schema,p)
+        if 'error' in removal:
+            failures.append({'id':p.id,'phase':'isolation',**removal});continue
+        atoms={('runtime',item) for item in removal['runtime']} | {
+            ('schema',json.dumps([k['role'],k['schema_sha256'],k['path']])) for k in removal['keywords']}
+        intersecting=[key for key,g in groups.items() if g['atoms'] & atoms]
+        group_name=(intersecting[0] if intersecting else p.guard+'/'+digest(sorted(atoms))[:12])
+        group=groups.setdefault(group_name,{'runtime':set(),'keywords':{},'targets':[],'discoveries':[],'atoms':set()})
+        for key in intersecting[1:]:
+            other=groups.pop(key)
+            group['runtime'].update(other['runtime']);group['keywords'].update(other['keywords'])
+            group['targets'].extend(other['targets']);group['discoveries'].extend(other['discoveries'])
+            group['atoms'].update(other['atoms'])
+        group['atoms'].update(atoms)
+        group['runtime'].update(removal['runtime'])
+        for k in removal['keywords']: group['keywords'][json.dumps([k['role'],k['schema_sha256'],k['path']])]=k
+        group['targets'].append(p.id)
+        group['discoveries'].append({'id':p.id,'trace':removal['trace']})
+    table=[]
+    for guard,group in sorted(groups.items()):
+        if available_memory()<6: raise RuntimeError('pause: available RAM under 6 GB')
+        keywords=list(group['keywords'].values()); runtime=sorted(group['runtime'])
+        mutant=module_for(source,runtime,keywords)
+        flips=[];stays=[];unexpected=[]
         for p in probes:
-            actual = outcome(p['call'], mutant, schema)
-            if p['guard'] == guard:
-                if actual == 'accepted':
-                    flips.append(p['id'])
-                else:
-                    wrong.append({'id': p['id'], 'expected': 'accepted', 'actual': actual})
-            elif actual == p['stock']:
-                stays.append(p['id'])
-            else:
-                wrong.append({'id': p['id'], 'expected': 'unchanged refusal', 'actual': actual})
-        failures.extend({'guard': guard, **w} for w in wrong)
-        table.append({'guard': guard, 'locations': inventory[guard], 'negatives_that_flip': flips,
-                      'negatives_that_stay_rejected': stays, 'unexpected': wrong})
-        print(guard, 'flip', len(flips), 'stay', len(stays), 'unexpected', len(wrong), flush=True)
-    schema_table, schema_failures, schema_negative_count = schema_guard_proof(source, schema, probes)
-    failures.extend(schema_failures)
-    print('schema keywords', len(schema_table), 'negatives', schema_negative_count,
-          'unexpected', len(schema_failures), flush=True)
-    for path, digest in inputs.items():
-        if hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != digest:
-            failures.append({'path': path, 'phase': 'input_stability', 'error': 'input changed during proof'})
-    # A fresh, unmodified module must still pass the complete fixture checker.
-    stock_result = module_for(source)['run']()
-    return {'status': 'pass' if not failures else 'fail', 'native_execution': 'NOT_RUN',
-            'method': __doc__, 'input_sha256': inputs, 'negative_count': len(probes), 'guard_count': len(inventory),
-            'families': sorted({p['family'] for p in probes if p['family'] != 'shared'}),
-            'inventory': inventory, 'guard_removal_table': table, 'failures': failures,
-            'schema_guard_removal_table': schema_table, 'schema_negative_count': schema_negative_count,
-            'restored_full_checker': stock_result['status']}
+            result=outcome(p,mutant,schema)
+            if p.id in group['targets']:
+                if result=='accepted': flips.append(p.id)
+                else: unexpected.append({'id':p.id,'expected':'accepted','actual':result})
+            elif result==stock_results[p.id]: stays.append(p.id)
+            else: unexpected.append({'id':p.id,'expected':stock_results[p.id],'actual':result})
+        failures.extend({'guard':guard,**e} for e in unexpected)
+        table.append({'guard':guard,'removed_runtime_guards':runtime,'removed_schema_keywords':keywords,
+            'duplicate_set':len(keywords)+len(runtime)>1,'duplicate_reason':
+            'Repeated enforcement of the named input invariant at the listed full-path callsites.' if len(keywords)+len(runtime)>1 else None,
+            'negatives_that_flip':flips,'negatives_that_stay_rejected':stays,'unexpected':unexpected,
+            'discovery':group['discoveries']})
+        print(row['event_type'],guard,'flip',len(flips),'stay',len(stays),'unexpected',len(unexpected),flush=True)
+    restored=module_for(source)
+    restoration={p.id:outcome(p,restored,schema) for p in probes}
+    if restoration!=stock_results: failures.append({'phase':'restore','error':'stock outcomes changed'})
+    raw={'__file__':str(CHECKER),'__name__':'dg6b_restored_checker'}
+    exec(compile(source,str(CHECKER),'exec'),raw)
+    full=raw['run'](family=row['event_type'])
+    if full['status']!='pass': failures.append({'phase':'restore','error':'fresh complete checker failed'})
+    return {'event_type':row['event_type'],'status':'pass' if not failures else 'fail',
+        'negative_count':len(probes),'guard_count':len(table),'complete_path_evaluations':len(probes)*len(table),
+        'positive_controls':positives,'stock_outcomes':stock_results,'guard_removal_table':table,
+        'failures':failures,'restored':restoration==stock_results,'restored_full_checker':full['status']}
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, required=True)
-    args = parser.parse_args()
-    report = run()
-    args.output.write_text(json.dumps(report, indent=2) + '\n')
-    print(report['status'], 'negatives', report['negative_count'], 'guards', report['guard_count'],
-          'failures', len(report['failures']))
-    raise SystemExit(0 if report['status'] == 'pass' else 1)
+def run(family=None):
+    paths=[CHECKER,Path(__file__).resolve(),ROOT/'scripts/pm_dg6b_full_oracles.py',
+        ROOT/'Plans/dg6b_event_contract_fixtures.json',ROOT/'Plans/dg6b_event_contracts.schema.json',ROOT/'Plans/shared_integration_runtime.schema.json',
+        ROOT/'Plans/event_record.schema.json',ROOT/'Plans/event_record_index_checkpoint.schema.json']
+    pins={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+    source=CHECKER.read_text(); schema=json.loads((ROOT/'Plans/dg6b_event_contracts.schema.json').read_text());fixtures=json.loads((ROOT/'Plans/dg6b_event_contract_fixtures.json').read_text())
+    rows=[]
+    for row in fixtures['families']:
+        if family and row['event_type']!=family: continue
+        if available_memory()<6: raise RuntimeError('pause: available RAM under 6 GB')
+        rows.append(run_family(row,source,schema))
+    if not rows: raise ValueError('no matching family')
+    for p in paths:
+        if hashlib.sha256(p.read_bytes()).hexdigest()!=pins[str(p.relative_to(ROOT))]:raise RuntimeError('input changed during proof')
+    return {'status':'pass' if all(r['status']=='pass' for r in rows) else 'fail',
+        'method':__doc__,'native_execution':'NOT_RUN','input_sha256':pins,'families':rows,
+        'negative_count':sum(r['negative_count'] for r in rows),'guard_count':sum(r['guard_count'] for r in rows),
+        'complete_path_evaluations':sum(r['complete_path_evaluations'] for r in rows),
+        'failures':[{'event_type':r['event_type'],**e} for r in rows for e in r['failures']]}
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family',help='Run one family; families always execute serially.')
+    parser.add_argument('--output',type=Path,required=True)
+    args=parser.parse_args()
+    report=run(args.family);args.output.write_text(json.dumps(report,indent=2)+'\n')
+    print(report['status'],'complete-path negatives',report['negative_count'],'guard rows',report['guard_count'],
+          'failures',len(report['failures']))
+    raise SystemExit(0 if report['status']=='pass' else 1)
