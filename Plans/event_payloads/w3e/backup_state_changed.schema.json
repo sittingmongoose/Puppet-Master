@@ -105,34 +105,10 @@
       }
     },
     "manifest_ref": {
-      "anyOf": [
-        {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256,
-          "not": {
-            "pattern": "[\\u0000-\\u0020\\u007f]"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_run/properties/manifest_ref"
     },
     "verification_receipt_ref": {
-      "anyOf": [
-        {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256,
-          "not": {
-            "pattern": "[\\u0000-\\u0020\\u007f]"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_run/properties/verification_receipt_ref"
     }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -217,10 +193,10 @@
         "scope_partition": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256,
           "not": {
             "pattern": "[\\u0000-\\u0020\\u007f]"
-          }
+          },
+          "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
         },
         "owner_operation_id": {
           "type": "string",
@@ -377,10 +353,10 @@
         "scope_partition": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256,
           "not": {
             "pattern": "[\\u0000-\\u0020\\u007f]"
-          }
+          },
+          "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
         },
         "body_inline": {
           "anyOf": [
@@ -506,10 +482,10 @@
         "scope_partition": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256,
           "not": {
             "pattern": "[\\u0000-\\u0020\\u007f]"
-          }
+          },
+          "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
         },
         "owner_operation_id": {
           "type": "string",

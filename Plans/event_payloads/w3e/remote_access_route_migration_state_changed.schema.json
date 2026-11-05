@@ -88,12 +88,7 @@
       "$ref": "https://puppetmaster.local/schemas/remote_access_system/1.0.0/remote_access_system_contracts.schema.json#/$defs/migration_phase"
     },
     "journal_ref": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 256,
-      "not": {
-        "pattern": "[\\u0000-\\u0020\\u007f]"
-      }
+      "$ref": "https://puppetmaster.local/schemas/remote_access_system/1.0.0/remote_access_system_contracts.schema.json#/$defs/remote_route_migration_record/properties/journal_ref"
     },
     "migration_receipt_ref": {
       "anyOf": [

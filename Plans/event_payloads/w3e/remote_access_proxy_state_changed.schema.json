@@ -64,19 +64,7 @@
       "$ref": "https://puppetmaster.local/schemas/remote_access_system/1.0.0/remote_access_system_contracts.schema.json#/$defs/server_endpoint_id"
     },
     "configuration_ref": {
-      "anyOf": [
-        {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256,
-          "not": {
-            "pattern": "[\\u0000-\\u0020\\u007f]"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "$ref": "https://puppetmaster.local/schemas/remote_access_system/1.0.0/remote_access_system_contracts.schema.json#/$defs/remote_route_record/properties/configuration_ref"
     },
     "prior_state": {
       "anyOf": [

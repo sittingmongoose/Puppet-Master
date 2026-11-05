@@ -3319,56 +3319,6 @@
           "predicate_kind": "not"
         },
         {
-          "schema_pointer": "/properties/manifest_ref/anyOf/0/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
-          "schema_pointer": "/properties/manifest_ref/anyOf/0/minLength",
-          "required_property": null,
-          "predicate_kind": "minLength"
-        },
-        {
-          "schema_pointer": "/properties/manifest_ref/anyOf/0/maxLength",
-          "required_property": null,
-          "predicate_kind": "maxLength"
-        },
-        {
-          "schema_pointer": "/properties/manifest_ref/anyOf/0/not",
-          "required_property": null,
-          "predicate_kind": "not"
-        },
-        {
-          "schema_pointer": "/properties/manifest_ref/anyOf/1/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
-          "schema_pointer": "/properties/verification_receipt_ref/anyOf/0/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
-          "schema_pointer": "/properties/verification_receipt_ref/anyOf/0/minLength",
-          "required_property": null,
-          "predicate_kind": "minLength"
-        },
-        {
-          "schema_pointer": "/properties/verification_receipt_ref/anyOf/0/maxLength",
-          "required_property": null,
-          "predicate_kind": "maxLength"
-        },
-        {
-          "schema_pointer": "/properties/verification_receipt_ref/anyOf/0/not",
-          "required_property": null,
-          "predicate_kind": "not"
-        },
-        {
-          "schema_pointer": "/properties/verification_receipt_ref/anyOf/1/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
           "schema_pointer": "/allOf/0/if/properties/scope_kind/const",
           "required_property": null,
           "predicate_kind": "const"
@@ -3534,9 +3484,9 @@
           "predicate_kind": "minLength"
         },
         {
-          "schema_pointer": "/$defs/custody/properties/scope_partition/maxLength",
+          "schema_pointer": "/$defs/custody/properties/scope_partition/pattern",
           "required_property": null,
-          "predicate_kind": "maxLength"
+          "predicate_kind": "pattern"
         },
         {
           "schema_pointer": "/$defs/custody/properties/scope_partition/not",
@@ -3859,9 +3809,9 @@
           "predicate_kind": "minLength"
         },
         {
-          "schema_pointer": "/$defs/checkpoint/properties/scope_partition/maxLength",
+          "schema_pointer": "/$defs/checkpoint/properties/scope_partition/pattern",
           "required_property": null,
-          "predicate_kind": "maxLength"
+          "predicate_kind": "pattern"
         },
         {
           "schema_pointer": "/$defs/checkpoint/properties/scope_partition/not",
@@ -4114,9 +4064,9 @@
           "predicate_kind": "minLength"
         },
         {
-          "schema_pointer": "/$defs/history/properties/scope_partition/maxLength",
+          "schema_pointer": "/$defs/history/properties/scope_partition/pattern",
           "required_property": null,
-          "predicate_kind": "maxLength"
+          "predicate_kind": "pattern"
         },
         {
           "schema_pointer": "/$defs/history/properties/scope_partition/not",
@@ -5112,7 +5062,12 @@
         "Current, zero-match nonempty, proven empty, degraded, compaction/rebuild and inclusive restart coverage.",
         "Large source/result/payload uses SP-337, entire wrapper bound holds.",
         "Original historical integer/float/timestamp recipe is authenticated; current shared profile never reinterprets it.",
-        "Coherent original backup/restore, with derived state rebuilt and no live authority restored."
+        "Coherent original backup/restore, with derived state rebuilt and no live authority restored.",
+        "Project: first append, same-original retry and lost acknowledgement, retained history read, custody recovery and checkpoint advance/restart; exact key/value/envelope/original-scope joins throughout.",
+        "Full Server/application: first append, same-original retry and lost acknowledgement, retained history read, custody recovery and checkpoint advance/restart; exact key/value/envelope/original-scope joins throughout.",
+        "Project boundary: owner-valid project: plus 248 ASCII a characters (256 characters total), encoded by the existing UTF-8/base64url-no-pad encoder to a 350-character project~ partition; append/retry/custody/history/checkpoint all accept it. Also cover owner-valid Project IDs at 254 and 255 characters for all final base64 quantum branches; application uses exactly app and project_id=null.",
+        "Original backup_run.manifest_ref: preserve the exact non-secret reference at 300 and 512 characters through payload (inline and SP-337-resolved), append, retry and retained read, including null only where the original owner permits it; no truncation or replacement locator.",
+        "Original backup_run.verification_receipt_ref: preserve the exact non-secret reference at 300 and 512 characters through payload (inline and SP-337-resolved), append, retry and retained read, including null only where the original owner permits it; no truncation or replacement locator."
       ],
       "format_number_plan": "Use only reviewed shared owner helpers in phase 2. Include exact integer/float/bool types; 0, -0, 1, 1.0, 1e0, 01, 2^53, 2^53+1, 2^60, uint64 max and owner domain endpoints where applicable. A representation-route refusal is not a schema-domain limit. Timestamp positives/negatives use the actual owner profile (CV-253 persisted UTC Z versus general RFC3339), including permitted leap seconds/fractions and retained old profiles.",
       "source_specific_rules": "Select current BackupRun v2 and its immutable phase-journal entry. Enforce the BRS-005 phase order and actual restart-convergence receipt. completed requires complete capture, every destination committed and non-null manifest; partial/failed/cancelled preserve their failure evidence. Capture, destination upload, integrity level and restore test remain independent. Retrying a phase reuses its original journal entry; a genuinely new phase has its own accepted entry. Project Backup has its one actual Project; Full Server Backup is application scope even when it includes Projects. No synthetic runtime run_id is created.",
@@ -5135,7 +5090,29 @@
         "pattern": "Use one full-string mismatch that still meets type and length; include trailing LF. Do not treat the schema pattern as a runtime full-match proof.",
         "conditional_union": "Each if/then/else and oneOf/anyOf route gets its own valid branch plus one invalid field/route at a time; never cut an entire keyword containing distinct predicates.",
         "reference": "Resolve every local and external reference eagerly, recursively including owner_fact/checkpoint body. Break one unvisited reference in a copied package as the one-defect negative.",
-        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed."
+        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed.",
+        "scope_partition_boundary": {
+          "sites": [
+            "/$defs/custody/properties/scope_partition",
+            "/$defs/history/properties/scope_partition",
+            "/$defs/checkpoint/properties/scope_partition"
+          ],
+          "positive": "At each complete stored-value site and its registry mirror, accept app and the exact encoded Project partition for valid original IDs up to the owner maximum; no separate character cap narrows encoder output. SP-340 still measures the entire encoded stored value at 16 KiB after SP-337 routing.",
+          "negative": "Start from each complete valid value. Separately replace only scope_partition with the raw Project ID, project~ with no suffix, a suffix of length 1 modulo 4, a padded suffix, a non-base64url character, or nonzero unused final bits; each fails the partition grammar. A same-shape different valid partition targets only the exact original/key/value scope join, with unrelated hashes/copies repaired. Invalid UTF-8 or a canonical suffix not encoding the actual owner Project targets the encoder/source join. No overlength-partition negative is invented: source ID and full encoded-value limits are separate guards.",
+          "isolation": "Lexical schema cases run before semantic joins; for integrated cases keep every non-target copy/key/digest coherent and cut only the selected predicate in phase 2. Inventory the pattern and no-control-character sites separately, including the trailing-LF case; do not label distinct predicates as duplicates or claim phase-1 isolation.",
+          "source_and_storage_boundaries": "Separate source-ID boundary: a 256-character owner-valid ASCII Project ID passes; append one allowed character (257) and coherently regenerate its partition/keys/copies/digests so only the owner/payload Project-ID bound is invalid. Separate SP-340 boundary: a fully valid entire stored wrapper/part at 16384 encoded bytes passes; one additional encoded byte (16385) refuses or requires SP-337 routing, with all references and resolved-body joins valid. No new partition character cap substitutes for either bound."
+        },
+        "original_reference_boundaries": {
+          "fields": [
+            "manifest_ref",
+            "verification_receipt_ref"
+          ],
+          "source_definition": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_run",
+          "positive": "Use complete valid original records and matching complete payloads at 1, 256, 257, 300, 511 and 512 characters, using lexical owner-valid references. Preserve exact nullability per imported field.",
+          "negative": "For each field separately, derive from its complete 512-character positive and append one allowed character (513): only maxLength fails. From the one-character positive use an empty string: record the implied minLength/pattern sites truthfully under the shared inventory without claiming independently removable guards. Separately use a same-length prohibited reference (absolute/file/secret-bearing locator), or a wrong exact type; for non-nullable journal_ref add null. Keep other fields and non-target original/payload/custody copies, keys and digests coherent; lexical boundary probes run before the source equality join.",
+          "reference_closure": "Eagerly resolve the exact imported original field and its nested non_secret_ref/nullable_non_secret_ref; inventory their predicate sites with the shared tool in phase 2. Include a one-defect exact-reference join mismatch using a different otherwise-valid locator.",
+          "isolation": "Cut each length/lexical/type/nullability/join predicate independently; only same-field identical predicates at multiple sites qualify as duplicates. Every invalid case has one defect and zero new effects."
+        }
       },
       "source_snapshot_plan": "Resolve source_evidence_ref as this family schema #/$defs/owner_fact, validate existing before/after record schema, authenticate original_result_ref and every actual authority join independently. No matching digest or all-true fixture can stand in for owner issuance. Fixed role roster: writer_fence, permission_or_service_authority, phase_journal_entry, capture_barrier, destination_attempt_set, verification_result. Null roles require actual source-phase inapplicability; the caller never chooses required slots.",
       "fixed_source_evidence_roles": [
@@ -8231,31 +8208,6 @@
           "predicate_kind": "not"
         },
         {
-          "schema_pointer": "/properties/configuration_ref/anyOf/0/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
-          "schema_pointer": "/properties/configuration_ref/anyOf/0/minLength",
-          "required_property": null,
-          "predicate_kind": "minLength"
-        },
-        {
-          "schema_pointer": "/properties/configuration_ref/anyOf/0/maxLength",
-          "required_property": null,
-          "predicate_kind": "maxLength"
-        },
-        {
-          "schema_pointer": "/properties/configuration_ref/anyOf/0/not",
-          "required_property": null,
-          "predicate_kind": "not"
-        },
-        {
-          "schema_pointer": "/properties/configuration_ref/anyOf/1/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
           "schema_pointer": "/properties/prior_state/anyOf/1/type",
           "required_property": null,
           "predicate_kind": "type"
@@ -9944,7 +9896,8 @@
         "Current, zero-match nonempty, proven empty, degraded, compaction/rebuild and inclusive restart coverage.",
         "Large source/result/payload uses SP-337, entire wrapper bound holds.",
         "Original historical integer/float/timestamp recipe is authenticated; current shared profile never reinterprets it.",
-        "Coherent original backup/restore, with derived state rebuilt and no live authority restored."
+        "Coherent original backup/restore, with derived state rebuilt and no live authority restored.",
+        "Original remote_route_record.configuration_ref: preserve the exact non-secret reference at 300 and 512 characters through payload (inline and SP-337-resolved), append, retry and retained read, including null only where the original owner permits it; no truncation or replacement locator."
       ],
       "format_number_plan": "Use only reviewed shared owner helpers in phase 2. Include exact integer/float/bool types; 0, -0, 1, 1.0, 1e0, 01, 2^53, 2^53+1, 2^60, uint64 max and owner domain endpoints where applicable. A representation-route refusal is not a schema-domain limit. Timestamp positives/negatives use the actual owner profile (CV-253 persisted UTC Z versus general RFC3339), including permitted leap seconds/fractions and retained old profiles.",
       "source_specific_rules": "Source is the original reverse_proxy_public RemoteRouteRecord and its checked configuration/test receipt, not generated-file delivery. Generated Caddy/NGINX/Traefik artifact states remain details under RAS-005; Nginx Proxy Manager is existing-only and needs no generated artifact. ready/active require actual identity, protocol/API, pairing/auth and applicable WebSocket/stream/transfer checks, not a certificate-validity assertion. PM never installs the proxy or chooses/holds/signs certificates. Public activation retains current preflight and explicit consent.",
@@ -9967,7 +9920,17 @@
         "pattern": "Use one full-string mismatch that still meets type and length; include trailing LF. Do not treat the schema pattern as a runtime full-match proof.",
         "conditional_union": "Each if/then/else and oneOf/anyOf route gets its own valid branch plus one invalid field/route at a time; never cut an entire keyword containing distinct predicates.",
         "reference": "Resolve every local and external reference eagerly, recursively including owner_fact/checkpoint body. Break one unvisited reference in a copied package as the one-defect negative.",
-        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed."
+        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed.",
+        "original_reference_boundaries": {
+          "fields": [
+            "configuration_ref"
+          ],
+          "source_definition": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_route_record",
+          "positive": "Use complete valid original records and matching complete payloads at 1, 256, 257, 300, 511 and 512 characters, using lexical owner-valid references. Preserve exact nullability per imported field.",
+          "negative": "For each field separately, derive from its complete 512-character positive and append one allowed character (513): only maxLength fails. From the one-character positive use an empty string: record the implied minLength/pattern sites truthfully under the shared inventory without claiming independently removable guards. Separately use a same-length prohibited reference (absolute/file/secret-bearing locator), or a wrong exact type; for non-nullable journal_ref add null. Keep other fields and non-target original/payload/custody copies, keys and digests coherent; lexical boundary probes run before the source equality join.",
+          "reference_closure": "Eagerly resolve the exact imported original field and its nested non_secret_ref/nullable_non_secret_ref; inventory their predicate sites with the shared tool in phase 2. Include a one-defect exact-reference join mismatch using a different otherwise-valid locator.",
+          "isolation": "Cut each length/lexical/type/nullability/join predicate independently; only same-field identical predicates at multiple sites qualify as duplicates. Every invalid case has one defect and zero new effects."
+        }
       },
       "source_snapshot_plan": "Resolve source_evidence_ref as this family schema #/$defs/owner_fact, validate existing before/after record schema, authenticate original_result_ref and every actual authority join independently. No matching digest or all-true fixture can stand in for owner issuance. Fixed role roster: writer_fence, permission_or_service_authority, route_source, configuration_disposition, route_test, public_consent, public_preflight. Null roles require actual source-phase inapplicability; the caller never chooses required slots.",
       "fixed_source_evidence_roles": [
@@ -15572,26 +15535,6 @@
           "predicate_kind": "type"
         },
         {
-          "schema_pointer": "/properties/journal_ref/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
-          "schema_pointer": "/properties/journal_ref/minLength",
-          "required_property": null,
-          "predicate_kind": "minLength"
-        },
-        {
-          "schema_pointer": "/properties/journal_ref/maxLength",
-          "required_property": null,
-          "predicate_kind": "maxLength"
-        },
-        {
-          "schema_pointer": "/properties/journal_ref/not",
-          "required_property": null,
-          "predicate_kind": "not"
-        },
-        {
           "schema_pointer": "/properties/migration_receipt_ref/anyOf/0/type",
           "required_property": null,
           "predicate_kind": "type"
@@ -17330,7 +17273,8 @@
         "Current, zero-match nonempty, proven empty, degraded, compaction/rebuild and inclusive restart coverage.",
         "Large source/result/payload uses SP-337, entire wrapper bound holds.",
         "Original historical integer/float/timestamp recipe is authenticated; current shared profile never reinterprets it.",
-        "Coherent original backup/restore, with derived state rebuilt and no live authority restored."
+        "Coherent original backup/restore, with derived state rebuilt and no live authority restored.",
+        "Original remote_route_migration_record.journal_ref: preserve the exact non-secret reference at 300 and 512 characters through payload (inline and SP-337-resolved), append, retry and retained read, including null only where the original owner permits it; no truncation or replacement locator."
       ],
       "format_number_plan": "Use only reviewed shared owner helpers in phase 2. Include exact integer/float/bool types; 0, -0, 1, 1.0, 1e0, 01, 2^53, 2^53+1, 2^60, uint64 max and owner domain endpoints where applicable. A representation-route refusal is not a schema-domain limit. Timestamp positives/negatives use the actual owner profile (CV-253 persisted UTC Z versus general RFC3339), including permitted leap seconds/fractions and retained old profiles.",
       "source_specific_rules": "Use remote_route_migration_record and its phase journal, preserving same-Server source/target endpoint/fingerprint, all expected/observed generations and currentness joins. Follow planned/preflight/stage/identity/transport checks before preference switch, drain and post-switch completion; a failed verification takes the existing rollback/blocked/recovery route. complete requires durable same-Server identity and currentness fences plus preserved command idempotency/cursor, switched preference and drained old route. Re-observation is not another migration.",
@@ -17353,7 +17297,17 @@
         "pattern": "Use one full-string mismatch that still meets type and length; include trailing LF. Do not treat the schema pattern as a runtime full-match proof.",
         "conditional_union": "Each if/then/else and oneOf/anyOf route gets its own valid branch plus one invalid field/route at a time; never cut an entire keyword containing distinct predicates.",
         "reference": "Resolve every local and external reference eagerly, recursively including owner_fact/checkpoint body. Break one unvisited reference in a copied package as the one-defect negative.",
-        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed."
+        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed.",
+        "original_reference_boundaries": {
+          "fields": [
+            "journal_ref"
+          ],
+          "source_definition": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_route_migration_record",
+          "positive": "Use complete valid original records and matching complete payloads at 1, 256, 257, 300, 511 and 512 characters, using lexical owner-valid references. Preserve exact nullability per imported field.",
+          "negative": "For each field separately, derive from its complete 512-character positive and append one allowed character (513): only maxLength fails. From the one-character positive use an empty string: record the implied minLength/pattern sites truthfully under the shared inventory without claiming independently removable guards. Separately use a same-length prohibited reference (absolute/file/secret-bearing locator), or a wrong exact type; for non-nullable journal_ref add null. Keep other fields and non-target original/payload/custody copies, keys and digests coherent; lexical boundary probes run before the source equality join.",
+          "reference_closure": "Eagerly resolve the exact imported original field and its nested non_secret_ref/nullable_non_secret_ref; inventory their predicate sites with the shared tool in phase 2. Include a one-defect exact-reference join mismatch using a different otherwise-valid locator.",
+          "isolation": "Cut each length/lexical/type/nullability/join predicate independently; only same-field identical predicates at multiple sites qualify as duplicates. Every invalid case has one defect and zero new effects."
+        }
       },
       "source_snapshot_plan": "Resolve source_evidence_ref as this family schema #/$defs/owner_fact, validate existing before/after record schema, authenticate original_result_ref and every actual authority join independently. No matching digest or all-true fixture can stand in for owner issuance. Fixed role roster: writer_fence, permission_or_service_authority, source_route, target_route, identity_fence, currentness_fence, phase_journal_entry, commit_or_rollback. Null roles require actual source-phase inapplicability; the caller never chooses required slots.",
       "fixed_source_evidence_roles": [
@@ -25599,31 +25553,6 @@
           "predicate_kind": "type"
         },
         {
-          "schema_pointer": "/properties/preview_receipt_ref/anyOf/0/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
-          "schema_pointer": "/properties/preview_receipt_ref/anyOf/0/minLength",
-          "required_property": null,
-          "predicate_kind": "minLength"
-        },
-        {
-          "schema_pointer": "/properties/preview_receipt_ref/anyOf/0/maxLength",
-          "required_property": null,
-          "predicate_kind": "maxLength"
-        },
-        {
-          "schema_pointer": "/properties/preview_receipt_ref/anyOf/0/not",
-          "required_property": null,
-          "predicate_kind": "not"
-        },
-        {
-          "schema_pointer": "/properties/preview_receipt_ref/anyOf/1/type",
-          "required_property": null,
-          "predicate_kind": "type"
-        },
-        {
           "schema_pointer": "/allOf/0/if/properties/scope_kind/const",
           "required_property": null,
           "predicate_kind": "const"
@@ -25789,9 +25718,9 @@
           "predicate_kind": "minLength"
         },
         {
-          "schema_pointer": "/$defs/custody/properties/scope_partition/maxLength",
+          "schema_pointer": "/$defs/custody/properties/scope_partition/pattern",
           "required_property": null,
-          "predicate_kind": "maxLength"
+          "predicate_kind": "pattern"
         },
         {
           "schema_pointer": "/$defs/custody/properties/scope_partition/not",
@@ -26114,9 +26043,9 @@
           "predicate_kind": "minLength"
         },
         {
-          "schema_pointer": "/$defs/checkpoint/properties/scope_partition/maxLength",
+          "schema_pointer": "/$defs/checkpoint/properties/scope_partition/pattern",
           "required_property": null,
-          "predicate_kind": "maxLength"
+          "predicate_kind": "pattern"
         },
         {
           "schema_pointer": "/$defs/checkpoint/properties/scope_partition/not",
@@ -26369,9 +26298,9 @@
           "predicate_kind": "minLength"
         },
         {
-          "schema_pointer": "/$defs/history/properties/scope_partition/maxLength",
+          "schema_pointer": "/$defs/history/properties/scope_partition/pattern",
           "required_property": null,
-          "predicate_kind": "maxLength"
+          "predicate_kind": "pattern"
         },
         {
           "schema_pointer": "/$defs/history/properties/scope_partition/not",
@@ -27607,7 +27536,11 @@
         "Current, zero-match nonempty, proven empty, degraded, compaction/rebuild and inclusive restart coverage.",
         "Large source/result/payload uses SP-337, entire wrapper bound holds.",
         "Original historical integer/float/timestamp recipe is authenticated; current shared profile never reinterprets it.",
-        "Coherent original backup/restore, with derived state rebuilt and no live authority restored."
+        "Coherent original backup/restore, with derived state rebuilt and no live authority restored.",
+        "Project: first append, same-original retry and lost acknowledgement, retained history read, custody recovery and checkpoint advance/restart; exact key/value/envelope/original-scope joins throughout.",
+        "Full Server/application: first append, same-original retry and lost acknowledgement, retained history read, custody recovery and checkpoint advance/restart; exact key/value/envelope/original-scope joins throughout.",
+        "Project boundary: owner-valid project: plus 248 ASCII a characters (256 characters total), encoded by the existing UTF-8/base64url-no-pad encoder to a 350-character project~ partition; append/retry/custody/history/checkpoint all accept it. Also cover owner-valid Project IDs at 254 and 255 characters for all final base64 quantum branches; application uses exactly app and project_id=null.",
+        "Original restore_run.preview_receipt_ref: preserve the exact non-secret reference at 300 and 512 characters through payload (inline and SP-337-resolved), append, retry and retained read, including null only where the original owner permits it; no truncation or replacement locator."
       ],
       "format_number_plan": "Use only reviewed shared owner helpers in phase 2. Include exact integer/float/bool types; 0, -0, 1, 1.0, 1e0, 01, 2^53, 2^53+1, 2^60, uint64 max and owner domain endpoints where applicable. A representation-route refusal is not a schema-domain limit. Timestamp positives/negatives use the actual owner profile (CV-253 persisted UTC Z versus general RFC3339), including permitted leap seconds/fractions and retained old profiles.",
       "source_specific_rules": "Resolve current RestoreRun v2 and the exact original phase entry. Apply manifest/compatibility/preview/approval, BRS-023 recovery point or narrowly validated emergency consent, quarantined staging, staged verification, identity/credential/source resolution and quiesce before activation; rebuild and post-verify before complete. Atomic activation or its owned journal governs uncertain outcome. as_new rewrites internal identities and grants no external forge/trust authority; server_full is application scope. Restore never revives sessions, credentials, public routes, Goals or schedules. Full restore keeps those paused and separately revalidated. Rollback is offered only with a real recovery point.",
@@ -27630,7 +27563,28 @@
         "pattern": "Use one full-string mismatch that still meets type and length; include trailing LF. Do not treat the schema pattern as a runtime full-match proof.",
         "conditional_union": "Each if/then/else and oneOf/anyOf route gets its own valid branch plus one invalid field/route at a time; never cut an entire keyword containing distinct predicates.",
         "reference": "Resolve every local and external reference eagerly, recursively including owner_fact/checkpoint body. Break one unvisited reference in a copied package as the one-defect negative.",
-        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed."
+        "isolation": "Each negative targets one input invariant. Repair unrelated hashes/copies/key/post-state. Do not merge different predicates merely because one implies another or shares a keyword/refusal. Phase 2 must resolve logically implied schema-site guards truthfully with the shared predicate inventory; no phase-1 proof is claimed.",
+        "scope_partition_boundary": {
+          "sites": [
+            "/$defs/custody/properties/scope_partition",
+            "/$defs/history/properties/scope_partition",
+            "/$defs/checkpoint/properties/scope_partition"
+          ],
+          "positive": "At each complete stored-value site and its registry mirror, accept app and the exact encoded Project partition for valid original IDs up to the owner maximum; no separate character cap narrows encoder output. SP-340 still measures the entire encoded stored value at 16 KiB after SP-337 routing.",
+          "negative": "Start from each complete valid value. Separately replace only scope_partition with the raw Project ID, project~ with no suffix, a suffix of length 1 modulo 4, a padded suffix, a non-base64url character, or nonzero unused final bits; each fails the partition grammar. A same-shape different valid partition targets only the exact original/key/value scope join, with unrelated hashes/copies repaired. Invalid UTF-8 or a canonical suffix not encoding the actual owner Project targets the encoder/source join. No overlength-partition negative is invented: source ID and full encoded-value limits are separate guards.",
+          "isolation": "Lexical schema cases run before semantic joins; for integrated cases keep every non-target copy/key/digest coherent and cut only the selected predicate in phase 2. Inventory the pattern and no-control-character sites separately, including the trailing-LF case; do not label distinct predicates as duplicates or claim phase-1 isolation.",
+          "source_and_storage_boundaries": "Separate source-ID boundary: a 256-character owner-valid ASCII Project ID passes; append one allowed character (257) and coherently regenerate its partition/keys/copies/digests so only the owner/payload Project-ID bound is invalid. Separate SP-340 boundary: a fully valid entire stored wrapper/part at 16384 encoded bytes passes; one additional encoded byte (16385) refuses or requires SP-337 routing, with all references and resolved-body joins valid. No new partition character cap substitutes for either bound."
+        },
+        "original_reference_boundaries": {
+          "fields": [
+            "preview_receipt_ref"
+          ],
+          "source_definition": "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_run",
+          "positive": "Use complete valid original records and matching complete payloads at 1, 256, 257, 300, 511 and 512 characters, using lexical owner-valid references. Preserve exact nullability per imported field.",
+          "negative": "For each field separately, derive from its complete 512-character positive and append one allowed character (513): only maxLength fails. From the one-character positive use an empty string: record the implied minLength/pattern sites truthfully under the shared inventory without claiming independently removable guards. Separately use a same-length prohibited reference (absolute/file/secret-bearing locator), or a wrong exact type; for non-nullable journal_ref add null. Keep other fields and non-target original/payload/custody copies, keys and digests coherent; lexical boundary probes run before the source equality join.",
+          "reference_closure": "Eagerly resolve the exact imported original field and its nested non_secret_ref/nullable_non_secret_ref; inventory their predicate sites with the shared tool in phase 2. Include a one-defect exact-reference join mismatch using a different otherwise-valid locator.",
+          "isolation": "Cut each length/lexical/type/nullability/join predicate independently; only same-field identical predicates at multiple sites qualify as duplicates. Every invalid case has one defect and zero new effects."
+        }
       },
       "source_snapshot_plan": "Resolve source_evidence_ref as this family schema #/$defs/owner_fact, validate existing before/after record schema, authenticate original_result_ref and every actual authority join independently. No matching digest or all-true fixture can stand in for owner issuance. Fixed role roster: writer_fence, permission_or_service_authority, phase_journal_entry, preview, approval, recovery_prerequisite, staged_verification, identity_resolution, credential_resolution, source_location_resolution, activation, derived_rebuild, post_restore_verification, cache_invalidation. Null roles require actual source-phase inapplicability; the caller never chooses required slots.",
       "fixed_source_evidence_roles": [
