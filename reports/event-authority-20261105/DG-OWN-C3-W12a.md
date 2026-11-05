@@ -4,6 +4,8 @@ Branch `plans/ea-goal-own-c3-w12a-20261105`, based exactly on `109e3c26c4a19b466
 
 Only W1/ATS-1116 changes. W2, ATS-1117 and the other families' suite rows remain unchanged. No IDs are minted; GRS-1135, CV-1132 and SIR-1132 remain unused. No event registry, admission, Decision Log, retention/deletion policy, governance lock/evidence, original bank or original source is changed. No pm-mail, subagent or main push is used.
 
+**Units:** none added. **Amended:** `Plans/Automated_Testing_System.md:7481` (ATS-1116), with the exact validation/footer hunks listed below. Implementation commit: `6cbb62b635c49500e54fe36e8022e15a7df60403`.
+
 **Executed original paths.** The new `scripts/pm_goal_own_c3_w12a_oracles.py` verifies the explicit v2.3 selection, its 781 whole members and all repository-support pins before imports. It runs the actual selected GoalSource, GoalCommand, sole ModelStore body issuer, physical owner, SharedLink/Storage first-receipt issuer and SIR publisher. The historical created fixture supplies setup lineage only. Its original owner receipt is independently resolved; no update creation grant, caller admission flag, class substitution, runtime method replacement or private-map repair supplies authority.
 
 Four complete finite U0–U4 scenarios cover ordinary Direct Save, an actual approved-agent instruction/dispatch/protected approval, empty Save and unchanged Save. Each has exactly one new body revision, the exact text and original created_at, preserved complete prior objective history/origin, genuine body receipt, frozen producer, original full-value/first receipt and immutable terminal replay. They use the selected edition's retained physical profile; they do not establish current MessagePack/reference compliance.
@@ -55,7 +57,7 @@ These are implementation gaps that an authored successor can address; none is de
 
 **Search and premises.** The exact W1 owner docs, selected source callables and current fetched-main premise tokens were inspected. GRS-068 still permits empty/unchanged text and the three editable states, requires actual instruction/approval and preserves Direct Save's no-extra-confirmation semantics. SP-299/SP-421, SIR-049 and CV-342 still govern this family. The original banks/source selection are byte-exact. No new semantic owner, product feature, retention clock or family binding is inferred. Two memory-note paths from the shared brief do not exist on Nas1; the lane/currentness instructions and coherent fifteen-file copy were applied directly.
 
-**Checks.** All heavy commands run one at a time with `PM_GOAL_AUDIT_WORKERS=1`; a resource wrapper waits for other workers' checkers and pauses its process group below 6 GiB available. The existing sibling venv is used read-only. Initial RAM was 14 GiB available and disk 498 GiB available. No sampled resource floor breach was observed in the completed commands.
+**Checks.** All heavy commands run one at a time with `PM_GOAL_AUDIT_WORKERS=1`; a resource wrapper waits for other workers' checkers and pauses its process group when another heavy checker is observed or available RAM falls below 6 GiB. The history audit recorded several pauses for other workers and completed in 938 seconds including those pauses. The existing sibling venv is used read-only. Initial RAM was 14 GiB available and disk 498 GiB available. No sampled resource floor breach was observed in the completed commands.
 
 | Check | Exit | Result |
 |---|---:|---|
@@ -70,7 +72,9 @@ These are implementation gaps that an authored successor can address; none is de
 | Goal lineage self-test | 0 | pass |
 | Shard generate / index generate / shard check | 0 / 0 / 0 | ATS-only derived scope |
 | Plan-index validate | 1 | same 29 exact failure records as W12 part 2; no new failures |
-| DG historical-reader guard audit | PENDING | running separately, one worker |
+| DG historical-reader guard audit | 0 | 6,143 cases / 6,032 negatives / 650 inherited guard rows; existing proof limitations remain |
+| Negative-success sentinel | 0 | unexpected-success child exits 1, as required |
+| Citation / derived / protected / sibling-scope audits | 0 | 48 citations; no unrelated owner or sibling changes |
 
 The index's 29 failures are 21 existing legacy removal-ledger errors and eight main-ahead missing units. Every named owner is unchanged from the task base. Unit/acceptance totals remain 7,481/30,125; derived comparison finds 84 PlanUnit and nine acceptance rows changed, all owned by ATS, with none removed. This is not an aggregate governance, migration, admission, reseal or landing result.
 
@@ -83,6 +87,8 @@ The index's 29 failures are 21 existing legacy removal-ledger errors and eight m
 
 **Retained evidence.** Directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/`; raw original captures are under `/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/`. Paths plus hashes below identify exact bytes; the selected summary names every scenario's raw capture manifest and SHA-256.
 
+- **checks.json:** SHA-256 `296b02e2e5addcd8ba0cfec5a51408b1a5249aa9e27487abae5390d32da0ac60`; all twelve inherited/generation commands and exit codes.
+- **negative-success-probe.json:** SHA-256 `aa10222c5ad1d908f6f4d43b0c31c762ce91a935f6b8de46873da7658a083b42`.
 - **selected-corpus-summary.json:** SHA-256 `e1b1f53d2a6571ae4ff636601d8a922002806dc60fedd53142fb904414c6ee38`.
 - **currentness-inputs.tar.gz:** SHA-256 `84ec3b38095a2b8a449469fac3e94d94e16ba79c75e936dd2bfc1cd5b39fc2d9`; fifteen files copied coherently and verified before index generation.
 - **derived-scope.json:** SHA-256 `65da2aec30a8e6cacc486e51b32e41af0e10c7d8050b0587632967ac94c80f0a`.
