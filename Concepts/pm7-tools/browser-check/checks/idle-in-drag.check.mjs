@@ -140,7 +140,7 @@ export const tests = {
 		});
 		await f.waitForFunction(() => { const jobs=window.__pmIdleRec.pending(); return /\bat (?:buildSliced|lateNext|prewarmSoon|prewarm|idleStill)\b/.test(jobs.map(j=>j.stack).join('\n')); }, null, {timeout:15000}).catch(() => {});
 		const pending = await f.evaluate(() => window.__pmIdleRec.pending());
-		for (const [owner] of OWNERS.slice(0,3)) {
+		for (const [owner] of OWNERS) {
 			await t.check(`setup exercised: pending ${owner}`, pending.some(j=>ownerOf(j.stack)===owner), JSON.stringify(pending.map(j=>({id:j.id,owner:ownerOf(j.stack),stack:top(j.stack)}))));
 		}
 		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', 'Usage');

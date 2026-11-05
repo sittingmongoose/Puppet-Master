@@ -70,10 +70,13 @@ export default async function(t) {
     await t.page.waitForTimeout(Number(t.args.hold||3000)); await t.page.mouse.up();
    },400);
  }
+ async function settledLook(){
+  await f.waitForFunction(()=>!(window.PM_THEME_TRANSITION?.busy()||window.PM_LOOK_COVERED?.()||window.PM_NIER?.wanted?.()!==window.PM_NIER?.on?.()),null,{timeout:20000});
+ }
  async function lookPicks(prefix='') {
    for(const from of ['basic-dark','nier-dark']) for(let i=0;i<3;i++) {
     await t.app.look(from);
-    await f.waitForFunction(()=>!(window.PM_THEME_TRANSITION?.busy()||window.PM_LOOK_COVERED?.()||window.PM_NIER?.wanted?.()!==window.PM_NIER?.on?.()),null,{timeout:20000});
+    await settledLook();
     await f.locator('#themeSelect').click();
     await f.evaluate(()=>{window.__colourSweeps=0;const real=document.getAnimations;window.__getAnimations=real;document.getAnimations=function(...a){if(new Error().stack.includes('finishColourTransitions'))window.__colourSweeps++;return real.apply(this,a);};});
     await sample(prefix+from+'-glass-'+i, async()=>{
@@ -99,11 +102,13 @@ export default async function(t) {
   }
   for(let i=0;i<3;i++) {
    await t.app.look('basic-dark');
+   await settledLook();
    await f.locator('#themeSelect').click();
    await sample('glass-'+i,()=>f.locator('.pm6-tt-family[data-family="glass"]').click(),4500);
   }
   for(let i=0;i<3;i++) {
    await t.app.look('nier-dark');
+   await settledLook();
    await f.locator('#themeSelect').click();
    await sample('nier-glass-'+i,()=>f.locator('.pm6-tt-family[data-family="glass"]').click(),6000);
   }
