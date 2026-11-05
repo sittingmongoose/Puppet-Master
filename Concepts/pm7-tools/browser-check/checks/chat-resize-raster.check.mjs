@@ -29,7 +29,8 @@ async function shrinkOnce(t, f, page, opaque, label, dir) {
 		cover: !!document.querySelector('#pmRoot .activity-panel.cover'), selected: PM56_APP.state.activity.selected?.id, nodes: document.querySelectorAll('#pmRoot *').length}));
 	await t.check(label + ' docked Detail before the shrink', setup.ok && setup.theme === 'basic-dark' && setup.opaque === opaque && docked.w === FROM && !docked.cover && docked.stage >= 360 && docked.selected === 'agent-schema', JSON.stringify({setup, docked}));
 	const box = await el.boundingBox();
-	const cap = await captureResize(t.page, () => el.evaluate((e, w) => { const wall = performance.timeOrigin + performance.now(); e.style.width = w + 'px'; e.style.minWidth = w + 'px'; return wall; }, TO));
+	const cap = await captureResize(t.page, async () => { await t.mark(label + ' shrink'); return el.evaluate((e, w) => { const wall = performance.timeOrigin + performance.now(); e.style.width = w + 'px'; e.style.minWidth = w + 'px'; return wall; }, TO); });
+	await t.mark(label + ' settled');
 	const settled = await f.evaluate(() => ({w: innerWidth, cover: !!document.querySelector('#pmRoot .activity-panel.cover'), stage: document.querySelector('#pmRoot .chat-stage').getBoundingClientRect().width,
 		column: document.getElementById('pmw-chat56').getBoundingClientRect().toJSON()}));
 	let r;

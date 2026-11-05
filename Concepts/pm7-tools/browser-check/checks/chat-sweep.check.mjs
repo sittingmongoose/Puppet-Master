@@ -36,6 +36,7 @@ export const tests = {
    await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
    let input,paint;
    try{
+    await t.mark('first click '+i);
     await t.page.mouse.click(box.x+box.width/2,box.y+box.height/2);
     await t.page.waitForTimeout(1200);
     input=await f.evaluate(()=>window.__activityPaintInput);
