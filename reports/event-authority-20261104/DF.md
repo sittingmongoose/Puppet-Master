@@ -1,123 +1,117 @@
-# DF — round 7: selected-source custody, restore isolation and Card 2
+# DF — sweep part 1, 2026-11-05
 
-Branch: `plans/ea-w2-filesafe-20261104`. Reviewed baseline: `31b0fe2476e4bd5f39f3dc45bcb0ec8e069fbb71`. Fixes: `95102f6463`. Card 2: `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c`. Assessed source and selected-fixture follow-up: `7f3e1c0fbc209b42ce07c83b27b1c734dcef74d7`. The report/self-grade commit adds no product change.
+Implementation head: `ef27813b0cd3d851f586729eddf94aef434f2fdd` on `plans/ea-w2-filesafe-20261104`. Rebased the 21 lane commits from `a10cfa6d834fad8984285510dd8abd438b893ff6` onto fetched main `e42ce235b4711325ced818c777f070c3ee0d7952` before editing. The shared clone's origin/main may advance while other workers fetch; this report's base is pinned. Generated conflicts were deferred and regenerated, never hand-merged. All pre-existing main owner prose is preserved as an exact prefix of the three shared owner docs.
 
-All nine families pass as prepared without admission under this round’s allowed retention/sweep holds. Membership C1 remains ABSENT. C7 remains PARTIAL for five unanswered application rule sets and the two safe-point EventRecord classifications. Native execution remains NOT_RUN. S1–S6 remain explicit sweep work; no current whole-lane guard-inventory, shared numeric/recipe or format certification is claimed. This report replaces round 6’s overbroad proof claims; its old literal matrix remains historical evidence only.
+**NOT_READY — part 2 remains required.** R7-B1, R7-B2 and S6 are fixed; deck-2 items 2.a–2.e are applied exactly. This is preparation without admission: every membership cell is ABSENT and native execution is NOT_RUN. S1–S5 remain open. Deck 3 Card 7 remains with Jared; application-scope FileSafe security-event retention is unchanged.
 
-## Review round 7: findings and responses
+## Sweep part 1: findings and responses
 
-**R6-B1 — fixed (`95102f6463`). Where:** `scripts/pm_filesafe_event_authority.py:85`, `scripts/pm_filesafe_event_authority.py:389`, `scripts/pm_filesafe_event_authority.py:609`; own CV-550..558 selected-original paragraphs. **Cause:** Python `==` let an independently selected boolean epoch match candidate integer 1 and neither validated the selected source nor recomputed its own commitment. **Fix:** validate the selected record under its existing original schema/recipe, verify its own commitment, then compare every complete value recursively with exact primitive types. No coercion, hash restamp, new number cap/serializer or replacement custody. The same verifier protects body reads while issued-only history stays independent of disposed controls.
+| Item | Response / implementation commit | Current location | How to verify |
+|---|---|---|---|
+| R7-B1 | **Fixed** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`): both safe-point histories now use DL-401 G28 Run year, not a pending classification. | Plans/storage-plan.md:30066; Plans/storage-plan.md:30134; own two source graphs; scripts/pm_filesafe_event_authority.py:147 | Both own authority CLIs; 72 run-year cases through graph checks; `focused-probes.py` rejects each wrong policy and wrong decision ref. |
+| R7-B2 | **Fixed** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`): 12 new controls independently exercise Project-count-only and disk-only refusal/eligible expiry in the three seven-year suites. | `Plans/filesafe_event_retention_fixtures.json:357,383,1468,1494,1873,1899` own independent cases; scripts/pm_filesafe_retention.py:53 | Complete authority CLIs; bounded clause-only probes remove exactly one OR operand. Only its two new cases fail per family; the peer remains enabled. Existing compound full cases stay as combination controls. |
+| S6 | **Fixed** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`), final year-zero coverage at `ef27813b0cd3d851f586729eddf94aef434f2fdd`: date-time support is always supplied locally to every DF validator, independently of optional FormatChecker packages. | scripts/pm_filesafe_schema_graph.py:20; scripts/pm_filesafe_schema_graph.py:43; both checker entry points and original-body/issued validators | All-nine full checkers, 24 grammar cases, coherent materialization/issued negatives, nine exact review witnesses, absent-global-handler controls and format-only cuts in `focused-probes.json`. |
+| N1 | **Resolved by rebase/regeneration** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`), no unrelated ledger repair. | `index-validate.stdout`, top-level `pass` | Index validation exits 0 with no failures; the old cycle-7 errors are absent on the rebased tree. Part-1 work changes no PlanUnit-removal ledger or Decision Log. |
 
-Each family has own Project/application epoch-1 positives through owner commit, prepare, append, first receipt, terminal and body read. Boolean, float, string, null, array and object forms in the selected bank refuse current acceptance and body reads; event-only history remains readable. The selected record’s own commitment is recomputed under the unchanged original recipe for 99 of the 108 type fixtures; the nine Project float sources cannot be encoded by their original recipe and refuse at that original encoding boundary. No alternate serializer or fabricated float commitment is introduced. Fixture follow-up is included in the assessed source commit. Separate self-committed foreign-selected-source controls isolate complete joins, and own commitment probes keep exact copies coherent. Authentic retained application float sources retain their original typed recipe and body-read positive. Shared authenticated frozen-resource/recipe dispatch is still S4. Verify `family-checks.json`, `selected-fixture-commitments.json` and `focused-probes.json`; the latter has 347 successful controls.
+Bounded capacity and format cuts are evidence for the repaired fixtures, not new proof machinery. `scripts/pm_filesafe_guard_isolation.py` and the old historical `DF.guard-removal.json` remain unchanged. No guard-table refactor, new numeric helper, serializer or cap was authored.
 
-**R6-B2 — fixed (`95102f6463`, final ATS placement corrected in `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c`). Where:** ten historical fix2 IDs in `Plans/filesafe_event_authority_fixtures.json`, own ATS-279. **Cause:** each original negative contradicted both operation kind and independent subject facts. **Fix:** five historical delete-with-live-target IDs now test only metadata-kind content equality with all manifest-subject joins true; five create-with-live-before IDs keep presence-compatible replace and change only expected_before_sha256. Body hashes, original source copies, manifests, event/receipt/issued copies are coherent. All original positives/protocols and every prior negative ID remain; only these ten prior negatives changed. An unequal-content skipped restore is impossible, so that kind control uses a valid clean restore while the original skipped positive is preserved.
+## Landed decision premises and deck-2 verification
 
-The focused AST cuts remove only the metadata content-equality clause or only the tested expected-before SHA predicate, leaving their peer clauses and every other guard enabled. This is a bounded repair witness, not a replacement proof framework.
+DL-401 is present on the rebased main. Its G28 cell says: **“The 2 restore-point records: Run year.”** Its Run year legend says: **“One year after the run finishes.”** Limits: **“1,000,000 per run and 5,000,000 per project, then the history continues in a linked successor. Needs a real run.”** Citation: Plans/Decision_Log.md:4414, Plans/Decision_Log.md:4493; original RT-G28 rows 288–289 in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/RT/RETENTION.jsonl` (SHA-256 `6b0e330f45f80b304488d3e3ba0bfaf362cf00f9eb86efae8903de6d46032bca`) identify `safe_point.created` and `safe_point.restored`.
 
-| Predicate removed | Own fixtures that pass | All negatives that pass | Negatives still rejected |
-|---|---:|---:|---:|
-| metadata content equality | 5 | 6 | 366 |
-| expected_before_sha256 subject equality | 5 | 5 | 367 |
+Current CV-557/558, closed payload/source roots and F2-213 still require the real capture/use run. The two own SP units and graphs now select the existing exact `RP-RUNTIME-365D` object: run completion + 31,536,000 seconds, no expiry anchor while running, independent run and applicable Project counts, linked successor, existing holds/recovery/latest-25-run/live-reference/backup protections. A real application run gets no fabricated Project count. Released safe-point files keep their existing policy; original snapshot bodies and restore journals are separate. Registered Chat `restore_point.*` histories are separate families. No classification question remains for either safe-point event.
 
-The exact flip/stay ID arrays are retained in `fix7/focused-probes.json`. Each kind witness rejects with only the subject predicate cut; each subject witness rejects with only the kind predicate cut. No kind/subject duplicate set is claimed.
+The five deck-2 bindings were already authored in `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c` (replayed during this rebase), and are verified/applied at `ef27813b0cd3d851f586729eddf94aef434f2fdd`. Own SP citations now point to the landed Decision Log; dependency/source-lineage metadata names the actual decision. No option was extended.
 
-### Card 2 — applied answers
+| Deck item | Family | Landed answer / exact chosen policy | Verification result |
+|---|---|---|---|
+| 2.a | `filesafe.command_denied` | Plans/Decision_Log.md:4880; `RP-OPERATIONAL-2555D` | **Fixed/applied** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`); Plans/storage-plan.md:29592; own graph and full retention suite. |
+| 2.b | `filesafe.destructive_override_denied` | Plans/Decision_Log.md:4906; `RP-AUTHORITY-INDEFINITE` | **Fixed/applied** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`); Plans/storage-plan.md:29660; own graph and full retention suite. |
+| 2.c | `filesafe.destructive_override_requested` | Plans/Decision_Log.md:4932; `RP-AUTHORITY-INDEFINITE` | **Fixed/applied** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`); Plans/storage-plan.md:29795; own graph and full retention suite. |
+| 2.d | `filesafe.guard_init_failed` | Plans/Decision_Log.md:4958; `RP-OPERATIONAL-2555D` | **Fixed/applied** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`); Plans/storage-plan.md:29863; own graph and full retention suite. |
+| 2.e | `filesafe.path_denied` | Plans/Decision_Log.md:4984; `RP-OPERATIONAL-2555D` | **Fixed/applied** (`ad9b9c63b92c1ac8a5d3cedf512558783e6b2ff5`); Plans/storage-plan.md:29931; own graph and full retention suite. |
 
-Jared’s complete verbatim answer was "i approve all of it". The presented deck’s fast-reply rule maps approve all to A on every item. Read all option-A text and Card 2’s common conditions. DL-422..426 are cited from `origin/plans/ea-cards2-answers-20261105` at `c81490e38cdd62175e5f921cfc6c65b542e2a5b7`; this lane writes no Decision Log entry.
+Exact approved option-A text, quoted from each landed entry:
 
-| Item | Exact family | Project binding | Decision | Applied commit |
-|---|---|---|---|---|
-| 2.a | `filesafe.command_denied` | `RP-OPERATIONAL-2555D` | DL-422 | `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c` |
-| 2.b | `filesafe.destructive_override_denied` | `RP-AUTHORITY-INDEFINITE` | DL-423 | `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c` |
-| 2.c | `filesafe.destructive_override_requested` | `RP-AUTHORITY-INDEFINITE` | DL-424 | `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c` |
-| 2.d | `filesafe.guard_init_failed` | `RP-OPERATIONAL-2555D` | DL-425 | `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c` |
-| 2.e | `filesafe.path_denied` | `RP-OPERATIONAL-2555D` | DL-426 | `6f75d3d2d3039c83fec8e8b784e723bcfe5b500c` |
+- **2.a / DL-422:** Keep this event about a command FileSafe refused as troubleshooting history for seven years under the limits above. It may disappear after expiry and protection checks; the original approval or action result keeps its own lifetime.
+- **2.b / DL-423:** Keep this event about a refused destructive override as permanent proof of the request, refusal or failure. It never expires by age or count and survives deletion of the described file or chat. For Project entries, only explicit Delete Puppet Master project data removes it under existing protections; Remove project from list does not. You can inspect it after seven years unless that Project data has been explicitly deleted.
+- **2.c / DL-424:** Keep this event about the request for a destructive override as permanent proof of the request, refusal or failure. It never expires by age or count and survives deletion of the described file or chat. For Project entries, only explicit Delete Puppet Master project data removes it under existing protections; Remove project from list does not. You can inspect it after seven years unless that Project data has been explicitly deleted.
+- **2.d / DL-425:** Keep this event about FileSafe failing to initialize and refusing unsafe execution as troubleshooting history for seven years under the limits above. It may disappear after expiry and protection checks; the original approval or action result keeps its own lifetime.
+- **2.e / DL-426:** Keep this event about FileSafe refusing a path as troubleshooting history for seven years under the limits above. It may disappear after expiry and protection checks; the original approval or action result keeps its own lifetime.
 
-The exact existing Storage registry policy objects match option A: no policy or storage-value registry entry was added or changed. SP-550/551/553/554/555 bind those objects for Project scope; each own graph names the Project binding and decision while retaining application PENDING_RETENTION_DECISION.
+The common Card 2 conditions are also preserved. Seven-year Project history uses 2,555 days from the first durable save of the original refusal/startup failure; retry, recovery and reprocessing cannot reset it. Only expired entries free of investigation, live-reference, recovery and backup protection can compact; existing legal/recent-run/rollback/maintenance protections remain. Capacity with no eligible expiry refuses new entries. Permanent proof has no age/count expiry, survives the described file/chat, and is removed only by authorized explicit Delete Puppet Master project data under existing protections; Remove project from list retains it. Full storage refuses new records. Supporting approvals, original action results, snapshots, journals and recovery logs keep their own policies. The adopted exact policy objects are unchanged from main.
 
-Seven-year history uses 2,555 days from the saved original refusal/startup-failure result at its first durable save, up to 2,000,000 records per Project. Retry, reprocessing, recovery and later observation do not reset it. Only expired entries free of investigation, active-reference, recovery and backup protections may compact; existing legal/preserved/recent-run/rollback/maintenance protections still apply. At capacity with no eligible expiry, refuse new entries. Supporting approvals, original action results, snapshots and recovery logs keep their own lifetimes.
+Card 2 explicitly grants **no counting or deletion rule for future entries outside Projects**. All five application graph bindings, release barriers and pending-refusal fixtures are preserved. The application-retention clauses in SP-550/551/553/554/555 are unchanged. Exact questions remain with Jared, under deck 3 Card 7:
 
-Permanent proof has no age/count expiry, survives deletion of the described file/chat, and stays inspectable after seven years. Only authorized explicit Delete Puppet Master project data under existing protections removes Project proof; Remove project from list retains it. Full storage refuses new entries. Permanent proof grants no access to a deleted or inaccessible body.
+- **SP-550 / DL-422:** What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.command_denied` history?
+- **SP-551 / DL-423:** What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_denied` history?
+- **SP-553 / DL-424:** What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_requested` history?
+- **SP-554 / DL-425:** What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.guard_init_failed` history?
+- **SP-555 / DL-426:** What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.path_denied` history?
 
-`scripts/pm_filesafe_retention.py` runs 125 own policy cases through the authority checker, including exact expiry, protections one by one, retry/recovery anchors, capacity, file/chat deletion, Project removal/deletion and application refusal. 105 binding/mutation probes pass. Each of five real CLI false-outcome controls exits 1 with exactly its intended diagnostic. No new user choice was inferred.
+## Format enforcement and input adoption
 
-## Remaining retention questions
+The selected resource closure uses only `date-time` formats. Both complete entry points and all body/retained-issued validators use an instance-local handler, with full-string ASCII RFC3339 grammar, integral calendar/time/offset range checks and no normalization. It preserves original strings, arbitrary fractional precision and valid offset/lowercase spellings. It rejects missing zones, malformed separators, invalid dates/time/offset fields, trailing LF, leap seconds (as the existing datetime consumers do) and empty/comma fractions. No optional handler absence silently admits a value. The nine cycle-7 malformed original-source witnesses now refuse.
 
-Five classification questions are answered for Project history. Card 2 explicitly withholds counting/deletion rules for future histories outside Projects, so these five versions stop pending the exact question below; no application recording is enabled.
+New timestamp controls rebuild complete-value commitments, source copies, body bytes/manifests where relevant and independently retained issued copies. Removing only the date-time predicate makes each own negative pass; the enabled guard and missing optional global handler both refuse it. Full checkers include payload, materialization and issued controls. This is S6 enforcement of the declared format; authenticated original schema/recipe dispatch remains S4 for part 2, not a current-then-legacy fallback.
 
-| Owner | Exact unanswered question |
-|---|---|
-| SP-550 | What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.command_denied` history? SP-550 leaves that exact scope pending under DL-422; Project classification is decided. |
-| SP-551 | What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_denied` history? SP-551 leaves that exact scope pending under DL-423; Project classification is decided. |
-| SP-553 | What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_requested` history? SP-553 leaves that exact scope pending under DL-424; Project classification is decided. |
-| SP-554 | What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.guard_init_failed` history? SP-554 leaves that exact scope pending under DL-425; Project classification is decided. |
-| SP-555 | What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.path_denied` history? SP-555 leaves that exact scope pending under DL-426; Project classification is decided. |
-| SP-557 | RETENTION: Is safe_point.created EventRecord history an authority/capture receipt (RP-AUTHORITY-INDEFINITE), non-authority recovery operational history (RP-OPERATIONAL-2555D), or runtime history (RP-RUNTIME-365D), independently of the already-governed released snapshot bodies? PENDING_RETENTION_DECISION remains in SP-557. |
-| SP-558 | RETENTION: Is safe_point.restored EventRecord history an authority/outcome receipt (RP-AUTHORITY-INDEFINITE), non-authority recovery operational history (RP-OPERATIONAL-2555D), or runtime history (RP-RUNTIME-365D), independently of the already-governed original restore transaction and snapshot bodies? PENDING_RETENTION_DECISION remains in SP-558. |
-
-The two safe-point EventRecord-history classifications were not on Card 2; they remain untouched. SP-552’s authenticated grant retains RP-AUTHORITY-INDEFINITE and SP-556’s advisory diagnostic retains RP-OPERATIONAL-2555D under their prior exact-kind Case L-3 assignments. Original bodies, released safe points, journals, generic indexes and checkpoints retain their own policies.
-
-## Sweep items S1–S6
-
-These are recorded exactly as sweep scope required by FIX-ROUND and this task; they are not silently closed by the lane repair.
-
-| Item | Current location / issue | Required sweep action |
-|---|---|---|
-| S1 | `scripts/pm_filesafe_event_authority.py:682`; raw load and current integer-token admission erase -0 | Adopt CV-1100 raw grammar at current ingress, preserve authentic original grammar. No lane cap/serializer. |
-| S2 | `scripts/pm_filesafe_event_authority.py:448`; inherited generic producer digest decimal/JCS difference at 2^60 | Adopt qualified generic EventRecord JCS by purpose; preserve CV-366 typed tree and string identity. |
-| S3 | `scripts/pm_filesafe_event_authority.py:160`, full_commitment and inherited physical encoder restrict float profile | Adopt SP-1100 purpose/profile dispatcher; preserve original physical bytes/types and signed zero. |
-| S4 | `scripts/pm_filesafe_event_authority.py:107`, issued_failures and original codecs select current helpers/resources | Adopt SP-1101 authenticated immutable original recipe/resource dispatch; never current-then-legacy or restamp. |
-| S5 | `scripts/pm_filesafe_guard_isolation.py`; `DF.guard-removal.json` compound/whole-keyword/merged-predicate cuts | Replace with shared `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105`; preserve peers and prove true same-field/predicate duplicates site by site. Lane proof script unchanged. |
-| S6 | `scripts/pm_filesafe_event_authority.py:107`, application decoder and issued validators; optional FormatChecker date-time handler may be absent | Guarantee enforced grammar/handler and fail closed on unavailable support; add malformed timestamps. This task explicitly retains S6 as a sweep item. |
-
-The old 846-row literal matrix’s input hashes and observations remain retained, but its status now says historical matrix only, not predicate proof. No machinery rewrite was performed. R6-B2’s actual multi-defect fixtures were fixed in lane, separately from S5.
+Main's `shared_integration_runtime.schema.json` changed three unrelated Settings copy-command wrappers and added their versioned/legacy definitions. Before updating the nine whole-resource selections, `shared-resource-adoption.json` compares every DF-reachable shared definition and verifies `WorkflowScopeV2` unchanged. No shared schema text, original Project resource, receipt policy or application rule was altered. This is explicit selection of the rebased input, not a governance hash refresh. All selected resource hashes then match their files and full eager reference checks still run.
 
 ## Family grades before and after
 
-Before is the independent cycle-6 review, including its C8/C12 downgrades, rather than the overstated round-6 self-grade. Counts are PASS / PARTIAL / ABSENT. C8 and C12 upgrade for all nine. C7 remains PARTIAL where a scope-specific retention decision is open.
+Before is the independent cycle-7 review, including its five C12 downgrades, not the overstated old self-grade. Counts are PASS / PARTIAL / ABSENT. C7 upgrades for both safe-point events; only the five application FileSafe contracts retain C7 PARTIAL. **C12 is conservatively PARTIAL for all nine until shared guard-table certification in part 2.** This accounts for the sweep readiness requirement; it does not claim a new regression in the four previously prepared families. Fixed R7-B1/B2/S6 controls pass, but no complete predicate inventory is certified. All nine remain NOT_READY_PART_2_PENDING.
 
-| Family | Before | After | Verdict |
+| Exact family | Before | After | C7 after |
 |---|---|---|---|
-| `filesafe.command_denied` | 8 / 3 / 1 | 10 / 1 / 1 | PASS prepared; no admission |
-| `filesafe.destructive_override_denied` | 8 / 3 / 1 | 10 / 1 / 1 | PASS prepared; no admission |
-| `filesafe.destructive_override_granted` | 9 / 2 / 1 | 11 / 0 / 1 | PASS prepared; no admission |
-| `filesafe.destructive_override_requested` | 8 / 3 / 1 | 10 / 1 / 1 | PASS prepared; no admission |
-| `filesafe.guard_init_failed` | 8 / 3 / 1 | 10 / 1 / 1 | PASS prepared; no admission |
-| `filesafe.path_denied` | 8 / 3 / 1 | 10 / 1 / 1 | PASS prepared; no admission |
-| `filesafe.policy_degraded` | 9 / 2 / 1 | 11 / 0 / 1 | PASS prepared; no admission |
-| `safe_point.created` | 8 / 3 / 1 | 10 / 1 / 1 | PASS prepared; no admission |
-| `safe_point.restored` | 8 / 3 / 1 | 10 / 1 / 1 | PASS prepared; no admission |
+| `filesafe.command_denied` | 9 / 2 / 1 | 9 / 2 / 1 | PARTIAL |
+| `filesafe.destructive_override_denied` | 10 / 1 / 1 | 9 / 2 / 1 | PARTIAL |
+| `filesafe.destructive_override_granted` | 11 / 0 / 1 | 10 / 1 / 1 | PASS |
+| `filesafe.destructive_override_requested` | 10 / 1 / 1 | 9 / 2 / 1 | PARTIAL |
+| `filesafe.guard_init_failed` | 9 / 2 / 1 | 9 / 2 / 1 | PARTIAL |
+| `filesafe.path_denied` | 9 / 2 / 1 | 9 / 2 / 1 | PARTIAL |
+| `filesafe.policy_degraded` | 11 / 0 / 1 | 10 / 1 / 1 | PASS |
+| `safe_point.created` | 9 / 2 / 1 | 10 / 1 / 1 | PASS |
+| `safe_point.restored` | 9 / 2 / 1 | 10 / 1 / 1 | PASS |
 
-## Checks, boundaries and integration
+All 108 cells are carried/reassessed against the implementation head; current exact citations and file/excerpt hashes are revalidated in `grade-citations.json`. Membership remains ABSENT; native execution remains NOT_RUN. Existing per-family CV/SP technical bindings, original-source search evidence and negative evidence remain in their own units. No new producer, consumer, checkpoint, event identity or native interface was invented.
 
-All nine families ran one at a time: authority totals `{'positive': 181, 'negative': 2035, 'protocol': 1323}`; payload totals `{'positive': 94, 'negative': 198, 'identity': 18}`; every CLI exit 0/status pass. The authority path includes all 125 Card 2 oracles for the five answered Project families. Focused 347 controls and Card 2 105 probes pass. All five actual false-outcome CLI controls exit 1/status fail. Original source/body/issued corruption, replay-only current writers, encoded keys/partitions, 16 KiB/SP-337, LF identifiers, metadata-only retry, checkpoint identities, eager schema-reference closure, historical reads and withdrawal controls remain in the complete run. Standing check 11 has the bounded repaired-fixture proof above; whole-lane machinery completeness is S5.
+## Checks and limits
 
-Shard generation/check pass with the verified 15-file currentness edition present; changed shard sources are only edited Contracts, ATS and Storage docs. Index generation passes. Index validation exit 1/top-level `fail` has 22 failures; exact rows are retained in `fix7/index-validate.stdout`. N1 remains an integration hold for legacy PlanUnit-removal ledgers/later-main/currentness edition differences, not a green repository-wide check. No unrelated ledger, Decision Log or governance artifact was repaired. Integration must preserve newer mainline owner clarifications and regenerate derived files.
+All nine families ran sequentially, each through the full payload and authority CLI. Totals: `{'positive': 329, 'negative': 2728, 'identity': 18, 'protocol': 1323}`; every family CLI exits 0/status pass. Retention graph checks include 125 existing Card 2 cases, 12 independent capacity cases and 72 safe-point Run year cases. Focused probes: **1024**, status pass. The initial CLI harness expected two wrong-binding diagnostics, but the existing approved-policy probe correctly adds a third; the harness was corrected without a product edit. Both CLI layers retain failure-exit behavior; 20 part-1 false-outcome/valid-as-negative CLI results are retained separately. Their checker source is identical to the final source; the final follow-up adds only year-zero fixture coverage. Shard/index generation and shard check exit 0; regenerated shard sources are limited to this lane's Contracts, Storage and ATS owner documents. Fifteen ignored currentness inputs were copied from the shared checkout and hash-verified before generation.
 
-DL-045 still covers these nine exact names. F2-213, CV-365/366, SP-286/CV-339 full-value v2 and SP-278/DL-076 contracts are preserved. Existing per-family searches and exact producer/reader/identity bindings remain in own CV/SP units. Card 2 supplies only its approved retention binding; no new producer, consumer, event identity, family or runtime interface was invented.
+Index validation exits **0**, top-level **pass**, with **zero failures**; exact output is retained in `index-validate.stdout`. N1 is resolved on the rebased tree without unrelated ledger edits. This does not claim repository-wide governance or native certification. No governance reseal, migration snapshot/baseline refresh or unrelated ledger repair was attempted. `git diff --check` and scope/preservation checks pass.
 
-The forged/contradictory-input and custody classes receive new selected-source probes and coherent restore controls; full checkers retain independent Storage metadata, identity spelling/type, inactive-reference, complete-size, retry/recovery/history and old BLAKE3 guards. Number spellings/physical profiles/original recipe dispatch and format availability are explicitly S1–S4/S6, not claimed ruled out. Native original custody, fsync, restore execution, access/holds and CAS remain NOT_RUN.
+Standing checks 1–10 continue through the existing complete family suites: current replay-only refusal and retained compatibility, exact CV-366/encoded Project keys, full 16 KiB/SP-337 custody, LF identifiers, caller-semantic retry, full-value receipt/checkpoint identities, failure exit, eager reference closure and retained-history directions. Check 11 gets bounded independent capacity/format evidence here; its whole-lane inventory remains S5. Earlier selected-source exact-type and restore-journal negative repairs remain present and are not weakened. Recurring forged identity/source/body, Storage metadata, historical read, schema-reference, full-size and custody checks run through the full suites. Numeric spellings, semantic JCS, physical profiles and original-recipe/resource selection are explicitly unresolved as S1–S4; no claim of having ruled them out is made.
 
-Resource checks began with 114+ GB free disk and 8 GB available RAM. Each checker used the memory driver: pause below 6 GB; recheck every two minutes; resume at 7 GB. `memory-monitor.jsonl` retains each start/finish and any pause. No parallel family checkers, mail, subagents, admission, family-registry append, main push or landing lock.
+Resource policy: start disk 117 GB available; memory floor 6 GB, resume 7 GB. This lane runs one checker/generator process at a time under the memory floor. Initial peer-checker waits are retained; scoped family oracles were then measured at roughly 34–90 MB before proceeding serially alongside other workers. Peer process observations and the RAM floor are logged for repository-wide jobs. Minimum recorded available RAM: 9 GB. There are 0 low-memory pauses and 96 pre-start serialization/memory waits. Each heavy checker runs alone in this lane. No pm-mail, subagents, admission/registry append, Decision Log edit, protected governance change, landing lock or main push. Existing IDs only: CV/SP-550..558, ATS-275..279; no new allocation, 559 remains unused.
 
-IDs reused: **CV-550..558, SP-550..558, ATS-275..279**. Decisions cited: **DL-422..426**; none minted. CV-559/SP-559 remain unused. Protected paths including event/storage registries, Decision Log, Spec Lock, auto-decisions, `.gitignore` and existing governance evidence are unchanged. Shared owner hunks are confined to those own units; the exact paths and preservation checks are in `fix7/scope-check.json`.
+## Part 2 items
+
+| Item | Exact remaining location | Required follow-up |
+|---|---|---|
+| S1 | `scripts/pm_filesafe_event_authority.py:36–37,684–689`, current raw loads and CV-550..558 integer paragraphs | Adopt CV-1100/1101 current raw-number grammar/decoder; preserve authentic original grammar. No lane cap or serializer. |
+| S2 | `scripts/pm_filesafe_event_authority.py:450,480,574`; inherited `scripts/pm-implementation-readiness.py:2773,3280`; `scripts/pm_filesafe_event_contracts.py:51` | Adopt qualified semantic JCS for its existing purpose; preserve distinct CV-366 typed source/string identity recipes. |
+| S3 | `scripts/pm_filesafe_event_authority.py:47–52,162–203`, full commitment/application decoder and inherited physical codec | Adopt SP-1100 purpose/profile dispatch; preserve physical floats, signed zero and retained bytes. |
+| S4 | `scripts/pm_filesafe_event_authority.py:107–113,458–490` plus original decoder/selected source/history paths | Adopt SP-1101's independently authenticated immutable original recipe/resource tuple; no downgrade, current-then-legacy or restamping. S6 does not close this. |
+| S5 | `scripts/pm_filesafe_guard_isolation.py` (stale lookup around line 1103), `reports/event-authority-20261104/DF.guard-removal.json` | Adopt shared `scripts/pm_guard_isolation.py` and named guard tables. Slice each predicate; prove genuine duplicate sites individually/jointly. The old KeyError/whole-keyword/merged-predicate machinery is not rebuilt. |
+
+No lane READY claim is made until both shared tools are adopted and the required Sol/Astra part-2 review passes. Native custody, fsync, restore execution, access/hold enforcement and CAS remain NOT_RUN; actual registry admission is a later integration task. Application FileSafe retention stays with Jared.
 
 ## Retained evidence
 
-Evidence path plus SHA-256; the scripts are supporting reproducers outside product canon.
+All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/sweep-p1/`. Raw evidence is outside product canon; only compact report/grades are committed. SHA-256 identifies each cited input/result.
 
-| Path | SHA-256 |
+| File | SHA-256 |
 |---|---|
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/family-checks.json` | `d5f4f9d5615f8651f2f22cd1167e67f7828c0af179b2a66c6d5faf9b3a1f01c4` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/selected-fixture-commitments.json` | `b2f1c5e6f988e42c32e962edf81e970e369d6d771946eed1f3ff806f2dbb225f` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/focused-probes.json` | `838e9a677c9e258f232eeef65adc2be7a73db7f9f9b4518b49c790a487359d82` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/card2-probes.json` | `21abe116de22ea642af6d186dc4ec75e8f32e3a49259ff22b8c4a310e0d49582` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/final-checks.json` | `79a7830a9e1bd0f28899e47c0c075df4d2149bbe689e6894b79d988d4910db6c` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/scope-check.json` | `4be504a6368320573fa245bc23cc6d830450ec4da45b1ff9e0cfd1ace28cf17a` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/grade-citations.json` | `c6061a1076c7ce5f524b73d9f3a347e5461a3a6548be64f12d1352c4a4f4b6de` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/index-validate.stdout` | `93ed49ced4974ad1da8fc38a39c6d6153aaa774b8c44c211748afa49cad496f6` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/shard-check-card2.stdout` | `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/currentness-sha256.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix7/memory-monitor.jsonl` | `827aae976967274be4e026bf10234d62d57dc22135fa20850362dafa7f65fcee` |
+| `family-checks.json` | `eeaedcc780ac7c28fecc47dab2eca49b93b4428008cfe0ee29883296af227a35` |
+| `focused-probes.json` | `1038b0da1d54b7161c64d2b92e3f693f0a97b9736a6d71082ed9e2499eed7d90` |
+| `cli-controls.json` | `3f5fa5c654cfac5280beb2ee41a074316ca1e0e2dd918b4facd860d817d15598` |
+| `shared-resource-adoption.json` | `46acb77d86ebdf9f42e01adc7fd43a9fd7bd1eeb2fd63f2f8dffb1fa963b3f85` |
+| `scope-check.json` | `e4f50080b1903ec1e5714314358128b0fa9c33b31e36c8154f577b88cd2a730e` |
+| `currentness-sha256.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
+| `grade-citations.json` | `0e848c77da8ebcc6e209bafb88aec0e5ca406406bccb81cbe2fabc8c93506f16` |
+| `shard-check.stdout` | `a715ce384c99d89a8b5576fb6a07f92786372746197d08d9bad57c619fec35c1` |
+| `index-validate.stdout` | `9d0fe5a50f38ae8504877cf3fd9742fece9299af3546215ab960400e637886b5` |
+| `memory-monitor.jsonl` | `61275bb95bcb0feb152a3c9298eaf462cf8b6bb13ebe50c1ba2372ecfae0b5b2` |
 
-Report, aggregate self-grade and nine per-family grades are copied to `drafts/DF/`. Extra evidence is under `drafts/DF/fix7/`. The sparse detached worktree `/home/sittingmongoose/pm-worktrees/DF-fix7` is removed using a literal-path force worktree removal after the report commit is pushed.
+The report, aggregate grade and nine per-family grades are copied into this sweep-p1 directory. The sparse detached worktree `/home/sittingmongoose/pm-worktrees/df-sweep1` is removed with literal-path `git worktree remove --force` after pushing the final report commit. No temporary server or browser was started.
