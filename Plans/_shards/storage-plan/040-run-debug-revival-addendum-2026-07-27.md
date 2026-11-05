@@ -2,15 +2,15 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18270-L18317
+Source lines: L18354-L18401
 
-Source SHA256: `e43cad0f3391b91b4b7ee625296c84afb5abf3bf63949f9bf07d0fbf580f8d44`
+Source SHA256: `fd69a7d174365c68f64f432301deccace2e256ee3b3a1ee9f8543e5ac7ad183d`
 
 ---
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum registers the project-scoped persistence key family for classical debugger workspace state (launch profiles, breakpoints, watch expressions) consumed by the rail "Debug & Run" panel and bottom-zone Debug tab whose layout and field schema canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496, referenced by unit id only, never restated). It owns only keys, lifetimes, and migration rules, and it creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+This addendum registers the project-scoped persistence key family for classical debugger workspace state (launch profiles, breakpoints, watch expressions) consumed by the rail "Debug & Run" panel and bottom-zone Debug tab whose layout and field schema canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-495, referenced by unit id only, never restated). It owns only keys, lifetimes, and migration rules, and it creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
 
 ### SP-244 - Debug Workspace Persistence Keys
 
@@ -45,7 +45,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - user-decision:2026-07-27-run-debug-revival
-- Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+- Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-495; referenced)
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F08,B-F06,B-F07,B-F08,B-F09,B-F10,B-F11,C-F01,C-F04,C-F05,C-F06,C-F07,C-F08,C-F09,C-F10,E-F11,D-F06
 preserved_exact_tokens: [pm.debug.launch_profiles:v1, pm.debug.breakpoints:v1, pm.debug.watches:v1]
