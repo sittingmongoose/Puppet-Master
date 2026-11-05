@@ -1,56 +1,124 @@
 {
-  "status": "stopped_before_implementation",
-  "kind": "static_input_inspection_only_not_validator_tests",
-  "base_head": "17c842445a2623bb0334ba8d6932e7a6bf088967",
+  "status": "implemented_pending_coordinated_landing_and_independent_reviews",
+  "kind": "bounded_fourth_recorded_change_no_seal_or_admission",
+  "resumed_from_head": "5764ca809c0dcc8a161d4fcd45770abf6355f746",
+  "third_change_head": "17c842445a2623bb0334ba8d6932e7a6bf088967",
   "recount_head": "c53e4199ae94ca853a197354f3f9e7f296cf1efc",
   "validator_sha256_before": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
-  "validator_sha256_after": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
-  "plans_scripts_tests_gitignore_diff_exit": 0,
-  "new_list": {
-    "sha256": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c",
-    "bytes": 249684,
-    "unique_sorted_names": 249,
-    "buckets": {
-      "b": 51,
-      "c": 18,
-      "d": 32,
-      "e": 148
-    }
+  "validator_sha256_after": "de9d85130aafed77f87bc365d94218db3992691a7e95285739b2c7c802e24321",
+  "scope_ruling": {
+    "author": "pm7-build",
+    "mail": "1105050013-eb00",
+    "attribution": "pm7-build's reading of 9.b, not Jared's words",
+    "final_approval": "august_and_all_249_recount_outcomes_in_one_run",
+    "single_snapshot": "diagnostic_only"
   },
-  "recount_receipt": {
-    "sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
-    "bytes": 350509,
-    "declared_input_fingerprints": 597,
-    "source_fingerprints_verified_by_this_worker": false,
-    "closure_claim": false
+  "source_custody": {
+    "declared_fingerprints": 597,
+    "verified_fingerprints": 597,
+    "explicit_saved_source_locations": 26,
+    "no_original_pin_changed": true,
+    "recovery": "15 exact ignored edition files and 11 external evidence inputs preserved. Two historical briefs recovered by removing later additions; accepted only after exact original byte count and complete SHA-256 matched."
   },
-  "authority_option_and_sources_preserved_verbatim": true,
-  "requested_validator_positive_tests": "not_run_no_implementation",
-  "requested_validator_negative_tests": "not_run_no_implementation",
-  "source_recount_positive_limit": "List/receipt byte pins, shape and cross-reference only; not complete source custody or product certification.",
-  "external_reference_sha256": {
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/BRIEF-DRAFT.md": "41864b36b0ec066dd89e05ce02241cd87dbdcfcedcd3cc6bfaad43830e322191",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-SEAL2.md": "ff64b8aada0fc64cb5a4a8dcd18c3358629a0489c6a8a7ef1605c2376ceb50de",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md": "e7e8d3f3a2f23737b201becddd94ff0c707815520a366ab32758088c720927fd",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md": "6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/CA-SEAL.md": "2e2e773040b3e3534dc8647812106ff352fee9f84b6eab0cdb8a4c1bb386bdb0",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW-astra-2.md": "8477873f58ea1b80f245a5a0afd545ca123cc7c64d18c8848a101a11165d3448",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW-astra.md": "161b7ad15c9479155550ba573c7b9290c271f4483ed6b2c4ec23d4029f6f85e7",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW-cycle2.md": "6cde637dfd9c4b970df86942c7b0f8bd7313a8786be5ec4e0f0a38ef34577700",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW-cycle3.md": "189c77bddd49dee337839fff797194aee9c87b4fb56597153bdd331044e55dee",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW.md": "a22a067876a204df9b6b6bc0c8e49034d211b3ea3480bc68fbb2e624e5232159",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-astra-2.md": "f07038011c98dd2a1b2a14451d942a6481bd6a73292512674ac1366694220749",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-astra-3.md": "56028d13140cd02ab4e135ddd748369cc2e1a6a380931382bc5e729a17a11568",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-astra.md": "370a8b72658c74455ce5cec6082b538197bd135207aebaf0461b99b2b29359ec",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle2.md": "98a3a800eb0eb17c401ce6d77e1581a71d243850e8ce7139d73dd1aa0e5d12a4",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle3.md": "5aeadf6fe1dd2de0de172cb6544003b73c9faf09b2a049d6900bfd411e4a1d77",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle4.md": "53f98bb34283b3f55881202205dfd9cbee2e81bcc90893355298c89c435ba9f9",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle5.md": "f70b44b7c8240f5be4bbaf83eb2d34c76fd61ffd1159380af3075e3344bf2900",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle6.md": "f485c34239c350ee727e770a1ef817d71a51bb92dc9857327f1df49e99cc6cb7",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle7.md": "dd1cc6940580b1491465747c48dddc6a83ffc55754f09c90b96a506d6769305f",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle8.md": "f9f7ac649010372077ba9abeb2725146ff181576f6088045515d2b5254e7766f",
-    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW.md": "c427f7cf7fad5dc20603bd651374683dd939767858ac8511b9a24321ed5257f5"
+  "targeted_checks": {
+    "status": "pass",
+    "count": 68,
+    "passed": 68,
+    "failed": 0
   },
-  "memory_sample": "               total        used        free      shared  buff/cache   available\nMem:              38          21           5           0          11          16\nSwap:             15          10           5\n",
-  "disk_sample": "Filesystem                        1G-blocks  Used Available Use% Mounted on\n/dev/mapper/ubuntu--vg-ubuntu--lv      489G  425G       60G  88% /\n"
+  "legacy_differential": {
+    "status": "pass",
+    "old_exit": 1,
+    "new_exit": 1,
+    "old_failures": 10,
+    "new_failure_count": 12,
+    "original_August_main_prefix_AST_unchanged": true,
+    "all_original_named_checks_equal": true,
+    "all_original_input_pins_equal": true,
+    "original_functions_unchanged": [
+      "holding_authority_bytes",
+      "holding_evidence_digest",
+      "holding_timestamp",
+      "decision_section_bytes",
+      "canonical_json_sha256",
+      "post_august_receipt_state",
+      "holding_validator_pin",
+      "registry_step_shape_ok",
+      "registry_step_states",
+      "strict_step_record",
+      "registry_step_claim",
+      "registry_step_record_scan",
+      "registry_step_problems",
+      "admission_record_problems",
+      "validate_post_august_admissions",
+      "validate_holding_bucket",
+      "option_token",
+      "decision_chosen_token",
+      "sha256_file",
+      "load_json",
+      "load_ledger",
+      "derive_independent_partition",
+      "evidence_map",
+      "cell_ok_pass"
+    ],
+    "original_functions_changed_only_for_fourth_change": [
+      "multi_family_receipt_state",
+      "post_august_validator_pin",
+      "main",
+      "build_receipt"
+    ],
+    "validator_before_sha256": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
+    "validator_after_sha256": "de9d85130aafed77f87bc365d94218db3992691a7e95285739b2c7c802e24321"
+  },
+  "index_validation": {
+    "exit": 1,
+    "top_level_status": "fail",
+    "findings": 23,
+    "ledger_errors": 21,
+    "newer_main_DL302": 1,
+    "untouched_readiness_artifact_stale": 1
+  },
+  "shard_check": {
+    "docs_checked": 99,
+    "failures": [],
+    "shards_checked": 3092,
+    "source_count": 99,
+    "status": "pass"
+  },
+  "scope_diff": {
+    "protected_files_and_existing_receipts_records_registry_unchanged": true,
+    "indexed_owner_docs_shards_plan_index_unchanged": true,
+    "test_files_under_tests_changed": false
+  },
+  "spec_lock_entry_template": {
+    "path": "reports/event-authority-20261105/seal-check-recount-receipt.json",
+    "sha256": "<SHA-256 of complete final receipt after actual lander and prior-receipt pins are filled>"
+  },
+  "pending": [
+    "Actual per-name outcomes and unchanged August closure/depth prerequisites",
+    "Decision/recount dependencies and coordinated third/fourth byte anchors",
+    "Actual lander slots and both independent pre/post landing reviews",
+    "Shared guard-isolation sweep; full guard-removal proof is not claimed",
+    "Resolve/report the 23 index findings at integration without editing unrelated files"
+  ],
+  "stopped_question": null,
+  "external_evidence_sha256": {
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/CA-SEAL2-checks.py": "ce2e04b8e7ef6e91afcca8caf73a2f6eef0467eaa45ff46263daee265e8617e0",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/check-results.json": "fb5375109e14ca1ff8976a0e2f6a71ba40a1a8cdc45429356d9862efd24230a9",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/source-locations.json": "154b4a3f4f89faa79d96b08b3600a9d947ea741004d58c3107aa005bca25360a",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recount-source-verification.json": "6956c8bd486657aacbe1bd48e16299316fa434a0c8224156f2f5eef0df3e0ab5",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/legacy_differential.py": "35f3d2cf3548c2bd132a268d5ae7ea2add29595961998b3be9001495725987f0",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/legacy-differential.json": "a240796ec237f42f8d457d64a6eea8455f97f5f38a9cc707773c29cde88448e0",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/shard-check.json": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/index-validate.json": "5700eb94f8e49e61f8df5b750185b3a09d59208e1c4cc733de1a9d3c403ff860",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/index-validate-with-edition.json": "c81f7ee63045fb6d4d008be50c4ed3c792d4ffac0d0d636ed2148e6ff6e7c082",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/currentness-edition-copy.json": "daf80cdc1395935c791eed463d54ff4d0405f90ce97f39f12e10fbb0a547f8ac"
+  },
+  "resources": {
+    "pre_worktree_free_disk_GB": 64,
+    "pre_worktree_available_memory_GB": 19,
+    "lowest_observed_available_memory_GB": 8,
+    "under_6GB_pause_needed": false,
+    "checker_scheduling_deviation": "One 0.96-second legacy differential overlapped the index-with-edition rerun. Subsequent checks were sequential."
+  }
 }
