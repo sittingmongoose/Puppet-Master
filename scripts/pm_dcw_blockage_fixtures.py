@@ -13,7 +13,7 @@ from blake3 import blake3
 
 import pm_dcw_event_oracles as m
 from pm_dcw_blockage_events import identity, row_for, source_key
-from pm_dcw_index_fixtures import issue, rehash
+from pm_dcw_index_fixtures import issue, rehash, snapshot
 
 
 def seal(s, update_observations=True):
@@ -311,6 +311,13 @@ def cases(row):
         def forge(s, field=field):
             s['event'][field] = 99 if field == 'sequence_id' else '2026-11-05T06:00:01Z'
             s['source']['prepared_event'] = copy.deepcopy(s['event'])
+            custody = s['authority']['custody'][s['event']['event_id']]
+            commitment = m.commitment(s['event'])
+            custody['original_event_value_commitment'] = copy.deepcopy(commitment)
+            s['source']['original_event_value_commitment'] = copy.deepcopy(commitment)
+            if field == 'sequence_id':
+                custody['first_append_receipt']['sequence_id'] = s['event']['sequence_id']
+                s['source']['first_append_receipt'] = copy.deepcopy(custody['first_append_receipt'])
         add('forged_storage_' + field, positive, mutate=forge, expected='original_full_value')
     controls = [('admitted_families', [], 'family_not_admitted'), ('writer_cutoff', True, 'writer_cutoff'),
                 ('effect_state', 'unknown', 'effect_unknown'), ('expected_value_revision', 2, 'source_CAS'),
@@ -336,8 +343,16 @@ def cases(row):
     add('original_observation', positive, mutate=lambda s: s['authority']['observations'][s['source']['source_ref']].update(actor_ref='actor:other'), expected='original_observation')
     add('source_key', positive, mutate=lambda s: s['source_key'].__setitem__(4, 'foreign'), expected='source_key')
     add('wizard_alias', positive, mutate=lambda s: s['event']['payload'].update(wizard_id='topic:one'), expected='wizard_run_alias', coherent=True)
-    add('required_conditions_empty', positive, mutate=edit_obs(lambda o: o.update(required_conditions=[], cleared_conditions=[], next_steps=[])), expected='required_conditions_empty')
-    add('foreign_cleared_condition', positive, mutate=edit_obs(lambda o: o['cleared_conditions'].append('foreign')), expected='foreign_cleared_condition')
+    add('whole_run_subject', positive, mutate=edit_obs(lambda o: o.update(subject_kind='topic')), expected='schema')
+    # Empty requirements cannot block a real step. Unblocked's nonempty set
+    # follows from its authentic predecessor and actual clearing action; the
+    # isolated omitted_original_required_condition case tests that join.
+    if name == 'wizard.blocked':
+        add('required_conditions_empty', positive, mutate=edit_obs(lambda o: o.update(
+            required_conditions=[], cleared_conditions=[], next_steps=[dict(step_ref='step:topic-a', prevented_by=[])])),
+            expected='run_can_continue')
+    add('foreign_cleared_condition', positive, mutate=edit_obs(lambda o: o['cleared_conditions'].append('foreign')),
+        expected='foreign_cleared_condition' if name == 'wizard.blocked' else 'conditions_remain')
     add('foreign_step_condition', positive, mutate=edit_obs(lambda o: o['next_steps'][0]['prevented_by'].append('foreign')), expected='foreign_step_condition')
     add('duplicate_step', positive, mutate=edit_obs(lambda o: o['next_steps'].append(copy.deepcopy(o['next_steps'][0]))), expected='duplicate_step')
     # Every closed payload field has one missing-field witness with all stored copies coherent.
@@ -385,7 +400,16 @@ def cases(row):
         for field, value, code in [('authorized', False, 'clearing_action_unauthorized'), ('effect', 'page_opened', 'not_clearing_action'),
                                   ('remaining_before', [], 'clearing_action_before'), ('cleared_conditions', [], 'clearing_action_incomplete'),
                                   ('remaining_after', ['condition:b'], 'clearing_action_after')]:
-            add('action_' + field, positive, mutate=lambda s, f=field, v=value: s['authority']['actions'][s['event']['payload']['resolution_source']].__setitem__(f, v), expected=code)
+            def action_edit(s, field=field, value=value):
+                action = s['authority']['actions'][s['event']['payload']['resolution_source']]
+                action[field] = copy.deepcopy(value)
+                if field == 'remaining_before':
+                    action['cleared_conditions'] = copy.deepcopy(value)
+            add('action_' + field, positive, mutate=action_edit, expected=code)
+        def foreign_action_condition(s):
+            action = s['authority']['actions'][s['event']['payload']['resolution_source']]
+            action.update(remaining_before=['foreign'], cleared_conditions=['foreign'])
+        add('action_remaining_before_foreign', positive, mutate=foreign_action_condition, expected='clearing_action_before')
         for effect in ('other_topic_cleared', 'history_reprocessed', 'report_edited'):
             add(effect, positive, mutate=lambda s, v=effect: s['authority']['actions'][s['event']['payload']['resolution_source']].update(effect=v), expected='not_clearing_action')
         for field in ('project_id', 'planning_run_id', 'blockage_id'):
@@ -417,7 +441,10 @@ def cases(row):
         first['payload_sha256'] = 'b' * 64
         rehash(s['index'], s['reader'])
     add('index_row_source_coherent_digests', positive, 'read', row_join, 'index_row_source')
-    add('checkpoint_foreign_store', positive, 'read', lambda s: s['reader']['live_token'].update(storage_instance_id='22222222-2222-4222-8222-222222222222'), 'checkpoint_storage_instance')
+    def foreign_checkpoint(s):
+        s['index'], s['reader'] = snapshot(list(s['authority']['events'].values()),
+            '22222222-2222-4222-8222-222222222222')
+    add('checkpoint_foreign_store', positive, 'read', foreign_checkpoint, 'checkpoint_storage_instance')
     add('index_predecessor_CAS', positive, 'read', lambda s: s['reader'].update(expected_predecessor='b' * 64), 'index_CAS')
     add('persisted_snapshot_forbidden', positive, 'read', lambda s: s['reader']['durable_token'].update(redb_snapshot_id='forged'), 'durable_snapshot_forbidden')
     add('original_time', positive, mutate=edit_event('occurred_at_utc', '2026-11-05T06:01:00Z'), expected='original_time', coherent=True)
@@ -473,14 +500,25 @@ def cases(row):
         seal(same)
         add('repair_not_new', same, mutate=edit_obs(lambda o: o.update(kind='repair_attempt_completed')), expected='repair_not_new')
     else:
-        add('resolution_source_join', positive, mutate=lambda s: s['event']['payload'].update(resolution_source='action:other'), expected='resolution_source', coherent=True)
+        def resolution_join(s):
+            old = s['event']['payload']['resolution_source']
+            s['event']['payload']['resolution_source'] = 'action:other'
+            s['authority']['actions']['action:other'] = copy.deepcopy(s['authority']['actions'][old])
+        add('resolution_source_join', positive, mutate=resolution_join, expected='resolution_source', coherent=True)
         add('blocked_source_missing', positive, mutate=lambda s: s['authority']['sources'].pop(s['event']['payload']['blocked_event_id']), expected='blocked_source_missing')
         add('blocked_original_missing', positive, mutate=lambda s: s['authority']['events'].pop(s['event']['payload']['blocked_event_id']), expected='blocked_original')
-        add('root_is_latest_update', updated, mutate=lambda s: s['event']['payload'].update(blocked_event_id=s['event']['payload']['predecessor_event_id']), expected='not_original_blockage', coherent=True)
+        add('root_is_latest_update', updated, mutate=lambda s: s['event']['payload'].update(blocked_event_id=s['event']['payload']['predecessor_event_id']), expected='foreign_original_blockage', coherent=True)
+        # Single-character refs keep wrong iterable types from independently
+        # violating uniqueness or the before/cleared-set comparison.
+        from pm_dcw_event_fixtures import replace
+        short = replace(positive, {'condition:a': 'a', 'condition:b': 'b'})
+        seal(short)
+        add('short_condition_refs', short)
         for field in ('remaining_before', 'cleared_conditions', 'remaining_after'):
-            for value in ('condition:b', None, {}, False):
-                add('action_container_' + field + '_' + repr(value), positive,
-                    mutate=lambda s, f=field, v=value: s['authority']['actions'][s['event']['payload']['resolution_source']].__setitem__(f, v), expected='clearing_action_type_' + field)
+            for value in ('b', None, {'b': False}, False):
+                add('action_container_' + field + '_' + repr(value), short,
+                    mutate=lambda s, f=field, v=value: s['authority']['actions'][s['event']['payload']['resolution_source']].__setitem__(f, v),
+                    expected='clearing_action_after' if field == 'remaining_after' else 'clearing_action_type_' + field)
         for field in ('remaining_before', 'cleared_conditions'):
             add('action_duplicate_' + field, positive,
                 mutate=lambda s, f=field: s['authority']['actions'][s['event']['payload']['resolution_source']][f].append('condition:b'), expected='clearing_action_duplicates_' + field)

@@ -4392,6 +4392,8 @@
     "UCC-129",
     "UCC-113",
     "UCC-110",
+    "PWIZ-097",
+    "PWIZ-098",
     "UCC-118",
     "UCC-131",
     "UCC-128",
@@ -6233,6 +6235,10 @@
     "OP-028",
     "OSI-431",
     "CV-341",
+    "CV-594",
+    "CV-595",
+    "CV-596",
+    "CV-597",
     "SIR-046",
     "SP-270",
     "SP-279",
@@ -7483,9 +7489,22 @@
     "UIW-044",
     "WM-073",
     "ACD-433",
+    "ACD-571",
+    "ACD-572",
+    "ACD-573",
+    "ACD-574",
+    "SP-579",
     "RTIM-001",
     "WM-096",
+    "CV-590",
+    "CV-591",
+    "CV-592",
+    "CV-593",
     "WM-098",
+    "SP-575",
+    "SP-576",
+    "SP-577",
+    "SP-578",
     "UIW-046"
   ],
   "build_order_blocked_nodes": [],
@@ -12322,6 +12341,46 @@
       "edge_type": "depends_on",
       "from": "ACD-511",
       "to": "ACD-510"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-571",
+      "to": "ACD-049"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-571",
+      "to": "ACD-050"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-572",
+      "to": "ACD-049"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-572",
+      "to": "ACD-050"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-573",
+      "to": "ACD-049"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-573",
+      "to": "ACD-050"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-574",
+      "to": "ACD-049"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-574",
+      "to": "ACD-050"
     },
     {
       "edge_type": "depends_on",
@@ -25997,6 +26056,136 @@
       "edge_type": "depends_on",
       "from": "CV-368",
       "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-590",
+      "to": "ACD-571"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-590",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-591",
+      "to": "ACD-572"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-591",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-592",
+      "to": "ACD-573"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-592",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-593",
+      "to": "ACD-574"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-593",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-594",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-594",
+      "to": "PWIZ-097"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-594",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-595",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-595",
+      "to": "PWIZ-098"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-595",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-596",
+      "to": "CV-233"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-596",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-596",
+      "to": "PWIZ-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-596",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-596",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-596",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-597",
+      "to": "CV-234"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-597",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-597",
+      "to": "PWIZ-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-597",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-597",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-597",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -61840,6 +62029,46 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PWIZ-097",
+      "to": "PWIZ-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-097",
+      "to": "PWIZ-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-097",
+      "to": "SP-216"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-097",
+      "to": "UCC-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-098",
+      "to": "PWIZ-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-098",
+      "to": "PWIZ-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-098",
+      "to": "SP-216"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-098",
+      "to": "UCC-032"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RAP-001",
       "to": "RAP-002"
     },
@@ -82562,6 +82791,126 @@
       "edge_type": "depends_on",
       "from": "SP-353",
       "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-575",
+      "to": "ACD-571"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-575",
+      "to": "CV-590"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-575",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-575",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-575",
+      "to": "SP-579"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-576",
+      "to": "ACD-572"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-576",
+      "to": "CV-591"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-576",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-576",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-576",
+      "to": "SP-579"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-577",
+      "to": "ACD-573"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-577",
+      "to": "CV-592"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-577",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-577",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-577",
+      "to": "SP-579"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-578",
+      "to": "ACD-574"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-578",
+      "to": "CV-593"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-578",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-578",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-578",
+      "to": "SP-579"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-579",
+      "to": "ACD-049"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-579",
+      "to": "ACD-050"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-579",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-579",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -117789,7 +118138,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T13:57:35Z",
+  "generated_at_utc": "2026-11-05T16:55:37Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -127374,6 +127723,74 @@
         "heading_level": 3,
         "heading_line": 28976,
         "line": 28978,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-571",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "ACD-571 - Bundle Revision Requested Event Semantics",
+        "heading_level": 3,
+        "heading_line": 29058,
+        "line": 29060,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-572",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "ACD-572 - Bundle Revision Started Event Semantics",
+        "heading_level": 3,
+        "heading_line": 29106,
+        "line": 29108,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-573",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "ACD-573 - Bundle Revision Completed Event Semantics",
+        "heading_level": 3,
+        "heading_line": 29154,
+        "line": 29156,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-574",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "ACD-574 - Bundle Revision Interrupted Event Semantics",
+        "heading_level": 3,
+        "heading_line": 29202,
+        "line": 29204,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -144939,6 +145356,142 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-590",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "CV-590 - Bundle Revision Requested Closed Event Contract",
+        "heading_level": 3,
+        "heading_line": 24484,
+        "line": 24486,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-591",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "CV-591 - Bundle Revision Started Closed Event Contract",
+        "heading_level": 3,
+        "heading_line": 24561,
+        "line": 24563,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-592",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "CV-592 - Bundle Revision Completed Closed Event Contract",
+        "heading_level": 3,
+        "heading_line": 24638,
+        "line": 24640,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-593",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "CV-593 - Bundle Revision Interrupted Closed Event Contract",
+        "heading_level": 3,
+        "heading_line": 24715,
+        "line": 24717,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw_fix1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-594",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "CV-594 - Deferred Intake wizard.opened Payload And Identity",
+        "heading_level": 3,
+        "heading_line": 24793,
+        "line": 24795,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw_fix1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-595",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "CV-595 - Deferred Intake wizard.deferred_payload.loaded Payload And Identity",
+        "heading_level": 3,
+        "heading_line": 24866,
+        "line": 24868,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dcw_round10",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-596",
+      "reasoning_tier": "high",
+      "risk_class": "planning_run_event_custody",
+      "source_location": {
+        "heading": "CV-596 - Planning Run wizard.blocked Complete Event Contract",
+        "heading_level": 3,
+        "heading_line": 24941,
+        "line": 24943,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dcw_round10",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-597",
+      "reasoning_tier": "high",
+      "risk_class": "planning_run_event_custody",
+      "source_location": {
+        "heading": "CV-597 - Planning Run wizard.unblocked Complete Event Contract",
+        "heading_level": 3,
+        "heading_line": 25160,
+        "line": 25162,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -216137,6 +216690,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_wave2_dcw_fix1",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-097",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "PWIZ-097 - Deferred Intake wizard.opened Observation",
+        "heading_level": 3,
+        "heading_line": 4150,
+        "line": 4152,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw_fix1",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-098",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "PWIZ-098 - Deferred Intake wizard.deferred_payload.loaded Observation",
+        "heading_level": 3,
+        "heading_line": 4207,
+        "line": 4209,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "runtime_artifacts_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
@@ -229765,6 +230352,91 @@
         "heading_level": 3,
         "heading_line": 29519,
         "line": 29521,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-575",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "SP-575 - Bundle Revision Requested Custody And History",
+        "heading_level": 3,
+        "heading_line": 29589,
+        "line": 29591,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-576",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "SP-576 - Bundle Revision Started Custody And History",
+        "heading_level": 3,
+        "heading_line": 29688,
+        "line": 29690,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-577",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "SP-577 - Bundle Revision Completed Custody And History",
+        "heading_level": 3,
+        "heading_line": 29786,
+        "line": 29788,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-578",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "SP-578 - Bundle Revision Interrupted Custody And History",
+        "heading_level": 3,
+        "heading_line": 29885,
+        "line": 29887,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_dcw_fix1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-579",
+      "reasoning_tier": "high",
+      "risk_class": "event_identity_custody",
+      "source_location": {
+        "heading": "SP-579 - Original Targeted Revision Source And Receipt Composition",
+        "heading_level": 3,
+        "heading_line": 29985,
+        "line": 29987,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -245077,10 +245749,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18915,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22125,
+    "node_count": 7506,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0

@@ -24949,7 +24949,7 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 a
   Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor its schema permits
   a current writer until individual registry admission. Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,
   extended for this exact event by this unit; payload/persistence binding is this unit plus CV-233. Jared''s only
-  quoted words are "i approve all of it". The deck''s approve-all mapping selects A, as recorded in DL-431 on origin/plans/ea-cards2-answers-20261105.
+  quoted words are "i approve all of it". The deck''s approve-all mapping selects A, as recorded in landed Plans/Decision_Log.md#DL-431.
   Answer source is /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md;
   frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.
   The approved option''s explanatory prose is the card''s text, not a Jared quotation.
@@ -25168,7 +25168,7 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045
   Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor its schema permits
   a current writer until individual registry admission. Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,
   extended for this exact event by this unit; payload/persistence binding is this unit plus CV-234. Jared''s only
-  quoted words are "i approve all of it". The deck''s approve-all mapping selects A, as recorded in DL-432 on origin/plans/ea-cards2-answers-20261105.
+  quoted words are "i approve all of it". The deck''s approve-all mapping selects A, as recorded in landed Plans/Decision_Log.md#DL-432.
   Answer source is /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md;
   frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.
   The approved option''s explanatory prose is the card''s text, not a Jared quotation.

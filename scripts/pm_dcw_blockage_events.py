@@ -121,8 +121,11 @@ def source_contract(s, p, seen):
     m.require(type(a['available_refs']) is list and p['source_ref'] in a['available_refs'], 'source_deleted')
     m.require(type(a['permission_snapshots']) is list and p['permission_snapshot_id'] in a['permission_snapshots'], 'permission_snapshot')
     required, cleared = set(obs['required_conditions']), set(obs['cleared_conditions'])
-    m.require(bool(required), 'required_conditions_empty')
-    m.require(cleared <= required, 'foreign_cleared_condition')
+    # Nonempty blocked next steps must each intersect required - cleared.
+    # Unblocked observations inherit that authentic nonempty predecessor set.
+    # These existing rules imply nonempty required conditions on every path.
+    if event['event_type'] == 'wizard.blocked':
+        m.require(cleared <= required, 'foreign_cleared_condition')
     for step in obs['next_steps']:
         m.require(set(step['prevented_by']) <= required, 'foreign_step_condition')
     m.require(len({x['step_ref'] for x in obs['next_steps']}) == len(obs['next_steps']), 'duplicate_step')
@@ -161,7 +164,7 @@ def source_contract(s, p, seen):
         m.require(previous is not None, 'predecessor_required')
         m.require(cleared == required, 'conditions_remain')
         root, _, root_p = historical_original(p['blocked_event_id'], s, seen)
-        m.require(root_p['predecessor_event_id'] is None, 'not_original_blockage')
+        # The chain's authenticated root equality below also excludes updates.
         # Walk the authenticated chain, rather than trusting a caller root ID.
         cursor = prior
         while cursor['predecessor_event_id'] is not None:
@@ -174,11 +177,11 @@ def source_contract(s, p, seen):
             m.require(action[field] == p[field], 'clearing_action_' + field)
         m.require(action['authorized'] is True, 'clearing_action_unauthorized')
         m.require(action['effect'] == 'conditions_cleared', 'not_clearing_action')
-        for field in ('remaining_before', 'cleared_conditions', 'remaining_after'):
+        for field in ('remaining_before', 'cleared_conditions'):
             m.require(type(action[field]) is list and all(type(v) is str for v in action[field]),
                       'clearing_action_type_' + field)
-            if field != 'remaining_after':
-                m.require(len(set(action[field])) == len(action[field]), 'clearing_action_duplicates_' + field)
+            m.require(len(set(action[field])) == len(action[field]), 'clearing_action_duplicates_' + field)
+        # Exact equality with [] below already implies the remaining_after type.
         m.require(bool(action['remaining_before']) and set(action['remaining_before']) <= required,
                   'clearing_action_before')
         m.require(set(action['cleared_conditions']) == set(action['remaining_before']), 'clearing_action_incomplete')

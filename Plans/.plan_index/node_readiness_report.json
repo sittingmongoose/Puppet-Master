@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18915,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22125,
+    "node_count": 7506,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T13:57:36Z",
+  "generated_at_utc": "2026-11-05T16:55:38Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -41967,10 +41967,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7487,
+  "plan_unit_count": 7506,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2806,
+      "high": 2825,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -43193,6 +43193,7 @@
       "event_contract_drift": 1,
       "event_driven_gui_projection_alignment": 1,
       "event_envelope_compatibility_break": 1,
+      "event_identity_custody": 17,
       "event_observation_misrepresented_as_goal_action": 1,
       "event_payload_gap": 1,
       "event_payload_schema_owner_split_drift": 1,
@@ -44435,6 +44436,7 @@
       "planning_history_lineage_loss": 1,
       "planning_intensity": 1,
       "planning_model": 1,
+      "planning_run_event_custody": 2,
       "planning_source_context_drift": 1,
       "planning_ui_projection": 1,
       "planning_wizard_runtime_drift": 1,
@@ -46116,7 +46118,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7287,
       "retired": 196,
       "superseded": 23
     },
@@ -46186,7 +46188,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5622,
+      "requirement": 5641,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46253,7 +46255,7 @@
       {
         "actual": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
         "error": "pnc019_source_hash_stale",
-        "expected": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "expected": "f7e2ff59269e9a305f890d98cd1aac1a3bfc0900410c68c5cc20ead5222de959",
         "source_path": "Plans/event_record.schema.json"
       },
       {
@@ -46277,7 +46279,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "00df41ae4fdb88f0465f95d87bff92ed9e47be104b78ca9d839f5a7b3f4520bc",
+        "expected": "84ba89f998bb38694b79debaa5f47696619058e80e914c393cf6fae31a607fd1",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46289,7 +46291,7 @@
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "79283d3bca2817d9938a91ae294e40f949d206dc26b3a19dc7ed8207ab30f276",
+        "expected": "6799b1bf957303b9664591fc5e9ca5e894560914cfa42805c2a1f360c60c8faf",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
@@ -46428,7 +46430,15 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/chain-wizard-flexibility.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_record.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",

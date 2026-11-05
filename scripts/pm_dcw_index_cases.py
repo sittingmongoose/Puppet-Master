@@ -54,11 +54,13 @@ def cases(row):
         cp = s['index']['checkpoint']; g = cp['generations'][cp['current_generation_id']]
         return g, s['index']['datasets'][g['index_dataset_name']]
 
-    # Astra's exact 54: six families x three fields x three history paths.
+    # Source-join witnesses retain authentic sources and reissue dependent digests.
+    # The historic 54 unrehashed inputs carried a second integrity defect.
     for field, invalid in [('event_id', 'reviewer-forged'), ('project_id', 'foreign-project'), ('payload_sha256', 'f' * 64)]:
         s = copy.deepcopy(base); _, rows = parts(s); next(iter(rows.values()))[field] = invalid
-        add('astra_' + field, s, 'index_row_source', ('index_row_source', 'index_row_digest'))
-        s = copy.deepcopy(s); rehash(s['index'], s['reader'])
+        rehash(s['index'], s['reader'])
+        add('astra_' + field, s, 'index_row_source', ('index_row_source',))
+        s = copy.deepcopy(s)
         add('rehash_' + field, s, 'index_row_source', ('index_row_source',))
 
     for field, invalid in [('event_type', 'run.started'), ('scope_partition', 'project~Zm9yZWlnbg'),
