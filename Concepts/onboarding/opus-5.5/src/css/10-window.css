@@ -609,7 +609,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] 
 .o55-ldwrap { display: inline-flex; align-items: center; flex: none; }
 
 /* FO-49: the native outer material, border and focus ring stay with the button's hit target.
-   Hover lift belongs to content inside that boundary. Existing look/press materials remain native. */
+   Hover lift and press squeeze belong to content inside that boundary; look materials remain native. */
 @property --o55-hover-y { syntax: '<length>'; inherits: true; initial-value: 0px; }
 @property --o55-press-s { syntax: '<number>'; inherits: true; initial-value: 1; }
 :is(.o55-card, .o55-tile) > * { translate: 0 var(--o55-hover-y); scale: var(--o55-press-s); }

@@ -2401,7 +2401,9 @@
      (Jared, QA round 2 Q20, 2026-10-30: "The hover glow circle around the mouse ... should be toned down. It also should be
      on objects that have the edge glow like the usage widgets. Similar to how the friendly and basic theme does it."). */
   /* the press: buttons flex and a small light blooms under the finger. Strip items and rail icons get neither: their
-     lens is the answer to a press (the white bloom read as a flash in the films). */
+     lens is the answer to a press (the white bloom read as a flash in the films). A wizard choice card or tile flexes
+     its content inside its stationary face (FO-49): flexing the button itself moved the box under a held pointer, so
+     it grew past its painted rest edge and came back under it, and a release there could miss the choice. */
   document.addEventListener('pointerdown', function (e) {
     if (!isGlass() || e.button !== 0) return;
     var g = e.target.closest && e.target.closest('.pmu-ctlbtn, .pmu-iconbtn, .o55-btn, .o55-card, .o55-tile, .o55t-btn, .o55t-barbtn');
@@ -2410,7 +2412,8 @@
     glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
     document.body.appendChild(glow);
     var S = spring(380, 18, 1), fr = S.map(function (s) { return { offset: s.t / S[S.length - 1].t, transform: 'scale(' + (1 + 0.025 * Math.sin(Math.min(1, s.t / 120) * Math.PI) + 0.012 * (1 - s.x) * Math.sin(s.t / 22)).toFixed(4) + ')' }; });
-    g.animate(fr, { duration: S[S.length - 1].t, easing: 'linear', composite: 'add' });
+    var flex = g.matches('.o55-card, .o55-tile') ? Array.prototype.slice.call(g.children) : [g];
+    flex.forEach(function (n) { n.animate(fr, { duration: S[S.length - 1].t, easing: 'linear', composite: 'add' }); });
     var size = Math.min(Math.max(r.width, r.height), 56) / 36;
     glow.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0.5 }, { transform: 'translate(-50%,-50%) scale(' + size.toFixed(2) + ')', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.2,.7,.2,1)' }).onfinish = function () { glow.remove(); };
   }, true);
