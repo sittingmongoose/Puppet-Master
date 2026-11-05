@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6156-L6461
+Source lines: L6156-L6464
 
-Source SHA256: `9c0410e167ba897b0a47edc1b957d464d777bde6a57087844b2bb7387b2eec9a`
+Source SHA256: `18ef187b558dadb4f429dd076afc8327f6d4522c80f1c9ff103a560d89754636`
 
 ---
 
@@ -258,7 +258,7 @@ owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor contributes the execution side of the Plans-to-Code Handoff Matrix. A complete WorkNode execution flow emits worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt when needed, merge_or_promotion_receipt when applicable, worknode_completion_receipt, and finalization evidence. Each transition records source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, and user escalation condition. Worker claims are never enough to certify code complete.
   The receipt chain preserves source_artifact, destination_artifact, retry_route, rollback_route, all WorkNodes terminal, all automated tests passed or dispositioned, and artifact-backed handoff evidence before code completion is certified. The source-control chain must preserve the same repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, rollback_available, rollback_ref, and restore_command_or_action through preflight, safe point creation, mutation/change, optional promotion, finalization, and completion certification.
-  A run is certified complete only after every required verification, receipt, authority, and finalization gate clears. Unresolved validator failure, verifier unavailability, or an exhausted repair budget never yields certified complete; existing owner policy determines the resulting disposition.
+  A run is certified complete only after every required verification, receipt, authority, and finalization gate clears. Unresolved validator failure, verifier unavailability, or an exhausted repair budget never yields certified complete; existing owner policy determines the disposition of the first two. An exhausted repair budget stops the run blocked with BlockedReasonCode budget_exhausted. When Settings planning.verification.repair-budget-exhaustion is ask_exception, that blocked stop also asks the project owner, through the DL-081 approved verification exception route, whether to finish as completed_with_approved_verification_exception, with the approver and the remaining risks recorded; the run is never shown as a clean pass. Until that route is bound (GRS-065 keeps it separately unbound), the run stays blocked. There is no degraded run state.
 gui_related: false
 gui_classification_reason: Execution receipts and certification handoffs are runtime/evidence contracts.
 depends_on: [EP-099, EP-100, EP-101, EP-102, PNC-014]
@@ -268,6 +268,7 @@ acceptance_criteria:
   - WorkNode execution receipts distinguish dispatch, preflight, safe point, change, test, audit, repair, promotion, and completion.
   - Code completion is certified from receipts, tests, source-control state, Auditor result, blockers, and final evidence, not worker prose.
   - A run with unresolved validator failure, verifier unavailability, or exhausted repair budget cannot be certified complete.
+  - An exhausted repair budget stops the run blocked with budget_exhausted; ask_exception adds only an owner exception request through the DL-081 route, never a degraded or clean finish.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
@@ -287,6 +288,8 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0018
 preserved_exact_tokens:
   - "certified complete"
+  - "budget_exhausted"
+  - "ask_exception"
   - "worknode_dispatch_receipt"
   - "source_control_preflight_receipt"
   - "safe_point_receipt"

@@ -2799,8 +2799,27 @@ def validate_effective_status_projection(
     }
 
 
-def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str) -> bool:
-    """Compatibility inference for pre-repair_required audit artifacts."""
+# Q-A (Jared, "i approve all of it", 2026-11-05T04:33:13Z; DL-340): in the 55 June directories of
+# LEGACY_AUDIT_DIRS, and only for an inventoried file with its frozen bytes, the compatibility
+# inference reads four more words as "passed". These claim statuses mean the claim held:
+LEGACY_COMPAT_CLAIM_STATUSES = frozenset({"pass", "supported_by_source_atoms", "previously_closed"})
+# and a validator result whose status is expected_fail counts as passed only for these five
+# governance commands, which the June audits expected to fail on stale generated files until a
+# governance seal refreshed them. Every other expected_fail result, and every other field (an
+# issue list, an overclaim list, a failing status), keeps its full meaning.
+LEGACY_COMPAT_EXPECTED_FAIL_COMMANDS = frozenset({
+    "python3 scripts/pm-plans-verify.py run-gates",
+    "python3 scripts/pm-shard-plans.py --check",
+    "python3 scripts/pm-plans-verify.py verify-spec-lock",
+    "python3 scripts/pm-plans-verify.py validate-evidence",
+    "python3 scripts/pm-plans-verify.py validate-plan-graph",
+})
+
+
+def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str, compat_words: bool = False) -> bool:
+    """Compatibility inference for pre-repair_required audit artifacts. `compat_words` (a frozen
+    file of a June directory only) lets a claim status in LEGACY_COMPAT_CLAIM_STATUSES count as
+    a held claim; the row's other fields are still read."""
     risk_key = str(row.get("risk_key", "")).lower()
     finding_family = str(row.get("finding_family", "")).lower()
     if any(
@@ -2833,7 +2852,9 @@ def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str) -> bool:
         return True
 
     claim_status = str(row.get("claim_status", ""))
-    if claim_status and claim_status != "source_lineage_supported":
+    if claim_status and claim_status != "source_lineage_supported" and not (
+        compat_words and claim_status in LEGACY_COMPAT_CLAIM_STATUSES
+    ):
         return True
 
     issues = row.get("issues")
@@ -2853,7 +2874,7 @@ def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str) -> bool:
 
 def actionable_jsonl_rows(
     path: Path, artifact: str, errors: list[str], inferred_out: set[str] | None = None,
-    explicit_out: set[str] | None = None,
+    explicit_out: set[str] | None = None, compat_words: bool = False,
 ) -> list[str]:
     """Actionable row keys of a JSONL audit artifact. `inferred_out`, when given, collects the
     keys of rows that carry neither repair_required nor finding_level, so the compatibility
@@ -2878,7 +2899,7 @@ def actionable_jsonl_rows(
             continue
         if explicit is False:
             continue
-        if legacy_actionable_jsonl_row(row, artifact):
+        if legacy_actionable_jsonl_row(row, artifact, compat_words):
             rows.append(str(line_no))
     return rows
 
@@ -2895,7 +2916,7 @@ def _note_classification(row: Any, key: str, inferred_out: set[str] | None, expl
 
 def actionable_warning_rows(
     data: dict[str, Any], artifact: str, errors: list[str], inferred_out: set[str] | None = None,
-    explicit_out: set[str] | None = None,
+    explicit_out: set[str] | None = None, compat_words: bool = False,
 ) -> list[str]:
     rows: list[str] = []
     for field in ("warnings", "findings", "semantic_risks"):
@@ -2909,14 +2930,14 @@ def actionable_warning_rows(
             explicit = explicit_repair_required(item, f"{artifact}:{field}[{index}]", errors)
             if explicit is True:
                 rows.append(f"{field}[{index}]")
-            elif explicit is None and legacy_actionable_jsonl_row(item, artifact):
+            elif explicit is None and legacy_actionable_jsonl_row(item, artifact, compat_words):
                 rows.append(f"{field}[{index}]")
     return rows
 
 
 def actionable_json_rows(
     path: Path, artifact: str, errors: list[str], inferred_out: set[str] | None = None,
-    explicit_out: set[str] | None = None,
+    explicit_out: set[str] | None = None, compat_words: bool = False,
 ) -> list[str]:
     if not path.exists():
         errors.append(f"missing source artifact {rel(path)}")
@@ -2937,7 +2958,7 @@ def actionable_json_rows(
             return rows
 
     if artifact == "ledger_consistency.json":
-        rows.extend(actionable_warning_rows(data, artifact, errors, inferred_out, explicit_out))
+        rows.extend(actionable_warning_rows(data, artifact, errors, inferred_out, explicit_out, compat_words))
         new_units = (
             data.get("compile_queue", {})
             .get("range_new_plan_units_not_in_compile_queue", [])
@@ -2963,7 +2984,10 @@ def actionable_json_rows(
             if explicit is False:
                 continue
             status = result.get("status")
-            passed = status == "pass" or (status is None and result.get("exit_code") == 0)
+            passed = status == "pass" or (status is None and result.get("exit_code") == 0) or (
+                compat_words and status == "expected_fail"
+                and result.get("command") in LEGACY_COMPAT_EXPECTED_FAIL_COMMANDS
+            )
             side_effect_count = result.get("side_effect_count", 0)
             if not passed or (isinstance(side_effect_count, int) and side_effect_count > 0):
                 rows.append(f"results.{name}")
@@ -2972,12 +2996,12 @@ def actionable_json_rows(
 
 def actionable_artifact_rows(
     path: Path, artifact: str, errors: list[str], inferred_out: set[str] | None = None,
-    explicit_out: set[str] | None = None,
+    explicit_out: set[str] | None = None, compat_words: bool = False,
 ) -> list[str]:
     if artifact.endswith(".jsonl"):
-        return actionable_jsonl_rows(path, artifact, errors, inferred_out, explicit_out)
+        return actionable_jsonl_rows(path, artifact, errors, inferred_out, explicit_out, compat_words)
     if artifact.endswith(".json"):
-        return actionable_json_rows(path, artifact, errors, inferred_out, explicit_out)
+        return actionable_json_rows(path, artifact, errors, inferred_out, explicit_out, compat_words)
     return [str(line_no) for line_no in range(1, artifact_row_count(path, errors) + 1)]
 
 
@@ -3358,17 +3382,38 @@ def validate_audit_dir(
     source_report = validate_source_artifacts(audit_dir, requested_artifacts, audit_refs, errors)
     scope_report = validate_scope_manifest(audit_dir, audit_refs, errors)
 
+    legacy_state = legacy_audit_state(audit_dir)
+    reserved_inputs = reserved_source_names(audit_dir, requested_artifacts)
+    # Any input the run reads that is a symbolic link disqualifies the directory: what a
+    # diagnostic names is then not the file that was read.
+    # Every path the per-audit run reads, checked component by component as written (a source
+    # argument through a symlinked parent counts), plus the registry (Q7 Sol r7).
+    symlinked_inputs = sorted(
+        [name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX,
+                           EFFECTIVE_STATUS, TERMINAL_STATE, "post_repair_audit_report.json"}
+         if path_has_symlink(audit_dir / name)]
+        + (["<registry>"] if path_has_symlink(registry_path) else [])
+    )
+    # Q-A compatibility words (DL-340) apply only when the whole run qualifies for the legacy rule:
+    # an eligible June directory, no reserved companion file requested as a source, and no input
+    # read through a symlink (Q-A Astra r1). Even then they apply only to a frozen file, never to
+    # repair_closure_matrix.jsonl, whose frozen part is only a prefix.
+    compat_files = (
+        set((legacy_state or {}).get("frozen_files") or []) - {"repair_closure_matrix.jsonl"}
+        if legacy_state is not None and not reserved_inputs and not symlinked_inputs else set()
+    )
     actionable_rows: set[tuple[str, str]] = set()
     inferred_rows: set[tuple[str, str]] = set()
     for artifact in requested_artifacts:
         inferred_keys: set[str] = set()
         explicit_keys: set[str] = set()
-        for source_row in actionable_artifact_rows(audit_dir / artifact, artifact, errors, inferred_keys, explicit_keys):
+        compat_words = artifact in compat_files and not path_has_symlink(audit_dir / artifact)
+        for source_row in actionable_artifact_rows(audit_dir / artifact, artifact, errors, inferred_keys, explicit_keys,
+                                                   compat_words):
             actionable_rows.add((artifact, str(source_row)))
         if "*" not in explicit_keys:
             # A key counts as inferred only if no row that shares it states either field.
             inferred_rows.update((artifact, key) for key in inferred_keys - explicit_keys)
-    legacy_state = legacy_audit_state(audit_dir)
     legacy_context: dict[str, Any] = {
         "legacy_state": legacy_state,
         "historical_matrix_lines": (legacy_state or {}).get("historical_matrix_lines"),
@@ -3379,17 +3424,8 @@ def validate_audit_dir(
         ),
         "matrix_identity_agrees": set(),
         "source_artifacts": list(requested_artifacts),
-        "reserved_source_inputs": reserved_source_names(audit_dir, requested_artifacts),
-        # Any input the run reads that is a symbolic link disqualifies the directory: what a
-        # diagnostic names is then not the file that was read.
-        # Every path the per-audit run reads, checked component by component as written (a source
-        # argument through a symlinked parent counts), plus the registry (Q7 Sol r7).
-        "symlinked_inputs": sorted(
-            [name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX,
-                               EFFECTIVE_STATUS, TERMINAL_STATE, "post_repair_audit_report.json"}
-             if path_has_symlink(audit_dir / name)]
-            + (["<registry>"] if path_has_symlink(registry_path) else [])
-        ),
+        "reserved_source_inputs": reserved_inputs,
+        "symlinked_inputs": symlinked_inputs,
         "report_has_status": isinstance(audit_report, dict) and "status" in audit_report,
         "scope_manifest_exists": (audit_dir / SCOPE_MANIFEST).exists(),
         "extra_coverage_all_inferred": False,
@@ -5391,6 +5427,96 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                   src_link_report.get("legacy_format_rule", {}).get("demoted_count", 0) == 0, src_link_report)
             (fourth / "new_findings.jsonl").unlink()
             (fourth / forged).unlink()
+
+            # Q-A (DL-340): four compatibility words, in frozen files of a June directory only.
+            check("compat_words_default_off", legacy_actionable_jsonl_row({"claim_status": "pass"}, "planunit_source_claims.jsonl"))
+            check("compat_words_read_three_claim_statuses_as_held", not any(
+                legacy_actionable_jsonl_row({"claim_status": w}, "planunit_source_claims.jsonl", True)
+                for w in ("pass", "supported_by_source_atoms", "previously_closed")))
+            check("compat_words_keep_every_other_field", all(
+                legacy_actionable_jsonl_row(dict(r, claim_status="pass"), "planunit_source_claims.jsonl", True)
+                for r in ({"overclaim_notes": ["x"]}, {"issues": ["x"]}, {"status": "fail"},
+                          {"classification": "missing_or_drift"}, {"missing_from_planunit_source_atoms": ["atom-0001"]})))
+            check("compat_words_other_claim_status_stays_actionable",
+                  legacy_actionable_jsonl_row({"claim_status": "unsupported"}, "planunit_source_claims.jsonl", True)
+                  and legacy_actionable_jsonl_row({"claim_status": "PASS"}, "planunit_source_claims.jsonl", True))
+            check("compat_words_leave_semantic_risks_alone",
+                  legacy_actionable_jsonl_row({"classification": "missing_or_drift", "claim_status": "pass"}, "semantic_risks.jsonl", True))
+            fifth = audits / sorted(LEGACY_AUDIT_DIRS)[4]
+            fifth.mkdir(parents=True, exist_ok=True)
+            (fifth / "audit_report.json").write_text(json.dumps({"audit_id": fifth.name}), encoding="utf-8")
+            claim_rows = [{"claim_status": "pass"}, {"claim_status": "supported_by_source_atoms"},
+                          {"claim_status": "previously_closed", "overclaim_notes": ["an overclaim list keeps the row"]},
+                          {"claim_status": "previously_closed"}, {"claim_status": "unsupported"}]
+            (fifth / "planunit_source_claims.jsonl").write_text("".join(json.dumps(r) + "\n" for r in claim_rows), encoding="utf-8")
+            gov = sorted(LEGACY_COMPAT_EXPECTED_FAIL_COMMANDS)[0]
+            (fifth / "validator_results.json").write_text(json.dumps({"results": [
+                {"name": "governance", "command": gov, "status": "expected_fail", "exit_code": 1},
+                {"name": "other", "command": "python3 scripts/pm-other.py", "status": "expected_fail", "exit_code": 1},
+                {"name": "governance-side-effect", "command": gov, "status": "expected_fail", "exit_code": 1, "side_effect_count": 1},
+                {"name": "governance-failed", "command": gov, "status": "fail", "exit_code": 1}]}), encoding="utf-8")
+            (fifth / "repair_closure_matrix.jsonl").write_text("", encoding="utf-8")
+
+            def compat_missing(extra: list[str] | None = None) -> list[str]:
+                _LEGACY_INVENTORY_CACHE.clear()
+                eligible.append(legacy_audit_state(fifth) is not None)
+                rep = validate_audit_dir(fifth, require_matrix=True, require_effective_status=False,
+                                         source_artifacts=["planunit_source_claims.jsonl", "validator_results.json", *(extra or [])],
+                                         registry_path=legacy_registry)
+                return [e for e in rep["errors"] if "missing closure rows for" in e]
+
+            eligible: list[bool] = []
+            # Not inventoried: full rules, 5 claim rows + 4 validator results are actionable.
+            check("compat_words_off_outside_inventory", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
+            freeze(fifth)
+            # Frozen: rows 3 and 5 of the claims and the non-governance, side-effect and failed results stay.
+            check("compat_words_apply_to_frozen_files", any("missing closure rows for 5 source rows" in e for e in compat_missing()), compat_missing())
+            (fifth / "new_claims.jsonl").write_text(json.dumps({"claim_status": "pass"}) + "\n", encoding="utf-8")
+            check("compat_words_skip_a_file_added_after_the_freeze",
+                  any("missing closure rows for 6 source rows" in e for e in compat_missing(["new_claims.jsonl"])), compat_missing(["new_claims.jsonl"]))
+            (fifth / "new_claims.jsonl").unlink()
+            saved_claims = (fifth / "planunit_source_claims.jsonl").read_bytes()
+            (fifth / "planunit_source_claims.jsonl").write_bytes(saved_claims + b"\n")
+            check("compat_words_off_when_a_frozen_file_changed", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
+            (fifth / "planunit_source_claims.jsonl").write_bytes(saved_claims)
+            # Each whole-run case starts from an eligible directory, so only its own condition can turn the words off.
+            check("compat_words_whole_run_cases_start_eligible", legacy_audit_state(fifth) is not None)
+            whole_run_start = len(eligible)
+            # Whole-run exclusions come first (Q-A Astra r1): a reserved companion requested as a source,
+            # in any spelling, or any input read through a symlink turns the words off for every file, so
+            # all 9 rows of the frozen files stay actionable (audit_report.json itself adds none).
+            check("compat_words_off_when_a_companion_is_a_source",
+                  any("missing closure rows for 9 source rows" in e for e in compat_missing(["audit_report.json"])),
+                  compat_missing(["audit_report.json"]))
+            check("compat_words_off_when_a_companion_is_a_source_respelled",
+                  any("missing closure rows for 9 source rows" in e for e in compat_missing(["./audit_report.json"])),
+                  compat_missing(["./audit_report.json"]))
+            saved_registry = legacy_registry.read_bytes() if legacy_registry.exists() else b""
+            real_registry = legacy_registry.with_name("_legacy_fixture_registry.real.jsonl")
+            real_registry.write_bytes(saved_registry)
+            legacy_registry.unlink(missing_ok=True)
+            legacy_registry.symlink_to(real_registry)
+            check("compat_words_off_when_the_registry_is_a_symlink", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
+            legacy_registry.unlink()
+            legacy_registry.write_bytes(saved_registry)
+            real_registry.unlink()
+            # The matrix's frozen part is a prefix: a row appended to it is never read with the words.
+            (fifth / "repair_closure_matrix.jsonl").write_text(json.dumps({"claim_status": "pass"}) + "\n", encoding="utf-8")
+            _LEGACY_INVENTORY_CACHE.clear()
+            matrix_src = validate_audit_dir(fifth, require_matrix=True, require_effective_status=False,
+                                            source_artifacts=["repair_closure_matrix.jsonl"], registry_path=legacy_registry)
+            check("compat_words_never_read_the_matrix", any("missing closure rows for 1 source rows" in e for e in matrix_src["errors"]), matrix_src["errors"])
+            (fifth / "repair_closure_matrix.jsonl").write_text("", encoding="utf-8")
+            check("compat_words_whole_run_cases_ran_on_an_eligible_directory",
+                  len(eligible) > whole_run_start and all(eligible[whole_run_start:]) and legacy_audit_state(fifth) is not None,
+                  eligible[whole_run_start:])
+            moved = fifth.parent / "claims-elsewhere.jsonl"
+            (fifth / "planunit_source_claims.jsonl").rename(moved)
+            (fifth / "planunit_source_claims.jsonl").symlink_to(moved)
+            # A frozen file reached through a symlink disqualifies the whole directory (legacy_audit_state).
+            check("compat_words_off_through_a_symlink", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
+            (fifth / "planunit_source_claims.jsonl").unlink()
+            moved.rename(fifth / "planunit_source_claims.jsonl")
         finally:
             LEGACY_INVENTORY_SHA256 = saved_pin
             _LEGACY_INVENTORY_CACHE.clear()
