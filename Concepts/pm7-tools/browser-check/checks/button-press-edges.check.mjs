@@ -9,15 +9,15 @@ export default async function(t) {
  const hold=Number(t.args.hold||350);
  const fe=f===t.page.mainFrame()?null:await f.frameElement(),off=fe?await fe.boundingBox():{x:0,y:0};
  await f.evaluate(()=>{
-  window.__press={clicks:[],downs:[],trial:''};
+  window.__press={clicks:[],downs:[],ups:[],cancels:[],trial:''};
   const id=e=>{const c=e.target.closest&&e.target.closest('button');return c?c.__pressId??'other-choice':null;};
   window.addEventListener('pointerdown',e=>{
    const p=window.__press;p.downs.push({trial:p.trial,id:id(e)});p.holding=true;p.metrics={worst:0,frames:0};
    const sample=()=>{if(!p.holding||!p.node)return;const r=p.node.getBoundingClientRect(),b=p.rest;p.metrics.frames++;p.metrics.worst=Math.max(p.metrics.worst,Math.abs(r.x-b.x),Math.abs(r.y-b.y),Math.abs(r.width-b.w),Math.abs(r.height-b.h));requestAnimationFrame(sample);};sample();
   },true);
-  window.addEventListener('pointerup',()=>{window.__press.holding=false;},true);
-  window.addEventListener('pointercancel',()=>{window.__press.holding=false;},true);
-  window.addEventListener('click',e=>{window.__press.clicks.push({trial:window.__press.trial,id:id(e)});e.stopImmediatePropagation();e.preventDefault();},true);
+  window.addEventListener('pointerup',e=>{window.__press.ups.push({trial:window.__press.trial,id:id(e)});window.__press.holding=false;},true);
+  window.addEventListener('pointercancel',e=>{window.__press.cancels.push({trial:window.__press.trial,id:id(e)});window.__press.holding=false;},true);
+  window.addEventListener('click',e=>{window.__press.clicks.push({trial:window.__press.trial,id:id(e),trusted:e.isTrusted});e.stopImmediatePropagation();e.preventDefault();},true);
  });
  const motions=t.args.motion?String(t.args.motion).split(','):['no-preference','reduce','attribute'];
  const looks=t.args.look?String(t.args.look).split(','):LOOKS;
@@ -32,11 +32,11 @@ export default async function(t) {
     await t.page.mouse.move(2,2);await f.evaluate(s=>{O55.S.lookOpen=false;O55.S.sess.ui.sheet=null;if(s==='safe-details')O55.S.sess.ui['details:hist']=true;if(s==='rail-history')O55.S.sess.history=['welcome','where','begin','name'];if(s==='away-proxy'){O55.S.draft().remote_mode='reverse_proxy';O55.S.draft().proxy_hostname='https://pm.example.net';}O55.ui.go(s==='look-menu'?'look':s==='backup-sheet'?'safe':s==='tree-sheet'?'ex-folder':s==='away-proxy'?'away':s==='safe-details'?'safe':s==='rail-history'?'review':s==='tip-open'?'name':s,{noHistory:true});if(s==='look-menu')O55.ui.act('lookMenu');if(s==='tip-open'){const q=O55.S.root.querySelector('.o55-layer:not(.o55-out) .o55-tipq');if(q)O55.ui.act('tip',q.getAttribute('data-arg'));}if(s==='backup-sheet'||s==='tree-sheet'){O55.S.sess.ui.sheet=s==='backup-sheet'?'backup':'tree';O55.ui.refresh();}},screen);await f.waitForTimeout(1800);
     await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility({opacityProperty:true,visibilityProperty:true})&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);window.__pressInventory.push({key,screen:O55.S.sess.screen,classes:e.className,action:e.getAttribute('data-o55-do'),label:e.textContent.trim(),width:e.getBoundingClientRect().width});e.setAttribute('data-press-test','');}}});});
     const sel=L+'button[data-press-test]'+(t.args.button?String(t.args.button):''),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
-    await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
+    await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];window.__press.ups=[];window.__press.cancels=[];});
     const misses=[],moved=[],scaled=[],covered=[],undecorated=[],tweened=[],ambient=[],tipOwn=[];let presses=0;
     for(let i=0;i<count;i++) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
-     const isLink=await c.evaluate(e=>e.matches('.o55-link')),isTip=await c.evaluate(e=>e.matches('.pst-tip-x'));let linkShot=false;
+     const isLink=await c.evaluate(e=>e.matches('.o55-link')),isTip=await c.evaluate(e=>e.matches('.pst-tip-x'));
      const ambientStart=isTip?await c.evaluate(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y};}):null;
      if(isLink&&t.args.inventoryOut&&motion==='no-preference')await t.crop(`${look}-${screen}-link-rest`,c,'Native underline at rest after moving text into its visual layer.');
      const points=['corner top-left','corner top-right','corner bottom-left','corner bottom-right'];
@@ -66,17 +66,26 @@ export default async function(t) {
       const read=()=>f.evaluate(({sel,i})=>{const e=document.querySelectorAll(sel)[i],r=e.getBoundingClientRect(),kid=e.firstElementChild,ks=kid?getComputedStyle(kid):null;
        return {x:r.x,y:r.y,w:r.width,h:r.height,rootScale:getComputedStyle(e).scale,rootTranslate:getComputedStyle(e).translate,transform:getComputedStyle(e).transform,active:e.matches(':active'),linkUnderline:!e.matches('.o55-link')||!kid||ks.textDecorationLine===getComputedStyle(e).textDecorationLine,kidDuration:ks?ks.transitionDuration:'0s',kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
       let h=await read();
-      if(isLink&&t.args.inventoryOut&&motion==='no-preference'&&!linkShot){await t.crop(`${look}-${screen}-link-held`,{x:off.x+rest.x,y:off.y+rest.y,width:rest.w,height:rest.h},'Native underline stays with the pressed text while the link target is stationary.');linkShot=true;}
       const drift=await f.evaluate(()=>({...window.__press.metrics}));
       if(t.args.marks)await t.mark(`up ${trial}`);await t.page.mouse.up();presses++;
-      const got=await f.evaluate(trial=>({c:window.__press.clicks.filter(x=>x.trial===trial),d:window.__press.downs.filter(x=>x.trial===trial)}),trial);
-      if(!(got.d.length===1&&got.d[0].id===i&&got.c.length===1&&got.c[0].id===i))misses.push({trial,down:got.d.map(x=>x.id),click:got.c.map(x=>x.id),held:h.transform});
+      await f.waitForFunction(trial=>window.__press.clicks.some(e=>e.trial===trial),trial,{timeout:1000}).catch(()=>{});
+      const got=await f.evaluate(trial=>({c:window.__press.clicks.filter(x=>x.trial===trial),d:window.__press.downs.filter(x=>x.trial===trial),u:window.__press.ups.filter(x=>x.trial===trial),cancel:window.__press.cancels.filter(x=>x.trial===trial)}),trial);
+      if(!(got.d.length===1&&got.d[0].id===i&&got.c.length===1&&got.c[0].id===i&&got.c[0].trusted))misses.push({trial,down:got.d.map(x=>x.id),click:got.c.map(x=>x.id),up:got.u,cancel:got.cancel,held:h.transform});
       if(isTip){ambient.push({kind:'ambient, not press',trial,betweenTrialsX:rest.x-ambientStart.x,betweenTrialsY:rest.y-ambientStart.y,holdDrift:drift.worst});if(h.transform!=='none'||!['none','1'].includes(h.rootScale)||!['none','0px','0px 0px'].includes(h.rootTranslate))tipOwn.push({trial,transform:h.transform,scale:h.rootScale,translate:h.rootTranslate});}
       if(drift.frames<2||drift.worst>.01||Math.abs(h.x-rest.x)>.01||Math.abs(h.y-rest.y)>.01||Math.abs(h.w-rest.w)>.01||Math.abs(h.h-rest.h)>.01)moved.push({trial,drift,rest,held:h});
       const contentScaled=(h.kidScale!=='none'&&h.kidScale!=='1')||/matrix\((?!1, 0, 0, 1,)/.test(h.kidTransform);
       if(look.startsWith('retro')&&h.kidDuration.split(',').some(v=>parseFloat(v)!==0))tweened.push({trial,duration:h.kidDuration});
       if(!h.linkUnderline)undecorated.push(trial);
       if(motion!=='no-preference'&&(contentScaled||h.transform!=='none'||!['none','0px','0px 0px'].includes(h.kidTranslate)))scaled.push({trial,transform:h.transform,kidScale:h.kidScale,kidTransform:h.kidTransform});
+     }
+     // Capture press appearance separately. Screenshot/compositor work must not
+     // extend or interfere with the eight native activation trials above.
+     if(isLink&&t.args.inventoryOut&&motion==='no-preference') {
+      await t.page.mouse.move(2,2);const b=await c.boundingBox();
+      await f.evaluate(({sel,i})=>{const e=document.querySelectorAll(sel)[i],r=e.getBoundingClientRect();window.__press.trial='visual-only';window.__press.node=e;window.__press.rest={x:r.x,y:r.y,w:r.width,h:r.height};},{sel,i});
+      await t.page.mouse.move(b.x+b.width/2,b.y+b.height/2);await t.page.mouse.down();await f.waitForTimeout(hold);
+      await t.crop(`${look}-${screen}-link-held`,{x:b.x,y:b.y,width:b.width,height:b.height},'Separate visual press: underline moves with content inside the stationary link.');
+      await t.page.mouse.up();
      }
     }
     await t.page.mouse.move(2,2);
