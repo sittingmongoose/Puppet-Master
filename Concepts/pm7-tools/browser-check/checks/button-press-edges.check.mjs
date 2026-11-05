@@ -33,10 +33,11 @@ export default async function(t) {
     await f.evaluate(()=>{document.querySelectorAll('[data-press-test]').forEach(e=>e.removeAttribute('data-press-test'));document.querySelectorAll('#pm-o55-onboarding button:not(.o55-card, .o55-tile):not([aria-disabled="true"]):not(:disabled)').forEach(e=>{if(e.checkVisibility({opacityProperty:true,visibilityProperty:true})&&e.getBoundingClientRect().width){const cls=[...e.classList].filter(c=>!['o55-on','pmh-on','o55-lookbtn','o55-talk','o55-close'].includes(c)).sort().join('.')||e.parentElement.className;const key=cls+(e.matches('.o55-btn')?':'+(e.closest('.o55-foot')?'footer':e.closest('.o55-sheet')?'sheet':'inline'):'');if(!window.__pressSeen.has(key)){window.__pressSeen.add(key);window.__pressInventory.push({key,screen:O55.S.sess.screen,classes:e.className,action:e.getAttribute('data-o55-do'),label:e.textContent.trim(),width:e.getBoundingClientRect().width});e.setAttribute('data-press-test','');}}});});
     const sel=L+'button[data-press-test]'+(t.args.button?String(t.args.button):''),count=await f.locator(sel).count(),tag=`${look} ${motion} ${screen}`;
     await f.evaluate(()=>{window.__press.clicks=[];window.__press.downs=[];});
-    const misses=[],moved=[],scaled=[],covered=[],undecorated=[],tweened=[];let presses=0;
+    const misses=[],moved=[],scaled=[],covered=[],undecorated=[],tweened=[],ambient=[],tipOwn=[];let presses=0;
     for(let i=0;i<count;i++) {
      const c=f.locator(sel).nth(i);await c.scrollIntoViewIfNeeded();await t.page.mouse.move(2,2);
-     const isLink=await c.evaluate(e=>e.matches('.o55-link'));let linkShot=false;
+     const isLink=await c.evaluate(e=>e.matches('.o55-link')),isTip=await c.evaluate(e=>e.matches('.pst-tip-x'));let linkShot=false;
+     const ambientStart=isTip?await c.evaluate(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y};}):null;
      if(isLink&&t.args.inventoryOut&&motion==='no-preference')await t.crop(`${look}-${screen}-link-rest`,c,'Native underline at rest after moving text into its visual layer.');
      const points=['corner top-left','corner top-right','corner bottom-left','corner bottom-right'];
      for(const d of (t.args.twoPx?[1,2]:[1]))for(const edge of ['top','bottom','left','right'])points.push(`${edge}-${d}`);
@@ -63,13 +64,14 @@ export default async function(t) {
       // Sampling starts in pointerdown capture, before owner press handlers and the first painted frame.
       await f.waitForTimeout(hold);
       const read=()=>f.evaluate(({sel,i})=>{const e=document.querySelectorAll(sel)[i],r=e.getBoundingClientRect(),kid=e.firstElementChild,ks=kid?getComputedStyle(kid):null;
-       return {x:r.x,y:r.y,w:r.width,h:r.height,transform:getComputedStyle(e).transform,active:e.matches(':active'),linkUnderline:!e.matches('.o55-link')||!kid||ks.textDecorationLine===getComputedStyle(e).textDecorationLine,kidDuration:ks?ks.transitionDuration:'0s',kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
+       return {x:r.x,y:r.y,w:r.width,h:r.height,rootScale:getComputedStyle(e).scale,rootTranslate:getComputedStyle(e).translate,transform:getComputedStyle(e).transform,active:e.matches(':active'),linkUnderline:!e.matches('.o55-link')||!kid||ks.textDecorationLine===getComputedStyle(e).textDecorationLine,kidDuration:ks?ks.transitionDuration:'0s',kidTranslate:ks?ks.translate:'none',kidScale:ks?ks.scale:'none',kidTransform:ks?ks.transform:'none'};},{sel,i});
       let h=await read();
       if(isLink&&t.args.inventoryOut&&motion==='no-preference'&&!linkShot){await t.crop(`${look}-${screen}-link-held`,{x:off.x+rest.x,y:off.y+rest.y,width:rest.w,height:rest.h},'Native underline stays with the pressed text while the link target is stationary.');linkShot=true;}
       const drift=await f.evaluate(()=>({...window.__press.metrics}));
       if(t.args.marks)await t.mark(`up ${trial}`);await t.page.mouse.up();presses++;
       const got=await f.evaluate(trial=>({c:window.__press.clicks.filter(x=>x.trial===trial),d:window.__press.downs.filter(x=>x.trial===trial)}),trial);
       if(!(got.d.length===1&&got.d[0].id===i&&got.c.length===1&&got.c[0].id===i))misses.push({trial,down:got.d.map(x=>x.id),click:got.c.map(x=>x.id),held:h.transform});
+      if(isTip){ambient.push({kind:'ambient, not press',trial,betweenTrialsX:rest.x-ambientStart.x,betweenTrialsY:rest.y-ambientStart.y,holdDrift:drift.worst});if(h.transform!=='none'||!['none','1'].includes(h.rootScale)||!['none','0px','0px 0px'].includes(h.rootTranslate))tipOwn.push({trial,transform:h.transform,scale:h.rootScale,translate:h.rootTranslate});}
       if(drift.frames<2||drift.worst>.01||Math.abs(h.x-rest.x)>.01||Math.abs(h.y-rest.y)>.01||Math.abs(h.w-rest.w)>.01||Math.abs(h.h-rest.h)>.01)moved.push({trial,drift,rest,held:h});
       const contentScaled=(h.kidScale!=='none'&&h.kidScale!=='1')||/matrix\((?!1, 0, 0, 1,)/.test(h.kidTransform);
       if(look.startsWith('retro')&&h.kidDuration.split(',').some(v=>parseFloat(v)!==0))tweened.push({trial,duration:h.kidDuration});
@@ -78,8 +80,9 @@ export default async function(t) {
      }
     }
     await t.page.mouse.move(2,2);
-    if(t.args.inventoryOut)await appendFile(String(t.args.inventoryOut)+'.trials.jsonl',JSON.stringify({look,motion,screen,count,presses,covered,misses,moved,scaled})+'\n');
+    if(t.args.inventoryOut)await appendFile(String(t.args.inventoryOut)+'.trials.jsonl',JSON.stringify({look,motion,screen,count,presses,covered,misses,moved,scaled,ambient,tipOwn})+'\n');
     await t.check(`FO-73 press activates at every edge ${tag}`,!misses.length,`${count} representative button families,  ${presses} held presses (${covered.length} points occluded before press); misses ${JSON.stringify(misses.slice(0,6))}${misses.length>6?` (+${misses.length-6})`:''}`);
+    if(ambient.length)await t.check(`FO-73 Pip close adds no own transform ${tag}`,!tipOwn.length,JSON.stringify(tipOwn));
     if(look.startsWith('retro'))await t.check(`FO-73 Retro press is a hard cut ${tag}`,!tweened.length,JSON.stringify(tweened));
     await t.check(`FO-73 link underline retained ${tag}`,!undecorated.length,JSON.stringify(undecorated));
     await t.check(`FO-73 pressed target stays at rest box ${tag}`,!moved.length,JSON.stringify(moved.slice(0,3)));
