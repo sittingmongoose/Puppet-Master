@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7732-L7915
+Source lines: L7734-L7916
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7`
 
 ---
 
@@ -98,15 +98,14 @@ plan_unit_id: UCC-104
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'Under DL-041, the DRY Method toggle''s eventual mutation path reuses cmd.settings.transaction.preview
+canonical_text: 'Under DL-408 (replacing DL-041 naming), the DRY Method toggle''s eventual mutation path reuses cmd.settings.transaction.preview
   and cmd.settings.transaction.apply from SSYS-018 and the Settings atomic mutation envelope. Until an owner-proven
   mapping from the exact guard key to a valid ordinary setting_id and its writer exists, the toggle is disabled
   with the existing owner_contract_missing reason and dispatches no mutation command or setting write. Preserve
   the exact guard identity app.agent_rules.dry_method_default_guard and values enabled | disabled_by_user.
-  The approved future event identity for this change is settings.updated, carrying that exact setting key and
+  The sole Settings change event identity for this change is settings.layer.changed, carrying that exact setting key and
   the existing transaction_id from pm.settings_transaction_result.v1, joined to request_id, project_id, changed_setting_ids,
-  revisions and receipt_ref under the current owner contract. Event Authority must independently admit a closed
-  payload and producer/consumer binding before emission; this naming choice does not register a family. The
+  revisions and receipt_ref under the current owner contract. The existing SSYS-060/DL-300 family and its owner-adoption prerequisites govern emission; DL-408 retires settings.updated as superseded and grants no missing writer authority. The
   historical settings.agent_rules.dry_method_default_guard.updated spelling is read-only source/history lineage,
   not an automatic alias or permission to rewrite old payloads. cmd.settings.agent_rules.dry_method_default_guard.set
   is retired source lineage, with no primary handler, production row or dispatch alias. Visible Settings >
@@ -137,8 +136,8 @@ acceptance_criteria:
   and dispatches zero mutation commands and writes zero setting values. After that prerequisite, the existing
   preview/apply sequence and enabled | disabled_by_user values apply; no per-setting command or handler is
   reintroduced.
-- Future settings.updated records preserve app.agent_rules.dry_method_default_guard and the existing committed
-  transaction identity after independent Event Authority admission; historical dedicated spellings remain read-only
+- Under DL-408, settings.layer.changed records preserve app.agent_rules.dry_method_default_guard and the existing committed
+  transaction identity under the existing family and owner-adoption prerequisites; historical dedicated spellings remain read-only
   without an assumed payload alias.
 - The visible command copy explains that disabling DRY only disables the default reuse-first guard.
 - Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8546-L8743
+Source lines: L8547-L8746
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7`
 
 ---
 
@@ -18,12 +18,14 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 ### Added GUI command families
 
+**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.
+
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
 |---|---|---|---|---|
-| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
-| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.theme.updated` |
+| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.layer.changed` (DL-408) |
 | `cmd.persona.create` | `project_id`, `persona_spec`, `source_refs[]`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied`, `stale_projection` | `persona.created` |
 | `cmd.persona.update` | `project_id`, `persona_id`, `persona_patch`, `expected_persona_revision`, `idempotency_key` | `persona_id`, `persona_revision` | `stale_projection`, `invalid_args`, `permission_denied` | `persona.updated` |
 | `cmd.persona.delete` | `project_id`, `persona_id`, `expected_persona_revision`, `confirmation_token`, `idempotency_key` | `persona_id`, `terminal_state` | `blocked_state_required`, `permission_denied`, `stale_projection` | `persona.deleted` |
@@ -103,7 +105,7 @@ plan_unit_id: UCC-108
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
+canonical_text: 'DL-408 retires settings.theme.updated as superseded by settings.layer.changed, the sole Settings change event including theme changes; existing owner-adoption requirements remain. The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
   send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain,
   runtime recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
   requirements. Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain canonical and
@@ -113,7 +115,7 @@ canonical_text: 'The FABLE GUI command repair registers missing theme, persona, 
   NieR (Q22), the Guided Tour bar''s Look menu and the NieR Mode editor compose cmd.settings.transaction.preview
   then cmd.settings.transaction.apply as UCC-120''s local affordances do; no theme family or NieR command is
   added. The application''s start and onboarding''s look previews (ui.onboarding.start, ui.onboarding.choose_look)
-  dispatch no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the one resolved Everywhere/Device/actual-Project
+  dispatch no cmd.theme.* and emit no settings.layer.changed: the pre-paint reads the one resolved Everywhere/Device/actual-Project
   theme pair; No project omits Project and never flashes a forced Basic Dark, while owner-declared factory/pre-claim
   fallback and nonpersistent onboarding preview remain (F3-468, DL-153). Amended 2026-10-09 (DL-180): from
   the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203);
@@ -150,7 +152,7 @@ acceptance_criteria:
 - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
 - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's
   Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction
-  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated
+  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.layer.changed
   (F3-468, DL-153).
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from

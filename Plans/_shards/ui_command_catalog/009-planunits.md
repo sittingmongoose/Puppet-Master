@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1269-L7085
+Source lines: L1269-L7087
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7`
 
 ---
 
@@ -4928,7 +4928,7 @@ plan_unit_id: UCC-084
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Assistant memory Gist Review commands verify, edit, pin/unpin, discard, toggle auto-save unverified, and preview capsules with required project/gist/thread payloads, events, and Assistant chat Gist Review panel surface.
+canonical_text: Assistant memory Gist Review commands verify, edit, pin/unpin, discard, toggle auto-save unverified, and preview capsules with required project/gist/thread payloads, events, and Assistant chat Gist Review panel surface. Under DL-408, the auto-save-unverified switch records only settings.layer.changed; settings.updated is retired as superseded.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4970,12 +4970,14 @@ preserved_exact_tokens:
 - memory.gist.unpinned
 - memory.gist.discarded
 - settings.updated
+- settings.layer.changed
 - Assistant chat Gist Review panel
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- settings.updated is retired as superseded by settings.layer.changed under DL-408.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
