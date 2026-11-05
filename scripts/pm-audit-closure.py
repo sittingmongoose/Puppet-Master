@@ -3136,6 +3136,26 @@ def _legacy_inventory() -> dict[str, Any] | None:
     return _LEGACY_INVENTORY_CACHE[key]
 
 
+def path_has_symlink(path: Path | str) -> bool:
+    """Whether the path as written traverses a symbolic link below the repository root: every
+    cumulative prefix of its components, taken literally (`a/../b` keeps `a`, nothing normalized or
+    resolved first), is checked with lstat, including the leaf. A path outside the root is checked
+    from its first component. An error while checking counts as a link (fail closed)."""
+    raw = Path(path) if Path(path).is_absolute() else ROOT / path
+    parts = raw.parts
+    root_parts = ROOT.parts
+    start = len(root_parts) if parts[: len(root_parts)] == root_parts else 1
+    current = Path(*parts[:start]) if start else Path(parts[0])
+    for part in parts[start:]:
+        current = current / part
+        try:
+            if os.path.islink(current):
+                return True
+        except OSError:
+            return True
+    return False
+
+
 def legacy_audit_state(audit_dir: Path) -> dict[str, Any] | None:
     """The legacy-rule state of an audit directory, or None when the rule does not apply.
 
@@ -3157,15 +3177,12 @@ def legacy_audit_state(audit_dir: Path) -> dict[str, Any] | None:
         if not expected.is_dir() or audit_dir.resolve() != expected:
             return None
         # The path as supplied must itself be ROOT/Plans/.audits/<name>, not an alias that resolves
-        # to it: no symlink in any supplied component below the repository root (Q7 Astra r1).
-        supplied = Path(os.path.normpath(str(audit_dir)))
-        if supplied != Path(os.path.normpath(str(ROOT / rel_dir))):
+        # to it: no symlink in any supplied component, checked as written before `..` collapses
+        # (Q7 Astra r1, Sol r7).
+        if path_has_symlink(audit_dir):
             return None
-        probe = supplied
-        while probe != ROOT and probe != probe.parent:
-            if probe.is_symlink():
-                return None
-            probe = probe.parent
+        if Path(os.path.normpath(str(audit_dir))) != Path(os.path.normpath(str(ROOT / rel_dir))):
+            return None
     except (AnchorError, OSError):
         return None
     inventory = _legacy_inventory()
@@ -3362,10 +3379,13 @@ def validate_audit_dir(
         "reserved_source_inputs": reserved_source_names(audit_dir, requested_artifacts),
         # Any input the run reads that is a symbolic link disqualifies the directory: what a
         # diagnostic names is then not the file that was read.
+        # Every path the per-audit run reads, checked component by component as written (a source
+        # argument through a symlinked parent counts), plus the registry (Q7 Sol r7).
         "symlinked_inputs": sorted(
-            name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX,
-                              EFFECTIVE_STATUS}
-            if (audit_dir / name).is_symlink()
+            [name for name in {*requested_artifacts, "audit_report.json", "repair_closure_matrix.jsonl", SCOPE_MANIFEST, IMPACT_MATRIX,
+                               EFFECTIVE_STATUS, TERMINAL_STATE, "post_repair_audit_report.json"}
+             if path_has_symlink(audit_dir / name)]
+            + (["<registry>"] if path_has_symlink(registry_path) else [])
         ),
         "report_has_status": isinstance(audit_report, dict) and "status" in audit_report,
         "scope_manifest_exists": (audit_dir / SCOPE_MANIFEST).exists(),
@@ -5101,6 +5121,17 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             alias_leaf.symlink_to(legacy_dir, target_is_directory=True)
             alias_parent = tmp / "alias-audits"
             alias_parent.symlink_to(legacy_dir.parent, target_is_directory=True)
+            child = legacy_dir.parent.parent / "r7-child"
+            child.mkdir(parents=True, exist_ok=True)
+            dotdot_alias = legacy_dir.parent.parent / "r7-alias"
+            dotdot_alias.symlink_to(child, target_is_directory=True)
+            dotted = Path(str(dotdot_alias) + "/../.audits/" + legacy_name)
+            check("legacy_state_symlink_then_dotdot_is_none", legacy_audit_state(dotted) is None)
+            link_dir = legacy_dir.parent.parent / "r7-links"
+            link_dir.symlink_to(legacy_dir, target_is_directory=True)
+            check("path_has_symlink_checks_every_component",
+                  path_has_symlink(link_dir / "semantic_risks.jsonl") and path_has_symlink(dotted)
+                  and not path_has_symlink(legacy_dir / "semantic_risks.jsonl") and not path_has_symlink(legacy_dir))
             check("legacy_state_alias_to_real_dir_is_none",
                   legacy_audit_state(alias_leaf) is None and legacy_audit_state(alias_parent / legacy_name) is None
                   and legacy_audit_state(legacy_dir) is not None)
