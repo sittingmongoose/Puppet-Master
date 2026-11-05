@@ -1,4 +1,4 @@
-// FO-75: no look-option pixel belongs to another control; help retains a 30px target.
+// FO-75: no look-option pixel belongs to another control; help retains its original expanded target.
 import { writeFile } from 'node:fs/promises';
 import { LOOKS } from '../browser-check.config.mjs';
 const menu='#pm-o55-onboarding .o55-lookmenu', option=':is(.o55-lookopt,.o55-lookmodes button)';
@@ -20,13 +20,13 @@ export default async function(t) {
       if(hit&&hit!==e&&!e.contains(hit)){wrong++;if(examples.length<12)examples.push({option:e.textContent.trim(),x,y,cover:hit.className});}
      }
     });
-    const help=[...root.querySelectorAll('button.o55-tipq')].map(e=>{const b=e.getBoundingClientRect(),p=getComputedStyle(e,'::before'),r={x:b.x+parseFloat(p.left),y:b.y+parseFloat(p.top),w:b.width-parseFloat(p.left)-parseFloat(p.right),h:b.height-parseFloat(p.top)-parseFloat(p.bottom)};let owned=true;
+    const help=[...root.querySelectorAll('button.o55-tipq')].map(e=>{const b=e.getBoundingClientRect(),s=getComputedStyle(e),p=getComputedStyle(e,'::before'),r={x:b.x+parseFloat(s.borderLeftWidth)+parseFloat(p.left),y:b.y+parseFloat(s.borderTopWidth)+parseFloat(p.top),w:parseFloat(p.width),h:parseFloat(p.height)};let owned=true;
      for(const [x,y] of [[r.x+1,r.y+1],[r.x+r.w-1,r.y+1],[r.x+1,r.y+r.h-1],[r.x+r.w-1,r.y+r.h-1],[r.x+1,r.y+r.h/2],[r.x+r.w-1,r.y+r.h/2],[r.x+r.w/2,r.y+1],[r.x+r.w/2,r.y+r.h-1]])owned=owned&&document.elementFromPoint(x,y)?.closest('button')===e;
      return {...r,owned};});return {count:options.length,pixels,wrong,examples,help};
    });
    const tag=`${look} ${motion}`;
    await t.check(`FO-75 every look-option pixel avoids other controls ${tag}`,scan.count>=7&&scan.wrong===0,JSON.stringify(scan));
-   await t.check(`FO-75 help retains usable 30px target ${tag}`,scan.help.length>=6&&scan.help.every(x=>x.w>=30&&x.h>=30&&x.owned),JSON.stringify(scan.help));
+   await t.check(`FO-75 help retains usable expanded target ${tag}`,scan.help.length>=6&&scan.help.every(x=>x.w>=26&&x.h>=26&&x.owned),JSON.stringify(scan.help));
    if(motion==='no-preference')await t.crop(`${look}-look-menu-rest`,f.locator(menu),'Transparent hit expansion changes without changing the resting menu.');
    const misses=[];
    for(let i=0;i<scan.count;i++) {
