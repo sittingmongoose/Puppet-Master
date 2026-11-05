@@ -655,3 +655,46 @@ Evidence is retained in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261
 The source-only probe uses the real jsonschema keyword implementations and referencing resolver after preloading its exact offline graph through the shared `_closed_datetime_graph`. It runs before inventory authentication and installs no Storage overlay; production `datetime_validator` still always installs authenticated `StorageSelection`, supports no custom/on-demand retrieval and retains current/frozen admission. References, anyOf/allOf/oneOf, not and if/then are evaluated as validators, not searched as pattern text. Exact citations and the schema fingerprint include actual resolved targets.
 
 **Preservation and limits:** all 233 row keys, pointers, resource fingerprints, field sets, profiles, owners and structural role evidence remain unchanged. Only wildcard classification and evidence fields change in the inventory. No owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or `.gitignore` change is made. Full native custody, aggregate guard isolation and adopting-lane graph audits remain outside this finite helper repair. No governance reseal, main push, pm-mail or delegate is performed.
+
+
+**Implementation commit:** `0f0e31fe781b1507a255a844f89100e66b746774`, pushed to `plans/ea-numrule-20261105`.
+
+**Actual-worktree self-test:** exit 0; **13,372/13,372 cases**, **200/200 integration checks**, including **35 new battery controls**. Full actual-worktree inventory: 133 Storage + 79 other-owner + 12 automatic non-timestamp + 9 reviewed non-timestamp roles; zero failures/unclassified. The four equivalent-pattern negatives fail after coherent evidence regeneration, all four corrected timestamp classifications pass, and stale source-value fingerprints fail independently. Exactly-one-timestamp and timestamp-or-empty schemas fail under the obsolete wildcard class and pass after timestamp classification. OneOf, not, if/then, real calendar enforcement, changed role pins and foreign role citations have independent controls.
+
+
+| Round-11 recheck | Result |
+|---|---|
+| Four equivalent-pattern negatives | All four gates fail `source_value_classification_conflict`; the source-derived pin differs from the coherently refreshed checksum of the false classification. |
+| Four corrected timestamp positives | All four gates pass; the source-derived pin equals the actual corrected inventory checksum. |
+| Existing source/evidence attacks | 27/27 expected outcomes; sibling/ancestor/foreign evidence, wrong-field quotes and Storage role changes remain rejected. |
+| Original runtime | 133/133 valid preloaded baselines; zero escaping nodes; 133 on-demand constructor refusals, zero callback calls. |
+| Adversarial / supplemental / graph runtime | 27 + 8 + 23 controls completed; fresh replacements, recursive/dynamic/mixed dialects, duplicate URIs and shared-class construction retain their controls. |
+| Original gate injections | All 20 injections and five inventory mutations exit 1; restored baseline exits 0. |
+| Extended gates / inventory mutations | 16/16 injections exit 1; 7/7 mutation gate/self-test pairs exit 1/1. |
+| Exclusions / injected self-tests | Executable-resource exclusions refuse; pattern and empty-citation self-test CLIs refuse before cases. |
+| Name-map behavior | 21 exact source citations, 252/252 original-versus-helper value controls match; 21 unsupported on-demand constructors refuse. |
+| Whole-tree wildcard gate | All 8,968 committed Plans blobs exposed; exactly four injected unreadable-container failures, no unrelated failures; 233 nodes retain the revised 133/79/12/9 totals. |
+| Coherent wrong-field whole-tree self-test | Exit 1; inventory admission refuses before cases. |
+| Preservation | All 4,400 protected blobs unchanged from the earlier `5e5c4cfe2b` baseline; all 233 row structural fields unchanged. Only classification/citation/new value-evidence fields change. |
+
+**Where / cause / fix:** B4 was in `_timestamp_constraint` and its source projection in `scripts/pm_event_datetime_inventory.py`: syntax-based recognition authenticated equivalent timestamp patterns as non-timestamp maps. The deciding recognizer is removed. The real resolver now supplies a battery trigger, and only an explicit, source-cited, independently pinned role review permits an accepting non-timestamp map. The inventory schema, derived pin, runtime admission regressions and adoption guide carry this distinction.
+
+
+**Final verification:** the complete Git-backed baseline repeats **13,372/13,372 cases and 200/200 checks**, exit 0. The full-Git equivalent-pattern confirmation now exits 1 on the forced wrong class (wrapper exit 0), before census; its correct source projection identifies the row as a timestamp. Shard body/path verification exits 0: 99 owner documents and 3,095 shards checked. Syntax checks and `git diff --check` pass. No index/governance or predicate-isolation sweep is rerun; no corresponding new PASS is claimed.
+
+**Execution and cleanup:** all cycle-10 probe entry points were copied and rerun serially. The extraction contains 102 exact inputs (38,890,630 bytes), matched against implementation `0f0e31fe781b1507a255a844f89100e66b746774`. The new probe, battery and role records are the three added inputs. Finite replays use six applicable exclusions; complete Git-backed runs use all 163. The adapter changes only Path I/O. Every run starts above 6 GiB available; scratch stays below 82 MB. The restored extraction matches all 102 inputs, with exactly the six scoped exclusions and no injected Plans files. Original review evidence is untouched. The final report/check/self-grade update changes reports only. Cleanup of both disposable environments, scratch and the worktree is recorded separately in the evidence directory.
+
+**B4 fixed in `0f0e31fe781b1507a255a844f89100e66b746774`; B1a/B1b/B2/B3 controls retained.** Native custody remains NOT_RUN; aggregate integration remains PARTIAL and full guard isolation SWEEP_PENDING. Family grading is N/A; no IDs minted. No owner prose, registry, Decision Log, Spec Lock, generated artifact, `.evidence`, `.gitignore`, main push or governance reseal is part of this task.
+
+| Round-11 evidence path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/actual-selftest.json` | `e519875feaa045e4856cbd801132277a83cf3d7343a71307828a1724aacff1b8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/battery-controls.json` | `81b651f6bf54222582a9b0f66bb56c1c83d9c89abae1b723a520928d1f9a9e36` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/results.json` | `554337f588f960c57d02c8c1c1be07782252210c309c09eb462933e331282e35` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/evidence-attacks.json` | `948cfd9083c9eeeb8d9ddf3fba61be79ed31b61a53059e3a78176eb8208e245d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/equivalent-pattern-full-summary.json` | `1dfae46ef063a7679c11ef692534adf52aff2bf89d2f32ac99989d5112a211f3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/full-selftest.json` | `c068e3af5eaf61e1426cae270226760a6ec7373a3a4f82afd316f347cd63f35f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/graph-attacks.json` | `04425cad5fa8364f44990a4efcd5f7475aef39f1b6564206951e34aba0c5642f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/preservation-audit.json` | `078faafd00c6e4b64cd3a88e2f2089ecbcc5bfa97ece5cf68cc8595a52a501bd` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/restoration.json` | `34c913db85b2ff60e6a37045b91f4a2676149d041f8475b026dbad7930efe2fb` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/shards.run.json` | `72695d6c41375614b94c17323bc7cebb5a6845a3b98def725983af8f66289cce` |

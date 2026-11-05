@@ -1,312 +1,11 @@
 {
-  "round": 10,
-  "implementation_commit": "82e29fe59bebe69fbb8104fa551c183e750356a9",
-  "source_base": "3bb73141e989043175ffd80774946d317667fd78",
-  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10",
-  "scope": "Finite shared-helper/source-evidence controls; native authority NOT_RUN; full guard isolation SWEEP_PENDING. Heavy checks ran serially with >=6 GiB available at each preflight.",
-  "commands": [
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/b3_controls.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 74.52905590899172,
-      "available_bytes": 14483267584,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "bcb3beb28bcb1b46863f7c84c1ef191733065454eca3942d201c66207f10fce6",
-      "stdout_bytes": 445,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "b3-controls"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent_full.py"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 1.0837491969869006,
-      "available_bytes": 14333321216,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "f0d46e64e6c51030c2b02891aa1abc7809e75a0037494c17236f82dd97a88bf5",
-      "stdout_bytes": 1031,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "coherent-full-selftest"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent_integrity.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 1.725772778998362,
-      "available_bytes": 14610063360,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "070379bd8cd2aa1299e6531566c8180d2015b1033a425160ade0b53eb2fd9b3b",
-      "stdout_bytes": 3859,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "coherent-integrity"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/exclusion_probes.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 33.396777917980216,
-      "available_bytes": 14242713600,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "55417aac9ad6add290914b4fde07735b88228245556cee986a2163877b035420",
-      "stdout_bytes": 919,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "exclusion-probes"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/extended_gate_integrity.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 164.77542123000603,
-      "available_bytes": 14269186048,
-      "scratch_bytes": 40178936,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "798def756fed719974708245d7ba6fc3e56b82bc401cfae3a495ddcf3512c451",
-      "stdout_bytes": 529,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "extended-gate-integrity"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/home/sittingmongoose/pm-worktrees/numrule-fix10/scripts/pm_event_numbers.py",
-        "--self-test"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 359.76613992097555,
-      "available_bytes": 21632253952,
-      "scratch_bytes": 39966770,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "a23fa8b7cdebead5abf33839a3cc8f56a175a8a4b296e6f8a1bb9f3cf1b751d5",
-      "stdout_bytes": 2089664,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "final-selftest"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/full_wildcard_gate.py"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 238.07637687999522,
-      "available_bytes": 15203131392,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "ae8809bcbe24d642d1d1ee289fa36b81c4a93fdcce0b56c9522ae7fca60b6ee5",
-      "stdout_bytes": 1351,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "full-wildcard-gate"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/probes.py"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 4.868602211994585,
-      "available_bytes": 13745594368,
-      "scratch_bytes": 40085904,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_bytes": 0,
-      "stderr_sha256": "776d6c637d5885dced2686a1df6187b224ae4d8cf7af414fe0294490b7d02b6d",
-      "stderr_bytes": 45922,
-      "name": "gate-probes-initial"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/probes.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 206.52200171697768,
-      "available_bytes": 13723770880,
-      "scratch_bytes": 40178936,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "1dcd8148b8d9d2c1acf6f089556078d45631373b2c9c75063510b65f8cd67ab9",
-      "stdout_bytes": 3371,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "gate-probes"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 2.6151610800006893,
-      "available_bytes": 14469578752,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_bytes": 0,
-      "stderr_sha256": "f8428fea725cd34a7df518926033dc343269e06a80c8eef5adebb1f9ed316e05",
-      "stderr_bytes": 1140,
-      "name": "name-maps-initial"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 3.080066303984495,
-      "available_bytes": 15385858048,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_bytes": 0,
-      "stderr_sha256": "9f01fb8d1a09a53aef4da8f0502d5c2eec544bca63b7189f624ffcff9fe07efb",
-      "stderr_bytes": 1465,
-      "name": "name-maps-initial2"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 4.46980855599395,
-      "available_bytes": 15145041920,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "f91254291617e14b495420a207347e15acfb033e74f74921f11b21d24e924217",
-      "stdout_bytes": 83,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "name-maps"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/runtime_adversarial.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 2.6799134939792566,
-      "available_bytes": 13534892032,
-      "scratch_bytes": 40085904,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "339c7ea0f2e7488743448e935750309a6d68782015302f9fa90fc75125adb9b3",
-      "stdout_bytes": 8982,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "runtime-adversarial"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/runtime_probes.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 21.961612649000017,
-      "available_bytes": 15652274176,
-      "scratch_bytes": 39966770,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "bb992d1902313d3802d7d089bac745948fda7e3e4dd595bde15c4be548d45ee9",
-      "stdout_bytes": 139,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "runtime-probes"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/injected_selftests.py",
-        "empty-citations"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 0.9654782710131258,
-      "available_bytes": 15228293120,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "4524644239f218906f1fd4d09832fb1292569e992dbe1b1544d5fb5013de2458",
-      "stdout_bytes": 72443,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "selftest-empty-citations"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/injected_selftests.py",
-        "pattern"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 9.250350334012182,
-      "available_bytes": 15114022912,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "b7049894454e8b4086fd1a06224f3324346e28888c8af4df56938d3ae0aa6b30",
-      "stdout_bytes": 1201,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "selftest-pattern"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/home/sittingmongoose/pm-worktrees/numrule-fix10/scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 25.352457223983947,
-      "available_bytes": 14266040320,
-      "scratch_bytes": 40216535,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc",
-      "stdout_bytes": 111,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "shards"
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix10-venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/supplemental_runtime.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 2.388513272977434,
-      "available_bytes": 13909495808,
-      "scratch_bytes": 40085904,
-      "head": "3bb73141e989043175ffd80774946d317667fd78",
-      "stdout_sha256": "6dab62e4c41eb8992d9f330519fd52bf30c2561c7c0c4b45e73ef3b212b483ba",
-      "stdout_bytes": 2177,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0,
-      "name": "supplemental-runtime"
-    }
-  ],
-  "selftest": {
-    "exit": 0,
-    "cases": 13372,
-    "passed": 13372,
-    "positives": 6836,
-    "negatives": 6536,
-    "integration_checks": 165
+  "round": 11,
+  "implementation_commit": "0f0e31fe781b1507a255a844f89100e66b746774",
+  "source_base": "76916b4542b4eb013d43dd6ae72ff765675b92d6",
+  "B4": "fixed; timestamp trigger plus explicit source-bound role review",
+  "battery": {
+    "samples": 653,
+    "sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3"
   },
   "inventory": {
     "failures": [],
@@ -315,51 +14,421 @@
     "status": "pass",
     "storage_nodes": 133,
     "unclassified_nodes": 0,
-    "wildcard_non_timestamp_nodes": 21
+    "wildcard_non_timestamp_nodes": 12,
+    "wildcard_non_timestamp_role_nodes": 9
+  },
+  "selftest": {
+    "cases": 13372,
+    "positives": 6836,
+    "negatives": 6536,
+    "integration_checks": 200,
+    "git_backed_repeat": "pass"
   },
   "runtime": {
-    "eager_valid_baselines": 133,
-    "escaping_nodes": 0,
-    "on_demand_constructor_refusals": 133,
+    "valid_preloaded": 133,
+    "escapes": 0,
+    "on_demand_refused": 133,
     "callback_calls": 0
   },
   "gate_injections": {
     "original": 20,
     "original_refused": 20,
-    "positive_detection_controls": 5,
+    "original_inventory_mutations_refused": 5,
     "extended": 16,
     "extended_refused": 16,
-    "original_inventory_mutation_pairs_refused": 7
+    "mutation_pairs_refused": 7
   },
-  "coherent_wrong_field_mutation": {
-    "gate_exit": 1,
-    "runtime_installation": "REFUSED",
-    "selftest_exit": 1,
-    "whole_tree_selftest_exit": 1,
-    "case_execution": "NOT_RUN_ADMISSION_REFUSED"
+  "equivalent_patterns": {
+    "negatives_failed": 4,
+    "corrected_positives_passed": 4,
+    "source_pin_distinguishes_all_eight": true,
+    "full_git_negative_failed": true
   },
-  "stronger_B3_controls": {
-    "total": 6,
-    "gate_and_selftest_refused": 6,
-    "independent_source_pin_refused": 6
+  "battery_controls": {
+    "checks": 35,
+    "passed": 35
+  },
+  "evidence_attacks": {
+    "total": 27,
+    "unexpected": []
   },
   "name_maps": {
     "nodes": 21,
-    "source_citations": 21,
+    "exact_source_citations": 21,
     "value_controls": 252,
     "matching_value_controls": 252,
-    "unsupported_constructor_refusals": 21
+    "matching_all_outcomes": 273,
+    "unsupported_constructors_refused": 21
   },
-  "whole_tree_wildcard": {
-    "plan_blobs": 8968,
-    "classified_nodes": 233,
-    "injected_failures": 4,
-    "unrelated_failures": 0
+  "graph_controls": 23,
+  "full_wildcard_gate": {
+    "failures": 4,
+    "plan_blobs_exposed": 8968
   },
-  "shards_exit": 0,
-  "index_and_governance": "NOT_RERUN; owner/index inputs unchanged; no new index/governance PASS claimed.",
-  "harness_initial_results": [
-    "gate-probes-initial: missing unchanged cited report; added input 99 and reran.",
-    "name-maps-initial and name-maps-initial2: old global bank mixed unrelated current/frozen complete or embedded URI editions; selected exact bounded value graph and reran. No predicates or source bytes changed."
-  ]
+  "preservation": {
+    "base": "5e5c4cfe2ba2e90001c9f9e962ae1d6a1f68b4a3",
+    "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+    "protected_blob_count": 4400,
+    "plans_markdown_count": 3774,
+    "schema_paths": 517,
+    "generated_shard_index_count": 3299,
+    "changed_protected_paths": [],
+    "changed_paths": [
+      "Plans/event_datetime_inventory.json",
+      "reports/event-authority-20261104/NUMRULE.checks.json",
+      "reports/event-authority-20261104/NUMRULE.md",
+      "reports/event-authority-20261104/NUMRULE.self-grade.json",
+      "reports/event-authority-20261105/NUMRULE-ADOPTION.md",
+      "scripts/pm_event_datetime.py",
+      "scripts/pm_event_datetime_admission_checks.py",
+      "scripts/pm_event_datetime_exclusions.json",
+      "scripts/pm_event_datetime_inventory.py",
+      "scripts/pm_event_datetime_inventory.schema.json",
+      "scripts/pm_event_datetime_roles.json",
+      "scripts/pm_event_datetime_timestamp_battery.json",
+      "scripts/pm_event_datetime_value_probe.py"
+    ],
+    "inventory_rows_old": 233,
+    "inventory_rows_new": 233,
+    "inventory_structural_changes": [],
+    "status": "pass"
+  },
+  "driver_groups": [
+    {
+      "name": "runtime-probes",
+      "exit": 0,
+      "seconds": 21.652874371007783
+    },
+    {
+      "name": "replay-suite",
+      "exit": 0,
+      "seconds": 989.7833450599865
+    },
+    {
+      "name": "additional-suite",
+      "exit": 0,
+      "seconds": 1013.6728249249863
+    },
+    {
+      "name": "equivalent-pattern-confirmation",
+      "exit": 0,
+      "seconds": 18.373511594021693
+    }
+  ],
+  "run_records": [
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/coherent_full.py"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 1.0496349720051512,
+      "available_bytes": 20823719936,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "c2f1deb5aab095f29740fc271e35c0992ec8b6c258c6565fb88d77efd4ae1954",
+      "stdout_bytes": 1031,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/coherent_integrity.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 1.6497834619949572,
+      "available_bytes": 22618996736,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "070379bd8cd2aa1299e6531566c8180d2015b1033a425160ade0b53eb2fd9b3b",
+      "stdout_bytes": 3859,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "pattern_full_confirmation.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 18.260887529002503,
+      "available_bytes": 23440121856,
+      "scratch_bytes": 81561443,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "bbc14baab16eca8e07470f22fd2f82fed5173efe81bedabc0f851c1d22eb5eef",
+      "stdout_bytes": 6473,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/full_git_checks.py",
+        "gate",
+        "equivalent-pattern-full-gate"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 4.440050158998929,
+      "available_bytes": 22090850304,
+      "scratch_bytes": 81346495,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "716dbd94aa20f9dac568fdbd0799f5168c742b042de2a1a2eb73d4e09b74ca81",
+      "stdout_bytes": 666,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/evidence_attacks.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 606.0893963630078,
+      "available_bytes": 20778999808,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "bd784e5c5a96b56554b287ba532fb4480a2a2305096e1a4a2f4e5920cdde6d36",
+      "stdout_bytes": 2068,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/exclusion_probes.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 77.88739106501453,
+      "available_bytes": 22141329408,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "55417aac9ad6add290914b4fde07735b88228245556cee986a2163877b035420",
+      "stdout_bytes": 919,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/extended_gate_integrity.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 284.9485367810121,
+      "available_bytes": 27970699264,
+      "scratch_bytes": 81421140,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "798def756fed719974708245d7ba6fc3e56b82bc401cfae3a495ddcf3512c451",
+      "stdout_bytes": 529,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/full_git_checks.py",
+        "selftest"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 401.1827732899983,
+      "available_bytes": 22925135872,
+      "scratch_bytes": 81525288,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "64afe23b21190d742636a620257baee6c6d8f4782131d53c26575f91ca4c3ab6",
+      "stdout_bytes": 1805,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/full_wildcard_gate.py"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 235.1420094629866,
+      "available_bytes": 18664599552,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "e7301025b3f941f82466f06ebc37ab82a7ae363b024d9cd9705baf4e434d5eab",
+      "stdout_bytes": 1393,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/probes.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 349.6431918379967,
+      "available_bytes": 17689690112,
+      "scratch_bytes": 81421140,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "1dcd8148b8d9d2c1acf6f089556078d45631373b2c9c75063510b65f8cd67ab9",
+      "stdout_bytes": 3371,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/graph_attacks.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 5.37131003299146,
+      "available_bytes": 20891996160,
+      "scratch_bytes": 81458724,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "44750d66127840a8233dce7d9602e72f6ee4608352d81496478a46e961f82ece",
+      "stdout_bytes": 2297,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/name_maps_audit.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 10.47324610099895,
+      "available_bytes": 18471182336,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "f91254291617e14b495420a207347e15acfb033e74f74921f11b21d24e924217",
+      "stdout_bytes": 83,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/preservation_audit.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.4285893120104447,
+      "available_bytes": 22956613632,
+      "scratch_bytes": 81458724,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "078faafd00c6e4b64cd3a88e2f2089ecbcc5bfa97ece5cf68cc8595a52a501bd",
+      "stdout_bytes": 1076,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/runtime_adversarial.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 6.052834772010101,
+      "available_bytes": 18639822848,
+      "scratch_bytes": 81421140,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "339c7ea0f2e7488743448e935750309a6d68782015302f9fa90fc75125adb9b3",
+      "stdout_bytes": 8982,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "runtime_probes.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 21.5737225220073,
+      "available_bytes": 17204441088,
+      "scratch_bytes": 81291835,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "ab26f4dfb2381eec203c65183150b015ffaf8cc088b7dbb3bb0307baf1aca519",
+      "stdout_bytes": 108,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/injected_selftests.py",
+        "empty-citations"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.8799603339866735,
+      "available_bytes": 23026143232,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "4524644239f218906f1fd4d09832fb1292569e992dbe1b1544d5fb5013de2458",
+      "stdout_bytes": 72443,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/injected_selftests.py",
+        "pattern"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 14.16404489800334,
+      "available_bytes": 23887007744,
+      "scratch_bytes": 81458739,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "582ea05c99ccfdbe63413b2e49cf45791898709a152391da8bfca144041cb863",
+      "stdout_bytes": 1245,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/tmp/numrule-fix11-replay/venv/bin/python",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/supplemental_runtime.py"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 6.512448517984012,
+      "available_bytes": 18350166016,
+      "scratch_bytes": 81421140,
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "stdout_sha256": "6dab62e4c41eb8992d9f330519fd52bf30c2561c7c0c4b45e73ef3b212b483ba",
+      "stdout_bytes": 2177,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    }
+  ],
+  "native_authority": "NOT_RUN",
+  "guard_isolation": "SWEEP_PENDING",
+  "family_grading": "N/A",
+  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11",
+  "actual_selftest_run": {
+    "command": [
+      "/tmp/numrule-fix11-runtime/venv/bin/python",
+      "scripts/pm_event_numbers.py",
+      "--self-test"
+    ],
+    "exit": 0,
+    "seconds": 366.94725743398885,
+    "available_bytes": 17601077248,
+    "stdout_sha256": "e519875feaa045e4856cbd801132277a83cf3d7343a71307828a1724aacff1b8"
+  },
+  "shards": {
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit": 0,
+    "seconds": 20.59463908697944,
+    "available_bytes": 21542805504,
+    "stdout_sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc"
+  },
+  "restoration": {
+    "status": "pass",
+    "inputs": 102,
+    "changed_inputs": [],
+    "extra_plan_files": [],
+    "scoped_exclusions": 6,
+    "source_implementation": "0f0e31fe781b1507a255a844f89100e66b746774"
+  },
+  "scope": "Finite shared-helper repair; no native custody, complete lane adoption or governance PASS.",
+  "index_and_governance": "NOT_RERUN; owner/index inputs unchanged; no seal or main landing.",
+  "role_rule": "Timestamp battery acceptance triggers explicit source-bound role review. All-refused is automatic; accepting maps require timestamp classification or an independently pinned non-timestamp role. No arbitrary-string classifier."
 }
