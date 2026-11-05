@@ -1,117 +1,169 @@
 {
-  "implementation_commit": "2d92a6977184325037bf8b52e8292dccf04d335a",
-  "reviewed_head": "379727030a1e0e6929a11e5f9595e1fe2f35db1a",
-  "status": "pass_with_known_integration_failure",
+  "implementation_commit": "ec476040a569d117e5315891e6749169d57f8b6c",
+  "reviewed_head": "679bc22ad3a5109a070a064235a2ed8bca838492",
+  "status": "pass_with_sweep_and_known_integration_items",
   "commands": [
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/run-family-checkers.py /home/sittingmongoose/pm-worktrees/DR-fix7",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/full-checker.json",
-      "sha256": "f7daf3d9fc7df2b95446ce7bfe4584db58aeab9ca443e694f59ec358981e0832",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/historical-predecessors.json",
+      "sha256": "0b64d00ac2d761d290d113974fd4910902890c26562a1cb3690ba6927ce0961c",
       "status": "pass",
-      "seconds": 184.732
+      "scope": null
     },
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/restore-full-checker.py /home/sittingmongoose/pm-worktrees/DR-fix7",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/restore-full-checker.json",
-      "sha256": "ab815091b5518da9aea3b5efbe39e502cd734b81a981616f759d5ba2440844ed",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
-      "status": null,
-      "seconds": 8.794
-    },
-    {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python scripts/pm-runtime-artifact-guard-isolation.py --full-checker --output /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/complete-guard-removal.json",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/complete-guard-removal.json",
-      "sha256": "22b8a66085d1ff64025b634a42c29d4816d2c2924a31d3fb9dbb6cd20f1b79a2",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/full-checker.json",
+      "sha256": "cfe9b50d938cb7c5a0ac98ead7949a4c3978d79b20ac25ba15d200096f887572",
       "status": "pass",
-      "seconds": 1193.7
+      "scope": null
     },
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/raw-guard-proof.py /home/sittingmongoose/pm-worktrees/DR-fix7",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/raw-guard-proof.json",
-      "sha256": "bae1cbb84a12b521bfa2a4cda0d60d51dd7da269b266c292279011d682d415d7",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/complete-guard-removal.json",
+      "sha256": "f797d8ea8cb5b62bcaaa8da29b5364f63a945f3a2fea578ae6e45099255fb135",
       "status": "pass",
-      "seconds": 241.271
+      "scope": null
     },
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python scripts/pm-runtime-artifact-standing-checks.py --output /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/standing-mutations.json",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/standing-mutations.json",
-      "sha256": "cc1086e99654cd5eeb02f008c0de8ac14177a4a4183d79ee2a70f397c8fea289",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/raw-guard-proof.json",
+      "sha256": "32c0a4eb7d374eec62e20bd45ddcfd85b5f613ce7e089db45703a4c93d701285",
       "status": "pass",
-      "seconds": 3129.589
+      "scope": "round_8_new_guards_only; complete legacy raw proof deferred with shared-tool Sweep P1"
     },
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/independent-boundaries.py /home/sittingmongoose/pm-worktrees/DR-fix7",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/independent-boundaries.json",
-      "sha256": "ed3d1d3a46219cf136753e12f05f62d01251904f1f9dd36ca77a36e8f637a6a3",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/runtime-schemas.json",
+      "sha256": "644397af6ef28a0670e25d638f1ac2330eb21945b5ae1ede14bd9be4671acea0",
       "status": "pass",
-      "seconds": 19.589
+      "scope": null
     },
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/historical-originals.py /home/sittingmongoose/pm-worktrees/DR-fix7",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/historical-originals.json",
-      "sha256": "d1cf8915f40e824cdb2722f874d4a784cb002a846f21951ab1a7a81670daa42b",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
-      "status": "pass",
-      "seconds": 8.646
-    },
-    {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/scope-audit.py /home/sittingmongoose/pm-worktrees/DR-fix7",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/scope-audit.json",
-      "sha256": "5be0827893befc129570f12693b1075f0e302e2adb09e4710a32746b8af27132",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
-      "status": "pass",
-      "seconds": 7.925
-    },
-    {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/runtime-schemas.json",
-      "sha256": "3fd6ab6c00934eae504d164593562d2467fac84347c147e66ad97dcd88509c16",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
-      "status": "pass",
-      "seconds": 0.389
-    },
-    {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/shard-check.json",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/shard-check.json",
       "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
       "status": "pass",
-      "seconds": 24.719
+      "scope": null
     },
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python scripts/pm-plan-index.py validate",
-      "exit_code": 1,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/index-validate.json",
-      "sha256": "6c9ceeee9813f9e1615f5fad83d3a5506fb8ed3c56d2b0c7a8fc88492224fb86",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/index-validate.json",
+      "sha256": "5154ced4139d3823cd4d38fba7e1c3efc14a165b4ec0f35d9684180069600b44",
       "status": "fail",
-      "seconds": 49.497
+      "scope": null
     },
     {
-      "command": "/home/sittingmongoose/PM-Experiments/DR-fix7-venv/bin/python /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/type-number-sweep.py /home/sittingmongoose/pm-worktrees/DR-fix7",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/type-number-sweep.json",
-      "sha256": "5fcd4ec11e1083cca00821c59bc12824d44f0b7634c8f58c22e351d1ea3adb19",
-      "working_directory": "/home/sittingmongoose/pm-worktrees/DR-fix7",
-      "status": "pass"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/currentness-copy.json",
+      "sha256": "1ae1029adda6c6dc268dcad2cf216b132b6d94cbb55d4242de3502be46acea6e",
+      "status": null,
+      "scope": null
+    },
+    {
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/legacy-guard-partial.json",
+      "sha256": "260d3aff63e3e91631307b17ae7a6a993c8192300e56e897750e4159d434824b",
+      "status": "proof_machinery_sweep",
+      "scope": null
+    },
+    {
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/scope-audit.json",
+      "sha256": "b522c55c0a324f66e8a1b342e219243cdfaf75083d9759f9a78baca7dcf97f2a",
+      "status": "pass",
+      "scope": null
     }
   ],
   "native_execution": "NOT_RUN",
   "admission": "NONE",
-  "integration_note": "N1: branch-age PlanUnit retention comparison against origin/main; preserve current main units and rerun the unmodified index validator at integration."
+  "integration_note": "N1: preserve current main DL-302/units, regenerate and rerun original index validator at integration; no unrelated removal-ledger repair.",
+  "static_assertions": 20448,
+  "guard_matrix": {
+    "guard_count": 3,
+    "isolated_negative_pairs": 6910,
+    "acceptance_flips": 20,
+    "unrelated_flips": 0
+  },
+  "historical_predecessor_routes": 4,
+  "new_one_defect_negative_pairs": 24,
+  "verified_evidence_quotes": 685,
+  "sweep_items": [
+    "S1",
+    "P1",
+    "N2"
+  ],
+  "earlier_evidence": "Round-7 standing/type/number suite evidence is historical, not claimed rerun in round 8.",
+  "command_runs": [
+    {
+      "name": "family-runtime_artifact.api_web_call",
+      "argv": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
+        "scripts/pm-runtime-artifact-event-drafts.py",
+        "--family",
+        "runtime_artifact.api_web_call"
+      ],
+      "exit_code": 0,
+      "seconds": 123.178,
+      "status": "pass",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/family-runtime_artifact.api_web_call.json",
+      "sha256": "d6bce9149ecc85221c0910901dc7de6e64c1d4e6aa43745dda227464549a2e16"
+    },
+    {
+      "name": "runtime-schemas",
+      "argv": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
+        "scripts/pm-plans-verify.py",
+        "validate-runtime-artifact-schemas"
+      ],
+      "exit_code": 0,
+      "seconds": 2.179,
+      "status": "pass",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/runtime-schemas.json",
+      "sha256": "644397af6ef28a0670e25d638f1ac2330eb21945b5ae1ede14bd9be4671acea0"
+    },
+    {
+      "name": "shard-check",
+      "argv": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "seconds": 114.31,
+      "status": "pass",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/shard-check.json",
+      "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85"
+    },
+    {
+      "name": "index-validate",
+      "argv": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 1,
+      "seconds": 101.411,
+      "status": "fail",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/index-validate.json",
+      "sha256": "5154ced4139d3823cd4d38fba7e1c3efc14a165b4ec0f35d9684180069600b44"
+    }
+  ],
+  "additional_runs": [
+    {
+      "argv": [
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
+        "families"
+      ],
+      "exit_code": 0,
+      "scope": "all nineteen, sequential; immutable input reuse only"
+    },
+    {
+      "argv": [
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
+        "new-guards"
+      ],
+      "exit_code": 0,
+      "scope": "O11-O13 against all 6910 pairs and nineteen full checkers per mutant"
+    },
+    {
+      "argv": [
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/raw-guard-proof.py",
+        "/home/sittingmongoose/pm-worktrees/DR-fix8"
+      ],
+      "exit_code": 0,
+      "scope": "new guard raw corroboration, no schema/codec result caches"
+    }
+  ]
 }

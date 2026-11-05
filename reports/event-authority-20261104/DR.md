@@ -1,19 +1,44 @@
-# DR — fix round 7: exact restore-source JSON types
+# DR — fix round 8: authenticated historical restore predecessors
 
-Branch `plans/ea-w2-runtime-artifacts-20261104`; reviewed head `379727030a1e0e6929a11e5f9595e1fe2f35db1a`; implementation `2d92a6977184325037bf8b52e8292dccf04d335a`. Final delivery head is recorded in external `drafts/DR/HEAD.txt`.
+Branch `plans/ea-w2-runtime-artifacts-20261104`; reviewed head `679bc22ad3a5109a070a064235a2ed8bca838492`; implementation `ec476040a569d117e5315891e6749169d57f8b6c`. Delivery head is in external `drafts/DR/HEAD.txt`.
 
-**Result:** cycle-6 review 18/19 prepared → **19/19 prepared without admission**. Grades **208 PASS / 1 PARTIAL / 19 ABSENT → 209 PASS / 0 PARTIAL / 19 ABSENT**. Membership remains ABSENT; native execution remains NOT_RUN.
+**Result:** C7-B1 fixed. **18/19 → 19/19 prepared without admission**, subject to the explicit sweep and integration items below. Reviewer grades **208 PASS / 1 PARTIAL / 19 ABSENT → 209 PASS / 0 PARTIAL / 19 ABSENT**. Membership is ABSENT; native execution is NOT_RUN. This self-grade does not claim independent review clearance or shared-tool proof certification.
 
-## Review round 7: findings and responses
+## Review round 8: findings and responses
 
-- **C6-B1 — fixed (`2d92a6977184325037bf8b52e8292dccf04d335a`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:1028`, `observation_admissible`, O03 and `scripts/pm_runtime_artifact_round7_cases.py`; existing RAP-113/SP-533/CV-533/ATS-260. Why: Python dictionary equality aliases boolean false with `0`/`0.0`, and true with `1`/`1.0`. Fix: validate the complete source snapshot using the adopted logical schema **before** comparing exact encoded values. No coercion. Nine required/optional restore booleans, protected/unprotected references, first/successor and inline/packed routes supply **832 new one-defect pairs**. Wrong forms include `0`, `1`, `0.0`, `1.0`, string booleans/numbers, null, arrays and nested objects. Source shape negatives are included. The candidate, identity, predecessor and pack bytes stay intact. All valid controls accept. O03 has **833 own flips**, no masked cases or unrelated flips. Injecting `restores_files: false → 0` into positive source adapters now makes the actual full restore checker exit 1/status fail; no production guard or expected answer is modified in that trial.
-- **N1 — integration item retained.** The required unmodified `pm-plan-index.py validate` exits 1 with top-level `fail`. All 22 failures match N1: DL-302 plus 21 pre-existing removal-ledger format errors. The branch still predates current-main units; the three-dot branch scope changes no Decision Log or owner prose this round. Preserve current-main units (including DL-302), regenerate at integration and rerun the original validator. No baseline substitution or unrelated ledger repair is claimed as a pass.
+- **C7-B1 — fixed (`ec476040a569d117e5315891e6749169d57f8b6c`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:1035–1051`, `observation_admissible`, and `scripts/pm_runtime_artifact_round8_cases.py`. Why: the default current decoder reached an authentic retained predecessor containing original Storage `sequence_id=1.0`. Fix: independently authenticated source input carries the recorded recipe and original event/first result/custody. Verify the proposed predecessor and its SP-286 first receipt against that independent original before the historical read, refuse unsupported recipes and withdrawn sources, then decode through the supported recorded profile. Candidate decoding and the complete current canonical-source schema/exact-value join stay strict. Recipe selection never reads the candidate, supplied receipt or supplied custody. The adapter models trusted authentication; native authentication/issuance remains NOT_RUN. Verify with `historical-predecessors.json`, the actual checker’s round-8 cases, and the full nineteen-family rerun.
+- **R1 — verification rerun.** All nineteen family checkers and the complete 6,910-pair baseline pass. The 3 new-guard rows also run the complete pair inventory and all family checkers sequentially. The inherited full mutation run stopped after D01 exposed an overbroad proof cut; its remaining rows and the old incomplete uncached matrix are deferred to shared-tool Sweep P1 under FIX-ROUND. B02/B03/S07 causal certification is not claimed complete here. Resource pauses and superseded runs remain in the procedure record.
+- **S1 — sweep item retained.** Timestamp grammar is outside this one-blocker fix, as explicitly requested; see below.
+- **N1 — integration item retained.** Run the original `pm-plan-index.py validate` against the copied currentness edition. Its top-level failure is retained, not normalized into a pass. Preserve current-main units including DL-302 at integration, regenerate and rerun; do not silence unrelated removal-ledger errors.
 
 **Disputed:** none. **Stopped for Jared:** none.
 
+## Authentic historical routes and refusals
+
+| Frozen predecessor | Current successor | Result |
+|---|---|---|
+| `numeric_inline` | inline | PASS |
+| `numeric_inline` | packed | PASS |
+| `numeric_packed` | inline | PASS |
+| `numeric_packed` | packed | PASS |
+
+All four routes pass after reproducing the pre-fix refusal. Old issuer `b96dc768a5cc93f7e0edb82b41a7f51ca02dec7c` reproduces each frozen original's exact event/result/custody bytes. Its checker SHA-256 is `fae56bf0407dab11f389f90ad3ff471ec39a234d07209e11bbc828f2af740156`. Frozen full-original SHA-256: inline `53420e558e597fd900ed97d02a6944ac6c342280778ee6775bd562b8293130b1`, packed `0f359255f74b0a0a29e3238342f963935a4001c6933c24480e528614c028a45f`. Originals remain unchanged. Old issuance is a test control only; the producer never reissues history.
+
+**24 one-defect pairs:** four each for forged event bytes, forged first receipt, forged custody, withdrawn predecessor, unsupported recorded recipe, and a current candidate with an integral-float Storage number. Offered receipt copies agree in the forged-receipt case; the independent authentic original stays unchanged. Every valid control accepts and every negative refuses. No candidate, logical body, grouping, ordinal, predecessor identity or canonical-source copy is left stale to mask the named fault. Missing predecessor authentication also refuses; an untrusted caller recipe preference cannot override the independently recorded recipe. The existing 832 source-type pairs remain in the full checker.
+
+## New guard rows
+
+These are **legacy diagnostic rows**, with the proof limits in Sweep P1. The recipe-removal mutant binds the already supported historical decoder after removing recipe support; it does not invent a new historical recipe. Forwarded inspection shares H01’s withdrawn predicate, and forged custody also reaches F13. Full names and linked sites are recorded in `DR.guard-removal.json`.
+
+| Guard | Predicate / boundary | Own flips | Other negatives stay refused | Full checker exit |
+|---|---|---:|---:|---:|
+| `O11` | predecessor: original event, SP-286 first result and custody authentication | 12 | 6898 | 1 |
+| `O12` | predecessor recorded recipe support and explicit historical dispatch | 4 | 6906 | 1 |
+| `O13` | predecessor: forward authenticated historical source inspection | 4 | 6906 | 1 |
+
 ## Family grades before and after
 
-P=PASS, Q=PARTIAL, A=ABSENT. Twelve rubric cells; expected absence is registry non-admission.
+P=PASS, Q=PARTIAL, A=ABSENT. Only restore_point.positive_negative_oracles changes. All other owner contracts and rubric cells retain their grades after their full family runs.
 
 | Exact family | Before → after |
 |---|---|
@@ -37,156 +62,50 @@ P=PASS, Q=PARTIAL, A=ABSENT. Twelve rubric cells; expected absence is registry n
 | `runtime_artifact.tool_llm_trace` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 | `runtime_artifact.validation_test` | 11P / 0Q / 1A → 11P / 0Q / 1A |
 
-## Whole guard table
+## Whole-lane baseline and new-guard verification
 
-**93/93 guards; 6,886 distinct valid/negative pairs; 7,087 owned acceptance flips; zero masked cases; zero unrelated flips.** Every complete mutant checker returns exit 1/status fail. All nineteen family checkers run sequentially under each guard or named duplicate set; available memory is checked before each family and guard. The raw production modules independently reproduce all baseline pairs and owned flips without schema, codec or hash memoization. No guard, expectation or negative from the reviewed inventory is removed.
+**20,448 assertions pass** across nineteen full family invocations, run one at a time. Immutable fixture/schema reads are reused and hash-checked; validation, codecs and guard outcomes are not cached in that rerun. The first standalone raw CLI family also passed; the superseded multi-process CLI attempt was cancelled before replacement, not run in parallel. An earlier restore trial was cancelled after family-selection changes and is not claimed as a pass. Procedure exception: the initial guard runner started during final input fingerprinting after all family checks had returned, was cancelled before its first guard row, and was restarted after the family runner exited; no family checker jobs overlapped. The later legacy matrix was superseded after its D01 machinery defect, as required by the sweep instruction.
 
-O03 names the duplicated type defenses: adopted source-snapshot schema and exact encoded snapshot join. They are removed together for the causal witness. Existing forwarded/repeated-rule sets stay explicit (F01→A07, F13→H06, F11→C06 custody-event, D12→B01 decode/packed-append, repeated canonical JSON and checkpoint joins). All other isolated negatives remain refused.
+**6,910 valid/negative pairs; 3 diagnostic guard rows; 20 owned flips; 0 unrelated flips.** Every complete mutant checker returns exit 1/status fail. Each new guard is checked against the complete lane pair inventory; the old full guard matrix is not claimed rerun. Its compound cuts, duplicate grouping and assertion inventory still require the shared tool in Sweep P1. Diagnostic rows not satisfying the inherited isolation test: `none`. These rows are classified explicitly after execution; a proof-machinery failure is not reported as an isolation pass. Raw corroboration is reported in its own evidence file at its stated scope; no missing result is inferred.
 
-| Guard / named rule | Negatives that flip (names in DR.guard-removal.json) | Other negatives stay refused | Full checker |
-|---|---|---:|---|
-| `D01` — decode: event_validator.iter_errors | `envelope_extension` (19) | 6867 | 1 / fail |
-| `D02` — decode: row['payload_schema_id'] | `family`, `payload_schema` (38) | 6848 | 1 / fail |
-| `D03` — decode: event['scope_kind'] | `redaction`, `replay` (38) | 6848 | 1 / fail |
-| `D04` — decode: len(rfc8785.dumps(payload)) | `inline_size` (19) | 6867 | 1 / fail |
-| `D05` — decode/stored: exact pack media and reference grammar | `media` (19) | 6867 | 1 / fail |
-| `D06` — decode: event['payload'] != {} | `placeholder` (19) | 6867 | 1 / fail |
-| `D07` — decode: not source or | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
-| `D08` — decode: len(body) != int(size) | `byte_size` (19) | 6867 | 1 / fail |
-| `D09` — decode: blake3(body).hexdigest() != digest | `same_size_digest` (19) | 6867 | 1 / fail |
-| `D10` — canonical JSON: unique members and canonical serialization (same encoding rule) | `duplicate_member`, `whitespace` (38) | 6848 | 1 / fail |
-| `D11` — decode: len(body) <= INLINE_LIMIT | `unnecessary_pack` (19) | 6867 | 1 / fail |
-| `D12` — decode: validator(schema | 124 named cases; full list in `DR.guard-removal.json` (163) | 6723 | 1 / fail |
-| `D13` — decode: payload['project_id'] != event['project_id'] | `project_join` (19) | 6867 | 1 / fail |
-| `D14` — decode: payload.get(field) | `attempt_id`, `node_id`, `run_id`, `thread_id` (76) | 6810 | 1 / fail |
-| `D15` — decode: payload['created_at_utc'] | `authored_time` (19) | 6867 | 1 / fail |
-| `D16` — decode: payload['actor_ref'] | `actor` (19) | 6867 | 1 / fail |
-| `D17` — decode: event['idempotency_key'] | `identity` (19) | 6867 | 1 / fail |
-| `D18` — decode: point['project_id'] | `point_project` (1) | 6885 | 1 / fail |
-| `H01` — inspect: source['withdrawn'] | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
-| `H02` — inspect: source['source_valid'] | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
-| `H03` — inspect: source['project_id'] | `family`, `project` (38) | 6848 | 1 / fail |
-| `H04` — inspect: source['original_payload'] | `changed_original` (19) | 6867 | 1 / fail |
-| `H06` — resolve_history: not full_value_matches | `authenticated_custody` (19) | 6867 | 1 / fail |
-| `H05` — explicit supported historical decoder selection | `decoder_selection` (2) | 6884 | 1 / fail |
-| `F01` — full_value_matches: stored_event_valid | `invalid_issued_custody`, `schema` (38) | 6848 | 1 / fail |
-| `F02` — full_value_matches: value_bytes(candidate) == value_bytes(stored) | `original_value_bytes` (19) | 6867 | 1 / fail |
-| `F03` — full_value_matches: custody['scope_partition'] == scope_partition(candidate['project_id']) | `partition` (19) | 6867 | 1 / fail |
-| `F04` — full_value_matches: custody['event_type'] == candidate['event_type'] | `custody_family` (19) | 6867 | 1 / fail |
-| `F05` — full_value_matches: custody['idempotency_key'] == candidate['idempotency_key'] | `custody_key` (19) | 6867 | 1 / fail |
-| `F06` — full_value_matches: value_bytes(receipt['sequence_id']) == value_bytes(candidate['sequence_id']) | `receipt_sequence`, `retained_exact_receipt_type` (38) | 6848 | 1 / fail |
-| `F07` — full_value_matches: result['original_segment_ref'] == custody['original_segment_ref'] | `segment_reference` (19) | 6867 | 1 / fail |
-| `F08` — full_value_matches: commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment'] | `full_commitment`, `result_commitment` (38) | 6848 | 1 / fail |
-| `F09` — full_value_matches: semantic_digest(candidate) == custody['producer_semantic_digest'] | `semantic_commitment` (19) | 6867 | 1 / fail |
-| `F10` — full_value_matches: value_bytes(receipt) == value_bytes(custody['first_append_receipt']) | `receipt_copy`, `retained_exact_receipt_type` (38) | 6848 | 1 / fail |
-| `F11` — full_value_matches: receipt['event_id'] == candidate['event_id'] == custody['event_id'] | `custody_event`, `receipt_event`, `shipped_wrong_custody_event` (57) | 6829 | 1 / fail |
-| `F12` — full_value_matches: value_bytes(result) == value_bytes(original['result']) | `original_result`, `retained_exact_receipt_type` (38) | 6848 | 1 / fail |
-| `F13` — full_value_matches: value_bytes(custody) == value_bytes(original['custody']) | `authenticated_custody`, `original_custody`, `retained_exact_receipt_type` (57) | 6829 | 1 / fail |
-| `V01` — stored_event_valid: event_validator.iter_errors | `event_extension` (19) | 6867 | 1 / fail |
-| `V02` — stored_event_valid: event['scope_kind'] | `replay` (19) | 6867 | 1 / fail |
-| `V03` — stored_event_valid: bool(PACK_REF.fullmatch(event['payload_ref'])) | `pack_ref` (19) | 6867 | 1 / fail |
-| `V04` — stored_event_valid: event['payload'] == {} | `pack_placeholder` (19) | 6867 | 1 / fail |
-| `V05` — stored_event_valid: len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT | `inline_size` (19) | 6867 | 1 / fail |
-| `V06` — stored_event_valid: validator(load(row['payload_schema_ref']), validation=validation).is_valid(event['payload']) | `logical_schema` (19) | 6867 | 1 / fail |
-| `V07` — stored_event_valid: return False | `unknown_dispatch` (19) | 6867 | 1 / fail |
-| `A01` — append: admission is not True | `flag_type_admission_0`, `flag_type_admission_1`, `flag_type_admission_2`, `flag_type_admission_3`, `flag_type_admission_4`, `flag_type_admission_5`, `flag_type_admission_6`, `flag_type_admission_7`, `flag_type_admission_8`, `flag_type_admission_9`, `not_admitted` (209) | 6677 | 1 / fail |
-| `A02` — append: source_valid is not True | 22 named cases; full list in `DR.guard-removal.json` (418) | 6468 | 1 / fail |
-| `A03` — append: replay policy before dedupe (both refusal branches) | `append_once_retry`, `dedupe_by_event_id_retry`, `projector_replay_only_retry` (57) | 6829 | 1 / fail |
-| `A04` — append: event['event_id'] in self.global_ids | `global_event_conflict` (19) | 6867 | 1 / fail |
-| `A05` — append: original['custody']['producer_semantic_digest'] == digest | `scoped_semantic_conflict` (19) | 6867 | 1 / fail |
-| `A06` — append: EVENT_VALIDATOR | `retry_envelope_extension` (19) | 6867 | 1 / fail |
-| `A07` — append: not full_value_matches | `invalid_issued_custody` (19) | 6867 | 1 / fail |
-| `P01` — policies_match: row.get('index_retention_policy_ref') == index_policy | `index` (19) | 6867 | 1 / fail |
-| `P02` — policies_match: row.get('checkpoint_retention_policy_ref') == checkpoint_policy | `checkpoint` (19) | 6867 | 1 / fail |
-| `P03` — policies_match: 'derived_retention_policy_ref' not in row | `conflated` (19) | 6867 | 1 / fail |
-| `C01` — checkpoint: schema/key route and resolved checkpoint target | `available_wrong_schema_target`, `route`, `shipped_wrong_key_route` (57) | 6829 | 1 / fail |
-| `C02` — checkpoint_matches: validator(schema, 'checkpoint') | `schema` (19) | 6867 | 1 / fail |
-| `C03` — checkpoint store/key identities, including repeated token store/key joins | `shipped_wrong_checkpoint_store`, `shipped_wrong_custody_store`, `shipped_wrong_source_store`, `shipped_wrong_store_key`, `shipped_wrong_token_store`, `storage` (114) | 6772 | 1 / fail |
-| `C04` — checkpoint live selection/verification/snapshot, including the repeated token snapshot join | 10 named cases; full list in `DR.guard-removal.json` (190) | 6696 | 1 / fail |
-| `C05` — checkpoint_matches: generation != expected_generation | `shipped_wrong_frontier`, `shipped_wrong_pointer`, `token_commitment` (57) | 6829 | 1 / fail |
-| `C06` — checkpoint_matches: not full_value_matches | `shipped_wrong_custody_event`, `shipped_wrong_event`, `source_event` (57) | 6829 | 1 / fail |
-| `C07` — checkpoint_matches: source['scope_partition'] | `partition`, `shipped_wrong_locator`, `shipped_wrong_partition` (57) | 6829 | 1 / fail |
-| `C08` — checkpoint_matches: selection['current_bytes_sha256'] | 36 named cases; full list in `DR.guard-removal.json` (684) | 6202 | 1 / fail |
-| `C09` — checkpoint_matches: value_bytes(anchor['source_selection']) != value_bytes(selection) | `coverage` (19) | 6867 | 1 / fail |
-| `C10` — checkpoint_matches: coverage['last_frame'] | `last_frame`, `source_frame_end_type`, `source_segment_retained_event_count_boolean`, `source_segment_scan_start_offset_boolean`, `source_segment_segment_generation_boolean` (95) | 6791 | 1 / fail |
-| `C11` — checkpoint_matches: segment['scan_start_offset'] | `segment` (19) | 6867 | 1 / fail |
-| `C12` — checkpoint_matches: value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset}) | `dataset`, `shipped_missing_dataset` (38) | 6848 | 1 / fail |
-| `C13` — checkpoint_matches: frontier['index_row_count'] == 1 | `row_count` (19) | 6867 | 1 / fail |
-| `C14` — checkpoint_matches: frontier['index_row_set_sha256'] == binding_digest(dict( domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)])) | `row_set_digest` (19) | 6867 | 1 / fail |
-| `O01` — observation_admissible: source['proof_valid'] | 33 named cases; full list in `DR.guard-removal.json` (33) | 6853 | 1 / fail |
-| `O02` — observation_admissible: candidate['correlation_id'] != grouping_identity | `grouping` (1) | 6885 | 1 / fail |
-| `O03` — source snapshot: adopted logical schema before exact encoded join (named duplicate type defenses) | 833 named cases; full list in `DR.guard-removal.json` (833) | 6053 | 1 / fail |
-| `O04` — observation_admissible: candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None | `first_parent_event_id`, `first_producer_sequence_id` (2) | 6884 | 1 / fail |
-| `O05` — observation_admissible: payload['artifact_id'] != | `artifact_id`, `project_id`, `record_ref`, `record_sha256`, `restore_point_id`, `source_branch_id`, `source_message_id`, `source_thread_id` (8) | 6878 | 1 / fail |
-| `O06` — observation_admissible: payload['type_payload'] == old['type_payload'] | `unchanged` (1) | 6885 | 1 / fail |
-| `O07` — observation_admissible: old_status != 'available' | `terminal_reopen` (1) | 6885 | 1 / fail |
-| `O08` — observation_admissible: candidate['producer_sequence_id'] == previous['producer_sequence_id'] + 1 | `0`, `2` (2) | 6884 | 1 / fail |
-| `O09` — observation_admissible: candidate['parent_event_id'] == previous['event_id'] | `predecessor` (1) | 6885 | 1 / fail |
-| `O10` — observation_admissible: candidate['correlation_id'] == previous['correlation_id'] | `prior_group` (1) | 6885 | 1 / fail |
-| `S01` — whole-document schema references, including optional/unvisited definitions | `unresolved_optional` (19) | 6867 | 1 / fail |
-| `S02` — exact_pattern: re.search(pattern, instance) and re.fullmatch(pattern, instance) is None | `identifier_LF` (1) | 6885 | 1 / fail |
-| `S04` — exact_pattern_properties: re.search(pattern, key) and re.fullmatch(pattern, key) is None | `identifier_key_LF` (1) | 6885 | 1 / fail |
-| `S03` — current-writer provider hash overlay | `provider_hash` (2) | 6884 | 1 / fail |
-| `S05` — rejected: return False | `success_is_not_failure` (1) | 6885 | 1 / fail |
-| `I01` — identity: type(revision) | `boolean_observation_revision`, `fractional_observation_revision`, `missing_observation_revision`, `negative_observation_revision` (4) | 6882 | 1 / fail |
-| `I02` — value_bytes: not math.isfinite | `infinite_value`, `nan_value`, `negative_infinite_value` (3) | 6883 | 1 / fail |
-| `I03` — value_bytes: type(value) not in | `unsupported_binary` (1) | 6885 | 1 / fail |
-| `S06` — validator: validation not in | `unsupported_validation_profile` (1) | 6885 | 1 / fail |
-| `H07` — inspect: return ('metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs') if type(source['body_deleted']) is bool else 'unavailable' | 11 named cases; full list in `DR.guard-removal.json` (209) | 6677 | 1 / fail |
-| `N01` — numeric_walk: not math.isfinite(value) | 32 named cases; full list in `DR.guard-removal.json` (608) | 6278 | 1 / fail |
-| `B01` — source_agreement: copy != source | 205 named cases; full list in `DR.guard-removal.json` (240) | 6646 | 1 / fail |
-| `B02` — decode: raw is False | `source_bytes_type_inline`, `source_bytes_type_packed` (4) | 6882 | 1 / fail |
-| `B03` — decode: evidence['provider_payload_hash'] != expected | `source_digest_inline`, `source_digest_packed` (4) | 6882 | 1 / fail |
-| `S07` — primitive JSON type at artifact_id, sequence_id and boolean scalar witness leaves; union/format tags retained | 21 named cases; full list in `DR.guard-removal.json` (399) | 6487 | 1 / fail |
+| Guard | Owned flips | Other negatives still refused | Unrelated flips |
+|---|---:|---:|---:|
+| `O11` | 12 | 6898 | 0 |
+| `O12` | 4 | 6906 | 0 |
+| `O13` | 4 | 6906 | 0 |
 
-## Eleven standing checks and Astra classes
+Standing checks 1–11 remain in every full family suite: replay-only writer refusal, Project-only scope/application refusal, encoded Project partitions, inline/packed size and integrity, exact identifier matching, producer-semantic retry comparisons, checkpoint identity/source joins, failure exit behavior, eager reference resolution, authenticated retained history and one-defect diagnostics. Application-writer certification and native execution are not claimed.
 
-The complete baseline has **20,400 distinct assertions, exit 0/status pass**, across nineteen sequential family runs; identical shared assertions are counted once and executed in each family run. All **45/45** standing mutation trials are caught. Every family retains standing checks 1–11; application scope is refused in this Project-only edition and is not application-writer certification. Historical support means authenticated issued originals, not invented unsupported legacy mappings.
+Astra classes 1/2/4/5/6/7/11 remain exercised by the unchanged identity/receipt/source/type/reference/size/custody cases in the full suite. Class 3 and 10a gain the authentic predecessor route. Class 8 is qualified by Sweep P1; class 9 is reflected in the grade limits. Existing numeric tests rerun but add no lane-local number policy. Class 12 remains S1. Earlier standalone standing-mutation and independent type/number campaigns are historical evidence from round 7, not asserted to have rerun here.
 
-| Astra class | Round-7 probe and result |
+## Sweep and integration items
+
+- **Sweep S1 — timestamp grammar.** `scripts/pm-runtime-artifact-event-drafts.py:296` (`FormatChecker()`), pinned dependencies, EventRecord/receipt/checkpoint/runtime-artifact date-time fields. The pinned environment can silently skip date-time checks. Adopt the existing Contracts_V0 UTC Z grammar with range/calendar/leap/fraction controls at current write boundaries, preserving authenticated historical recipes. Review cycle 7’s `format-probes.json` records 342 wrongly accepted malformed-date route trials and exact schema pointers. No timestamp rule is changed in this fix.
+- **Sweep P1 — shared check-11 machinery.** Adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105`. Replace inherited whole-condition/keyword cuts and any removal sets merging distinct predicates. Inventory assertions and prove duplicate predicates site by site: each site removed alone must leave the same defect refused; all sites removed must flip it. Existing examples include O03’s combined schema/value test and compound D/C rules. In particular, D01 removes the entire EventRecord validation, so its cut also removes the current candidate's N01 number predicate; such cross flips are an overbroad proof cut and are not fixed by merging predicate ownership. The O12 legacy forced-dispatch witness is diagnostic only and also needs the shared recipe-dispatch adapter. No local proof-tool rebuild is attempted. The original event/custody/receipt authenticators remain fixed in the event-forgery negative; they are verification truth, not regenerated observations of the tampered event. The new fixtures each carry a single defect and product guards retain refusal coverage.
+- **Sweep N2 — shared number/recipe rule.** Adopt CV-1100 / SP-1100 / SP-1101 in the cross-lane sweep, including authenticated full shared write-time recipe dispatch. This fix only uses this lane’s existing supported historical profile. It adds no number cap, serializer, physical float normalization, signed-zero erasure or recipe inferred from untrusted data.
+- **Integration N1.** The original index validator exits 1/top-level fail with 23 failures: 21 existing removal-ledger-format failures, DL-302 absent against origin/main, and a stale generated Plans/.plan_index/node_readiness_report.json. The currentness edition was freshly copied before validation. These are reported for integration; no generated readiness/governance artifact is refreshed in this fix. No unrelated owner prose or removal-ledger changes are made.
+
+## Authority and scope
+
+No Plans path changes from the reviewed head: RAP-113, SP-533, CV-533 and ATS-260 already require this boundary. All schemas, fixtures, frozen originals, registry files, generated shards/indexes and governance artifacts remain byte-identical. Canonical Markdown was not edited, so regeneration is unnecessary. Fifteen latest shared-currentness files were copied into the ignored audit path and hash-verified. The original shard and schema checks and index validation have their actual outcomes in `DR.checks.json`.
+
+No new owner decision, technical binding or Decision Log premise is applied. Existing DL-045/DL-075/DL-270, source/body policies, SP-278/SP-286/CV-339 and SP-337 remain as reviewed. Native source authentication/issuance, writer fences, crash/sync/CAS, backup/restore and UI stay NOT_RUN; readiness remains `blocked_runtime_certification_incomplete`.
+
+**IDs used: zero new.** Existing RAP-100..118 / SP-520..538 / CV-520..538 / ATS-260 remain 58 IDs. No admission, registry append, Decision Log entry, governance seal, mailbox use, subagent, landing lock or main push.
+
+## Evidence
+
+All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/`. `commands.json`, `guards-command.json` and `memory.json` retain commands, outcomes, durations and resource samples. Memory is checked before each family and guard: below 6 GB pauses; recheck every two minutes, resume at 7 GB, stop only after 45 continuous minutes below 6 GB. Disk started at 478 GB available. The sparse local worktree and temporary environment are removed after pushing; external `cleanup.json` records the result.
+
+| Evidence file | SHA-256 |
 |---|---|
-| 1 forged/contradictory input | Framed identity, full-value source joins and all B01/B02/B03 body/digest pairs rerun. C6-B1 source contradictions now refuse. |
-| 2 Storage metadata | Full family suites preserve producer-semantic retries and reject forged Storage-owned copies against original receipt/custody. Real issuance remains NOT_RUN. |
-| 3 retained history | 798 checks over 38 numeric and four provider originals reissue with the actual old models, preserve exact bytes after live changes and reject withdrawal/forgery. Historical decoder and commitment recipes are byte-identical to reviewed source. |
-| 4 field read two ways | Source schema runs before encoded equality; current helper boolean predicates and numeric/copy boundaries receive integer/float/string/null/container probes. |
-| 5 dangling references | Complete schema preflight and optional/unused/external/fragment standing mutations rerun; no bypass. |
-| 6 sizes of every part | Existing exact 16 KiB inline/packed boundary, digest and canonical-storage checks rerun for every family. No stored operation/outbox value is added. |
-| 7 custody paths | Inline/packed fresh append, retry, retained resolution, receipt and checkpoint joins rerun; source authentication remains a synthetic adapter. |
-| 8 masked negatives | Complete 93-row table and uncached proof; one guard or explicitly named duplicate set at a time, with every unrelated negative still refused. |
-| 9 grade precision | Only restore_point.positive_negative_oracles upgrades. All 680 exact evidence excerpts match current source. Native NOT_RUN and membership ABSENT remain explicit. |
-| 10 numeric forms | 3666 independent boundary assertions include float/exponent/signed-zero/invalid leading-zero forms and unchanged originals. Every declared numeric scalar also receives representation probes. |
-| 11 confused types | Raw sweep passes **220,163 assertions**, including **13,454 declared scalar positions** across nineteen families, optional fields and unused reachable definitions. All present event/payload/receipt/custody/result/checkpoint/token fields are tested at their complete schema boundary. Legal multi-type fixture fields keep their declared alternatives. Exact source-copy witnesses include every restore boolean. |
-
-Both item 10 and item 11 apply to this round. Nothing is deferred under the later-added-item clause.
-
-## Scope, authority and integration
-
-Compared with `379727030a1e0e6929a11e5f9595e1fe2f35db1a`, **no Plans path changed**. Every owner unit, payload schema, fixture, frozen original, registry and generated shard/index is byte-identical. Production definitions other than `observation_admissible` and `main` are byte-identical; `main` only gains explicit family selection. All 5,668 old named negative pairs remain, with 1,218 additions. The other eighteen families change only shared test coverage and sequential execution controls, and keep their eleven PASS cells.
-
-No new technical binding or Decision Log premise is applied. Existing DL-045/DL-075/DL-270, source/body policies, SP-278/SP-286/CV-339 and SP-337 remain as previously reviewed. No feature, retention/deletion choice or owner conflict is decided. Canonical Markdown was not edited, so derived regeneration is unnecessary; the unchanged shards are checked. Fifteen ignored currentness files match the shared edition by SHA-256. Native authentication/receipt issuance, sync/crash/CAS, backup/restore and UI execution remain NOT_RUN. Readiness remains blocked_runtime_certification_incomplete; no seal follows.
-
-**IDs used: zero new.** Existing allocation stays RAP-100..118 / SP-520..538 / CV-520..538 / ATS-260 (58 IDs). No registry/admission, Decision Log, .gitignore, Spec Lock, governance evidence, auto-decisions or frozen-validator edit. No subagent, mailbox use, landing lock or main push.
-
-## Verification commands and evidence
-
-Exact argv, exit codes, duration and output hashes are in `DR.checks.json`; top-level index failure is retained as N1. Pinned dependencies come from `scripts/requirements-runtime-artifact-drafts.txt` plus PyYAML 6.0.3. All checks run one family at a time; available RAM stays at least 6 GB.
-
-| Evidence under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-7/` | SHA-256 |
-|---|---|
-| `full-checker.json` | `f7daf3d9fc7df2b95446ce7bfe4584db58aeab9ca443e694f59ec358981e0832` |
-| `complete-guard-removal.json` | `22b8a66085d1ff64025b634a42c29d4816d2c2924a31d3fb9dbb6cd20f1b79a2` |
-| `raw-guard-proof.json` | `bae1cbb84a12b521bfa2a4cda0d60d51dd7da269b266c292279011d682d415d7` |
-| `standing-mutations.json` | `cc1086e99654cd5eeb02f008c0de8ac14177a4a4183d79ee2a70f397c8fea289` |
-| `type-number-sweep.json` | `5fcd4ec11e1083cca00821c59bc12824d44f0b7634c8f58c22e351d1ea3adb19` |
-| `restore-full-checker.json` | `ab815091b5518da9aea3b5efbe39e502cd734b81a981616f759d5ba2440844ed` |
-| `independent-boundaries.json` | `ed3d1d3a46219cf136753e12f05f62d01251904f1f9dd36ca77a36e8f637a6a3` |
-| `historical-originals.json` | `d1cf8915f40e824cdb2722f874d4a784cb002a846f21951ab1a7a81670daa42b` |
-| `scope-audit.json` | `5be0827893befc129570f12693b1075f0e302e2adb09e4710a32746b8af27132` |
-| `grade-source-audit.json` | `9b8bd2bee98a4f51641f7f2d1219f881f1e93c1f7132678439ed80735b79a408` |
-| `currentness-copy.json` | `1b765b9ac2ab42d60576eba5c1f1edd03454965e434717497da8cbcf32c009bf` |
-| `runtime-schemas.json` | `3fd6ab6c00934eae504d164593562d2467fac84347c147e66ad97dcd88509c16` |
+| `historical-predecessors.json` | `0b64d00ac2d761d290d113974fd4910902890c26562a1cb3690ba6927ce0961c` |
+| `full-checker.json` | `cfe9b50d938cb7c5a0ac98ead7949a4c3978d79b20ac25ba15d200096f887572` |
+| `complete-guard-removal.json` | `f797d8ea8cb5b62bcaaa8da29b5364f63a945f3a2fea578ae6e45099255fb135` |
+| `raw-guard-proof.json` | `32c0a4eb7d374eec62e20bd45ddcfd85b5f613ce7e089db45703a4c93d701285` |
+| `runtime-schemas.json` | `644397af6ef28a0670e25d638f1ac2330eb21945b5ae1ede14bd9be4671acea0` |
 | `shard-check.json` | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
-| `index-validate.json` | `6c9ceeee9813f9e1615f5fad83d3a5506fb8ed3c56d2b0c7a8fc88492224fb86` |
-| `validation-runs.json` | `437a1212b514495373c62d95f0545276637351cd4d1a29f982fb593572036853` |
-
-The sparse detached fix worktree and temporary venv are removed after push; external `cleanup.json` records the completed cleanup. No browser or server was started.
+| `index-validate.json` | `5154ced4139d3823cd4d38fba7e1c3efc14a165b4ec0f35d9684180069600b44` |
+| `currentness-copy.json` | `1ae1029adda6c6dc268dcad2cf216b132b6d94cbb55d4242de3502be46acea6e` |
+| `legacy-guard-partial.json` | `260d3aff63e3e91631307b17ae7a6a993c8192300e56e897750e4159d434824b` |
+| `scope-audit.json` | `b522c55c0a324f66e8a1b342e219243cdfaf75083d9759f9a78baca7dcf97f2a` |
