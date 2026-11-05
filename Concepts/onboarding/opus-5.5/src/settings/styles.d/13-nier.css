@@ -499,6 +499,8 @@ html[data-o55-nier] #panel-settings .o55g-wrap {
   --text-secondary: color-mix(in srgb, var(--text-primary) 60%, var(--k3-text-2));
   --text-muted: var(--text-secondary);
 }
+/* Embedded Settings notes and the key prompt use k3 inks rather than the window tokens. */
+html[data-o55-nier] #panel-settings .o55g-wrap :is(.pm51-note:not(.tone-attention), .o55-quiet-line) { color: var(--text-secondary); }
 
 /* The ground. The head boot script paints <html> inline (and #pm-boot-paint) in Basic Dark before Settings load, and
    never takes it back; the parchment wins over it while NieR Mode is on. */
