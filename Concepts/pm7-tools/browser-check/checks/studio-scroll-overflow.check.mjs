@@ -1,6 +1,6 @@
 // SW-42: walk the long Studio scroller in Glass Light, including its final viewport.
 export default async function (t) {
-  await t.viewport(1390, 900);
+  await t.viewport(1920, 1080);
   const f = await t.app.open(); await t.app.look('glass-light');
   // The retained historical looks summary identifies Home's whole-page audit as partial.
   // browser-check caps the unscoped probe at eight scrollers and twelve stops; scope each
@@ -25,6 +25,7 @@ export default async function (t) {
       await t.check('Home scroller '+i+' reached bottom',done,'',{hard:true});
     }
   } finally {await f.evaluate(()=>document.querySelectorAll('[data-full-scroll]').forEach(e=>e.removeAttribute('data-full-scroll')));}
+  await t.viewport(1390,900);
   await f.locator('.pmds-entry').click();
   await f.locator('[data-pmds-tab="onboarding"]').click();
   const scroller = f.locator('#pmds-main');
