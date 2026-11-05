@@ -39,6 +39,7 @@ async function wording(t,f,mode) {
  await t.check('requested wording is applied',await f.evaluate(()=>O55.talk.mode())===want,want);
 }
 export default async function(t) {
+ const initialViewport=t.args.widths ? await t.page.evaluate(()=>({width:innerWidth,height:innerHeight})) : null;
  const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
  for (const [ix,look] of looks.entries()) for (const mode of [0,1]) {
   if(t.args.widths) {const widths=String(t.args.widths).split(',').map(Number);await t.page.setViewportSize({width:widths[(ix*2+mode)%widths.length],height:t.args.short ? 500 : 1080});}
@@ -107,4 +108,5 @@ export default async function(t) {
    await t.check('running token abandoned by browser choice cannot sign in',running&&r.state==='idle',JSON.stringify(r));
   });
  }
+ if(initialViewport) await t.page.setViewportSize(initialViewport);
 }
