@@ -1229,10 +1229,13 @@ class AstGuards:
                 reason = reason or next((python_atom_reason(atom) for _, atom in self._leaves(expr) if python_atom_reason(atom)), "")
                 continue
             for clause, atom in self._leaves(expr):
-                if not reads_input(atom):
-                    continue              # constants/fixed calls have ZERO input atoms
                 atom_reason = python_atom_reason(atom)
                 reason = reason or atom_reason
+                if not reads_input(atom):
+                    # Absence of an explicit parameter read is not evidence
+                    # that an opaque call/dataflow expression is constant.
+                    # Validate its grammar first, then count known constants 0.
+                    continue
                 atoms.append((clause, atom, {"line": root.lineno, "column": root.col_offset, "node": type(root).__name__,
                     "field": field_name, "argument": arg_index if role == "own" else None,
                     "accepting": not polarity, "path": list(clause)}))

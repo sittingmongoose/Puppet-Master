@@ -1417,7 +1417,20 @@ def round6_probe(g, trap, memory):
                 except g.IsolationError: pass
                 else: raise AssertionError('unknown path registered: ' + context)
             rows.append({'context': context, 'source': source, 'targets': targets})
-        return {'contexts': rows}, True
+        unknown_own = []
+        for body in ('return helper() or v["x"] >= 0',
+                     'assert helper() or v["x"] >= 0, "bad"',
+                     'require(helper() or v["x"] >= 0, "bad")'):
+            source = 'def check(v, errors):\n    ' + body + '\n    return True\n'
+            module, candidates, _ = composition_suite(g, 'unknown-own/'+body.split()[0], source, memory)
+            targets = [c for c in candidates if c['line'] == 2]
+            assert targets and all(c['action'] == 'unsupported' and not c['cut'] for c in targets)
+            for c in targets:
+                try: module.register(c, 'bad', g.Invariant('/x', 'nonnegative'))
+                except g.IsolationError: pass
+                else: raise AssertionError('opaque no-argument helper vanished from composition')
+            unknown_own.append({'source': source, 'targets': targets})
+        return {'contexts': rows, 'unknown_own_tests': unknown_own}, True
 
     source, name = trap['source'], trap['id']
     module, candidates, template = composition_suite(g, name, source, memory)
