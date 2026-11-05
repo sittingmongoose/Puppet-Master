@@ -29590,48 +29590,41 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 ### SP-640 — doctor.custom_headless.checked Storage adoption.
 
 ```yaml
-{
-  "plan_unit_id": "SP-640",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "doctor.custom_headless.checked Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-217 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id} with closed schema Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json and reader reader.ds15.doctor_custom_headless_checked.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-640"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-640
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  doctor.custom_headless.checked Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-217 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id} with closed schema Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json and reader reader.ds15.doctor_custom_headless_checked.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 doctor.custom_headless.checked: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-217. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-640
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
@@ -29686,718 +29679,694 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 ### SP-642 — live.session.started Storage adoption.
 
 ```yaml
-{
-  "plan_unit_id": "SP-642",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.session.started Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-219 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_started:{project_id} with closed schema Plans/ds15_live_session_started_checkpoint.schema.json and reader reader.ds15.live_session_started.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-642"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-642
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  live.session.started Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-219 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_started:{project_id} with closed schema Plans/ds15_live_session_started_checkpoint.schema.json and reader reader.ds15.live_session_started.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.session.started: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-219. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-642
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-643 — live.step.updated Storage adoption.
 
 ```yaml
-{
-  "plan_unit_id": "SP-643",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.step.updated Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-220 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_step_updated:{project_id} with closed schema Plans/ds15_live_step_updated_checkpoint.schema.json and reader reader.ds15.live_step_updated.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-643"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-643
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  live.step.updated Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-220 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_step_updated:{project_id} with closed schema Plans/ds15_live_step_updated_checkpoint.schema.json and reader reader.ds15.live_step_updated.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.step.updated: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-220. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-643
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-644 — live.artifact.created Storage adoption.
 
 ```yaml
-{
-  "plan_unit_id": "SP-644",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.artifact.created Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-221 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_artifact_created:{project_id} with closed schema Plans/ds15_live_artifact_created_checkpoint.schema.json and reader reader.ds15.live_artifact_created.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-644"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-644
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  live.artifact.created Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-221 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_artifact_created:{project_id} with closed schema Plans/ds15_live_artifact_created_checkpoint.schema.json and reader reader.ds15.live_artifact_created.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.artifact.created: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-221. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-644
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-645 — live.session.completed Storage adoption.
 
 ```yaml
-{
-  "plan_unit_id": "SP-645",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.session.completed Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-222 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_completed:{project_id} with closed schema Plans/ds15_live_session_completed_checkpoint.schema.json and reader reader.ds15.live_session_completed.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-645"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-645
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  live.session.completed Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-222 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_completed:{project_id} with closed schema Plans/ds15_live_session_completed_checkpoint.schema.json and reader reader.ds15.live_session_completed.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.session.completed: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-222. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-645
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-646 — live.session.degraded Storage adoption.
 
 ```yaml
-{
-  "plan_unit_id": "SP-646",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "live.session.degraded Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-223 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_degraded:{project_id} with closed schema Plans/ds15_live_session_degraded_checkpoint.schema.json and reader reader.ds15.live_session_degraded.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-646"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-646
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  live.session.degraded Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-223 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_degraded:{project_id} with closed schema Plans/ds15_live_session_degraded_checkpoint.schema.json and reader reader.ds15.live_session_degraded.v1@1.0.0. No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.session.degraded: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-223. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event contract only; existing presentation is consumed.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-646
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-647 — browser.context_captured Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-647",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "browser.context_captured independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.browser_context_captured:{scope_key} uses Plans/ds15_browser_context_captured_checkpoint.schema.json and exact reader reader.ds15.browser_context_captured.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Chip value binding: Plans/ds15_browser_capture_chip_v2.schema.json governs the typed browser entry inside composer_prep_state.v1:{thread_id}. No browser-owned composer or separate chip storage family. Migration validates actual thread/namespace and preserves sibling entries and draft bytes; unresolved legacy chip stays visibly unavailable, never silently reassigned. Append/passive replay cannot recreate a chip that the user sent or removed. Read/serialization rechecks current permissions, source deletion and chip blocked/expired/scrubbed/revoked state; unavailable chips may remain visible but never serialize as successful attachments.\nApplication identity follows CV-366 exactly: application@1:{hex(server_id)}:{hex(owner_operation_id)}, using UTF-8 lowercase hex of OriginalBrowserTransitionSource.server_id and immutable original_operation_id through owner.browser.transition.application@1.0.0. Preserve original source/thread/chip/ordinary user/Computer/profile/BrowserSession joins and SP-286 full-value custody. Wrong or absent original identity and a raw tuple/scope hash refuse. The Project MessagePack recipe remains unchanged; scope_key is a checkpoint namespace only. Append recovery rejects projector_replay_only as replay_only_not_appendable; publication rechecks current permission/source/access while retained receipt resolution remains independent of retired controls.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-647"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-647
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  browser.context_captured independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.browser_context_captured:{scope_key} uses Plans/ds15_browser_context_captured_checkpoint.schema.json and exact reader reader.ds15.browser_context_captured.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Chip value binding: Plans/ds15_browser_capture_chip_v2.schema.json governs the typed browser entry inside composer_prep_state.v1:{thread_id}. No browser-owned composer or separate chip storage family. Migration validates actual thread/namespace and preserves sibling entries and draft bytes; unresolved legacy chip stays visibly unavailable, never silently reassigned. Append/passive replay cannot recreate a chip that the user sent or removed. Read/serialization rechecks current permissions, source deletion and chip blocked/expired/scrubbed/revoked state; unavailable chips may remain visible but never serialize as successful attachments.
+  Application identity follows CV-366 exactly: application@1:{hex(server_id)}:{hex(owner_operation_id)}, using UTF-8 lowercase hex of OriginalBrowserTransitionSource.server_id and immutable original_operation_id through owner.browser.transition.application@1.0.0. Preserve original source/thread/chip/ordinary user/Computer/profile/BrowserSession joins and SP-286 full-value custody. Wrong or absent original identity and a raw tuple/scope hash refuse. The Project MessagePack recipe remains unchanged; scope_key is a checkpoint namespace only. Append recovery rejects projector_replay_only as replay_only_not_appendable; publication rechecks current permission/source/access while retained receipt resolution remains independent of retired controls.
+  Round 7 browser.context_captured: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-647
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-648 — dev.session.started Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-648",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "dev.session.started independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_started:{project_id} uses Plans/ds15_dev_session_started_checkpoint.schema.json and exact reader reader.ds15.dev_session_started.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-648"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-648
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  dev.session.started independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_started:{project_id} uses Plans/ds15_dev_session_started_checkpoint.schema.json and exact reader reader.ds15.dev_session_started.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.
+  Round 7 dev.session.started: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-648
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-649 — dev.session.stopping Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-649",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "dev.session.stopping independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_stopping:{project_id} uses Plans/ds15_dev_session_stopping_checkpoint.schema.json and exact reader reader.ds15.dev_session_stopping.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-649"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-649
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  dev.session.stopping independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_stopping:{project_id} uses Plans/ds15_dev_session_stopping_checkpoint.schema.json and exact reader reader.ds15.dev_session_stopping.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.
+  Round 7 dev.session.stopping: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-649
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-650 — dev.session.stopped Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-650",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "dev.session.stopped independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_stopped:{project_id} uses Plans/ds15_dev_session_stopped_checkpoint.schema.json and exact reader reader.ds15.dev_session_stopped.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-650"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-650
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  dev.session.stopped independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_stopped:{project_id} uses Plans/ds15_dev_session_stopped_checkpoint.schema.json and exact reader reader.ds15.dev_session_stopped.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.
+  Round 7 dev.session.stopped: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-650
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-651 — dev.session.restarting Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-651",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "dev.session.restarting independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_restarting:{project_id} uses Plans/ds15_dev_session_restarting_checkpoint.schema.json and exact reader reader.ds15.dev_session_restarting.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-651"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-651
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  dev.session.restarting independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.dev_session_restarting:{project_id} uses Plans/ds15_dev_session_restarting_checkpoint.schema.json and exact reader reader.ds15.dev_session_restarting.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.
+  Round 7 dev.session.restarting: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-651
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-652 — preview.session.started Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-652",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "preview.session.started independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.preview_session_started:{project_id} uses Plans/ds15_preview_session_started_checkpoint.schema.json and exact reader reader.ds15.preview_session_started.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-652"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-652
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  preview.session.started independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.preview_session_started:{project_id} uses Plans/ds15_preview_session_started_checkpoint.schema.json and exact reader reader.ds15.preview_session_started.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.
+  Round 7 preview.session.started: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-652
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-653 — preview.session.refreshed Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-653",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "preview.session.refreshed independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.preview_session_refreshed:{project_id} uses Plans/ds15_preview_session_refreshed_checkpoint.schema.json and exact reader reader.ds15.preview_session_refreshed.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-653"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-653
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  preview.session.refreshed independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.preview_session_refreshed:{project_id} uses Plans/ds15_preview_session_refreshed_checkpoint.schema.json and exact reader reader.ds15.preview_session_refreshed.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.
+  Round 7 preview.session.refreshed: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-653
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-654 — preview.session.stopped Storage binding
 
 ```yaml
-{
-  "plan_unit_id": "SP-654",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "preview.session.stopped independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.preview_session_stopped:{project_id} uses Plans/ds15_preview_session_stopped_checkpoint.schema.json and exact reader reader.ds15.preview_session_stopped.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-654"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-654
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  preview.session.stopped independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317 in full, SP-286/CV-339 full-value v2 and SP-278/DL-076. Own checkpoint projector.checkpoint.ds15.preview_session_stopped:{project_id} uses Plans/ds15_preview_session_stopped_checkpoint.schema.json and exact reader reader.ds15.preview_session_stopped.v1@1.0.0. Physical profile: derived redb, coordination_and_storage, messagepack_canonical, maximum 16384 bytes under SP-339/SP-340. Oversize refuses; no canonical budget-based deletion. Event/checkpoint retention PENDING_RETENTION_DECISION; RT owns assignment. Original custody/recovery follows its actual source owner. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.
+  Round 7 preview.session.stopped: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-654
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-655 — Developer workflow and subordinate DAP value v2
 
 ```yaml
-{
-  "plan_unit_id": "SP-655",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "dev_session_record.v1 versioned aggregate value binding (newly authored technical closure, DL-045). Section15 owns the developer workflow (209,244-247,9433); Shared Runtime 10.1 owns subordinate DebugSessionBroker mechanics. The physical key remains dev_session_record.v1:{project_id}:{dev_session_id}, value version 2.0.0, schema pm.storage_value.dev_session_record.v2 at Plans/ds15_dev_session_record_v2.schema.json#/$defs/dev_session_record. No parallel root identity or fabricated DAP id. workflow carries its state/revision/operation/outcome and actual optional run/thread/workspace/terminal links; dap is null for non-debug work, else the unchanged complete DAP v1 value with its independent generation/state/waiter evidence. Outer and nested project_id/dev_session_id and DAP topology.project_id must agree. Workflow state is never used as DAP state or PTY liveness. A DAP state change needs its own verified DebugSessionBroker outcome and existing waiter/trigger checks; workflow stop alone authorizes none.\nMigration: keep the original exact closed shared_runtime_contracts.schema.json DAP v1 codec for read-only import. Validate its schema AND existing pm-shared-runtime-contracts.py semantic rules first; copy every DAP field byte-equivalently to dap under the same outer root ids, set workflow=null when no verified workflow source exists, and never infer workflow state from DAP state. A verified legacy Section15 workflow source may populate workflow without DAP; validate exact links/outcome. Ambiguous root joins or missing original outcome refuse. StorageMigrationCoordinator makes a backed-up transaction, verifies canonical MessagePack codec roundtrip and full-value SP-286 outcome/first-receipt custody, then writes the schema/store version last. No lazy rewrite. Original per-transition outcomes remain immutable in adopted SP-286/CV-339 full-value v2 custody; the mutable latest workflow row cannot substitute for an earlier outcome on retry.\nRecovery: this existing canonical_non_rebuildable family retains mandatory backup and disclosure on absent/corrupt bytes; do not rebuild from events or infer live PTY/DAP state. After restart verify runtime owners before any mutation. Writer/reader withdrawal follows each event contract. SP-339/SP-340 existing canonical projects_and_sources profile and 16384-byte encoded ceiling remain. Retention for the expanded v2 workflow/DAP combination is PENDING_RETENTION_DECISION for RT; existing DAP-only v1 remains RP-DEBUG-30D under its unchanged scope, never extended to workflow by inference. No retention/deletion ruling. Static codec/schema/migration vectors in Plans/ds15_value_contract_fixtures.json run through scripts/pm-ds15-event-contracts.py; native execution NOT_RUN.",
-  "gui_related": false,
-  "gui_classification_reason": "Durable event/runtime contract.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-655"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-655
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  dev_session_record.v1 versioned aggregate value binding (newly authored technical closure, DL-045). Section15 owns the developer workflow (209,244-247,9433); Shared Runtime 10.1 owns subordinate DebugSessionBroker mechanics. The physical key remains dev_session_record.v1:{project_id}:{dev_session_id}, value version 2.0.0, schema pm.storage_value.dev_session_record.v2 at Plans/ds15_dev_session_record_v2.schema.json#/$defs/dev_session_record. No parallel root identity or fabricated DAP id. workflow carries its state/revision/operation/outcome and actual optional run/thread/workspace/terminal links; dap is null for non-debug work, else the unchanged complete DAP v1 value with its independent generation/state/waiter evidence. Outer and nested project_id/dev_session_id and DAP topology.project_id must agree. Workflow state is never used as DAP state or PTY liveness. A DAP state change needs its own verified DebugSessionBroker outcome and existing waiter/trigger checks; workflow stop alone authorizes none.
+  Migration: keep the original exact closed shared_runtime_contracts.schema.json DAP v1 codec for read-only import. Validate its schema AND existing pm-shared-runtime-contracts.py semantic rules first; copy every DAP field byte-equivalently to dap under the same outer root ids, set workflow=null when no verified workflow source exists, and never infer workflow state from DAP state. A verified legacy Section15 workflow source may populate workflow without DAP; validate exact links/outcome. Ambiguous root joins or missing original outcome refuse. StorageMigrationCoordinator makes a backed-up transaction, verifies canonical MessagePack codec roundtrip and full-value SP-286 outcome/first-receipt custody, then writes the schema/store version last. No lazy rewrite. Original per-transition outcomes remain immutable in adopted SP-286/CV-339 full-value v2 custody; the mutable latest workflow row cannot substitute for an earlier outcome on retry.
+  Recovery: this existing canonical_non_rebuildable family retains mandatory backup and disclosure on absent/corrupt bytes; do not rebuild from events or infer live PTY/DAP state. After restart verify runtime owners before any mutation. Writer/reader withdrawal follows each event contract. SP-339/SP-340 existing canonical projects_and_sources profile and 16384-byte encoded ceiling remain. Retention for the expanded v2 workflow/DAP combination is PENDING_RETENTION_DECISION for RT; existing DAP-only v1 remains RP-DEBUG-30D under its unchanged scope, never extended to workflow by inference. No retention/deletion ruling. Static codec/schema/migration vectors in Plans/ds15_value_contract_fixtures.json run through scripts/pm-ds15-event-contracts.py; native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Durable event/runtime contract.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-655
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```
 
 
 ### SP-656 — Preview subject UI and runtime identity mapping
 
 ```yaml
-{
-  "plan_unit_id": "SP-656",
-  "unit_type": "contract",
-  "status": "accepted",
-  "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "preview_state subject/UI v2 technical binding (DL-045). FinalGUISpec:3584 and rewrite-tie-in-memo:231-302 establish subject-owned UI restore intent distinct from runtime PreviewSession and BrowserSession. Canonical write key preview_state.v1:{project_id}:{preview_subject_id}; a legacy preview_id key is read-only input, never a second subject identity. Plans/ds15_preview_state_v2.schema.json closes value version 2.0.0 with actual subject/source ref, restore intent, attachment target, export-prefs ref, scroll sync, last error and historical runtime/revision refs. runtime_verification is always unverified in persisted UI state. Runtime state created/loading/ready/stale/degraded/error/closed belongs to the actual live PreviewSession, not this UI cache. Opening/revealing preserves runtime identity when the existing subject/source_revision/surface-kind/transport tuple is unchanged; source changes use owner-resolved identity, never a guessed old live session. Optional BrowserSession overlay stays independent. No DOM/browser-storage/live instance serialization or automatic automation resume.\nMigration: old preview_state.v1:{project_id}:{preview_id} with legacy starting/running/stopped/error is accepted only with an owner-verified exact mapping of legacy preview_id/source_file to preview_subject_id/source ref, and authoritative saved intent/attachment/export/scroll/error state. Never equate preview_id with preview_session_id. Missing or multiple mappings are unavailable; do not guess a subject, invent UI preferences or a live session. Preserve legacy status for diagnostics, set runtime_verification=unverified and last_preview_session_id=null when no verified historical identity exists. Explicit StorageMigrationCoordinator backup/copy-forward/codec verification writes the new key/version last and records the old key read-only; fail closed on ambiguous migration. Preserve all existing UI preferences and owned refs. Restore uses subject intent and creates a new live runtime as needed through existing commands, never deserializes old running.\nThe materialized ds15_preview_subject_ui_state family is canonical UI intent with mandatory backup, bounded to SP-339/SP-340 16384 encoded bytes in canonical redb settings_and_layout; original transition outcomes are held by SP-286/CV-339 full-value v2, not reconstructed from latest UI state. Grouped deferred inventory is lineage only and excludes this now-materialized key. No retention/deletion policy is selected: its new exact policy is PENDING_RETENTION_DECISION for RT. Existing refresh/hot-reload actions bind independently in SMPFS-316; ordinary browser reload uses UCC-117, non-browser refresh never dispatches browser commands. Versioned schema/migration plus runtime/subject mismatch oracles run via scripts/pm-ds15-event-contracts.py; native execution NOT_RUN.",
-  "gui_related": true,
-  "gui_classification_reason": "Pending composer or preview UI state.",
-  "depends_on": [
-    "DL-045"
-  ],
-  "unblocks": [],
-  "acceptance_criteria": [
-    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
-  ],
-  "validation_surfaces": [
-    "python3 scripts/pm-ds15-event-contracts.py"
-  ],
-  "risk_class": "event_authority_contract_drift",
-  "reasoning_tier": "high",
-  "context_scope": "ds15_event_preparation",
-  "implementation_surfaces": [
-    "Plans/storage-plan.md"
-  ],
-  "node_compile_hint": {
-    "mode": "contract_only",
-    "create_worknodes": false,
-    "create_nodeseeds": false
-  },
-  "source_lineage": [
-    "Plans/Decision_Log.md#DL-045"
-  ],
-  "preserved_exact_tokens": [
-    "SP-656"
-  ],
-  "negative_constraints": [
-    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
-  ],
-  "owner_hints": [
-    "Plans/storage-plan.md"
-  ]
-}
+plan_unit_id: SP-656
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  preview_state subject/UI v2 technical binding (DL-045). FinalGUISpec:3584 and rewrite-tie-in-memo:231-302 establish subject-owned UI restore intent distinct from runtime PreviewSession and BrowserSession. Canonical write key preview_state.v1:{project_id}:{preview_subject_id}; a legacy preview_id key is read-only input, never a second subject identity. Plans/ds15_preview_state_v2.schema.json closes value version 2.0.0 with actual subject/source ref, restore intent, attachment target, export-prefs ref, scroll sync, last error and historical runtime/revision refs. runtime_verification is always unverified in persisted UI state. Runtime state created/loading/ready/stale/degraded/error/closed belongs to the actual live PreviewSession, not this UI cache. Opening/revealing preserves runtime identity when the existing subject/source_revision/surface-kind/transport tuple is unchanged; source changes use owner-resolved identity, never a guessed old live session. Optional BrowserSession overlay stays independent. No DOM/browser-storage/live instance serialization or automatic automation resume.
+  Migration: old preview_state.v1:{project_id}:{preview_id} with legacy starting/running/stopped/error is accepted only with an owner-verified exact mapping of legacy preview_id/source_file to preview_subject_id/source ref, and authoritative saved intent/attachment/export/scroll/error state. Never equate preview_id with preview_session_id. Missing or multiple mappings are unavailable; do not guess a subject, invent UI preferences or a live session. Preserve legacy status for diagnostics, set runtime_verification=unverified and last_preview_session_id=null when no verified historical identity exists. Explicit StorageMigrationCoordinator backup/copy-forward/codec verification writes the new key/version last and records the old key read-only; fail closed on ambiguous migration. Preserve all existing UI preferences and owned refs. Restore uses subject intent and creates a new live runtime as needed through existing commands, never deserializes old running.
+  The materialized ds15_preview_subject_ui_state family is canonical UI intent with mandatory backup, bounded to SP-339/SP-340 16384 encoded bytes in canonical redb settings_and_layout; original transition outcomes are held by SP-286/CV-339 full-value v2, not reconstructed from latest UI state. Grouped deferred inventory is lineage only and excludes this now-materialized key. No retention/deletion policy is selected: its new exact policy is PENDING_RETENTION_DECISION for RT. Existing refresh/hot-reload actions bind independently in SMPFS-316; ordinary browser reload uses UCC-117, non-browser refresh never dispatches browser commands. Versioned schema/migration plus runtime/subject mismatch oracles run via scripts/pm-ds15-event-contracts.py; native execution NOT_RUN.
+gui_related: true
+gui_classification_reason: Pending composer or preview UI state.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-656
+negative_constraints:
+- No admission, retention decision, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-657 — catalog.install.started Storage contract
+
+```yaml
+plan_unit_id: SP-657
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: catalog.install.started@1.0.0 independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318,
+  SP-286/CV-339 ordinary SeglogFrameV2 append and SP-278 complete-source checkpoint/CAS. Producer is catalog lifecycle controller
+  over the existing item subsystem install outcome, never queue acceptance. Exact original source/outcome/event/first receipt
+  and full-value commitment survive retry/recovery/backup; every read/checkpoint/rebuild checks original custody and current
+  disclosure/withdrawal. Consumer reader.ds15.catalog_install_started.v1@1.0.0; checkpoint key projector.checkpoint.ds15.catalog_install_started:{scope_key};
+  exact value Plans/ds15_catalog_install_started_checkpoint.schema.json. Current append rejects replay-only; authenticated
+  supported retained replay-only history is valid. Caller Storage metadata is excluded from retry equality; original metadata
+  must join selected global index. SP-337 16 KiB body/value ceilings, nine-field token, no persisted snapshot. Event and checkpoint
+  retention_policy_ref=PENDING_RETENTION_DECISION, no expiry/deletion decision. Compatibility, withdrawal/reinstall and all
+  field joins are independently governed by Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318. Newly authored technical
+  binding; native NOT_RUN; no admission.
+gui_related: false
+gui_classification_reason: Event identity, original outcome custody and reader contracts.
+depends_on:
+- SMPFS-318
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Exact family positive and negative static oracles pass; no production admission or native proof.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-657
+negative_constraints:
+- No admission, retention/deletion decision, update/remove policy, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-658 — catalog.install.completed Storage contract
+
+```yaml
+plan_unit_id: SP-658
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: catalog.install.completed@1.0.0 independently adopts Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-319,
+  SP-286/CV-339 ordinary SeglogFrameV2 append and SP-278 complete-source checkpoint/CAS. Producer is catalog lifecycle controller
+  over the existing item subsystem install outcome, never queue acceptance. Exact original source/outcome/event/first receipt
+  and full-value commitment survive retry/recovery/backup; every read/checkpoint/rebuild checks original custody and current
+  disclosure/withdrawal. Consumer reader.ds15.catalog_install_completed.v1@1.0.0; checkpoint key projector.checkpoint.ds15.catalog_install_completed:{scope_key};
+  exact value Plans/ds15_catalog_install_completed_checkpoint.schema.json. Current append rejects replay-only; authenticated
+  supported retained replay-only history is valid. Caller Storage metadata is excluded from retry equality; original metadata
+  must join selected global index. SP-337 16 KiB body/value ceilings, nine-field token, no persisted snapshot. Event and checkpoint
+  retention_policy_ref=PENDING_RETENTION_DECISION, no expiry/deletion decision. Compatibility, withdrawal/reinstall and all
+  field joins are independently governed by Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-319. Newly authored technical
+  binding; native NOT_RUN; no admission.
+gui_related: false
+gui_classification_reason: Event identity, original outcome custody and reader contracts.
+depends_on:
+- SMPFS-319
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Exact family positive and negative static oracles pass; no production admission or native proof.
+validation_surfaces:
+- python3 scripts/pm-ds15-event-contracts.py
+risk_class: event_authority_contract_drift
+reasoning_tier: high
+context_scope: ds15_event_preparation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-658
+negative_constraints:
+- No admission, retention/deletion decision, update/remove policy, native proof, WorkNodes or NodeSeeds.
+owner_hints:
+- Plans/storage-plan.md
 ```

@@ -3105,7 +3105,32 @@
     "DL-010",
     "DL-011",
     "DL-012",
+    "ATS-320",
+    "ATS-322",
+    "ATS-323",
+    "ATS-324",
+    "ATS-325",
+    "ATS-326",
+    "ATS-327",
+    "ATS-328",
+    "ATS-329",
     "CV-334",
+    "CV-660",
+    "CV-662",
+    "CV-663",
+    "CV-664",
+    "CV-665",
+    "CV-666",
+    "CV-667",
+    "CV-668",
+    "CV-669",
+    "CV-670",
+    "CV-671",
+    "CV-672",
+    "CV-673",
+    "CV-674",
+    "CV-675",
+    "CV-676",
     "DL-047",
     "DL-048",
     "DL-049",
@@ -3122,6 +3147,38 @@
     "DL-087",
     "DL-088",
     "GRS-060",
+    "N2-217",
+    "N2-219",
+    "N2-220",
+    "N2-221",
+    "N2-222",
+    "N2-223",
+    "SMPFS-310",
+    "SMPFS-311",
+    "SMPFS-312",
+    "SMPFS-313",
+    "SMPFS-314",
+    "SMPFS-315",
+    "SMPFS-316",
+    "SMPFS-317",
+    "SMPFS-318",
+    "SMPFS-319",
+    "SP-640",
+    "SP-642",
+    "SP-643",
+    "SP-644",
+    "SP-645",
+    "SP-646",
+    "SP-647",
+    "SP-648",
+    "SP-649",
+    "SP-650",
+    "SP-651",
+    "SP-652",
+    "SP-653",
+    "SP-654",
+    "SP-655",
+    "SP-656",
     "DL-076",
     "DL-077",
     "DL-078",
@@ -6141,6 +6198,8 @@
     "SP-300",
     "SP-302",
     "SP-303",
+    "SP-657",
+    "SP-658",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -6182,6 +6241,8 @@
     "RGV-019",
     "UF-102",
     "SP-269",
+    "CV-677",
+    "CV-678",
     "ACD-087",
     "CV-336",
     "PS-134",
@@ -15526,6 +15587,51 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-320",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-322",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-323",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-324",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-325",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-326",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-327",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-328",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-329",
+      "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
@@ -25931,6 +26037,106 @@
       "edge_type": "depends_on",
       "from": "CV-368",
       "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-660",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-662",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-663",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-664",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-665",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-666",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-667",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-668",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-669",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-670",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-671",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-672",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-673",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-674",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-675",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-676",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-677",
+      "to": "SMPFS-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-677",
+      "to": "SP-657"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-678",
+      "to": "SMPFS-319"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-678",
+      "to": "SP-658"
     },
     {
       "edge_type": "depends_on",
@@ -45941,6 +46147,36 @@
       "edge_type": "depends_on",
       "from": "N2-157",
       "to": "SP-290"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-217",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-219",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-220",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-221",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-222",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-223",
+      "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
@@ -74729,6 +74965,56 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-310",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-311",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-312",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-313",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-314",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-315",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-316",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-317",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-318",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-319",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-001",
       "to": "PDS-003"
     },
@@ -81991,6 +82277,116 @@
       "edge_type": "depends_on",
       "from": "SP-353",
       "to": "SP-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-640",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-642",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-643",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-644",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-645",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-646",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-647",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-648",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-649",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-650",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-651",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-652",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-653",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-654",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-655",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-656",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-657",
+      "to": "SMPFS-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-657",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-657",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-658",
+      "to": "SMPFS-319"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-658",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-658",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -117208,7 +117604,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T20:28:27Z",
+  "generated_at_utc": "2026-11-05T03:22:22Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131321,6 +131717,159 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-320",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-320 — doctor.custom_headless.checked positive/negative oracles.",
+        "heading_level": 3,
+        "heading_line": 7233,
+        "line": 7235,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-322",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-322 — live.session.started positive/negative oracles.",
+        "heading_level": 3,
+        "heading_line": 7323,
+        "line": 7325,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-323",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-323 — live.step.updated positive/negative oracles.",
+        "heading_level": 3,
+        "heading_line": 7365,
+        "line": 7367,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-324",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-324 — live.artifact.created positive/negative oracles.",
+        "heading_level": 3,
+        "heading_line": 7407,
+        "line": 7409,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-325",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-325 — live.session.completed positive/negative oracles.",
+        "heading_level": 3,
+        "heading_line": 7449,
+        "line": 7451,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-326",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-326 — live.session.degraded positive/negative oracles.",
+        "heading_level": 3,
+        "heading_line": 7491,
+        "line": 7493,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-327",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-327 — DS15 independent family semantic oracle sections",
+        "heading_level": 3,
+        "heading_line": 7533,
+        "line": 7535,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-328",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-328 — DS15 independent family semantic oracle sections",
+        "heading_level": 3,
+        "heading_line": 7573,
+        "line": 7575,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-329",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "ATS-329 — DS15 independent family semantic oracle sections",
+        "heading_level": 3,
+        "heading_line": 7625,
+        "line": 7627,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -144358,6 +144907,312 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-660",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-660 — doctor.custom_headless.checked closed payload.",
+        "heading_level": 3,
+        "heading_line": 24472,
+        "line": 24474,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-662",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-662 — live.session.started closed payload.",
+        "heading_level": 3,
+        "heading_line": 24560,
+        "line": 24562,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-663",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-663 — live.step.updated closed payload.",
+        "heading_level": 3,
+        "heading_line": 24600,
+        "line": 24602,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-664",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-664 — live.artifact.created closed payload.",
+        "heading_level": 3,
+        "heading_line": 24640,
+        "line": 24642,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-665",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-665 — live.session.completed closed payload.",
+        "heading_level": 3,
+        "heading_line": 24680,
+        "line": 24682,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-666",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-666 — live.session.degraded closed payload.",
+        "heading_level": 3,
+        "heading_line": 24720,
+        "line": 24722,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-667",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-667 — browser.context_captured closed payload",
+        "heading_level": 3,
+        "heading_line": 24760,
+        "line": 24762,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-668",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-668 — dev.session.started closed payload",
+        "heading_level": 3,
+        "heading_line": 24800,
+        "line": 24802,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-669",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-669 — dev.session.stopping closed payload",
+        "heading_level": 3,
+        "heading_line": 24839,
+        "line": 24841,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-670",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-670 — dev.session.stopped closed payload",
+        "heading_level": 3,
+        "heading_line": 24878,
+        "line": 24880,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-671",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-671 — dev.session.restarting closed payload",
+        "heading_level": 3,
+        "heading_line": 24917,
+        "line": 24919,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-672",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-672 — preview.session.started closed payload",
+        "heading_level": 3,
+        "heading_line": 24956,
+        "line": 24958,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-673",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-673 — preview.session.refreshed closed payload",
+        "heading_level": 3,
+        "heading_line": 24995,
+        "line": 24997,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-674",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-674 — preview.session.stopped closed payload",
+        "heading_level": 3,
+        "heading_line": 25034,
+        "line": 25036,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-675",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-675 — Developer workflow/DAP versioned codec",
+        "heading_level": 3,
+        "heading_line": 25073,
+        "line": 25075,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-676",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-676 — Preview subject UI versioned value",
+        "heading_level": 3,
+        "heading_line": 25113,
+        "line": 25115,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-677",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-677 — catalog.install.started payload contract",
+        "heading_level": 3,
+        "heading_line": 25153,
+        "line": 25155,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-678",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "CV-678 — catalog.install.completed payload contract",
+        "heading_level": 3,
+        "heading_line": 25195,
+        "line": 25197,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -192674,6 +193529,108 @@
       "unit_type": "owner_boundary"
     },
     {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-217",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "N2-217 — doctor.custom_headless.checked 1.0.0 — newly authored owner contract, prepared without admission.",
+        "heading_level": 3,
+        "heading_line": 9111,
+        "line": 9113,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-219",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "N2-219 — live.session.started 1.0.0 — newly authored owner contract, prepared without admission.",
+        "heading_level": 3,
+        "heading_line": 9212,
+        "line": 9214,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-220",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "N2-220 — live.step.updated 1.0.0 — newly authored owner contract, prepared without admission.",
+        "heading_level": 3,
+        "heading_line": 9265,
+        "line": 9267,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-221",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "N2-221 — live.artifact.created 1.0.0 — newly authored owner contract, prepared without admission.",
+        "heading_level": 3,
+        "heading_line": 9318,
+        "line": 9320,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-222",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "N2-222 — live.session.completed 1.0.0 — newly authored owner contract, prepared without admission.",
+        "heading_level": 3,
+        "heading_line": 9371,
+        "line": 9373,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-223",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "N2-223 — live.session.degraded 1.0.0 — newly authored owner contract, prepared without admission.",
+        "heading_level": 3,
+        "heading_line": 9424,
+        "line": 9426,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
       "context_scope": "named_plan_aggregate",
       "gui_related": true,
       "owner_doc": "Plans/Named_Plan_System.md",
@@ -222271,6 +223228,176 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-310",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-310 — browser.context_captured owner contract",
+        "heading_level": 3,
+        "heading_line": 13364,
+        "line": 13366,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-311",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-311 — dev.session.started owner contract",
+        "heading_level": 3,
+        "heading_line": 13420,
+        "line": 13422,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-312",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-312 — dev.session.stopping owner contract",
+        "heading_level": 3,
+        "heading_line": 13475,
+        "line": 13477,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-313",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-313 — dev.session.stopped owner contract",
+        "heading_level": 3,
+        "heading_line": 13530,
+        "line": 13532,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-314",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-314 — dev.session.restarting owner contract",
+        "heading_level": 3,
+        "heading_line": 13585,
+        "line": 13587,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-315",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-315 — preview.session.started owner contract",
+        "heading_level": 3,
+        "heading_line": 13640,
+        "line": 13642,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-316",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-316 — preview.session.refreshed owner contract",
+        "heading_level": 3,
+        "heading_line": 13695,
+        "line": 13697,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-317",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-317 — preview.session.stopped owner contract",
+        "heading_level": 3,
+        "heading_line": 13750,
+        "line": 13752,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-318",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-318 — catalog.install.started owner contract",
+        "heading_level": 3,
+        "heading_line": 13805,
+        "line": 13807,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-319",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SMPFS-319 — catalog.install.completed owner contract",
+        "heading_level": 3,
+        "heading_line": 13853,
+        "line": 13855,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
       "context_scope": "storage_generated_residual_tail",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -228066,6 +229193,312 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-640",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-640 — doctor.custom_headless.checked Storage adoption.",
+        "heading_level": 3,
+        "heading_line": 29481,
+        "line": 29483,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-642",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-642 — live.session.started Storage adoption.",
+        "heading_level": 3,
+        "heading_line": 29570,
+        "line": 29572,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-643",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-643 — live.step.updated Storage adoption.",
+        "heading_level": 3,
+        "heading_line": 29611,
+        "line": 29613,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-644",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-644 — live.artifact.created Storage adoption.",
+        "heading_level": 3,
+        "heading_line": 29652,
+        "line": 29654,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-645",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-645 — live.session.completed Storage adoption.",
+        "heading_level": 3,
+        "heading_line": 29693,
+        "line": 29695,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-646",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-646 — live.session.degraded Storage adoption.",
+        "heading_level": 3,
+        "heading_line": 29734,
+        "line": 29736,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-647",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-647 — browser.context_captured Storage binding",
+        "heading_level": 3,
+        "heading_line": 29775,
+        "line": 29777,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-648",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-648 — dev.session.started Storage binding",
+        "heading_level": 3,
+        "heading_line": 29815,
+        "line": 29817,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-649",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-649 — dev.session.stopping Storage binding",
+        "heading_level": 3,
+        "heading_line": 29854,
+        "line": 29856,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-650",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-650 — dev.session.stopped Storage binding",
+        "heading_level": 3,
+        "heading_line": 29893,
+        "line": 29895,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-651",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-651 — dev.session.restarting Storage binding",
+        "heading_level": 3,
+        "heading_line": 29932,
+        "line": 29934,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-652",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-652 — preview.session.started Storage binding",
+        "heading_level": 3,
+        "heading_line": 29971,
+        "line": 29973,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-653",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-653 — preview.session.refreshed Storage binding",
+        "heading_level": 3,
+        "heading_line": 30010,
+        "line": 30012,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-654",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-654 — preview.session.stopped Storage binding",
+        "heading_level": 3,
+        "heading_line": 30049,
+        "line": 30051,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-655",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-655 — Developer workflow and subordinate DAP value v2",
+        "heading_level": 3,
+        "heading_line": 30088,
+        "line": 30090,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-656",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-656 — Preview subject UI and runtime identity mapping",
+        "heading_level": 3,
+        "heading_line": 30128,
+        "line": 30130,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-657",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-657 — catalog.install.started Storage contract",
+        "heading_level": 3,
+        "heading_line": 30168,
+        "line": 30170,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
+    },
+    {
+      "context_scope": "ds15_event_preparation",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-658",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract_drift",
+      "source_location": {
+        "heading": "SP-658 — catalog.install.completed Storage contract",
+        "heading_level": 3,
+        "heading_line": 30217,
+        "line": 30219,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "contract"
     },
     {
       "context_scope": "scheduling_precedence",
@@ -243374,10 +244807,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18815,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 22023,
+    "node_count": 7482,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -392,5 +392,51 @@
       "Plans/UI_Command_Catalog.md:463-464,9570-9588"
     ],
     "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
+  },
+  {
+    "event_type": "catalog.install.started",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "storage_owner": "Plans/storage-plan.md#SP-657",
+    "payload_owner": "Plans/Contracts_V0.md#CV-677",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_catalog_install_started.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_catalog_install_started_checkpoint.schema.json",
+    "consumer": "reader.ds15.catalog_install_started.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.catalog_install_started:{scope_key}",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.install.started\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_started-search.json",
+    "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
+  },
+  {
+    "event_type": "catalog.install.completed",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-319",
+    "storage_owner": "Plans/storage-plan.md#SP-658",
+    "payload_owner": "Plans/Contracts_V0.md#CV-678",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_catalog_install_completed.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_catalog_install_completed_checkpoint.schema.json",
+    "consumer": "reader.ds15.catalog_install_completed.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.catalog_install_completed:{scope_key}",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.install.completed\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_completed-search.json",
+    "negative_search_result": "No exact versioned producer/consumer/checkpoint/identity/withdrawal definition found in the documented scope.",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "numeric_schema_profile_ref": "Plans/ds15_integer_domain.schema.json"
   }
 ]

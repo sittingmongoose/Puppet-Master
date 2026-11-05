@@ -793,20 +793,23 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # Re-pinned 2026-11-04 for DS15 SP-640..656: 14 independent event checkpoints plus
 # subject-owned preview UI add 15 materialized later-feature values. The skipped
 # family is withdrawn to DT; no retention policy is added or inferred.
-# Census on rebase (2026-11-05): main's 344 families (320 + 23 + 1) + these 15 materialized = 359.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 359
+# DS15 round 7 SP-657/658 adds the two independently owned install checkpoints;
+# both are materialized later-feature values; retention remains undecided.
+# Census on rebase (2026-11-05), from the merged registry: main's 344 families (320 materialized + 23 deferred
+# + 1 alias) + DS15's 17 materialized later-feature rows (16 event checkpoints + ds15_preview_subject_ui_state) = 361.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 361
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 # DS15 adds no retention policy, so the merged count is main's 35.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 35
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 335,
+    "materialized": 337,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 61,
-    "later_gui_or_feature_projection": 288,
+    "later_gui_or_feature_projection": 290,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

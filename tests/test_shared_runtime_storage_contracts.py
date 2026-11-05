@@ -222,14 +222,14 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # deferred_not_build_blocking families; the projects/settings refresh (SP-337..SP-353, DL-280..DL-300)
         # adds 41 materialized families and the 2026-11-04 full-review fix (finding 14) two more. None was removed.
         # 275 + 2 + 43 = 320 materialized, 19 + 4 = 23 deferred, 1 alias: 344.
-        # DS15 SP-640..656: current census plus fourteen checkpoints and preview UI.
-        # Census on rebase (2026-11-05): main's 344 + 15 materialized = 359 (320 + 15 = 335 materialized).
-        self.assertEqual(len(self.registry["families"]), 359)
+        # DS15 SP-640..658: sixteen independent checkpoints and preview UI.
+        # Census on rebase (2026-11-05): main's 344 + 17 materialized = 361 (320 + 17 = 337 materialized).
+        self.assertEqual(len(self.registry["families"]), 361)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 335,
+                    "materialized": 337,
                     "deferred_not_build_blocking": 23,
                     "compatibility_alias": 1,
                 }
@@ -376,9 +376,11 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         report = json.loads(proc.stdout)
-        self.assertEqual(report["families"], 14)
-        self.assertGreaterEqual(report["semantic_oracles"], 594)
-        self.assertGreaterEqual(report["value_oracles"], 33)
+        self.assertEqual(report["families"], 16)
+        self.assertGreaterEqual(report["semantic_oracles"], 11776)
+        self.assertGreaterEqual(report["value_oracles"], 49)
+        self.assertGreaterEqual(report["guard_proof_oracles"], 247)
+        self.assertGreaterEqual(report["numeric_oracles"], 3488)
         self.assertEqual(report["native_execution"], "NOT_RUN")
 
     def test_materializer_check_is_current(self) -> None:

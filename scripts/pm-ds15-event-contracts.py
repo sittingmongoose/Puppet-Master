@@ -2,7 +2,7 @@
 """Execute DS15 static contract oracles. No production effects or native proof."""
 import copy
 import hashlib
-import json
+import json, yaml
 import re
 from pathlib import Path
 import jsonschema
@@ -51,7 +51,7 @@ def parse_integer(token):
 
 def parse_numeric_json(encoded):
     """Keep lexical rejection before Python erases -0; JSON rejects 01 itself."""
-    value = json.loads(encoded, parse_int=parse_integer)
+    value = json.loads(encoded, parse_int=parse_integer, object_pairs_hook=_app.unique_object)
     if not numbers_ok(value):
         raise ValueError('DS15 requires canonical-range JSON integers')
     return value
@@ -74,13 +74,33 @@ _codec_spec.loader.exec_module(_codec)
 _debug_spec = importlib.util.spec_from_file_location('pm_ds15_debug_semantics', ROOT / 'scripts/pm-shared-runtime-contracts.py')
 _debug = importlib.util.module_from_spec(_debug_spec)
 _debug_spec.loader.exec_module(_debug)
+_app_spec = importlib.util.spec_from_file_location('pm_ds15_app_hash', ROOT / 'scripts/pm_projects_refresh_contracts.py')
+_app = importlib.util.module_from_spec(_app_spec)
+_app_spec.loader.exec_module(_app)
 
 @lru_cache(maxsize=None)
 def read(path):
     return json.loads((ROOT / path).read_text())
 
+class MemoizedValidation:
+    """Cache exact validator errors by JSON value, never by mutable object id."""
+    def __init__(self, original):
+        self.original = original
+        self.errors = {}
+
+    def iter_errors(self, instance):
+        key = json.dumps(instance, sort_keys=True, ensure_ascii=True)
+        if key not in self.errors:
+            self.errors[key] = tuple(self.original.iter_errors(instance))
+        return iter(self.errors[key])
+
+    def validate(self, instance):
+        self.original.validate(instance)
+
+
 def validator(schema):
     return cached_validator(json.dumps(schema, sort_keys=True))
+
 
 def check_reference_closure(schema, registry):
     """Resolve every schema reference, including unused definitions/branches.
@@ -146,16 +166,27 @@ def cached_validator(encoded):
     jsonschema.Draft202012Validator.check_schema(schema)
     registry = schema_registry()
     check_reference_closure(schema, registry)
-    return StrictValidator(schema, registry=registry, format_checker=FORMAT)
+    return MemoizedValidation(StrictValidator(schema, registry=registry, format_checker=FORMAT))
 
 @lru_cache(maxsize=1)
 def application_source_validator():
     schema = read('Plans/application_workflow_sources.schema.json')
     return validator({'$ref': schema['$id'] + '#/$defs/OriginalBrowserTransitionSource'})
 
+def identity_fields_types_ok(c, payload):
+    props = read(c['payload_schema_ref'])['properties']
+    fields = [*c['identity_fields'], 'project_id' if c['scope_policy'] == 'project_only' else 'scope']
+    return all(not list(validator(props[k]).iter_errors(payload.get(k))) for k in fields)
+
+
 @integer_boundary(None)
 def identity(c, payload, source=None):
-    if payload.get('scope', {}).get('kind') == 'app':
+    if not object_input_present(payload) or not identity_fields_types_ok(c, payload):
+        return None
+    if c['scope_policy'] != 'project_only':
+        if not object_input_present(payload.get('scope')):
+            return None
+    if c['scope_policy'] != 'project_only' and payload['scope'].get('kind') == 'app':
         if not source:
             raise ValueError('Application identity requires original Server/owner-operation custody')
         return 'application@1:{}:{}'.format(source['server_id'].encode().hex(),
@@ -166,6 +197,8 @@ def identity(c, payload, source=None):
 
 @integer_boundary(None)
 def commitment(event):
+    if not authority_types_ok(event):
+        return None
     domain = 'pm.storage.original_event_value_commitment.v1'
     codec = 'pm.seglog_frame_v2.event_value.canonical_msgpack.v1'
     preimage = [domain, '1.0.0', codec, event['schema_id'], event['schema_version'], event]
@@ -176,6 +209,14 @@ def commitment(event):
 def shared_valid(kind, value):
     schema = read('Plans/event_append_receipt_contracts.schema.json')
     return not list(validator({'$defs': schema['$defs'], '$ref': '#/$defs/' + kind}).iter_errors(value))
+
+def object_input_present(value):
+    return isinstance(value, dict)
+
+
+def browser_record_bytes_present(value):
+    return type(value) is str
+
 
 def application_source_present(value):
     return bool(value)
@@ -193,17 +234,111 @@ def admission_present(value):
     return value is not None
 
 
+def authority_types_ok(value):
+    """Exact types precede every boolean/numeric authority interpretation."""
+    booleans = {'owner_command_authorized', 'config_inspected', 'committed',
+                'visible_dependency_available', 'thread_writable', 'auto_send',
+                'managed_outcome_committed', 'managed_resources_settled', 'dap_owner_verified',
+                'rewrite_terminal_history', 'runtime_verified', 'restored_live_claim',
+                'refreshable', 'refresh_committed', 'backup_closure_verified', 'permission_now',
+                'source_deleted_now', 'share_current', 'reader_withdrawn', 'receipt_retained',
+                'retained_prefix_complete', 'verified', 'backup_verified', 'protected_auth'}
+    integers = {'previous_revision', 'admitted_sequence', 'withdrawal_frontier', 'sequence',
+                'sequence_id', 'producer_sequence_id', 'first_sequence', 'last_sequence',
+                'scan_low', 'scan_high', 'selected_high', 'through_sequence_id', 'generation',
+                'revision', 'frontier_revision', 'manifest_generation', 'recovery_epoch',
+                'selected_segment_generation', 'byte_offset', 'durable_end_offset'}
+    if isinstance(value, dict):
+        return all((type(v) is bool if k in booleans else
+                    (type(v) is int and v >= 0 or k == 'admitted_sequence' and v is None) if k in integers else True)
+                   and authority_types_ok(v) for k, v in value.items())
+    if isinstance(value, list):
+        return all(authority_types_ok(v) for v in value)
+    return True
+
+
+def context_types_ok(c, value, retained=False):
+    complete = read('Plans/ds15_authority_context.schema.json')
+    validator(complete)
+    schema = complete['$defs'][c['event_type']]
+    if retained:
+        schema = dict(schema, required=['scope', 'owner_command_authorized'])
+    return not list(validator(schema).iter_errors(value))
+
+
+def app_hash(record):
+    """CV-366 closed accepted-source preimage; physical bytes are separate."""
+    return _app.semantic_hash('accepted_source', {
+        'schema_id': record['schema_id'], 'schema_version': record['schema_version'],
+        'scope': record['scope'], 'record': record,
+        'identity': {'server_id': record['scope']['server_id'],
+                     'original_operation_id': record.get('original_operation_id'),
+                     'workspace_id': record.get('workspace_id')}})
+
+
 @integer_boundary(False)
-def envelope_ok(c, d, retry=True):
+def browser_source_ok(d, source):
+    # The bank represents the existing owner's retained record bytes, resolved
+    # by accepted_source_ref, independently of either observation of the source.
+    raw = d['browser_owner_records'].get(source['accepted_source_ref'])
+    if not browser_record_bytes_present(raw):
+        return False
+    try:
+        record = parse_numeric_json(raw)
+    except (ValueError, UnicodeError):
+        return False
+    if list(validator(read('Plans/ds15_browser_owner_record.schema.json')).iter_errors(record)):
+        return False
+    if source['accepted_source_sha256'] != app_hash(record):
+        return False
+    unsigned = {k: v for k, v in source.items() if k != 'source_sha256'}
+    if source['source_sha256'] != app_hash(unsigned):
+        return False
+    if (source['original_input_semantic_sha256'] != app_hash(source['original_input'])
+            or source['original_output_semantic_sha256'] != app_hash(source['original_output'])):
+        return False
+    evidence = {'schema_id': 'pm.fixture.owner_evidence.v1', 'schema_version': '1.0.0',
+                'owner_ref': record['interface_id'], 'source_ref': source['accepted_source_ref'],
+                'source_sha256': app_hash(record), 'revision': 1, 'generation': 1}
+    p = d['payload']
+    if (record['scope'] != source['scope']
+            or record['storage_instance_id'] != source['storage_instance_id']
+            or record['original_operation_id'] != source['original_operation_id']
+            or record['interface_id'] != source['interface_id']
+            or record['thread_id'] != source['thread_id']
+            or record['capture'] != p):
+        return False
+    for key in ('original_input', 'original_output'):
+        original = source[key]
+        if {k: v for k, v in original.items() if k != 'controller_evidence'} != record[key + '_body']:
+            return False
+        if (original['scope'] != record['scope'] or original['profile_id'] != record['profile_id']
+                or original['workspace_id'] != record['workspace_id']
+                or p['browser_session_id'] not in original['session_refs']
+                or original['transition_source_ref'] != source['accepted_source_ref']
+                or original['controller_evidence'] != evidence):
+            return False
+    return all(stage['status'] == 'accepted'
+               and stage['original_operation_id'] == record['original_operation_id']
+               and stage['owner_method_id'] == record['interface_id']
+               and stage['request_ref'] == record['request_ref']
+               and stage['result_ref'] == record['result_ref']
+               and stage['custody_evidence'] == evidence
+               for stage in source['stage_custody'].values())
+
+
+@integer_boundary(False)
+def envelope_ok(c, d, retry=True, historical=False):
     e, original = d['envelope'], d['original']['event']
     scope = d['context']['scope']
     if (list(validator(read('Plans/event_record.schema.json')).iter_errors(e))
             or list(validator(read('Plans/event_record.schema.json')).iter_errors(original))
             or e['event_type'] != c['event_type'] or not re.fullmatch(r'[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+', e['event_type'])
-            or e['replay_policy'] != 'dedupe_by_idempotency_key'
-            or original['replay_policy'] != 'dedupe_by_idempotency_key'
+            or (not historical and e['replay_policy'] != 'dedupe_by_idempotency_key')
+            or (not historical and original['replay_policy'] != 'dedupe_by_idempotency_key')
             or e['scope_kind'] != ('application' if scope['kind'] == 'app' else 'project')
             or e['project_id'] != scope['project_id'] or e['payload'] != d['payload']
+            or scope != d['payload'].get('scope', {'kind': 'project', 'project_id': d['payload'].get('project_id')})
             or e['run_id'] != d['payload'].get('run_id') or e['thread_id'] != d['payload'].get('thread_id')
             or e['payload_schema_id'] != read(c['payload_schema_ref'])['$id']
             or d['scope_partition'] != _codec.scope_partition(e['scope_kind'], e['project_id'])
@@ -215,7 +350,13 @@ def envelope_ok(c, d, retry=True):
             or _codec.event_producer_semantic_digest(e) != _codec.event_producer_semantic_digest(original)):
         return False
     source = d.get('application_source')
-    if scope['kind'] == 'app':
+    if scope['kind'] == 'app' and c['event_type'].startswith('catalog.install.'):
+        if (not object_input_present(source) or set(source) != {'server_id', 'original_operation_id'}
+                or any(type(source[k]) is not str or not 0 < len(source[k]) <= 256 or '\n' in source[k] for k in source)
+                or source != d['original']['application_source']
+                or source['original_operation_id'] != d['payload']['operation_id']):
+            return False
+    elif scope['kind'] == 'app':
         if (not application_source_present(source) or source != d['original']['application_source']
                 or list(application_source_validator().iter_errors(source))
                 or source['schema_id'] != 'pm.application_source.browser_transition.v1'
@@ -225,6 +366,7 @@ def envelope_ok(c, d, retry=True):
                 or source['scope']['scope_kind'] != 'application' or source['scope']['project_id'] is not None
                 or source['scope']['server_id'] != source['server_id']
                 or not original_output_present(source['original_output'])
+                or not browser_source_ok(d, source)
                 or source['original_output']['profile_id'] != scope['profile_id']
                 or d['payload']['browser_session_id'] not in source['original_output']['session_refs']
                 or any(stage['original_operation_id'] != source['original_operation_id']
@@ -251,6 +393,50 @@ def receipt_ok(d):
             and custody['idempotency_key'] == event['idempotency_key']
             and custody['producer_semantic_digest'] == _codec.event_producer_semantic_digest(event))
 
+def original_evidence_ok(op, d):
+    required = ['original', 'envelope', 'storage_instance_id', 'scope_partition']
+    if op == 'receipt_boundary':
+        required += ['receipt', 'custody', 'issued_result']
+    if op in ('recover', 'publish', 'read', 'checkpoint', 'rebuild'):
+        required += ['outcome', 'original_context', 'receipt', 'backup_closure_verified']
+        if d.get('receipt') is not None:
+            required += ['custody', 'issued_result', 'receipt_ref']
+    if op in ('publish', 'read', 'checkpoint', 'rebuild') or op == 'recover' and d.get('receipt') is None:
+        required += ['permission_now', 'source_deleted_now', 'share_current']
+    if op in ('read', 'checkpoint', 'rebuild'):
+        required += ['reader_withdrawn', 'reader_installed']
+    if op == 'publish':
+        required += ['receipt_retained']
+    if op in ('checkpoint', 'rebuild'):
+        required += ['checkpoint', 'selected_token', 'expected_previous', 'stored_previous',
+                     'live_snapshot_id', 'current_live_snapshot_id', 'selected_source',
+                     'index_rows', 'scan_low', 'scan_high', 'selected_high', 'selected_matches']
+    if op == 'rebuild':
+        required += ['retained_prefix_complete']
+    if op == 'withdraw_writer':
+        required += ['admitted_sequence', 'withdrawal_frontier']
+    schema = dict(read('Plans/ds15_original_evidence.schema.json'), required=required)
+    return not list(validator(schema).iter_errors(d))
+
+
+def admission_numbers_ok(admitted, frontier):
+    return (type(admitted) is int and 0 <= admitted <= 2 ** 64 - 1
+            and type(frontier) is int and 0 <= frontier <= 2 ** 64 - 1)
+
+
+def index_inputs_ok(d):
+    return not list(validator(read('Plans/ds15_index_inputs.schema.json')).iter_errors(
+        {'source': d['selected_source'], 'rows': d['index_rows']}))
+
+
+@integer_boundary(False)
+def checkpoint_value_ok(c, cp):
+    if (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(cp))
+            or len(_codec.canonical_messagepack_bytes(cp)) > 16384):
+        return False
+    return True
+
+
 @integer_boundary(False)
 def token_matches_storage(token, storage_instance_id):
     key = 'event_record_index_checkpoint.v1:' + storage_instance_id
@@ -266,10 +452,12 @@ def owner_text(c):
     start = text.index('### ' + uid + ' ')
     end = text.find('\n### ', start + 1)
     unit = text[start:end if end != -1 else len(text)]
-    return json.loads(unit.split('```yaml\n', 1)[1].split('\n```', 1)[0])['canonical_text']
+    return yaml.safe_load(unit.split('```yaml\n', 1)[1].split('\n```', 1)[0])['canonical_text']
 
 @integer_boundary(False)
 def payload_ok(c, p, x):
+    if not context_types_ok(c, x) or not authority_types_ok(x):
+        return False
     if list(validator(read(c['payload_schema_ref'])).iter_errors(p)):
         return False
     if not x['owner_command_authorized']:
@@ -291,6 +479,9 @@ def payload_ok(c, p, x):
     if p.get('browser_session_id') and x['session_security_class'] != 'ordinary':
         return False
     n = c['event_type']
+    if n in ('catalog.install.started', 'catalog.install.completed'):
+        return (x['catalog_outcome_committed'] and x['catalog_owner_payload'] == p
+                and x['catalog_phase'] == p['phase'] == n.rsplit('.', 1)[1])
     if n == 'doctor.custom_headless.checked':
         return x['config_inspected'] and x['doctor_invocation_id'] == p['doctor_invocation_id']
     if n == 'live.session.started':
@@ -313,7 +504,7 @@ def payload_ok(c, p, x):
                 and x['chip']['chip_id'] == p['chip_id'] and x['chip']['thread_id'] == p['thread_id']
                 and x['chip']['attachment_type'] == p['attachment_type']
                 and x['chip']['source_ref'] == p['source_ref'] and x['chip']['committed']
-                and x['chip']['status'] == p['capture_status'] and x['thread_scope'] == scope and not x['auto_send'])
+                and x['chip']['status'] == p['capture_status'] and x['chip']['provenance_ref'] == p['provenance_ref'] and x['thread_scope'] == scope and not x['auto_send'])
     if n.startswith('dev.session.'):
         transitions = {'dev.session.started': ({'created', 'restarting'}, 'running'),
                        'dev.session.restarting': ({'running', 'stopped'}, 'restarting'),
@@ -345,17 +536,33 @@ def payload_ok(c, p, x):
 @integer_boundary({'result': 'REFUSE', 'effects': 0})
 def evaluate(c, op, d):
     """Normative reference model over concrete source/receipt/index values."""
+    if not object_input_present(d):
+        return {'result': 'REFUSE', 'effects': 0}
+    if not object_input_present(d.get('context')) or not object_input_present(d.get('payload')):
+        return {'result': 'REFUSE', 'effects': 0}
     p, x = d['payload'], d['context']
+    if not authority_types_ok(d):
+        return {'result': 'REFUSE', 'effects': 0}
     # Boundary oracles deliberately exercise the adopted EventRecord contract
     # separately from the stricter, bounded family metadata schemas. They do
     # not authorize a family append or introduce a large-inline payload field.
     if op == 'envelope_boundary':
+        if not original_evidence_ok(op, d):
+            return {'result': 'REFUSE', 'effects': 0}
         return {'result': 'ACCEPT' if envelope_ok(c, d, retry=False) else 'REFUSE', 'effects': 0}
+    if op == 'checkpoint_boundary':
+        return {'result': 'ACCEPT' if checkpoint_value_ok(c, d.get('checkpoint')) else 'REFUSE', 'effects': 0}
     if op == 'receipt_boundary':
+        if not original_evidence_ok(op, d):
+            return {'result': 'REFUSE', 'effects': 0}
+        if list(validator(read('Plans/event_record.schema.json')).iter_errors(d['original']['event'])):
+            return {'result': 'REFUSE', 'effects': 0}
         return {'result': 'ACCEPT' if receipt_ok(d) else 'REFUSE', 'effects': 0}
     if op == 'event_schema':
-        valid = not list(validator(read('Plans/event_record.schema.json')).iter_errors(d['envelope']))
+        valid = not list(validator(read('Plans/event_record.schema.json')).iter_errors(d.get('envelope')))
         return {'result': 'ACCEPT' if valid else 'REFUSE', 'effects': 0}
+    if not original_evidence_ok(op, d):
+        return {'result': 'REFUSE', 'effects': 0}
     if op in ('payload', 'recover', 'publish', 'withdraw_writer'):
         policies = [d['envelope'].get('replay_policy'), d['original']['event'].get('replay_policy'),
                     d.get('replay_policy'), x.get('replay_policy'), x.get('envelope_replay_policy')]
@@ -363,12 +570,13 @@ def evaluate(c, op, d):
             return {'result': 'REFUSE', 'effects': 0, 'error': 'replay_only_not_appendable'}
     if op == 'payload':
         return {'result': 'ACCEPT' if payload_ok(c, p, x) and envelope_ok(c, d, retry=False) else 'REFUSE', 'effects': 0}
-    if op in ('recover', 'publish', 'read'):
+    if op in ('recover', 'publish', 'read', 'checkpoint', 'rebuild'):
         o, r, out = d['original'], d['receipt'], d['outcome']
         if not outcome_present(out) or not out['committed'] or not d['backup_closure_verified']:
             return {'result': 'UNAVAILABLE', 'effects': 0}
-        if (not payload_ok(c, o['payload'], d['original_context']) or not envelope_ok(c, d)
+        if (not payload_ok(c, o['payload'], d['original_context'])
                 or p != o['payload'] or out['payload'] != o['payload']
+                or not envelope_ok(c, d, historical=op in ('read', 'checkpoint', 'rebuild'))
                 or out['event_id'] != o['event_id'] or o['event']['payload'] != o['payload']
                 or o['event']['event_id'] != o['event_id'] or o['idempotency_key'] != o['event']['idempotency_key']):
             return {'result': 'REFUSE', 'effects': 0}
@@ -379,11 +587,11 @@ def evaluate(c, op, d):
         # New append recovery and publication still require the current joins.
         if (op == 'publish' or (op == 'recover' and r is None)) and not payload_ok(c, o['payload'], x):
             return {'result': 'REFUSE', 'effects': 0}
-        if op == 'read' and (d['reader_withdrawn'] or d['reader_installed'] != c['consumer']):
-            return {'result': 'UNAVAILABLE', 'effects': 0}
-        if op in ('publish', 'read') and (not d['permission_now'] or d['source_deleted_now'] or not d['share_current']
-                                         or not x['owner_command_authorized']):
-            return {'result': 'REFUSE' if op == 'publish' else 'UNAVAILABLE', 'effects': 0}
+        if op in ('read', 'checkpoint', 'rebuild') and (d['reader_withdrawn'] or d['reader_installed'] != c['consumer']):
+            return {'result': 'UNAVAILABLE' if op == 'read' else 'REFUSE', 'effects': 0}
+        if op in ('publish', 'read', 'checkpoint', 'rebuild') and (not d['permission_now'] or d['source_deleted_now'] or not d['share_current']
+                                         or not context_types_ok(c, x, retained=op in ('read', 'checkpoint', 'rebuild')) or not x['owner_command_authorized']):
+            return {'result': 'UNAVAILABLE' if op == 'read' else 'REFUSE', 'effects': 0}
         if r is None:
             if op == 'recover' and (not d['permission_now'] or d['source_deleted_now'] or not d['share_current']):
                 return {'result': 'REFUSE', 'effects': 0}
@@ -392,11 +600,11 @@ def evaluate(c, op, d):
             return {'result': 'REFUSE', 'effects': 0}
         if op == 'publish' and not d['receipt_retained']:
             return {'result': 'PENDING', 'effects': 0, 'event_id': o['event_id']}
-        return {'result': 'ORIGINAL', 'effects': 0, 'event_id': o['event_id'], 'receipt_ref': d['receipt_ref']}
+        if op in ('recover', 'publish', 'read'):
+            return {'result': 'ORIGINAL', 'effects': 0, 'event_id': o['event_id'], 'receipt_ref': d['receipt_ref']}
     if op in ('checkpoint', 'rebuild'):
         cp = d['checkpoint']
-        if (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(cp))
-                or len(_codec.canonical_messagepack_bytes(cp)) > 16384):
+        if not checkpoint_value_ok(c, cp):
             return {'result': 'REFUSE', 'effects': 0}
         if op == 'rebuild' and not d['retained_prefix_complete']:
             return {'result': 'UNAVAILABLE', 'effects': 0}
@@ -406,20 +614,36 @@ def evaluate(c, op, d):
                 or cp['state'] != 'current' or token != d['selected_token']
                 or d['live_snapshot_id'] != d['current_live_snapshot_id']
                 or not token_matches_storage(token, d['storage_instance_id'])
-                or not d['share_current'] or not envelope_ok(c, d) or not receipt_ok(d)
+                or not d['share_current'] or not envelope_ok(c, d, historical=True) or not receipt_ok(d)
                 or cp.get('project_id') != p.get('project_id') or cp.get('scope') != p.get('scope')):
             return {'result': 'REFUSE', 'effects': 0}
-        if cp == d['stored_previous']:
-            return {'result': 'UNCHANGED', 'effects': 0}
+        if not index_inputs_ok(d):
+            return {'result': 'REFUSE', 'effects': 0}
         rows, low, high, source = d['index_rows'], d['scan_low'], d['scan_high'], d['selected_source']
         prior = d['stored_previous']
         source_rows = source['rows']
-        start = source['first_sequence'] if prior is None else prior['through_sequence_id'] + 1
         if (source['storage_instance_id'] != d['storage_instance_id']
                 or source['index_read_token'] != token or source['last_sequence'] != d['selected_high']
                 or [r['sequence'] for r in source_rows] != list(range(source['first_sequence'], source['last_sequence'] + 1))
-                or any(r['scope_partition'] != _codec.scope_partition('application' if r['scope']['kind'] == 'app' else 'project', r['scope']['project_id']) for r in source_rows)
-                or low != start or rows != [r for r in source_rows if low <= r['sequence'] <= high]
+                or any(r['scope_partition'] != _codec.scope_partition('application' if r['scope']['kind'] == 'app' else 'project', r['scope']['project_id']) for r in source_rows)):
+            return {'result': 'REFUSE', 'effects': 0}
+        # Every matching row resolves its own original record, not the last
+        # supplied receipt. Join ALL row fields to that independent source.
+        for row in source_rows:
+            if row['event_type'] == c['event_type'] and row['scope'] == x['scope']:
+                original = d if row['event_id'] == d['original']['event_id'] else d.get('retained_events', {}).get(row['event_id'])
+                if not object_input_present(original):
+                    return {'result': 'REFUSE', 'effects': 0}
+                event = original['original']['event']
+                if (row != {'event_id': event['event_id'], 'event_type': event['event_type'],
+                            'scope': original['original_context']['scope'],
+                            'scope_partition': original['scope_partition'], 'sequence': event['sequence_id']}
+                        or (original is not d and evaluate(c, 'read', original).get('result') != 'ORIGINAL')):
+                    return {'result': 'REFUSE', 'effects': 0}
+        if cp == d['stored_previous']:
+            return {'result': 'UNCHANGED', 'effects': 0}
+        start = source['first_sequence'] if prior is None else prior['through_sequence_id'] + 1
+        if (low != start or rows != [r for r in source_rows if low <= r['sequence'] <= high]
                 or [r['sequence'] for r in rows] != list(range(low, high + 1))
                 or cp['through_sequence_id'] != high or high != d['selected_high']
                 or (prior is not None and (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(prior))
@@ -439,7 +663,8 @@ def evaluate(c, op, d):
         return {'result': 'ADVANCE', 'effects': 0, 'through_sequence_id': high, 'last_event_id': last}
     if op == 'withdraw_writer':
         admitted = d['admitted_sequence']
-        if not admission_present(admitted) or admitted > d['withdrawal_frontier']:
+        if (not admission_present(admitted) or not admission_numbers_ok(admitted, d['withdrawal_frontier'])
+                or admitted > d['withdrawal_frontier']):
             return {'result': 'REFUSE', 'effects': 0}
         return evaluate(c, 'publish', d)
     raise AssertionError(op)
@@ -466,6 +691,24 @@ def patch(data, changes):
             parent[key] = copy.deepcopy(value)
 
 
+def refresh_browser_owner(data):
+    source = data['application_source']
+    if source is None:
+        return
+    record = json.loads(data['browser_owner_records'][source['accepted_source_ref']])
+    record['capture'] = copy.deepcopy(data['payload'])
+    data['browser_owner_records'][source['accepted_source_ref']] = json.dumps(record, sort_keys=True, separators=(',', ':'))
+    h = app_hash(record)
+    for key in ('original_input', 'original_output'):
+        source[key]['controller_evidence']['source_sha256'] = h
+        source[key + '_semantic_sha256'] = app_hash(source[key])
+    for stage in source['stage_custody'].values():
+        stage['custody_evidence']['source_sha256'] = h
+    source['accepted_source_sha256'] = h
+    source['source_sha256'] = app_hash({k: v for k, v in source.items() if k != 'source_sha256'})
+    data['original']['application_source'] = copy.deepcopy(source)
+
+
 def semantic_input(c, fixture, case, active=()):
     """Build one defect from a valid operation-specific parent.
 
@@ -484,6 +727,8 @@ def semantic_input(c, fixture, case, active=()):
     if case.get('refresh_envelope'):
         data['envelope']['payload'] = copy.deepcopy(data['payload'])
         data['envelope']['idempotency_key'] = identity(c, data['payload'], data.get('application_source'))
+    if case.get('refresh_browser_owner'):
+        refresh_browser_owner(data)
     return data
 
 
@@ -500,6 +745,28 @@ def predicate_ok(c, target, data):
     fixture must first validate its parent at this same boundary, then change
     one leaf. End-to-end semantic cases remain independently required below.
     """
+    if target == 'original_evidence_ok':
+        return original_evidence_ok('read', data)
+    if target == 'admission_numbers_ok':
+        return admission_numbers_ok(data['admitted_sequence'], data['withdrawal_frontier'])
+    if target == 'index_inputs_ok':
+        return index_inputs_ok(data)
+    if target == 'object_input_present':
+        return object_input_present(data['payload'])
+    if target == 'browser_record_bytes_present':
+        return browser_record_bytes_present(data['browser_owner_records'].get(data['application_source']['accepted_source_ref']))
+    if target == 'identity_fields_types_ok':
+        return identity_fields_types_ok(c, data['payload'])
+    if target == 'identity':
+        return identity(c, data['payload'], data.get('application_source'))
+    if target == 'commitment':
+        return commitment(data['original']['event'])
+    if target == 'context_types_ok':
+        return context_types_ok(c, data['context'])
+    if target == 'authority_types_ok':
+        return authority_types_ok(data)
+    if target == 'browser_source_ok':
+        return browser_source_ok(data, data['application_source'])
     if target == 'payload_ok':
         return payload_ok(c, data['payload'], data['context'])
     if target == 'envelope_ok':
@@ -556,7 +823,7 @@ PREPARED_FAMILIES = {'doctor.custom_headless.checked', 'live.session.started', '
                      'live.artifact.created', 'live.session.completed', 'live.session.degraded',
                      'browser.context_captured', 'dev.session.started', 'dev.session.stopping',
                      'dev.session.stopped', 'dev.session.restarting', 'preview.session.started',
-                     'preview.session.refreshed', 'preview.session.stopped'}
+                     'preview.session.refreshed', 'preview.session.stopped', 'catalog.install.started', 'catalog.install.completed'}
 
 @integer_boundary(False)
 def value_valid(schema_ref, value):
@@ -576,7 +843,9 @@ def value_valid(schema_ref, value):
 @integer_boundary(None)
 def migrate(kind, source, evidence):
     """Static migration oracle only. It neither opens a store nor authorizes writes."""
-    if not evidence.get('verified') or not evidence.get('backup_verified'):
+    if list(validator(read('Plans/ds15_migration_inputs.schema.json')['$defs'][kind]).iter_errors({'source': source, 'evidence': evidence})):
+        return None
+    if not authority_types_ok(evidence) or not evidence.get('verified') or not evidence.get('backup_verified'):
         return None
     if kind == 'dap_v1':
         if _debug.validate(source, 'dev_session_record', read('Plans/shared_runtime_contracts.schema.json')):
@@ -644,7 +913,7 @@ def guard_proof_result(proof, data):
     if target == 'value_valid':
         return value_valid(data['schema_ref'], data['value'])
     c = next(c for c in read('Plans/ds15_event_contracts.json') if c['event_type'] == proof['event_type'])
-    if target in ('payload_ok', 'envelope_ok'):
+    if target in ('payload_ok', 'envelope_ok', 'context_types_ok', 'authority_types_ok', 'browser_source_ok', 'identity_fields_types_ok', 'identity', 'commitment', 'object_input_present', 'browser_record_bytes_present', 'index_inputs_ok', 'admission_numbers_ok', 'original_evidence_ok'):
         return predicate_ok(c, target, data)
     return evaluate(c, target, data)
 
@@ -790,6 +1059,8 @@ def check_guard_proofs():
 
 
 def main():
+    for schema_ref in ('Plans/ds15_authority_context.schema.json', 'Plans/ds15_migration_inputs.schema.json', 'Plans/ds15_browser_owner_record.schema.json', 'Plans/ds15_original_evidence.schema.json'):
+        validator(read(schema_ref))
     shared = read('Plans/event_append_receipt_full_value_fixtures.json')
     assert commitment(shared['base_original_event'])['sha256'] == shared['commitment_sha256']
     contracts = read('Plans/ds15_event_contracts.json')

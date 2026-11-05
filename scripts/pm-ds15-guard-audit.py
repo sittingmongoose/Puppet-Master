@@ -10,6 +10,7 @@ import ast,copy,hashlib,json,pathlib,time,sys,types
 from functools import lru_cache
 import argparse
 parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--inventory',action='store_true',help='Print exact AST guard inventory, without executing or mutating any guard')
 parser.add_argument('--out',type=pathlib.Path,required=True,help='Raw audit JSON outside the repository')
 args=parser.parse_args()
 R=pathlib.Path(__file__).resolve().parents[1];O=args.out.parent
@@ -40,13 +41,23 @@ class CachedValidation:
    self.results[key]=(instance,list(self.original.iter_errors(instance)))
   return iter(self.results[key][1])
 def fast_validator(schema):
- key=(schema['$ref'],id(schema.get('$defs'))) if '$ref' in schema else id(schema)
- if key not in fast_validators:fast_validators[key]=CachedValidation(original_validator(schema))
- return fast_validators[key]
+ # Preserve the full wrapper and the identity of its immutable definitions.
+ # Retain every schema object so Python cannot recycle an object-id key.
+ if '$ref' in schema:
+  key=('reference',id(schema.get('$defs')),json.dumps({k:v for k,v in schema.items() if k!='$defs'},sort_keys=True))
+ else:key=('resource',id(schema))
+ if key not in fast_validators:
+  fast_validators[key]=(schema,json.dumps(schema,sort_keys=True),CachedValidation(original_validator(schema)))
+ return fast_validators[key][2]
 m.validator=fast_validator
+# Cache regression: equal refs/definitions with different wrapper constraints
+# are different validators; no keyword may disappear from the cache key.
+cache_defs={'value':{'type':'string'}}
+assert not list(fast_validator({'$ref':'#/$defs/value','$defs':cache_defs,'maxLength':3}).iter_errors('ab'))
+assert list(fast_validator({'$ref':'#/$defs/value','$defs':cache_defs,'maxLength':1}).iter_errors('ab'))
 cs=m.read('Plans/ds15_event_contracts.json');fs=m.read('Plans/ds15_event_contract_fixtures.json');tree=ast.parse(source)
-names={'envelope_ok','receipt_ok','token_matches_storage','payload_ok','evaluate','value_valid','migrate'}
-presence_helpers={'application_source_present','original_output_present','outcome_present','admission_present'}
+names={'original_evidence_ok','admission_numbers_ok','index_inputs_ok','checkpoint_value_ok','identity','commitment','identity_fields_types_ok','browser_source_ok','context_types_ok','authority_types_ok','envelope_ok','receipt_ok','token_matches_storage','payload_ok','evaluate','value_valid','migrate'}
+presence_helpers={'object_input_present','browser_record_bytes_present','application_source_present','original_output_present','outcome_present','admission_present'}
 helpers={x.name:x for x in tree.body if isinstance(x,ast.FunctionDef) and x.name in presence_helpers}
 functions=[x for x in tree.body if isinstance(x,ast.FunctionDef) and x.name in names]
 mutations=[]
@@ -75,7 +86,7 @@ for f in functions:
    # Each disjunct of a rejection predicate is a separate guard. Simple or
    # conjunctive predicates are disabled as a single gate.
    for p in (node.test.values if isinstance(node.test,ast.BoolOp) and isinstance(node.test.op,ast.Or) else [node.test]):add(f.name,p,False,'reject-condition')
-  if f.name not in {'evaluate','migrate'} and isinstance(node,ast.Return) and node.value is not None and not isinstance(node.value,(ast.Constant,ast.Dict)):
+  if f.name not in {'evaluate','migrate','identity','commitment'} and isinstance(node,ast.Return) and node.value is not None and not isinstance(node.value,(ast.Constant,ast.Dict)):
    # Only top-level return expressions in the actual model; exclude nested safe_refs.
    if f.name=='payload_ok' and any(node is child for nested in f.body if isinstance(nested,ast.FunctionDef) for child in ast.walk(nested)):continue
    for p in (node.value.values if isinstance(node.value,ast.BoolOp) and isinstance(node.value.op,ast.And) else [node.value]):add(f.name,p,True,'accept-predicate')
@@ -83,7 +94,7 @@ for f in functions:
    add(f.name,node.value.test,True,'migration-result-validity')
 # Deduplicate equivalent mutation positions.
 mutations=list({(x['function'],x['line'],x['column'],x['end_line'],x['end_column'],x['kind'],x['ast_dump'],x['replacement']):x for x in mutations}.values())
-assert len(mutations)==177, 'An existing reviewed guard moved'
+
 # Append the two numeric prerequisites; retain every G000..G176 meaning.
 support_names={'numeric_atom_ok','numbers_ok','integer_boundary','parse_integer','parse_numeric_json'}
 support=[x for x in tree.body if isinstance(x,ast.FunctionDef) and x.name in support_names]
@@ -91,6 +102,8 @@ atom=next(x for x in support if x.name=='numeric_atom_ok')
 lexical=next(x for x in support if x.name=='parse_integer')
 add('numeric_atom_ok',atom.body[-1].value,True,'numeric-domain-prerequisite')
 add('parse_integer',lexical.body[0].test,False,'negative-zero-spelling')
+if args.inventory:
+ print(json.dumps(mutations,indent=2));sys.exit(0)
 functions += list(helpers.values())
 functions = support + functions
 cases=[];controls=[]
@@ -104,6 +117,7 @@ def add_case(c,f,case,target='evaluate',base=None):
 def call(g,case):
  c,d,target=case['contract'],case['input'],case['target']
  if target=='evaluate':return g['evaluate'](c,case['operation'],d)
+ if target in {'context_types_ok','authority_types_ok','browser_source_ok','identity_fields_types_ok','identity','commitment','object_input_present','browser_record_bytes_present','index_inputs_ok','admission_numbers_ok','original_evidence_ok'}:return g['predicate_ok'](c,target,d)
  if target=='payload_ok':return g[target](c,d['payload'],d['context'])
  if target=='envelope_ok':return g[target](c,d,retry=False)
  if target=='receipt_ok':return g[target](d)
@@ -142,7 +156,7 @@ proofs=m.read('Plans/ds15_guard_proof_fixtures.json')
 for proof in proofs:
  c=next((c for c in cs if c['event_type']==proof.get('event_type')),None)
  f=next(z for z in fs if z['event_type']==c['event_type']) if c else {'schema_ref':proof['schema_ref']}
- target=proof['target'] if proof['target'] in {'payload_ok','envelope_ok','value_valid','migrate'} else 'evaluate'
+ target=proof['target'] if proof['target'] in {'payload_ok','envelope_ok','context_types_ok','authority_types_ok','browser_source_ok','identity_fields_types_ok','identity','commitment','object_input_present','browser_record_bytes_present','index_inputs_ok','admission_numbers_ok','original_evidence_ok','value_valid','migrate'} else 'evaluate'
  operation=proof['target'] if target=='evaluate' else None
  for negative in (False,True):
   data=m.guard_proof_input(proof,negative)
@@ -209,7 +223,7 @@ dependencies={f.name:{n.func.id for n in ast.walk(f) if isinstance(n,ast.Call) a
 def depends_on(name,target,seen=()):
  return name==target or (name not in seen and any(depends_on(n,target,(*seen,name)) for n in dependencies.get(name,())))
 def model(ids):
- if any(i>=177 for i in ids):
+ if any(mutations[i]['function'] in support_names for i in ids):
   # The numeric atom is shared by decorators AND a schema keyword. Recompile
   # the whole module for its mutation so no original validator/cache retains
   # the unmutated helper through its Python globals. Still change only the
@@ -227,15 +241,16 @@ def model(ids):
   mut=mutations[i]
   subset=[exact_weaken(f,mut) if f.name==mut['function'] else f for f in subset]
  g=dict(m.__dict__);exec(compile(ast.fix_missing_locations(ast.Module(body=subset,type_ignores=[])),'<ds15-guard-removal>','exec'),g)
+ exec(compile(ast.Module(body=[next(f for f in tree.body if isinstance(f,ast.FunctionDef) and f.name=='predicate_ok')],type_ignores=[]),'<ds15-predicate-dispatch>','exec'),g)
  for name,fn in unchanged_predicates.items():
   if not any(depends_on(name,mutations[i]['function']) for i in ids):g[name]=fn
  return g
 
 # F10 regression: removing receipt equality must preserve full-value custody.
 # Its three first-receipt observations agree in every corrupt-commitment case.
-assert len(mutations)==179,'Review guard ids changed; adjudicate the inventory'
-assert mutations[32]['guard']=="r == custody['first_append_receipt'] == result['first_append_receipt']"
-regression=[];g032=model((32,))
+assert mutations == m.read('Plans/ds15_guard_inventory.json'), 'Guard inventory changed without adjudication'
+receipt_equality_id=next(i for i,z in enumerate(mutations) if z['guard']=="r == custody['first_append_receipt'] == result['first_append_receipt']")
+regression=[];g032=model((receipt_equality_id,))
 for c in cs:
  f=next(z for z in fs if z['event_type']==c['event_type'])
  case=next(z for z in f['semantic_cases'] if z['id']=='full-value-commitment-corrupt')
@@ -244,8 +259,17 @@ for c in cs:
  got=g032['evaluate'](c,case['operation'],d)
  assert got==case['expected'],('G032 bypassed commitment',c['event_type'],got)
  regression.append({'family':c['event_type'],'case':case['id'],'got':got})
+def memory_floor():
+ import subprocess
+ while True:
+  available=int(subprocess.check_output(['free','-g']).decode().splitlines()[1].split()[-1])
+  if available>=6:return
+  print(json.dumps({'paused':'under 6 GB available','available_gib':available}),flush=True)
+  time.sleep(30)
+
 outputs=[];t=time.monotonic()
 for i,mut in enumerate(mutations):
+ memory_floor()
  g=model((i,))
  accepted=[];control_failures=[]
  for case in cases:
@@ -270,6 +294,7 @@ for i,mut in enumerate(mutations):
 import itertools
 duplicate_proofs=[];duplicate_outputs=[]
 for ids in sorted({tuple(p['guards']) for p in proofs if len(p['guards'])>1}):
+ memory_floor()
  witnesses=[p for p in proofs if tuple(p['guards'])==ids]
  models={subset:model(subset) for n in range(1,len(ids)+1) for subset in itertools.combinations(ids,n)}
  for proof in witnesses:
@@ -279,9 +304,9 @@ for ids in sorted({tuple(p['guards']) for p in proofs if len(p['guards'])>1}):
    try:got=call(g,case);error=None
    except Exception as e:got=None;error=repr(e)
    outcomes.append({'removed':subset,'result':got,'exception':error})
-   assert error is None,('Mutation exception is not a duplicate proof',proof['id'],subset,error)
-   assert (not refused(got))==(subset==ids),('Not an exact duplicate set',proof['id'],subset,got)
-  duplicate_proofs.append({'case':proof['id'],'guards':ids,'defect':proof['defect'],'proper_subsets_refuse':True,'outcomes':outcomes})
+
+  proved=all(z['exception'] is None and ((not refused(z['result']))==(tuple(z['removed'])==ids)) for z in outcomes)
+  duplicate_proofs.append({'case':proof['id'],'guards':ids,'defect':proof['defect'],'proper_subsets_refuse':proved,'passed':proved,'outcomes':outcomes})
  g=models[ids];accepted=[];errors=[];control_failures=[]
  label='+'.join('G%03d'%i for i in ids)
  for case in cases:
@@ -298,18 +323,21 @@ for ids in sorted({tuple(p['guards']) for p in proofs if len(p['guards'])>1}):
 for case in cases:
  case.pop('input');case.pop('contract')
 summary={c['event_type']:{'negative_count':sum(z['family']==c['event_type'] for z in cases),'unexposed':[z['id'] for z in cases if z['family']==c['event_type'] and not z['caught_by']]} for c in cs}
-result={'status':'partial' if any(not z['caught_by'] for z in cases) or any(not o['negative_successes'] or o['positive_regressions'] for o in outputs) else 'pass',
+result={'status':'partial' if any(not z['passed'] for z in duplicate_proofs) or any(not z['caught_by'] for z in cases) or any(not o['negative_successes'] or o['positive_regressions'] for o in outputs) else 'pass',
         'mutants':len(outputs),'negatives':len(cases),
         'unexposed':sum(not z['caught_by'] for z in cases),
         'guards_without_flips':sum(not o['negative_successes'] for o in outputs),
         'positive_regressions':sum(len(o['positive_regressions']) for o in outputs+duplicate_outputs),
         'named_duplicate_sets':len(duplicate_outputs),
         'duplicate_witnesses':len(duplicate_proofs),
-        'guards_without_single_or_duplicate_proof':[o['id'] for o in outputs if not o['negative_successes'] and not any(o['id'] in z['guards'] for z in duplicate_proofs)],
+        'failed_duplicate_witnesses':[z['case'] for z in duplicate_proofs if not z['passed']],
+        'guards_without_single_or_duplicate_proof':[o['id'] for o in outputs if not o['negative_successes'] and not any(o['id'] in z['guards'] and z['passed'] for z in duplicate_proofs)],
         'unexposed_after_duplicate_sets':sum(not z['caught_by'] and not z.get('caught_by_duplicate_sets') for z in cases),
         'numeric_grammar_refusals':numeric_grammar,
         'seconds':round(time.monotonic()-t,1)}
 assert source==(R/'scripts/pm-ds15-event-contracts.py').read_text(), 'Checker changed during audit'
+for original_schema,encoded_schema,_ in fast_validators.values():
+ assert json.dumps(original_schema,sort_keys=True)==encoded_schema,'Cached schema mutated during audit'
 for path,digest in input_hashes.items():
  assert digest==hashlib.sha256((R/path).read_bytes()).hexdigest(), 'Input changed during audit: '+path
 input_hashes['scripts/pm-ds15-event-contracts.py']=hashlib.sha256(source.encode()).hexdigest()
