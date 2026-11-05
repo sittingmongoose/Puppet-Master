@@ -1965,6 +1965,10 @@
       },
       "nas-find": {
         "enter": "Looking on your network…",
+        "found": "Here are the devices I found. Which one?",
+        "empty": "No devices found. Try entering an address.",
+        "failed": "Discovery failed. Try entering an address.",
+        "selected": "That device is ready for SSH.",
         "group:device": "That one? I'll knock gently.",
         "method:ssh": "SSH. The safe way in.",
         "method:smb": "A shared folder. Easy.",
@@ -2014,7 +2018,8 @@
       "nas-smb": {
         "enter": "Sign in to the shared folder.",
         "typing": "Into the keychain it goes.",
-        "checking": "Checking I can read it…"
+        "checking": "Checking I can read it…",
+        "done": "Signed in! I can read it."
       },
       "nas-nfs": {
         "enter": "Opening the share…",
@@ -2022,7 +2027,9 @@
       },
       "nas-mounted": {
         "enter": "Which drive is it on?",
-        "group:volume": "That drive? Easy."
+        "checking": "Checking I can read that drive…",
+        "group:volume": "That drive? Easy.",
+        "done": "I can read that drive. All good!"
       },
       "away-setup": {
         "enter": "Let's set up the way in.",

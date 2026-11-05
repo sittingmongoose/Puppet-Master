@@ -467,7 +467,7 @@
      (o55:succeeded, 62-flow.js F.op and 30-owners.js adopt), never an error leaving the screen */
   window.addEventListener('o55:succeeded', (e) => {
     const d = e.detail || {};
-    lastSuccess = { at: performance.now(), startedAt: d.startedAt != null ? d.startedAt : performance.now(), screen: d.screen || (S.sess && S.sess.screen) };
+    lastSuccess = { at: performance.now(), startedAt: d.startedAt != null ? d.startedAt : performance.now(), screen: d.screen || (S.sess && S.sess.screen), key: d.kind === 'op' ? d.key : null };
     if (S.open) O55.motion.real.setTimeout(() => { if (S.open) renderScene(); }, 0);
   });
   function stageOf() {
@@ -512,7 +512,7 @@
        fault that only left (another way chosen, a skip, a token instead of a sign-in) is no success: Pip goes quiet. */
     const now = performance.now();
     if (lastOops && lastOops.screen !== S.sess.screen) lastOops = null;
-    let cheer = null;
+    let cheer = null, won = false;
     if (oops) {
       const same = lastOops && lastOops.key === oops.key;
       const fieldEl = oops.el && oops.el.closest && oops.el.closest('.o55-field[data-key]');
@@ -520,7 +520,7 @@
       let since = same ? lastOops.since : now; if (lastSuccess && lastSuccess.at >= since) since = lastSuccess.at + 1;
       lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null, since, field: same ? lastOops.field : (fieldEl ? fieldEl.getAttribute('data-key') : null) };
     } else if (lastOops) {
-      const won = !!(lastSuccess && lastSuccess.at >= lastOops.since && lastSuccess.startedAt >= lastOops.since - 100 && lastSuccess.screen === S.sess.screen);
+      won = !!(lastSuccess && lastSuccess.at >= lastOops.since && lastSuccess.startedAt >= lastOops.since - 100 && lastSuccess.screen === S.sess.screen);
       let ok = won, gone = false;
       if (lastOops.refused) {
         const r = lastOops.refused, c = layer && Array.from(layer.querySelectorAll('[data-o55-do]')).find((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg);
@@ -547,10 +547,21 @@
       else if (ok || (gone && !running) || now - lastOops.since > 30000) lastOops = null; /* put right without a cheer of its own, moved on, or long ago */
     }
     /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
-       next refresh's ordinary one) */
-    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; cheerLog.push({ at: Math.round(performance.now()), key: cheer.key, text: cheering.text, screen: S.sess.screen }); if (cheerLog.length > 40) cheerLog.shift(); }
+       next refresh's ordinary one). On a screen whose lines report an operation (spec.speech, 55-scenes.js) the cheer
+       belongs to what it cheers: the operation that succeeded, for the inputs it ran with, or else where the screen
+       stands now. It stands only while that is still what the screen shows: another account typed as it begins leaves
+       no "In! The folder opened." over a check that is gone, and a success for inputs already changed is not cheered
+       (FO-41). The stage drops a line whose owner is gone at once (58-rig.js direct). */
+    const sp = spec.speech || null;
+    const aiOwner = cheer && won && S.sess.screen === 'ai' && O55.ai ? O55.ai.speechOwner(S, lastSuccess.key) : null;
+    const live = (owner) => !owner || (owner.kind === 'ai-account' ? O55.ai.speechLive(S, owner) : owner === (sp && sp.id));
+    const owner = aiOwner || (!cheer || !sp ? null : won && lastSuccess.key ? sp.screen + '|' + lastSuccess.key + '|done' : sp.id);
+    if (cheer && !live(owner)) cheer = null;
+    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen, owner }; spec.sayNow = true; cheerLog.push({ at: Math.round(performance.now()), key: cheer.key, text: cheering.text, screen: S.sess.screen }); if (cheerLog.length > 40) cheerLog.shift(); }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
-    if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
+    /* (its happy face goes with it: the step it was for is no longer on show) */
+    if (cheering && !live(cheering.owner)) { cheering = null; st.moodOverride = null; }
+    if (cheering) { spec.say = cheering.text; spec.sayOwner = cheering.owner; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
        world) changes only when it is picked (Jared, O6, 2026-10-30: "it shouldnt change the themes on hover, it should
        change on click. It is a little too busy with it changing on hover") */
@@ -560,11 +571,13 @@
        / "Type it in."). A fault or a cheer still speaks at once; a screen whose stage answers each letter (Name) is left be */
     const sdef = SCREENS.defs[S.sess.screen], typingNow = !!S.typedAt && performance.now() - S.typedAt < 1200;
     const singing = !!(sdef && sdef.typing && S.pipTyping && sdef.typing(S, S.pipTyping));
-    if (typingNow && !singing && !oops && !cheer && !cheering && lastLine && lastLine.screen === S.sess.screen && lastLine.lineId === 'typing' && spec.lineId !== 'typing') {
-      spec.say = lastLine.say; spec.lineId = 'typing'; if (lastLine.mood) spec.pip.mood = lastLine.mood;
+    /* (only a line nothing has taken away: one an operation said is held only while that operation still stands) */
+    if (typingNow && !singing && !oops && !cheer && !cheering && lastLine && lastLine.screen === S.sess.screen && lastLine.lineId === 'typing' && spec.lineId !== 'typing'
+      && (!lastLine.owner || lastLine.owner === (sp && sp.id))) {
+      spec.say = lastLine.say; spec.lineId = 'typing'; spec.sayOwner = lastLine.owner; if (lastLine.mood) spec.pip.mood = lastLine.mood;
       if (!holdLineT) holdLineT = O55.motion.real.setTimeout(() => { holdLineT = null; if (S.open) renderScene(); }, 1250);
     }
-    lastLine = { say: spec.say, lineId: spec.lineId, mood: spec.pip && spec.pip.mood, screen: S.sess.screen };
+    lastLine = { say: spec.say, lineId: spec.lineId, mood: spec.pip && spec.pip.mood, screen: S.sess.screen, owner: spec.sayOwner || null };
     /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
     if (oops) st.moodOverride = null;
     st.direct(spec);
@@ -662,8 +675,13 @@
   }
 
 
-  /* Quiet in-screen update: morph the current layer; never replays the entrance. */
+  /* Quiet in-screen update: morph the current layer; never replays the entrance. Removing a focused field mid-morph
+     makes the browser report its last edit (change, blur) right then; a refresh asked for by that handler is not
+     started inside the morph that is still removing nodes (a nested one removes them first: FO-63), it runs whole as
+     soon as that morph ends, in the same turn. */
+  let morphing = false, missed = false;
   function refresh() {
+    if (morphing) { missed = true; return; }
     flushOpen();
     if (!S.open) return;
     if (!onBranch(S.sess.screen)) return transition(null);
@@ -674,7 +692,8 @@
     /* a refusal's reason still showing outlives a redraw (a screen's own 1 s refresh took it away mid-read: RV-19); it
        goes back where it was and its fade carries on from where it was */
     const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
-    U.morph(layer, paneHtml(def));
+    morphing = true;
+    try { U.morph(layer, paneHtml(def)); } finally { morphing = false; }
     if (keepReason && !keepReason.isConnected) { const ft = layer.querySelector('.o55-foot'); if (ft) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; ft.appendChild(keepReason); } }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
@@ -683,6 +702,7 @@
     renderScene(); renderSound();
     if (onBranch(S.sess.screen)) def.mounted && def.mounted(S, layer, false); /* (off the branch: no checks or ops start) */
     skin('refresh', layer);
+    if (missed) { missed = false; refresh(); }
   }
 
   function transition(dir) {
