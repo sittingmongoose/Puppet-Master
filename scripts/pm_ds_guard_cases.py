@@ -117,3 +117,62 @@ def capture():
     if failures:raise AssertionError('captured cases must reproduce before ablation: '+json.dumps(failures[:5]))
     for identity,group in discovered.items():groups.setdefault(identity,group)
     return list(groups.values()),positives,{'tests_run':result.testsRun,'unique_checker_calls':len(records),'negative_cases':sum(len(g[2]) for g in groups.values()),'positive_controls':len(positives),'scoped_fault_controls':scoped_faults}
+
+
+from contextlib import contextmanager, ExitStack
+from functools import lru_cache
+from unittest.mock import patch
+
+
+@contextmanager
+def static_browser_contexts(functions):
+    """Cache fixed schema construction only, never event checks or witness values.
+
+    The source audit traces cold construction first, then clears these caches
+    before each mutation. A changed schema/ref guard therefore constructs its
+    context under that mutation. The exact validating readers still run for
+    every event; no validator result or returned error list is cached.
+    """
+    namespaces={id(inspect.unwrap(fn).__globals__):inspect.unwrap(fn).__globals__ for fn in functions}
+    caches=[]
+    with ExitStack() as stack:
+        for namespace in namespaces.values():
+            factory=namespace.get('contract_context')
+            if not inspect.isfunction(factory) or Path(factory.__code__.co_filename).name!='pm-browser-event-admission.py':
+                continue
+            cached=lru_cache(maxsize=1)(factory)
+            stack.enter_context(patch.dict(namespace,{'contract_context':cached}))
+            caches.append(cached)
+        def clear():
+            for cached in caches:cached.cache_clear()
+        yield clear
+
+
+@contextmanager
+def validated_schema_documents():
+    """Memoize successful *schema-definition* checks, never input validation.
+
+    The original object is validated, without a JSON roundtrip. Non-JSON Python
+    forms (including tuples), custom formats and subclasses always use the
+    original checker. Ref closure and every event/value guard still execute.
+    """
+    import math
+    from jsonschema import Draft202012Validator
+    original=Draft202012Validator.check_schema.__func__
+    passed=set()
+    def json_tree(value):
+        kind=type(value)
+        if kind in (str,int,bool,type(None)):return True
+        if kind is float:return math.isfinite(value)
+        if kind is list:return all(json_tree(v) for v in value)
+        if kind is dict:return all(type(k) is str and json_tree(v) for k,v in value.items())
+        return False
+    def check(cls,schema,**kwargs):
+        if cls is not Draft202012Validator or kwargs or not json_tree(schema):
+            return original(cls,schema,**kwargs)
+        key=json.dumps(schema,sort_keys=True,separators=(',',':'))
+        if key not in passed:
+            original(cls,schema)
+            passed.add(key)
+    with patch.object(Draft202012Validator,'check_schema',classmethod(check)):
+        yield

@@ -7,6 +7,8 @@ import copy
 import inspect
 import json
 import textwrap
+import io
+from contextlib import redirect_stdout
 import sys
 from functools import lru_cache
 from contextlib import ExitStack
@@ -118,9 +120,12 @@ def audit():
     # A source-condition mutation cannot affect a case that never calls that function.
     # Trace each baseline; keep every unrelated negative in the reported stay-rejected set.
     all_cases={name:test for _,_,cases in groups for name,test in cases}
+    import pm_event_payload_route as route
     traces={}
     for ordinal,(name,test) in enumerate(all_cases.items()):
         if ordinal%25==0:print('baseline '+str(ordinal)+'/'+str(len(all_cases)),flush=True)
+        # Match the cold eager state used by mutations; warm caches cannot hide dependencies.
+        route._eager_done.clear()
         calls=set()
         def trace(frame,event,arg):
             if event=='call':calls.add((frame.f_code.co_filename,frame.f_code.co_firstlineno,id(frame.f_globals)))
@@ -135,43 +140,47 @@ def audit():
     unique={}
     for module,fn,cases in groups:
         unique.setdefault((id(module),id(fn)),(module,fn))
-    for module,fn in unique.values():
-        code=inspect.unwrap(fn).__code__;identity=(code.co_filename,code.co_firstlineno,id(inspect.unwrap(fn).__globals__))
-        cases=[(name,test) for name,test in all_cases.items() if identity in traces[name]]
-        unrelated=sorted(set(all_cases)-{n for n,_ in cases})
-        print('audit '+fn.__qualname__+' cases='+str(len(cases)),flush=True)
-        for line,condition,tree in guards(fn):
-            import pm_event_payload_route as route
-            route._eager_done.clear()
-            altered=weaken(fn,line,tree);flipped=[];stayed=[];exceptions=[]
-            owner=fn.__qualname__.split('.')[0]
-            target=getattr(module,owner) if '.' in fn.__qualname__ and inspect.isclass(getattr(module,owner,None)) else module
-            aliases=[]
-            with ExitStack() as stack:
-                stack.enter_context(patch.object(target,fn.__name__,altered))
-                if fn in (home._exact_numeric_type,home._ecma_pattern):
-                    keyword='type' if fn is home._exact_numeric_type else 'pattern'
-                    stack.enter_context(patch.dict(home.Home4Validator.VALIDATORS,{keyword:altered}))
-                    aliases.append('Home4Validator.VALIDATORS['+keyword+'] (same captured function)')
-                for class_name in ('ReplayOracle','CandidateReplayOracle'):
-                    cls=getattr(module,class_name,None)
-                    if cls is not None and getattr(cls,'contract_failures',None) is fn:
-                        stack.enter_context(patch.object(cls,'contract_failures',staticmethod(altered)))
-                        aliases.append(class_name+'.contract_failures (same captured function)')
-                for name,test in cases:
-                    try:(flipped if test() else stayed).append(name)
-                    except Exception as exc:exceptions.append({'case':name,'exception':repr(exc)})
-            route._eager_done.clear()
-            table.append({'guard':str(Path(inspect.getsourcefile(inspect.unwrap(fn))).relative_to(ROOT))+':'+str(inspect.getsourcelines(fn)[1]+line-1),
-                          'function':fn.__qualname__,'condition':condition,'negatives_that_flip':flipped,'negatives_that_stay_rejected':sorted(stayed+unrelated),
-                          'affected_case_count':len(cases),'unchanged_noncallers':len(unrelated),'named_alias_set':aliases,'namespace':inspect.unwrap(fn).__globals__.get('__name__'),
-                          'exceptions':exceptions,'status':'witnessed' if flipped and not exceptions else 'partial',
-                          'limit':"Actual source-condition ablation. Noncallers are unchanged by construction; flips need refusal ownership adjudication. Empty/exception rows remain open."})
+    from pm_ds_guard_cases import static_browser_contexts
+    with static_browser_contexts(fn for _,fn in unique.values()) as clear_contexts:
+        for module,fn in unique.values():
+            code=inspect.unwrap(fn).__code__;identity=(code.co_filename,code.co_firstlineno,id(inspect.unwrap(fn).__globals__))
+            cases=[(name,test) for name,test in all_cases.items() if identity in traces[name]]
+            unrelated=sorted(set(all_cases)-{n for n,_ in cases})
+            print('audit '+fn.__qualname__+' cases='+str(len(cases)),flush=True)
+            for line,condition,tree in guards(fn):
+                import pm_event_payload_route as route
+                route._eager_done.clear()
+                clear_contexts()
+                altered=weaken(fn,line,tree);flipped=[];stayed=[];exceptions=[]
+                owner=fn.__qualname__.split('.')[0]
+                target=getattr(module,owner) if '.' in fn.__qualname__ and inspect.isclass(getattr(module,owner,None)) else module
+                aliases=[]
+                with ExitStack() as stack:
+                    stack.enter_context(patch.object(target,fn.__name__,altered))
+                    if fn in (home._exact_numeric_type,home._ecma_pattern):
+                        keyword='type' if fn is home._exact_numeric_type else 'pattern'
+                        stack.enter_context(patch.dict(home.Home4Validator.VALIDATORS,{keyword:altered}))
+                        aliases.append('Home4Validator.VALIDATORS['+keyword+'] (same captured function)')
+                    for class_name in ('ReplayOracle','CandidateReplayOracle'):
+                        cls=getattr(module,class_name,None)
+                        if cls is not None and getattr(cls,'contract_failures',None) is fn:
+                            stack.enter_context(patch.object(cls,'contract_failures',staticmethod(altered)))
+                            aliases.append(class_name+'.contract_failures (same captured function)')
+                    for name,test in cases:
+                        try:(flipped if test() else stayed).append(name)
+                        except Exception as exc:exceptions.append({'case':name,'exception':repr(exc)})
+                route._eager_done.clear()
+                clear_contexts()
+                table.append({'guard':str(Path(inspect.getsourcefile(inspect.unwrap(fn))).relative_to(ROOT))+':'+str(inspect.getsourcelines(fn)[1]+line-1),
+                              'function':fn.__qualname__,'condition':condition,'negatives_that_flip':flipped,'negatives_that_stay_rejected':sorted(stayed+unrelated),
+                              'affected_case_count':len(cases),'unchanged_noncallers':len(unrelated),'named_alias_set':aliases,'namespace':inspect.unwrap(fn).__globals__.get('__name__'),
+                              'exceptions':exceptions,'status':'witnessed' if flipped and not exceptions else 'partial',
+                              'limit':"Actual source-condition ablation. Noncallers are unchanged by construction; flips need refusal ownership adjudication. Empty/exception rows remain open."})
     for path,digest in source_hashes.items():
         if __import__('hashlib').sha256((ROOT/path).read_bytes()).hexdigest()!=digest:
             baseline_failures.append({'source_changed_during_audit':path})
     return {'source_sha256':source_hashes,'schema_id':'pm.ds.whole_lane_guard_removal.v2','status':'partial','baseline_failures':baseline_failures,
-            'inherited_case_reuse':INHERITED_SUMMARY,'distinct_negative_count':len(all_cases),'guard_removal_complete':False,
+            'inherited_case_reuse':INHERITED_SUMMARY,'distinct_negative_count':len(all_cases),'guard_removal_complete':False,'trace_policy':'Eager cache cold for each baseline and mutation; fixed context construction cached only within a mutation; successful standard-library schema-definition checks memoized by complete JSON document; no input validation result cached.',
             'guard_count':len(table),'witnessed_guard_count':sum(r['status']=='witnessed' for r in table),
             'guard_removal_table':table,'claim':'Inventory plus inherited checker/state-machine cases and actual source-condition ablations; no complete check-11 claim while any row is partial or ownership unadjudicated.'}
 
@@ -179,14 +188,15 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path);parser.add_argument('--self-test',action='store_true');args=parser.parse_args()
     if args.self_test:
         with patch(__name__+'.cohort',return_value=[(round2,round2.compaction_payload_errors,[('injected_accepted_negative',lambda:True)])]):
-            bad=audit()
+            with redirect_stdout(io.StringIO()):bad=audit()
         good=bad['status']=='fail' and bad['guard_count']==0 and bool(bad['baseline_failures'])
         print(json.dumps({'status':'pass' if good else 'fail','injected_accepted_negative_refused_before_ablation':good}));return not good
     if args.output is None:parser.error('--output is required unless --self-test')
     # Pure hash memoization only; keys are exact bytes and no check is disabled.
     import pm_event_payload_route as route
     cached=lru_cache(maxsize=128)(home.blake3_hex)
-    with patch.object(home,'blake3_hex',cached),patch.object(route,'blake3_hex',cached):
+    from pm_ds_guard_cases import validated_schema_documents
+    with validated_schema_documents(),patch.object(home,'blake3_hex',cached),patch.object(route,'blake3_hex',cached):
         result=audit()
     args.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='guard_removal_table'},indent=2));return bool(result['baseline_failures'])
 if __name__=='__main__':raise SystemExit(main())
