@@ -3,9 +3,13 @@
 export default async function (t) {
 	await t.emulate({ reducedMotion: 'reduce' });
 	await t.app.open();
+	await t.check('app motion API reads reduced after open', () => t.root.evaluate(() => O55.motion.reduced()));
 	await t.check('prefers-reduced-motion after load', () => t.root.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches));
 	await t.app.open();
+	await t.check('app motion API reads reduced after open', () => t.root.evaluate(() => O55.motion.reduced()));
 	await t.check('prefers-reduced-motion after reload', () => t.root.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches));
 	await t.visible('main.primary-content', 'main content visible');
 	await t.emulate({ reducedMotion: 'no-preference' });
+	await t.app.open();
+	await t.check('explicit motion on survives navigation in app frame', () => t.root.evaluate(() => !matchMedia('(prefers-reduced-motion: reduce)').matches));
 }

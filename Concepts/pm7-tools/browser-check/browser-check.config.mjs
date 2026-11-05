@@ -1,6 +1,7 @@
 // browser-check config for PuppetMaster's published page (Concepts/PMConcept7.html), per the PM7 plan's browser rules:
 // file:// (the page is self-contained), a cache-buster on every load, ?o55=off,
-// reduced motion re-applied and confirmed after each navigation, one browser per run.
+// Explicit t.emulate media requests are re-applied by browser-check after navigation.
+// No Reduced Motion default: checks must request reduce (or no-preference) themselves; one browser per run.
 //   browser-check run Concepts/pm7-tools/browser-check/checks
 //   browser-check run Concepts/pm7-tools/browser-check/checks --set page=/tmp/private-build.html
 import fs from 'node:fs';

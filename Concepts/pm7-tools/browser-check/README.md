@@ -79,6 +79,8 @@ export default async function (t) {
 
 ## Motion
 
+The kit has no Reduced Motion default. Request it with `await t.emulate({ reducedMotion: 'reduce' })` before opening the app; browser-check preserves that request on navigation. `reduced-motion` checks both the media query and `O55.motion.reduced()` inside the returned app frame. A plain `t.app.open()` does not enable Reduced Motion.
+
 `t.moving` and `t.still` compare real compositor frames. They are a quick gate, not the verification standard. The plan requires 60 fps recordings watched frame by frame, so for a motion claim:
 
 ```sh
