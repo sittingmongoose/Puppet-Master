@@ -2769,6 +2769,1192 @@
       "id": "rewrite-clone-backend-retired",
       "kind": "removed-backend",
       "expected": "AstGuards and CodeSite no longer exist in the credit path"
+    },
+    {
+      "id": "B1-same-line",
+      "kind": "code",
+      "expected": "B1-same-line fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if not value['x'].isdigit() else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        try:\n            assert table is not None; int(value['x'])\n        except ValueError:\n            table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": "0"
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": "bad"
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "runtime_untracked_site"
+      ],
+      "runtime_type": "ValueError",
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "assert",
+          "path": "subject.py",
+          "reason": "Internal readiness assertion on the freshly constructed table; independent of all input values.",
+          "source": "assert table is not None"
+        }
+      ]
+    },
+    {
+      "id": "B1-separate-line",
+      "kind": "code",
+      "expected": "B1-separate-line fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if not value['x'].isdigit() else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        try:\n            assert table is not None\n            int(value['x'])\n        except ValueError:\n            table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": "0"
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": "bad"
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "runtime_untracked_site"
+      ],
+      "runtime_type": "ValueError",
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "assert",
+          "path": "subject.py",
+          "reason": "Internal readiness assertion on the freshly constructed table; independent of all input values.",
+          "source": "assert table is not None"
+        }
+      ]
+    },
+    {
+      "id": "B2-class-state",
+      "kind": "code",
+      "expected": "B2-class-state fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nclass Model:\n    seen = []\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        Model.seen.append(value['x'])\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true,
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "path": "subject.py",
+          "reason": "Record original transition attempts; logging does not decide acceptance.",
+          "source": "Model.seen.append(value['x'])"
+        }
+      ]
+    },
+    {
+      "id": "B2-bound-builtin-receiver",
+      "kind": "code",
+      "expected": "B2-bound-builtin-receiver fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nSHARED = []\nrecord = SHARED.append\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        record(value['x'])\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ],
+      "repeat": true,
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Record original transition attempts through the bound list append; no acceptance decision.",
+          "source": "record(value['x'])"
+        }
+      ]
+    },
+    {
+      "id": "B3-actual-sys-path",
+      "kind": "code",
+      "expected": "B3-actual-sys-path fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nimport lane_helper\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['special']:\n            lane_helper.check(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "raise",
+      "imported_file": "lib/lane_helper.py",
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Delegate to original checker helper; its repository source closure must be inventoried for inline refusals.",
+          "source": "lane_helper.check(value)"
+        }
+      ],
+      "imports": {
+        "lib/lane_helper.py": "def check(value):\n    if value['y'] < 0:\n        raise ValueError('hidden_y')\n    return True\n"
+      },
+      "extra_paths": [
+        "lib"
+      ]
+    },
+    {
+      "id": "B3-ordinary-path-control",
+      "kind": "code",
+      "expected": "B3-ordinary-path-control fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nimport lane_helper\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['special']:\n            lane_helper.check(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "raise",
+      "imported_file": "lane_helper.py",
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Delegate to original checker helper; its repository source closure must be inventoried for inline refusals.",
+          "source": "lane_helper.check(value)"
+        }
+      ],
+      "imports": {
+        "lane_helper.py": "def check(value):\n    if value['y'] < 0:\n        raise ValueError('hidden_y')\n    return True\n"
+      }
+    },
+    {
+      "id": "B3-cached-origin-conflict",
+      "kind": "code",
+      "expected": "B3-cached-origin-conflict fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nimport lane_helper\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['special']:\n            lane_helper.check(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "uncertified_import_binding",
+      "remove_extra_paths_after_import": true,
+      "non_guards": [
+        {
+          "function": "factory.check",
+          "kind": "call_review",
+          "path": "subject.py",
+          "reason": "Delegate to original checker helper; its repository source closure must be inventoried for inline refusals.",
+          "source": "lane_helper.check(value)"
+        }
+      ],
+      "imports": {
+        "lib/lane_helper.py": "def check(value):\n    if value['y'] < 0:\n        raise ValueError('hidden_y')\n    return True\n"
+      },
+      "extra_paths": [
+        "lib"
+      ]
+    },
+    {
+      "id": "B3-aliased-importlib-predicate",
+      "kind": "code",
+      "expected": "B3-aliased-importlib-predicate fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nfrom importlib import import_module as load\n\ndef px(value, context):\n    if value['special']:\n        helper = load('lane_helper')\n        helper.check(value)\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "imports": {
+        "lane_helper.py": "def check(value):\n    if value['y'] < 0:\n        raise ValueError('hidden_y')\n    return True\n"
+      }
+    },
+    {
+      "id": "B3-module-assignment-alias",
+      "kind": "code",
+      "expected": "B3-module-assignment-alias fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nimport importlib as loaders\nload = loaders.import_module\n\ndef px(value, context):\n    if value['special']:\n        helper = load('lane_helper')\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_code_or_import"
+    },
+    {
+      "id": "B3-builtin-alias",
+      "kind": "code",
+      "expected": "B3-builtin-alias fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nfrom builtins import __import__ as load\n\ndef px(value, context):\n    if value['special']:\n        helper = load('lane_helper')\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_code_or_import"
+    },
+    {
+      "id": "B3-builtin-assignment-alias",
+      "kind": "code",
+      "expected": "B3-builtin-assignment-alias fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nload = __import__\n\ndef px(value, context):\n    if value['special']:\n        helper = load('lane_helper')\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_code_or_import"
+    },
+    {
+      "id": "B3-runpy-module-alias",
+      "kind": "code",
+      "expected": "B3-runpy-module-alias fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nimport runpy as runner\nload = runner.run_path\n\ndef px(value, context):\n    if value['special']:\n        helper = load('unused.py')\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_code_or_import"
+    },
+    {
+      "id": "B3-runpy-from-alias",
+      "kind": "code",
+      "expected": "B3-runpy-from-alias fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nfrom runpy import run_module as load\n\ndef px(value, context):\n    if value['special']:\n        helper = load('lane_helper')\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_code_or_import"
+    },
+    {
+      "id": "B3-predicate-local-alias",
+      "kind": "code",
+      "expected": "B3-predicate-local-alias fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nimport importlib as loaders\n\ndef px(value, context):\n    if value['special']:\n        load = loaders.import_module\n        helper = load('lane_helper')\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "dynamic_code_or_import"
+    },
+    {
+      "id": "B3-package-relative-context",
+      "kind": "code",
+      "expected": "B3-package-relative-context fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\nfrom pkg import helper\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        if value['special']:\n            helper.check(value)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "imports": {
+        "pkg/__init__.py": "from . import helper\n",
+        "pkg/helper.py": "def check(value):\n    if value['y'] < 0:\n        raise ValueError('hidden_y')\n    return True\n"
+      },
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_kind": "raise",
+      "imported_file": "pkg/helper.py",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "helper.check(value)",
+          "reason": "Delegate original helper; its source must be scanned."
+        }
+      ]
+    },
+    {
+      "id": "B4-dict-order",
+      "kind": "code",
+      "expected": "B4-dict-order fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    first = value['order'].pop('a')\n    value['order']['a'] = first\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "order": {
+              "a": 1,
+              "b": 2
+            }
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "order": {
+              "a": 1,
+              "b": 2
+            }
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "mutated input/context",
+      "state_observation": "order",
+      "alias_fixture": false
+    },
+    {
+      "id": "B4-alias-topology",
+      "kind": "code",
+      "expected": "B4-alias-topology fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    value['right'] = dict(value['right'])\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "left": {
+              "leaf": 1
+            },
+            "right": {
+              "leaf": 1
+            }
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "left": {
+              "leaf": 1
+            },
+            "right": {
+              "leaf": 1
+            }
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "mutated input/context",
+      "state_observation": "alias",
+      "alias_fixture": true
+    },
+    {
+      "id": "B4-context-order",
+      "kind": "code",
+      "expected": "B4-context-order fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    first = context['order'].pop('a')\n    context['order']['a'] = first\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = {'order': {'a': 1, 'b': 2}}\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "mutated input/context"
+    },
+    {
+      "id": "B4-temporary-restored-input",
+      "kind": "code",
+      "expected": "B4-temporary-restored-input fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    original = value['x']\n    value['x'] = 999\n    value['x'] = original\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "mutated input/context"
+    },
+    {
+      "id": "B4-mutating-helper",
+      "kind": "code",
+      "expected": "B4-mutating-helper fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef alter(value):\n    value['right'] = dict(value['right'])\n    return True\n\ndef px(value, context):\n    alter(value)\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "left": {
+              "leaf": 1
+            },
+            "right": {
+              "leaf": 1
+            }
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "left": {
+              "leaf": 1
+            },
+            "right": {
+              "leaf": 1
+            }
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites",
+        "table_protocol_error"
+      ],
+      "protocol_contains": "mutated input/context",
+      "static_error_kind": "predicate_purity_uncertified",
+      "alias_fixture": true
+    },
+    {
+      "id": "B4-dormant-mutation",
+      "kind": "code",
+      "expected": "B4-dormant-mutation fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    if value['special']:\n        value['x'] = 1\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "special": false
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "special": false
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "hidden_static_sites"
+      ],
+      "static_error_kind": "predicate_mutation"
+    },
+    {
+      "id": "B5-direct-independent",
+      "kind": "code",
+      "expected": "B5-direct-independent fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    other_code = py({'y': value['x']}, context)\n    return 'bad_x' if other_code is not None else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px), g.Guard('y', g.Invariant('/y','nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x"
+        },
+        {
+          "id": "y-bad",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "registered predicate entered outside"
+    },
+    {
+      "id": "B5-direct-duplicate",
+      "kind": "code",
+      "expected": "B5-direct-duplicate fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return py(value, context)\n\ndef py(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px), g.Guard('x2', g.Invariant('/x', 'nonnegative'), 'bad_x', py)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        table.require('x2', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "duplicate",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "registered predicate entered outside",
+      "duplicates": [
+        {
+          "id": "duplicate",
+          "sites": [
+            "x",
+            "x2"
+          ],
+          "invariant": [
+            "/x",
+            "nonnegative"
+          ],
+          "evidence": "Both table sites enforce the same x predicate; direct entry must still fail."
+        }
+      ]
+    },
+    {
+      "id": "B5-nested-table-control",
+      "kind": "code",
+      "expected": "B5-nested-table-control fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\ndef factory():\n    def px(value, context):\n        table.require('y', value, context)\n        return 'bad_x' if value['x'] < 0 else None\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x','nonnegative'), 'bad_x', px), g.Guard('y', g.Invariant('/y','nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x"
+        },
+        {
+          "id": "y-bad",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "nested guard evaluation"
+    },
+    {
+      "id": "B5-alias-call",
+      "kind": "code",
+      "expected": "B5-alias-call fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    other_code = alias({'y': value['x']}, context)\n    return 'bad_x' if other_code is not None else None\n\ndef py(value, context):\n    return 'bad_y' if value['y'] < 0 else None\n\nalias = py\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px), g.Guard('y', g.Invariant('/y','nonnegative'), 'bad_y', py)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x"
+        },
+        {
+          "id": "y-bad",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "registered predicate entered outside"
+    },
+    {
+      "id": "B5-checker-direct-entry",
+      "kind": "code",
+      "expected": "B5-checker-direct-entry fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        px(value, context)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "registered predicate entered outside"
+    },
+    {
+      "id": "B5-bound-alias-call",
+      "kind": "code",
+      "expected": "B5-bound-alias-call fails closed for its named reason, with zero credit",
+      "source": "import pm_guard_isolation as g\n\ndef factory():\n    class Methods:\n        def py(self, value, context):\n            return 'bad_y' if value['y'] < 0 else None\n    methods = Methods()\n    other = methods.py\n    def px(value, context):\n        result = other({'y': value['x']}, context)\n        return 'bad_x' if result is not None else None\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px), g.Guard('y', g.Invariant('/y', 'nonnegative'), 'bad_y', methods.py)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        table.require('y', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "y": 0
+          },
+          "target": "x",
+          "code": "bad_x"
+        },
+        {
+          "id": "y-bad",
+          "value": {
+            "x": 0,
+            "y": -1
+          },
+          "target": "y",
+          "code": "bad_y"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "registered predicate entered outside",
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory",
+          "kind": "call_review",
+          "source": "Methods()",
+          "reason": "Fresh per-case source-backed receiver; no acceptance decision."
+        }
+      ]
+    },
+    {
+      "id": "B1-exact-exception-propagation",
+      "kind": "code",
+      "expected": "B1-exact-exception-propagation enforces its own named boundary",
+      "source": "import pm_guard_isolation as g\n\ndef plumbing():\n    raise ValueError('plumbing')\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        try:\n            plumbing()\n        except ValueError:\n            pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "status": "PASS",
+      "failure_kinds": [],
+      "proved_rows": 1,
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "plumbing",
+          "kind": "raise",
+          "source": "raise ValueError('plumbing')",
+          "reason": "Reviewed internal plumbing operation, independent of input."
+        },
+        {
+          "path": "subject.py",
+          "function": "plumbing",
+          "kind": "call_review",
+          "source": "ValueError('plumbing')",
+          "reason": "Construct the internal plumbing exception."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "plumbing()",
+          "reason": "Call original internal plumbing helper; its raise is separately declared."
+        }
+      ]
+    },
+    {
+      "id": "B1-exception-object-reraise",
+      "kind": "code",
+      "expected": "B1-exception-object-reraise enforces its own named boundary",
+      "source": "import pm_guard_isolation as g\n\ndef plumbing():\n    raise ValueError('plumbing')\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        try:\n            plumbing()\n        except ValueError as exc:\n            try:\n                raise exc\n            except ValueError:\n                pass\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "plumbing",
+          "kind": "raise",
+          "source": "raise ValueError('plumbing')",
+          "reason": "Reviewed internal plumbing operation, independent of input."
+        },
+        {
+          "path": "subject.py",
+          "function": "plumbing",
+          "kind": "call_review",
+          "source": "ValueError('plumbing')",
+          "reason": "Construct the internal plumbing exception."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "plumbing()",
+          "reason": "Call original internal plumbing helper; its raise is separately declared."
+        }
+      ],
+      "failure_kinds": [
+        "runtime_untracked_site"
+      ],
+      "runtime_type": "ValueError"
+    },
+    {
+      "id": "B2-uncertifiable-slotted-state",
+      "kind": "code",
+      "expected": "B2-uncertifiable-slotted-state enforces its own named boundary",
+      "source": "import pm_guard_isolation as g\n\nclass Opaque:\n    __slots__ = ('data',)\n\nSTATE = Opaque()\nSTATE.data = []\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        unused = STATE\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "state_shared_across_cases"
+      ]
+    },
+    {
+      "id": "B5-private-test-entry",
+      "kind": "code",
+      "expected": "B5-private-test-entry enforces its own named boundary",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table._test(table.guards['x'], value, context)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "table_protocol_error"
+      ],
+      "protocol_contains": "outside authorized engine entry"
+    },
+    {
+      "id": "B4-factory-order-repair",
+      "kind": "code",
+      "expected": "B4-factory-order-repair enforces its own named boundary",
+      "source": "import pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory(value):\n    first = value['order'].pop('a')\n    value['order']['a'] = first\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = {'order': {'a': 1, 'b': 2}}\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "order": {
+              "a": 1,
+              "b": 2
+            }
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "order": {
+              "a": 1,
+              "b": 2
+            }
+          },
+          "target": "x",
+          "code": "bad_x"
+        }
+      ],
+      "failure_kinds": [
+        "infrastructure_or_declaration"
+      ],
+      "error_contains": "factory mutated the frozen fixture"
     }
   ]
 }

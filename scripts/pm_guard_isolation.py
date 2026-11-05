@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import ast
 import copy
+import dis
 import inspect
 import importlib.machinery
 from dataclasses import asdict, dataclass, field, replace
@@ -71,6 +72,40 @@ def evidence_value(value):
         items = [[evidence_value(k), evidence_value(v)] for k, v in value.items()]
         return ["mapping", sorted(items, key=lambda pair: encoded(pair[0]))]
     raise IsolationError("unsupported case fingerprint type: " + kind.__name__ + "; supply reifiable fixture data")
+
+
+@dataclass(frozen=True)
+class _DataSnapshot:
+    signature: tuple
+    keepalive: tuple = field(compare=False, repr=False)
+
+
+def _data_snapshot(*roots):
+    """Purity witness for the supported, original data graph (never a serializer).
+
+    Retain order, aliases, cycles, physical scalar bits AND object identities.
+    No hooks, descriptors, equality overloads or user iterators are invoked.
+    Context sets are observed in their original order; they are never copied.
+    """
+    seen, nodes, keepalive = {}, [], []
+    def visit(value):
+        keepalive.append(value)  # no recycled IDs after a detached node dies
+        kind = type(value)
+        if kind in (type(None), bool, int, float, str, bytes):
+            return ('scalar', id(value), encoded(evidence_value(value)))
+        if kind not in (dict, list, tuple, bytearray, set, frozenset):
+            raise IsolationError('predicate purity cannot certify data type: ' + kind.__name__)
+        if id(value) in seen:
+            return ('ref', seen[id(value)])
+        index = len(nodes)
+        seen[id(value)] = index
+        nodes.append(None)
+        contents = (tuple((visit(k), visit(v)) for k, v in value.items()) if kind is dict else
+                    bytes(value) if kind is bytearray else tuple(visit(v) for v in value))
+        nodes[index] = (kind.__name__, id(value), contents)
+        return ('ref', index)
+    references = tuple(visit(value) for value in roots)
+    return _DataSnapshot((references, tuple(nodes)), tuple(keepalive))
 
 
 def pointer(parts: tuple) -> str:
@@ -976,6 +1011,8 @@ class GuardTable:
         self._root = self._context = None
         self._bound = False
         self._in_predicate = False
+        self._purity_before = None
+        self._matrix_frame = None
         self._schema = None
 
     @property
@@ -993,23 +1030,41 @@ class GuardTable:
             self._schema.bind(cuts)
 
     def _test(self, row, value, context):
+        caller = sys._getframe(1)
+        if (not self._bound or value is not self._root or context is not self._context or
+                not (caller.f_code is GuardTable.require.__code__ and caller.f_locals.get('self') is self or
+                     caller.f_code is _SchemaBinding.validate.__code__ and caller.f_locals.get('self') is self._schema and caller.f_locals.get('table') is self or
+                     caller is self._matrix_frame)):
+            self._errors.append('predicate evaluation outside authorized engine entry')
+            raise IsolationError(self._errors[-1])
         if self._in_predicate:
             self._errors.append('nested guard evaluation')
             raise IsolationError('guard predicates cannot invoke guards')
         self._in_predicate = True
-        before = digest([value, context])
         try:
+            self._purity_before = _data_snapshot(value, context)
             result = row.predicate(value, context)
             if result is not None and (type(result) is not str or result != row.refusal_code):
                 raise IsolationError('predicate must return None or its exact refusal code: ' + row.name)
-            if digest([value, context]) != before:
-                raise IsolationError('guard predicate mutated input/context: ' + row.name)
+            self._check_purity(value, context)
             return result
         except BaseException as exc:
             self._errors.append(type(exc).__name__ + ': ' + str(exc))
             raise
         finally:
-            self._in_predicate = False
+            # Even a caught/translated predicate exception cannot hide a mutation.
+            try:
+                if self._purity_before is not None:
+                    self._check_purity(value, context)
+            finally:
+                self._purity_before = None
+                self._in_predicate = False
+
+    def _check_purity(self, value, context):
+        if _data_snapshot(value, context) != self._purity_before:
+            error = 'guard predicate mutated input/context'
+            self._errors.append(error)
+            raise IsolationError(error)
 
     def require(self, name, value, context=None):
         if not self._bound or value is not self._root or context is not self._context:
@@ -1108,29 +1163,100 @@ def static_scan(suite, table):
             raise IsolationError('invalid or duplicate non-guard declaration')
         allowed[key] = [declaration, 0]
 
-    def resolve_module(name, source, level=0):
-        bases = [root, source.parent, root / 'scripts']
+    contexts, source_modules = {}, {}
+    for _, module in list(sys.modules.items()):
+        if not isinstance(module, types.ModuleType):
+            continue
+        filename = vars(module).get('__file__')
+        if filename:
+            path = Path(filename).resolve()
+            contexts.setdefault(path, set()).add(vars(module).get('__package__') or '')
+            source_modules.setdefault(path, []).append(module)
+
+    def resolve_module(name, source, level=0, optional=False):
+        """Follow Python's binding/search context without executing imports.
+
+        Loaded bindings and PathFinder must agree. Custom finders, missing
+        origins, namespace ambiguity and native repository code need a seam.
+        """
         if level:
-            base = source.parent
-            for _ in range(level - 1):
-                base = base.parent
-            bases = [base]
-        parts = name.split('.') if name else []
-        found = []
-        for base in bases:
-            target = base.joinpath(*parts)
-            candidates = [target.with_suffix('.py'), target / '__init__.py'] if parts else [target / '__init__.py']
-            for candidate in candidates:
-                if candidate.is_file() and candidate.resolve().is_relative_to(root):
-                    found.append(candidate.resolve())
-                    # Package initialization is executed too.
-                    for parent in candidate.parents:
-                        if parent == base or not parent.is_relative_to(base):
-                            break
-                        init = parent / '__init__.py'
-                        if init.is_file():
-                            found.append(init.resolve())
-        return set(found)
+            packages = contexts.get(source, set())
+            if len(packages) != 1 or not next(iter(packages), ''):
+                errors.append({'kind': 'uncertified_import_binding', 'path': str(source), 'module': name, 'reason': 'unknown package context'})
+                return set()
+            try:
+                name = importlib.util.resolve_name('.' * level + name, next(iter(packages)))
+            except (ImportError, ValueError) as exc:
+                errors.append({'kind': 'uncertified_import_binding', 'path': str(source), 'module': name, 'reason': str(exc)})
+                return set()
+        found, search = set(), None
+        parts = name.split('.')
+        for index in range(len(parts)):
+            full = '.'.join(parts[:index + 1])
+            loaded = sys.modules.get(full)
+            spec = importlib.machinery.BuiltinImporter.find_spec(full) if index == 0 else None
+            spec = spec or (importlib.machinery.FrozenImporter.find_spec(full) if index == 0 else None)
+            spec = spec or importlib.machinery.PathFinder.find_spec(full, search)
+            origin = getattr(spec, 'origin', None)
+            loaded_origin = vars(loaded).get('__file__') if isinstance(loaded, types.ModuleType) else None
+            if loaded_origin and origin not in ('built-in', 'frozen'):
+                if not origin or Path(loaded_origin).resolve() != Path(origin).resolve():
+                    errors.append({'kind': 'uncertified_import_binding', 'path': str(source), 'module': full,
+                                   'reason': 'loaded origin disagrees with search path', 'loaded_origin': loaded_origin, 'search_origin': origin})
+                    return found
+            if spec is None or origin is None:
+                certified_attribute = False
+                if optional and index == len(parts) - 1:
+                    parent_name, _, attribute = full.rpartition('.')
+                    parent = sys.modules.get(parent_name)
+                    if isinstance(parent, types.ModuleType) and attribute in vars(parent):
+                        binding = vars(parent)[attribute]
+                        bound_path = (vars(binding).get('__file__') if isinstance(binding, types.ModuleType) else
+                                      binding.__code__.co_filename if inspect.isfunction(binding) else
+                                      vars(sys.modules[binding.__module__]).get('__file__') if type(binding) is type and binding.__module__ in sys.modules else None)
+                        certified_attribute = True
+                        if bound_path and Path(bound_path).resolve().is_relative_to(root):
+                            target = Path(bound_path).resolve()
+                            if target.suffix != '.py' or not target.is_file():
+                                certified_attribute = False
+                            else:
+                                found.add(target)
+                                if isinstance(binding, types.ModuleType):
+                                    contexts.setdefault(target, set()).add(vars(binding).get('__package__') or '')
+                    elif parent is None:
+                        # Dormant from-imports have not executed. Only a direct
+                        # source declaration certifies an attribute binding.
+                        for candidate in found:
+                            if candidate.stem == parts[-2] or candidate.name == '__init__.py':
+                                declarations = ast.parse(candidate.read_text()).body
+                                certified_attribute = any(isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and part.name == attribute for part in declarations)
+                                if certified_attribute:
+                                    break
+                if not certified_attribute:
+                    errors.append({'kind': 'uncertified_import_binding', 'path': str(source), 'module': full,
+                                   'reason': 'missing or ambiguous module origin'})
+                return found
+            if origin not in ('built-in', 'frozen'):
+                target = Path(origin).resolve()
+                if target.is_relative_to(root):
+                    if target.suffix != '.py' or not target.is_file() or not isinstance(spec.loader, importlib.machinery.SourceFileLoader):
+                        errors.append({'kind': 'unscannable_module', 'path': str(target), 'module': full})
+                    else:
+                        found.add(target)
+                        package = full if spec.submodule_search_locations is not None else full.rpartition('.')[0]
+                        contexts.setdefault(target, set()).add(package)
+            search = vars(loaded).get('__path__', spec.submodule_search_locations) if isinstance(loaded, types.ModuleType) else spec.submodule_search_locations
+            if search is not None and (type(search) not in (list, tuple) or not all(type(p) is str for p in search) or not search):
+                errors.append({'kind': 'uncertified_import_binding', 'path': str(source), 'module': full, 'reason': 'unscannable package search path'})
+                return found
+            if index < len(parts) - 1 and search is None:
+                if not optional or index != len(parts) - 2:
+                    errors.append({'kind': 'uncertified_import_binding', 'path': str(source), 'module': name, 'reason': 'parent is not a package'})
+                    return found
+                # The final from-import may be a function/class attribute of a
+                # non-package module; resolve it through that loaded binding.
+                search = []
+        return found
 
     while pending:
         path = pending.pop()
@@ -1151,19 +1277,76 @@ def static_scan(suite, table):
             for child in ast.iter_child_nodes(node):
                 collect(child, owner)
         collect(tree)
+        # Conservative symbol closure: aliases retain loader provenance. A
+        # conflicting assignment makes the name uncertain rather than safe.
+        symbols = {name: {name} for name in ('eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars')}
+        for module in source_modules.get(path, []):
+            for name, binding in vars(module).items():
+                if isinstance(binding, types.ModuleType):
+                    symbols.setdefault(name, set()).add(vars(binding).get('__name__', ''))
+                elif inspect.isfunction(binding) or isinstance(binding, types.BuiltinFunctionType):
+                    symbols.setdefault(name, set()).add((binding.__module__ or '') + '.' + binding.__name__)
+        for part in ast.walk(tree):
+            if isinstance(part, ast.Import):
+                for alias in part.names:
+                    symbols.setdefault(alias.asname or alias.name.split('.')[0], set()).add(alias.name if alias.asname else alias.name.split('.')[0])
+            elif isinstance(part, ast.ImportFrom):
+                for alias in part.names:
+                    symbols.setdefault(alias.asname or alias.name, set()).add((part.module + '.' if part.module else '') + alias.name)
+        def origins(node):
+            if isinstance(node, ast.Name):
+                return symbols.get(node.id, set())
+            if isinstance(node, ast.Attribute):
+                return {name + '.' + node.attr for name in origins(node.value)}
+            return set()
+        assignments = [part for part in ast.walk(tree) if isinstance(part, (ast.Assign, ast.AnnAssign, ast.NamedExpr))]
+        for _ in range(len(assignments) + 1):
+            changed = False
+            for part in assignments:
+                targets = part.targets if isinstance(part, ast.Assign) else [part.target]
+                for target in targets:
+                    if isinstance(target, ast.Name):
+                        previous = symbols.setdefault(target.id, set())
+                        new = origins(part.value) - previous
+                        if new:
+                            previous.update(new)
+                            changed = True
+            if not changed:
+                break
+        pure_calls = {'len', 'isinstance', 'type', 'str', 'int', 'bool', 'bytes', 'dict', 'list', 'tuple', 'set', 'frozenset', 'abs', 'all', 'any', 'min', 'max', 'sum'}
+        pure_methods = {'get', 'keys', 'values', 'items', 'copy', 'count', 'index', 'startswith', 'endswith', 'isdigit', 'isdecimal', 'isnumeric', 'isascii', 'isalpha', 'isalnum', 'isspace', 'lower', 'upper', 'strip', 'lstrip', 'rstrip', 'split', 'rsplit', 'join', 'find', 'rfind', 'replace', 'hex'}
+        shadowed = {part.name for part in ast.walk(tree) if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))}
+        shadowed.update(part.id for part in ast.walk(tree) if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store))
+        shadowed.update(part.arg for part in ast.walk(tree) if isinstance(part, ast.arg))
+        def data_expression(part, names):
+            if isinstance(part, ast.Name):
+                return part.id in names
+            if isinstance(part, ast.Subscript):
+                return data_expression(part.value, names)
+            if isinstance(part, ast.Constant):
+                return True
+            if isinstance(part, ast.Call):
+                return isinstance(part.func, ast.Name) and part.func.id in pure_calls - shadowed and not origins(part.func) and all(data_expression(a, names) for a in part.args)
+            return False
         exempt = set()
+        predicate_data = {}
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 first = min([node.lineno] + [d.lineno for d in node.decorator_list])
                 key = (str(path), first, owners[node])
                 if key in predicate_keys:
                     located_predicates.add(key)
+                    data_names = {a.arg for a in [*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs]}
+                    for part in ast.walk(node):
+                        if isinstance(part, ast.Assign) and data_expression(part.value, data_names):
+                            data_names.update(t.id for t in part.targets if isinstance(t, ast.Name))
                     # Only the predicate body; defaults/decorators are not predicates.
                     def predicate_body(part):
                         if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
                             errors.append({'kind': 'nested_predicate_code', 'path': _relative(path, root), 'line': part.lineno})
                             return
                         exempt.add(part)
+                        predicate_data[part] = data_names
                         for child in ast.iter_child_nodes(part):
                             predicate_body(child)
                     for statement in node.body:
@@ -1175,23 +1358,46 @@ def static_scan(suite, table):
                 'Match', 'Nonlocal', 'Pass', 'Raise', 'Return', 'Try', 'TryStar', 'TypeAlias', 'While', 'With'}:
                 errors.append({'kind': 'unknown_statement', 'node': type(node).__name__, 'path': _relative(path, root), 'line': node.lineno})
             if isinstance(node, (ast.Import, ast.ImportFrom)):
-                names = [(alias.name, 0) for alias in node.names] if isinstance(node, ast.Import) else [(node.module or '', node.level)]
+                names = [(alias.name, 0, False) for alias in node.names] if isinstance(node, ast.Import) else [(node.module or '', node.level, False)]
                 if isinstance(node, ast.ImportFrom):
                     if any(a.name == '*' for a in node.names):
                         errors.append({'kind': 'star_import', 'path': _relative(path, root), 'line': node.lineno})
-                    names += [(((node.module + '.') if node.module else '') + a.name, node.level) for a in node.names if a.name != '*']
-                for name, level in names:
-                    resolved = resolve_module(name, path, level)
+                    names += [(((node.module + '.') if node.module else '') + a.name, node.level, True) for a in node.names if a.name != '*']
+                for name, level, optional in names:
+                    resolved = resolve_module(name, path, level, optional)
                     pending.extend(resolved)
                     imports.append({'from': _relative(path, root), 'module': name, 'repository_files': sorted(_relative(p, root) for p in resolved),
-                                    'external': not bool(resolved)})
-                    if level and not resolved and name == (node.module or ''):
-                        errors.append({'kind': 'unresolved_relative_import', 'path': _relative(path, root), 'module': name})
+                                    'external': not bool(resolved), 'optional_attribute': optional})
+                if not owners[node]:
+                    missing = object()
+                    for module in source_modules.get(path, []):
+                        for alias in node.names:
+                            local = alias.asname or (alias.name.split('.')[0] if isinstance(node, ast.Import) else alias.name)
+                            actual = vars(module).get(local, missing)
+                            if isinstance(node, ast.Import):
+                                expected = sys.modules.get(alias.name if alias.asname else alias.name.split('.')[0], missing)
+                            else:
+                                package = vars(module).get('__package__') or ''
+                                absolute = importlib.util.resolve_name('.' * node.level + (node.module or ''), package) if node.level else node.module
+                                parent = sys.modules.get(absolute)
+                                expected = vars(parent).get(alias.name, missing) if isinstance(parent, types.ModuleType) else missing
+                            if expected is missing or actual is not expected:
+                                errors.append({'kind': 'uncertified_import_binding', 'path': _relative(path, root), 'line': node.lineno,
+                                               'module': alias.name, 'reason': 'live import alias differs from the resolved binding'})
             kind = None
             if isinstance(node, ast.Call):
                 name = ast.unparse(node.func)
-                if name.split('.')[-1] in ('eval', 'exec', 'compile', '__import__', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile'):
+                bindings = origins(node.func)
+                sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path'}
+                if name.split('.')[-1] in sensitive or any(
+                        origin.split('.')[0] in ('importlib', 'runpy') or any(token in sensitive for token in origin.split('.')) for origin in bindings):
                     errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
+                if node in exempt:
+                    safe = (isinstance(node.func, ast.Name) and node.func.id in pure_calls - shadowed and not bindings or
+                            isinstance(node.func, ast.Attribute) and node.func.attr in pure_methods and data_expression(node.func.value, predicate_data[node]))
+                    if not safe:
+                        errors.append({'kind': 'predicate_purity_uncertified', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node),
+                                       'reason': 'call binding/effects require an explicit reviewed seam; inline supported pure data operations'})
                 if node not in exempt:
                     leaf = name.split('.')[-1]
                     if leaf in ('append', 'extend', 'insert', 'update', 'add', 'setdefault', 'clear', 'pop', 'remove', 'discard', 'write', 'write_text', 'write_bytes'):
@@ -1206,6 +1412,9 @@ def static_scan(suite, table):
                               or name in ('table.require', 'table.validate')):
                         kind = 'call_review'
             if node in exempt:
+                if isinstance(node, (ast.AugAssign, ast.Delete, ast.NamedExpr)) or isinstance(node, (ast.Assign, ast.AnnAssign)) and any(
+                        isinstance(part, (ast.Attribute, ast.Subscript)) for target in (node.targets if isinstance(node, ast.Assign) else [node.target]) for part in ast.walk(target)):
+                    errors.append({'kind': 'predicate_mutation', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
                 continue
             if isinstance(node, ast.Raise):
                 kind = 'raise'
@@ -1227,8 +1436,13 @@ def static_scan(suite, table):
                 declaration = allowed.get(key)
                 if declaration:
                     declaration[1] += 1
+                # Only the exception operation is authorized. Evaluation of an
+                # assert test/raise payload and neighboring statements is not.
+                operation = node.test if isinstance(node, ast.Assert) else node
                 sites.append({'id': _relative(path, root) + ':' + str(node.lineno) + ':' + str(node.col_offset) + ':' + kind,
                               'path': _relative(path, root), 'function': owners[node], 'line': node.lineno,
+                              'exception_span': [operation.lineno, operation.end_lineno, operation.col_offset, operation.end_col_offset],
+                              'exception_operation': 'RAISE_VARARGS' if kind in ('raise', 'assert') else 'CALL' if kind == 'refusal_helper' else '',
                               'kind': kind, 'source': text, 'non_guard': bool(declaration),
                               'reason': declaration[0].reason if declaration else ''})
         # A function's implicit None return is also a possible rejecting return.
@@ -1269,7 +1483,7 @@ def _state_objects(case, root):
             return
         seen.add(id(obj))
         if isinstance(obj, types.ModuleType):
-            source = getattr(obj, '__file__', None)
+            source = vars(obj).get('__file__')
             if source and Path(source).resolve().is_relative_to(root) and Path(source).resolve() != Path(__file__).resolve():
                 for name, value in vars(obj).items():
                     if not name.startswith('__'):
@@ -1286,8 +1500,11 @@ def _state_objects(case, root):
             visit(obj.__self__)
             visit(obj.__func__)
         elif inspect.isfunction(obj):
-            if not Path(obj.__code__.co_filename).resolve().is_relative_to(root):
-                return                 # external library state is a declared review boundary
+            source = Path(obj.__code__.co_filename).resolve()
+            if source == Path(__file__).resolve():
+                return
+            if not source.is_relative_to(root):
+                raise IsolationError('state_shared_across_cases: cannot certify external function graph: ' + obj.__qualname__)
             for cell in obj.__closure__ or ():
                 try:
                     visit(cell.cell_contents)
@@ -1302,28 +1519,52 @@ def _state_objects(case, root):
                 result.pop()
             for name in obj.__code__.co_names:
                 if name in obj.__globals__:
-                    value = obj.__globals__[name]
-                    if not isinstance(value, type):
-                        visit(value)
+                    visit(obj.__globals__[name])
+        elif isinstance(obj, type):
+            if obj.__module__ == 'builtins':
+                return
+            if type(obj) is not type:
+                raise IsolationError('state_shared_across_cases: cannot certify metaclass graph')
+            module = sys.modules.get(obj.__module__)
+            source = vars(module).get('__file__') if module else None
+            if source and Path(source).resolve() == Path(__file__).resolve():
+                return
+            if not source or not Path(source).resolve().is_relative_to(root):
+                raise IsolationError('state_shared_across_cases: cannot certify class graph: ' + obj.__name__)
+            # Classes are themselves mutable. Their dictionaries, bases and
+            # descriptors may also retain shared data independently of instances.
+            result.append(obj)
+            for base in obj.__bases__:
+                visit(base)
+            for name, value in vars(obj).items():
+                if name not in ('__dict__', '__weakref__'):
+                    visit(value)
+        elif isinstance(obj, (types.BuiltinFunctionType, types.BuiltinMethodType)):
+            receiver = obj.__self__
+            if receiver is not None and not isinstance(receiver, types.ModuleType):
+                visit(receiver)
+        elif type(obj) in (staticmethod, classmethod):
+            visit(obj.__func__)
+        elif type(obj) is property:
+            for fn in (obj.fget, obj.fset, obj.fdel):
+                visit(fn)
         elif isinstance(obj, GuardTable):
             return
         elif isinstance(obj, _SchemaPredicate):
             return
-        elif hasattr(obj, '__dict__') and not isinstance(obj, (types.ModuleType, type)):
+        elif not isinstance(obj, (types.CodeType, types.MethodDescriptorType, re.Pattern)) and type(obj) not in (type(None), bool, int, float, complex, str, bytes):
+            cls = type(obj)
+            if type(cls) is not type or any('__getattr__' in vars(base) or base is not object and '__getattribute__' in vars(base) for base in cls.__mro__):
+                raise IsolationError('state_shared_across_cases: cannot certify object access: ' + cls.__name__)
+            try:
+                state = object.__getattribute__(obj, '__dict__')
+            except AttributeError:
+                raise IsolationError('state_shared_across_cases: cannot certify reachable state: ' + cls.__name__) from None
+            if type(state) is not dict or any(vars(base).get('__slots__') for base in cls.__mro__):
+                raise IsolationError('state_shared_across_cases: cannot certify instance graph: ' + cls.__name__)
             result.append(obj)
-            visit(vars(obj))
-        elif not isinstance(obj, (type, types.CodeType, types.BuiltinFunctionType, types.BuiltinMethodType,
-                                  types.MethodDescriptorType, re.Pattern)) and type(obj) not in (type(None), bool, int, float, complex, str, bytes):
-            # Opaque/slotted state cannot quietly escape the freshness check.
-            result.append(obj)
-            for cls in type(obj).__mro__:
-                slots = cls.__dict__.get('__slots__', ())
-                for name in (slots,) if isinstance(slots, str) else slots:
-                    if name not in ('__dict__', '__weakref__'):
-                        try:
-                            visit(object.__getattribute__(obj, name))
-                        except AttributeError:
-                            pass
+            visit(state)
+            visit(cls)
     result.extend([case, case.table])
     visit(case.context)
     visit(case.check)
@@ -1378,9 +1619,9 @@ class _SchemaBinding:
             table._errors.append('undeclared schema input occurrence: ' + entry)
             raise IsolationError(table._errors[-1])
         self.consumed.add(entry)
-        before = digest([value, context])
+        before = _data_snapshot(value, context)
         selected = self.selectors[entry](value, context)
-        if digest([value, context]) != before:
+        if _data_snapshot(value, context) != before:
             table._errors.append('schema selector mutated the frozen input/context')
             raise IsolationError(table._errors[-1])
         if self.view.validator(entry).is_valid(selected):
@@ -1456,13 +1697,13 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
     retained = {}             # weak references where possible; strong for builtin mutable state
     signature = None
     checker_signature = None
-    scanned_paths, predicate_keys, non_guard_lines = set(), set(), set()
+    scanned_paths, exception_sites = set(), set()
     engine = Path(__file__).resolve()
     root = Path(suite.repository_root).resolve()
     def fresh(value):
-        nonlocal signature, checker_signature
+        nonlocal signature, checker_signature, scanned_paths, exception_sites
         gate.check()
-        before = digest(value)
+        before = _data_snapshot(value)
         factory_signature = inspect.signature(suite.factory)
         try:
             factory_signature.bind(value)
@@ -1471,7 +1712,7 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             factory_signature.bind()
             with_input = False
         case = suite.factory(value) if with_input else suite.factory()
-        if digest(value) != before:
+        if _data_snapshot(value) != before:
             raise IsolationError('factory mutated the frozen fixture; derive state without repairing input')
         report['factories'] += 1
         if type(case) is not Case or type(case.table) is not GuardTable or not callable(case.check):
@@ -1486,6 +1727,15 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             signature = meta
         elif meta != signature:
             raise IsolationError('guard table declaration changed between cases')
+        if not report['static']:
+            report['static'] = static_scan(suite, case.table)
+            scanned_paths = {(root / f['path']).resolve() for f in report['static']['files']}
+            if Path(checker_signature[0]) not in scanned_paths:
+                fail('checker_outside_scanned_closure', source=list(checker_signature))
+            exception_sites = {(str((root / s['path']).resolve()), s['exception_operation'], tuple(s['exception_span']))
+                               for s in report['static']['sites'] if s['non_guard'] and s.get('exception_operation')}
+            if report['static']['status'] != 'PASS':
+                fail('hidden_static_sites', sites=[s['id'] for s in report['static']['sites'] if not s['non_guard']], errors=report['static']['errors'])
         objects = _state_objects(case, root)
         for obj in objects:
             prior = retained.get(id(obj))
@@ -1504,10 +1754,31 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
         report['evaluations'] += 1
         table = case.table
         table._bind(value, case.context, cuts)
-        events, plumbing_exceptions = [], set()
+        events, exceptions = [], {}
+        instructions = {}
+        predicates = [fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)]
+        predicate_codes = {fn.__code__ for fn in predicates}
         path_cache = {}
         engine_name = str(engine)
         def trace(frame, event, arg):
+            if event == 'call' and frame.f_code in predicate_codes:
+                parent = frame.f_back
+                row = parent.f_locals.get('row') if parent else None
+                called = row.predicate if type(row) is Guard else None
+                function = called.__func__ if inspect.ismethod(called) else called
+                authorized = (parent is not None and parent.f_code is GuardTable._test.__code__ and
+                              parent.f_locals.get('self') is table and table._in_predicate and
+                              any(function is fn for fn in predicates) and function.__code__ is frame.f_code and
+                              function.__globals__ is frame.f_globals)
+                if authorized and inspect.ismethod(called):
+                    authorized = frame.f_locals.get(function.__code__.co_varnames[0]) is called.__self__
+                if not authorized:
+                    error = 'registered predicate entered outside its engine evaluation: ' + frame.f_code.co_name
+                    table._errors.append(error)
+                    raise IsolationError(error)
+            if table._in_predicate and table._purity_before is not None:
+                table._check_purity(value, case.context)
+                frame.f_trace_opcodes = True
             filename = frame.f_code.co_filename
             if filename == engine_name:
                 return None
@@ -1520,12 +1791,23 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             if event == 'call' and path not in scanned_paths:
                 events.append({'kind': 'unscanned_repository_code', 'path': str(path), 'function': frame.f_code.co_name})
             if event == 'exception':
-                _, exc, _ = arg
+                _, exc, traceback = arg
                 if not any(exc is issued for issued in table._issued):
-                    location = (str(path), frame.f_lineno)
-                    if location in non_guard_lines:
-                        plumbing_exceptions.add(id(exc))
-                    elif id(exc) not in plumbing_exceptions:
+                    if frame.f_code not in instructions:
+                        instructions[frame.f_code] = list(dis.get_instructions(frame.f_code))
+                    instruction = next((i for i in reversed(instructions[frame.f_code]) if i.offset <= frame.f_lasti), None)
+                    position = instruction.positions if instruction else None
+                    site = (str(path), instruction.opname if instruction else '',
+                            (position.lineno, position.end_lineno, position.col_offset, position.end_col_offset) if position else ())
+                    # The first observed origin decides. A later helper boundary
+                    # cannot launder an already untracked exception. Propagation
+                    # of the very same authorized object retains its disposition.
+                    prior = exceptions.get(id(exc))
+                    propagated = (prior is not None and prior[1] and instruction is not None and
+                                  instruction.opname != 'RAISE_VARARGS' and traceback.tb_next is prior[2])
+                    authorized = (site in exception_sites and (prior is None and traceback.tb_next is None or prior is not None and prior[1]))
+                    exceptions[id(exc)] = (exc, propagated or authorized, traceback)
+                    if not exceptions[id(exc)][1]:
                         events.append({'kind': 'untracked_exception', 'path': str(path), 'line': frame.f_lineno,
                                        'type': type(exc).__name__, 'message': str(exc)})
             return trace
@@ -1536,7 +1818,11 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             sys.settrace(trace)
             if predicate is not None:
                 row = table.guards[predicate]
-                result = table._test(row, value, case.context)
+                table._matrix_frame = sys._getframe()
+                try:
+                    result = table._test(row, value, case.context)
+                finally:
+                    table._matrix_frame = None
                 got = {'passes': result is None, 'code': result or ''}
             else:
                 result = case.check(value)
@@ -1582,15 +1868,6 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
         initial = fresh(_fixture_copy(suite.controls[0].value))
         guards = dict(initial.table.guards)
         report['inventory'] = signature
-        report['static'] = static_scan(suite, initial.table)
-        scanned_paths = {(root / f['path']).resolve() for f in report['static']['files']}
-        if Path(checker_signature[0]) not in scanned_paths:
-            fail('checker_outside_scanned_closure', source=list(checker_signature))
-        non_guard_lines = {(str((root / s['path']).resolve()), s['line']) for s in report['static']['sites']
-                           if s['non_guard'] and s['kind'] in ('raise', 'assert', 'refusal_helper')}
-        if report['static']['status'] != 'PASS':
-            fail('hidden_static_sites', sites=[s['id'] for s in report['static']['sites'] if not s['non_guard']],
-                 errors=report['static']['errors'])
         if initial.table._schema:
             catalog = initial.table._schema.catalog
             report['schema_inventory'] = [asdict(g) for g in catalog.guards.values()]

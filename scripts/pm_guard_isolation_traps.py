@@ -29,13 +29,21 @@ def _code_suite(g, trap, root):
     path = root / 'subject.py'
     path.write_text(trap['source'])
     for name, source in trap.get('imports', {}).items():
-        (root / name).write_text(source)
-    sys.path.insert(0, str(root))
+        destination = root / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(source)
+    sys.path[:0] = [str(root / p) for p in trap.get('extra_paths', [])] + [str(root)]
     module = _load(path, '_method_b_subject')
+    if trap.get('remove_extra_paths_after_import'):
+        for extra in trap.get('extra_paths', []):
+            sys.path.remove(str(root / extra))
     suite = g.Suite(trap['id'], module.factory,
         [g.Control(c['id'], c['value'], 'synthetic') for c in trap['controls']],
         [g.Negative(n['id'], n['value'], n['target'], n['code'], n.get('control', 'valid'), n.get('defect', n['id'])) for n in trap['negatives']],
         ('subject.py',), root)
+    if trap.get('alias_fixture'):
+        for fixture in [*suite.controls, *suite.negatives]:
+            fixture.value['right'] = fixture.value['left']
     # checker_modules accepts absolute paths; relative convenience is rooted here.
     suite.checker_modules = (path,)
     suite.non_guards = [_allow(g, 'subject.py', 'factory', 'return',
@@ -141,6 +149,21 @@ def exercise(g, memory):
                     try:
                         suite = _code_suite(g, trap, root) if trap['kind'] == 'code' else _schema_suite(g, trap, root)
                         result = g.run(suite, memory=memory)
+                        if trap.get('repeat'):
+                            row['repeat_report'] = g.run(suite, memory=memory)
+                        if trap.get('state_observation'):
+                            observations = []
+                            for cut in (False, True):
+                                value = g._fixture_copy(suite.controls[0].value)
+                                if trap['state_observation'] == 'alias':
+                                    value['right'] = value['left']
+                                before = g._data_snapshot(value)
+                                original = suite.factory().table.guards['x'].predicate
+                                (g._always_pass if cut else original)(value, None)
+                                observations.append({'cut': cut, 'order': list(value.get('order', {})),
+                                    'aliased': value.get('left') is value.get('right') if 'left' in value else None,
+                                    'snapshot_unchanged': before == g._data_snapshot(value)})
+                            row['observation'] = observations
                     except g.IsolationError as exc:
                         result = {'status': 'FAIL', 'failures': [{'kind': 'construction_refused', 'error': str(exc)}], 'rows': []}
                     row['report'] = result
@@ -151,6 +174,22 @@ def exercise(g, memory):
                         row['caught'] = row['caught'] and any(trap['error_contains'] in f.get('error', '') for f in result['failures'])
                     if trap.get('static_kind'):
                         row['caught'] = row['caught'] and any(s['kind'] == trap['static_kind'] and not s['non_guard'] for s in result.get('static', {}).get('sites', []))
+                    if trap.get('static_error_kind'):
+                        row['caught'] = row['caught'] and any(e['kind'] == trap['static_error_kind'] for e in result.get('static', {}).get('errors', []))
+                    if trap.get('runtime_type'):
+                        row['caught'] = row['caught'] and any(e.get('type') == trap['runtime_type'] for e in result.get('runtime', []))
+                    if trap.get('protocol_contains'):
+                        row['caught'] = row['caught'] and any(trap['protocol_contains'] in error for f in result['failures'] if f['kind'] == 'table_protocol_error' for error in f['errors'])
+                    if trap.get('repeat'):
+                        repeated = row['repeat_report']
+                        row['caught'] = row['caught'] and repeated['status'] == 'FAIL' and required <= {f['kind'] for f in repeated['failures']} and not any(r.get('proved') for r in repeated['rows'])
+                    if trap.get('state_observation'):
+                        observations = row['observation']
+                        row['caught'] = row['caught'] and not observations[0]['snapshot_unchanged'] and observations[1]['snapshot_unchanged']
+                        if trap['state_observation'] == 'alias':
+                            row['caught'] = row['caught'] and observations[0]['aliased'] is False and observations[1]['aliased'] is True
+                        else:
+                            row['caught'] = row['caught'] and observations[0]['order'] == ['b', 'a'] and observations[1]['order'] == ['a', 'b']
                     if trap.get('imported_file'):
                         row['caught'] = row['caught'] and any(f['path'] == trap['imported_file'] for f in result.get('static', {}).get('files', []))
                     if trap.get('matrix_guard'):

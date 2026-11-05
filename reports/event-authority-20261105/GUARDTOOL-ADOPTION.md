@@ -14,6 +14,8 @@ report = run(suite); markdown(report)  # --adapter file:factory --json report.js
 
 A Python predicate is an original, source-backed `def` function taking `(complete_value, context)`. Return `None` for pass or the row's exact refusal string. Do not raise, return booleans/Outcomes, invoke other guards, repair inputs, or mutate input/context. Every predicate must check the one declared invariant. The checker calls `table.require(name, value, context)` and finishes with exact `True`. It does not translate exceptions or construct refusals. `Outcome.refuse`, `False`, `None`, exit zero and forged `GuardRefusal` objects are untracked results.
 
+Registered predicate entry is checked by its known function/code/global identity and bound receiver. Calls through aliases, raw bound methods, another predicate or the checker fail with `table_protocol_error`. The authorized entries are the table's `require`, schema attribution and the engine's individual matrix evaluation. Calling the internal `_test` from lane code is also refused.
+
 `require` must receive the entire bound value and the exact context object; select fields inside the predicate. This makes the direct predicate matrix and the full boundary use the same arguments. A context of `None` may be omitted. A non-None context must be passed explicitly at each call.
 
 ## Restructure a lane checker
@@ -41,6 +43,18 @@ def make_case(value):
 ```
 
 The return of `Case(...)` is a plumbing return: declare its exact source as a non-guard. Pure helper returns, mutation used by an original successful transition, and delegation calls likewise need specific reasons when flagged. A declaration does not allow an untagged runtime rejection: an uncaught plumbing exception still fails the case. A caught plumbing exception is permitted only at a specifically declared exception site. An exception in a guard predicate remains an error.
+
+An exception allowance binds the exact bytecode operation and source span: the assertion's raise, the explicit raise, or the declared refusal-helper call. It does not cover another statement on the same line, evaluation failures in an assertion test/raise payload, or an undeclared new raise of a previously allowed exception. Only verified propagation of the same authorized exception is permitted. Missing instruction positions fail closed.
+
+## Certification boundaries after Method B review round 1
+
+The scanner follows the actual module origins, Python search paths, loaded package paths and package context. Loaded origins must agree with the search result. From-import bindings and package initializers are included. Missing/ambiguous origins, unsupported repository loaders, native repository modules and unresolved bindings fail closed. Importlib, `__import__` and runpy loaders retain that classification through import aliases and assignment aliases, including inside predicate bodies and dormant branches. A non-guard declaration cannot waive these import failures. Supply a source-backed, statically imported seam that can be reviewed and scanned.
+
+Freshness walks reachable class attributes/bases/descriptors and builtin bound-method receivers. Shared classes themselves are mutable state. An opaque/slotted graph, custom access/metaclass graph or external function/class graph that cannot be certified fails with `state_shared_across_cases`; no row earns credit. Construct the supported model/state per case or supply an explicit reviewed seam instead of treating an unknown graph as safe.
+
+Input purity uses a separate diagnostic graph snapshot. It retains dictionary/set iteration order, aliases, cycles, typed scalar bits and object identities, keeping references so detached nodes cannot recycle their IDs. This does not change product number, identity or storage serialization. Exact builtin scalar/container data is supported; subclasses, descriptors and opaque input/context data fail closed. Fixture reconstruction still refuses sets; original context sets are observed without copying them.
+
+Predicate mutation syntax and uncertified calls are static failures, including dormant mutations and calls to mutating helpers. Supported calls are the named pure builtin data operations in `static_scan` and listed read-only methods on certified data expressions; arbitrary helper/native/reflective call effects are not inferred. Inline the supported pure computation or develop a separately reviewed supported seam. A `NonGuard` does not waive predicate purity. Runtime instruction checkpoints also compare the original value/context graph, so temporary mutations and helper writes cannot be hidden by restoring values before return. Factory and schema-selector before/after comparisons use the same order/alias-aware graph witness. These checks supplement review of each predicate's declared invariant.
 
 ## Proof and report
 
