@@ -1,24 +1,42 @@
-# CA-SEAL2 combined predicate coverage
+# CA-SEAL2 coverage inventory — round 9
 
-Validator SHA-256: `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`. Baseline: `fceb67118ec6f5b73017f2fb8ab31056ed27a52e`; CA-SEAL ancestor: `17c842445a2623bb0334ba8d6932e7a6bf088967`.
+Validator SHA-256: `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`. Historical base: `17c842445a2623bb0334ba8d6932e7a6bf088967`.
 
-**370 classified rows: 327 walker sites (286 syntax + 41 semantic), plus 43 AST-regenerated supplement rows; 0 unclassified.** The combined inventory is the completeness claim for every predicate added or touched in the 15 frozen changed top-level functions, including nested functions. This applies Astra 5's neutral ruling. The earlier supported-forms-only claim and unenforced `outside_walker_sites` list are retired.
+The node inventory walks the complete bodies of all 15 touched top-level functions, including nested functions and unchanged August statements. Enumeration depends on AST node types, never on a call-name whitelist or an inferred predicate form. Every call receives a row. Missing, stale, duplicate and changed identities fail before outcome checking. Byte-hash and line-metadata updates cannot supply a missing row.
 
-| Outcome | Walker | Supplement | Combined |
-|---|---:|---:|---:|
-| **killed by** | 233 | 37 | 270 |
-| **structural** | 21 | 0 | 21 |
-| **implied** | 20 | 3 | 23 |
-| **same-predicate duplicate** | 3 | 1 | 4 |
-| **frozen-input only** | 50 | 2 | 52 |
-| **Unclassified** | 0 | 0 | 0 |
+| Node type | Rows |
+|---|---:|
+| BinOp(BitAnd) | 9 |
+| BinOp(BitOr) | 3 |
+| BoolOp | 110 |
+| Call | 891 |
+| Compare | 219 |
+| If test | 171 |
+| IfExp | 17 |
+| Try dispatch | 6 |
+| UnaryOp(Not) | 113 |
+| comprehension if | 38 |
+| except alternative | 29 |
+| except dispatch | 6 |
+| parser callback | 5 |
+| NamedExpr, Assert, match case/guard, BitXor, While test, TryStar dispatch | 0 |
 
-The supplement covers the assigned completion negation, four exception tuples and their twenty alternatives, three parser callbacks, Boolean compositions/coercion, the combined comprehension filter and the changed multiline third-receipt wrapper. Each row has the same enforced identity, outcome, named tests or explanation, cut and evidence requirements as walker rows. Wrapper sensitivity does not prove its children. The three UnicodeError alternatives are implied by ValueError on the same raised exception; explicit single-cut and paired-cut witnesses establish that subclass containment. The new builder bool() conversion duplicates the existing returned-pass conversion; a zero input proves both single cuts preserve False and the paired cut loses it.
+**1617 node rows:** 808 predicate/preservation rows and 809 non-predicate data operations. The 327 historical syntax/semantic rows remain separately checked, for **1944 combined rows**. These counts include wrappers and children; they are not counts of independent invariants.
 
-`predicate_supplement()` audits changed spans with a separate AST pass. It checks an explicit syntax/call grammar before admitting rows, including nested functions and predicates whose first line predates a changed line. Missing, stale, duplicate or edited supplement rows fail the real coverage test. Unknown syntax, exception classes, callbacks, calls or comprehension filters fail closed. A separate evidence script independently derives changed spans using Git diff and checks all 43 identities without invoking that function.
+| Node outcome | Rows |
+|---|---:|
+| non-predicate data operation | 809 |
+| preserved August predicate | 557 |
+| killed by | 198 |
+| implied | 8 |
+| same-predicate duplicate | 3 |
+| structural | 4 |
+| frozen-input only | 38 |
 
-The corpus has **190 checks**: every B01 dispatch alternative has a strict returned-result or contextual-diagnostic control; every B02 wrong-type control requires False or the intended ValueError; B03 checks an absent map against 597 actual synthetic absolute sources, all four present snapshot digests against fixture bytes, and a missing denominator's diagnostic null. Eight additional dependency-fault controls exercise the defensive dispatch alternatives. These do not claim that the real frozen sources resolve without the supplied map. Aggregates use ordinary assertions, so an escaping exception fails.
+The 557 **preserved August predicate** rows identify inherited, unchanged occurrences by historical node identity, line, function, column, type and expression at CA-SEAL `17c842445a`. The coverage test regenerates and verifies those historical identities. This preservation outcome does not claim a new accepting-input or guard-removal proof for the unchanged August implementation. They were absent from the earlier changed-line inventory and are now explicitly inventoried. No newly inserted node can acquire their identities through byte/line metadata updates.
 
-The original 84 survivor records remain historical lineage from Astra 3. Current row outcomes supersede their former structural labels for the newly tested type guards. Structural rows include fixed data returns and other explicitly explained data-flow outcomes, not claimed accepting-negative proofs. Frozen-only and same-field proofs retain their pinned evidence. Exact name boundaries, path components, span bounds, authority tokens and individual receipt clauses remain separately inventoried.
+The 809 **non-predicate data operations** have a reason and concrete parent/consumer AST data-flow records. Lookup, digest, type, length, bytes and collection producers remain distinct from the comparisons/truth tests that consume them. Mutation calls and exception construction have explicit effect/raise consumers. The twelve bitwise nodes are eleven set operations and one optional-type annotation; the full expressions and actual consumers distinguish them from Boolean bitwise combinations. Predicate-returning helpers and methods remain predicates. Classification never suppresses enumeration.
 
-Replay commands, current results, coverage failure demonstrations and content hashes are recorded in `CA-SEAL2.md`, section **Astra round 5: findings and responses**, and the compact `CA-SEAL2-fix8-results.json`. This is regression coverage; final approval, admission and a live seal remain unearned.
+All historical and node outcomes together: killed by: 431, non-predicate data operation: 825, implied: 28, structural: 9, same-predicate duplicate: 6, frozen-input only: 88, preserved August predicate: 557. **Unclassified: 0.**
+
+The committed corpus adds three scratch insertion controls: assigned `isinstance`, assigned Boolean `&`, and the builder `| isinstance(...)`. They update existing identities/byte metadata without supplying a new row, then require missing identities. Synthetic grammar controls exercise every requested node type, including absent-in-source walrus/assert/match/XOR forms, a bare comprehension filter, nested functions and an unknown callable. See the round-9 report for replay results and evidence hashes.

@@ -5,8 +5,10 @@ import ast
 import dis
 import types
 import copy
+from collections import Counter
 import difflib
 import hashlib
+from functools import lru_cache
 import importlib.util
 import json
 import os
@@ -112,144 +114,78 @@ def predicate_sites(source, before):
 
 
 def predicate_supplement(source, before, walker):
-    """Independently audit the changed AST, including nested functions.
+    """Inventory syntax by node type, without guessing a call's return type.
 
-    The old walker's start-line rules stay reproducible. This pass uses span
-    overlap, audits every changed AST node against an explicit grammar, and
-    inventories predicate forms the walker omitted. Unknown forms fail closed;
-    adding a new form requires a rule, coverage rows and evidence together.
+    Walk the whole body of each changed top-level function, including nested
+    functions and inherited August statements. Classification is a separate,
+    reviewed record; it can never suppress an identity in this enumeration.
     """
     functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
     previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
-    changed = set()
-    for tag, _, _, start, end in difflib.SequenceMatcher(
-            None, before.splitlines(), source.splitlines(), autojunk=False).get_opcodes():
-        if tag in {'insert', 'replace'}:
-            changed.update(range(start + 1, end + 1))
-    known = {(r['function'], r['line'], r['column'], r['expression'])
-             for r in walker if 'expression' in r}
-    supported = {
-        'FunctionDef', 'arg', 'Assign', 'Expr', 'For', 'If', 'IfExp', 'Try',
-        'ExceptHandler', 'Pass', 'Raise', 'Return', 'Attribute', 'BinOp', 'BoolOp',
-        'Call', 'Compare', 'Constant', 'Dict', 'GeneratorExp', 'List', 'ListComp',
-        'Name', 'Set', 'SetComp', 'Slice', 'Subscript', 'Tuple', 'UnaryOp', 'keyword',
-    }
-    # Data calls are audited too: a newly introduced predicate callback cannot
-    # silently hide in an assignment or keyword outside a branch condition.
-    named_calls = {
-        'Counter', 'Path', 'ValueError', 'any', 'bool', 'dict', 'float', 'isinstance',
-        'len', 'observed', 'ord', 'recount_anchor', 'recount_change_state',
-        'recount_frozen_inputs', 'recount_json', 'recount_object', 'recount_outcomes',
-        'recount_relative', 'recount_snapshot_pins', 'recount_source_bytes',
-        'recount_validation', 'decision_section_bytes', 'set', 'sha256_file',
-        'sorted', 'str', 'third_change_validator_pin', 'type',
-    }
-    method_calls = {
-        'append', 'check_output', 'decode', 'dumps', 'encode', 'extend', 'fullmatch',
-        'escape', 'get', 'hexdigest', 'is_absolute', 'is_file', 'is_relative_to', 'isfinite',
-        'items', 'join', 'loads', 'read_bytes', 'resolve', 'search', 'sha256',
-        'split', 'splitlines', 'startswith', 'strip',
-    }
-    predicate_methods = {'fullmatch', 'search', 'isfinite', 'startswith',
-                         'is_absolute', 'is_relative_to', 'is_file'}
-    rows = {}
-    def add(function, node, expression, kind):
-        row = {'function': function, 'line': node.lineno, 'column': node.col_offset,
-               'expression': expression, 'kind': kind}
-        row['site_id'] = 'supplement:' + sha(json.dumps(row, sort_keys=True).encode())
-        rows[row['site_id']] = row
-    def omitted(function, node, expression, kind):
-        if (function, node.lineno, node.col_offset, expression) not in known:
-            add(function, node, expression, kind)
-    def condition(n):
-        # Explicit truth-test grammar; unknown atoms (including bare filters)
-        # cannot count as covered merely because an enclosing branch is listed.
-        if isinstance(n, ast.BoolOp):
-            assert isinstance(n.op, (ast.And, ast.Or)), 'unrecognised Boolean operator'
-            for child in n.values: condition(child)
-        elif isinstance(n, ast.UnaryOp) and isinstance(n.op, ast.Not):
-            condition(n.operand)
-        elif isinstance(n, ast.BinOp) and isinstance(n.op, ast.Sub):
-            assert all(isinstance(x, ast.Call) and ast.unparse(x.func) == 'set'
-                       for x in (n.left, n.right)), 'unrecognised truth-tested subtraction'
-        elif isinstance(n, (ast.Compare, ast.Call, ast.Name, ast.Subscript)):
-            pass  # Individually enumerated by branch/clause/compare/call rules.
-        else:
-            raise AssertionError('unrecognised predicate form: ' + type(n).__name__)
-    touched = []
-    for name, fn in functions.items():
-        old = previous.get(name)
-        if old is not None and ast.dump(old) == ast.dump(fn):
-            continue
-        touched.append(name)
-        for n in ast.walk(fn):
-            if not hasattr(n, 'lineno'):
-                continue
-            if old is not None and not any(line in changed for line in range(n.lineno, n.end_lineno + 1)):
-                continue
-            assert type(n).__name__ in supported, ('unrecognised predicate/AST form', name, n.lineno, type(n).__name__)
-            if isinstance(n, (ast.If, ast.IfExp)):
-                condition(n.test)
-                omitted(name, n.test, ast.unparse(n.test), 'overlapping branch')
-            elif isinstance(n, ast.BoolOp):
-                condition(n)
-                omitted(name, n, ast.unparse(n), 'Boolean composition')
-            elif isinstance(n, ast.UnaryOp):
-                assert isinstance(n.op, ast.Not), ('unrecognised unary form', name, n.lineno)
-                condition(n)
-                omitted(name, n, ast.unparse(n), 'Boolean negation')
-            elif isinstance(n, ast.Compare):
-                assert all(isinstance(op, (ast.Eq, ast.NotEq, ast.Is, ast.IsNot, ast.In, ast.NotIn,
-                                          ast.Lt, ast.LtE)) for op in n.ops), 'unrecognised comparison'
-                for left, op, right in zip([n.left] + n.comparators[:-1], n.ops, n.comparators):
-                    expression = ast.unparse(ast.Compare(left=left, ops=[op], comparators=[right]))
-                    omitted(name, n, expression, 'overlapping comparison')
-            elif isinstance(n, (ast.GeneratorExp, ast.ListComp, ast.SetComp)):
-                for generator in n.generators:
-                    assert not generator.is_async, 'unrecognised asynchronous comprehension'
-                    for test in generator.ifs:
-                        assert isinstance(test, (ast.Compare, ast.BoolOp)), 'unrecognised comprehension filter'
-                        condition(test)
-                        omitted(name, test, ast.unparse(test), 'comprehension filter')
+    touched = [name for name, fn in functions.items()
+               if name not in previous or ast.dump(previous[name]) != ast.dump(fn)]
+    rows = []
+    def add(function, node, expression, node_type):
+        identity = {'function': function, 'line': node.lineno, 'column': node.col_offset,
+                    'expression': expression, 'kind': 'node ' + node_type}
+        rows.append(dict(identity, node_type=node_type,
+                         site_id='supplement:' + sha(json.dumps(identity, sort_keys=True).encode())))
+    for name in touched:
+        for n in ast.walk(functions[name]):
+            if isinstance(n, (ast.Compare, ast.BoolOp, ast.Call, ast.IfExp,
+                              ast.NamedExpr, ast.Assert)):
+                add(name, n, ast.unparse(n), type(n).__name__)
+            elif isinstance(n, ast.UnaryOp) and isinstance(n.op, ast.Not):
+                add(name, n, ast.unparse(n), 'UnaryOp(Not)')
+            elif isinstance(n, ast.BinOp) and isinstance(n.op, (ast.BitAnd, ast.BitOr, ast.BitXor)):
+                add(name, n, ast.unparse(n), 'BinOp(' + type(n.op).__name__ + ')')
+            elif isinstance(n, (ast.If, ast.While)):
+                add(name, n.test, ast.unparse(n.test), type(n).__name__ + ' test')
+            elif isinstance(n, ast.comprehension):
+                for test in n.ifs:
+                    add(name, test, ast.unparse(test), 'comprehension if')
+            elif isinstance(n, ast.match_case):
+                add(name, n.pattern, ast.unparse(n.pattern), 'match case')
+                if n.guard is not None:
+                    add(name, n.guard, ast.unparse(n.guard), 'match guard')
+            elif isinstance(n, (ast.Try, ast.TryStar)):
+                # Dispatch identity excludes handler bodies; those are walked
+                # independently. Each handler and each alternative also has a row.
+                add(name, n, repr([ast.unparse(h.type) if h.type else '*' for h in n.handlers]),
+                    type(n).__name__ + ' dispatch')
             elif isinstance(n, ast.ExceptHandler):
-                assert isinstance(n.type, ast.Tuple), 'unrecognised exception dispatch form'
-                alternatives = [ast.unparse(x) for x in n.type.elts]
-                assert alternatives and len(alternatives) == len(set(alternatives)), 'invalid dispatch alternatives'
-                assert set(alternatives) <= {'OSError', 'ValueError', 'TypeError', 'KeyError',
-                                             'UnicodeError', 'subprocess.SubprocessError'}, 'unrecognised exception class'
-                add(name, n, ast.unparse(n.type), 'exception dispatch')
-                for alternative in n.type.elts:
-                    add(name, alternative, ast.unparse(alternative), 'exception alternative')
-            elif isinstance(n, ast.Call):
-                if isinstance(n.func, ast.Name):
-                    assert n.func.id in named_calls, ('unrecognised call', name, n.lineno, ast.unparse(n.func))
-                    if n.func.id in {'any', 'bool'}:
-                        omitted(name, n, ast.unparse(n), 'Boolean coercion')
-                elif isinstance(n.func, ast.Attribute):
-                    assert n.func.attr in method_calls, ('unrecognised call', name, n.lineno, ast.unparse(n.func))
-                    if n.func.attr in predicate_methods:
-                        omitted(name, n, ast.unparse(n), 'overlapping predicate call')
-                    if ast.unparse(n.func) == 'json.loads':
-                        callbacks = {'object_pairs_hook': 'pairs', 'parse_constant': 'constant',
-                                     'parse_float': 'finite_float'}
-                        for keyword in n.keywords:
-                            assert keyword.arg in callbacks and ast.unparse(keyword.value) == callbacks[keyword.arg], 'unrecognised parser callback'
-                            add(name, keyword, keyword.arg + '=' + ast.unparse(keyword.value), 'parser callback')
-                else:
-                    raise AssertionError('unrecognised call form: ' + ast.unparse(n.func))
-    return sorted(rows.values(), key=lambda r: (r['line'], r['column'], r['kind'])), touched
+                add(name, n, ast.unparse(n.type) if n.type else '*', 'except dispatch')
+                alternatives = n.type.elts if isinstance(n.type, ast.Tuple) else [n.type]
+                for alternative in alternatives:
+                    add(name, alternative or n, ast.unparse(alternative) if alternative else '*',
+                        'except alternative')
+            elif isinstance(n, ast.keyword) and n.arg in {'object_pairs_hook', 'parse_constant', 'parse_float'}:
+                add(name, n, n.arg + '=' + ast.unparse(n.value), 'parser callback')
+    return sorted(rows, key=lambda r: (r['line'], r['column'], r['kind'])), touched
 
 
 def check_coverage(repo, test_names):
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
-    actual = predicate_sites((repo / REL).read_text(), before)
-    table = json.loads((repo / COVERAGE).read_bytes())
-    expected = {row['site_id']: row for row in actual}
-    supplement, touched = predicate_supplement((repo / REL).read_text(), before, actual)
+    validate_coverage((repo / REL).read_bytes(), before,
+                      json.loads((repo / COVERAGE).read_bytes()), test_names)
+
+
+@lru_cache(maxsize=16)
+def coverage_model(source, before):
+    # Cache only immutable source text. Mutable bytes/table are read and checked
+    # on every invocation; changed sources obtain a separately regenerated model.
+    actual = predicate_sites(source, before)
+    supplement, touched = predicate_supplement(source, before, actual)
+    previous, _ = predicate_supplement(before, '', [])
+    return ({r['site_id']: r for r in actual + supplement}, touched,
+            {r['site_id']: r for r in previous})
+
+
+def validate_coverage(raw, before, table, test_names):
+    source = raw.decode()
+    expected, touched, previous_nodes = coverage_model(source, before)
     assert table['touched_functions'] == touched, 'changed touched-function inventory'
     rows = table['sites'] + table['supplement']
-    actual += supplement
-    expected = {row['site_id']: row for row in actual}
     recorded = {row['site_id']: row for row in rows}
     assert len(recorded) == len(rows), 'duplicate coverage site'
     missing, stale = set(expected) - set(recorded), set(recorded) - set(expected)
@@ -263,16 +199,104 @@ def check_coverage(repo, test_names):
             assert row['killed_by'] and set(row['killed_by']) <= test_names, ('unknown test', site)
             assert row['cut'], ('missing narrow cut', site)
         else:
-            assert row['outcome'] in {'same-predicate duplicate', 'implied', 'frozen-input only', 'structural'}
+            assert row['outcome'] in {'same-predicate duplicate', 'implied', 'frozen-input only',
+                                      'structural', 'non-predicate data operation', 'preserved August predicate'}
             assert row['reason'], ('missing survivor explanation', site)
+            if row['outcome'] == 'non-predicate data operation':
+                assert row['data_flow'], ('missing data-flow evidence', site)
+            if row['outcome'] == 'preserved August predicate':
+                assert row['baseline_expression'] == row['expression']
+                baseline = previous_nodes[row['baseline_site_id']]
+                assert baseline['line'] == row['baseline_line']
+                assert all(baseline[k] == row[k] for k in ('function', 'column', 'expression', 'node_type')), site
     assert len(table['prior_survivors']) == 84
-    assert table['validator_sha256'] == sha((repo / REL).read_bytes()), 'validator is not frozen'
+    assert table['validator_sha256'] == sha(raw), 'validator is not frozen'
     assert table['totals']['walker_sites'] == len(table['sites'])
-    assert table['totals']['supplement_rows'] == len(supplement)
-    assert table['totals']['combined_sites'] == len(actual)
+    assert table['totals']['supplement_rows'] == sum(r['site_id'].startswith('supplement:') for r in expected.values())
+    assert table['totals']['combined_sites'] == len(expected)
     outcomes = {outcome: sum(r['outcome'] == outcome for r in rows) for outcome in {r['outcome'] for r in rows}}
     assert table['totals']['outcomes'] == outcomes
+    assert table['totals']['node_types'] == dict(Counter(r['node_type'] for r in table['supplement']))
+    assert table['totals']['node_outcomes'] == dict(Counter(r['outcome'] for r in table['supplement']))
     assert table['totals']['unclassified'] == 0
+
+
+def check_insertion_probe(repo, test_names, statement, return_function):
+    raw = (repo / REL).read_bytes()
+    before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
+    return insertion_probe(raw, before, (repo / COVERAGE).read_bytes(),
+                           frozenset(test_names), statement, return_function)
+
+
+@lru_cache(maxsize=16)
+def insertion_probe(raw, before, table_raw, test_names, statement, return_function):
+    source = raw.decode().replace('\r\n', '\n')
+    fn = next(n for n in ast.parse(source).body
+              if isinstance(n, ast.FunctionDef) and n.name == return_function)
+    line = next(n.lineno for n in fn.body if isinstance(n, ast.Return))
+    lines = source.splitlines(keepends=True)
+    lines.insert(line - 1, '    ' + statement + '\n')
+    altered = ''.join(lines)
+    table = json.loads(table_raw)
+    # Rebase existing byte/line metadata only. No new row, classification or
+    # outcome is supplied for the inserted nodes.
+    for group in ('sites', 'supplement'):
+        for row in table[group]:
+            if 'line' not in row:
+                continue
+            if row['line'] >= line:
+                row['line'] += 1
+            identity = {k: row[k] for k in ('function', 'line', 'column', 'expression', 'kind')}
+            row['site_id'] = row['site_id'].split(':')[0] + ':' + sha(json.dumps(identity, sort_keys=True).encode())
+    altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
+    table['validator_sha256'] = sha(altered_raw)
+    walker = predicate_sites(altered, before)
+    supplement, _ = predicate_supplement(altered, before, walker)
+    recorded = {r['site_id'] for r in table['sites'] + table['supplement']}
+    missing = {r['site_id'] for r in walker + supplement} - recorded
+    inserted = [r for r in supplement if r['line'] == line]
+    assert inserted and all(r['site_id'] in missing for r in inserted), inserted
+    try:
+        validate_coverage(altered_raw, before, table, test_names)
+    except AssertionError as exc:
+        assert 'coverage sites missing=' in str(exc) and str(sorted(missing)) in str(exc), str(exc)
+    else:
+        raise AssertionError('unlisted insertion passed coverage')
+    return missing
+
+
+def check_node_types():
+    # Synthetic grammar control: none of these forms needs a call-name rule.
+    source = """def probe(items, flag):
+    assigned = isinstance(items, list)
+    both = flag & assigned
+    either = flag | assigned
+    xor = flag ^ assigned
+    inverted = not flag
+    combined = flag and assigned
+    compare = flag == assigned
+    choice = flag if assigned else False
+    saved = (value := flag)
+    selected = [x for x in items if x]
+    assert flag
+    try:
+        (lambda x: x)(flag)
+    except ValueError:
+        pass
+    match flag:
+        case True if assigned:
+            return choice
+    def nested():
+        return unknown_predicate(flag)
+"""
+    rows, _ = predicate_supplement(source, '', [])
+    required = {'Call', 'BinOp(BitAnd)', 'BinOp(BitOr)', 'BinOp(BitXor)', 'UnaryOp(Not)',
+                'BoolOp', 'Compare', 'IfExp', 'NamedExpr', 'comprehension if', 'Assert',
+                'Try dispatch', 'except dispatch', 'except alternative', 'match case', 'match guard'}
+    assert required <= {r['node_type'] for r in rows}
+    calls = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call)]
+    assert sum(r['node_type'] == 'Call' for r in rows) == len(calls)
+    assert any(r['expression'] == 'unknown_predicate(flag)' for r in rows)
 
 
 def run(repo, output, source_map, apply_cut=None):
@@ -794,7 +818,14 @@ def run(repo, output, source_map, apply_cut=None):
             ]:
                 doc = copy.deepcopy(outcome_doc)
                 mutate(doc)
-                record('negative_outcome_' + label, lambda doc=doc: outcomes(doc), True)
+                if label == 'extra_name':
+                    doc['rows'].sort(key=lambda row: row['event_type'])
+                    admitted = set(names) | {'foreign.name'}
+                    record('negative_outcome_extra_name', lambda doc=doc, admitted=admitted:
+                           exact_refusal(lambda: outcomes(doc, admitted),
+                                         'recount outcomes must name each exact member once in sorted order'))
+                else:
+                    record('negative_outcome_' + label, lambda doc=doc: outcomes(doc), True)
             put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(outcome_doc))
             record('negative_missing_complete_admission_record', lambda: v.recount_outcomes(names, set(names[1:])), True)
             card_raw = ('Decision required: ' + names[0]).encode()
@@ -1159,6 +1190,14 @@ def run(repo, output, source_map, apply_cut=None):
                 if value is None: os.environ.pop(key, None)
                 else: os.environ[key] = value
     record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}))
+    record('positive_exhaustive_node_type_inventory', check_node_types)
+    for label, statement, function in [
+        ('isinstance_assignment', "state['complete'] = isinstance(issues, list)", 'recount_validation'),
+        ('boolean_bitand_assignment', "state['complete'] = state['complete'] & state['diagnostic_only']", 'recount_validation'),
+        ('builder_boolean_bitor', "overall_pass = overall_pass | isinstance(named.get('review_extra'), dict)", 'build_receipt'),
+    ]:
+        record('negative_unlisted_' + label, lambda statement=statement, function=function:
+               check_insertion_probe(repo, {r['name'] for r in results}, statement, function))
     summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
                'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
                'real_frozen_source_custody': custody, 'results': results,
