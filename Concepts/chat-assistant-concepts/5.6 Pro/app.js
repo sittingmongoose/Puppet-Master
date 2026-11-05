@@ -2772,6 +2772,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     renderOverlays();fitActivityTabs();
     armComposerObserver();armJumpBottomListener();armFollowObserver();syncJumpBottom();
     if(HOSTED)hostedSyncTabs();
+    // Conversation owners arm lane streams and Crew travel on the app phase.
+    // Preserve that lifecycle after the scoped DOM commit, without a full patch.
+    runAfterRender('app',{scope:stage,flips:[]});
   }
 
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
