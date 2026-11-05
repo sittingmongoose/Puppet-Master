@@ -421,6 +421,25 @@ def run_corpus(path):
     from pm_event_datetime_inventory import check_inventory
     inventory_check = check_inventory(root)
     checks["datetime_inventory_complete_and_classified"] = inventory_check["status"] == "pass"
+    # Review C6-B1: schema fences inside Markdown containers are discovered too.
+    from pm_event_datetime_inventory import _markdown_fences
+    fence_schema = {"type": "object", "properties": {"observed_at_utc": {"type": "string", "format": "date-time"}}}
+    fence_json = json.dumps(fence_schema)
+    fence_forms = {
+        "top_level": "```json\n" + fence_json + "\n```\n",
+        "blockquote": "> ```json\n> " + fence_json + "\n> ```\n",
+        "nested_blockquote": "> > ```json\n> > " + fence_json + "\n> > ```\n",
+        "nested_list_indented": "- item\n  - sub\n\n        ```json\n        " + fence_json + "\n        ```\n",
+        "list_marker_on_fence_line": "1. ```json\n   " + fence_json + "\n   ```\n",
+        "blockquote_list": "> - ```json\n>   " + fence_json + "\n>   ```\n",
+        "tilde_blockquote": "> ~~~json\n> " + fence_json + "\n> ~~~\n",
+    }
+    fence_ok = True
+    for form, text in fence_forms.items():
+        bodies = [json.loads(body) for _, body in _markdown_fences(text)]
+        fence_ok = fence_ok and bodies == [fence_schema]
+    fence_ok = fence_ok and list(_markdown_fences("Prose naming observed_at_utc, no fence.\n")) == []
+    checks["datetime_inventory_fence_containers"] = fence_ok
     from pm_event_datetime import datetime_validator
     schema = json.loads((root / "Plans/event_record.schema.json").read_text())
     envelope_validator = datetime_validator(schema)

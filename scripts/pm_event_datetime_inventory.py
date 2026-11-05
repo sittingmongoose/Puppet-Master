@@ -54,15 +54,36 @@ def _unique_object(pairs):
     return result
 
 
+_BLOCKQUOTE_MARKERS = re.compile(r"^(?:[ \t]*>[ \t]?)*")
+_LIST_MARKER = re.compile(r"^[ \t]*(?:[-*+]|\d{1,9}[.)])[ \t]+")
+
+
+def _strip_blockquotes(line):
+    """Remove every leading blockquote marker, including nested `> >`."""
+    return line[_BLOCKQUOTE_MARKERS.match(line).end():]
+
+
 def _markdown_fences(text):
-    """CommonMark backtick/tilde fences, including an unclosed final fence."""
+    """Backtick/tilde fences at any container depth, including an unclosed final fence.
+
+    Deliberately over-inclusive so the completeness gate fails closed: a fence
+    inside a blockquote or a list item, at any indentation, with or without list
+    markers on its opening line, is scanned. Body lines lose their blockquote
+    markers; JSON tolerates the remaining indentation. A body that then fails to
+    parse but names a property map and a Storage field is a scan error, never a
+    silent skip (see scan()).
+    """
     opening, start, body = None, None, []
-    for line_no, line in enumerate(text.splitlines(keepends=True), 1):
+    for line_no, raw in enumerate(text.splitlines(keepends=True), 1):
+        line = _strip_blockquotes(raw)
         if opening is None:
-            match = re.match(r"^ {0,3}(`{3,}|~{3,})([^\n]*)", line)
+            candidate = line
+            while _LIST_MARKER.match(candidate):
+                candidate = _LIST_MARKER.sub("", candidate, count=1)
+            match = re.match(r"^[ \t]*(`{3,}|~{3,})([^\n]*)", candidate)
             if match and (match.group(1)[0] == "~" or "`" not in match.group(2)):
                 opening, start, body = match.group(1), line_no, []
-        elif re.fullmatch(r" {0,3}" + re.escape(opening[0]) +
+        elif re.fullmatch(r"[ \t]*" + re.escape(opening[0]) +
                           "{" + str(len(opening)) + r",}[ \t]*\r?\n?", line):
             yield start, "".join(body)
             opening = None

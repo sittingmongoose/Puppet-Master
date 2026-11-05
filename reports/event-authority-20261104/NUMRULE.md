@@ -402,3 +402,16 @@ Artifacts below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
 | `index-pinned.stdout` | `bf6c2198b6ec6c7c74308a786e73d023c0cd6b5efb2e214bbe554629890f164d` |
 | `currentness-copy.json` | `fae54dc550049395c0fd345173357ee0ba22eea51ea761130f11485e7f42c930` |
 | `dependencies.json` | `6c1a0a100cd72b69c2554e8bc82e667ddb1a1e3266ea7a56c0635c86463d170c` |
+
+## Review round 6: findings and responses (lead fix, 2026-11-05)
+
+**C6-B1 (cycle 6, `reviews/NUMRULE-sol/REVIEW-cycle6.md`): container-nested Markdown schema fences bypassed the completeness gate.** Fixed by the stream E lead as a small review fix.
+
+- `scripts/pm_event_datetime_inventory.py` `_markdown_fences()` now finds backtick and tilde fences at any container depth. It strips every leading blockquote marker (including nested `> >`) from each line, skips list markers on the opening line, and accepts any indentation. It is deliberately over-inclusive, so the gate fails closed: a body that then fails to parse but names a property map and a Storage field remains a scan error, never a silent skip.
+- `scripts/pm_event_numbers_corpus.py` registers the integration check `datetime_inventory_fence_containers`. It covers seven forms (top level, blockquote, nested blockquote, nested-list indented, list marker on the fence line, blockquote containing a list, tilde in a blockquote), each of which must yield exactly the injected schema, plus a no-fence prose control. The previous scanner fails the blockquote and nested-list forms of this check.
+- **Verification on this head:**
+  - Real tree: `python3 scripts/pm_event_datetime_inventory.py` exits 0, with 212 nodes, 133 Storage, 79 other-owner and 0 unclassified (unchanged).
+  - Injecting the reviewer's node at `Plans/review-container-schema.md` in each of the seven forms makes the CLI exit 1, with 213 nodes and 1 unclassified (`unclassified_schema_node`).
+  - The blockquote injection also makes `python3 scripts/pm_event_numbers.py --self-test` exit 1, with `datetime_inventory_complete_and_classified: false`.
+  - Without injection, the self-test passes: 13,372/13,372 cases (6,836 positives, 6,536 labelled negatives) and 71/71 integration checks.
+- No owner prose, pinned schema, corpus case or inventory entry changed.
