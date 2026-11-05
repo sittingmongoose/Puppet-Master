@@ -55,8 +55,8 @@ def domain_cases(m, contexts, boundaries, archive=None):
                     changed = {**original,field:wrong['value']}
                     add(event,'permission_or_withdrawal','reader-'+mode+'-'+field+'-'+wrong['name'],lambda *a:m.read_canonical_history(*a),
                         (original,event),(changed,event))
-        # Unsupported numeric history is checked at its real decoder/hash/envelope predicates;
-        # no fictitious retained commitment is manufactured for an unencodable number.
+        # Current numbers use the strict writer recipe. Retained integral metadata is tested below
+        # against the frozen recipe, including values outside the current writer domain.
         for number in fixtures['numeric_cases']:
             literal = number['literal']
             if not number['commitment_valid']:
@@ -72,7 +72,7 @@ def domain_cases(m, contexts, boundaries, archive=None):
             for number in fixtures['numeric_cases']:
                 if number['valid_json'] and not number['commitment_valid']:
                     parsed = m.json_numbers(number['literal'])
-                    if finite_positive(m,parsed):
+                    if finite_positive(m,parsed) and parsed != int(parsed):
                         bad = {**control,'sequence_id':parsed}
                         add(event,'commitment_numbers','historical-envelope-'+mode+'-'+number['literal'],
                             lambda v:m.historical_envelope_matches(v),(control,),(bad,))

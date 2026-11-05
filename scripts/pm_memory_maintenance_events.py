@@ -10,6 +10,8 @@ import importlib.util
 import json
 import math
 import argparse
+import datetime
+import re
 from urllib.parse import urljoin
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry
@@ -47,8 +49,9 @@ def pure(function):
 
 
 @pure
-def within_value_cap(value):
-    return len(_CODEC.binding_bytes(canonical_numbers(value))) <= 16384
+def within_value_cap(value, historical=False):
+    normalize = historical_numbers if historical else canonical_numbers
+    return len(_CODEC.binding_bytes(normalize(value))) <= 16384
 
 
 
@@ -64,7 +67,7 @@ def json_numbers(text):
     """
     def exact(token):
         value = Decimal(token)
-        return int(value) if value.is_finite() and abs(value) <= SAFE_INTEGER and value == value.to_integral_value() else value
+        return int(value) if value.is_finite() and value == value.to_integral_value() else value
     return json.loads(text, parse_float=exact, parse_constant=exact)
 
 
@@ -96,6 +99,30 @@ def numbers_supported(value):
 
 def digest(value):
     return hashlib.sha256(json.dumps(canonical_numbers(value), ensure_ascii=False, sort_keys=True,
+                                    separators=(',', ':')).encode('utf-8')).hexdigest()
+
+
+def historical_numbers(value):
+    """Frozen integer-json-v1 encoding: integral values have no safe-integer upper bound.
+
+    Both retained envelope editions use this same encoding. Current writes are its strict subset,
+    with identical bytes on that subset; no caller-controlled recipe selector or fallback exists.
+    Lossless Decimal ingestion preserves integers before encoding, including uint64 boundaries.
+    """
+    if type(value) in (int, float, Decimal):
+        finite = value.is_finite() if isinstance(value, Decimal) else (True if type(value) is int else math.isfinite(value))
+        if not finite or value != int(value):
+            raise ValueError('non_integer_commitment_number')
+        return int(value)
+    if isinstance(value, dict):
+        return {key: historical_numbers(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [historical_numbers(item) for item in value]
+    return value
+
+
+def historical_digest(value):
+    return hashlib.sha256(json.dumps(historical_numbers(value), ensure_ascii=False, sort_keys=True,
                                     separators=(',', ':')).encode('utf-8')).hexdigest()
 
 
@@ -239,18 +266,51 @@ def checked_registry():
     return schema_registry(checked_documents())
 
 
+def enforced_formats():
+    """Do not depend on jsonschema's optional date-time/URI dependency packages being installed.
+
+    This is the existing RFC3339 contract: explicit zone, real calendar fields, optional nonempty
+    fractional seconds; leap seconds are unsupported. Timestamp strings are never normalized for
+    hashing. UUID is a full 8-4-4-4-12 hexadecimal spelling. Schema types remain separate guards.
+    """
+    checker = FormatChecker()
+    @checker.checks('date-time')
+    def date_time(value):
+        if not isinstance(value, str):
+            return True
+        match = re.fullmatch(r'([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?([Zz]|[+-][0-9]{2}:[0-9]{2})', value)
+        if match is None:
+            return False
+        try:
+            datetime.datetime(*(int(v) for v in match.groups()[:6]))
+        except ValueError:
+            return False
+        zone = match.group(7)
+        return zone in ('Z', 'z') or int(zone[1:3]) <= 23 and int(zone[4:6]) <= 59
+    @checker.checks('uuid')
+    def uuid(value):
+        return not isinstance(value, str) or re.fullmatch(r'[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}', value) is not None
+    return checker
+
+
 @lru_cache(maxsize=None)
 def validator(path, definition):
     # Select the definition inside its own document so every reference keeps the document's base URI.
     doc = load(path)
-    if definition not in doc['$defs']:
+    if not definition.startswith('/') and definition not in doc['$defs']:
         raise KeyError(definition)
-    return Draft202012Validator({'$ref': document_uri(path, doc) + '#/$defs/' + definition},
-                                registry=checked_registry(), format_checker=FormatChecker())
+    pointer = definition if definition.startswith('/') else '/$defs/' + definition
+    return Draft202012Validator({'$ref': document_uri(path, doc) + '#' + pointer},
+                                registry=checked_registry(), format_checker=enforced_formats())
 
 
-def target_schema_matches(target, kind):
-    return validator('Plans/memory_maintenance_rebuild_target.schema.json', kind + '_target').is_valid(target)
+def formatted_value_matches(path, pointer, value):
+    return validator(path, pointer).is_valid(value)
+
+
+def target_schema_matches(target, kind, historical=False):
+    return validator('Plans/memory_maintenance_rebuild_target.schema.json',
+                     ('historical_' if historical else '') + kind + '_target').is_valid(target)
 
 
 def target_order_matches(target):
@@ -258,8 +318,8 @@ def target_order_matches(target):
     return names == sorted(set(names))
 
 
-def target_manifest_matches(target):
-    return target['manifest_sha256'] == digest(target['artifacts'])
+def target_manifest_matches(target, historical=False):
+    return target['manifest_sha256'] == (historical_digest if historical else digest)(target['artifacts'])
 
 
 def target_source_matches(target, row):
@@ -273,10 +333,10 @@ def target_identity_matches(target, row, kind):
 
 
 @pure
-def valid_target(target, row):
+def valid_target(target, row, historical=False):
     kind = 'lexical' if 'lexical' in row['command_id'] else 'semantic'
-    return (target_schema_matches(target, kind) and target_order_matches(target)
-            and target_manifest_matches(target) and target_source_matches(target, row)
+    return (target_schema_matches(target, kind, historical) and target_order_matches(target)
+            and target_manifest_matches(target, historical) and target_source_matches(target, row)
             and target_identity_matches(target, row, kind))
 
 
@@ -309,8 +369,9 @@ def result_digest(row):
                    target['target_id'] if target else None])
 
 
-def operation_schema_matches(row, name):
-    return validator('Plans/memory_maintenance_operation.schema.json', name).is_valid(row)
+def operation_schema_matches(row, name, historical=False):
+    return validator('Plans/memory_maintenance_operation.schema.json',
+                     ('historical_' if historical else '') + name).is_valid(row)
 
 
 def operation_receipts_match(row):
@@ -328,12 +389,12 @@ def operation_result_digest_matches(row):
 
 
 @pure
-def valid_operation(row, name):
-    if not operation_schema_matches(row, name) or not within_value_cap(row):
+def valid_operation(row, name, historical=False):
+    if not operation_schema_matches(row, name, historical) or not within_value_cap(row, historical):
         return False
     if not operation_receipts_match(row):
         return False
-    if row.get('prepared_target') is not None and not valid_target(row['prepared_target'], row):
+    if row.get('prepared_target') is not None and not valid_target(row['prepared_target'], row, historical):
         return False
     if row['phase'] == 'prepared':
         # Reserve terminal custody before swapping: success must still fit after both receipt ids and outcome exist.
@@ -342,7 +403,7 @@ def valid_operation(row, name):
                     'result_sha256': '0' * 64,
                     'completed_event_id': identity(event_type(row, 'completed'), row['storage_instance_id'],
                                                    row['project_id'], row['operation_id'])[0]}
-        if not within_value_cap(terminal):
+        if not within_value_cap(terminal, historical):
             return False
 
     if row['status'] is not None:
@@ -441,7 +502,7 @@ def start_custody_gate(state, first_start=False, writer_event=None, canonical_hi
     if canonical is not None:
         value = canonical.get('full_value') if isinstance(canonical, dict) else None
         reference = canonical_value(row, 'started')
-        require(original_matches(canonical, value) and envelope_validator().is_valid(value)
+        require(original_matches(canonical, value) and historical_envelope_matches(value)
                 and retained_binding({k: value[k] for k in set(reference) - STORAGE_FIELDS},
                                      {k: reference[k] for k in set(reference) - STORAGE_FIELDS})
                 and retained_binding({k: value[k] for k in expected}, expected), 'start_receipt_missing')
@@ -470,7 +531,9 @@ def _append_current(before, value, event):
     require(value['replay_policy'] == 'dedupe_by_idempotency_key', 'replay_policy_mismatch')
     require(flag(state['admitted'], True), 'not_admitted')
     require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
-    require(valid_operation(row, operation_name(event)), 'invalid_operation')
+    # Returning a verified original reads its existing operation edition; new append admission
+    # still applies the current operation schema. An original is never returned before custody.
+    require(valid_operation(row, operation_name(event), state['original'] is not None), 'invalid_operation')
     suffix = event.rsplit('.', 1)[1]
     expected = canonical_value(row, suffix)
     # Validate dispatch and all producer-owned joins separately from Storage's three assigned fields.
@@ -487,7 +550,7 @@ def _append_current(before, value, event):
     start_custody_gate(state, first_start=suffix == 'started', writer_event=event)
     if state['original'] is not None:
         original = state['original']['full_value']
-        require(original_matches(state['original'], original) and envelope_validator().is_valid(original)
+        require(original_matches(state['original'], original) and historical_envelope_matches(original)
                 and retained_binding({k: original[k] for k in producer_fields},
                                      {k: value[k] for k in producer_fields}), 'original_value_changed')
         return state, deepcopy(original)
@@ -509,8 +572,8 @@ def retained_flush(original):
     return original['durability'] == 'full_flush'
 
 
-def retained_digest(original):
-    return original['full_value_sha256'] == digest(original['full_value'])
+def retained_digest(original, historical=True):
+    return original['full_value_sha256'] == (historical_digest if historical else digest)(original['full_value'])
 
 
 def retained_binding(value, expected):
@@ -521,7 +584,7 @@ def original_matches(original, value):
     # Equivalent conjunction: after equality holds, self-digest and expected-value digest are identical.
     # Separate predicates let check 11 remove integrity without also removing the operation/value join.
     return (retained_shape(original) and retained_flush(original)
-            and retained_binding(original['full_value'], value) and retained_digest(original))
+            and retained_binding(original['full_value'], value) and retained_digest(original, True))
 
 
 def accept(payload, contract, context):
@@ -721,7 +784,7 @@ def read_history(before, event):
     fence, revoked access, a forged or missing original and missing start custody. It changes no state."""
     state = before; row = state['operation']
     require(flag(state['permission'], True) and flag(state['withdrawn'], False), 'permission_or_withdrawal')
-    require(valid_operation(row, operation_name(event_type(row, 'started'))), 'invalid_operation')
+    require(valid_operation(row, operation_name(event_type(row, 'started')), True), 'invalid_operation')
     suffix = event.rsplit('.', 1)[1] if event.count('.') >= 2 else ''
     require(suffix in ('started', 'completed') and event == event_type(row, suffix), 'unknown_event')
     start_custody_gate(state)
@@ -729,13 +792,25 @@ def read_history(before, event):
     return deepcopy(state['originals'][event]['full_value'])
 
 
+# Frozen recipe selection is by the closed envelope edition, not an untrusted recipe field.
+# The two editions deliberately share one numeric/hash recipe, so changing edition cannot select
+# weaker number validation. Their separate envelope constraints still apply in full.
+HISTORY_RECIPES = {('pm.event.v0', '1.0.0'): 'compatibility',
+                   ('pm.event.v0', '2.0.0'): 'historical_current'}
+
+
 def historical_envelope_matches(value):
-    if not numbers_supported(value):
+    if not isinstance(value, dict):
         return False
-    # The frozen 1.0.0 reader is an explicit envelope-owner definition; never a writer option.
-    if isinstance(value, dict) and value.get('schema_version') == '1.0.0':
-        return validator('Plans/memory_maintenance_event_record.schema.json', 'compatibility').is_valid(value)
-    return envelope_validator().is_valid(value)
+    try:
+        historical_numbers(value)
+    except ValueError:
+        return False
+    edition = (value.get('schema_id'), value.get('schema_version'))
+    definition = HISTORY_RECIPES.get(edition, 'historical_current') if all(type(v) is str for v in edition) else 'historical_current'
+    # Unknown editions are tested against the closed 2.0.0 schema, which rejects their constants;
+    # this is not a permissive recipe fallback. Both known editions use the same hash encoding.
+    return validator('Plans/memory_maintenance_event_record.schema.json', definition).is_valid(value)
 
 
 def historical_payload_matches(value, expected):
@@ -764,7 +839,7 @@ def historical_producer_matches(value, expected):
 
 
 def historical_matches(original, expected):
-    return (retained_shape(original) and retained_flush(original) and retained_digest(original)
+    return (retained_shape(original) and retained_flush(original) and retained_digest(original, True)
             and historical_envelope_matches(original['full_value'])
             and historical_payload_matches(original['full_value'], expected)
             and historical_producer_matches(original['full_value'], expected)
@@ -780,7 +855,7 @@ def read_canonical_history(before, event):
     """
     require(flag(before['permission'], True) and flag(before['withdrawn'], False), 'permission_or_withdrawal')
     row = before['written_operation']
-    require(valid_operation(row, operation_name(event_type(row, 'started'))), 'invalid_operation')
+    require(valid_operation(row, operation_name(event_type(row, 'started')), True), 'invalid_operation')
     suffix = event.rsplit('.', 1)[1] if event.count('.') >= 2 else ''
     require(suffix in ('started', 'completed') and event == event_type(row, suffix), 'unknown_event')
     snapshot = {'operation': row, 'originals': before['originals'], 'withdrawn': before['withdrawn']}
@@ -1115,13 +1190,13 @@ def run_writers(fixtures, families):
 @lru_cache(maxsize=1)
 def checkpoint_validator():
     schema = load('Plans/event_record_index_checkpoint.schema.json')
-    return Draft202012Validator({**schema, '$ref': '#/$defs/checkpoint'}, format_checker=FormatChecker())
+    return Draft202012Validator({**schema, '$ref': '#/$defs/checkpoint'}, format_checker=enforced_formats())
 
 
 def checkpoint_identity_matches(checkpoint, row, value, event):
     """Only the adopted SP-278 storage/event join; no projector, cursor advance or read authorization."""
     expected_id, expected_key = identity(event, row['storage_instance_id'], row['project_id'], row['operation_id'])
-    return (valid_operation(row, operation_name(event)) and envelope_validator().is_valid(value)
+    return (valid_operation(row, operation_name(event), True) and historical_envelope_matches(value)
             and checkpoint_validator().is_valid(checkpoint['checkpoint'])
             and checkpoint['checkpoint']['storage_instance_id'] == row['storage_instance_id']
             and checkpoint['checkpoint_key'] == 'event_record_index_checkpoint.v1:' + row['storage_instance_id']
@@ -1186,6 +1261,12 @@ def boundary_domains():
     return result
 
 
+def write_recipes():
+    spec = importlib.util.spec_from_file_location('_dmem_write_recipes', ROOT / 'scripts/pm_memory_write_recipes.py')
+    result = importlib.util.module_from_spec(spec); spec.loader.exec_module(result)
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(); parser.add_argument('--family'); args = parser.parse_args()
     check_resources()
@@ -1221,6 +1302,7 @@ def main():
     numeric_writers = run_numeric_writers(fixtures['writer_families'])
     contexts = {f['event_type']: {**f, 'writer_states': next(w['states'] for w in fixtures['writer_families'] if w['event_type']==f['event_type'])} for f in fixtures['stateful_families']}
     domains = boundary_domains().run(__import__('sys').modules[__name__], contexts, fixtures['cases'])
+    recipes = write_recipes().run(__import__('sys').modules[__name__], contexts)
     identifier_names = [case['name'] for case in fixtures['identifier_cases']]
     assert len(identifier_names) == len(set(identifier_names))
     assert {event.replace('.', '_') + ':' + name for event in families
@@ -1264,7 +1346,7 @@ def main():
                       'generic_checkpoint_identity_cases': checkpoints,
                       'start_custody_matrix': matrix, 'history_cases': history,
                       'canonical_history_cases': canonical_history,
-                      'numeric_writer_cases': numeric_writers, 'boundary_domains': domains,
+                      'numeric_writer_cases': numeric_writers, 'boundary_domains': domains, 'write_recipes': recipes,
                       'schema_reference_cases': references, 'registry_mirrors_reference_checked': mirrors,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 

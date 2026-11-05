@@ -76,7 +76,7 @@ def start_custody_gate(state, first_start=False, writer_event=None, canonical_hi
         value = canonical.get('full_value') if isinstance(canonical, dict) else None
         reference = core.canonical_value(row, 'started')
         core.require(isinstance(value, dict) and core.original_matches(canonical, value), 'start_receipt_missing')
-        guard('envelope_schema', core.envelope_validator().is_valid(value), 'start_receipt_missing')
+        guard('envelope_schema', core.historical_envelope_matches(value), 'start_receipt_missing')
         guard('payload_schema', core.validator('Plans/memory_maintenance_event_payloads.schema.json',
                                                started.replace('.', '_')).is_valid(value['payload']), 'start_receipt_missing')
         producer = set(reference) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
@@ -202,7 +202,7 @@ def append_current(before, value, event):
     guard('replay_policy', value['replay_policy'] == 'dedupe_by_idempotency_key')
     guard('admission', core.flag(state['admitted'], True))
     guard('permission_or_withdrawal', core.flag(state['permission'], True) and core.flag(state['withdrawn'], False))
-    guard('operation_valid', core.valid_operation(row, core.operation_name(event)))
+    guard('operation_valid', core.valid_operation(row, core.operation_name(event), state['original'] is not None))
     expected = core.canonical_value(row, suffix)
     producer_fields = set(expected) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
     guard('semantic_binding', all(value[k] == expected[k] for k in producer_fields), 'producer_join')
@@ -217,7 +217,7 @@ def append_current(before, value, event):
         original = state['original']['full_value']
         if suffix == 'completed':
             guard('original_value', core.original_matches(state['original'], original)
-                  and core.envelope_validator().is_valid(original)
+                  and core.historical_envelope_matches(original)
                   and core.retained_binding({k: original[k] for k in set(expected) - core.STORAGE_FIELDS},
                                            {k: value[k] for k in set(expected) - core.STORAGE_FIELDS}))
         output = deepcopy(original)
@@ -503,9 +503,10 @@ def main():
     numeric_writers = core.run_numeric_writers(fixtures['families'])
     contexts = {f['event_type']: f for f in fixtures['families']}
     domains = core.boundary_domains().run(core, contexts, [c for f in fixtures['families'] for c in f['boundary_cases']], __import__('sys').modules[__name__])
+    recipes = core.write_recipes().run(core, contexts, __import__('sys').modules[__name__])
     print(json.dumps({'status':'pass','families':paths,'guard_cases':len(fixtures['guard_cases']),
                       'guard_removal_table':guards,'canonical_history_cases':canonical_history,
-                      'numeric_writer_cases':numeric_writers,'boundary_domains':domains,
+                      'numeric_writer_cases':numeric_writers,'boundary_domains':domains,'write_recipes':recipes,
                       'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
                       'real_cutoffs':'ABSENT; numeric proposals in report only'},indent=2))
 

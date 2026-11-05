@@ -458,6 +458,15 @@ class DropReplayField(ast.NodeTransformer):
         return node
 
 
+class DropHistoryEditionConstants(ast.NodeTransformer):
+    """Envelope schema_id/version constants are deliberately repeated by historical binding."""
+    def visit_Assign(self, node):
+        if any(isinstance(t, ast.Name) and t.id == 'fields' for t in node.targets):
+            node.value = ast.BinOp(left=node.value, op=ast.Sub(), right=ast.Set(
+                elts=[ast.Constant('schema_id'), ast.Constant('schema_version')]))
+        return node
+
+
 class WithoutOutcomeEnum:
     def __init__(self,validator):self.validator=validator
     def is_valid(self,value):
@@ -474,6 +483,28 @@ class WithoutOutcomeEnum:
 
 class AlwaysValid:
     def is_valid(self,value):return True
+
+
+class WithoutStructure:
+    """Remove a named structural schema guard while retaining the independent format guard."""
+    def __init__(self, validator): self.validator = validator
+    def is_valid(self, value):
+        return not any(error.validator == 'format' or (
+            error.validator == 'pattern' and 'format' in error.schema)
+            for error in self.validator.iter_errors(value))
+
+
+class WithoutFormats:
+    """Named duplicates: format enforcement and UTC/end-of-input patterns on formatted leaves.
+
+    Every non-format constraint (including type, length, required fields and identifier patterns)
+    stays enabled. Direct format-leaf witnesses do not bypass an envelope or a custody gate.
+    """
+    def __init__(self, validator): self.validator = validator
+    def is_valid(self, value):
+        return not any(error.validator != 'format' and not (
+            error.validator == 'pattern' and 'format' in error.schema)
+            for error in self.validator.iter_errors(value))
 
 
 REASONS={'outcome':{'outcome_invalid'},'admission':{'not_admitted'},'permission_or_withdrawal':{'permission_or_withdrawal'},
@@ -506,8 +537,9 @@ def numeric_schema_mutant(m):
     @lru_cache(maxsize=None)
     def validator(path,definition):
         doc=documents[path]
-        new=m.Draft202012Validator({'$ref':m.document_uri(path,doc)+'#/$defs/'+definition},
-            registry=registry,format_checker=m.FormatChecker())
+        pointer=definition if definition.startswith('/') else '/$defs/'+definition
+        new=m.Draft202012Validator({'$ref':m.document_uri(path,doc)+'#'+pointer},
+            registry=registry,format_checker=m.enforced_formats())
         return new
     return validator
 
@@ -529,12 +561,20 @@ def semantic_mutant(m,name):
                          ('selector_schema','selector_schema_matches'),('selector_scope','selector_scope_matches')]:
             if name==guard:change(fn,lambda *args:True)
         if name=='envelope_schema':
-            change('envelope_validator',lambda:AlwaysValid())
+            real_envelope=m.envelope_validator
+            change('envelope_validator',lambda:WithoutStructure(real_envelope()))
             real=m.validator
-            change('validator',lambda path,definition:AlwaysValid() if path in ('Plans/event_record.schema.json','Plans/memory_maintenance_event_record.schema.json') else real(path,definition))
+            change('validator',lambda path,definition:WithoutStructure(real(path,definition)) if path in ('Plans/event_record.schema.json','Plans/memory_maintenance_event_record.schema.json') else real(path,definition))
+            change('historical_binding',replaced_function(m,'historical_binding',DropHistoryEditionConstants()))
         if name=='payload_schema':
             real=m.validator
-            change('validator',lambda path,definition:AlwaysValid() if 'event_payloads' in path else real(path,definition))
+            change('validator',lambda path,definition:WithoutStructure(real(path,definition)) if 'event_payloads' in path else real(path,definition))
+        if name=='formats_enforced':
+            real=m.validator
+            change('validator',lambda path,definition:WithoutFormats(real(path,definition)))
+            envelope=m.envelope_validator;checkpoint=m.checkpoint_validator
+            change('envelope_validator',lambda:WithoutFormats(envelope()))
+            change('checkpoint_validator',lambda:WithoutFormats(checkpoint()))
         if name=='references_resolve':change('unresolved_references',lambda *args,**kwargs:[])
         if name=='json_number_grammar':
             real_decoder=m.decode_json_number
@@ -567,6 +607,7 @@ def semantic_mutant(m,name):
             change('validator',numeric_validator)
             change('envelope_validator',lambda:numeric_validator('Plans/memory_maintenance_event_record.schema.json','current'))
             change('canonical_numbers',replaced_function(m,'canonical_numbers',RemoveUnsupportedNumber()))
+            change('historical_numbers',replaced_function(m,'historical_numbers',RemoveUnsupportedNumber()))
         if name=='original_input':
             change('_transition',replaced_function(m,'_transition',RemoveExpressions({"action['value'] == value":True})))
         if name=='replay_policy':change('_append_current',replaced_function(m,'_append_current',DropReplayField()))
@@ -700,13 +741,14 @@ def main():
     if not args.family:
         return sequential(args.out)
     m=module('_check11_maintenance','pm_memory_maintenance_events.py')
+    m.check_resources()
     f=m.load('Plans/memory_maintenance_event_fixtures.json');contracts={c['event_type']:c for c in m.load('Plans/memory_maintenance_contracts.json')['families']}
     contexts={c['event_type']:{'event_type':c['event_type'],'states':c['states'],
               'writer_states':next(w['states'] for w in f['writer_families'] if w['event_type']==c['event_type'])}
               for c in f['stateful_families']}
     prior=json.loads((ROOT/'reports/event-authority-20261104/DMEM-check11-guards.json').read_text())
-    mg=set(row['guard'] for row in prior['guard_tables']['maintenance'])
-    ag=set(row['guard'] for row in prior['guard_tables']['archive'])|{'memory_flags'}
+    mg=set(row['guard'] for row in prior['guard_tables']['maintenance'])|{'formats_enforced'}
+    ag=set(row['guard'] for row in prior['guard_tables']['archive'])|{'memory_flags','formats_enforced'}
     if args.family in contexts:
         contexts={args.family:contexts[args.family]};f=m.select_family(f,args.family);contracts={args.family:contracts[args.family]}
     else:
@@ -714,6 +756,8 @@ def main():
         f=m.select_family(f,args.family)
     semantic=semantic_cases(m,f,contexts)+canonical_history_cases(m,contexts)
     semantic+=m.boundary_domains().domain_cases(m,contexts,f['cases'])
+    semantic+=m.write_recipes().history_cases(m,contexts)+m.write_recipes().format_cases(m,contexts)
+    semantic+=m.write_recipes().retry_cases(m,contexts)
     matrix=cases_for_matrix(m,f,contracts,f['start_custody_matrix']['families'],contexts)
     rows,n=prove_complete(m,semantic,matrix,f,contracts,guards=mg) if contexts else ([],0)
     archive=module('_check11_archive','pm_memory_archive_events.py');am=archive.core
@@ -765,6 +809,8 @@ def main():
         if case['guard']=='producer_join':case['guard']='semantic_binding'
     asemantic+=extra+canonical_history_cases(am,actx,archive=True)
     asemantic+=am.boundary_domains().domain_cases(am,actx,adapted['cases'],archive)
+    asemantic+=am.write_recipes().history_cases(am,actx,archive)+am.write_recipes().format_cases(am,actx)
+    asemantic+=am.write_recipes().retry_cases(am,actx,archive)
     ar,an=prove_complete(am,asemantic,amatrix,adapted,ac,archive,guards=ag) if actx else ([],0)
     result={'status':'pass','families':sorted(set(contracts)|set(ac)),
             'custody_matrix_cases':len(matrix)+len(amatrix),'maintenance_cases':n,'archive_cases':an,
