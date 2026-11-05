@@ -245,3 +245,8 @@ Round-1 logs and this report/self-grade copy live under `/mnt/Cursor/PuppetMaste
 | `test_pm_onboarding_phases` | 1 | 47 tests, same 1 failing test name: existing family census pin 342 vs 344; policy pin restored to 28 |
 
 The first automated invocations of `verify-spec-lock` and `lint-contractrefs` exited 2 because the harness passed an unsupported timeout argument. Both were rerun without that argument; the table reports those completed runs. `fix1/validators/rerun-exit-codes.txt` and the two `*-rerun.txt` outputs preserve them. All test files ran with `python3 -m unittest`. Normalized readiness comparisons and failing-test-name comparisons are in `fix1/baseline-comparison.json` and `fix1/test-comparison.json`; the comparison baseline is the previously recorded pre-review tip outputs, not a fresh full-tree baseline. No runtime proof or aggregate landing certification is claimed.
+
+
+## Batch 1 integration citation update (2026-11-05; CA-RET review)
+
+The reviewed lane state above remains historical. The integration includes the answers branch: DL-401 is at `Plans/Decision_Log.md:4414` and DL-404 at `:4534`. SP-291 now carries DL-401 in both `depends_on` (`Plans/storage-plan.md:23934`) and `source_lineage`; the incomplete telemetry clock and every no-project counting question remain unchanged. B2's three row-assignment citations (`Plans/storage-plan.md:17427`, `:17429`, `:17431`) and policy-object citation (`Plans/storage_value_registry.json:558`) are still accurate. The current SP-349/SP-351 unit headings are `Plans/storage-plan.md:29094` and `:29294`. Dated check claims and original source hashes above refer to the named lane commits, not the integrated tree.

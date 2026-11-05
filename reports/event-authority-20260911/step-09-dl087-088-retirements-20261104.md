@@ -81,3 +81,10 @@ Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/B1-b
 3. **Note.** DL-087's orchestrator pointer and the eight J248 disposition records are follow-ups outside this branch: the pointer is on `origin/plans/ea-w2-orchestrator-20261104` (lane DO); the eight records are updated at integration after the owner landing. This branch completes item 2 of the September section 6, not every DL-087 obligation.
 4. **Note.** Regeneration reproduces every shard and JSONL byte; the four `.plan_index` JSON files differ only in `generated_at_utc`, which the validator ignores by design.
 5. **Note.** Reseal request unchanged: Contracts (with its Spec Lock entry), Run Modes, their shard evidence and currentness, run-002 batch hashes and final summary, and the readiness report. The lander refreshes the migration snapshot and baseline after landing.
+
+
+## Batch 1 integration citation update (2026-11-05; B1 part 2 review)
+
+The dated report above describes its reviewed lane head. In `plans/ea-batch1-20261105`, the eight J248 row objects and both ledgers now record these owner edits as complete, with current locators: Contracts `Plans/Contracts_V0.md:3058`, the board-only table at `:3070-3076`, CV-270 at `:16768` and retired CV-271 at `:16822`; the spawn-request prohibitions at `:1471` and `:2990`, CV-116 at `:8999`, CV-266 at `:16562`, and the completed Run Modes clarification at `Plans/Run_Modes.md:195`. The queued-child premise is `Plans/assistant-chat-design.md:1849`, the frozen-roster premise is `Plans/Collaborative_Workflows.md:464`, and the non-emitting shared-event section is `:430-454`. Evidence grades remain historical, explicitly confer no current writer authority, and are not regraded.
+
+The separately assigned orchestrator pointers remain pending at `Plans/orchestrator-subagent-integration.md:4367` and `:4425`. Completion here means present on the prepared integration branch; the integration worker does not land it on main.
