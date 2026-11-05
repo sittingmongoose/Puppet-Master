@@ -1,3 +1,5 @@
+import { writeFile } from 'node:fs/promises';
+import path from 'node:path';
 // FO-62: exercise the actual sampler with known own ink and a deliberately corrupted outside-only shot.
 import { readThrough, capturePaint, installCaptureWitness, cleanupCaptureWitness, measureWithRetries } from './glass-backing.check.mjs';
 async function once(t) {
@@ -50,6 +52,11 @@ async function once(t) {
   await f.evaluate(()=>{const e=document.getElementById('exclusion-background');e.style.color='rgb(1,253,97)';e.style.left='112px';e.style.width='396px';e.style.height='68px';e.style.overflow='hidden';});
   const green=await measureWithRetries(t,f,'#exclusion-fixture');
   await t.check('marker-coloured real outside ink is still valid and over limit',green&&!green.invalid&&green.share>.002&&green.tries===1,JSON.stringify(green));
+  await f.evaluate(()=>{const e=document.getElementById('exclusion-background');e.style.left='100px';e.style.height='20px';e.style.width='216px';e.style.backgroundImage='linear-gradient(currentColor,currentColor)';e.textContent='';});
+  const edgeDir=t.args.inputs?path.join(String(t.args.inputs),'selftest-edge-green'):null;
+  const edge=await readThrough(t,f,'#exclusion-fixture',{inputDir:edgeDir});
+  if(edgeDir)await writeFile(path.join(edgeDir,'sample.json'),JSON.stringify(edge,null,2));
+  await t.check('real marker-green content touching the witness stays backing evidence',edge&&!edge.invalid&&edge.share>.002,JSON.stringify(edge));
   await t.check('capture styles restored', await f.evaluate(() => !document.querySelector('#bc-through, #bc-own-reference, #bc-geometry, #bc-geometry-rules, [data-bc-target], [data-bc-in]')));
  } finally { await f.evaluate(() => { document.getElementById('exclusion-fixture')?.remove(); document.getElementById('exclusion-background')?.remove(); }); }
 }

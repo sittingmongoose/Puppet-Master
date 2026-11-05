@@ -41,7 +41,9 @@ export async function installCaptureWitness(f,sel,measured,{resize=false}={}) {
    if(!n.style)continue;
    const ownText=[...n.childNodes].some(c=>c.nodeType===3&&c.textContent.trim());
    if(!ownText&&!n.matches('svg,img,canvas,input,textarea,select'))continue;
-   let node=n;
+   // SVG text/foreignObject boxes are not CSS anchor boxes. This named plate is
+   // painted by its HTML figure; certify that wrapper instead of inventing a DOM probe.
+   let node=e.matches('figure.pmx-plate')&&n.closest('svg')?e:n;
    while(node!==e&&node.getClientRects().length>1&&getComputedStyle(node).display.startsWith('inline'))node=node.parentElement;
    const b=node.getBoundingClientRect(),c=getComputedStyle(node);
    if(!b.width||!b.height||c.visibility==='hidden'||b.bottom<=Math.max(0,bounds.top)||b.top>=Math.min(innerHeight,bounds.bottom)||b.right<=Math.max(0,bounds.left)||b.left>=Math.min(innerWidth,bounds.right))continue;
@@ -82,9 +84,10 @@ export async function capturePaint(t,r,measured) {
   const pi=colors.get((full.data[i]<<16)|(full.data[i+1]<<8)|full.data[i+2]);
   if(pi!==undefined){const a=points[pi];a.count++;a.bounds=a.bounds?{left:Math.min(a.bounds.left,x),top:Math.min(a.bounds.top,y),right:Math.max(a.bounds.right,x),bottom:Math.max(a.bounds.bottom,y)}:{left:x,top:y,right:x,bottom:y};stroke[p]=1;}
  }
- // Only the border-connected stroke is instrumentation. Matching green content inside it stays evidence.
+ // Only the border band is instrumentation, even when real green content touches it.
  const queue=new Uint32Array(candidates.length);let head=0,tail=0;
- const add=p=>{if(candidates[p]&&!stroke[p]){stroke[p]=1;queue[tail++]=p;}};
+ const band=Math.ceil(2*scale);
+ const add=p=>{const x=p%full.width,y=Math.floor(p/full.width);if(x>=left+band&&x<=right-band&&y>=top+band&&y<=bottom-band)return;if(candidates[p]&&!stroke[p]){stroke[p]=1;queue[tail++]=p;}};
  if(count){for(let x=left;x<=right;x++){add(top*full.width+x);add(bottom*full.width+x);}for(let y=top;y<=bottom;y++){add(y*full.width+left);add(y*full.width+right);}}
  while(head<tail){const p=queue[head++],x=p%full.width,y=Math.floor(p/full.width);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&xx<full.width&&yy>=0&&yy<full.height)add(yy*full.width+xx);}}
  const b=JSON.parse(measured.sourceRect),expected={left:Math.round(b.left*scale),top:Math.round(b.top*scale),right:Math.round(b.left*scale)+Math.round(b.width*scale)-1,bottom:Math.round(b.top*scale)+Math.round(b.height*scale)-1};
