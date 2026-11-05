@@ -1,0 +1,200 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "canonical_check_reuse": "Canonical Markdown, shard/index bodies and both checker sources are unchanged; canonical-input-invariance exits 0. Tool-specific checks were rerun after the occurrence fix.",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/pm_guard_isolation.py",
+        "--self-test",
+        "--pause-when-low",
+        "6",
+        "--resume-at",
+        "7",
+        "--max-rss",
+        "1024",
+        "--json",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/self-test.json",
+        "--markdown",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/trap-results.md"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/self-test-final.log",
+      "name": "self-test",
+      "seconds": 6.909
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm_guard_isolation.py",
+        "--adapter",
+        "scripts/pm_guard_isolation_traps.py:example_suite",
+        "--pause-when-low",
+        "6",
+        "--resume-at",
+        "7",
+        "--max-rss",
+        "1024",
+        "--json",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/adapter-example.json",
+        "--markdown",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/adapter-example.md"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/adapter-example-final.log",
+      "name": "adapter-example",
+      "seconds": 3.749
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm_guard_isolation.py",
+        "--adapter",
+        "scripts/pm_guard_isolation_traps.py:example_suite",
+        "--max-rss",
+        "1",
+        "--json",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/max-rss-refusal.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/max-rss-refusal-final.log",
+      "name": "max-rss-refusal",
+      "seconds": 2.164
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm_guard_isolation.py",
+        "--adapter",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/does-not-exist.py:suite",
+        "--json",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/bad-adapter-refusal.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/bad-adapter-refusal-final.log",
+      "name": "bad-adapter-refusal",
+      "seconds": 4.689
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "scripts/pm_guard_isolation.py",
+        "scripts/pm_guard_isolation_traps.py"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/syntax-final.log",
+      "name": "syntax",
+      "seconds": 2.279
+    },
+    {
+      "command": [
+        "rg",
+        "--no-ignore",
+        "-l",
+        "pm_guard_isolation|guard_isolation_traps",
+        "scripts",
+        "tests"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/target-discovery-explicit-final.log",
+      "name": "target-discovery-explicit",
+      "seconds": 0.869
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "origin/main",
+        "--",
+        "Plans/*.md",
+        "Plans/_shards",
+        "Plans/.plan_index",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/canonical-input-invariance-final.log",
+      "name": "canonical-input-invariance",
+      "seconds": 0.508
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/diff-check-final.log",
+      "name": "diff-check",
+      "seconds": 0.537
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "failure_count": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/index-validate.log",
+      "name": "index-validate",
+      "top_level_status": "pass"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/shard-check.log",
+      "name": "shard-check",
+      "seconds": 201.98
+    }
+  ],
+  "derived_regeneration": "not required; no canonical Markdown changed",
+  "discovery_attempt": {
+    "exit_code": 1,
+    "meaning": "no matches from the default ignored directory walk",
+    "raw_receipt": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/serial-checks.json",
+    "resolved_by": "target-discovery-explicit; --no-ignore, exit 0"
+  },
+  "ids_used": [],
+  "lane_adoption": "NOT_RUN",
+  "native_product_execution": "NOT_RUN",
+  "owner_markdown_changed": false,
+  "real_memory_pauses": [
+    {
+      "resumed_available_gib": 9,
+      "seconds": 240.28493670199532
+    }
+  ],
+  "resources": {
+    "host": "ubuntu-agent-nas1",
+    "initial_available_gib": 15,
+    "initial_root_free_gb": 497,
+    "parallel_checker_jobs": 0,
+    "total_gib": 19
+  },
+  "self_test": {
+    "status": "PASS",
+    "traps": 49
+  },
+  "source_edition": "final occurrence-isolated implementation",
+  "status": "PASS"
+}

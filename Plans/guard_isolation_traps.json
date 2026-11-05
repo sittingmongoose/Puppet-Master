@@ -1,0 +1,593 @@
+{
+  "version": 1,
+  "traps": [
+    {
+      "id": "merged-predicates",
+      "kind": "merged",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "minimum": 0
+          },
+          "y": {
+            "minimum": 0
+          }
+        }
+      },
+      "expected": "distinct invariant duplicate declaration refused"
+    },
+    {
+      "id": "whole-required-list",
+      "kind": "required",
+      "schema": {
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ]
+      },
+      "expected": "cut x alone preserves required y"
+    },
+    {
+      "id": "non-type-inventory",
+      "kind": "inventory",
+      "schema": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 4,
+        "pattern": "^[a-z]+$"
+      },
+      "expected": "unwitnessed minLength/maxLength/pattern reported"
+    },
+    {
+      "id": "two-defect-negative",
+      "kind": "masked",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "minimum": 0
+          },
+          "y": {
+            "minimum": 0
+          }
+        }
+      },
+      "expected": "target remains rejected: minimum on y"
+    },
+    {
+      "id": "type-cut-enum-membership",
+      "kind": "type_enum",
+      "schema": {
+        "type": "string",
+        "enum": [
+          "red"
+        ]
+      },
+      "expected": "wrong type flips, well-typed foreign enum stays rejected"
+    },
+    {
+      "id": "conditional-string-null",
+      "kind": "conditional",
+      "schema": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "if": {
+          "type": "string"
+        },
+        "then": {
+          "minLength": 1,
+          "maxLength": 4
+        },
+        "else": {
+          "const": null
+        }
+      },
+      "expected": "one then clause cut preserves peer and null path"
+    },
+    {
+      "id": "unresolved-unused-reference",
+      "kind": "dangling",
+      "schema": {
+        "type": "object",
+        "$defs": {
+          "unused": {
+            "$ref": "missing.schema.json#/$defs/never"
+          }
+        }
+      },
+      "expected": "eager closure fails before cases"
+    },
+    {
+      "id": "unexposed-construction",
+      "kind": "unexposed",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "expected": "maximum has no flipping negative: unproved"
+    },
+    {
+      "id": "shared-code-not-duplicates",
+      "kind": "compound_code",
+      "expected": "individual x/y clause cuts, same refusal code, no merging"
+    },
+    {
+      "id": "true-duplicates",
+      "kind": "duplicate_code",
+      "expected": "each site alone retains same defect; all sites cut accepts"
+    },
+    {
+      "id": "changed-refusal-mask",
+      "kind": "changed_code",
+      "expected": "masking records bad_y, not just a boolean failure"
+    },
+    {
+      "id": "required-dependency-member",
+      "kind": "dependency",
+      "schema": {
+        "type": "object",
+        "dependentRequired": {
+          "x": [
+            "y",
+            "z"
+          ]
+        }
+      },
+      "expected": "cut one dependency member preserves the other"
+    },
+    {
+      "id": "reference-with-sibling",
+      "kind": "ref_sibling",
+      "schema": {
+        "$defs": {
+          "base": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "$ref": "#/$defs/base",
+        "maximum": 5
+      },
+      "expected": "resolved minimum cut preserves sibling maximum"
+    },
+    {
+      "id": "contains-count-clause",
+      "kind": "contains",
+      "schema": {
+        "type": "array",
+        "contains": {
+          "type": "integer"
+        },
+        "minContains": 1,
+        "maxContains": 2
+      },
+      "expected": "minimum match cut preserves maximum match guard"
+    },
+    {
+      "id": "oneof-overlap-clause",
+      "kind": "oneof",
+      "schema": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "minimum": 0
+          }
+        ]
+      },
+      "expected": "exclusivity cut preserves zero-match rejection"
+    },
+    {
+      "id": "negated-branch",
+      "kind": "not",
+      "schema": {
+        "not": {
+          "type": "integer"
+        }
+      },
+      "expected": "negative-polarity atom cut accepts forbidden integer"
+    },
+    {
+      "id": "reference-cycle",
+      "kind": "cycle",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "$ref": "#"
+          }
+        }
+      },
+      "expected": "cyclic reference resolves without recursion expansion"
+    },
+    {
+      "id": "array-object-assertions",
+      "kind": "array_inventory",
+      "schema": {
+        "type": "object",
+        "minProperties": 1,
+        "maxProperties": 3,
+        "additionalProperties": false,
+        "unevaluatedProperties": false,
+        "properties": {
+          "a": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "const": 1
+              }
+            ],
+            "items": false,
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true
+          }
+        }
+      },
+      "expected": "all cardinality, closure, item and positional assertions visible"
+    },
+    {
+      "id": "bounds-multiples-format",
+      "kind": "scalar_inventory",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "n": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "exclusiveMinimum": -1,
+            "exclusiveMaximum": 11,
+            "multipleOf": 2
+          },
+          "s": {
+            "type": "string",
+            "format": "date-time",
+            "const": "2026-11-05T00:00:00Z"
+          }
+        }
+      },
+      "expected": "all numeric assertions and format visible; format enforced"
+    },
+    {
+      "id": "unused-code-site",
+      "kind": "unexposed_code",
+      "expected": "unregistered AST refusal site is reported"
+    },
+    {
+      "id": "runner-crash",
+      "kind": "runner_crash",
+      "schema": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "expected": "checker exception is infrastructure, never a refusal pass"
+    },
+    {
+      "id": "false-success-oracle",
+      "kind": "false_success",
+      "schema": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "expected": "accepted negative fails baseline"
+    },
+    {
+      "id": "duplicate-labels",
+      "kind": "duplicate_labels",
+      "schema": {
+        "type": "integer"
+      },
+      "expected": "same display ID twice is a declaration failure"
+    },
+    {
+      "id": "memory-resume",
+      "kind": "memory_resume",
+      "expected": "pause below 6, wait at 6, resume at 7"
+    },
+    {
+      "id": "memory-timeout",
+      "kind": "memory_timeout",
+      "expected": "continuous low memory terminates with partial progress"
+    },
+    {
+      "id": "predicate-helper-return",
+      "kind": "predicate_return",
+      "expected": "return a and b cuts one acceptance predicate at a time"
+    },
+    {
+      "id": "accumulated-refusal",
+      "kind": "accumulated",
+      "expected": "remove one errors.append site; preserve other error"
+    },
+    {
+      "id": "require-predicate",
+      "kind": "require_call",
+      "expected": "require(a and b) retains peer condition and helper"
+    },
+    {
+      "id": "assert-predicate",
+      "kind": "assert_clause",
+      "expected": "assert a and b retains peer assertion"
+    },
+    {
+      "id": "selector-through-ref",
+      "kind": "selector_ref",
+      "schema": {
+        "$defs": {
+          "selector": {
+            "type": "string"
+          }
+        },
+        "if": {
+          "$ref": "#/$defs/selector"
+        },
+        "then": {
+          "maxLength": 3
+        }
+      },
+      "expected": "referenced if type is selector, not silently an acceptance guard"
+    },
+    {
+      "id": "boolean-ref-target",
+      "kind": "boolean_ref",
+      "schema": {
+        "$defs": {
+          "forbidden": false,
+          "unrelated": false
+        },
+        "properties": {
+          "a": {
+            "$ref": "#/$defs/forbidden"
+          }
+        }
+      },
+      "expected": "false references use resource pointers, not interned boolean identity"
+    },
+    {
+      "id": "negation-through-ref",
+      "kind": "negative_ref",
+      "schema": {
+        "$defs": {
+          "n": {
+            "type": "integer"
+          }
+        },
+        "not": {
+          "$ref": "#/$defs/n"
+        }
+      },
+      "expected": "negative polarity propagates through a reference"
+    },
+    {
+      "id": "nested-id-anchor",
+      "kind": "anchor",
+      "schema": {
+        "$id": "https://pm.invalid/nested/root.json",
+        "$defs": {
+          "part": {
+            "$id": "part.json",
+            "$anchor": "positive",
+            "minimum": 0
+          }
+        },
+        "$ref": "part.json#positive"
+      },
+      "expected": "nested resource id and anchor resolved and mutated without flattening"
+    },
+    {
+      "id": "unused-anyof-branch-ref",
+      "kind": "dangling",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "missing.json"
+          }
+        ]
+      },
+      "expected": "unvisited anyOf reference fails closure"
+    },
+    {
+      "id": "unvisited-clause-inventory",
+      "kind": "branch_inventory",
+      "schema": {
+        "allOf": [
+          {
+            "if": {
+              "type": "string"
+            },
+            "then": {
+              "minLength": 1
+            },
+            "else": {
+              "type": "null"
+            }
+          }
+        ],
+        "anyOf": [
+          {
+            "const": null
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "expected": "all conditional and disjunction branches inventoried before fixtures"
+    },
+    {
+      "id": "negated-boolean-inventory",
+      "kind": "boolean_not",
+      "schema": {
+        "not": true
+      },
+      "expected": "not true is a rejecting assertion; not false is redundant"
+    },
+    {
+      "id": "mixed-reference-polarity",
+      "kind": "mixed_ref",
+      "schema": {
+        "not": {
+          "type": "integer"
+        },
+        "$ref": "#/not"
+      },
+      "expected": "same physical site receives distinct positive-ref and negative-inline occurrence identities"
+    },
+    {
+      "id": "class-guard-inventory",
+      "kind": "class_guard",
+      "expected": "unadapted class refusal is visible and fails inventory"
+    },
+    {
+      "id": "schema-never-consumed",
+      "kind": "unconsumed",
+      "schema": {
+        "type": "integer"
+      },
+      "expected": "declared root never used by callback fails proof"
+    },
+    {
+      "id": "dangling-dynamic-reference",
+      "kind": "dangling",
+      "schema": {
+        "$defs": {
+          "unused": {
+            "$dynamicRef": "missing.json#scope"
+          }
+        }
+      },
+      "expected": "unused dynamic reference fails eager closure"
+    },
+    {
+      "id": "fragment-dialect",
+      "kind": "dialect",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "definitions": {
+          "tuple": {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        }
+      },
+      "expected": "fragment validator retains owning draft-07 tuple semantics"
+    },
+    {
+      "id": "typed-evidence-fingerprints",
+      "kind": "typed_evidence",
+      "expected": "diagnostic hashes distinguish bool/int/float/signed-zero/bytes/container/key types"
+    },
+    {
+      "id": "outcome-exact-types",
+      "kind": "outcome_types",
+      "expected": "integer truthiness is not an accepted boolean outcome"
+    },
+    {
+      "id": "shared-reference-fields",
+      "kind": "shared_fields",
+      "schema": {
+        "$defs": {
+          "n": {
+            "minimum": 0
+          }
+        },
+        "properties": {
+          "a": {
+            "$ref": "#/$defs/n"
+          },
+          "b": {
+            "$ref": "#/$defs/n"
+          }
+        }
+      },
+      "expected": "shared target has distinct a/b cuts; each peer stays enabled"
+    },
+    {
+      "id": "shared-reference-duplicates",
+      "kind": "shared_duplicate",
+      "schema": {
+        "$defs": {
+          "n": {
+            "minimum": 0
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/$defs/n"
+          },
+          {
+            "$ref": "#/$defs/n"
+          }
+        ]
+      },
+      "expected": "same-field duplicate occurrences prove each site independently and together"
+    },
+    {
+      "id": "inline-reference-duplicates",
+      "kind": "inline_duplicate",
+      "schema": {
+        "allOf": [
+          {
+            "minimum": 0
+          },
+          {
+            "$ref": "#/allOf/0"
+          }
+        ]
+      },
+      "expected": "inline cut leaves referenced copy; reference cut leaves inline copy"
+    },
+    {
+      "id": "mixed-reference-fields",
+      "kind": "mixed_fields",
+      "schema": {
+        "$defs": {
+          "n": {
+            "type": "integer"
+          }
+        },
+        "properties": {
+          "a": {
+            "$ref": "#/$defs/n"
+          },
+          "b": {
+            "not": {
+              "$ref": "#/$defs/n"
+            }
+          }
+        }
+      },
+      "expected": "positive and negative occurrences have independent field cuts"
+    },
+    {
+      "id": "native-schema-container-alias",
+      "kind": "native_schema_alias",
+      "expected": "Python shared schema dictionaries cannot merge independent field cuts"
+    },
+    {
+      "id": "negated-compound-shortcut",
+      "kind": "negated_compound",
+      "schema": {
+        "not": {
+          "minimum": 0,
+          "maximum": 10
+        }
+      },
+      "expected": "a negated compound shortcut flips unrelated targets and fails the proof"
+    }
+  ]
+}

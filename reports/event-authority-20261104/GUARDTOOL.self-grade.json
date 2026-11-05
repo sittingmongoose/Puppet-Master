@@ -1,0 +1,76 @@
+{
+  "checks": "reports/event-authority-20261104/GUARDTOOL.checks.json",
+  "criteria": [
+    {
+      "basis": "Seven proof implementations pinned and inspected; remaining twelve lane interfaces inspected statically.",
+      "criterion": "survey",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Complete declared graph, atomic/routing classifications and eager reference failures exercised.",
+      "criterion": "schema_inventory",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Required/dependency members, type membership, conditional peers, counts, negation, exclusivity and isolated reference occurrences exercised.",
+      "criterion": "predicate_cuts",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Exact top-level Python sites, Boolean leaves, predicate calls and unsupported-context inventory exercised.",
+      "criterion": "code_sites",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Controls, own flips, unchanged unrelated refusals, explicit masking codes, crashes and restoration exercised.",
+      "criterion": "runner_and_masking",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Declared same-field/predicate identity plus individual cuts, joint cut and member restoration.",
+      "criterion": "duplicates",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Stable JSON inventory/removal tables, complement universe and Markdown output exercised.",
+      "criterion": "output",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Serial execution, actual low-memory pause/resume and expected RSS refusal verified.",
+      "criterion": "resources",
+      "grade": "PASS"
+    },
+    {
+      "basis": "49/49 synthetic traps caught, including independent shared-reference occurrences and duplicate-site restoration.",
+      "criterion": "corpus",
+      "grade": "PASS"
+    },
+    {
+      "basis": "All 19 drafting lanes have callback, labels, replaced machinery and remaining-work instructions.",
+      "criterion": "adoption_guide",
+      "grade": "PASS"
+    },
+    {
+      "basis": "Current ATS-003/004 cited; no new PlanUnit or product contract needed.",
+      "criterion": "owner_scope",
+      "grade": "PASS"
+    }
+  ],
+  "evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/verification-manifest.json",
+    "sha256": "6ba9204c901609206090aa2838b1420e0da0916a281225393c446f12666abf14"
+  },
+  "families": [],
+  "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
+  "ids_used": [],
+  "limitations": [
+    "Adapter declarations of input-field identity, selectors and opaque predicate boundaries still require review.",
+    "No complete real lane matrix executed or family grade upgraded.",
+    "Class/closure/native internals and recursive/dynamic schema contexts require explicit atomic adapter seams.",
+    "Default date-time checker unavailable in this interpreter; tool fails closed until supplied.",
+    "RSS is sampled at boundaries, not an allocation sandbox."
+  ],
+  "self_assessment": "PASS for delivered synthetic machinery; lane adoption and native evidence NOT_RUN",
+  "subject": "shared check-11 guard-isolation tool"
+}
