@@ -258,6 +258,8 @@
     const apply = () => {
       try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', (typeof window.PM_THEME_PAINT_FAMILY === 'function' ? window.PM_THEME_PAINT_FAMILY(family) : family) + '-' + mode); }
+      // Auto and an explicit mode can paint the same colours; the controls still changed.
+      if (now.slug === O55.theme().slug) { refresh(); renderLook(); }
     };
     /* the look belongs to the whole onboarding, not to one journey's draft (it was lost at the end when it was picked
        while the Connect draft was active) */

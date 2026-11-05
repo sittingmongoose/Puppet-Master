@@ -34,6 +34,8 @@ export default async function(t) {
   await t.equal('Back selects Auto control', await f.locator('[data-o55-do="pickMode"][data-arg="auto"]').getAttribute('aria-checked'), 'true');
   await click('pickMode','light');
   await t.equal('explicit Light replaces Auto', await f.evaluate(() => O55.S.sess.drafts.main.theme_mode), 'light');
+  await t.equal('explicit Light selected even when paint is unchanged', await f.locator('[data-o55-do="pickMode"][data-arg="light"]').getAttribute('aria-checked'), 'true');
   await click('pickMode','auto');
+  await t.equal('Auto selected even when paint is unchanged', await f.locator('[data-o55-do="pickMode"][data-arg="auto"]').getAttribute('aria-checked'), 'true');
   await t.equal('look screen can choose Auto again', await f.evaluate(() => PM_THEME.getMode()), 'auto');
 }
