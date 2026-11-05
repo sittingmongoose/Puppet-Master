@@ -30,8 +30,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-660",
-          "line_start": 29487,
-          "line_end": 29487,
+          "line_start": 29596,
+          "line_end": 29596,
           "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
@@ -51,8 +51,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29505,
-              "line_end": 29505,
+              "line_start": 29614,
+              "line_end": 29614,
               "quote": "currently absent means\\"
             }
           ],
@@ -71,15 +71,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29487,
-              "line_end": 29487,
+              "line_start": 29596,
+              "line_end": 29596,
               "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-680",
-              "line_start": 24471,
-              "line_end": 24471,
+              "line_start": 24487,
+              "line_end": 24487,
               "quote": "alert.acknowledged exact payload and storage route"
             }
           ],
@@ -98,15 +98,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29488,
-              "line_end": 29488,
+              "line_start": 29597,
+              "line_end": 29597,
               "quote": "handlers::alert::acknowledge, produces this exact family. Existing closed\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29512,
-              "line_end": 29512,
+              "line_start": 29621,
+              "line_end": 29621,
               "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
@@ -139,8 +139,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-680",
-              "line_start": 24471,
-              "line_end": 24471,
+              "line_start": 24487,
+              "line_end": 24487,
               "quote": "alert.acknowledged exact payload and storage route"
             }
           ],
@@ -159,15 +159,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29494,
-              "line_end": 29494,
+              "line_start": 29603,
+              "line_end": 29603,
               "quote": "Identity is Project-scoped EventRecord\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29495,
-              "line_end": 29495,
+              "line_start": 29604,
+              "line_end": 29604,
               "quote": "project~base64url_no_pad(UTF8(project_id)); envelope project_id equals payload project_id,\\"
             }
           ],
@@ -186,22 +186,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29500,
-              "line_end": 29500,
+              "line_start": 29609,
+              "line_end": 29609,
               "quote": "Request digest covers\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29517,
-              "line_end": 29517,
+              "line_start": 29626,
+              "line_end": 29626,
               "quote": "retries\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29704,
+              "line_end": 29704,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             },
             {
@@ -227,8 +227,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29549,
-              "line_end": 29549,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
@@ -247,15 +247,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29519,
-              "line_end": 29519,
+              "line_start": 29628,
+              "line_end": 29628,
               "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_acknowledged_operation.schema.json.\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29521,
-              "line_end": 29521,
+              "line_start": 29630,
+              "line_end": 29630,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             },
             {
@@ -288,8 +288,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29490,
-              "line_end": 29490,
+              "line_start": 29599,
+              "line_end": 29599,
               "quote": "Transition: unacknowledged\\"
             }
           ],
@@ -308,22 +308,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29526,
-              "line_end": 29526,
+              "line_start": 29635,
+              "line_end": 29635,
               "quote": "projector.alert_acknowledged.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29529,
-              "line_end": 29529,
+              "line_start": 29638,
+              "line_end": 29638,
               "quote": "SP-278 and DL-076:\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29507,
-              "line_end": 29507,
+              "line_start": 29616,
+              "line_end": 29616,
               "quote": "CAS the exact subject revision\\"
             }
           ],
@@ -342,15 +342,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29542,
-              "line_end": 29542,
+              "line_start": 29651,
+              "line_end": 29651,
               "quote": "Compatibility/withdrawal: only payload\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29546,
-              "line_end": 29546,
+              "line_start": 29655,
+              "line_end": 29655,
               "quote": "withdrawn under whole-value CAS.\\"
             },
             {
@@ -376,15 +376,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-330",
-              "line_start": 7232,
-              "line_end": 7232,
+              "line_start": 7238,
+              "line_end": 7238,
               "quote": "alert.acknowledged contract oracles"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29554,
-              "line_end": 29554,
+              "line_start": 29663,
+              "line_end": 29663,
               "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             },
             {
@@ -469,8 +469,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-661",
-          "line_start": 29634,
-          "line_end": 29634,
+          "line_start": 29743,
+          "line_end": 29743,
           "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
@@ -490,8 +490,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29653,
-              "line_end": 29653,
+              "line_start": 29762,
+              "line_end": 29762,
               "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
@@ -510,15 +510,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29634,
-              "line_end": 29634,
+              "line_start": 29743,
+              "line_end": 29743,
               "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-681",
-              "line_start": 24522,
-              "line_end": 24522,
+              "line_start": 24538,
+              "line_end": 24538,
               "quote": "alert.dismissed exact payload and storage route"
             }
           ],
@@ -537,15 +537,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29635,
-              "line_end": 29635,
+              "line_start": 29744,
+              "line_end": 29744,
               "quote": "handlers::alert::dismiss, produces this exact family. Existing closed payload\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29512,
-              "line_end": 29512,
+              "line_start": 29621,
+              "line_end": 29621,
               "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
@@ -578,8 +578,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-681",
-              "line_start": 24522,
-              "line_end": 24522,
+              "line_start": 24538,
+              "line_end": 24538,
               "quote": "alert.dismissed exact payload and storage route"
             }
           ],
@@ -598,15 +598,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29642,
-              "line_end": 29642,
+              "line_start": 29751,
+              "line_end": 29751,
               "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29642,
-              "line_end": 29642,
+              "line_start": 29751,
+              "line_end": 29751,
               "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
@@ -625,22 +625,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29648,
-              "line_end": 29648,
+              "line_start": 29757,
+              "line_end": 29757,
               "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29517,
-              "line_end": 29517,
+              "line_start": 29626,
+              "line_end": 29626,
               "quote": "retries\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29704,
+              "line_end": 29704,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             },
             {
@@ -666,8 +666,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29549,
-              "line_end": 29549,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
@@ -686,15 +686,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29776,
+              "line_end": 29776,
               "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_dismissed_operation.schema.json.\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29521,
-              "line_end": 29521,
+              "line_start": 29630,
+              "line_end": 29630,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             },
             {
@@ -727,8 +727,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29637,
-              "line_end": 29637,
+              "line_start": 29746,
+              "line_end": 29746,
               "quote": "Transition: unacknowledged,\\"
             }
           ],
@@ -747,22 +747,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29783,
+              "line_end": 29783,
               "quote": "projector.alert_dismissed.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29529,
-              "line_end": 29529,
+              "line_start": 29638,
+              "line_end": 29638,
               "quote": "SP-278 and DL-076:\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29507,
-              "line_end": 29507,
+              "line_start": 29616,
+              "line_end": 29616,
               "quote": "CAS the exact subject revision\\"
             }
           ],
@@ -781,15 +781,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29690,
-              "line_end": 29690,
+              "line_start": 29799,
+              "line_end": 29799,
               "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29546,
-              "line_end": 29546,
+              "line_start": 29655,
+              "line_end": 29655,
               "quote": "withdrawn under whole-value CAS.\\"
             },
             {
@@ -815,15 +815,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-331",
-              "line_start": 7282,
-              "line_end": 7282,
+              "line_start": 7288,
+              "line_end": 7288,
               "quote": "alert.dismissed contract oracles"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29554,
-              "line_end": 29554,
+              "line_start": 29663,
+              "line_end": 29663,
               "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             },
             {
@@ -908,8 +908,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-662",
-          "line_start": 29781,
-          "line_end": 29781,
+          "line_start": 29890,
+          "line_end": 29890,
           "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
@@ -929,8 +929,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29653,
-              "line_end": 29653,
+              "line_start": 29762,
+              "line_end": 29762,
               "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
@@ -949,15 +949,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29781,
-              "line_end": 29781,
+              "line_start": 29890,
+              "line_end": 29890,
               "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-682",
-              "line_start": 24572,
-              "line_end": 24572,
+              "line_start": 24588,
+              "line_end": 24588,
               "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
@@ -976,15 +976,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29782,
-              "line_end": 29782,
+              "line_start": 29891,
+              "line_end": 29891,
               "quote": "handlers::alert::mute_rule, produces this exact family. Existing closed\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29512,
-              "line_end": 29512,
+              "line_start": 29621,
+              "line_end": 29621,
               "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
@@ -1017,8 +1017,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-682",
-              "line_start": 24572,
-              "line_end": 24572,
+              "line_start": 24588,
+              "line_end": 24588,
               "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
@@ -1037,15 +1037,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29642,
-              "line_end": 29642,
+              "line_start": 29751,
+              "line_end": 29751,
               "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29642,
-              "line_end": 29642,
+              "line_start": 29751,
+              "line_end": 29751,
               "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
@@ -1064,22 +1064,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29795,
-              "line_end": 29795,
+              "line_start": 29904,
+              "line_end": 29904,
               "quote": "Request digest covers the full admitted command, subject alert_rule_id,\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29517,
-              "line_end": 29517,
+              "line_start": 29626,
+              "line_end": 29626,
               "quote": "retries\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29704,
+              "line_end": 29704,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             },
             {
@@ -1105,8 +1105,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29549,
-              "line_end": 29549,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
@@ -1125,15 +1125,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29814,
-              "line_end": 29814,
+              "line_start": 29923,
+              "line_end": 29923,
               "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_rule_muted_operation.schema.json.\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29521,
-              "line_end": 29521,
+              "line_start": 29630,
+              "line_end": 29630,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             },
             {
@@ -1166,8 +1166,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29784,
-              "line_end": 29784,
+              "line_start": 29893,
+              "line_end": 29893,
               "quote": "Transition: unmuted\\"
             }
           ],
@@ -1186,22 +1186,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29821,
-              "line_end": 29821,
+              "line_start": 29930,
+              "line_end": 29930,
               "quote": "projector.alert_rule_muted.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29529,
-              "line_end": 29529,
+              "line_start": 29638,
+              "line_end": 29638,
               "quote": "SP-278 and DL-076:\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29507,
-              "line_end": 29507,
+              "line_start": 29616,
+              "line_end": 29616,
               "quote": "CAS the exact subject revision\\"
             }
           ],
@@ -1220,15 +1220,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29690,
-              "line_end": 29690,
+              "line_start": 29799,
+              "line_end": 29799,
               "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29546,
-              "line_end": 29546,
+              "line_start": 29655,
+              "line_end": 29655,
               "quote": "withdrawn under whole-value CAS.\\"
             },
             {
@@ -1254,15 +1254,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-332",
-              "line_start": 7331,
-              "line_end": 7331,
+              "line_start": 7337,
+              "line_end": 7337,
               "quote": "alert.rule_muted contract oracles"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29554,
-              "line_end": 29554,
+              "line_start": 29663,
+              "line_end": 29663,
               "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             },
             {
@@ -1347,8 +1347,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-663",
-          "line_start": 29928,
-          "line_end": 29928,
+          "line_start": 30037,
+          "line_end": 30037,
           "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
@@ -1368,8 +1368,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29653,
-              "line_end": 29653,
+              "line_start": 29762,
+              "line_end": 29762,
               "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
@@ -1388,15 +1388,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29928,
-              "line_end": 29928,
+              "line_start": 30037,
+              "line_end": 30037,
               "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-683",
-              "line_start": 24622,
-              "line_end": 24622,
+              "line_start": 24638,
+              "line_end": 24638,
               "quote": "alert.snoozed exact payload and storage route"
             }
           ],
@@ -1415,15 +1415,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29929,
-              "line_end": 29929,
+              "line_start": 30038,
+              "line_end": 30038,
               "quote": "handlers::alert::snooze, produces this exact family. Existing closed payload\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29512,
-              "line_end": 29512,
+              "line_start": 29621,
+              "line_end": 29621,
               "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
@@ -1456,8 +1456,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-683",
-              "line_start": 24622,
-              "line_end": 24622,
+              "line_start": 24638,
+              "line_end": 24638,
               "quote": "alert.snoozed exact payload and storage route"
             }
           ],
@@ -1476,15 +1476,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29642,
-              "line_end": 29642,
+              "line_start": 29751,
+              "line_end": 29751,
               "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29642,
-              "line_end": 29642,
+              "line_start": 29751,
+              "line_end": 29751,
               "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
@@ -1503,22 +1503,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29648,
-              "line_end": 29648,
+              "line_start": 29757,
+              "line_end": 29757,
               "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29517,
-              "line_end": 29517,
+              "line_start": 29626,
+              "line_end": 29626,
               "quote": "retries\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29704,
+              "line_end": 29704,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             },
             {
@@ -1544,8 +1544,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29549,
-              "line_end": 29549,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
@@ -1564,15 +1564,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29961,
-              "line_end": 29961,
+              "line_start": 30070,
+              "line_end": 30070,
               "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_snoozed_operation.schema.json.\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29521,
-              "line_end": 29521,
+              "line_start": 29630,
+              "line_end": 29630,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             },
             {
@@ -1605,8 +1605,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29490,
-              "line_end": 29490,
+              "line_start": 29599,
+              "line_end": 29599,
               "quote": "Transition: unacknowledged\\"
             }
           ],
@@ -1625,22 +1625,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29968,
-              "line_end": 29968,
+              "line_start": 30077,
+              "line_end": 30077,
               "quote": "projector.alert_snoozed.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29529,
-              "line_end": 29529,
+              "line_start": 29638,
+              "line_end": 29638,
               "quote": "SP-278 and DL-076:\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29507,
-              "line_end": 29507,
+              "line_start": 29616,
+              "line_end": 29616,
               "quote": "CAS the exact subject revision\\"
             }
           ],
@@ -1659,15 +1659,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29690,
-              "line_end": 29690,
+              "line_start": 29799,
+              "line_end": 29799,
               "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29546,
-              "line_end": 29546,
+              "line_start": 29655,
+              "line_end": 29655,
               "quote": "withdrawn under whole-value CAS.\\"
             },
             {
@@ -1693,15 +1693,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-333",
-              "line_start": 7380,
-              "line_end": 7380,
+              "line_start": 7386,
+              "line_end": 7386,
               "quote": "alert.snoozed contract oracles"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29554,
-              "line_end": 29554,
+              "line_start": 29663,
+              "line_end": 29663,
               "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             },
             {
@@ -1786,8 +1786,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-708",
-          "line_start": 51012,
-          "line_end": 51012,
+          "line_start": 51017,
+          "line_end": 51017,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -1804,8 +1804,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51032,
-              "line_end": 51032,
+              "line_start": 51043,
+              "line_end": 51043,
               "quote": "Membership ABSENT."
             }
           ],
@@ -1824,8 +1824,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51012,
-              "line_end": 51012,
+              "line_start": 51017,
+              "line_end": 51017,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -1844,8 +1844,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51020,
-              "line_end": 51020,
+              "line_start": 50827,
+              "line_end": 50827,
               "quote": "Producer and transitions: there is no current producer"
             }
           ],
@@ -1864,8 +1864,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51018,
-              "line_end": 51018,
+              "line_start": 51023,
+              "line_end": 51023,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -1884,8 +1884,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51018,
-              "line_end": 51018,
+              "line_start": 51023,
+              "line_end": 51023,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -1904,8 +1904,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51020,
-              "line_end": 51020,
+              "line_start": 50827,
+              "line_end": 50827,
               "quote": "No timestamp guess, identifier similarity, replay of note commands"
             }
           ],
@@ -1924,8 +1924,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51028,
-              "line_end": 51028,
+              "line_start": 51039,
+              "line_end": 51039,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -1944,8 +1944,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51026,
-              "line_end": 51026,
+              "line_start": 51037,
+              "line_end": 51037,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -1964,8 +1964,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51020,
-              "line_end": 51020,
+              "line_start": 50827,
+              "line_end": 50827,
               "quote": "Producer and transitions:"
             }
           ],
@@ -1984,8 +1984,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51022,
-              "line_end": 51022,
+              "line_start": 51033,
+              "line_end": 51033,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -2004,8 +2004,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51030,
-              "line_end": 51030,
+              "line_start": 51041,
+              "line_end": 51041,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -2024,8 +2024,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
-              "line_start": 51032,
-              "line_end": 51032,
+              "line_start": 51043,
+              "line_end": 51043,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -2073,8 +2073,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-706",
-          "line_start": 50876,
-          "line_end": 50876,
+          "line_start": 50881,
+          "line_end": 50881,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -2091,8 +2091,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50902,
-              "line_end": 50902,
+              "line_start": 50907,
+              "line_end": 50907,
               "quote": "Membership ABSENT."
             }
           ],
@@ -2111,8 +2111,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50876,
-              "line_end": 50876,
+              "line_start": 50881,
+              "line_end": 50881,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -2131,8 +2131,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50888,
-              "line_end": 50888,
+              "line_start": 50893,
+              "line_end": 50893,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -2151,8 +2151,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50882,
-              "line_end": 50882,
+              "line_start": 50887,
+              "line_end": 50887,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -2171,8 +2171,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50882,
-              "line_end": 50882,
+              "line_start": 50887,
+              "line_end": 50887,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -2191,8 +2191,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50888,
-              "line_end": 50888,
+              "line_start": 50893,
+              "line_end": 50893,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -2211,8 +2211,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50898,
-              "line_end": 50898,
+              "line_start": 50903,
+              "line_end": 50903,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -2231,8 +2231,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50896,
-              "line_end": 50896,
+              "line_start": 50901,
+              "line_end": 50901,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -2251,8 +2251,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50890,
-              "line_end": 50890,
+              "line_start": 50765,
+              "line_end": 50765,
               "quote": "Exact transition:"
             }
           ],
@@ -2271,8 +2271,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50892,
-              "line_end": 50892,
+              "line_start": 50897,
+              "line_end": 50897,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -2291,8 +2291,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50900,
-              "line_end": 50900,
+              "line_start": 50905,
+              "line_end": 50905,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -2311,8 +2311,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
-              "line_start": 50902,
-              "line_end": 50902,
+              "line_start": 50907,
+              "line_end": 50907,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -2359,8 +2359,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-707",
-          "line_start": 50944,
-          "line_end": 50944,
+          "line_start": 50949,
+          "line_end": 50949,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -2377,8 +2377,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50970,
-              "line_end": 50970,
+              "line_start": 50975,
+              "line_end": 50975,
               "quote": "Membership ABSENT."
             }
           ],
@@ -2397,8 +2397,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50944,
-              "line_end": 50944,
+              "line_start": 50949,
+              "line_end": 50949,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -2417,8 +2417,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50956,
-              "line_end": 50956,
+              "line_start": 50961,
+              "line_end": 50961,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -2437,8 +2437,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50950,
-              "line_end": 50950,
+              "line_start": 50955,
+              "line_end": 50955,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -2457,8 +2457,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50950,
-              "line_end": 50950,
+              "line_start": 50955,
+              "line_end": 50955,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -2477,8 +2477,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50956,
-              "line_end": 50956,
+              "line_start": 50961,
+              "line_end": 50961,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -2497,8 +2497,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50966,
-              "line_end": 50966,
+              "line_start": 50971,
+              "line_end": 50971,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -2517,8 +2517,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50964,
-              "line_end": 50964,
+              "line_start": 50969,
+              "line_end": 50969,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -2537,8 +2537,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50958,
-              "line_end": 50958,
+              "line_start": 51099,
+              "line_end": 51099,
               "quote": "Exact transition:"
             }
           ],
@@ -2557,8 +2557,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50960,
-              "line_end": 50960,
+              "line_start": 50965,
+              "line_end": 50965,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -2577,8 +2577,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50968,
-              "line_end": 50968,
+              "line_start": 50973,
+              "line_end": 50973,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -2597,8 +2597,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
-              "line_start": 50970,
-              "line_end": 50970,
+              "line_start": 50975,
+              "line_end": 50975,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -2645,8 +2645,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-709",
-          "line_start": 51074,
-          "line_end": 51074,
+          "line_start": 51085,
+          "line_end": 51085,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -2663,8 +2663,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51100,
-              "line_end": 51100,
+              "line_start": 51111,
+              "line_end": 51111,
               "quote": "Membership ABSENT."
             }
           ],
@@ -2683,8 +2683,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51074,
-              "line_end": 51074,
+              "line_start": 51085,
+              "line_end": 51085,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -2703,8 +2703,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51086,
-              "line_end": 51086,
+              "line_start": 51097,
+              "line_end": 51097,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -2723,8 +2723,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51080,
-              "line_end": 51080,
+              "line_start": 51091,
+              "line_end": 51091,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -2743,8 +2743,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51080,
-              "line_end": 51080,
+              "line_start": 51091,
+              "line_end": 51091,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -2763,8 +2763,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51086,
-              "line_end": 51086,
+              "line_start": 51097,
+              "line_end": 51097,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -2783,8 +2783,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51096,
-              "line_end": 51096,
+              "line_start": 51107,
+              "line_end": 51107,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -2803,8 +2803,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51094,
-              "line_end": 51094,
+              "line_start": 51105,
+              "line_end": 51105,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -2823,8 +2823,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51088,
-              "line_end": 51088,
+              "line_start": 51031,
+              "line_end": 51031,
               "quote": "Exact effect:"
             }
           ],
@@ -2843,8 +2843,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51090,
-              "line_end": 51090,
+              "line_start": 51101,
+              "line_end": 51101,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -2863,8 +2863,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51098,
-              "line_end": 51098,
+              "line_start": 51109,
+              "line_end": 51109,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -2883,8 +2883,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
-              "line_start": 51100,
-              "line_end": 51100,
+              "line_start": 51111,
+              "line_end": 51111,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -2931,8 +2931,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-666",
-          "line_start": 30399,
-          "line_end": 30399,
+          "line_start": 30508,
+          "line_end": 30508,
           "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission."
         },
         {
@@ -2961,8 +2961,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30449,
-              "line_end": 30449,
+              "line_start": 30558,
+              "line_end": 30558,
               "quote": "currently absent: deny before journal, record/body write, append"
             }
           ],
@@ -2981,15 +2981,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30399,
-              "line_end": 30399,
+              "line_start": 30508,
+              "line_end": 30508,
               "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-686",
-              "line_start": 24784,
-              "line_end": 24784,
+              "line_start": 24800,
+              "line_end": 24800,
               "quote": "concern.created closed current payload and authority route"
             }
           ],
@@ -3008,15 +3008,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30404,
-              "line_end": 30404,
+              "line_start": 30513,
+              "line_end": 30513,
               "quote": "handlers::concern::create commits this family, after independently authenticating one of those five creator"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30225,
+              "line_end": 30225,
               "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
@@ -3049,8 +3049,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-686",
-              "line_start": 24784,
-              "line_end": 24784,
+              "line_start": 24800,
+              "line_end": 24800,
               "quote": "concern.created closed current payload and authority route"
             }
           ],
@@ -3069,15 +3069,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30420,
-              "line_end": 30420,
+              "line_start": 30529,
+              "line_end": 30529,
               "quote": "Identity: Project-only EventRecord 2.0.0, scope_kind=project, envelope project_id equals payload and original"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30421,
-              "line_end": 30421,
+              "line_start": 30530,
+              "line_end": 30530,
               "quote": "project~base64url_no_pad(UTF8(project_id)). No application/default/focus"
             }
           ],
@@ -3096,15 +3096,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 22461,
-              "line_end": 22461,
+              "line_start": 22543,
+              "line_end": 22543,
               "quote": "Request digest"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30468,
-              "line_end": 30468,
+              "line_start": 30577,
+              "line_end": 30577,
               "quote": "retries recover append; settled retries"
             },
             {
@@ -3137,8 +3137,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30542,
-              "line_end": 30542,
+              "line_start": 30651,
+              "line_end": 30651,
               "quote": "PENDING_RETENTION_DECISION, with Case L-3 audit-authority/ordinary telemetry and RP-PROJECTION-3GEN"
             }
           ],
@@ -3157,15 +3157,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30487,
-              "line_end": 30487,
+              "line_start": 30596,
+              "line_end": 30596,
               "quote": "Custody: canonical record and original operation are non-rebuildable original authority. Preserve immutable original"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30489,
-              "line_end": 30489,
+              "line_start": 30598,
+              "line_end": 30598,
               "quote": "backup/restore includes all of them with the original Storage source under one verified recovery boundary."
             },
             {
@@ -3198,8 +3198,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30411,
-              "line_end": 30411,
+              "line_start": 30520,
+              "line_end": 30520,
               "quote": "Birth is absent -> active at concern_revision=1, never acknowledged/resolved/dismissed, never a"
             }
           ],
@@ -3218,22 +3218,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30497,
-              "line_end": 30497,
+              "line_start": 30606,
+              "line_end": 30606,
               "quote": "projector.concern_created.history@1.0.0 and reader.concern_created.history@1.0.0 expose passive"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30142,
-              "line_end": 30142,
+              "line_start": 30251,
+              "line_end": 30251,
               "quote": "SP-278/DL-076:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30452,
-              "line_end": 30452,
+              "line_start": 30561,
+              "line_end": 30561,
               "quote": "CAS creates concern_record.v1:{project_id}:{concern_id}"
             }
           ],
@@ -3252,15 +3252,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30526,
-              "line_end": 30526,
+              "line_start": 30635,
+              "line_end": 30635,
               "quote": "Compatibility: only the exact current payload 1.0.0 and declared value schemas are selected;"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30516,
-              "line_end": 30516,
+              "line_start": 30625,
+              "line_end": 30625,
               "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires"
             }
           ],
@@ -3279,15 +3279,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-334",
-              "line_start": 7456,
-              "line_end": 7456,
+              "line_start": 7462,
+              "line_end": 7462,
               "quote": "concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30547,
-              "line_end": 30547,
+              "line_start": 30656,
+              "line_end": 30656,
               "quote": "NOT_RUN. Nothing here admits an event or makes a native writer available.'"
             },
             {
@@ -3383,8 +3383,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-710",
-          "line_start": 51142,
-          "line_end": 51142,
+          "line_start": 51153,
+          "line_end": 51153,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -3401,8 +3401,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51168,
-              "line_end": 51168,
+              "line_start": 51179,
+              "line_end": 51179,
               "quote": "Membership ABSENT."
             }
           ],
@@ -3421,8 +3421,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51142,
-              "line_end": 51142,
+              "line_start": 51153,
+              "line_end": 51153,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -3441,8 +3441,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51154,
-              "line_end": 51154,
+              "line_start": 51165,
+              "line_end": 51165,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -3461,8 +3461,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51148,
-              "line_end": 51148,
+              "line_start": 51159,
+              "line_end": 51159,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -3481,8 +3481,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51148,
-              "line_end": 51148,
+              "line_start": 51159,
+              "line_end": 51159,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -3501,8 +3501,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51154,
-              "line_end": 51154,
+              "line_start": 51165,
+              "line_end": 51165,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -3521,8 +3521,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51164,
-              "line_end": 51164,
+              "line_start": 51175,
+              "line_end": 51175,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -3541,8 +3541,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51162,
-              "line_end": 51162,
+              "line_start": 51173,
+              "line_end": 51173,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -3561,8 +3561,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51156,
-              "line_end": 51156,
+              "line_start": 51235,
+              "line_end": 51235,
               "quote": "Exact effect:"
             }
           ],
@@ -3581,8 +3581,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51158,
-              "line_end": 51158,
+              "line_start": 51169,
+              "line_end": 51169,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -3601,8 +3601,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51166,
-              "line_end": 51166,
+              "line_start": 51177,
+              "line_end": 51177,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -3621,8 +3621,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
-              "line_start": 51168,
-              "line_end": 51168,
+              "line_start": 51179,
+              "line_end": 51179,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -3669,8 +3669,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-711",
-          "line_start": 51210,
-          "line_end": 51210,
+          "line_start": 51221,
+          "line_end": 51221,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -3687,8 +3687,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51236,
-              "line_end": 51236,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "Membership ABSENT."
             }
           ],
@@ -3707,8 +3707,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51210,
-              "line_end": 51210,
+              "line_start": 51221,
+              "line_end": 51221,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -3727,8 +3727,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51222,
-              "line_end": 51222,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -3747,8 +3747,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51216,
-              "line_end": 51216,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -3767,8 +3767,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51216,
-              "line_end": 51216,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -3787,8 +3787,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51222,
-              "line_end": 51222,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -3807,8 +3807,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51232,
-              "line_end": 51232,
+              "line_start": 51243,
+              "line_end": 51243,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -3827,8 +3827,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51230,
-              "line_end": 51230,
+              "line_start": 51241,
+              "line_end": 51241,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -3847,8 +3847,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51224,
-              "line_end": 51224,
+              "line_start": 51235,
+              "line_end": 51235,
               "quote": "Exact effect:"
             }
           ],
@@ -3867,8 +3867,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51226,
-              "line_end": 51226,
+              "line_start": 51237,
+              "line_end": 51237,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -3887,8 +3887,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51234,
-              "line_end": 51234,
+              "line_start": 51245,
+              "line_end": 51245,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -3907,8 +3907,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
-              "line_start": 51236,
-              "line_end": 51236,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -3955,8 +3955,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-712",
-          "line_start": 51278,
-          "line_end": 51278,
+          "line_start": 51221,
+          "line_end": 51221,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -3973,8 +3973,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51304,
-              "line_end": 51304,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "Membership ABSENT."
             }
           ],
@@ -3993,8 +3993,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51278,
-              "line_end": 51278,
+              "line_start": 51221,
+              "line_end": 51221,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -4013,8 +4013,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51290,
-              "line_end": 51290,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -4033,8 +4033,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51284,
-              "line_end": 51284,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -4053,8 +4053,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51284,
-              "line_end": 51284,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -4073,8 +4073,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51290,
-              "line_end": 51290,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -4093,8 +4093,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51300,
-              "line_end": 51300,
+              "line_start": 51243,
+              "line_end": 51243,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -4113,8 +4113,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51298,
-              "line_end": 51298,
+              "line_start": 51241,
+              "line_end": 51241,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -4133,8 +4133,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51292,
-              "line_end": 51292,
+              "line_start": 51167,
+              "line_end": 51167,
               "quote": "Exact transition:"
             }
           ],
@@ -4153,8 +4153,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51294,
-              "line_end": 51294,
+              "line_start": 51237,
+              "line_end": 51237,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -4173,8 +4173,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51302,
-              "line_end": 51302,
+              "line_start": 51245,
+              "line_end": 51245,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -4193,8 +4193,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
-              "line_start": 51304,
-              "line_end": 51304,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -4241,8 +4241,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-713",
-          "line_start": 51346,
-          "line_end": 51346,
+          "line_start": 51221,
+          "line_end": 51221,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -4259,8 +4259,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51372,
-              "line_end": 51372,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "Membership ABSENT."
             }
           ],
@@ -4279,8 +4279,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51346,
-              "line_end": 51346,
+              "line_start": 51221,
+              "line_end": 51221,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -4299,8 +4299,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51358,
-              "line_end": 51358,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -4319,8 +4319,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51352,
-              "line_end": 51352,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -4339,8 +4339,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51352,
-              "line_end": 51352,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -4359,8 +4359,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51358,
-              "line_end": 51358,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -4379,8 +4379,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51368,
-              "line_end": 51368,
+              "line_start": 51243,
+              "line_end": 51243,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -4399,8 +4399,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51366,
-              "line_end": 51366,
+              "line_start": 51241,
+              "line_end": 51241,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -4419,8 +4419,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51360,
-              "line_end": 51360,
+              "line_start": 51167,
+              "line_end": 51167,
               "quote": "Exact transition:"
             }
           ],
@@ -4439,8 +4439,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51362,
-              "line_end": 51362,
+              "line_start": 51237,
+              "line_end": 51237,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -4459,8 +4459,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51370,
-              "line_end": 51370,
+              "line_start": 51245,
+              "line_end": 51245,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -4479,8 +4479,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
-              "line_start": 51372,
-              "line_end": 51372,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -4527,8 +4527,8 @@
         {
           "path": "Plans/FinalGUISpec.md",
           "unit": "F3-714",
-          "line_start": 51414,
-          "line_end": 51414,
+          "line_start": 51221,
+          "line_end": 51221,
           "quote": "Newly authored owner contract for "
         }
       ],
@@ -4545,8 +4545,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51440,
-              "line_end": 51440,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "Membership ABSENT."
             }
           ],
@@ -4565,8 +4565,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51414,
-              "line_end": 51414,
+              "line_start": 51221,
+              "line_end": 51221,
               "quote": "Newly authored owner contract for "
             }
           ],
@@ -4585,8 +4585,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51426,
-              "line_end": 51426,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Explicitly adopt SP-286/CV-339"
             }
           ],
@@ -4605,8 +4605,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51420,
-              "line_end": 51420,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "Payload and scope: the exact closed schema is "
             }
           ],
@@ -4625,8 +4625,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51420,
-              "line_end": 51420,
+              "line_start": 51227,
+              "line_end": 51227,
               "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))"
             }
           ],
@@ -4645,8 +4645,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51426,
-              "line_end": 51426,
+              "line_start": 51233,
+              "line_end": 51233,
               "quote": "Same scoped key with changed caller semantic body is idempotency_conflict"
             }
           ],
@@ -4665,8 +4665,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51436,
-              "line_end": 51436,
+              "line_start": 51243,
+              "line_end": 51243,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION"
             }
           ],
@@ -4685,8 +4685,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51434,
-              "line_end": 51434,
+              "line_start": 51241,
+              "line_end": 51241,
               "quote": "Mandatory coherent backup/restore preserves them together"
             }
           ],
@@ -4705,8 +4705,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51428,
-              "line_end": 51428,
+              "line_start": 51235,
+              "line_end": 51235,
               "quote": "Exact effect:"
             }
           ],
@@ -4725,8 +4725,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51430,
-              "line_end": 51430,
+              "line_start": 51237,
+              "line_end": 51237,
               "quote": "Explicitly adopt SP-278/DL-076:"
             }
           ],
@@ -4745,8 +4745,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51438,
-              "line_end": 51438,
+              "line_start": 51245,
+              "line_end": 51245,
               "quote": "Close exact-family writer admission first"
             }
           ],
@@ -4765,8 +4765,8 @@
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
-              "line_start": 51440,
-              "line_end": 51440,
+              "line_start": 51247,
+              "line_end": 51247,
               "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
             },
             {
@@ -4813,8 +4813,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-664",
-          "line_start": 30075,
-          "line_end": 30075,
+          "line_start": 30184,
+          "line_end": 30184,
           "quote": "canonical_text: 'Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission."
         }
       ],
@@ -4834,8 +4834,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30103,
-              "line_end": 30103,
+              "line_start": 30212,
+              "line_end": 30212,
               "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host"
             }
           ],
@@ -4854,15 +4854,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30075,
-              "line_end": 30075,
+              "line_start": 30184,
+              "line_end": 30184,
               "quote": "Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-684",
-              "line_start": 24672,
-              "line_end": 24672,
+              "line_start": 24688,
+              "line_end": 24688,
               "quote": "panel.redocked current payload and historical reader"
             }
           ],
@@ -4881,15 +4881,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30078,
-              "line_end": 30078,
+              "line_start": 30187,
+              "line_end": 30187,
               "quote": "handlers::panel::redock in the shared panel shell, is this family''s sole producer. Successful transition is"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30225,
+              "line_end": 30225,
               "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
@@ -4922,8 +4922,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-684",
-              "line_start": 24672,
-              "line_end": 24672,
+              "line_start": 24688,
+              "line_end": 24688,
               "quote": "panel.redocked current payload and historical reader"
             }
           ],
@@ -4942,15 +4942,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30089,
-              "line_end": 30089,
+              "line_start": 30198,
+              "line_end": 30198,
               "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30089,
-              "line_end": 30089,
+              "line_start": 30198,
+              "line_end": 30198,
               "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             }
           ],
@@ -4969,8 +4969,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30098,
-              "line_end": 30098,
+              "line_start": 30207,
+              "line_end": 30207,
               "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar"
             },
             {
@@ -4983,8 +4983,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29704,
+              "line_end": 29704,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             },
             {
@@ -5010,8 +5010,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30182,
-              "line_end": 30182,
+              "line_start": 30291,
+              "line_end": 30291,
               "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt"
             }
           ],
@@ -5030,8 +5030,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30130,
-              "line_end": 30130,
+              "line_start": 30239,
+              "line_end": 30239,
               "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate"
             },
             {
@@ -5071,8 +5071,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30078,
-              "line_end": 30078,
+              "line_start": 30187,
+              "line_end": 30187,
               "quote": "Successful transition is"
             }
           ],
@@ -5091,22 +5091,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30140,
-              "line_end": 30140,
+              "line_start": 30249,
+              "line_end": 30249,
               "quote": "projector.panel_redocked.history@1.0.0 and reader.panel_redocked.history@1.0.0 expose passive record-backed"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30142,
-              "line_end": 30142,
+              "line_start": 30251,
+              "line_end": 30251,
               "quote": "SP-278/DL-076: complete"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30119,
-              "line_end": 30119,
+              "line_start": 30228,
+              "line_end": 30228,
               "quote": "CAS committed -> settled with original_append_result_ref"
             }
           ],
@@ -5125,15 +5125,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30165,
-              "line_end": 30165,
+              "line_start": 30274,
+              "line_end": 30274,
               "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_redocked.schema.json is the original 1.0.0"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30157,
-              "line_end": 30157,
+              "line_start": 30266,
+              "line_end": 30266,
               "quote": "withdrawn token, cursor beyond frontier or missing"
             },
             {
@@ -5159,15 +5159,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-334",
-              "line_start": 7436,
-              "line_end": 7436,
+              "line_start": 7442,
+              "line_end": 7442,
               "quote": "panel.redocked is checked independently by python3 scripts/pm-panel-event-contracts-check.py with"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 20215,
-              "line_end": 20215,
+              "line_start": 20297,
+              "line_end": 20297,
               "quote": "NOT_RUN."
             },
             {
@@ -5252,8 +5252,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-665",
-          "line_start": 30237,
-          "line_end": 30237,
+          "line_start": 30346,
+          "line_end": 30346,
           "quote": "canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission."
         }
       ],
@@ -5273,8 +5273,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30103,
-              "line_end": 30103,
+              "line_start": 30212,
+              "line_end": 30212,
               "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host"
             }
           ],
@@ -5293,15 +5293,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30237,
-              "line_end": 30237,
+              "line_start": 30346,
+              "line_end": 30346,
               "quote": "Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-685",
-              "line_start": 24728,
-              "line_end": 24728,
+              "line_start": 24744,
+              "line_end": 24744,
               "quote": "panel.undocked current payload and historical reader"
             }
           ],
@@ -5320,15 +5320,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30240,
-              "line_end": 30240,
+              "line_start": 30349,
+              "line_end": 30349,
               "quote": "handlers::panel::undock in the shared panel shell, is this family''s sole producer. Successful transition is"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30225,
+              "line_end": 30225,
               "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
@@ -5361,8 +5361,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-685",
-              "line_start": 24728,
-              "line_end": 24728,
+              "line_start": 24744,
+              "line_end": 24744,
               "quote": "panel.undocked current payload and historical reader"
             }
           ],
@@ -5381,15 +5381,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30089,
-              "line_end": 30089,
+              "line_start": 30198,
+              "line_end": 30198,
               "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30089,
-              "line_end": 30089,
+              "line_start": 30198,
+              "line_end": 30198,
               "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             }
           ],
@@ -5408,8 +5408,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30098,
-              "line_end": 30098,
+              "line_start": 30207,
+              "line_end": 30207,
               "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar"
             },
             {
@@ -5422,8 +5422,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29704,
+              "line_end": 29704,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             },
             {
@@ -5449,8 +5449,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30182,
-              "line_end": 30182,
+              "line_start": 30291,
+              "line_end": 30291,
               "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt"
             }
           ],
@@ -5469,8 +5469,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30130,
-              "line_end": 30130,
+              "line_start": 30239,
+              "line_end": 30239,
               "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate"
             },
             {
@@ -5510,8 +5510,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30078,
-              "line_end": 30078,
+              "line_start": 30187,
+              "line_end": 30187,
               "quote": "Successful transition is"
             }
           ],
@@ -5530,22 +5530,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30302,
-              "line_end": 30302,
+              "line_start": 30411,
+              "line_end": 30411,
               "quote": "projector.panel_undocked.history@1.0.0 and reader.panel_undocked.history@1.0.0 expose passive record-backed"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30142,
-              "line_end": 30142,
+              "line_start": 30251,
+              "line_end": 30251,
               "quote": "SP-278/DL-076: complete"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30119,
-              "line_end": 30119,
+              "line_start": 30228,
+              "line_end": 30228,
               "quote": "CAS committed -> settled with original_append_result_ref"
             }
           ],
@@ -5564,15 +5564,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30327,
-              "line_end": 30327,
+              "line_start": 30436,
+              "line_end": 30436,
               "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_undocked.schema.json is the original 1.0.0"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30157,
-              "line_end": 30157,
+              "line_start": 30266,
+              "line_end": 30266,
               "quote": "withdrawn token, cursor beyond frontier or missing"
             },
             {
@@ -5598,15 +5598,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-334",
-              "line_start": 7443,
-              "line_end": 7443,
+              "line_start": 7449,
+              "line_end": 7449,
               "quote": "panel.undocked is checked independently by the same checker with Plans/panel_event_contracts/panel_undocked.fixtures.json:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 20215,
-              "line_end": 20215,
+              "line_start": 20297,
+              "line_end": 20297,
               "quote": "NOT_RUN."
             },
             {
