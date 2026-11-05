@@ -1,6 +1,8 @@
 // FO-56: resizing an open note, keyboard scrolling and existing note semantics.
+import openResizeNotes from './look-menu-open-resize.check.mjs';
 import {reachableMenuLines} from '../helpers/look-menu-lines.mjs';
 export default async function(t) {
+  await openResizeNotes(t);
   await t.emulate({reducedMotion:'reduce'});
   const f = await t.app.open({onboarding:true,query:'o55=screen=look'});
   await f.locator('[data-o55-do="pickFamily"][data-arg="nier"]').last().click();
