@@ -10,19 +10,19 @@
     {
       "path": "Plans/Contracts_V0.md",
       "unit": "CV-557",
-      "line_start": 25051,
-      "line_end": 25051,
+      "line_start": 25065,
+      "line_end": 25065,
       "quote": "**Producer and transition.**",
       "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
-      "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+      "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
       "quote_check": "exact"
     }
   ],
-  "outcome": "prepare (check-11 repair complete; numeric epoch counterexample FIX5-N2 remains outside authorized scope; admission absent)",
-  "pass_count": 9,
-  "before_pass_count": 9,
+  "outcome": "prepare (round-6 technical repairs verified; individual admission absent; seven event-history retention questions remain pending across DF)",
+  "pass_count": 10,
+  "before_pass_count": 8,
   "normative_depth_complete": false,
-  "technical_depth_complete": false,
+  "technical_depth_complete": true,
   "native_execution": "NOT_RUN",
   "current_owner_units": [
     "CV-557",
@@ -53,12 +53,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "ABSENT"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "owner_doc": {
       "status": "PASS",
@@ -68,31 +68,31 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25049,
-          "line_end": 25049,
+          "line_start": 25063,
+          "line_end": 25063,
           "quote": "**Newly authored owner contract",
           "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25063,
-          "line_end": 25063,
+          "line_start": 25077,
+          "line_end": 25077,
           "quote": "**Exact original source graph (second pass).**",
           "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "producer": {
       "status": "PASS",
@@ -102,21 +102,21 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25063,
-          "line_end": 25063,
+          "line_start": 25077,
+          "line_end": 25077,
           "quote": "**Exact original source graph (second pass).**",
           "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25077,
-          "line_end": 25077,
+          "line_start": 25093,
+          "line_end": 25093,
           "quote": "**Lifecycle barriers for",
           "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
@@ -132,11 +132,11 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25071,
-          "line_end": 25071,
+          "line_start": 25087,
+          "line_end": 25087,
           "quote": "**Complete application originals for `safe_point.created`",
           "excerpt_sha256": "1a0d3e6468fcd1327be0383f2031a98e906d1787a278d8f1df1d02078cff8c75",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
@@ -146,17 +146,17 @@
           "line_end": 201,
           "quote": "\"application_original_composition_root\"",
           "excerpt_sha256": "08d8aa7b1c1c2be732b8f3ad15f7bfc988847ef35e134f5461cfd7489b8bfc29",
-          "file_sha256": "4cd3bcf5a2a2c425a377f74ff4ef4faccb08bf892ccb758ef16c8fe11716b8d9",
+          "file_sha256": "06a3787381a98648d1062992a8764c9a3f696a383bfb22ab8dccbbb590c57368",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25071,
-          "line_end": 25071,
+          "line_start": 25087,
+          "line_end": 25087,
           "quote": "**Complete application originals for `safe_point.created`",
           "excerpt_sha256": "1a0d3e6468fcd1327be0383f2031a98e906d1787a278d8f1df1d02078cff8c75",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
@@ -166,17 +166,17 @@
           "line_end": 201,
           "quote": "\"application_original_composition_root\"",
           "excerpt_sha256": "08d8aa7b1c1c2be732b8f3ad15f7bfc988847ef35e134f5461cfd7489b8bfc29",
-          "file_sha256": "4cd3bcf5a2a2c425a377f74ff4ef4faccb08bf892ccb758ef16c8fe11716b8d9",
+          "file_sha256": "06a3787381a98648d1062992a8764c9a3f696a383bfb22ab8dccbbb590c57368",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -196,21 +196,21 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25049,
-          "line_end": 25049,
+          "line_start": 25063,
+          "line_end": 25063,
           "quote": "**Newly authored owner contract",
           "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "scope_identity": {
       "status": "PASS",
@@ -220,11 +220,11 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25053,
-          "line_end": 25053,
+          "line_start": 25067,
+          "line_end": 25067,
           "quote": "**Scope and joins.**",
           "excerpt_sha256": "356c919262c63b2dd5a2bad6965f8004d148d8c38b97a2dbd521e7b09142b16d",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
@@ -240,21 +240,21 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25089,
-          "line_end": 25089,
+          "line_start": 25105,
+          "line_end": 25105,
           "quote": "For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id",
           "excerpt_sha256": "f47b120453aaecf4c6f89b6cedba1f5e546b1d1a318620eab8101bb2c624a94d",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "replay_idempotency": {
       "status": "PASS",
@@ -305,30 +305,30 @@
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
           "quote": "**Current-writer eligibility for `safe_point.created` (review round 2).**",
-          "line_start": 25055,
-          "line_end": 25055,
+          "line_start": 25069,
+          "line_end": 25069,
           "excerpt_sha256": "f195deb09723d7c30b1db0cf30f1557b17da7fdf6aea84e3ea6f985c81bafada",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
           "quote": "**Current-writer eligibility for `safe_point.created` (review round 2).**",
-          "line_start": 25055,
-          "line_end": 25055,
+          "line_start": 25069,
+          "line_end": 25069,
           "excerpt_sha256": "f195deb09723d7c30b1db0cf30f1557b17da7fdf6aea84e3ea6f985c81bafada",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "retention": {
       "status": "PARTIAL",
@@ -352,22 +352,22 @@
           "line_end": 149,
           "quote": "\"retention_policy_ref\"",
           "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
-          "file_sha256": "4cd3bcf5a2a2c425a377f74ff4ef4faccb08bf892ccb758ef16c8fe11716b8d9",
+          "file_sha256": "06a3787381a98648d1062992a8764c9a3f696a383bfb22ab8dccbbb590c57368",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PARTIAL"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "redaction_custody": {
       "status": "PASS",
       "representation": "exact_normative_owner",
-      "finding": "SP-557/CV-557 require non-secret bounded audit values, original input/body ref+hash custody, current owner/access/hold checks and coherent source/body/receipt backup epochs. Missing or inaccessible originals stay unavailable; history cannot recreate deleted bodies.",
+      "finding": "CV-557 requires recomputed BLAKE3, SHA-256 and length for every resolved file blob, including body-dependent history and every byte-resolving retry/rebuild/restore path. Event-only history remains independent of disposed domain controls; native execution stays NOT_RUN.",
       "evidence": [
         {
           "path": "Plans/storage-plan.md",
@@ -382,21 +382,31 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25065,
-          "line_end": 25065,
+          "line_start": 25081,
+          "line_end": 25081,
           "quote": "The source's original_request, original_result, writer_epoch",
           "excerpt_sha256": "de1002a443a05f71d88cc27b17bbf29fb758718f7b9c1a9a14a48d3e3331133a",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-557",
+          "line_start": 25087,
+          "line_end": 25087,
+          "quote": "For every resolved file blob, recompute `blake3:` plus BLAKE3",
+          "excerpt_sha256": "76c54e57de8da601540d7ac5c93a9a3aae562936403d438768283c3b77cc3766",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
-        "status": "PASS"
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
+        "status": "PARTIAL"
       },
-      "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change": "upgraded",
+      "change_reason": "Resolved original bytes now recompute BLAKE3 against both manifest and inventory on write and historical body resolution; coherent forged/swapped/truncated negatives isolate it."
     },
     "transitions": {
       "status": "PASS",
@@ -406,31 +416,31 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25051,
-          "line_end": 25051,
+          "line_start": 25065,
+          "line_end": 25065,
           "quote": "**Producer and transition.**",
           "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25077,
-          "line_end": 25077,
+          "line_start": 25093,
+          "line_end": 25093,
           "quote": "**Lifecycle barriers for",
           "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "consumers_checkpoints": {
       "status": "PASS",
@@ -449,12 +459,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
@@ -464,11 +474,11 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25059,
-          "line_end": 25059,
+          "line_start": 25073,
+          "line_end": 25073,
           "quote": "**Compatibility.**",
           "excerpt_sha256": "1f2549a6c617bebc1dfaf68610c6d1dcf58a05ee350ae8c170ee238fece5f094",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
@@ -503,17 +513,17 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Round 5 isolates negative guards; prior normative owner and production predicates are byte-identical. All earlier standing-check and B1..B8 regressions hold."
+      "change_reason": "Own canonical contract and original positive/protocol controls retained; round-6 verification passes."
     },
     "positive_negative_oracles": {
-      "status": "PARTIAL",
+      "status": "PASS",
       "representation": "exact_normative_owner",
-      "finding": "Own-family single-defect inputs preserve unrelated typed values and recompute source/body/digest/receipt/issued/boundary copies. The literal 830-guard / 3119-negative matrix has zero uncovered guards, unexpected flips or exceptions; every flip/stay set is explicit, including overlapping upper layers. Schema ingress, owner predicates and complete-step/materialization results are explicitly separated. Actual CLI thread/epoch/full-value/scope removals expose accepted negatives. Earlier B1..B8 and standing checks 1..10 hold. R4-B1 is fixed, but C12 stays PARTIAL: independent FIX5-N2 accepts application writer_epoch 1 and 1.0 with distinct source commitments; adding a numeric guard is outside the explicit check-11 scope. Native NOT_RUN.",
+      "finding": "CV-557/ATS-279 now cover strict numeric/source types and retained source recipes. The complete 846-guard / 3466-negative literal matrix has zero uncovered guards, unexpected flips or exceptions. Original integration controls remain; native NOT_RUN.",
       "evidence": [
         {
           "path": "Plans/Automated_Testing_System.md",
@@ -522,27 +532,27 @@
           "line_end": 7538,
           "quote": "- `safe_point.created`: independent Project and application traces",
           "excerpt_sha256": "7fd3f3b9feb2f9533fad1d8e02f113b0b5c24254274fbf320173bf299d185ba1",
-          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
+          "file_sha256": "b237d2b4d387ccb9bfda6e35ab861905ddb0f7582ba2462f8c9ebbd728cc0d8c",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-557",
-          "line_start": 166210,
-          "line_end": 166210,
+          "line_start": 188610,
+          "line_end": 188610,
           "quote": "\"id\": \"safe_point_created.fix1.1.missing_custody_after_recovery\"",
           "excerpt_sha256": "958ab4a3b9ff2dba80b21a8988ae196f73a26388efb0598c5dd1e447c7fa0e18",
-          "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
+          "file_sha256": "08b68dd9bdcc40c0359346aa34ba97c6180c9f670e4e0bcca8498f4a8b5e262e",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
           "quote": "**Current-writer eligibility for `safe_point.created` (review round 2).**",
-          "line_start": 25055,
-          "line_end": 25055,
+          "line_start": 25069,
+          "line_end": 25069,
           "excerpt_sha256": "f195deb09723d7c30b1db0cf30f1557b17da7fdf6aea84e3ea6f985c81bafada",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
@@ -552,37 +562,37 @@
           "line_start": 7546,
           "line_end": 7546,
           "excerpt_sha256": "641a0f3e62b5f984ad674a6858f75436fa45718ebf999e1aa3b0375be661b99b",
-          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
+          "file_sha256": "b237d2b4d387ccb9bfda6e35ab861905ddb0f7582ba2462f8c9ebbd728cc0d8c",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-557",
           "quote": "\"id\": \"safe_point_created.fix2.replay_only_writer.project\"",
-          "line_start": 159988,
-          "line_end": 159988,
+          "line_start": 180499,
+          "line_end": 180499,
           "excerpt_sha256": "701953eb8b3da0ae7244e2b1666123732b89051aefc810d86875845d2807248f",
-          "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
+          "file_sha256": "08b68dd9bdcc40c0359346aa34ba97c6180c9f670e4e0bcca8498f4a8b5e262e",
           "quote_check": "exact"
         },
         {
           "path": "scripts/pm_filesafe_event_authority.py",
           "unit": "CV-557",
           "quote": "return 'replay_only_not_appendable'",
-          "line_start": 470,
-          "line_end": 470,
+          "line_start": 473,
+          "line_end": 473,
           "excerpt_sha256": "d724ff68974f6d3c28933813a60a372848d55ce5bf8f35ddeacfc7ec4f6c2909",
-          "file_sha256": "83fc7c1641a3454ea88e75e067fc7280d10c74559bd97206bfa8ffcd48d489c5",
+          "file_sha256": "2825f749c78417bd1a4ce13a6663d3bbee4aaca9bc1fe49e22f295022d45cbcc",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
           "quote": "**SP-337 payload boundary for `safe_point.created` (review round 3).**",
-          "line_start": 25057,
-          "line_end": 25057,
+          "line_start": 25071,
+          "line_end": 25071,
           "excerpt_sha256": "c5a08f0b62674494ed5479edf2b5c85c97f40fb334d2231ab72badc93e3b75ee",
-          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
           "quote_check": "exact"
         },
         {
@@ -592,27 +602,27 @@
           "line_start": 7551,
           "line_end": 7551,
           "excerpt_sha256": "403448b0fbdb485f2f37004ddeb7635ed52fde272e9718788253043b724a5b09",
-          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
+          "file_sha256": "b237d2b4d387ccb9bfda6e35ab861905ddb0f7582ba2462f8c9ebbd728cc0d8c",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-557",
           "quote": "\"id\": \"safe_point_created.fix3.inline_utf8_16385.project\"",
-          "line_start": 160432,
-          "line_end": 160432,
+          "line_start": 180943,
+          "line_end": 180943,
           "excerpt_sha256": "b42147fac5fc31162f8871c2fdd375f82b9af04979306be6b9ffda599c78ea31",
-          "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
+          "file_sha256": "08b68dd9bdcc40c0359346aa34ba97c6180c9f670e4e0bcca8498f4a8b5e262e",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-557",
           "quote": "\"id\": \"safe_point_created.fix3.sp337_reference.application\"",
-          "line_start": 150334,
-          "line_end": 150334,
+          "line_start": 168130,
+          "line_end": 168130,
           "excerpt_sha256": "a95cebbfe105b760841286ad77c5649243b784dad9accf5e53fdbea266a9898b",
-          "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
+          "file_sha256": "08b68dd9bdcc40c0359346aa34ba97c6180c9f670e4e0bcca8498f4a8b5e262e",
           "quote_check": "exact"
         },
         {
@@ -622,7 +632,7 @@
           "line_start": 165,
           "line_end": 165,
           "excerpt_sha256": "e8d6ae5f7cf6c653b007b152ff87d0c45613a864fbd88c190b8dc9a62cef64ab",
-          "file_sha256": "83fc7c1641a3454ea88e75e067fc7280d10c74559bd97206bfa8ffcd48d489c5",
+          "file_sha256": "2825f749c78417bd1a4ce13a6663d3bbee4aaca9bc1fe49e22f295022d45cbcc",
           "quote_check": "exact"
         },
         {
@@ -632,27 +642,27 @@
           "line_start": 7557,
           "line_end": 7557,
           "excerpt_sha256": "a4dd43e4d40a41ca9667ac3223df013608e3d2d47559c9a515bd186b9f84e5de",
-          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
+          "file_sha256": "b237d2b4d387ccb9bfda6e35ab861905ddb0f7582ba2462f8c9ebbd728cc0d8c",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-557",
           "quote": "\"id\": \"safe_point_created.fix4.history.project.inline.epoch_rollover\"",
-          "line_start": 170090,
-          "line_end": 170090,
+          "line_start": 192490,
+          "line_end": 192490,
           "excerpt_sha256": "a9cc36d6843eec66db1497e35225e1aa58a1c4ba4f6647bc02ff95c3fa74310c",
-          "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
+          "file_sha256": "08b68dd9bdcc40c0359346aa34ba97c6180c9f670e4e0bcca8498f4a8b5e262e",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-557",
           "quote": "\"id\": \"safe_point_created.fix4.history.application.ref.disposed_controls\"",
-          "line_start": 171972,
-          "line_end": 171972,
+          "line_start": 194372,
+          "line_end": 194372,
           "excerpt_sha256": "7128d569f696cbb1a22946f73328ef53792be89c4d3fccd50917fd636b376ade",
-          "file_sha256": "b9ac52136b21aa1bf719d0f40f61e9a05c9e25161e077bbafcc43c5e2f531664",
+          "file_sha256": "08b68dd9bdcc40c0359346aa34ba97c6180c9f670e4e0bcca8498f4a8b5e262e",
           "quote_check": "exact"
         },
         {
@@ -682,7 +692,7 @@
           "line_start": 224,
           "line_end": 224,
           "excerpt_sha256": "9ab9ca826cf5b5850c08794b5dd18fe5fa2ebe26b1092b58a081e023240324aa",
-          "file_sha256": "5ebbbcc633b845d9d0a95a516617e0119f340787e109973b0ff35d55fca34d88",
+          "file_sha256": "2de347af312ae888d99e0ea47e7ce3c1f1b9fc634b9f9edef64f795123c72020",
           "quote_check": "exact"
         },
         {
@@ -692,40 +702,54 @@
           "line_start": 8,
           "line_end": 8,
           "excerpt_sha256": "4ecd8185ab2fd646e5a9db399302b86b68a5309dce1030585e459e51fab0fe16",
-          "file_sha256": "2e73ee343b9ecc68d59a347a39dfad55415820dab3498d0f685d0d87af7220fc",
+          "file_sha256": "46f5d528ac761ce8324442342f7fd6c9aa31a0a615a7c3457c6b62c64eec7493",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-557",
+          "line_start": 25079,
+          "line_end": 25079,
+          "quote": "**Integer admission for `safe_point.created` (review round 6).**",
+          "excerpt_sha256": "28063854872c07b297a810274829536fe88381bda1b9c65eea2361e6a5523ba4",
+          "file_sha256": "78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "unit": "ATS-279",
+          "line_start": 7530,
+          "line_end": 7530,
+          "quote": "- `safe_point.created`: `Plans/filesafe_event_authority_fixtures.json` contains",
+          "excerpt_sha256": "193ee929d8821935d24f388c74b278a6d75f1fed96d3341d59201bbf8d532bff",
+          "file_sha256": "b237d2b4d387ccb9bfda6e35ab861905ddb0f7582ba2462f8c9ebbd728cc0d8c",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-cycle4.md",
-        "commit": "79baed4be8b1de3770846647eb27e4f438a72081",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/REVIEW-astra-2.md",
+        "commit": "233112bf6aa6f47bb1c58bf36bb7e6731625c07a",
         "status": "PARTIAL"
       },
-      "change": "carried",
-      "change_reason": "R4-B1 guard isolation is repaired; new confirmed FIX5-N2 outside the authorized check-11 scope prevents upgrading C12.",
+      "change": "upgraded",
+      "change_reason": "B1 and S1 are fixed with coherent own negatives, exact-type sweeps, retained legacy recipes and a complete sequential guard matrix.",
       "guard_isolation": {
-        "command": "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>",
+        "command": "python3 scripts/pm_filesafe_guard_isolation.py --jobs 1 --progress --output <evidence-path>",
         "status": "PASS",
         "literal_matrix": true,
-        "guards": 830,
-        "negatives": 3119,
+        "guards": 846,
+        "negatives": 3466,
         "uncovered": 0,
         "unexpected_flips": 0,
         "exceptions": 0,
-        "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/guard-removal-matrix.json",
-        "proof_sha256": "c0d75d433620ecac9ae4cf6e341cf80d3fc2aec694e71cf20b87d0d6e6221fa7"
-      },
-      "out_of_scope_finding": {
-        "id": "FIX5-N2",
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix5/numeric-epoch-probes.json",
-        "sha256": "c4c296207762e6ab556ea1b7f47f1dcce668bb5117cd564cc865a839c5fbc457"
+        "proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix6/guard-removal-matrix.json.gz",
+        "proof_sha256": "3ee17fd2c25f00df17533689a21c79357498dc4dd3cd1773164842cdbef1fd45"
       }
     }
   },
   "remaining_gaps": [
     "RETENTION: Is safe_point.created EventRecord history an authority/capture receipt (RP-AUTHORITY-INDEFINITE), non-authority recovery operational history (RP-OPERATIONAL-2555D), or runtime history (RP-RUNTIME-365D), independently of the already-governed released snapshot bodies? PENDING_RETENTION_DECISION remains in SP-557.",
-    "ADMISSION: safe_point.created membership_version remains ABSENT; separate individual batch admission is required.",
-    "FIX5-N2: Application writer_epoch 1.0 passes as 1 with a distinct accepted_source_sha256; numeric-ingress follow-up required."
+    "ADMISSION: safe_point.created membership_version remains ABSENT; separate individual batch admission is required."
   ],
   "static_checks_seen": [
     "python3 scripts/pm_filesafe_event_contracts.py",
@@ -734,13 +758,13 @@
     "python3 scripts/pm-plan-index.py validate",
     "python3 scripts/pm_filesafe_guard_isolation.py --output <evidence-path>"
   ],
-  "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-  "grading_batch": "DF_FIX5_self_grade",
-  "assessed_head": "4309f746955e76e73f43a95e1b51defa6a793325",
+  "notes": "Prepared normative/static contract depth only. Seven event-history retention questions remain owner decisions. Native execution/authenticity, durable storage, filesystem effects and CAS remain NOT_RUN; membership ABSENT.",
+  "grading_batch": "DF_FIX6_self_grade",
+  "assessed_head": "8a2cbfbb23710541235f49ad53139ae80d63720f",
   "counts": {
-    "PASS": 9,
-    "PARTIAL": 2,
-    "ABSENT": 1
+    "ABSENT": 1,
+    "PASS": 10,
+    "PARTIAL": 1
   },
-  "prepared_verdict": "NOT_READY_FIX5_N2"
+  "prepared_verdict": "PASS_PREPARED_WITHOUT_ADMISSION"
 }
