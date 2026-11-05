@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L3714-L3820
+Source lines: L3714-L3822
 
-Source SHA256: `1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82`
+Source SHA256: `954b866044a53b1cd33584d2e828076a690cefbbc6a0988c9b81ec2be05adada`
 
 ---
 
@@ -22,7 +22,9 @@ owner_doc: Plans/Commands_System.md
 canonical_text: Teach/Teacher can be summoned through /teach, help icon launches, and varied natural-language phrases
   such as asking PM to teach, explain, show how, walk me through, or help me do something. Summon phrase resolution
   disambiguates Teach guidance from implementation/build requests, carries current-surface context into a new or
-  selected Teacher thread, and exposes Help icon/summon phrase guidance in Help/Glossary entries.
+  selected Teacher thread, and exposes Help icon/summon phrase guidance in Help/Glossary entries. Amended 2026-11-05
+  under DL-333, following DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture, not the Teacher;
+  the Teacher is summoned through the help icon and the intent-classified natural-language route above.
 gui_related: true
 gui_classification_reason: Defines user-facing /teach and natural-language invocation routes into Assistant Chat.
 depends_on:
