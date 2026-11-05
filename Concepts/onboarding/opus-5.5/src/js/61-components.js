@@ -190,7 +190,7 @@
       const id = s.do + ':' + s.value, St = O55.S;
       if (St && St.tip && St.tip.seg === s.do && St.tip.screen === (St.sess && St.sess.screen) && St.tip.id !== id) St.tip.id = id;
       const seg = `<div class="o55-seg" role="radiogroup"${s.label ? ` aria-label="${esc(s.label)}"` : ''}${described(id)} data-key="seg-${esc(s.do)}">` + s.options.map((o) =>
-        `<button type="button" role="radio" aria-checked="${o.v === s.value}" class="${o.v === s.value ? 'o55-on' : ''}" data-o55-do="${esc(s.do)}" data-arg="${esc(o.v)}"${o.disabled ? ` aria-disabled="true" data-disabled-reason="${esc(o.reason || '')}"` : ''}${U.attrs(X)}>${o.glyph ? small(o.glyph, 14) : ''}<span>${esc(o.label)}</span></button>`).join('') + '</div>';
+        `<button type="button" role="radio" aria-checked="${o.v === s.value}" class="${o.v === s.value ? 'o55-on' : ''}" data-o55-do="${esc(s.do)}" data-arg="${esc(o.v)}"${o.disabled ? ` aria-disabled="true" data-disabled-reason="${esc(o.reason || '')}"` : ''}${U.attrs(X)}><span class="o55-segface">${o.glyph ? small(o.glyph, 14) : ''}<span>${esc(o.label)}</span></span></button>`).join('') + '</div>';
       const qh = q(id);
       return qh ? `<span class="o55-opt o55-opt-seg" data-key="opt-seg-${esc(s.do)}" data-o55-seg="${esc(s.do)}">${seg}${qh}</span>${explainer(id)}` : seg;
     },

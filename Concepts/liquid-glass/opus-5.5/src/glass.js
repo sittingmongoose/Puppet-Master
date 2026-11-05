@@ -1384,6 +1384,7 @@
       /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
       follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
     { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true,
+      label: function (i) { return i.querySelector('.o55-segface'); },
       /* in the pane's content, centred in its scroller (margin-block: auto): a change of the content's height (a device
          card's note, M6) or of the scroller's re-centres it */
       follow: function (strip) { return [strip, strip.closest('.o55-content'), strip.closest('.o55-scroll')]; } },
