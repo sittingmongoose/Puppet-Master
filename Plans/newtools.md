@@ -507,7 +507,7 @@ Detection is deterministic and has explicit ownership:
    - Validate: file exists and is executable (`fs::metadata` + permission check).
    - If valid: register the tool in the tool registry with ToolID `CustomHeadlessTool`.
    - If invalid (file missing, not executable): log warning `tool.custom_headless.invalid`, skip registration, continue.
-4. If key does not exist: skip (not an error). Emit `tool.custom_headless.skipped` seglog event on first Doctor run.
+4. If key does not exist: skip (not an error). Under DL-436 / SMPFS-326, prepare `tool.custom_headless.skipped` for the first readiness check finding this setting absent for the Project. Earlier configured runs leave the chance unused; issuance never resets on configuration edits/removal/re-addition. Same-ID restore preserves issuance, uncertain old backups suppress a duplicate, and clone/import gets a fresh chance only with a separate new saved Project ID. Later checks still save their ordinary check result. Persistence remains gated on admission.
 5. **Evidence:** Doctor check emits a seglog event (`doctor.custom_headless.checked`) recording the detection outcome. This event serves as the implementation evidence.
 
   ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2
@@ -9169,7 +9169,7 @@ owner_hints:
   "unit_type": "contract",
   "status": "superseded",
   "owner_doc": "Plans/newtools.md",
-  "canonical_text": "tool.custom_headless.skipped is STOPPED; DS15 withdraws its unsupported draft. DT owns the first-Doctor-run eligibility/reset/restore question at origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. No DS15 producer, eligibility, identity, schema, checkpoint or prepared outcome is bound for this family. N2-066 remains the behavior source; no ruling is inferred. This unit id is retired from drafting and must not be reused.",
+  "canonical_text": "Historical withdrawal of the unsupported tool.custom_headless.skipped draft. DL-436 (deck-2 item 4.f) now resolves first-absent-check eligibility/reset/import/restore; the newly authored DS15 owner contract is Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326. DT cites DS15 rather than holding a separate row. This old unit id remains retired and is not reused; it grants no admission.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [

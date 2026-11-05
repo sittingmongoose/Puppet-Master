@@ -1986,7 +1986,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7671,
+      "line_count": 7678,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 86,
       "plan_unit_ids": [
@@ -2147,7 +2147,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "70863dec9a92920774080bd43bd768f6c1975c35eaaeca33c474cf4e7c10fddb",
+      "sha256": "4200003168e7c00f9629f640ef3604ffa8c41fec69fc90eee99c4d84dab51718",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85,
@@ -5329,7 +5329,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "835aec5dbcd3b6958b48a402e76e3f25a775e3df4cd85dca929ed52dcf9b989b",
+      "sha256": "803c38b3a831885cc9e007ba34fb240b6584bb4c526418b7f63fa8fd49c9726e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 379
@@ -12294,7 +12294,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "09715e8dc71bfc02783573d5ad882a2d8537db931adaa25536185bc4fa47f912",
+      "sha256": "a548496482152e7f8737f5912e0857ee145b3a9b0a97c142dd067306f1240b25",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163
@@ -17034,10 +17034,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 75,
+        "False": 82,
         "True": 110
       },
-      "heading_count": 292,
+      "heading_count": 299,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Automated_Testing_System.md",
@@ -17077,9 +17077,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 13898,
+      "line_count": 14266,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-      "plan_unit_count": 185,
+      "plan_unit_count": 192,
       "plan_unit_ids": [
         "SMPFS-002",
         "SMPFS-003",
@@ -17265,7 +17265,14 @@
         "SMPFS-316",
         "SMPFS-317",
         "SMPFS-318",
-        "SMPFS-319"
+        "SMPFS-319",
+        "SMPFS-320",
+        "SMPFS-321",
+        "SMPFS-322",
+        "SMPFS-323",
+        "SMPFS-324",
+        "SMPFS-325",
+        "SMPFS-326"
       ],
       "reasoning_tiers": [
         "high",
@@ -17407,10 +17414,10 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "ba88db62e4060c2a935b9164403ef8ab07071985833384ba8cfcf8de8bd85496",
+      "sha256": "dfb41d374455e729eb6463303a242b3e040ee9d6ed0f84906ed6cc3b61234032",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 181,
+        "accepted": 188,
         "retired": 2,
         "superseded": 2
       },
@@ -17419,7 +17426,7 @@
         "command_binding": 2,
         "compatibility_disposition": 2,
         "constraint": 4,
-        "contract": 10,
+        "contract": 17,
         "owner_boundary": 4,
         "requirement": 162,
         "schema_contract": 1
@@ -17514,6 +17521,13 @@
         "onboarding owner-routing fixtures",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-browser-event-admission.py",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.started",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.completed",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family tool.custom_headless.skipped",
         "python3 scripts/pm-ds15-event-contracts.py",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plan-index.py validate",
@@ -19205,7 +19219,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "cb76551e124d79e46d749c41239b4bbc1c4e991faff7c9180f023b56faa05cff",
+      "sha256": "723139d9411072aefcbcb5ac8f1daf5dd5e25c4ed83858fca74f487f14a6bca3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 355,
@@ -21582,7 +21596,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T03:22:22Z",
+  "generated_at_utc": "2026-11-05T06:28:52Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21590,13 +21604,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3685,
+      "False": 3692,
       "True": 3797
     },
-    "plan_unit_count": 7482,
+    "plan_unit_count": 7489,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7265,
+      "accepted": 7272,
       "retired": 194,
       "superseded": 23
     },
@@ -21626,7 +21640,7 @@
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
-      "contract": 66,
+      "contract": 73,
       "contract_requirement": 3,
       "data_contract": 8,
       "decision": 174,

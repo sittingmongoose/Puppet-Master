@@ -29636,7 +29636,7 @@ owner_hints:
   "unit_type": "contract",
   "status": "superseded",
   "owner_doc": "Plans/storage-plan.md",
-  "canonical_text": "tool.custom_headless.skipped is STOPPED; DS15 withdraws its unsupported draft. DT owns the first-Doctor-run eligibility/reset/restore question at origin/plans/ea-w2-tools-gates-approvals-20261104:reports/event-authority-20261104/DT.md, Question for Jared. No DS15 producer, eligibility, identity, schema, checkpoint or prepared outcome is bound for this family. N2-066 remains the behavior source; no ruling is inferred. This unit id is retired from drafting and must not be reused.",
+  "canonical_text": "Historical withdrawal of the unsupported tool.custom_headless.skipped draft. DL-436 (deck-2 item 4.f) now resolves first-absent-check eligibility/reset/import/restore; the newly authored DS15 owner contract is Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326. DT cites DS15 rather than holding a separate row. This old unit id remains retired and is not reused; it grants no admission.",
   "gui_related": false,
   "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
   "depends_on": [
