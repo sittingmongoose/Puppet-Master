@@ -154,6 +154,7 @@ async function begin(t, f, look, mode, screen, tag) {
 }
 
 export default async function (t) {
+    const initialViewport = t.args.widths ? await t.page.evaluate(() => ({ width: innerWidth, height: innerHeight })) : null;
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	const only = t.args.only ? String(t.args.only).split(',') : ['discovery', 'smb', 'drive', 'nfs', 'install'];
 	const combos = looks.flatMap((look) => [[look, 0], [look, 1]]);
@@ -288,4 +289,5 @@ export default async function (t) {
 			await verdict(t, f, `${tag} install running, then done`, ['nas-install:done']);
 		});
 	}
+    if (initialViewport) await t.page.setViewportSize(initialViewport);
 }
