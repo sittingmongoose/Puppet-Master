@@ -1058,3 +1058,265 @@ For each of the six record-bearing inputs, the production `datetime_validator` r
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix14/cycle12-replay/coherent-bypass.json` | `62695716a6ed3ed11ced962dca239b885ef5b78dc95a5390b015a8b493783545` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix14/cycle12-replay/full-selftest.json` | `023f122502e4ff2417b5b33eb4ee8193045f4e1249c1e078cec56c597d35de32` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix14/cycle12-replay/full-selftest-inventory.json` | `920e17992b18ca7bec8c55e2bbb9dbc29cd4a338b04302ef1a28957446e2cdba` |
+
+
+## Number gate (Sol max): findings and responses
+
+Scope: CV-1100, SP-1100, SP-1101, `scripts/pm_event_numbers.py`, the number corpus, its runner and the number sections of the adoption guide. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-numbers-gate-solmax.md` (NOT_READY, B1 and B2, at `45a6ccde933e52635c6eda7d9e82921cf66622b5`). No date-time code changed, and no number recipe's production behaviour changed: every edit is to the corpus, its runner, the CLI flag and the mutation set.
+
+Implementation commit `f9bd0abf922e0bf19e689e2315bedecae06696d7` is the tested `19be90befcdc7d84eb900b64010348679dc8eb14` rebased onto `85b0ca7ece` (FIX14's date-time round). Every number file is blob-identical between the two, so the number-scope runs below apply to it unchanged; `--scope all` was rerun on the rebased tree.
+
+Both findings were one kind of hole. The corpus checked the helper against itself (it accepts, or it changes when a field changes), never against an independent expected result, so a wrong but self-consistent helper passed. This round closes the class, not only the five mutations: every public number API now has an independent output oracle, and the corpus proves it catches wrong implementations.
+
+**B1 — fixed in `f9bd0abf922e0bf19e689e2315bedecae06696d7`.**
+- **Where:** `current-large-exact` and the `current_json` executor in `scripts/pm_event_numbers_corpus.py`; the parser is `loads_current_json` with `current_integer` in `scripts/pm_event_numbers.py`.
+- **Why:** the executor discarded the returned tree and reported only `accepted`, so a rounded or float integer passed.
+- **Fix:**
+  - **Returns oracle, whole class:** every positive of an API that returns a value carries `returns`, the exact type-aware value (`{"@int": "<digits>"}`, `{"@parsed_decimal": ..., "kind": ...}`, `{"@json_number": ...}`, `{"@object": ...}`). The runner compares it through `typed()`, which never calls the helper and accepts only exact built-in types. A positive of such an API without `returns` fails. 102 existing positives gained one; every new positive has one.
+  - **Current parser:** 15 new cases. `current-nested-exact-types` checks the exact nested tree: `2^53+1`, uint64 max, `-(2^53+1)`, `2^100+1`, `0`, `-1`, and fraction/exponent tokens kept as `ParsedDecimal` with their kind. `current-numeric-kinds-declared` checks schema-declared kinds by path. `current-logical-integer-4400-digits` parses a 4400-digit integer each way (above Python's default integer-string limit; no global cap).
+  - **Subsequent integer slot:** `current_json_slot` runs the documented sequence, `loads_current_json` then `current_integer` at the slot. Bounds sit on both sides of the exact value: `2^53+1` with maximum `2^53+1` and with minimum `2^53+1` are accepted, maximum `2^53` is refused `integer_range`; uint64 max inside `0..2^64-1` is accepted and `2^64` refused. A rounded value fails the first two, a float fails as `integer_type`.
+  - **Separate refusals kept:** fraction (`1.0`, `9007199254740993.0`), exponent (`1e0`), type (`"1"`, `true`) and zero (`-0`, refused `integer_token`) are each a single-defect slot negative.
+
+**B2 — fixed in `f9bd0abf922e0bf19e689e2315bedecae06696d7`.**
+- **Where:** `number_integration_checks` in `scripts/pm_event_numbers_corpus.py` compared producer digests only with each other, and called `qualified_jcs` directly for the endpoints. There was no producer case op.
+- **Why:** no observation compared `producer_semantic_bytes` or `producer_semantic_digest` with an independent result, so a substituted serializer, a dropped qualification or a wrong hash passed.
+- **Fix:** the `producer` case op calls the actual wrappers on the frozen base event. 28 cases, each on both routes where it applies:
+  - **Known answers:** expected JCS text and SHA-256 come from Node's ECMAScript `JSON.stringify` with UTF-16 key order over an independently transcribed CV-317 field list, never from the helper. The review's preimage (integral, fractional and exponent floats, BMP and supplementary keys) gives `a2e019f1b0e9d842cb4577196da7ca6024ef6ce1158df557858ff93914567416`, the review's own answer. The base event, `2^53`, and changed Storage-only fields (same digest as the base) are vectors too.
+  - **Wrapper endpoints:** `2^53` accepted; `2^60` refused `jcs_decimal` (single defect); `2^53+1` and uint64 max refused `jcs_binary64`, labelled `full_route_predicates` endpoint controls because they fail both binary64 and decimal equality.
+  - **Forwarding:** `type_sensitive_paths` (`1.0` refused `jcs_kind`, `1.5` accepted), `sign_sensitive_paths` (`-0.0` refused `jcs_sign`) and `numeric_kinds` (declared Decimal accepted; undeclared refused `jcs_kind_undeclared`, a labelled two-predicate control). Unqualified controls show the same inputs pass without the qualification. A missing projection field is refused `producer_projection`.
+  - **Kept:** CV-317's projection and hash are unchanged. The existing exact projection and exclusion checks stay; the owner checks now record a raising helper as a failed check instead of aborting the run.
+
+**Whole class — self-checking corpus.**
+- **Mutation set:** `scripts/pm_event_numbers_mutations.json`, 121 fixed mutations, each one exact source edit applied in memory to a fresh module (files are never written). It covers the 25 APIs in the adoption guide's import block and seven classes: value rounding, type coercion, dropped qualification argument, substituted serializer, wrong hash, removed refusal, off-by-one boundary, plus substituted profile identifiers. It includes the review's five mutations verbatim and its sixth (decoder profile loss).
+- **Command:** `python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations`. Exit 0 means: the intact corpus passes; each (API, class) cell has a mutation or a stated not-applicable reason; each mutation applies exactly once and fails the number corpus; and each declared survivor really survives. `--mutations` with `--scope all` is refused (exit 2).
+- **Result:** exit 0; 121 mutations, **120 caught, 1 survivor** (declared, below), 0 not applied, 0 runner exceptions; 83 not-applicable cells, each with a reason. The review's 6 mutations: 6 caught.
+- **Against the reviewed base:** the same 121 mutations on `45a6ccde93`'s corpus and runner: 79 caught, **42 missed**. This round's oracles catch 41 of those 42; the other is the declared survivor.
+- **Harness controls:** a false survivor declaration, a no-op mutation, an uncovered cell, a positive without `returns` and a wrong `returns` each give exit 1.
+- **Standalone (T8):** no program path. The number-only, `--mutations` and control runs are fresh processes started from an unrelated directory, on an extraction holding only the four number scripts, the mutation set and the three data files, with msgpack 1.1.2 (wheel SHA-256 `180759d8...`, as in the review). The date-time modules were absent; with them present and raising at import, `--scope numbers` and `--mutations` give the same result, and number outcomes are byte-identical.
+
+**Mutation table.** Result is the number corpus under that mutation; Base is the reviewed `45a6ccde93` corpus.
+
+| API | Class | Mutation | Result | Base |
+|---|---|---|---|---|
+| `loads_current_json` | value rounding | `review-current-parser-rounded-int` (review) | Caught: 8 cases (`current-large-exact`) | **missed** |
+| `loads_current_json` | type coercion | `review-current-parser-float` (review) | Caught: 9 cases (`current-large-exact`) | **missed** |
+| `producer_semantic_bytes` | substituted serializer | `review-producer-json` (review) | Caught: 18 cases (`producer-2^53+1-bytes`) | **missed** |
+| `producer_semantic_digest` | wrong hash | `review-producer-sha512` (review) | Caught: 6 cases (`producer-2^53-digest`) | **missed** |
+| `producer_semantic_bytes` | dropped qualification | `review-producer-drops-qualification` (review) | Caught: 6 cases (`producer-numeric-kind-undeclared-bytes`) | **missed** |
+| `decode_storage_value` | dropped qualification | `review-decoder-profile-loss` (review) | Caught: 11 cases (`decode-app-binary`) | caught |
+| `current_integer_token` | value rounding | `token-rounds-through-binary64` | Caught: 14 cases (`current-large-exact`) | caught |
+| `current_integer_token` | type coercion | `token-returns-float` | Caught: 27 cases (`current-large-exact`) | caught |
+| `current_integer_token` | dropped qualification | `token-drops-bounds` | Caught: 3 cases (`slot-above-maximum`) | **missed** |
+| `current_integer_token` | substituted serializer | `token-int-parser` | Caught: 2 cases (`current-logical-integer-4400-digits`) | caught |
+| `current_integer_token` | removed refusal | `token-no-grammar` | Caught: 14 cases (`bad-token-' 1'`) | caught |
+| `current_integer_token` | off by one boundary | `token-grammar-leading-zero` | Caught: 5 cases (`bad-token-'-0'`) | caught |
+| `current_integer_token` | off by one boundary | `token-chunk-width` | Caught: 107 cases (`binding-18446744073709551615`) | caught |
+| `current_integer` | value rounding | `integer-rounds-through-binary64` | Caught: 34 cases (`current-large-exact`) | caught |
+| `current_integer` | type coercion | `integer-isinstance` | Caught: 5 cases (`current-slot-type-boolean`) | caught |
+| `current_integer` | type coercion | `integer-returns-float` | Caught: 90 cases (`current-large-exact`) | caught |
+| `current_integer` | dropped qualification | `integer-json-number-drops-bounds` | Caught: 2 cases (`slot-above-maximum`) | **missed** |
+| `current_integer` | removed refusal | `integer-no-fraction-type-refusal` | Caught: 5 cases (`slot--0.0`) | caught |
+| `current_integer` | removed refusal | `integer-no-minimum` | Caught: 4 cases (`payload-negative-size`) | caught |
+| `current_integer` | off by one boundary | `integer-maximum-exclusive` | Caught: 14 cases (`current-slot-2^53+1-maximum-equal`) | caught |
+| `current_integer` | off by one boundary | `integer-minimum-exclusive` | Caught: 3 cases (`current-slot-2^53+1-minimum-equal`) | **missed** |
+| `storage_uint64` | value rounding | `uint64-rounds-through-binary64` | Caught: 20 cases (`metadata-byte_offset-18446744073709551615`) | **missed** |
+| `storage_uint64` | type coercion | `uint64-returns-float` | Caught: 61 cases (`metadata-byte_offset-1152921504606846976`) | **missed** |
+| `storage_uint64` | dropped qualification | `uint64-drops-bounds` | Caught: 2 cases (`uint64-overflow--1`) | caught |
+| `storage_uint64` | removed refusal | `uint64-no-upper-refusal` | Caught: 1 case (`uint64-overflow-18446744073709551616`) | caught |
+| `storage_uint64` | off by one boundary | `uint64-maximum-minus-one` | Caught: 10 cases (`metadata-byte_offset-18446744073709551615`) | caught |
+| `storage_uint64` | off by one boundary | `uint64-minimum-one` | Caught: 1 case (`uint64-zero`) | **missed** |
+| `exact_boolean` | type coercion | `boolean-isinstance-int` | Caught: 3 cases (`bool-number`) | caught |
+| `exact_boolean` | type coercion | `boolean-returns-int` | Caught: 2 cases (`bool-ok-False`) | **missed** |
+| `exact_boolean` | removed refusal | `boolean-no-refusal` | Caught: 8 cases (`bool-array`) | caught |
+| `current_append_policy` | removed refusal | `append-policy-no-replay-only-refusal` | Caught: 1 case (`append-replay-only`) | caught |
+| `current_append_policy` | removed refusal | `append-policy-no-membership` | Caught: 1 case (`append-unknown-policy`) | caught |
+| `current_append_policy` | type coercion | `append-policy-returns-bytes` | Caught: 3 cases (`append-append_once`) | caught |
+| `current_append_policy` | type coercion | `append-policy-no-type-check` | **Survives (declared):** Equivalent at every JSON-expressible input: membership in a tuple of exact str values already refuses every non-str JSON value with the same replay_policy reason. Only a str subclass instance distinguishes the two, and the JSON corpus cannot express one. | **missed** |
+| `loads_exact` | value rounding | `parse-int-rounds-through-binary64` | Caught: 19 cases (`current-large-exact`) | caught |
+| `loads_exact` | type coercion | `parse-float-native` | Caught: 14 cases (`current-nested-exact-types`) | caught |
+| `loads_exact` | dropped qualification | `parse-drops-duplicate-hook` | Caught: 1 case (`duplicate-json`) | caught |
+| `loads_exact` | dropped qualification | `parse-drops-nonfinite-hook` | Caught: 3 cases (`parse--Infinity`) | caught |
+| `loads_exact` | substituted serializer | `parse-latin1-decoder` | Caught: 2 cases (`parse-invalid-utf8-bytes`) | **missed** |
+| `loads_exact` | removed refusal | `parse-no-scalar-walk` | Caught: 2 cases (`parse-key-lone-surrogate`) | caught |
+| `loads_exact` | removed refusal | `parse-keys-not-walked` | Caught: 1 case (`parse-key-lone-surrogate`) | **missed** |
+| `loads_current_json` | dropped qualification | `current-drops-numeric-kinds` | Caught: 1 case (`current-numeric-kinds-declared`) | **missed** |
+| `loads_current_json` | substituted serializer | `current-plain-json-parser` | Caught: 5 cases (`current-logical-integer-4400-digits`) | caught |
+| `loads_current_json` | removed refusal | `current-no-integer-token-refusal` | Caught: 2 cases (`current-nested-minuszero`) | caught |
+| `loads_current_json` | off by one boundary | `current-array-path-off-by-one` | Caught: 1 case (`current-numeric-kinds-declared`) | **missed** |
+| `qualified_jcs` | value rounding | `jcs-output-rounds-15-digits` | Caught: 7 cases (`jcs--9007199254740992`) | caught |
+| `qualified_jcs` | type coercion | `jcs-boolean-as-integer` | Caught: 1 case (`jcs-boolean-null`) | **missed** |
+| `qualified_jcs` | dropped qualification | `jcs-drops-numeric-kinds` | Caught: 8 cases (`jcs-decimal-kind-1.0`) | caught |
+| `qualified_jcs` | dropped qualification | `jcs-drops-sign-paths` | Caught: 5 cases (`jcs-sign-loss-current`) | caught |
+| `qualified_jcs` | substituted serializer | `jcs-python-json` | Caught: 22 cases (`jcs--0`) | caught |
+| `qualified_jcs` | removed refusal | `jcs-no-decimal-refusal` | Caught: 8 cases (`jcs--1152921504606846976`) | caught |
+| `qualified_jcs` | removed refusal | `jcs-no-binary64-refusal` | Caught: 6 cases (`jcs-binary64-only-10^23`), 2 checks (`full_jcs_endpoint_refusal_9007199254740993`) | caught |
+| `qualified_jcs` | off by one boundary | `jcs-binary64-tolerance-one` | Caught: 4 cases (`producer-2^53+1-bytes`), 2 checks (`full_jcs_endpoint_refusal_9007199254740993`) | caught |
+| `producer_semantic_bytes` | value rounding | `producer-rounds-integers` | Caught: 6 cases (`producer-2^53+1-bytes`) | **missed** |
+| `producer_semantic_bytes` | type coercion | `producer-stringifies-integers` | Caught: 8 cases (`producer-2^53+1-bytes`) | **missed** |
+| `producer_semantic_bytes` | dropped qualification | `producer-drops-sign-qualification` | Caught: 2 cases (`producer-sign-qualified-negative-zero-bytes`) | **missed** |
+| `producer_semantic_bytes` | removed refusal | `producer-no-projection-refusal` | Caught: 2 cases (`producer-missing-migration-bytes`), 12 checks (`producer_requires_present_event_type`) | caught |
+| `producer_semantic_bytes` | off by one boundary | `producer-drops-last-field` | Caught: 14 cases (`producer-2^53-bytes`), 1 check (`producer_includes_migration`) | caught |
+| `producer_semantic_digest` | type coercion | `digest-returns-bytes` | Caught: 6 cases (`producer-2^53-digest`) | **missed** |
+| `producer_semantic_digest` | dropped qualification | `digest-drops-qualification` | Caught: 3 cases (`producer-numeric-kind-undeclared-digest`) | **missed** |
+| `producer_semantic_digest` | substituted serializer | `digest-python-json` | Caught: 9 cases (`producer-2^53+1-digest`), 12 checks (`producer_requires_present_event_type`) | caught |
+| `producer_semantic_digest` | wrong hash | `digest-sha3-256` | Caught: 6 cases (`producer-2^53-digest`) | **missed** |
+| `producer_semantic_digest` | wrong hash | `digest-blake2s` | Caught: 6 cases (`producer-2^53-digest`) | **missed** |
+| `producer_semantic_digest` | removed refusal | `digest-swallows-refusal` | Caught: 7 cases (`producer-2^53+1-digest`), 12 checks (`producer_requires_present_event_type`) | caught |
+| `producer_semantic_digest` | off by one boundary | `digest-truncated` | Caught: 6 cases (`producer-2^53-digest`) | **missed** |
+| `storage_value_bytes` | value rounding | `physical-lossy-float32` | Caught: 4 cases (`decode-float64-0.1`) | caught |
+| `storage_value_bytes` | type coercion | `physical-bool-as-integer` | Caught: 4 cases (`decode-bool-nil`) | **missed** |
+| `storage_value_bytes` | dropped qualification | `physical-float32-ignores-profile` | Caught: 7 cases (`app-float--0.0`) | caught |
+| `storage_value_bytes` | dropped qualification | `physical-binary-ignores-profile` | Caught: 2 cases (`decode-binary`) | caught |
+| `storage_value_bytes` | substituted serializer | `physical-msgpack-packb` | Caught: 20 cases (`decode-binary`), 2 checks (`frozen_complete_event_bytes`) | caught |
+| `storage_value_bytes` | substituted serializer | `physical-insertion-order-maps` | Caught: 3 cases (`decode-unordered-map`), 2 checks (`frozen_complete_event_bytes`) | caught |
+| `storage_value_bytes` | removed refusal | `physical-no-integer-range-refusal` | Caught: 2 cases (`physical-overflow--9223372036854775809`) | caught |
+| `storage_value_bytes` | off by one boundary | `physical-negative-fixint-boundary` | Caught: 1 case (`physical-int--33`) | caught |
+| `storage_value_bytes` | off by one boundary | `physical-int8-boundary` | Caught: 1 case (`physical-int--129`) | caught |
+| `storage_value_bytes` | off by one boundary | `binding-fixstr-boundary` | Caught: 1 case (`physical-str-32`) | **missed** |
+| `decode_storage_value` | value rounding | `decode-rounds-floats` | Caught: 5 cases (`decode-app-float64-1.0`) | **missed** |
+| `decode_storage_value` | type coercion | `decode-raw-strings` | Caught: 5 cases (`decode-binding-map`), 1 check (`frozen_complete_event_decode`) | caught |
+| `decode_storage_value` | substituted serializer | `decode-msgpack-canonical-check` | Caught: 14 cases (`decode-binary`) | caught |
+| `decode_storage_value` | removed refusal | `decode-no-canonical-refusal` | Caught: 15 cases (`decode-app-float32`) | caught |
+| `decode_storage_value` | removed refusal | `decode-no-ext-refusal` | Caught: 1 case (`decode-extension`) | caught |
+| `full_value_commitment` | type coercion | `full-value-returns-bytes` | Caught: 1 case (`full-value-frozen-positive`), 1 check (`frozen_full_value_commitment`) | caught |
+| `full_value_commitment` | dropped qualification | `full-value-drops-profile-id` | Caught: 1 case (`full-value-frozen-positive`), 1 check (`frozen_full_value_commitment`) | caught |
+| `full_value_commitment` | substituted serializer | `full-value-msgpack-packb` | Caught: 1 case (`full-value-frozen-positive`), 1 check (`frozen_full_value_commitment`) | caught |
+| `full_value_commitment` | wrong hash | `full-value-sha512` | Caught: 1 case (`full-value-frozen-positive`), 1 check (`frozen_full_value_commitment`) | caught |
+| `full_value_commitment` | removed refusal | `full-value-no-edition-refusal` | Caught: 2 cases (`full-value-wrong-schema-id`) | caught |
+| `full_value_commitment` | off by one boundary | `full-value-preimage-position` | Caught: 1 case (`full-value-frozen-positive`), 1 check (`frozen_full_value_commitment`) | caught |
+| `verify_payload_bytes` | type coercion | `payload-inline-coerced` | Caught: 1 case (`payload-inline-flag-type`) | **missed** |
+| `verify_payload_bytes` | dropped qualification | `payload-size-drops-minimum` | Caught: 1 case (`payload-negative-size`) | **missed** |
+| `verify_payload_bytes` | wrong hash | `payload-sha256` | Caught: 5 cases (`payload-inline-boundary`) | caught |
+| `verify_payload_bytes` | removed refusal | `payload-no-media-refusal` | Caught: 1 case (`payload-media`) | caught |
+| `verify_payload_bytes` | removed refusal | `payload-no-bytes-type-refusal` | Caught: 1 case (`payload-text-input`) | **missed** |
+| `verify_payload_bytes` | off by one boundary | `payload-inline-limit-inclusive` | Caught: 1 case (`payload-inline-boundary`) | caught |
+| `JsonNumber` | value rounding | `json-number-exact-rounds` | Caught: 3 cases (`jcs-binary64-only-10^23`) | caught |
+| `JsonNumber` | type coercion | `json-number-exact-float` | Caught: 5 cases (`jcs-1e-9999`) | caught |
+| `JsonNumber` | dropped qualification | `json-number-ignores-integer-flag` | Caught: 2 cases (`json-number-integer-flag-exponent`) | **missed** |
+| `JsonNumber` | removed refusal | `json-number-no-float-marker-refusal` | Caught: 1 case (`json-number-float-flag-integer-token`) | **missed** |
+| `JsonNumber` | off by one boundary | `json-number-leading-zero` | Caught: 1 case (`json-number-leading-zero`) | **missed** |
+| `ParsedDecimal` | value rounding | `parsed-decimal-rounds` | Caught: 1 case (`current-nested-exact-types`) | **missed** |
+| `ParsedDecimal` | type coercion | `parsed-decimal-float-base` | Caught: 8 cases (`current-nested-exact-types`) | caught |
+| `ParsedDecimal` | dropped qualification | `parsed-decimal-drops-kind` | Caught: 1 case (`current-numeric-kinds-declared`) | **missed** |
+| `RecipeTuple` | type coercion | `recipe-no-type-check` | Caught: 2 cases (`recipe-hash-int`) | caught |
+| `RecipeTuple` | dropped qualification | `recipe-hash-prefix-match` | Caught: 1 case (`recipe-hash-trailing-lf`) | caught |
+| `RecipeTuple` | removed refusal | `recipe-no-hash-refusal` | Caught: 3 cases (`recipe-hash-short`) | caught |
+| `RecipeTuple` | off by one boundary | `recipe-hash-length-63` | Caught: 1 case (`recipe-hash-short`) | caught |
+| `OriginalBinding` | type coercion | `binding-no-type-check` | Caught: 1 case (`binding-event-id-type`) | **missed** |
+| `OriginalBinding` | dropped qualification | `binding-application-ignores-project` | Caught: 1 case (`binding-application-with-project`) | **missed** |
+| `OriginalBinding` | removed refusal | `binding-no-field-refusal` | Caught: 2 cases (`binding-empty-event-id`) | **missed** |
+| `OriginalBinding` | removed refusal | `binding-no-scope-refusal` | Caught: 4 cases (`binding-application-with-project`) | **missed** |
+| `OriginalBinding` | off by one boundary | `binding-project-empty-boundary` | Caught: 1 case (`binding-project-empty-project`) | **missed** |
+| `RetainedDispatcher` | type coercion | `dispatcher-truthy-verifier` | Caught: 3 cases (`history-verifier-result-integer`) | caught |
+| `RetainedDispatcher` | type coercion | `dispatcher-truthy-disclosure` | Caught: 1 case (`history-truthy_disclosure`) | caught |
+| `RetainedDispatcher` | dropped qualification | `dispatcher-skips-disclosure` | Caught: 5 cases (`history-deleted`) | caught |
+| `RetainedDispatcher` | dropped qualification | `dispatcher-ignores-original-recipe` | Caught: 1 case (`history-unknown_recipe`) | caught |
+| `RetainedDispatcher` | removed refusal | `dispatcher-no-override-refusal` | Caught: 1 case (`history-caller_override`) | caught |
+| `RetainedDispatcher` | removed refusal | `dispatcher-no-binding-join` | Caught: 9 cases (`history-foreign-event_id`) | caught |
+| `RetainedDispatcher` | off by one boundary | `dispatcher-verifies-twice` | Caught: 7 cases (`history-current-original`) | caught |
+| `Refusal` | dropped qualification | `refusal-drops-reason` | Caught: 205 cases (`append-policy-type`), 12 checks (`full_jcs_endpoint_refusal_9007199254740993`) | caught |
+| `EVENT_VALUE` | substituted identifier | `event-value-identifier` | Caught: 1 case (`full-value-frozen-positive`), 1 check (`frozen_full_value_commitment`) | caught |
+| `APP_PHYSICAL` | substituted identifier | `app-physical-identifier` | Caught: 12 cases (`app-binary`) | caught |
+| `INDEX_BINDING` | substituted identifier | `index-binding-identifier` | Caught: 15 cases (`binding-1`) | caught |
+| `APP_PHYSICAL` | substituted identifier | `app-physical-swapped-for-event-value` | Caught: 14 cases (`app-binary`) | caught |
+
+**Not-applicable cells** (83), with the reason recorded in the mutation set:
+
+| API | Classes | Reason |
+|---|---|---|
+| `current_integer_token` | wrong hash | Computes no hash. |
+| `current_integer` | substituted serializer | Parses nothing itself: token parsing is current_integer_token's, mutated there. |
+| `current_integer` | wrong hash | Computes no hash. |
+| `storage_uint64` | substituted serializer | Serializes and parses nothing. |
+| `storage_uint64` | wrong hash | Computes no hash. |
+| `exact_boolean` | value rounding | No numeric value is computed here. |
+| `exact_boolean` | dropped qualification | Takes no qualification or profile argument. |
+| `exact_boolean` | substituted serializer | Serializes and parses nothing. |
+| `exact_boolean` | wrong hash | Computes no hash. |
+| `exact_boolean` | off by one boundary | Has no numeric, length or position boundary. |
+| `current_append_policy` | value rounding | No numeric value is computed here. |
+| `current_append_policy` | dropped qualification | Takes no qualification or profile argument. |
+| `current_append_policy` | substituted serializer | Serializes and parses nothing. |
+| `current_append_policy` | wrong hash | Computes no hash. |
+| `current_append_policy` | off by one boundary | Has no numeric, length or position boundary. |
+| `loads_exact` | wrong hash | Computes no hash. |
+| `loads_exact` | off by one boundary | No numeric or length boundary: token grammar boundaries belong to JsonNumber and current_integer_token, mutated there. |
+| `loads_current_json` | wrong hash | Computes no hash. |
+| `qualified_jcs` | wrong hash | Computes no hash. |
+| `producer_semantic_bytes` | wrong hash | Computes no hash. The digest wrapper's hash is mutated under producer_semantic_digest. |
+| `producer_semantic_digest` | value rounding | Hashes bytes; numeric rounding belongs to the bytes route, mutated under producer_semantic_bytes. |
+| `storage_value_bytes` | wrong hash | Computes no hash. |
+| `decode_storage_value` | wrong hash | Computes no hash. |
+| `decode_storage_value` | off by one boundary | Width boundaries are the encoder's, mutated under storage_value_bytes; the decoder compares bytes exactly. |
+| `full_value_commitment` | value rounding | Numeric bytes come from storage_value_bytes, whose rounding is mutated there. |
+| `verify_payload_bytes` | value rounding | No numeric value is computed here. |
+| `verify_payload_bytes` | substituted serializer | Compares the owner's bytes as given; serializes nothing. |
+| `JsonNumber` | substituted serializer | Serializes and parses nothing. |
+| `JsonNumber` | wrong hash | Computes no hash. |
+| `ParsedDecimal` | substituted serializer | Serializes and parses nothing. |
+| `ParsedDecimal` | wrong hash | Computes no hash. |
+| `ParsedDecimal` | removed refusal | Has no refusal of its own. |
+| `ParsedDecimal` | off by one boundary | Has no numeric, length or position boundary. |
+| `RecipeTuple` | value rounding | No numeric value is computed here. |
+| `RecipeTuple` | substituted serializer | Serializes and parses nothing. |
+| `RecipeTuple` | wrong hash | Checks SHA-256 syntax only; computes no hash. |
+| `OriginalBinding` | value rounding | No numeric value is computed here. |
+| `OriginalBinding` | substituted serializer | Serializes and parses nothing. |
+| `OriginalBinding` | wrong hash | Computes no hash. |
+| `RetainedDispatcher` | value rounding | No numeric value is computed here. |
+| `RetainedDispatcher` | substituted serializer | Serializes and parses nothing. |
+| `RetainedDispatcher` | wrong hash | Computes no hash: the frozen verifier owns commitments. |
+| `Refusal` | value rounding, type coercion, substituted serializer, wrong hash, removed refusal, off by one boundary | Exception carrier: only its reason is behaviour, mutated as dropped_qualification. |
+| `OriginalCustody` | value rounding, type coercion, dropped qualification, substituted serializer, wrong hash, removed refusal, off by one boundary | Frozen field carrier with no logic; its use is mutated through RetainedDispatcher. |
+| `FrozenRecipe` | value rounding, type coercion, dropped qualification, substituted serializer, wrong hash, removed refusal, off by one boundary | Frozen field carrier with no logic; its use is mutated through RetainedDispatcher. |
+| `EVENT_VALUE` | value rounding, type coercion, dropped qualification, substituted serializer, wrong hash, removed refusal, off by one boundary | Profile identifier string; mutated as substituted_identifier. |
+| `APP_PHYSICAL` | value rounding, type coercion, dropped qualification, substituted serializer, wrong hash, removed refusal, off by one boundary | Profile identifier string; mutated as substituted_identifier. |
+| `INDEX_BINDING` | value rounding, type coercion, dropped qualification, substituted serializer, wrong hash, removed refusal, off by one boundary | Profile identifier string; mutated as substituted_identifier. |
+
+**The review's mutations, rerun from scratch copies.** The review's `route_gap_repro.py` and `cli_mutations.py`, byte-identical to its fingerprints, were copied with only their expected results changed (pass to fail, CLI exit 0 to 1); the diffs are retained.
+
+| Mutation | `route_gap_repro.py` (real runner) | `cli_mutations.py` (fresh CLI) |
+|---|---|---|
+| `current_parser_rounded_int` | fail, 432/440 | exit 1, 432/440 |
+| `current_parser_float` | fail, 431/440 | exit 1, 431/440 |
+| `producer_sorted_json` | fail, 422/440 | exit 1, 422/440 |
+| `producer_sha512` | fail, 434/440 | exit 1, 434/440 |
+| `producer_drops_qualification` | fail, 434/440 | not in that script |
+| `decoder-profile-loss` | not in that script | exit 1, 429/440 |
+| `deliberate-wrong-expected-output` | not in that script | exit 1, 439/440 |
+
+The intact known answer reproduces (`a2e019f1b0e9d842cb4577196da7ca6024ef6ce1158df557858ff93914567416`). Every row fails `--scope numbers`.
+
+**Corpus counts.**
+
+| Selection | Cases | Positives | Negatives | Checks | Result |
+|---|---|---|---|---|---|
+| `--scope numbers` | 440 | 235 | 205 | 60 | 440/440 pass |
+| `--scope all` | 13486 | 6898 | 6588 | 299 | 13486/13486 pass, exit 0 |
+
+95 cases added (28 producer, 12 current_json_slot, 11 json_number, 9 physical, 8 binding_constructor, 5 jcs, 5 parse, 4 decode, 3 current_json, 3 payload, 2 integer, 2 token, 2 slot, 1 uint64). 102 existing positives gained a `returns` oracle; no existing case's input, outcome or label changed, and none was removed. The new negatives are 37 single-defect cases and 6 labelled multi-predicate controls.
+
+**Independent vectors.** 175 positives' expected values were rechecked by code that never imports the helper: MessagePack bytes and decodes with the msgpack library plus the SP-236 float-width rule, integers with `int()`, current-parser trees with `json`/`decimal`, JsonNumber exact values with `decimal`: 0 mismatches. Producer and new JCS vectors come from Node v22.22.2.
+
+**Date-time gate after the corpus change.** `--scope all` on the full `Plans/` tree: inventory `pass`, 233 nodes (133 Storage, 89 other-owner), 0 unclassified. The corpus edit needs one data update there, the corpus row's content pin in `scripts/pm_event_datetime_exclusions.json`; nothing else in that file changed.
+
+**Limits.**
+- The returns oracles and producer vectors are finite. The mutation set is a fixed sample: catching 120 of 121 shows the corpus is not self-referential at these sites, not that every wrong implementation fails.
+- One declared survivor (`append-policy-no-type-check`) is an equivalent mutant at every JSON input; a reviewer checks its reason.
+- `--scope numbers` says nothing about date-time. Native custody, durability and family admission remain NOT_RUN; guard isolation stays SWEEP_PENDING.
+
+**Scope.** Changed: `scripts/pm_event_numbers.py` (CLI flag and docstring only), `scripts/pm_event_numbers_corpus.py`, the new `scripts/pm_event_numbers_mutations.json`, the number cases of the corpus, the corpus row's content pin, the adoption guide's number-only section and this report set. Unchanged: every helper function and recipe, all date-time code and data except that pin, the binding helper, owner prose, pinned schemas, generated shards and index, the registry and the governance inputs.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/cli-runs.json` | `0a813b80d882b2b37675dc8ff7ef57de1dfe58ee98cbf1504a181bff6537052e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/head-numbers-mutations.stdout.json` | `1e164871e0d991b890b55be2a7b39d7b8a7ca1c68658b3ea3f7849ddf4cfe37e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/base-comparison.json` | `9f6df5c84d45f6589139618fe1782d24a24ee5bc5ca996ffa3e9de49dc288b35` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/gen-cases.json` | `784fd68ee3fb0e6235238b1a0e6b6de9bb38c27c3fae3db82a59e4a5b309c9f6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/vector-crosscheck.json` | `f5f5ba36a74f964bcd327ddbe32738336e14fb61d5df369a18f817e158787b46` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/review-rerun/route-gaps.json` | `f23458de0f899a1f3632a254fd96aab0638d551619f9c70da859597683fe6969` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/review-rerun/cli-mutations.json` | `7a7209385651d3cc5f6b3f8ccf2af1b01a8fa46ccf15de3c44404c84178ed3f5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/full-selftest-summary.json` | `fcff4f134191e7d933f541c3cd6a51b247f5f8c8e8375d872ccc79d78d15a805` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2/dependency.json` | `c76fcbf1169363abc7a5a05ef1f02b7b5ee6be351b4a4fd5654fd5dcf78de84c` |

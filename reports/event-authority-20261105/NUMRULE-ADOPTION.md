@@ -23,6 +23,13 @@ The number recipes and the date-time gate are separate scopes. A lane can adopt 
 
 **Selection:** a case runs when its `op` is in `NUMBER_OPS` in `scripts/pm_event_numbers_corpus.py` and it has no `date_time_profile`. History cases with a `date_time_profile` belong to the date-time suite.
 
+**Independent oracles:** the corpus compares each public API with an expected result built outside the helper, never with the helper itself.
+- **Returned values:** every positive of an API that returns a value (`RETURNING_OPS`) carries `returns`, the exact type-aware value: `{"@int": "<digits>"}`, `{"@float": "<repr>"}`, `{"@parsed_decimal": "<token>", "kind": ...}`, `{"@json_number": ...}`, `{"@object": {...}}` and so on. A float where an integer is expected, a rounded integer or a lost kind fails. A positive without `returns` fails too.
+- **Current parser:** after `loads_current_json`, the cases call `current_integer` at the integer slot with bounds on both sides of the exact value (`2^53+1`, uint64 max), and parse a 4400-digit integer. No global cap.
+- **Producer routes:** the `producer` cases call `producer_semantic_bytes` and `producer_semantic_digest` and compare the exact JCS text and SHA-256 with vectors from an independent ECMAScript serializer. They also cover the wrapper's own endpoints (`2^53` accepted, `2^53+1` and uint64 max refused `jcs_binary64` as labelled multi-predicate controls, `2^60` refused `jcs_decimal` as a single defect) and the forwarding of `type_sensitive_paths`, `sign_sensitive_paths` and `numeric_kinds`.
+
+**Self-check:** `python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations` replays `scripts/pm_event_numbers_mutations.json`: 121 in-memory source mutations covering every API in the import block below, one or more per applicable class (value rounding, type coercion, a dropped qualification argument, a substituted serializer, a wrong hash, a removed refusal, an off-by-one boundary). Exit 0 means the intact corpus passes, every (API, class) cell has a mutation or a stated not-applicable reason, and every mutation fails the number corpus, except declared survivors, whose reasons a reviewer checks. One survivor is declared: removing the `type(value) is not str` test in `current_append_policy` is equivalent for every JSON input. `--mutation-set PATH` selects another set. Files are never written. A lane that copies or changes the helper runs this before adopting it.
+
 **Imports:**
 
 ```python
@@ -39,7 +46,7 @@ from pm_event_numbers import (
 
 **Needs:**
 - **Packages:** `rfc8785==0.1.4`, `msgpack==1.1.2`, `blake3==1.0.11`, plus jsonschema and referencing through the `CV-366` cross-check in `pm_projects_refresh_contracts`. `markdown-it-py` is not needed.
-- **Code:** `scripts/pm_event_numbers.py`, `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_index_binding.py`, `scripts/pm_projects_refresh_contracts.py`.
+- **Code:** `scripts/pm_event_numbers.py`, `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_index_binding.py`, `scripts/pm_projects_refresh_contracts.py`, and `scripts/pm_event_numbers_mutations.json` for `--mutations`. The commands work from any working directory and with only these files and the three data files, laid out as `scripts/` and `Plans/` side by side.
 - **Data:** `Plans/event_number_recipe_corpus.json`, `Plans/seglog_frame_v2_wire_fixtures.json`, `Plans/event_append_receipt_full_value_fixtures.json`.
 
 **Decoder profiles:** always pass the exact profile to `decode_storage_value`. The same bytes change meaning by profile: `ca3f800000` is canonical for `EVENT_VALUE`, refused `physical_noncanonical` for `APP_PHYSICAL` (`CV-366` requires float64), and refused `binding_domain` for `INDEX_BINDING` (`SP-278` is uint-only).

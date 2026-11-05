@@ -510,5 +510,97 @@
     "family_grading": "N/A",
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1",
     "scope": "Number scope only. No date-time code, owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
+  },
+  "number_gate_solmax": {
+    "round": "number gate (Sol max)",
+    "source_base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+    "implementation_commit": "f9bd0abf922e0bf19e689e2315bedecae06696d7",
+    "tested_number_commit": "19be90befcdc7d84eb900b64010348679dc8eb14",
+    "rebased_onto": "85b0ca7ece",
+    "B1": "fixed; current-parser positives check exact typed values and the subsequent integer slot boundary",
+    "B2": "fixed; actual producer bytes/digest routes against independent JCS and SHA-256, endpoints and forwarding",
+    "whole_class": "returns oracle on every value-returning positive; committed mutation set run by --mutations",
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations",
+    "number_only": {
+      "status": "pass",
+      "corpus_cases": 440,
+      "case_passes": 440,
+      "positives": 235,
+      "negatives": 205,
+      "integration_checks": 60
+    },
+    "all_scope": {
+      "exit_code": 0,
+      "status": "pass",
+      "corpus_cases": 13486,
+      "case_passes": 13486,
+      "integration_checks": 299,
+      "datetime_inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "unclassified_nodes": 0
+      }
+    },
+    "mutations": {
+      "apis": 25,
+      "caught": 120,
+      "declared_survivors": 1,
+      "mutations": 121,
+      "not_applicable_cells": 83,
+      "not_applied": 0,
+      "review_mutations": 6,
+      "review_mutations_caught": 6,
+      "runner_exceptions": 0,
+      "survivors": 1
+    },
+    "base_comparison": {
+      "base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+      "caught": 79,
+      "missed": 42,
+      "missed_now_caught": 41
+    },
+    "declared_survivors": [
+      {
+        "id": "append-policy-no-type-check",
+        "reason": "Equivalent at every JSON-expressible input: membership in a tuple of exact str values already refuses every non-str JSON value with the same replay_policy reason. Only a str subclass instance distinguishes the two, and the JSON corpus cannot express one."
+      }
+    ],
+    "review_mutations": {
+      "route_gap_repro": {
+        "current_parser_rounded_int": "fail",
+        "current_parser_float": "fail",
+        "producer_sorted_json": "fail",
+        "producer_sha512": "fail",
+        "producer_drops_qualification": "fail"
+      },
+      "cli_mutations": {
+        "current-parser-rounded-int": 1,
+        "current-parser-float": 1,
+        "producer-json": 1,
+        "producer-sha512": 1,
+        "decoder-profile-loss": 1,
+        "deliberate-wrong-expected-output": 1
+      }
+    },
+    "known_answer_sha256": "a2e019f1b0e9d842cb4577196da7ca6024ef6ce1158df557858ff93914567416",
+    "cases_added": 95,
+    "returns_added_to_existing": 102,
+    "vector_crosscheck": {
+      "checked": 175,
+      "mismatches": 0
+    },
+    "harness_controls_exit_1": [
+      "control-false-survivor",
+      "control-surviving-mutation",
+      "control-uncovered-cell",
+      "control-missing-returns",
+      "control-wrong-returns"
+    ],
+    "msgpack": "1.1.2",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2",
+    "scope": "Number scope only. No helper behaviour, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
   }
 }
