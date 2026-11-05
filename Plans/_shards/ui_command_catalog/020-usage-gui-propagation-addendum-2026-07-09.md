@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L10158-L10228
+Source lines: L10184-L10256
 
-Source SHA256: `ce3245e312fdf84d34ac33c22d578df4c581f9a8e205144f10e2fb76fc221683`
+Source SHA256: `1af8b4a077d054ec48a2a1094284049241a9b2f0c0fa46d6e0f819bd1c35deca`
 
 ---
 
@@ -79,3 +79,5 @@ owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Contracts_V0.md
 ```
+
+Lineage pointer (DL-333): UCC-109 stays the route payload contract. For `cmd.artifacts.show_in_usage` and `cmd.artifacts.show_in_ledger` its field list is history beside their typed definitions in the owner doc that UCC-230 names, which reference this contract.

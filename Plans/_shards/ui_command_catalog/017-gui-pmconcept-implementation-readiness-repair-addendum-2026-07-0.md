@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8492-L8555
+Source lines: L8514-L8579
 
-Source SHA256: `ce3245e312fdf84d34ac33c22d578df4c581f9a8e205144f10e2fb76fc221683`
+Source SHA256: `1af8b4a077d054ec48a2a1094284049241a9b2f0c0fa46d6e0f819bd1c35deca`
 
 ---
 
@@ -46,6 +46,8 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.plan_compile.inspect_assignment` | Inspect assignment | PlanCompileRun id, assignment id | Opens assignment inspector |
 | `cmd.plan_compile.request_bounded_recompile` | Request bounded recompile | PlanCompileRun id, affected PlanUnit refs, reason, currentness token | Bounded recompile request receipt |
 | `cmd.plan_compile.open_build` | Open Build | PlanCompileRun id, build/run identity, target artifact or route; disabled until `BuildStarted` or resulting build identity exists | Opens resulting build or build artifact route |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 ### Testing capability and visible-session command rows
 
