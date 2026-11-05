@@ -10056,10 +10056,13 @@
                   "command_id": "cmd.chat.memory.verification_sweep",
                   "schema_version": "1.0.0",
                   "event_type": "memory.verification_sweep.started",
-                  "occurred_at_utc": "2026-11-04T17:00:00Z"
+                  "occurred_at_utc": "2026-11-04T17:00:00Z",
+                  "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                  "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+                  "month": "2026-07"
                 }
               },
-              "full_value_sha256": "17dd4d8d9d63fa62950229ef01874cd527514eb7a645a3ee459524abe6c50dc9",
+              "full_value_sha256": "d4f0cd5fef075c5bdf1c1cfc2cfb630831c4714368575dac926290c1099accb6",
               "durability": "full_flush"
             }
           }
@@ -19704,10 +19707,13 @@
                   "command_id": "cmd.chat.memory.verification_sweep",
                   "schema_version": "1.0.0",
                   "event_type": "memory.verification_sweep.started",
-                  "occurred_at_utc": "2026-11-04T17:00:00Z"
+                  "occurred_at_utc": "2026-11-04T17:00:00Z",
+                  "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                  "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+                  "month": "2026-07"
                 }
               },
-              "full_value_sha256": "17dd4d8d9d63fa62950229ef01874cd527514eb7a645a3ee459524abe6c50dc9",
+              "full_value_sha256": "d4f0cd5fef075c5bdf1c1cfc2cfb630831c4714368575dac926290c1099accb6",
               "durability": "full_flush"
             }
           },
@@ -20066,12 +20072,28 @@
             },
             "family-rehashed": {
               "full_value": {
-                "schema_id": "pm.event.v0",
-                "schema_version": "2.0.0",
-                "scope_kind": "project",
                 "event_id": "evt_mem_80cb584ab202f088a84c269c1a8f084d184c2344c0442cc810b7cb78c40217d2",
                 "event_type": "memory.verification_sweep.started",
+                "idempotency_key": "memory-maintenance:80cb584ab202f088a84c269c1a8f084d184c2344c0442cc810b7cb78c40217d2",
+                "scope_kind": "project",
                 "project_id": "project-1",
+                "correlation_id": "operation-1",
+                "causation_event_id": null,
+                "payload_ref": null,
+                "payload": {
+                  "project_id": "project-1",
+                  "operation_id": "operation-1",
+                  "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "command_id": "cmd.chat.memory.verification_sweep",
+                  "schema_version": "1.0.0",
+                  "event_type": "memory.verification_sweep.started",
+                  "occurred_at_utc": "2026-11-04T17:00:00Z",
+                  "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                  "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+                  "month": "2026-07"
+                },
+                "schema_id": "pm.event.v0",
+                "schema_version": "2.0.0",
                 "thread_id": null,
                 "run_id": null,
                 "node_id": null,
@@ -20084,21 +20106,8 @@
                 "persisted_at_utc": "2026-11-04T17:00:00Z",
                 "sequence_id": 1,
                 "producer_sequence_id": null,
-                "correlation_id": "operation-1",
-                "causation_event_id": null,
                 "parent_event_id": null,
-                "idempotency_key": "memory-maintenance:80cb584ab202f088a84c269c1a8f084d184c2344c0442cc810b7cb78c40217d2",
                 "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started",
-                "payload": {
-                  "project_id": "project-1",
-                  "operation_id": "operation-1",
-                  "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "command_id": "cmd.chat.memory.verification_sweep",
-                  "schema_version": "1.0.0",
-                  "event_type": "memory.verification_sweep.started",
-                  "occurred_at_utc": "2026-11-04T17:00:00Z"
-                },
-                "payload_ref": null,
                 "redaction_profile": "no_secrets",
                 "replay_policy": "dedupe_by_idempotency_key",
                 "migration": {
@@ -20108,7 +20117,7 @@
                   "compatibility_event_type": null
                 }
               },
-              "full_value_sha256": "96804d37152c05defcba3b94312fab58fdc8bd951c7f9f1e066f518728fd80bd",
+              "full_value_sha256": "2defffb8c4653d34f96d3735bd8a666492492ac58cdddfe11ec1ecf36ca309d4",
               "durability": "full_flush"
             }
           }
@@ -29883,10 +29892,12 @@
                   "command_id": "cmd.chat.memory.verification_sweep",
                   "schema_version": "1.0.0",
                   "event_type": "memory.verification_sweep.started",
-                  "occurred_at_utc": "2026-11-04T17:00:00Z"
+                  "occurred_at_utc": "2026-11-04T17:00:00Z",
+                  "cutoff_ref": "synthetic-cutoff-prune_archive",
+                  "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
                 }
               },
-              "full_value_sha256": "17dd4d8d9d63fa62950229ef01874cd527514eb7a645a3ee459524abe6c50dc9",
+              "full_value_sha256": "ab6b02f15a212c03bbac29f625b39d1227187457443a422342d6a01d30b0a51e",
               "durability": "full_flush"
             }
           }
@@ -39248,10 +39259,12 @@
                   "command_id": "cmd.chat.memory.verification_sweep",
                   "schema_version": "1.0.0",
                   "event_type": "memory.verification_sweep.started",
-                  "occurred_at_utc": "2026-11-04T17:00:00Z"
+                  "occurred_at_utc": "2026-11-04T17:00:00Z",
+                  "cutoff_ref": "synthetic-cutoff-prune_archive",
+                  "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
                 }
               },
-              "full_value_sha256": "17dd4d8d9d63fa62950229ef01874cd527514eb7a645a3ee459524abe6c50dc9",
+              "full_value_sha256": "ab6b02f15a212c03bbac29f625b39d1227187457443a422342d6a01d30b0a51e",
               "durability": "full_flush"
             }
           },
@@ -39603,12 +39616,27 @@
             },
             "family-rehashed": {
               "full_value": {
-                "schema_id": "pm.event.v0",
-                "schema_version": "2.0.0",
-                "scope_kind": "project",
                 "event_id": "evt_mem_80cb584ab202f088a84c269c1a8f084d184c2344c0442cc810b7cb78c40217d2",
                 "event_type": "memory.verification_sweep.started",
+                "idempotency_key": "memory-maintenance:80cb584ab202f088a84c269c1a8f084d184c2344c0442cc810b7cb78c40217d2",
+                "scope_kind": "project",
                 "project_id": "project-1",
+                "correlation_id": "operation-1",
+                "causation_event_id": null,
+                "payload_ref": null,
+                "payload": {
+                  "project_id": "project-1",
+                  "operation_id": "operation-1",
+                  "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "command_id": "cmd.chat.memory.verification_sweep",
+                  "schema_version": "1.0.0",
+                  "event_type": "memory.verification_sweep.started",
+                  "occurred_at_utc": "2026-11-04T17:00:00Z",
+                  "cutoff_ref": "synthetic-cutoff-prune_archive",
+                  "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+                },
+                "schema_id": "pm.event.v0",
+                "schema_version": "2.0.0",
                 "thread_id": null,
                 "run_id": null,
                 "node_id": null,
@@ -39621,21 +39649,8 @@
                 "persisted_at_utc": "2026-11-04T17:00:00Z",
                 "sequence_id": 1,
                 "producer_sequence_id": null,
-                "correlation_id": "operation-1",
-                "causation_event_id": null,
                 "parent_event_id": null,
-                "idempotency_key": "memory-maintenance:80cb584ab202f088a84c269c1a8f084d184c2344c0442cc810b7cb78c40217d2",
                 "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started",
-                "payload": {
-                  "project_id": "project-1",
-                  "operation_id": "operation-1",
-                  "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "command_id": "cmd.chat.memory.verification_sweep",
-                  "schema_version": "1.0.0",
-                  "event_type": "memory.verification_sweep.started",
-                  "occurred_at_utc": "2026-11-04T17:00:00Z"
-                },
-                "payload_ref": null,
                 "redaction_profile": "no_secrets",
                 "replay_policy": "dedupe_by_idempotency_key",
                 "migration": {
@@ -39645,7 +39660,7 @@
                   "compatibility_event_type": null
                 }
               },
-              "full_value_sha256": "96804d37152c05defcba3b94312fab58fdc8bd951c7f9f1e066f518728fd80bd",
+              "full_value_sha256": "dbc71f9a215273e9a82274a61aec2394b99a14c5724c950229fc68a29e8138e9",
               "durability": "full_flush"
             }
           }
@@ -104891,6 +104906,2724 @@
           "value": "0000000000000000000000000000000000000000000000000000000000000000"
         }
       ]
+    },
+    {
+      "name": "memory.monthly_summary.completed:cutoff-self-reference",
+      "event_type": "memory.monthly_summary.completed",
+      "guard": "cutoff_reference",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.summarize_monthly",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-monthly_summary",
+          "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+          "month": "2026-07"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.summarize_monthly",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-monthly_summary",
+              "cutoff_sha256": "5b9f0417e6a00ddf0f086cfcc12fd2d3f2a1713260f66140351983af8728be09",
+              "month": "2026-07"
+            },
+            "originals": {
+              "memory.monthly_summary.started": {
+                "full_value": {
+                  "event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "event_type": "memory.monthly_summary.started",
+                  "idempotency_key": "memory-maintenance:008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.summarize_monthly",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.monthly_summary.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                    "cutoff_sha256": "5b9f0417e6a00ddf0f086cfcc12fd2d3f2a1713260f66140351983af8728be09",
+                    "month": "2026-07"
+                  }
+                },
+                "full_value_sha256": "d65f53abbe358f43db14804d0f43605f30affa0d9562562a658770143130dbbe",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-monthly_summary": {
+                "job": "monthly_summary",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-contradictory-ref",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        },
+        {
+          "path": [
+            "action",
+            "expected_operation"
+          ],
+          "value": {
+            "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "project_id": "project-1",
+            "operation_id": "operation-1",
+            "command_id": "cmd.chat.memory.summarize_monthly",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "phase": "started",
+            "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+            "completed_event_id": null,
+            "result_ref": null,
+            "result_sha256": null,
+            "status": null,
+            "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+            "completed_occurred_at_utc": null,
+            "cutoff_ref": "synthetic-cutoff-monthly_summary",
+            "cutoff_sha256": "5b9f0417e6a00ddf0f086cfcc12fd2d3f2a1713260f66140351983af8728be09",
+            "month": "2026-07"
+          }
+        }
+      ],
+      "refusal": "cutoff_reference"
+    },
+    {
+      "name": "memory.monthly_summary.completed:cutoff-duplicate-reference",
+      "event_type": "memory.monthly_summary.completed",
+      "guard": "cutoff_unique",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.summarize_monthly",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-monthly_summary",
+          "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+          "month": "2026-07"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.summarize_monthly",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-monthly_summary",
+              "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+              "month": "2026-07"
+            },
+            "originals": {
+              "memory.monthly_summary.started": {
+                "full_value": {
+                  "event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "event_type": "memory.monthly_summary.started",
+                  "idempotency_key": "memory-maintenance:008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.summarize_monthly",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.monthly_summary.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                    "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+                    "month": "2026-07"
+                  }
+                },
+                "full_value_sha256": "3c00567f3e1ded71aeea3736dfffcf5d7aa3868143c459430f887833b65aa8ac",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-monthly_summary": {
+                "job": "monthly_summary",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              },
+              "synthetic-alias": {
+                "job": "monthly_summary",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        }
+      ],
+      "refusal": "cutoff_unique"
+    },
+    {
+      "name": "memory.monthly_summary.completed:selected-rewrite-kind",
+      "event_type": "memory.monthly_summary.completed",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Todo",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      }
+    },
+    {
+      "name": "memory.monthly_summary.completed:selected-rewrite-pinned",
+      "event_type": "memory.monthly_summary.completed",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      }
+    },
+    {
+      "name": "memory.monthly_summary.completed:selected-rewrite-new_field",
+      "event_type": "memory.monthly_summary.completed",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ],
+            "new_field": "forged"
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      }
+    },
+    {
+      "name": "memory.monthly_summary.started:cutoff-self-reference",
+      "event_type": "memory.monthly_summary.started",
+      "guard": "cutoff_reference",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.summarize_monthly",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-monthly_summary",
+          "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+          "month": "2026-07"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.summarize_monthly",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-monthly_summary",
+              "cutoff_sha256": "5b9f0417e6a00ddf0f086cfcc12fd2d3f2a1713260f66140351983af8728be09",
+              "month": "2026-07"
+            },
+            "originals": {
+              "memory.monthly_summary.started": {
+                "full_value": {
+                  "event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "event_type": "memory.monthly_summary.started",
+                  "idempotency_key": "memory-maintenance:008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.summarize_monthly",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.monthly_summary.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                    "cutoff_sha256": "5b9f0417e6a00ddf0f086cfcc12fd2d3f2a1713260f66140351983af8728be09",
+                    "month": "2026-07"
+                  }
+                },
+                "full_value_sha256": "d65f53abbe358f43db14804d0f43605f30affa0d9562562a658770143130dbbe",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-monthly_summary": {
+                "job": "monthly_summary",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-contradictory-ref",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        },
+        {
+          "path": [
+            "action",
+            "expected_operation"
+          ],
+          "value": {
+            "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "project_id": "project-1",
+            "operation_id": "operation-1",
+            "command_id": "cmd.chat.memory.summarize_monthly",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "phase": "started",
+            "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+            "completed_event_id": null,
+            "result_ref": null,
+            "result_sha256": null,
+            "status": null,
+            "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+            "completed_occurred_at_utc": null,
+            "cutoff_ref": "synthetic-cutoff-monthly_summary",
+            "cutoff_sha256": "5b9f0417e6a00ddf0f086cfcc12fd2d3f2a1713260f66140351983af8728be09",
+            "month": "2026-07"
+          }
+        }
+      ],
+      "refusal": "cutoff_reference"
+    },
+    {
+      "name": "memory.monthly_summary.started:cutoff-duplicate-reference",
+      "event_type": "memory.monthly_summary.started",
+      "guard": "cutoff_unique",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.summarize_monthly",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-monthly_summary",
+          "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+          "month": "2026-07"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.summarize_monthly",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-monthly_summary",
+              "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+              "month": "2026-07"
+            },
+            "originals": {
+              "memory.monthly_summary.started": {
+                "full_value": {
+                  "event_id": "evt_mem_008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "event_type": "memory.monthly_summary.started",
+                  "idempotency_key": "memory-maintenance:008d33f436801338e9ced30d56f21a8125378407ba31de638e81ac8e50fbb6af",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.summarize_monthly",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.monthly_summary.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                    "cutoff_sha256": "909c03600da690212f803a88ddf247c038043a05962ee16d907d84d044df4914",
+                    "month": "2026-07"
+                  }
+                },
+                "full_value_sha256": "3c00567f3e1ded71aeea3736dfffcf5d7aa3868143c459430f887833b65aa8ac",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-monthly_summary": {
+                "job": "monthly_summary",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              },
+              "synthetic-alias": {
+                "job": "monthly_summary",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-monthly_summary",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        }
+      ],
+      "refusal": "cutoff_unique"
+    },
+    {
+      "name": "memory.monthly_summary.started:selected-rewrite-kind",
+      "event_type": "memory.monthly_summary.started",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Todo",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      }
+    },
+    {
+      "name": "memory.monthly_summary.started:selected-rewrite-pinned",
+      "event_type": "memory.monthly_summary.started",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      }
+    },
+    {
+      "name": "memory.monthly_summary.started:selected-rewrite-new_field",
+      "event_type": "memory.monthly_summary.started",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ],
+            "new_field": "forged"
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": {
+          "original_ids": [
+            "old-note"
+          ],
+          "evidence_refs": [
+            "evidence-a",
+            "evidence-b"
+          ]
+        }
+      }
+    },
+    {
+      "name": "memory.prune_archive.completed:cutoff-self-reference",
+      "event_type": "memory.prune_archive.completed",
+      "guard": "cutoff_reference",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.prune_archive",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-prune_archive",
+          "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.prune_archive",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-prune_archive",
+              "cutoff_sha256": "4583652f5c92275c69ea679a04d5fe21b56c1addeb8dbceb7c83e99a36229099"
+            },
+            "originals": {
+              "memory.prune_archive.started": {
+                "full_value": {
+                  "event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "event_type": "memory.prune_archive.started",
+                  "idempotency_key": "memory-maintenance:dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.prune_archive",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.prune_archive.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-prune_archive",
+                    "cutoff_sha256": "4583652f5c92275c69ea679a04d5fe21b56c1addeb8dbceb7c83e99a36229099"
+                  }
+                },
+                "full_value_sha256": "7dfe2b96aad776180b124e6d590155f119cac62078aaceda66af2069d0f451ca",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-prune_archive": {
+                "job": "prune_archive",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-contradictory-ref",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        },
+        {
+          "path": [
+            "action",
+            "expected_operation"
+          ],
+          "value": {
+            "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "project_id": "project-1",
+            "operation_id": "operation-1",
+            "command_id": "cmd.chat.memory.prune_archive",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "phase": "started",
+            "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+            "completed_event_id": null,
+            "result_ref": null,
+            "result_sha256": null,
+            "status": null,
+            "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+            "completed_occurred_at_utc": null,
+            "cutoff_ref": "synthetic-cutoff-prune_archive",
+            "cutoff_sha256": "4583652f5c92275c69ea679a04d5fe21b56c1addeb8dbceb7c83e99a36229099"
+          }
+        }
+      ],
+      "refusal": "cutoff_reference"
+    },
+    {
+      "name": "memory.prune_archive.completed:cutoff-duplicate-reference",
+      "event_type": "memory.prune_archive.completed",
+      "guard": "cutoff_unique",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.prune_archive",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-prune_archive",
+          "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.prune_archive",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-prune_archive",
+              "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+            },
+            "originals": {
+              "memory.prune_archive.started": {
+                "full_value": {
+                  "event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "event_type": "memory.prune_archive.started",
+                  "idempotency_key": "memory-maintenance:dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.prune_archive",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.prune_archive.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-prune_archive",
+                    "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+                  }
+                },
+                "full_value_sha256": "e7f85491bb3d28d19771be7f3f696b601250afe223aee26b586c57b9ca53e569",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-prune_archive": {
+                "job": "prune_archive",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-prune_archive",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              },
+              "synthetic-alias": {
+                "job": "prune_archive",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-prune_archive",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        }
+      ],
+      "refusal": "cutoff_unique"
+    },
+    {
+      "name": "memory.prune_archive.completed:selected-rewrite-kind",
+      "event_type": "memory.prune_archive.completed",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Todo",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      }
+    },
+    {
+      "name": "memory.prune_archive.completed:selected-rewrite-pinned",
+      "event_type": "memory.prune_archive.completed",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      }
+    },
+    {
+      "name": "memory.prune_archive.completed:selected-rewrite-new_field",
+      "event_type": "memory.prune_archive.completed",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ],
+            "new_field": "forged"
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      }
+    },
+    {
+      "name": "memory.prune_archive.started:cutoff-self-reference",
+      "event_type": "memory.prune_archive.started",
+      "guard": "cutoff_reference",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.prune_archive",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-prune_archive",
+          "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.prune_archive",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-prune_archive",
+              "cutoff_sha256": "4583652f5c92275c69ea679a04d5fe21b56c1addeb8dbceb7c83e99a36229099"
+            },
+            "originals": {
+              "memory.prune_archive.started": {
+                "full_value": {
+                  "event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "event_type": "memory.prune_archive.started",
+                  "idempotency_key": "memory-maintenance:dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.prune_archive",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.prune_archive.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-prune_archive",
+                    "cutoff_sha256": "4583652f5c92275c69ea679a04d5fe21b56c1addeb8dbceb7c83e99a36229099"
+                  }
+                },
+                "full_value_sha256": "7dfe2b96aad776180b124e6d590155f119cac62078aaceda66af2069d0f451ca",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-prune_archive": {
+                "job": "prune_archive",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-contradictory-ref",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        },
+        {
+          "path": [
+            "action",
+            "expected_operation"
+          ],
+          "value": {
+            "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "project_id": "project-1",
+            "operation_id": "operation-1",
+            "command_id": "cmd.chat.memory.prune_archive",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "phase": "started",
+            "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+            "completed_event_id": null,
+            "result_ref": null,
+            "result_sha256": null,
+            "status": null,
+            "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+            "completed_occurred_at_utc": null,
+            "cutoff_ref": "synthetic-cutoff-prune_archive",
+            "cutoff_sha256": "4583652f5c92275c69ea679a04d5fe21b56c1addeb8dbceb7c83e99a36229099"
+          }
+        }
+      ],
+      "refusal": "cutoff_reference"
+    },
+    {
+      "name": "memory.prune_archive.started:cutoff-duplicate-reference",
+      "event_type": "memory.prune_archive.started",
+      "guard": "cutoff_unique",
+      "kind": "phase",
+      "initial": "started",
+      "action": {
+        "op": "settle",
+        "status": "succeeded",
+        "completed_occurred_at_utc": "2026-11-04T17:01:00Z",
+        "expected_operation": {
+          "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "project_id": "project-1",
+          "operation_id": "operation-1",
+          "command_id": "cmd.chat.memory.prune_archive",
+          "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "phase": "started",
+          "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+          "completed_event_id": null,
+          "result_ref": null,
+          "result_sha256": null,
+          "status": null,
+          "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+          "completed_occurred_at_utc": null,
+          "cutoff_ref": "synthetic-cutoff-prune_archive",
+          "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+        }
+      },
+      "edits": [
+        {
+          "path": [
+            "state"
+          ],
+          "value": {
+            "operation": {
+              "schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "project_id": "project-1",
+              "operation_id": "operation-1",
+              "command_id": "cmd.chat.memory.prune_archive",
+              "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "phase": "started",
+              "started_event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+              "completed_event_id": null,
+              "result_ref": null,
+              "result_sha256": null,
+              "status": null,
+              "started_occurred_at_utc": "2026-11-04T17:00:00Z",
+              "completed_occurred_at_utc": null,
+              "cutoff_ref": "synthetic-cutoff-prune_archive",
+              "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+            },
+            "originals": {
+              "memory.prune_archive.started": {
+                "full_value": {
+                  "event_id": "evt_mem_dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "event_type": "memory.prune_archive.started",
+                  "idempotency_key": "memory-maintenance:dc7799f62700c9d5c14ecbb5055b330e4fbad5a5ca674f8907eebe17c2fb1edc",
+                  "scope_kind": "project",
+                  "project_id": "project-1",
+                  "correlation_id": "operation-1",
+                  "causation_event_id": null,
+                  "payload_ref": null,
+                  "payload": {
+                    "project_id": "project-1",
+                    "operation_id": "operation-1",
+                    "source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "command_id": "cmd.chat.memory.prune_archive",
+                    "schema_version": "1.0.0",
+                    "event_type": "memory.prune_archive.started",
+                    "occurred_at_utc": "2026-11-04T17:00:00Z",
+                    "cutoff_ref": "synthetic-cutoff-prune_archive",
+                    "cutoff_sha256": "4a0790333eae6f17cc748136b58579563a01feba9c9f1119979d1311e49ac78b"
+                  }
+                },
+                "full_value_sha256": "e7f85491bb3d28d19771be7f3f696b601250afe223aee26b586c57b9ca53e569",
+                "durability": "full_flush"
+              }
+            },
+            "selector": null,
+            "effect_count": 0,
+            "swap_count": 0,
+            "durable_artifacts": [],
+            "volatile": null,
+            "permission": true,
+            "withdrawn": false,
+            "current_source_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "request_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "cutoff_authorities": {
+              "synthetic-cutoff-prune_archive": {
+                "job": "prune_archive",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-prune_archive",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              },
+              "synthetic-alias": {
+                "job": "prune_archive",
+                "scope_kind": "project",
+                "project_id": "project-1",
+                "cutoff_ref": "synthetic-cutoff-prune_archive",
+                "selection_contract_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "approval_decision_ref": "synthetic:test-only-no-product-approval"
+              }
+            },
+            "archive": {
+              "memories": {
+                "old-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-original-1",
+                  "evidence_refs": [
+                    "evidence-a",
+                    "evidence-b"
+                  ]
+                },
+                "pinned-note": {
+                  "pinned": true,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-pinned-1",
+                  "evidence_refs": [
+                    "evidence-pinned"
+                  ]
+                },
+                "recent-note": {
+                  "pinned": false,
+                  "kind": "Note",
+                  "archived": false,
+                  "version_ref": "version-recent-1",
+                  "evidence_refs": []
+                }
+              },
+              "selected_ids": [
+                "old-note"
+              ],
+              "summary": null
+            }
+          }
+        }
+      ],
+      "refusal": "cutoff_unique"
+    },
+    {
+      "name": "memory.prune_archive.started:selected-rewrite-kind",
+      "event_type": "memory.prune_archive.started",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Todo",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      }
+    },
+    {
+      "name": "memory.prune_archive.started:selected-rewrite-pinned",
+      "event_type": "memory.prune_archive.started",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      }
+    },
+    {
+      "name": "memory.prune_archive.started:selected-rewrite-new_field",
+      "event_type": "memory.prune_archive.started",
+      "guard": "selected_fields_preserved",
+      "kind": "archive",
+      "initial": "started",
+      "edits": [],
+      "refusal": "selected_fields_preserved",
+      "before": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "control_after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ]
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      },
+      "after": {
+        "memories": {
+          "old-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": true,
+            "version_ref": "version-original-1",
+            "evidence_refs": [
+              "evidence-a",
+              "evidence-b"
+            ],
+            "new_field": "forged"
+          },
+          "pinned-note": {
+            "pinned": true,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-pinned-1",
+            "evidence_refs": [
+              "evidence-pinned"
+            ]
+          },
+          "recent-note": {
+            "pinned": false,
+            "kind": "Note",
+            "archived": false,
+            "version_ref": "version-recent-1",
+            "evidence_refs": []
+          }
+        },
+        "selected_ids": [
+          "old-note"
+        ],
+        "summary": null
+      }
     }
   ]
 }

@@ -63,8 +63,6 @@ class IgnoreFamilyConst:
             return self.validator.is_valid(value)
         return not any(not (e.validator == 'const' and list(e.path) in
                             (['event_type'], ['command_id']))
-                       and not (e.validator == 'required' and all(k in ('cutoff_ref','cutoff_sha256','month')
-                                                                for k in e.validator_value if k not in value))
                        for e in self.validator.iter_errors(value))
 
 
@@ -88,6 +86,7 @@ def custody_mutant(m, name, archive=None):
             # The archive repeats the same retained-family join at its payload-schema boundary.
             real_validator = m.validator
             change('validator', lambda *args: IgnoreFamilyConst(real_validator(*args)))
+            change('historical_producer_matches', lambda *args: True)
         yield
     finally:
         for key, value in saved.items(): setattr(m, key, value)
@@ -230,6 +229,15 @@ def semantic_cases(m, fixtures, contexts):
                 lambda r=changed,e=event:call(m.valid_operation,r,m.operation_name(e)))
         add(event,'inline_cap','inline-cap',lambda:call(m.within_value_cap,{'text':'x'}),
             lambda:call(m.within_value_cap,{'text':'x'*17000}))
+        def number(value):
+            try:
+                m.digest(value)
+            except ValueError:
+                return ('refused', 'non_integer_commitment_number')
+            return ('ok',)
+        for label, numeric_value in [('fraction', 1.5), ('infinity', float('inf')), ('nan', float('nan'))]:
+            add(event,'commitment_numbers','number-'+label,lambda fn=number:fn(1),
+                lambda v=numeric_value,fn=number:fn(v))
         payload=value['payload']; wrong={**payload,'unknown':True}
         path='Plans/memory_maintenance_event_payloads.schema.json';definition=event.replace('.','_')
         add(event,'payload_schema','payload-schema',lambda p=payload,d=definition:call(m.validator(path,d).is_valid,p),
@@ -361,6 +369,48 @@ def semantic_cases(m, fixtures, contexts):
     return cases
 
 
+def canonical_history_cases(m, families, archive=False):
+    cases = []
+    fixtures = m.load('Plans/memory_canonical_history_fixtures.json')
+    for family in fixtures['canonical_history_families']:
+        event = family['event_type']
+        if event not in families:
+            continue
+        for case in family['cases']:
+            if 'refusal' not in case:
+                continue
+            guard = {'history_binding': 'semantic_binding' if archive else 'custody_binding',
+                     'producer_join': 'semantic_binding' if archive else 'producer_join',
+                     'history_envelope': 'envelope_schema', 'history_payload': 'payload_schema'}.get(case['guard'], case['guard'])
+            def probe(negative, c=case, f=family):
+                state = m.patch(f['states'][c['initial']], c['edits'] if negative else [])
+                before = deepcopy(state)
+                read = c['read'] if negative else f['event_type']
+                try:
+                    if guard_name(c) == 'custody_presence':
+                        # Actual common gate: removing presence cannot manufacture requested bytes.
+                        snapshot = {'operation':state['written_operation'], 'originals':state['originals'],
+                                    'withdrawn':state['withdrawn']}
+                        m.start_custody_gate(snapshot, canonical_history=True)
+                    else:
+                        if negative and c.get('number_literal') is not None:
+                            m.parse_json_number(c['number_literal'])
+                        m.read_canonical_history(state, read)
+                except (m.Refusal, json.JSONDecodeError) as error:
+                    result = ('refused', 'invalid_json_number' if isinstance(error,json.JSONDecodeError) else str(error))
+                else:
+                    result = ('ok',)
+                assert state == before
+                return result
+            cases.append({'name':event+':canonical-history:'+case['name'].split(':',1)[1], 'guard':guard,
+                          'positive':lambda p=probe:p(False), 'negative':lambda p=probe:p(True)})
+    return cases
+
+
+def guard_name(case):
+    return case['guard']
+
+
 class RemoveExpressions(ast.NodeTransformer):
     def __init__(self,replacements):self.replacements=replacements
     def visit(self,node):
@@ -389,6 +439,12 @@ CHECKPOINT_GUARDS={
 class RemoveUnknownAction(ast.NodeTransformer):
     def visit_Raise(self,node):
         if ast.unparse(node)=="raise Refusal('unknown_action')":return ast.Pass()
+        return node
+
+
+class RemoveUnsupportedNumber(ast.NodeTransformer):
+    def visit_Raise(self,node):
+        if ast.unparse(node)=="raise ValueError('non_integer_commitment_number')":return ast.Pass()
         return node
 
 
@@ -443,11 +499,15 @@ def semantic_mutant(m,name):
                          ('target_identity','target_identity_matches'),('inline_cap','within_value_cap'),
                          ('selector_schema','selector_schema_matches'),('selector_scope','selector_scope_matches')]:
             if name==guard:change(fn,lambda *args:True)
-        if name=='envelope_schema':change('envelope_validator',lambda:AlwaysValid())
+        if name=='envelope_schema':
+            change('envelope_validator',lambda:AlwaysValid())
+            real=m.validator
+            change('validator',lambda path,definition:AlwaysValid() if path=='Plans/event_record.schema.json' else real(path,definition))
         if name=='payload_schema':
             real=m.validator
             change('validator',lambda path,definition:AlwaysValid() if 'event_payloads' in path else real(path,definition))
         if name=='references_resolve':change('unresolved_references',lambda *args,**kwargs:[])
+        if name=='json_number_grammar':change('parse_json_number',lambda literal:1)
         if name in ('producer_join','replay_policy'):
             real=m.retained_binding;field='actor_ref' if name=='producer_join' else 'replay_policy'
             def binding(value,expected):
@@ -455,6 +515,7 @@ def semantic_mutant(m,name):
                     value={k:v for k,v in value.items() if k!=field};expected={k:v for k,v in expected.items() if k!=field}
                 return real(value,expected)
             change('retained_binding',binding)
+        if name=='producer_join':change('historical_producer_matches',lambda *args:True)
         if name=='outcome':
             real=m.validator
             change('validator',lambda path,definition:WithoutOutcomeEnum(real(path,definition)) if 'operation.schema' in path else real(path,definition))
@@ -467,6 +528,7 @@ def semantic_mutant(m,name):
         if name in CHECKPOINT_GUARDS:
             change('checkpoint_identity_matches',replaced_function(m,'checkpoint_identity_matches',RemoveExpressions(CHECKPOINT_GUARDS[name])))
         if name=='action':change('_transition',replaced_function(m,'_transition',RemoveUnknownAction()))
+        if name=='commitment_numbers':change('canonical_numbers',replaced_function(m,'canonical_numbers',RemoveUnsupportedNumber()))
         if name=='original_input':
             change('_transition',replaced_function(m,'_transition',RemoveExpressions({"action['value'] == value":True})))
         if name=='replay_policy':change('_append_current',replaced_function(m,'_append_current',DropReplayField()))
@@ -529,6 +591,8 @@ def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):
         corpus.append({'name':case['name'],'guard':case['guard'],
                        'positive':lambda c=case:matrix_probe(m,fixtures,contracts,c,True),
                        'negative':lambda c=case:matrix_probe(m,fixtures,contracts,c)})
+    names = [case['name'] for case in corpus]
+    assert len(names) == len(set(names)), ('duplicate_guard_case_ids', sorted({name for name in names if names.count(name)>1}))
     baseline={}
     for case in corpus:
         assert case['positive']()[0]=='ok',(case['name'],'invalid control')
@@ -565,7 +629,7 @@ def main():
     contexts={c['event_type']:{'event_type':c['event_type'],'states':c['states'],
               'writer_states':next(w['states'] for w in f['writer_families'] if w['event_type']==c['event_type'])}
               for c in f['stateful_families']}
-    semantic=semantic_cases(m,f,contexts)
+    semantic=semantic_cases(m,f,contexts)+canonical_history_cases(m,contexts)
     matrix=cases_for_matrix(m,f,contracts,f['start_custody_matrix']['families'],contexts)
     rows,n=prove_complete(m,semantic,matrix,f,contracts)
     archive=module('_check11_archive','pm_memory_archive_events.py');am=archive.core
@@ -611,7 +675,7 @@ def main():
     extra=semantic_cases(am,generic,actx)
     for case in extra:
         if case['guard']=='producer_join':case['guard']='semantic_binding'
-    asemantic+=extra
+    asemantic+=extra+canonical_history_cases(am,actx,archive=True)
     ar,an=prove_complete(am,asemantic,amatrix,adapted,ac,archive)
     result={'status':'pass','families':sorted(set(contracts)|set(ac)),
             'custody_matrix_cases':len(matrix)+len(amatrix),'maintenance_cases':n,'archive_cases':an,
