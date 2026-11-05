@@ -1,3 +1,81 @@
+# DG6A — review round 8
+
+Branch `plans/ea-w2-gui-concerns-20261104`; reviewed input `ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f`. B1 repair **7298ede10ed9e3aae621419af8e77cd4ea893474**; coherent admission-negative follow-up **da26fea8ad8ce783a0f842e933ed3744f33bbee8**. The final report commit is self-inclusive and changes reporting only. All seven complete family checkers ran serially at `da26fea8ad8ce783a0f842e933ed3744f33bbee8` and passed **3,515 cases**. Source SHA-256 pins match that commit.
+
+Seven families remain prepared without admission, each **9 PASS / 2 PARTIAL / 1 ABSENT**. C6 and C11 recover for the six B1 families. C12 remains PARTIAL for all seven because B2 is explicitly assigned to the shared guard-isolation sweep. Membership ABSENT, retention PARTIAL / `PENDING_RETENTION_DECISION`, native NOT_RUN, and all nine held records/questions/recommendations remain unchanged. This section supersedes the earlier 509/509 proof and 10/1/1 grade claims below; those sections are historical records only.
+
+## Review round 8: findings and responses
+
+| Finding | Where / why / fix | Verification |
+|---|---|---|
+| **B1 — fixed (`7298ede10e`, test refinement `da26fea8ad`)** | Four `Plans/event_payloads/attention/alert_*.schema.json` revision pairs at lines 22–23 and both `panel_*_v2.schema.json` host-revision pairs at lines 126–132. Round 7 narrowed schemas while retaining their IDs/versions. Remove those lowered maxima, restoring earlier owner ranges. `scripts/pm-alert-event-contracts-check.py:157` now uses the existing exact MessagePack recipe for committed/settled originals, selected from independently supplied original admission evidence and its known family/schema edition, never the caller's retry payload. It validates the retained original digest and exact body; existing append-resolution/source/receipt joins remain. `historical_guards:480` selects the schema from the independent original's edition. Current `request_digest`/`semantic_packed` and exact type/token/format checks remain. Panel `protocol_errors:123` supplies the same independent original evidence. No new number cap, serializer, normalization, schema ID or version. | Every affected family has prior revisions 9007199254740991, 9007199254740992 and 9007199254740993, with result prior+1, coherent commands/snapshots and pinned earlier-codec digests/payload-byte hashes. All 18 retained reads and 18 exact retries pass. Per original, mismatched edition/source fail separately through History and retry, each changing one leaf and producing only its owning refusal. Supplemental admission/digest/unsupported-original-edition controls also refuse. |
+| **B2 — sweep item, unchanged** | `scripts/pm-dg6a-guard-check.py:389,407–413`: the nine `history_shape` rows pop an early-return rejection and bypass the remaining reader checks. The original cycle-8 review proves this; the table is not complete proof. Adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105` in the cross-lane sweep. The round instruction moves proof machinery there, so this repair does not rebuild or claim to repair the lane proof script. | The proof script is byte-identical to reviewed input. All seven C12 cells remain PARTIAL. The grade audit refuses an invented C12 PASS for each family. No new complete guard-removal count or duplicate-set proof is claimed. |
+| **N1 — existing integration item** | The copied ignored currentness edition still makes `Plans/.plan_index/node_readiness_report.json` stale. Read-only index validation's complete 23-row failure array equals cycle 8's pre-generation array exactly: 21 legacy ledger shapes, newer-main DL-302 comparison, and readiness staleness. | Fifteen currentness files copied and SHA-256 matched. No owner Markdown changed in this B1 repair, so no regeneration was required or performed. Integration should regenerate normally against the current edition; no diagnostic restamping or governance reseal here. |
+
+## New B1 cases
+
+`scripts/pm-alert-event-contracts-check.py:685` exercises `retained_revision_cases` from each of the six family fixtures through the actual composed reader and protocol checker. Expected request digests and encoded-payload hashes are pinned from cycle 8's independent earlier-recipe evidence at `adda7279f8067637b109125f9524b0952f88f96b`; no new serializer or current-domain re-encoding supplies the expected values. Source: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG6A-sol/cycle8-evidence/history-number-recipes.json`, SHA-256 `e64faee85bfcc5ac6ad5d47d66674ffeb8668ffd3e37dd3363721ee821d61152`.
+
+Per revision: retained-original read and exact retry are positive; History edition/source mismatches and retry edition/source mismatches are four separate one-leaf negatives. A digest-only forgery is another one-leaf negative. Missing original admission keeps both original and resolver observations coherently false; it fails only the admission-dependent retry guard. An unsupported original edition reconciles all four payload copies and recomputes the earlier-codec digest, so it fails only edition selection. These last two each have one semantic defect, with no stale copy or digest. The admission witness was corrected in `da26fea8ad` before the final complete rerun.
+
+Total: **18 retained originals, 18 exact retries, 126 refusals; 162 new observations**. All pass. Each affected family contributes 27 observations. `concern.created` gains no revision-range fixture and its complete checker still passes. Both immutable panel-v1 readers remain exercised and their schemas are unchanged. Existing live-state/replay-only positives, forged/withdrawn controls, current writer type/spelling checks, byte limits, source custody and full-u64 cursor positives remain in the seven checkers.
+
+## Family grades before and after
+
+Before = independent cycle-8 re-grade. P/p/A = PASS/PARTIAL/ABSENT.
+
+| Family | Before P/p/A | Round 8 P/p/A | Complete checker cases |
+|---|---|---|---:|
+| alert.acknowledged | 7/4/1 | 9/2/1 | 460 |
+| alert.dismissed | 7/4/1 | 9/2/1 | 463 |
+| alert.rule_muted | 7/4/1 | 9/2/1 | 463 |
+| alert.snoozed | 7/4/1 | 9/2/1 | 476 |
+| panel.redocked | 7/4/1 | 9/2/1 | 516 |
+| panel.undocked | 7/4/1 | 9/2/1 | 516 |
+| concern.created | 9/2/1 | 9/2/1 | 621 |
+
+All 84 prepared-family cells have cycle-8 priors and current citations. The grade audit resolves **603 citations**. All nine held grade records remain structurally identical to the reviewed input. The exact stopped questions and unapplied recommendations below remain authoritative as holds.
+
+## Sweep items and proof limits
+
+- **B2 / check 11:** replace the lane machinery with the shared guard-isolation tool, prove each field/predicate separately, distinguish exact same-invariant duplicates from shared enforcement sites, and replace the nine unproved navigation rows. Include the retained-retry guards and new witnesses in the shared inventory. The earlier 500/509 independent result belongs to the reviewed head, not this repair head.
+- **Shared number rule / SP-1101:** complete CV-1100/SP-1100/SP-1101 adoption and authenticated write-time recipe dispatch in the sweep. This repair only preserves the six existing earlier exact MessagePack editions for independently admitted originals; it authors no general dispatch system. Current range rules and physical-number-byte concerns beyond this cap removal remain sweep work, including `scripts/pm-dg6a-domain.py:66–69`, current-only embedded operation/shared-state schemas and CV-680..686's current-number wording. Storage uint64 metadata and cursors must keep their complete domain; no 2^53 metadata cap is introduced.
+- **Number-domain oracle expectations:** `scripts/pm-dg6a-domain-check.py:170,180,253` and `scripts/pm-dg6a-final-regression-check.py:146` still contain round-7 unsafe-range expectations, including standalone payload refusal at 2^53/2^53+1. Align them with the owner domains during shared-rule adoption; do not restore the rejected payload maxima to satisfy those expectations. Those broader domain/full-CLI drivers are not claimed as passing reruns here. The seven complete family entry points are the reruns reported above.
+- **N1:** regenerate the index with the current copied ignored edition at integration; keep the existing four-timestamp exception and report diagnostic changes honestly. No index/governance artifacts were edited in this bounded repair.
+
+The shared-tool instruction supersedes round-local proof rebuilding. No full source-removal/domain matrix or 719-CLI campaign was rerun or represented as passing. Current family checkers and the new B1 positive/negative cases all pass; C12 remains PARTIAL until shared isolation is completed.
+
+## Verification, scope and evidence
+
+| Check | Exit / result |
+|---|---|
+| Seven complete family entry points, serial at `da26fea8ad` | 0 each; 3,515 total cases. Exact commands, input head and memory readings in `family-commands.json`. |
+| New retained-revision cases | 162/162; 36 positives and 126 negatives. Per-family observations in `*.retained.json`. |
+| Grade baseline and seven false C12-PASS controls | Expected exits 0 then seven 1s; 8/8 pass. Inputs restored byte-for-byte. |
+| Grade/citation/held-record audit | 0; 603 citations; all nine held records identical. |
+| `pm-shard-plans.py --check --config Plans/sharding_config.json` | 0/pass; 99 docs, 3,129 shard bodies. |
+| `pm-plan-index.py validate` | 1; parsed top-level status fail; exactly the same complete 23 failures as cycle 8 before generation. |
+| Scope/source/whitespace audit | pass; source bytes match code commit; no new PlanUnit IDs or forbidden-path edits. |
+
+Owner Markdown, both registries, Decision Log, immutable panel-v1 schemas, currentness/governance artifacts, storage profiles and budgets, and the lane proof/domain scripts are unchanged. The only companion edits are six payload schemas, six family fixtures and the alert/panel checkers; the grade-audit driver is updated to enforce truthful C12 PARTIAL with seven new false-PASS controls. There is no admission, registry append, Decision Log entry, retention answer, actor grant, product feature, new identity recipe, main push, pm-mail, subagent, browser or server.
+
+Existing IDs retained: **SP-660..666, CV-680..686, F3-700..705, ATS-330..334** (25 definitions). **No new IDs.** SP-1101 and the shared-tool branch are sweep references, not lane allocations. Initial root disk free 94 GB and available RAM 13 GiB met the 50-GB/6-GiB gates. Every family run records a resource check; no memory pause was needed. The sparse detached worktree is removed with the literal prescribed path after the final report/grade copy and push.
+
+| Evidence | Absolute path | SHA-256 |
+|---|---|---|
+| `verification-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/verification-summary.json` | `588054adf9c46b702844e8368d788cd92374cb889f0510bd47be34d3945fdb48` |
+| `family-commands.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/family-commands.json` | `7d0b77ce79f201714676dddf3fca0f508a96f767dc55d6fca53d5b2fc54ef7af` |
+| `consumed-sources.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/consumed-sources.json` | `688213e28d89fd0858cb40239c0aaec613557f1b30d3a1e06471a25c87fd2453` |
+| `regrade-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/regrade-summary.json` | `34c36eec361105db56542672a1775237a8df210fbfb6b8b6e42be384b34b6a57` |
+| `grade-controls.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/grade-controls.json` | `ea6313e693ac93790337fcfaf7bceb359db7877fd70fb4905f115c8b63b5d4aa` |
+| `boundary-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/boundary-audit.json` | `73da6681990b63c65ecf73898835e56133b4dd75b43c6efbdef07610d6a631c3` |
+| `shard-check.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/shard-check.log` | `48c1f857e2193456e9db56b97c616373bfca9a7db703b6ebe4b0efe2ae378363` |
+| `index-validate.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/index-validate.log` | `b36502925ee11fffee1f8ab525d000398791fc8ba9ae6b5d3f7ca427c3ec4e3b` |
+| `index-baseline-comparison.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/index-baseline-comparison.json` | `de1acb8142e500a8a70be88e83717648c66548859ad01a20cfd1add195c1ec26` |
+| `currentness-copy.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix8/currentness-copy.json` | `260def53a52691607d7f8bbb9790c4626cd49842f94e3cc39b308ab33eaad507` |
+
+## Earlier rounds (unchanged historical record)
+
 # DG6A — review round 7
 
 Branch `plans/ea-w2-gui-concerns-20261104`; reviewed input `adda7279f8067637b109125f9524b0952f88f96b`. Technical repair **da37d7ac9d947f8a26b6b66f053dffb4eaa6f150**; navigation-proof refinement **f34fec9eb0c00754638a05e65b456e576b9d818a**. The final report commit is self-inclusive. Earlier round records and all nine held questions/recommendations remain below unchanged.
