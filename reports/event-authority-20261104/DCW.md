@@ -1,3 +1,100 @@
+# DCW — sweep part 1 (2026-11-05)
+
+Branch `plans/ea-w2-chain-wizard-20261104`; tested implementation **`d9d930b925946c8c95726c6cb5b492507f11ec95`**; rebased onto `origin/main` **`d5ec2f70c0d69c469796eea9b9cfdae30f281f42`**. Input was cycle-10 head `4a7e59c94270b8a54c5b9e366b561ab697f2a54f`, review `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCW-sol/REVIEW-cycle10.md`. F1–F3 are repaired locally; readiness awaits part 2 and the instructed Sol/Astra review. Each family remains **8 PASS / 3 PARTIAL / 1 ABSENT**. No prepared PASS, admission or native authority is claimed.
+
+## Sweep part 1: findings and responses
+
+Every fixed entry below belongs to commit `d9d930b925946c8c95726c6cb5b492507f11ec95`. Verification outputs are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p1/`.
+
+| Item | Where / cause | Fix and verification |
+|---|---|---|
+| **Deck 4.a** | `Plans/Decision_Log.md:5119` DL-431; `Plans/Contracts_V0.md:24948` CV-596. | Already applied as decided; updated owner citation to the landed DL entry. Landed option: “Attach Blocked to the whole Planning Run. Save it only when the component responsible for planning records a blockage or repair attempt that prevents every otherwise permitted next step. A stalled topic does not block the run if another can continue. Count completed repair attempts for that blockage; add no three-round trigger. You see the whole run’s blockage and report.” `deck-fidelity.json` matches it after only case/whitespace/apostrophe folding. Zero/one/four completed repairs, topic-can-continue and nontrigger cases remain in the real CLI. |
+| **Deck 4.b** | `Plans/Decision_Log.md:5139` DL-432; `Plans/Contracts_V0.md:25167` CV-597. | Already applied as decided; updated owner citation to the landed DL entry. Landed option: “Save Unblocked when the responsible planning component records that all required blocking conditions for that same run/topic have cleared. Link the authorized action that actually cleared it to the original blockage. Clearing another topic, opening a page, reprocessing old history or merely editing a report does not count. You see clearance as soon as that work can resume.” Only run/topic resolves to run, as DL-431/432 expressly direct; no successful-next-step requirement is added. `deck-fidelity.json` and the full Unblocked CLI verify this. Jared’s words remain exactly “i approve all of it”; option prose is attributed to the card. |
+| **F1** | `scripts/pm_dcw_index_cases.py:57`: the original 54 row/source negatives retained their old digest/frontier/token observations. | Rehash before adding the original `round8_astra_*` cases. Their isolation declarations now name only `index_row_source`; no paired digest cut. All six families × three fields × three read paths refuse `index_row_source`, accept with only that predicate disabled, and still refuse when only `index_row_digest` is disabled. Separate digest-corruption negatives refuse intact and accept with only their digest guard disabled. `targeted-controls.json` and all six full family CLIs verify the real constructors. |
+| **F2** | `scripts/pm_dcw_blockage_fixtures.py:308`, `:347`, `:400`, `:444`, `:503`, `:512`: extra commitment, receipt, next-step, action, root or token defects masked the intended failures. | Reissue event commitment and receipt-sequence copies while retaining authentic Storage originals. Build foreign checkpoints as internally coherent complete snapshots. Keep before/cleared action sets coherent; give source-join claims an otherwise valid action. Use unique one-character condition refs for wrong iterable types. Remove logically entailed assertions as described below; keep each enforcing guard and its negative. Both new CLIs and the one-predicate controls pass. |
+| **F3** | `scripts/pm_dcw_blockage_fixtures.py:346`; each source schema’s `observation.subject_kind.const`. | Add `whole_run_subject` independently for each family: authenticated observation and stored copy say `topic`, with valid event/episode/receipt/index facts. Intact oracle refuses `schema`; removing only the subject constant in schema/resource/materialized copies accepts that negative and makes the complete family CLI fail its expectation. `targeted-controls.json` records both controls. |
+| **Other cycle-10 diagnostics** | Unblocked `foreign_cleared_condition`, `resolution_source_join`, `root_is_latest_update`, and wrong action-container types. | Included in F2: remove subset assertion where exact set equality already implies it; update the original-root negative to the actual chain-root equality; reissue action lookup and coherent condition sets. Same-field repeated writer-policy/token checks, missing-object dereference controls, cyclic-recursion diagnostics and whole-keyword proof defects remain explicitly part-2 inventory work. No whole-lane proof is inferred from these targeted controls. |
+
+**Why redundant assertions were removed (`scripts/pm_dcw_blockage_events.py:124`, `:165`, `:180`):** Blocked requires at least one next step and each step must intersect `required - cleared`, which implies a nonempty required set. Unblocked authenticates that predecessor and includes its requirements, so the same implication holds through the chain. A separate empty-required assertion has no orthogonal witness. Blocked now has an empty-required witness with a real unprevented step; Unblocked retains the isolated `omitted_original_required_condition` predecessor witness and retires its compound empty-set input. Exact `cleared == required` implies the removed Unblocked subset assertion. Equality with the authenticated chain root implies that root is an original blockage rather than an update. Exact `remaining_after == []` implies its removed separate type check. These removals change refusal ordering, not which JSON inputs are accepted; their enforcing predicates and focused negatives remain active. This is the cycle-10 requested elimination of redundant assertions, not a merged removal set.
+
+## Family grades before and after
+
+Counts are PASS / PARTIAL / ABSENT. All 96 status cells are regraded; all 292 supporting quotations were re-located and matched in this tree. `retention`, `compatibility_withdrawal` and `positive_negative_oracles` remain PARTIAL; `membership_version` remains ABSENT. Prepared technical readiness is still withheld for all eight families.
+
+| Family | Cycle 10 | Sweep part 1 |
+|---|---|---|
+| `bundle.revision_requested` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `bundle.revision_started` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `bundle.revision_completed` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `bundle.revision_interrupted` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.blocked` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.deferred_payload.loaded` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.opened` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.unblocked` | 8 / 3 / 1 | 8 / 3 / 1 |
+
+## Verification
+
+Eight real family CLIs pass: 5951 contract cases, including 477 new-family cases and 433 additional valid-base repair controls. Focused F1/F2/F3 controls pass **252 outcomes**. A repaired valid base is not credited as predicate-isolation proof. Six standing suites cover 1328 outcomes; their inherited check-11 status does not override the explicit pending whole-lane proof. Six registered-schema suites retain genuine `run.started@2.0.0` joins, exact editions/pointers and eager unused-reference closure.
+
+| Serial command/check | Exit |
+|---|---:|
+| `bundle_revision_requested` | 0 |
+| `bundle_revision_started` | 0 |
+| `bundle_revision_completed` | 0 |
+| `bundle_revision_interrupted` | 0 |
+| `wizard_opened` | 0 |
+| `wizard_deferred_payload_loaded` | 0 |
+| `wizard_blocked` | 0 |
+| `wizard_unblocked` | 0 |
+| `bundle_revision_requested-standing` | 0 |
+| `bundle_revision_started-standing` | 0 |
+| `bundle_revision_completed-standing` | 0 |
+| `bundle_revision_interrupted-standing` | 0 |
+| `wizard_opened-standing` | 0 |
+| `wizard_deferred_payload_loaded-standing` | 0 |
+| `bundle_revision_requested-registered` | 0 |
+| `bundle_revision_started-registered` | 0 |
+| `bundle_revision_completed-registered` | 0 |
+| `bundle_revision_interrupted-registered` | 0 |
+| `wizard_opened-registered` | 0 |
+| `wizard_deferred_payload_loaded-registered` | 0 |
+| `shards-generate` | 0 |
+| `index-generate` | 0 |
+| `shards-check` | 0 |
+| `index-validate` | 0 |
+
+Plan-index validation top-level status: **pass**. Its complete output has zero failures; node_readiness_status remains blocked_runtime_certification_incomplete. No runtime readiness or governance-currentness claim is made. Regenerated shard families are limited to this lane’s Contracts, Planning Wizard, assistant-chat, Storage, storage-value registry and shared EventRecord schema sources; regenerated-scope.json records them. The copied ignored currentness edition has 15 matching SHA-256 values in `currentness-sha256.json`. The rebase’s only prose conflict was the independent appended PWIZ-038 and PWIZ-097/098 material: both survive, with zero removed main lines in Contracts, Planning Wizard, assistant chat or Storage (`rebase-owner-preservation.json`). Generated conflicts were discarded and regenerated, never hand-merged. The landed PWIZ-038 workflow/clarification cap is preserved; DL-431 adds no event-count threshold.
+
+**Recurring defect classes:** identity/source/actor/receipt/Project forgeries and custody paths run in the full family suites (items 1/2/7); retained read/rebuild after live changes, replay-only history and withdrawal remain tested (3/10a), with the format/number history limitations below; exact-type/descriptor/boolean/container negatives remain active (4/11); unused local/external/transitive refs run in the standing and registered suites (5); complete event/source 16-KiB/SP-337 and restore cases run in every family (6); focused independent guard controls resolve the listed masked inputs without claiming a complete inventory (8); PARTIAL grades preserve remaining limits (9); number spelling/domain and exact original-time profile remain part 2 (10/12/10a). No new serializer, number cap, timestamp grammar or proof framework was added. Native adapters/authentication, actual Storage bytes/CRC, redb CAS/concurrency, append/lost-ack, crash recovery, backup/restore, permission/deletion and retention-boundary campaigns remain **NOT_RUN**.
+
+## Part 2 items
+
+- **SW-N1 / NUMRULE:** `scripts/pm_dcw_event_oracles.py:97–132,147–149,628–661,796,818–820`, CV-590–595 integer/parsed-negative-zero prose, shared envelope/receipt/checkpoint numeric schemas and all five physical source families plus both new families. Adopt CV-1100/SP-1100/SP-1101 at semantic, physical and authenticated original-write boundaries. Preserve full Storage uint64, physical floats and signed zero. No local cap or normalizer.
+- **SW-B2 / date-time:** `scripts/pm_dcw_event_oracles.py:688–709`, its format uses, `scripts/pm_dcw_index_cases.py:166–174`, both new families and the legacy validator in `scripts/pm_bundle_revision_events.py:22–30`. Compare DCW’s round-8 grammar with shared **CV-1101**, replacing it if they differ. The cycle-10 evidence already records non-Z offsets accepted and legitimate leap seconds refused; preserve permitted fraction precision, exact retained strings and authenticated original edition/recipe selection. No part-1 grammar change.
+- **SW-B3 / shared guard tables:** `scripts/pm_dcw_event_isolation.py:497–526`, historic `DCW.guard-removal.md`, `scripts/pm_dcw_index_cases.py:46–50`, compound `index_read:368`, registered shared-code diagnostic cuts and all new-family predicate sites. Adopt the reviewed shared guard tool and named predicate tables for all eight families; inventory exact clauses and prove same-field duplicates site by site. The old proof remains superseded. The 252 focused controls are not complete guard-table evidence.
+
+No stopped product-choice item remains in this sweep. Existing event/source retention questions stay pending for RT; no new retention choice was made. **New IDs: none.** Existing allocation remains CV-590–597, SP-575–579, ACD-571–574 and PWIZ-097/098. No registry append, admission, Decision Log write, mailbox, subagent, main push or governance seal. The two prescribed memory files were absent at the brief’s Nas1 path; no IDs were minted. Minimum sampled available RAM was **15 GB**; heavy checkers ran serially and pause below 6 GB. The requested worktree is removed after branch push.
+
+## Evidence
+
+Raw outputs and compact regrade summaries: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p1/`; `SHA256SUMS` binds retained files. Verification programs remain under `/home/sittingmongoose/PM-Experiments/ea-dcw-sweep1/` and `/mnt/Cursor/PM-Experiments/ea-dcw-sweep1/`, as recorded in `programs-sha256.json`. Temporary Python environments/caches are removed after use. This report and the self-grade are copied to the evidence directory.
+
+| Evidence under the directory above | SHA-256 |
+|---|---|
+| `targeted-controls.json` | `23454fd5713e444223115d6ef8fe93d361b9a6d69a117d9e69a103a2e8d3ce61` |
+| `check-results.json` | `0fc939ad88e939acf4dd05ad5961718674d5eecd7c98943657bdd5dae1d5772b` |
+| `deck-fidelity.json` | `8ae52d20b7ff662205d866b01a5e096f0bf43feaa4f5d52c56694b1235fa0e00` |
+| `regrade-citations.json` | `fc46586221640705826092ba7a619e989f8d2610ccfdb9c6b749bc987586ea50` |
+| `summary.json` | `75183632be12c9371f47c05274be0ed8bd8243761ff349d91d767a934d32c7f3` |
+| `currentness-sha256.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
+| `regenerated-scope.json` | `b8a32825f2b8114ec89abe4657c57b68ccaac2a187a09d11338e62e2ac7ed21b` |
+| `rebase-owner-preservation.json` | `1540b782ffe4477ace50664a528e463349246c6ed1949829e146b9c7712848e6` |
+| `programs-sha256.json` | `5f2c4fdf23c5e0bb3478d3bb63cefec605d7668fb1623c1c7afb9dd2fc5a4a1c` |
+
+## Prior round-10 record (source lineage)
+
+The retained record below describes the earlier head; the sweep findings, current citations and limits above supersede its fixture and readiness claims.
+
 # DCW — round 10, Event Authority
 
 Branch `plans/ea-w2-chain-wizard-20261104`; implementation `6cab86dabf1f306dfed8998f8f312d6b283e112f`; base `21717728039303d923e82b9499c8b700167b3044`. This round applies Jared's deck-2 answers, not a review-fix cycle. Both held families now have complete drafted owner/source/schema/oracle contracts. Each self-grades **8 PASS / 3 PARTIAL / 1 ABSENT**. Full technical prepared PASS remains withheld for shared sweeps; membership remains ABSENT and native execution NOT_RUN. No family is stopped for an unanswered product choice; event-history retention remains explicitly pending as permitted.
