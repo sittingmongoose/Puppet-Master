@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-20261104-DG-ROUND1-SELF-GRADE",
+  "assessment_id": "EA-20261104-DG-ROUND2-SELF-GRADE",
   "assessment_kind": "drafting_worker_self_grade",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -21,9 +21,10 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-goal-depth-20261104",
-    "commit": "4b6d989d3eb8aa7203c523f777096d0198deb6a9",
+    "commit": "686382d06164df5f7296f4d6af1ab8f9d16f734e",
     "base": "be4766513f",
-    "round_1_base": "0c40a7809826bcf509bbb16483bbdd8f4c48760b"
+    "round_1_base": "0c40a7809826bcf509bbb16483bbdd8f4c48760b",
+    "round_2_base": "ffec5d16ff1a6cd9d472be6171e0dbb8c142bcdd"
   },
   "membership_note": "Existing registry membership is unchanged. No new family, successor selector, admission or app edition is edited; Card 3 A unused-app withdrawal is approved for a future checkpoint. Prepared run rows remain partial.",
   "status_meaning": "Self-grade by the drafting worker; an independent grader and the Sol and Astra reviewers check it later.",
@@ -10134,5 +10135,16 @@
       }
     }
   ],
-  "round_1_replaced_citations": []
+  "round_1_replaced_citations": [],
+  "round_2": {
+    "implementation_commit": "686382d06164df5f7296f4d6af1ab8f9d16f734e",
+    "family_grades": "unchanged from cycle 2; all 19 changed oracle cells PARTIAL",
+    "guard_rows": 987,
+    "negative_cases": 7807,
+    "inventoried_schema_type_assertions": 508,
+    "inactive_schema_type_assertions": 1,
+    "unproved_active_guards": 0,
+    "native_execution": "NOT_RUN",
+    "open_followups": "All listed owner follow-ups retained; app-scope goal_run.stopped remains Jared\u2019s."
+  }
 }
