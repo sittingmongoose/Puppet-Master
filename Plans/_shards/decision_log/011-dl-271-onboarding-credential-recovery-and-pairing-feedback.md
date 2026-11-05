@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19639-L21375
+Source lines: L26794-L28530
 
-Source SHA256: `950ff7e6acd122fa16c06dad5bd132f84d4e16d065775642c94df83d7a992b5f`
+Source SHA256: `4b0b395198d993ff55a8c3aceef8c1f3c802c8f612fa49957caf2735a12543d1`
 
 ---
 
@@ -1406,7 +1406,7 @@ owner_hints:
 ContractRef: ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Permissions_System.md#PS-148, ContractName:Plans/orchestrator-subagent-integration.md#OSI-441, ContractName:Plans/human-in-the-loop.md#HITL-038, ContractName:Plans/FinalGUISpec.md#F3-673
 
 
-### DL-300 - Event Authority Admits The App Scope Editions And Three New Families
+### DL-300: Event Authority Admits The App Scope Editions And Three New Families
 
 ```yaml
 plan_unit_id: DL-300

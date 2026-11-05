@@ -4586,7 +4586,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24468,
+      "line_count": 24482,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 361,
       "plan_unit_ids": [
@@ -5311,10 +5311,11 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "03b09cc13847139ac3c5ead7d952532de3895983c0e8a4be88def5e2b86b963d",
+      "sha256": "078ea0299d9a8cbba000a9e5b550f2c95ca1f02c7d8a4525dc53c6427bdad8c5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 361
+        "accepted": 360,
+        "retired": 1
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -5758,10 +5759,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 62,
-        "True": 207
+        "False": 98,
+        "True": 226
       },
-      "heading_count": 442,
+      "heading_count": 552,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5884,10 +5885,63 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 21375,
+      "line_count": 28530,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 269,
+      "plan_unit_count": 324,
       "plan_unit_ids": [
+        "DL-400",
+        "DL-401",
+        "DL-402",
+        "DL-403",
+        "DL-404",
+        "DL-405",
+        "DL-406",
+        "DL-407",
+        "DL-408",
+        "DL-409",
+        "DL-410",
+        "DL-411",
+        "DL-412",
+        "DL-413",
+        "DL-414",
+        "DL-415",
+        "DL-416",
+        "DL-417",
+        "DL-418",
+        "DL-419",
+        "DL-420",
+        "DL-421",
+        "DL-422",
+        "DL-423",
+        "DL-424",
+        "DL-425",
+        "DL-426",
+        "DL-427",
+        "DL-428",
+        "DL-429",
+        "DL-430",
+        "DL-431",
+        "DL-432",
+        "DL-433",
+        "DL-434",
+        "DL-435",
+        "DL-436",
+        "DL-437",
+        "DL-438",
+        "DL-439",
+        "DL-440",
+        "DL-441",
+        "DL-442",
+        "DL-443",
+        "DL-444",
+        "DL-445",
+        "DL-446",
+        "DL-447",
+        "DL-448",
+        "DL-449",
+        "DL-450",
+        "DL-451",
+        "DL-452",
         "DL-002",
         "DL-003",
         "DL-004",
@@ -5978,6 +6032,8 @@
         "DL-092",
         "DL-093",
         "DL-094",
+        "DL-095",
+        "DL-096",
         "DL-001",
         "DL-104",
         "DL-105",
@@ -6207,6 +6263,7 @@
         "compaction_detail_retention_and_original_custody",
         "completion_state_conflation",
         "composer_chrome_stacking",
+        "coordination_heartbeat_expiry_policy_drift",
         "correction_landed_in_a_shape_its_owner_did_not_choose",
         "corroboration_disagreement_outcome_drift",
         "corroboration_threshold_drift",
@@ -6226,10 +6283,12 @@
         "duplicated_or_unenforced_check_presentation",
         "eli5_scope_and_rewrite",
         "event_authority_admission_decision_entry_drift",
+        "event_authority_admission_decision_entry_scope_drift",
         "event_authority_binding_scope_expansion",
         "event_authority_checkpoint_approval_drift",
         "event_authority_checkpoint_drift",
         "event_authority_decision_drift",
+        "event_authority_landing_granularity_drift",
         "event_authority_registration_checkpoint_drift",
         "event_authority_seal_check_drift",
         "extraction_mapping_overauthority",
@@ -6263,6 +6322,7 @@
         "orchestrator_diagnostic_retention_drift",
         "owner_answer_loss_or_unapproved_event_admission",
         "owner_decision_drift",
+        "owner_decision_fidelity",
         "owner_drift",
         "owner_identity_and_truthful_feedback",
         "owner_routing_to_retired_document",
@@ -6333,17 +6393,17 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "950ff7e6acd122fa16c06dad5bd132f84d4e16d065775642c94df83d7a992b5f",
+      "sha256": "4b0b395198d993ff55a8c3aceef8c1f3c802c8f612fa49957caf2735a12543d1",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 269
+        "accepted": 324
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 156,
+        "decision": 208,
         "decision_record": 24,
-        "requirement": 88
+        "requirement": 91
       },
       "validation_surfaces": [
         "60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip frames",
@@ -6357,6 +6417,8 @@
         "Exact approved card, quotation and supersession coverage review.",
         "Exact response SHA-256 and scope-name comparison",
         "Exact response-byte preservation and source SHA-256 checks",
+        "Frozen validator decision_section_bytes extraction",
+        "Frozen validator decision_section_bytes hash comparison for DL-077 and DL-094",
         "Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.",
         "Manual review of Plans/Planning_Wizard.md PWIZ-006, PWIZ-011, and PWIZ-028 against this record.",
         "Owner/consumer source-to-decision review",
@@ -16660,7 +16722,7 @@
         "worktree_binding_drift",
         "worktree_gui_affordance_drift"
       ],
-      "sha256": "d02f612daafb7aaf32e8f8113d22d32a51d780c289c1a2f15dd906be4412617d",
+      "sha256": "e24e05db972c0d74f8a4b89be76874ccb166d60bce526da3da00793ba5aa8d2b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52,
@@ -18620,7 +18682,7 @@
         "False": 231,
         "True": 110
       },
-      "heading_count": 817,
+      "heading_count": 818,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18715,7 +18777,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29476,
+      "line_count": 29587,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 341,
       "plan_unit_ids": [
@@ -19182,7 +19244,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5",
+      "sha256": "46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 337,
@@ -21562,7 +21624,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T11:14:57Z",
+  "generated_at_utc": "2026-11-05T13:13:42Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21570,14 +21632,14 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3636,
-      "True": 3794
+      "False": 3672,
+      "True": 3813
     },
-    "plan_unit_count": 7430,
+    "plan_unit_count": 7485,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7212,
-      "retired": 195,
+      "accepted": 7266,
+      "retired": 196,
       "superseded": 23
     },
     "unit_type_counts": {
@@ -21609,7 +21671,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 179,
+      "decision": 231,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -21646,7 +21708,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5618,
+      "requirement": 5621,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
