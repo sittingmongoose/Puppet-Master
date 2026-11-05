@@ -41,8 +41,8 @@ export async function installCaptureWitness(f,sel,measured,{resize=false}={}) {
    if(!n.style)continue;
    const ownText=[...n.childNodes].some(c=>c.nodeType===3&&c.textContent.trim());
    if(!ownText&&!n.matches('svg,img,canvas,input,textarea,select'))continue;
-   // SVG text/foreignObject boxes are not CSS anchor boxes. This named plate is
-   // painted by its HTML figure; certify that wrapper instead of inventing a DOM probe.
+   // The SVG asset anchor certifies only its outer box. Internal text is
+   // certified independently from foreground paint by svgInkStability below.
    let node=e.matches('figure.pmx-plate')&&n.closest('svg')?e:n;
    while(node!==e&&node.getClientRects().length>1&&getComputedStyle(node).display.startsWith('inline'))node=node.parentElement;
    const b=node.getBoundingClientRect(),c=getComputedStyle(node);
@@ -98,6 +98,29 @@ export async function capturePaint(t,r,measured) {
  return {...im,outlineMask:grow(outline,width,height,2),png:encodePng(im),paintPng,capture:{bounds,expected,markerPixels:tail,valid:valid&&inFrame,own,ownValid:own.every(p=>p.valid)}};
 }
 export function ownInkStability(images){return {stable:Object.values(images).every(im=>im.capture.ownValid),failed:Object.entries(images).flatMap(([name,im])=>im.capture.own.filter(p=>!p.valid).map(p=>({name,...p}))) };}
+// SVG descendants do not reliably expose CSS anchor boxes. Their initial row bounds
+// only select paint regions; they never certify a position. Compare the signed own-ink
+// signals (original minus own-hidden, outside-hidden minus all-hidden) BEFORE glyph
+// growth. Zero displacement must be the unique best alignment in each row. A missing,
+// changed or ambiguous silhouette is refused, rather than masked as backing evidence.
+export function svgInkStability(a, reference, b, c, rows, rect, scale) {
+ const results=rows.map(row=>{
+  const x0=Math.max(2,Math.floor((row.left-rect.x)*scale)-2),x1=Math.min(a.width-2,Math.ceil((row.right-rect.x)*scale)+2);
+  const y0=Math.max(2,Math.floor((row.top-rect.y)*scale)-2),y1=Math.min(a.height-2,Math.ceil((row.bottom-rect.y)*scale)+2);
+  const scores=[];
+  for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++) {
+   let dot=0,aa=0,bb=0;
+   for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++) {
+    const i=(y*a.width+x)*4,j=((y+dy)*b.width+x+dx)*4;
+    for(let k=0;k<3;k++) {const u=a.data[i+k]-reference.data[i+k],v=b.data[j+k]-c.data[j+k];dot+=u*v;aa+=u*u;bb+=v*v;}
+   }
+   scores.push({dx,dy,score:aa&&bb?dot/Math.sqrt(aa*bb):0,energy:aa});
+  }
+  const zero=scores.find(s=>!s.dx&&!s.dy),best=scores.reduce((a,b)=>a.score>b.score?a:b);
+  return {row,zero:zero.score,best,stable:zero.energy>0&&zero.score>=.95&&scores.every(s=>(!s.dx&&!s.dy)||s.score<zero.score)};
+ });
+ return {stable:results.every(r=>r.stable),rows:results};
+}
 function changed(a, b, mask) {
 	let n = 0, mx = 0;
 	for (let i = 0, p = 0; i < a.data.length; i += 4, p++) {
@@ -120,6 +143,7 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 	}, sel);
 	if (!measured) return null;
 	const r = measured.rect;
+ measured.svgRows=await f.evaluate(s=>[...document.querySelector(s).querySelectorAll('svg *')].filter(n=>[...n.childNodes].some(c=>c.nodeType===3&&c.textContent.trim())).map(n=>n.getBoundingClientRect().toJSON()).filter(b=>b.width&&b.height),sel);
 	// Capture an independent own-text reference BEFORE removing any outside text.
 	// Mark the subtree by ancestry too: nodes rendered during capture must not lose ink.
 	const hideOwn = '[data-bc-in], [data-bc-in] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
@@ -192,6 +216,8 @@ export async function readThrough(t, f, sel, { loseOwnInk = false, resizeAfterMe
 		}
 		const faults = { ownInkLoss: loseOwnInk ? expected>0 && retainedInk/expected<.05 : null, ownRowMove: moveOwnRow ? rowInk>50&&rowMatched/rowInk>.995 : null };
 		const ownStability=ownInkStability({a1,a2,reference,b,c});
+  ownStability.svg=svgInkStability(a2,reference,b,c,measured.svgRows,r,measured.dpr);
+  ownStability.stable=ownStability.stable&&ownStability.svg.stable;
 		const snap=value=>{if(!value)return null;const b=JSON.parse(value);return JSON.stringify([b.x,b.y,b.width,b.height].map(v=>Math.round(v*measured.dpr)));};
 		const geometryStable = snap(stable.sourceRect) === snap(stable.setupRect) && snap(stable.sourceRect) === snap(stable.endRect) && captures.every(c=>c.valid);
 		if (!geometryStable || !ownStability.stable || (expected > 0 && covered / expected < 0.95)) return { invalid: true, reason: `geometry stable=${geometryStable}; own ink stable=${ownStability.stable}; own glyph exclusion ${covered}/${expected}`, rect: r, geometry: stable, captures, ownStability, faults };
