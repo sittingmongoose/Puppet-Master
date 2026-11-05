@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L30440-L30832
+Source lines: L30440-L30889
 
-Source SHA256: `c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16`
+Source SHA256: `f5fe3d2265042faa65dba540e9993cd06a336467978c6479650d04e9ff8b9e81`
 
 ---
 
@@ -401,3 +401,60 @@ negative_constraints:
 The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.certified original custody and oracle boundary adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+
+### SP-1139 - Certified projection bounded reference physical edition
+
+```yaml
+plan_unit_id: SP-1139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045 for exactly goal_run.certified. Plans/goal_run_projection_reference_contracts/certified.md
+  and certified.physical.json define the additive reference.v1 projection and checkpoint Storage selections.
+  Preserve SP-317/P5 base64url UTF-8 key components, original whole-value commitment, complete identity/receipt
+  joins, all nine durable token fields, profile_digest, root_revision, full preimage/afterimage CAS and actual
+  transaction identity. Deterministically choose inline, event_reference, then record_reference by measuring
+  BOTH complete row and complete operation against 16384 bytes in original CV-339 MessagePack. Checkpoint also
+  uses its complete logical-value reference when necessary. Actual pack/index durability precedes referencing
+  acknowledgement; full bytes/media/BLAKE3/size, original-source lifetime, independent disclosure and withdrawal
+  checks remain mandatory. Preserve RP-PROJECTION-3GEN and each original source policy; no new hold/archive.
+  Rebuild a fresh dataset, replay complete authentic prefix and cut over atomically. BRS-031 restores authority
+  and rebuilds derived state. Original v5 physical selections remain history.
+gui_related: false
+gui_classification_reason: Defines original source custody, derived physical representation and acceptance,
+  without visual presentation.
+depends_on:
+- SP-317
+- SP-337
+- SP-340
+unblocks: []
+acceptance_criteria:
+- Preserve all complete original source, scope, custody, phase and lifetime predicates through explicit successor
+  selection.
+- Measure complete stored values and operations; rebuild and atomically cut over without rewriting predecessors.
+- Report representation components separately from complete original semantic tuples and native NOT_RUN.
+validation_surfaces:
+- scripts/pm_goal_own_c3_w5_projection_oracles.py
+- Plans/goal_run_projection_reference_contracts/certified.md
+risk_class: original_source_custody_or_reference_representation_drift
+reasoning_tier: high
+context_scope: dg_own_c3_w5_part3_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_run_projection_reference_contracts/certified.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/certified.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/DG-OWN-C3.md#part-3-for-c3-w34-split-and-c3-w5
+negative_constraints:
+- No Event registry admission, changed original bank/hash/header, retention/deletion policy, native installation
+  or governance seal.
+- No full oracle PASS from schema, size or source-shaped component controls.
+```
+
+ContractRef: ContractName:Plans/goal_run_projection_reference_contracts/certified.md

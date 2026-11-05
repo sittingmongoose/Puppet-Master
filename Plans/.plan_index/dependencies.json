@@ -7234,6 +7234,7 @@
     "ATS-210",
     "GRS-202",
     "SP-1136",
+    "SP-1139",
     "CDRY-022",
     "WM-063",
     "G-031",
@@ -7243,6 +7244,7 @@
     "ATS-1117",
     "SP-428",
     "EP-1132",
+    "CV-1137",
     "CDRY-023",
     "WM-064",
     "F3-445",
@@ -7251,12 +7253,14 @@
     "GRS-1131",
     "ATS-212",
     "ATS-1118",
+    "GRS-1138",
     "ATS-066",
     "DL-162",
     "F3-631",
     "GRS-1132",
     "GRS-1133",
     "GRS-1134",
+    "ATS-1121",
     "DL-163",
     "F3-618",
     "F3-620",
@@ -15644,6 +15648,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "ATS-057"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "CV-1137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "GRS-1138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1121",
+      "to": "SP-1139"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ATS-210",
       "to": "ATS-057"
     },
@@ -23826,6 +23850,16 @@
       "edge_type": "depends_on",
       "from": "CV-1131",
       "to": "SP-1131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1137",
+      "to": "CV-352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1137",
+      "to": "SP-1139"
     },
     {
       "edge_type": "depends_on",
@@ -40761,6 +40795,21 @@
       "edge_type": "depends_on",
       "from": "GRS-1134",
       "to": "SP-1136"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1138",
+      "to": "CV-1137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1138",
+      "to": "GRS-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1138",
+      "to": "SP-1139"
     },
     {
       "edge_type": "depends_on",
@@ -78201,6 +78250,21 @@
       "edge_type": "depends_on",
       "from": "SP-1136",
       "to": "SP-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1139",
+      "to": "SP-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1139",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1139",
+      "to": "SP-340"
     },
     {
       "edge_type": "depends_on",
@@ -118638,7 +118702,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T07:44:14Z",
+  "generated_at_utc": "2026-11-05T13:08:08Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -132819,6 +132883,23 @@
       "unit_type": "owner_boundary"
     },
     {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1121",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "ATS-1121 - Certified reference successor and full original tuple acceptance",
+        "heading_level": 3,
+        "heading_line": 7652,
+        "line": 7654,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "goal_current_writer_oracles",
       "gui_related": false,
       "owner_doc": "Plans/Automated_Testing_System.md",
@@ -141742,6 +141823,23 @@
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1137",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "CV-1137 - Certified reference successor whole roots and scoped methods",
+        "heading_level": 3,
+        "heading_line": 24940,
+        "line": 24942,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "web_payload_ref_blob_batch_audit",
@@ -180655,6 +180753,23 @@
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-1138",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "GRS-1138 - Certified projection reference successor",
+        "heading_level": 3,
+        "heading_line": 9198,
+        "line": 9200,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "goal_run_stopped_current",
@@ -226387,6 +226502,23 @@
       "unit_type": "owner_boundary"
     },
     {
+      "context_scope": "dg_own_c3_w5_part3_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1139",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_custody_or_reference_representation_drift",
+      "source_location": {
+        "heading": "SP-1139 - Certified projection bounded reference physical edition",
+        "heading_level": 3,
+        "heading_line": 30835,
+        "line": 30837,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "storage_scope_split_owner_reconciliation",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -245824,10 +245956,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19022,
+    "depends_on_edge_count": 19034,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22230,
-    "node_count": 7481,
+    "edge_count": 22242,
+    "node_count": 7485,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

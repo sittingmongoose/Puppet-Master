@@ -1,0 +1,58 @@
+{
+  "status": "NEWLY_AUTHORED_DERIVED_REFERENCE_PROFILE_NOT_INSTALLED",
+  "profile": "goal_run_started_cancelled_certified_projector.reference.v1",
+  "projection_edition": "pm.goal_run_certified.projection.reference.v1",
+  "source_package_edition": "pm.goal_run_certified.consumer_source.v2",
+  "members": [
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/certified.md",
+      "sha256": "4a2f95b6b0a8608cd577bdaf7512e6a306e82093de5a21421651dfa2b5ee37a5",
+      "bytes": 15339
+    },
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "bytes": 42408
+    },
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/certified.imports.json",
+      "sha256": "2ab433d87b0abdf2562386b9fd9346f30def1d0acd4fee6c45b47005c6f62445",
+      "bytes": 30661
+    },
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/certified.resources.json",
+      "sha256": "5d533383965c4ea54bf9f73e75f5fd503ee6d8d5d732a48d1643f67897c6198b",
+      "bytes": 1541
+    },
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/certified.methods.json",
+      "sha256": "25b5ce8da4d9dbe0929bd85cf05d2c50f6d836528a485a82b47078b74c76d63b",
+      "bytes": 91353
+    },
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/certified.physical.json",
+      "sha256": "93913e0b47eeb040069b86d2e8cdebf790674bdee43f493e06d388dec3acf89c",
+      "bytes": 2839
+    },
+    {
+      "path": "Plans/goal_run_projection_reference_contracts/certified.definition-adaptations.json",
+      "sha256": "e52c137c00d883af2b3e8b0a19ae6a153c9c78e7dd667712b04b65de6db427e6",
+      "bytes": 25631
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+      "sha256": "da84ffb39a990021c49bbcd11ae9cbc700bdcf679ea285a4a65eaba40e4265d7",
+      "bytes": 1366
+    },
+    {
+      "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/installed-profile.json",
+      "sha256": "20d5787d4a13acf7b27031d12aacd6c397ff38772e2ab80350980afc796516a6",
+      "bytes": 4476
+    }
+  ],
+  "required_original_native_profile": "pm.executor.workflow_source.all_writers.v7",
+  "required_original_native_profile_digest": "0055de6c0e113173d2c4f1a1b2a3d9268681241b528ab6f24304fcfb4b163845",
+  "native_writer_roster_changed": false,
+  "native": "NOT_RUN",
+  "profile_digest_recipe": "P5 SHA-256 of entire sorted-key compact UTF-8 JSON logical profile value; no prefix/trailing LF"
+}

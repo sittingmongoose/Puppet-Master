@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8920-L9195
+Source lines: L8920-L9250
 
-Source SHA256: `3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218`
+Source SHA256: `624acad5edf26c546cbb7bbfc863ad0406e88a88e44acc35aec15ac12e562464`
 
 ---
 
@@ -284,3 +284,58 @@ negative_constraints:
 The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.certified original complete boundary suite). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+
+### GRS-1138 - Certified projection reference successor
+
+```yaml
+plan_unit_id: GRS-1138
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Newly authored owner contract under DL-045 for exactly goal_run.certified. Explicitly select
+  pm.goal_run_certified.projection.reference.v1 and Plans/goal_run_projection_reference_contracts/certified.md
+  with its physical/resource/method/profile selections. Preserve the full SP-317 original logical combined
+  projection and every original source/producer/custody/currentness predicate. The three inline, event_reference
+  and record_reference forms preserve original Event identity and whole-value commitment, decode into the identical
+  original record, and use the existing SP-337 pack route. New derived rows and checkpoint are rebuilt in an
+  empty isolated generation and atomically cut over; predecessor bytes/selections and native v7 births remain
+  unchanged. Complete CF-01..12/P4..P8 tuples remain required independently of representation components and
+  native NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines original source custody, derived physical representation and acceptance,
+  without visual presentation.
+depends_on:
+- GRS-085
+- SP-1139
+- CV-1137
+unblocks: []
+acceptance_criteria:
+- Preserve all complete original source, scope, custody, phase and lifetime predicates through explicit successor
+  selection.
+- Measure complete stored values and operations; rebuild and atomically cut over without rewriting predecessors.
+- Report representation components separately from complete original semantic tuples and native NOT_RUN.
+validation_surfaces:
+- scripts/pm_goal_own_c3_w5_projection_oracles.py
+- Plans/goal_run_projection_reference_contracts/certified.md
+risk_class: original_source_custody_or_reference_representation_drift
+reasoning_tier: high
+context_scope: dg_own_c3_w5_part3_20261105
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_run_projection_reference_contracts/certified.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/certified.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/DG-OWN-C3.md#part-3-for-c3-w34-split-and-c3-w5
+negative_constraints:
+- No Event registry admission, changed original bank/hash/header, retention/deletion policy, native installation
+  or governance seal.
+- No full oracle PASS from schema, size or source-shaped component controls.
+```
+
+ContractRef: ContractName:Plans/goal_run_projection_reference_contracts/certified.md
