@@ -133,9 +133,13 @@
        'nier'        a NieR switch asked and not yet painted (PM_NIER.wanted() differs from on())
        'drag'        a drag is held (body.pm-resizing, pm-ab-dragging, pmw-dragging, pmu-pointer-op, pm7u-pointer-op):
                      no idle job runs inside a drag (PM7 build F3-3); named last, so a cover is still named first
-     PM_BUSY.drag() -> true while a drag class is on the body. PM_BUSY.idle(fn, timeout?) is the one admission for idle
-     work: fn runs in an idle callback (requestIdleCallback with that timeout), but never inside a held drag: asked
-     during one, it waits for the spell's end ('pm-idle') and asks again; a callback that lands in one does the same.
+     PM_BUSY.drag() -> true while a drag class is on the body. PM_BUSY.idle(fn, timeout?, { quiet }?) is the one admission
+     for idle work: fn runs in an idle callback (requestIdleCallback with that timeout), but never inside a held drag:
+     asked during one, it waits for the spell's end ('pm-idle') and asks again; a callback that lands in one does the same.
+     quiet (ms) is for a job that holds the main thread long in one task: its callback runs fn only once no pointer
+     move, press, key, wheel or touch has come for that long and none is pending, else it asks again when that time is
+     up, so a press that was on its way does not wait behind the job (SW-01: a cold first Activity click waited 229 ms
+     behind the editor sheet's idle build).
      A hidden tab is not busy by itself (callers keep their own document.hidden check). It reads attributes and ids only,
      never style or layout, so it costs nothing in any frame. 'pm-idle' is sent on window in the first frame after a
      busy spell ends: every spell this script sees begin (one of those markers appearing) or that a call finds. */
@@ -195,13 +199,22 @@
     const jobs = [...idleAsked]; idleAsked.clear();
     for (const job of jobs) { job.drop(); idlePark(job); }
   };
-  window.PM_BUSY.idle = function idleWhenStill(fn, timeout) {
+  // the input clock for quiet jobs: the last pointer move, press, key, wheel or touch, and input already queued
+  let inputAt = -1e9;
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => window.addEventListener(t, () => { inputAt = performance.now(); }, { capture: true, passive: true }));
+  const inputPending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending()); } catch (_) { return false; } };
+  window.PM_BUSY.idle = function idleWhenStill(fn, timeout, opts) {
     if (typeof fn !== 'function') return null;
     const job = { dead: false, id: 0, timer: 0 };
+    const quiet = opts && opts.quiet > 0 ? opts.quiet : 0;
     const run = (dl) => {
       job.id = 0; job.timer = 0; idleAsked.delete(job);
       if (job.dead) return;
       if (dragging()) { idlePark(job); return; }
+      if (quiet) {
+        const wait = inputAt + quiet - performance.now();
+        if (wait > 0 || inputPending()) { job.timer = setTimeout(job.ask, Math.max(50, wait)); return; }
+      }
       fn(dl);
     };
     job.ask = () => {

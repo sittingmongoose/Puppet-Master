@@ -1580,7 +1580,11 @@ function prepareSoon() {
       open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
     }
   };
-  if (window.requestIdleCallback) requestIdleCallback(build); else setTimeout(build, 500);
+  /* the build is one task of ~170 ms (its measuring is forced style and layout on the P1000): a press that lands in it
+     waits for all of it (a cold first Activity click waited 229 ms behind it, SW-01), so it goes once the pointer and
+     keys have been still for 600 ms with no input pending */
+  if (window.PM_BUSY && typeof window.PM_BUSY.idle === 'function') window.PM_BUSY.idle(build, 0, { quiet: 600 });
+  else if (window.requestIdleCallback) requestIdleCallback(build); else setTimeout(build, 500);
 }
 window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
 
