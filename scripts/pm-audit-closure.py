@@ -5459,11 +5459,13 @@ def cmd_self_test(args: argparse.Namespace) -> int:
 
             def compat_missing(extra: list[str] | None = None) -> list[str]:
                 _LEGACY_INVENTORY_CACHE.clear()
+                eligible.append(legacy_audit_state(fifth) is not None)
                 rep = validate_audit_dir(fifth, require_matrix=True, require_effective_status=False,
                                          source_artifacts=["planunit_source_claims.jsonl", "validator_results.json", *(extra or [])],
                                          registry_path=legacy_registry)
                 return [e for e in rep["errors"] if "missing closure rows for" in e]
 
+            eligible: list[bool] = []
             # Not inventoried: full rules, 5 claim rows + 4 validator results are actionable.
             check("compat_words_off_outside_inventory", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
             freeze(fifth)
@@ -5477,9 +5479,9 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             (fifth / "planunit_source_claims.jsonl").write_bytes(saved_claims + b"\n")
             check("compat_words_off_when_a_frozen_file_changed", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
             (fifth / "planunit_source_claims.jsonl").write_bytes(saved_claims)
-            moved = fifth.parent / "claims-elsewhere.jsonl"
-            (fifth / "planunit_source_claims.jsonl").rename(moved)
-            (fifth / "planunit_source_claims.jsonl").symlink_to(moved)
+            # Each whole-run case starts from an eligible directory, so only its own condition can turn the words off.
+            check("compat_words_whole_run_cases_start_eligible", legacy_audit_state(fifth) is not None)
+            whole_run_start = len(eligible)
             # Whole-run exclusions come first (Q-A Astra r1): a reserved companion requested as a source,
             # in any spelling, or any input read through a symlink turns the words off for every file, so
             # all 9 rows of the frozen files stay actionable (audit_report.json itself adds none).
@@ -5505,6 +5507,12 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                                             source_artifacts=["repair_closure_matrix.jsonl"], registry_path=legacy_registry)
             check("compat_words_never_read_the_matrix", any("missing closure rows for 1 source rows" in e for e in matrix_src["errors"]), matrix_src["errors"])
             (fifth / "repair_closure_matrix.jsonl").write_text("", encoding="utf-8")
+            check("compat_words_whole_run_cases_ran_on_an_eligible_directory",
+                  len(eligible) > whole_run_start and all(eligible[whole_run_start:]) and legacy_audit_state(fifth) is not None,
+                  eligible[whole_run_start:])
+            moved = fifth.parent / "claims-elsewhere.jsonl"
+            (fifth / "planunit_source_claims.jsonl").rename(moved)
+            (fifth / "planunit_source_claims.jsonl").symlink_to(moved)
             # A frozen file reached through a symlink disqualifies the whole directory (legacy_audit_state).
             check("compat_words_off_through_a_symlink", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
             (fifth / "planunit_source_claims.jsonl").unlink()
