@@ -315,6 +315,7 @@ async function noReplay(t, mode) {
 		const f = await frameFor(t, mode);
 		await t.emulate({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
 		await lookAndName(t, f, look);
+		await t.page.mouse.move(1900, 1060); /* (the pointer off the page, so no layout puts a choice under it: filmRelayout) */
 		await f.waitForTimeout(3000);
 		let was = await stageNow(f), prev = '1024x768';
 		for (const [w, h] of [[740, 768], [1280, 500], [860, 768]]) {
@@ -512,6 +513,10 @@ async function filmRelayout(t, mode) {
 		await size(1024, 768);
 		await f.waitForTimeout(600);
 		await lookAndName(t, f, look);
+		// the pointer parked outside the page: left on the page, a layout put a suggestion under it, Pip previewed that
+		// choice ('Ooh, good one.', the sign '--preview') and the next layout took it away, a new line said for a real
+		// change, not a replay
+		await t.page.mouse.move(1700, 1000);
 		await f.waitForTimeout(2500);
 		for (let i = 1; i <= reps; i++) {
 			await t.mark(`${look} rep ${i} 1024`);
