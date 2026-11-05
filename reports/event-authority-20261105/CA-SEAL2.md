@@ -395,6 +395,7 @@ All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
 | `CA-SEAL2-fix3-results.json` | `e53d9f9375a18c4908acb448478089e309b0e5c3c75fe8f0ce5f4d1db4160b8c` |
 
 
+
 ## Review round 4: findings and responses
 
 Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-astra-2.md`, including the full 182-variant table, both result summaries, eleven independent witnesses and their replay scripts. All 225 retained Astra 2 evidence files match the published SHA-256 manifest. The final corpus is 134/134, including 107 recorded negative refusals. All 110 original result records/refusal strings remain identical. All 597 original source hashes and byte counts verify. No frozen validator byte, receipt, owner document or governance record changes in this round.
@@ -460,7 +461,7 @@ All filenames below resolve under the full `E` prefix above. The compact committ
 | `removal-summary.json` | `e4e6ce14d9987737dbd105dcb7c98b368b33c19783bdb751e7cd8d4a2ab041ed` |
 | `supplemental-summary.json` | `e02f7909f14287872a32295c8a3b3f3f622c53daa3cfd8b0d52f37c94de1e59e` |
 | `survivor-proofs.json` | `e08049c7cb1451a1916008010e11dffd20f04275831f96973faec2a023cdeb1b` |
-| `survivor-summary.json` | `21b2c0a1e7ed5c63d8f1517a3a49b89e1e8e97f66a1eb2bd2e420c80b0dceb3b` |
+| `survivor-summary.json` | `4f537ba168a1580c7c9e36615fba2ffeb7cc0ba5045e9da1a7456662563f49c3` |
 | `shard-check.json` | `d88b6d64d2c3bbfb29393c893950a0750de443783549fb7cbb624230301e2be3` |
 | `index-validate.json` | `023e454e42bf0523160a0ecbe462f8110225717a8839f5b6a9dd602af7919820` |
 | `index-comparison.json` | `bca4e1c4f3769b5c247d278e8943b586fa3794c6cdc8759a2947f754ce02d215` |
