@@ -742,7 +742,11 @@
         "event_sequence"
       ],
       "legacy_alias": null,
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      },
       "transition": "pre-lock decomposition -> degraded pre-lock shape; graph_locked=true rejects. Shapes are redacted bounded shape descriptors, not plan bodies; evidence_ref resolves the original evidence.",
       "new_binding_status": "newly_authored_owner_contract",
       "new_stored_value_families": [],
@@ -801,7 +805,13 @@
           ]
         }
       },
-      "replay_policy": "dedupe_by_idempotency_key"
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_terminal_transition": "original durably committed fallback result",
+      "retention_decision_evidence": [
+        "Jared first-deck G28, E-CARDS-1.as-presented-578a6774.md:92",
+        "DL-401 applied at 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md:17461-17464 (origin/plans/ea-retention-cards1-20261104)",
+        "Plans/Executor_Protocol.md#EP-216: pre-lock fallback, no run"
+      ]
     },
     {
       "event_type": "remediation.resolved",
