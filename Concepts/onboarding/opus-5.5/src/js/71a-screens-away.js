@@ -87,7 +87,7 @@
         fields += C.note(T('away.proxy.public', { name }), 'warn', 'globe');
         fields += C.details(S, 'proxyneeds', T('away.proxy.needsTitle'), `<ul class="o55-will">${['dns', 'ports', 'cgnat'].map((k) => `<li>${C.small(k === 'dns' ? 'globe' : k === 'ports' ? 'lock' : 'link', 14)}<span>${U.esc(T('away.proxy.needs.' + k, { host: res.ok ? res.url.replace(/^https:\/\//, '') : 'pm.example.com', name }))}</span></li>`).join('')}</ul>`);
         const on = consented(S) && res.ok;
-        fields += `<div class="o55-checkline" data-key="consent"><button type="button" role="checkbox" aria-checked="${on}" class="o55-check${on ? ' is-on' : ''}" data-o55-do="consent" data-pm-hover-exempt="true"${res.ok ? '' : ` aria-disabled="true" data-disabled-reason="${U.esc(T('missing.proxyAddress'))}"`}>${on ? C.small('check', 13) : ''}</button><span>${U.esc(T('away.proxy.consent', { name }))}</span></div>`;
+        fields += `<div class="o55-checkline" data-key="consent"><button type="button" role="checkbox" aria-checked="${on}" class="o55-check${on ? ' is-on' : ''}" data-o55-do="consent" data-pm-hover-exempt="true"${res.ok ? '' : ` aria-disabled="true" data-disabled-reason="${U.esc(T('missing.proxyAddress'))}"`}><span class="o55-checkface" aria-hidden="true">${on ? C.small('check', 13) : ''}</span></button><span>${U.esc(T('away.proxy.consent', { name }))}</span></div>`;
       }
       /* a new Server makes its own link after the commit and shows it then (SCR-05): nothing to paste here */
       if (route === 'remote_link') fields = `<p class="o55-hint" data-key="link-next">${U.esc(T('away.link.next', { name }))}</p>`;
