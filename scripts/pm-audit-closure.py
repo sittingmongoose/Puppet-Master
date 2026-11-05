@@ -448,7 +448,6 @@ ANCHOR_REF_RE = re.compile(r"^(?P<path>[^#\s]+)#(?P<kind>unit|section|json|jsonl
 LEGACY_LINE_REF_RE = re.compile(r":\d+(?:-\d+)?$")
 PLAN_UNIT_FENCE_RE = re.compile(r"```yaml\n(.*?)\n```", re.DOTALL)
 PLAN_UNIT_ID_RE = re.compile(r"plan_unit_id:\s*['\"]?([A-Za-z0-9][A-Za-z0-9_.-]*)")
-MD_HEADING_RE = re.compile(r"^(#{1,6})\s*(.*?)\s*$")
 
 
 class AnchorError(ValueError):
@@ -574,68 +573,24 @@ def _lines(text: str) -> list[str]:
     return lines
 
 
-_MD_FENCE_OPEN_RE = re.compile(r"^( *)(`{3,}|~{3,})(.*)$")
-_MD_ATX_RE = re.compile(r"^ {0,3}(#{1,6})(?:[ \t]+(.*?))?[ \t]*$")
-_MD_HTML_BLOCK_TAGS = (
-    "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|"
-    "fieldset|figcaption|figure|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|iframe|legend|li|link|"
-    "main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|"
-    "title|tr|track|ul"
-)
-_MD_HTML_STARTS: tuple[tuple[Any, Any], ...] = (
-    (re.compile(r"^ {0,3}<(?:script|pre|style|textarea)(?:\s|>|$)", re.I), re.compile(r"</(?:script|pre|style|textarea)>", re.I)),
-    (re.compile(r"^ {0,3}<!--"), re.compile(r"-->")),
-    (re.compile(r"^ {0,3}<\?"), re.compile(r"\?>")),
-    (re.compile(r"^ {0,3}<![A-Za-z]"), re.compile(r">")),
-    (re.compile(r"^ {0,3}<!\[CDATA\["), re.compile(r"\]\]>")),
-    (re.compile(rf"^ {{0,3}}</?(?:{_MD_HTML_BLOCK_TAGS})(?:\s|/?>|$)", re.I), None),
-    (re.compile(r"^ {0,3}(?:<[A-Za-z][A-Za-z0-9-]*(?:\s+[A-Za-z_:][\w.:-]*(?:\s*=\s*(?:[^\s\"'=<>`]+|'[^']*'|\"[^\"]*\"))?)*\s*/?>|</[A-Za-z][A-Za-z0-9-]*\s*>)\s*$"), None),
-)
-
-
 def markdown_headings(lines: list[str]) -> list[dict[str, Any]]:
-    """ATX headings that are section boundaries, per CommonMark block structure.
+    """ATX headings at the document's top level, as a CommonMark parser (markdown-it-py) reads
+    the block structure, used as section boundaries.
 
-    A false heading would end a section early and leave text outside its hash, so only real
-    headings count: lines in a fenced code block (closed only by the same fence character, at
-    least as long, with nothing after it) or in an HTML block (CommonMark types 1-7) are not
-    headings, and an ATX heading needs a space or the line end after its #s and at most three
-    spaces of indentation. Setext headings, headings inside block quotes or list items, and
-    indented code are not boundaries; treating them as text only makes a section longer."""
+    A false boundary would end a section early and leave text outside its hash, so boundaries
+    come from a real CommonMark parse: nothing inside fenced or indented code, HTML blocks, block
+    quotes or list items is a boundary. Setext headings are deliberately not boundaries; treating
+    them as text only makes a section longer. Without markdown-it-py section anchors are refused."""
+    try:
+        from markdown_it import MarkdownIt  # noqa: PLC0415 - only section anchors need it.
+    except ImportError as exc:  # pragma: no cover - environment dependent
+        raise AnchorError("section anchors need markdown-it-py (Debian/Ubuntu: python3-markdown-it)") from exc
+    tokens = MarkdownIt("commonmark").parse("\n".join(lines) + "\n")
     headings: list[dict[str, Any]] = []
-    fence: tuple[str, int, int] | None = None
-    html_end: Any = None
-    in_html = False
-    for index, line in enumerate(lines):
-        if fence is not None:
-            char, length, indent = fence
-            stripped = line.lstrip(" ")
-            run = len(stripped) - len(stripped.lstrip(char))
-            if len(line) - len(stripped) <= indent + 3 and run >= length and not stripped[run:].strip():
-                fence = None
-            continue
-        if in_html:
-            if html_end is None:
-                if not line.strip():
-                    in_html = False
-            elif html_end.search(line):
-                in_html, html_end = False, None
-            continue
-        opened = _MD_FENCE_OPEN_RE.match(line)
-        if opened and not (opened.group(2)[0] == "`" and "`" in opened.group(3)):
-            fence = (opened.group(2)[0], len(opened.group(2)), len(opened.group(1)))
-            continue
-        for start, end in _MD_HTML_STARTS:
-            if start.match(line):
-                if end is None or not end.search(line[start.match(line).end():]):
-                    in_html, html_end = True, end
-                break
-        if in_html:
-            continue
-        match = _MD_ATX_RE.match(line)
-        if match:
-            title = re.sub(r"(?:^|[ \t]+)#+[ \t]*$", "", match.group(2) or "").strip()
-            headings.append({"index": index, "level": len(match.group(1)), "title": title})
+    for position, token in enumerate(tokens):
+        if token.type == "heading_open" and token.level == 0 and token.map and token.markup.startswith("#"):
+            title = tokens[position + 1].content.strip() if position + 1 < len(tokens) else ""
+            headings.append({"index": token.map[0], "level": int(token.tag[1]), "title": title})
     return headings
 
 
@@ -691,6 +646,7 @@ class AnchorResolver:
         self._json: dict[str, Any] = {}
         self._jsonl: dict[str, list[dict[str, Any]]] = {}
         self._unit_errors: dict[str, str] = {}
+        self._headings: dict[str, list[dict[str, Any]]] = {}
 
     def path(self, rel_path: str) -> Path:
         path = contained_path(self.root, rel_path)
@@ -817,7 +773,9 @@ class AnchorResolver:
 
     def _section(self, ref: str, rel_path: str, value: str) -> tuple[str, str]:
         lines = _lines(self.text(rel_path))
-        headings = markdown_headings(lines)
+        if rel_path not in self._headings:
+            self._headings[rel_path] = markdown_headings(lines)
+        headings = self._headings[rel_path]
         path_titles = [part.strip() for part in value.split(" > ")]
         if any(not part for part in path_titles):
             raise AnchorError(f"{ref}: blank heading title in section path")
@@ -3405,7 +3363,45 @@ def build_reaudit_row(
     return row
 
 
+class _RegistryLock:
+    """Exclusive advisory lock on the registry file itself for a whole read-validate-append
+    transaction, so concurrent appends serialize; aliases of the same file share the lock.
+    Where POSIX locking is unavailable the append is refused rather than left racing."""
+
+    def __init__(self, path: Path) -> None:
+        self.path = path
+        self.handle: Any = None
+
+    def __enter__(self) -> "_RegistryLock":
+        try:
+            import fcntl  # noqa: PLC0415
+        except ImportError as exc:  # pragma: no cover - platform dependent
+            raise AnchorError("reaudit-append needs POSIX file locking (fcntl) to serialize registry appends") from exc
+        if self.path.exists():
+            self.handle = self.path.open("rb")
+            fcntl.flock(self.handle.fileno(), fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, *exc: Any) -> None:
+        if self.handle is not None:
+            import fcntl  # noqa: PLC0415
+
+            fcntl.flock(self.handle.fileno(), fcntl.LOCK_UN)
+            self.handle.close()
+
+
 def cmd_reaudit_append(args: argparse.Namespace) -> int:
+    """Serialize the whole append transaction on the registry, then run it."""
+    registry_path = repo_path(args.registry)
+    try:
+        with _RegistryLock(registry_path):
+            return _reaudit_append(args)
+    except AnchorError as exc:
+        print(json.dumps({"schema_id": "pm.audit_closure.reaudit_append_report.v1", "status": "fail", "errors": [str(exc)]}, indent=2))
+        return 1
+
+
+def _reaudit_append(args: argparse.Namespace) -> int:
     """Migration: append one re-audit row per reviewed record whose anchors have not moved.
 
     A record whose dependency anchors hash differently now than when it was rechecked is
@@ -4352,6 +4348,14 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             ("section_spans_hash_without_space", "#not-a-heading\n"),
             ("section_spans_html_comment_heading", "<!--\n# hidden\n-->\n"),
             ("section_spans_html_block_heading", "<pre>\n# hidden\n</pre>\n"),
+            # SOL10-1: the review's seven bodies, each a false boundary for a hand-written scanner.
+            ("section_spans_fence_closed_by_overindented_line", " ```\n    ```\n# Hidden\n```\n"),
+            ("section_spans_indented_fake_fence_opener", "    ```\n\n```\n# Hidden\n```\n"),
+            ("section_spans_fence_with_unicode_closing_suffix", "```\n```\u00a0\n# Hidden\n```\n"),
+            ("section_spans_html_block_with_unicode_blank", "<div>\n\u00a0\n# Hidden\n\n"),
+            ("section_spans_list_item_heading", "- item\n\n  # Nested\n\n"),
+            ("section_spans_html_that_cannot_interrupt_paragraph", "paragraph\n<widget>\n```\n\n# Hidden\n```\n"),
+            ("section_spans_invalid_html_attribute", "<widget a\u03c0>\n```\n\n# Hidden\n```\n"),
         ):
             md = tmp / "Plans/md.md"
             texts = []
@@ -4370,6 +4374,25 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         check("stale_closed_leaf_chain_is_one_open_finding", not has(report, "duplicate open finding_key")
               and [r["line"] for r in report["open_rows"]] == [3], report)
         write_doc()
+        # SOL10-3: the governance caller (pm-plans-verify.py) reads the registry with LF-only splitting too.
+        here = Path(__file__).resolve().parent
+        if (here / "pm-plans-verify.py").is_file():
+            for script in ("pm-audit-closure.py", "pm-plans-verify.py", "pm_wiring_inventory.py"):
+                if (here / script).is_file():
+                    shutil.copyfile(here / script, tmp / "scripts" / script)
+            registry.write_text(json.dumps(legacy_row(closure_reason="Repaired left\u2028right."), sort_keys=True, ensure_ascii=False) + "\n",
+                                encoding="utf-8")
+            spec = __import__("importlib.util").util.spec_from_file_location("pm_plans_verify_selftest", tmp / "scripts" / "pm-plans-verify.py")
+            verify = __import__("importlib.util").util.module_from_spec(spec)
+            sys.modules[spec.name] = verify
+            spec.loader.exec_module(verify)
+            verify.ROOT = tmp
+            gate = verify.cmd_validate_audit_closure(argparse.Namespace(registry=str(registry)))
+            parse_failures = [f for f in gate.get("failures", []) if "json_parse" in json.dumps(f)]
+            check("caller_reads_literal_line_separator", "\u2028" in registry.read_text(encoding="utf-8") and not parse_failures, gate)
+            for script in ("pm-audit-closure.py", "pm-plans-verify.py", "pm_wiring_inventory.py"):
+                (tmp / "scripts" / script).unlink(missing_ok=True)
+            sys.modules.pop(spec.name, None)
         # ASTRA-4: JSONL readers split on LF only; U+2028 inside a JSON string stays in it.
         for name, ensure_ascii in (("record_with_literal_line_separator_reads", False), ("record_with_escaped_line_separator_reads", True)):
             uni = audit_dir / f"unicode-{int(ensure_ascii)}.jsonl"
@@ -4460,6 +4483,32 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         check("reaudit_append_keeps_sibling_file", code == 0 and sibling.read_text() == "User-owned diagnostic data.\n"
               and registry.read_bytes().startswith(before_registry), real)
         sibling.unlink()
+        # SOL10-2: the append transaction holds an exclusive lock on the registry.
+        import fcntl  # noqa: PLC0415
+        write_registry([legacy_row()])
+        with _RegistryLock(registry):
+            with registry.open("rb") as other:
+                try:
+                    fcntl.flock(other.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    locked_out = False
+                    fcntl.flock(other.fileno(), fcntl.LOCK_UN)
+                except BlockingIOError:
+                    locked_out = True
+        check("reaudit_append_lock_is_exclusive", locked_out)
+        # Two concurrent CLI appends of the same record: one appends, the other skips it as done.
+        append_with()
+        write_registry([legacy_row()])
+        shutil.copyfile(Path(__file__).resolve(), tmp / "scripts" / "pm-audit-closure.py")
+        cli = [sys.executable, str(tmp / "scripts" / "pm-audit-closure.py"), "reaudit-append",
+               "--registry", rel(registry), "--records", rel(records_path)]
+        procs = [subprocess.Popen(cli, cwd=tmp, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) for _ in range(2)]
+        outs = [proc.communicate(timeout=300) for proc in procs]
+        reports = [json.loads(out[0]) for out in outs]
+        lines_now = [l for l in registry.read_text().splitlines() if l.strip()]
+        check("concurrent_appends_write_one_row", sorted(r["appended"] for r in reports) == [0, 1]
+              and sorted(r["already_appended"] for r in reports) == [0, 1] and len(lines_now) == 2
+              and not validate_registry(registry)["errors"], [reports, len(lines_now), [o[1][-300:] for o in outs]])
+        (tmp / "scripts" / "pm-audit-closure.py").unlink()
         # F8: an earlier append that no longer validates is reported, not skipped as done.
         append_with()
         write_registry([legacy_row()])

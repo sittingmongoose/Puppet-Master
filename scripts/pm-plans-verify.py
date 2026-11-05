@@ -7008,7 +7008,7 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
 
     reopened_rows: list[dict[str, Any]] = []
     if registry.exists():
-        for line_no, line in enumerate(registry.read_text(encoding="utf-8").splitlines(), start=1):
+        for line_no, line in enumerate(registry.read_text(encoding="utf-8").split("\n"), start=1):  # LF only, as the core reads JSONL
             if not line.strip():
                 continue
             try:
