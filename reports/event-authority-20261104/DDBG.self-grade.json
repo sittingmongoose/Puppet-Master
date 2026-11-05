@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DDBG-20261104",
+  "assessment_id": "EA-W2-DDBG-SWEEP-P1-20261105",
   "assessment_kind": "self_grade_prepared_without_admission",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -22,19 +22,23 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-debug-20261104",
-    "commit": "d77cc98f8f7ae9594efd876bc7e02f733319a085",
+    "commit": "c19ffddf8ff2e23b85bcf9c42ad48af8e651265d",
     "normative_files_sha256": {
-      "Plans/Contracts_V0.md": "1d62cf52688ed1af9548210d2d7ee64f0b53ad92bd220f0486fba747881215d3",
-      "Plans/storage-plan.md": "d55f579fbb47e86733ec6f3bbc965675172e4ec1397d294213d2ba1df3a39fea",
-      "Plans/Automated_Testing_System.md": "98e9f34dcf3178258a980a4ce371555ccc878ad0595d0ee586cd87843e63b650",
-      "Plans/debug_investigation_event_payloads.schema.json": "a7d0e6156bc33fe1a34f9b6ce11c2aa34efab7ec23daf7bab7639fff07f016aa",
-      "Plans/debug_investigation_event_fixtures.json": "5d26221dd3df8e9963d75dd2dddfc5934cb337b855f5b067aa9df17226e8d6d1"
+      "Plans/Contracts_V0.md": "f1cca0bc6560f5249d314c5a6f7924ac0b0a3eb6d9b635b0e87281a4b64264c8",
+      "Plans/storage-plan.md": "44e597736a7a8f005032e1dba771ccfa5cf00ad5f34085cb61e884c914a75c7b",
+      "Plans/Automated_Testing_System.md": "6b0e47287e80cae7d987b0a6eda31791e987046c0a447c8cc12bb639e451ec6d",
+      "Plans/debug_investigation_event_payloads.schema.json": "600ee6d0b29fdf039d6c64ba2d561ea8f60995d033f6341607d6122f3cb5cba0",
+      "Plans/debug_investigation_event_fixtures.json": "e7e062e0c584a8f0f46aaba46331e1e0c88c0747a6cd498bc3414c9b50f46c61",
+      "Plans/assistant-chat-design.md": "c8386ee4896fbf759ad08ce6a15da1586c0bcdedb360ac14a8a40eb6febe2206",
+      "Plans/MiscPlan.md": "075650d61f254d219224a6955894056175249145fa195c870d67edcca7226d33",
+      "scripts/pm_debug_investigation_transitions.py": "c614827b5f4118bd1aebe9fa9ad6d2368dfa7c05c101d83baf13b385eb446997"
     },
     "review_round_1_fix_commit": "5271b83e9e65347d1b0e22e9a719837a006b7919",
-    "checker_sha256": "be4d7a59cbb65cefc1be2b741b68e92dfff782bb4151133453b3f1cfb620a00c",
+    "checker_sha256": "e09d2cdc1c0e78dfa3e5b72756841cc5829eaabbab6855648f5c77a79aab8934",
     "review_round_2_fix_commit": "1ace7c32935eee55e147a98a05bbca8091707b0c",
     "review_round_3_fix_commit": "d77cc98f8f7ae9594efd876bc7e02f733319a085",
-    "standing_checker_sha256": "71615b9a30da601ac2b053357552a25bc42539163bc85e76e2bb3077f8b9833e"
+    "standing_checker_sha256": "9d5fdb5afd0933ca54a010cc34a10256014bcc57664b0d79c051f117d47042e7",
+    "base": "e42ce235b4711325ced818c777f070c3ee0d7952"
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -67,7 +71,7 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -75,26 +79,19 @@
               "line_start": 1563,
               "line_end": 1563,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -105,16 +102,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -125,16 +122,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -152,16 +149,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -172,16 +169,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -189,46 +186,39 @@
               "line_start": 1600,
               "line_end": 1600,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-570",
-              "line_start": 1580,
-              "line_end": 1580,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-570",
-              "line_start": 1593,
-              "line_end": 1593,
-              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+              "line_start": 1630,
+              "line_end": 1630,
+              "quote": "changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -239,36 +229,36 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-570",
-              "line_start": 1574,
-              "line_end": 1574,
-              "quote": "decision are frozen. item_id is fresh within investigation_id; an existing item is not added again."
+              "line_start": 1586,
+              "line_end": 1586,
+              "quote": "Producer binding: owner.debug.investigation.context_item_added@1.0.0 is the exact emitting handler above."
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -279,16 +269,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -299,16 +289,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -318,34 +308,34 @@
               "quote": "history or sibling records. Positive/negative oracles are the context_item_added cases in Plans/debug_investigation_event_fixtures.json"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-285",
-              "line_start": 7254,
-              "line_end": 7254,
-              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
+              "path": "Plans/debug_investigation_event_fixtures.json",
+              "unit": "context_item_added",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"event_type\": \"debug.investigation.context_item_added\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         }
       },
       "pass_count": 10,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2.",
+        "Earlier lane-local retention marker still needs integration with current G02 assignment; no new Jared choice is required."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json",
         "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.context_item_state_changed",
@@ -376,7 +366,7 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -384,26 +374,19 @@
               "line_start": 1688,
               "line_end": 1688,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -414,16 +397,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -434,16 +417,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -461,16 +444,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -481,16 +464,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -498,46 +481,39 @@
               "line_start": 1724,
               "line_end": 1724,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-571",
-              "line_start": 1704,
-              "line_end": 1704,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-571",
-              "line_start": 1717,
-              "line_end": 1717,
-              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+              "line_start": 1754,
+              "line_end": 1754,
+              "quote": "changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -548,36 +524,36 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-571",
-              "line_start": 1699,
-              "line_end": 1699,
-              "quote": "previous_state to its latest accepted state. An equal state is a no-op, not a new transition. Revocation"
+              "line_start": 1710,
+              "line_end": 1710,
+              "quote": "Producer binding: owner.debug.investigation.context_item_state_changed@1.0.0 is the exact emitting handler"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -588,16 +564,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -608,16 +584,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -628,40 +604,33 @@
             },
             {
               "path": "Plans/debug_investigation_event_fixtures.json",
-              "unit": "context_item_state_changed no-op",
-              "line_start": 421,
-              "line_end": 421,
-              "quote": "\"case\": \"equal-state active no-op\","
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-285",
-              "line_start": 7254,
-              "line_end": 7254,
-              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
+              "unit": "context_item_state_changed",
+              "line_start": 332,
+              "line_end": 332,
+              "quote": "\"event_type\": \"debug.investigation.context_item_state_changed\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         }
       },
       "pass_count": 10,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2.",
+        "Earlier lane-local retention marker still needs integration with current G02 assignment; no new Jared choice is required."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json",
         "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.exported",
@@ -692,7 +661,7 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -700,26 +669,19 @@
               "line_start": 1812,
               "line_end": 1812,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -730,16 +692,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -750,16 +712,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -777,16 +739,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -797,16 +759,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -814,46 +776,39 @@
               "line_start": 1848,
               "line_end": 1848,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-572",
-              "line_start": 1828,
-              "line_end": 1828,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-572",
-              "line_start": 1841,
-              "line_end": 1841,
-              "quote": "retention remains PENDING_RETENTION_DECISION."
+              "line_start": 1878,
+              "line_end": 1878,
+              "quote": "changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -864,36 +819,36 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-572",
-              "line_start": 1823,
-              "line_end": 1823,
-              "quote": "commit and counts are verified against that exact manifest. bundle_id and schema_id must match it. Omitted/redacted/revoked/blocked/expired"
+              "line_start": 1834,
+              "line_end": 1834,
+              "quote": "Producer binding: owner.debug.investigation.exported@1.0.0 is the exact emitting handler above. Under"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -904,16 +859,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -924,16 +879,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -943,34 +898,34 @@
               "quote": "history or sibling records. Positive/negative oracles are the exported cases in Plans/debug_investigation_event_fixtures.json"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-285",
-              "line_start": 7254,
-              "line_end": 7254,
-              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
+              "path": "Plans/debug_investigation_event_fixtures.json",
+              "unit": "exported",
+              "line_start": 657,
+              "line_end": 657,
+              "quote": "\"event_type\": \"debug.investigation.exported\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         }
       },
       "pass_count": 10,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2.",
+        "Earlier lane-local retention marker still needs integration with current G02 assignment; no new Jared choice is required."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json",
         "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.imported",
@@ -1001,7 +956,7 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1009,26 +964,19 @@
               "line_start": 1936,
               "line_end": 1936,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1039,16 +987,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1059,16 +1007,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1086,16 +1034,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1106,16 +1054,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1123,46 +1071,39 @@
               "line_start": 1972,
               "line_end": 1972,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-573",
-              "line_start": 1952,
-              "line_end": 1952,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-573",
-              "line_start": 1965,
-              "line_end": 1965,
-              "quote": "retention remains PENDING_RETENTION_DECISION."
+              "line_start": 2002,
+              "line_end": 2002,
+              "quote": "changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1173,36 +1114,36 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-573",
-              "line_start": 1947,
-              "line_end": 1947,
-              "quote": "publishing the imported investigation. bundle_id/schema_id match the admitted manifest and imported_target_kind"
+              "line_start": 1958,
+              "line_end": 1958,
+              "quote": "Producer binding: owner.debug.investigation.imported@1.0.0 is the exact emitting handler above. Under"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1213,16 +1154,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1233,16 +1174,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1252,34 +1193,34 @@
               "quote": "history or sibling records. Positive/negative oracles are the imported cases in Plans/debug_investigation_event_fixtures.json"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-285",
-              "line_start": 7254,
-              "line_end": 7254,
-              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
+              "path": "Plans/debug_investigation_event_fixtures.json",
+              "unit": "imported",
+              "line_start": 970,
+              "line_end": 970,
+              "quote": "\"event_type\": \"debug.investigation.imported\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         }
       },
       "pass_count": 10,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2.",
+        "Earlier lane-local retention marker still needs integration with current G02 assignment; no new Jared choice is required."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json",
         "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.instrumentation_state_changed",
@@ -1287,7 +1228,7 @@
       "family_revision": "1.0.0",
       "registry_pointer": null,
       "disposition": "CURRENT_WRITER",
-      "outcome": "blocked_on_Jared",
+      "outcome": "prepared_without_admission",
       "disposition_evidence": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -1310,34 +1251,27 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
               "line_start": 2060,
               "line_end": 2060,
-              "quote": "drafted without admission; HELD_FOR_JARED and not prepared."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
+              "quote": "prepared without admission. DL-429 resolves the former hold. CV-123/124 and section 3.5 remain the minimum"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1345,257 +1279,249 @@
               "line_start": 2059,
               "line_end": 2059,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.instrumentation_state_changed@1.0.0,"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-574",
-              "line_start": 2070,
-              "line_end": 2070,
-              "quote": "HELD_FOR_JARED: this family has no authorized transition mapping and is not prepared."
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2099,
-              "line_end": 2099,
+              "line_start": 2135,
+              "line_end": 2135,
               "quote": "Producer binding: owner.debug.investigation.instrumentation_state_changed@1.0.0 is the exact emitting"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Structurally closed draft only; mapping and transition domain remain held under CV-574. Structural PASS does not prepare or authorize this family.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
               "line_start": 2061,
               "line_end": 2061,
-              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/instrumentation_state_changed;"
+              "quote": "semantic and ref-only owners. Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/instrumentation_state_changed."
             },
             {
               "path": "Plans/debug_investigation_event_payloads.schema.json",
               "unit": "#/$defs/instrumentation_state_changed",
-              "line_start": 281,
-              "line_end": 281,
-              "quote": "\"$id\": \"pm.debug_investigation.instrumentation_state_changed.schema.v1\""
+              "line_start": 230,
+              "line_end": 230,
+              "quote": "\"$id\": \"pm.debug_investigation.instrumentation_state_changed.schema.v1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2109,
-              "line_end": 2109,
+              "line_start": 2145,
+              "line_end": 2145,
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.instrumentation_state_changed\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2113,
-              "line_end": 2113,
+              "line_start": 2149,
+              "line_end": 2149,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-574",
-              "line_start": 2093,
-              "line_end": 2093,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Exact family adopts current Storage G02 Project retention, original terminal-transition anchor, protected obligations, unchanged TTL/count and no derived family value.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2106,
-              "line_end": 2106,
-              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+              "line_start": 2180,
+              "line_end": 2180,
+              "quote": "= RP-OPERATIONAL-2555D@1.0.0, explicitly assigned to all nine G02 names in current Storage Case L-3."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3 G02",
+              "line_start": 17594,
+              "line_end": 17594,
+              "quote": "- G02, debug investigations (9): `debug.investigation.started`, `debug.investigation.state_changed`, `debug.investigation.target_bound`, `debug.investigation.context_item_added`, `debug.investigation."
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2136,
-              "line_end": 2136,
+              "line_start": 2172,
+              "line_end": 2172,
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "transitions": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "HELD_FOR_JARED: canon leaves the exact instrumentation field/domain mappings and transition predicates open; all current candidates are refused. No positive transition oracle is claimed.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2070,
-              "line_end": 2070,
-              "quote": "HELD_FOR_JARED: this family has no authorized transition mapping and is not prepared."
+              "line_start": 2085,
+              "line_end": 2085,
+              "quote": "DL-429 is the complete transition authority. Creation is planned/not_needed and emits no change event."
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2118,
-              "line_end": 2118,
+              "line_start": 2154,
+              "line_end": 2154,
               "quote": "Consumer binding: reader.debug.investigation.instrumentation_state_changed@1.0.0 is the direct transient"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2150,
-              "line_end": 2150,
+              "line_start": 2192,
+              "line_end": 2192,
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "HELD_FOR_JARED: canon leaves the exact instrumentation field/domain mappings and transition predicates open; all current candidates are refused. No positive transition oracle is claimed.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-574",
-              "line_start": 2156,
-              "line_end": 2156,
+              "line_start": 2198,
+              "line_end": 2198,
               "quote": "history or sibling records. Positive/negative oracles are the instrumentation_state_changed cases in"
             },
             {
               "path": "Plans/debug_investigation_event_fixtures.json",
-              "unit": "instrumentation hold",
-              "line_start": 1366,
-              "line_end": 1366,
-              "quote": "\"case\": \"round-1 scrubbed labels cannot establish a transition\","
+              "unit": "instrumentation_state_changed",
+              "line_start": 1282,
+              "line_end": 1282,
+              "quote": "\"event_type\": \"debug.investigation.instrumentation_state_changed\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         }
       },
       "pass_count": 8,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: CV-574 instrumentation source/domain mapping and transition predicates remain unanswered; HELD_FOR_JARED, not prepared",
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json"
+        "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Structurally closed draft and conditional technical bindings only. No positive transition or live append is claimed; static candidate gate refuses instrumentation_mapping_unresolved. Retention and admission remain separate gates."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.started",
@@ -1608,8 +1534,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-575",
-          "line_start": 2201,
-          "line_end": 2201,
+          "line_start": 2245,
+          "line_end": 2245,
           "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.started@1.0.0,"
         }
       ],
@@ -1626,334 +1552,271 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2202,
-              "line_end": 2202,
+              "line_start": 2246,
+              "line_end": 2246,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2201,
-              "line_end": 2201,
+              "line_start": 2245,
+              "line_end": 2245,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.started@1.0.0,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2241,
-              "line_end": 2241,
+              "line_start": 2285,
+              "line_end": 2285,
               "quote": "Producer binding: owner.debug.investigation.started@1.0.0 is the exact emitting handler above. Under"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "CV-575 closes enums and only owner-supported Debug and effective planning constraints; Crew from plan is accepted. No universal equality or automatic post-approval overlay clearing.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2203,
-              "line_end": 2203,
+              "line_start": 2247,
+              "line_end": 2247,
               "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/started; operation_id is"
             },
             {
               "path": "Plans/debug_investigation_event_payloads.schema.json",
               "unit": "#/$defs/started",
-              "line_start": 454,
-              "line_end": 454,
+              "line_start": 494,
+              "line_end": 494,
               "quote": "\"$id\": \"pm.debug_investigation.started.schema.v1\""
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "Canonical enum closure; 1.0B Debug Mode contract",
-              "line_start": 2669,
-              "line_end": 2669,
-              "quote": "`requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-575",
-              "line_start": 2217,
-              "line_end": 2217,
-              "quote": "The resolved mode tuple obeys assistant-chat-design sections 1.0A, 1.0B, 1.0C"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "CONFLICT"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Payload/envelope/owner Project and investigation joins are statically enforced, including optional thread/run and encoded partition; exact payload-only mismatch refuses with unchanged expected identity.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2251,
-              "line_end": 2251,
+              "line_start": 2295,
+              "line_end": 2295,
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.started\","
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-575",
-              "line_start": 2232,
-              "line_end": 2232,
-              "quote": "A payload-only Project mismatch refuses before any append or receipt."
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2255,
-              "line_end": 2255,
+              "line_start": 2299,
+              "line_end": 2299,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-575",
-              "line_start": 2235,
-              "line_end": 2235,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2248,
-              "line_end": 2248,
-              "quote": "retention remains PENDING_RETENTION_DECISION."
+              "line_start": 2329,
+              "line_end": 2329,
+              "quote": "changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2278,
-              "line_end": 2278,
+              "line_start": 2322,
+              "line_end": 2322,
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Chat 1.0A-C/15/29.1 own read-only planning/Crew, debug/debug, explicit YOLO, explicit invocation and approved plan/TODO handoff. Scope-specific run.started restrictions are not imported.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2212,
-              "line_end": 2212,
-              "quote": "The existing Debug investigation launch handler emits once after target selection and requested/effective"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-575",
-              "line_start": 2221,
-              "line_end": 2221,
-              "quote": "Crew launched from plan remains read-only with runtime"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-575",
-              "line_start": 2225,
-              "line_end": 2225,
-              "quote": "Approval alone does not specify overlay clearing."
+              "line_start": 2285,
+              "line_end": 2285,
+              "quote": "Producer binding: owner.debug.investigation.started@1.0.0 is the exact emitting handler above. Under"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "CONFLICT"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2260,
-              "line_end": 2260,
+              "line_start": 2304,
+              "line_end": 2304,
               "quote": "Consumer binding: reader.debug.investigation.started@1.0.0 is the direct transient history reader for"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2292,
-              "line_end": 2292,
+              "line_start": 2336,
+              "line_end": 2336,
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-575",
-              "line_start": 2298,
-              "line_end": 2298,
+              "line_start": 2342,
+              "line_end": 2342,
               "quote": "history or sibling records. Positive/negative oracles are the started cases in Plans/debug_investigation_event_fixtures.json"
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "Canonical enum closure; 1.0B Debug Mode contract",
-              "line_start": 2669,
-              "line_end": 2669,
-              "quote": "`requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`"
-            },
-            {
               "path": "Plans/debug_investigation_event_fixtures.json",
-              "unit": "started Project mismatch",
-              "line_start": 1501,
-              "line_end": 1501,
-              "quote": "\"case\": \"payload Project only mismatch\","
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-285",
-              "line_start": 7254,
-              "line_end": 7254,
-              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
+              "unit": "started",
+              "line_start": 3623,
+              "line_end": 3623,
+              "quote": "\"event_type\": \"debug.investigation.started\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         }
       },
       "pass_count": 10,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2.",
+        "Earlier lane-local retention marker still needs integration with current G02 assignment; no new Jared choice is required."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json",
         "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.target_bound",
@@ -1966,8 +1829,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-576",
-          "line_start": 2342,
-          "line_end": 2342,
+          "line_start": 2386,
+          "line_end": 2386,
           "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.target_bound@1.0.0,"
         }
       ],
@@ -1984,285 +1847,271 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2343,
-              "line_end": 2343,
-              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "ABSENT"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "owner_doc": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2342,
-              "line_end": 2342,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.target_bound@1.0.0,"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PASS"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "producer": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2368,
-              "line_end": 2368,
-              "quote": "Producer binding: owner.debug.investigation.target_bound@1.0.0 is the exact emitting handler above."
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PASS"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "closed_payload_schema": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "CV-576 closes target bindings; source_sha256 requires exactly 64 lowercase hex characters. LF, uppercase, short and nonhex fixtures are refused.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2344,
-              "line_end": 2344,
-              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/target_bound; operation_id"
-            },
-            {
-              "path": "Plans/debug_investigation_event_payloads.schema.json",
-              "unit": "#/$defs/target_bound",
-              "line_start": 528,
-              "line_end": 528,
-              "quote": "\"$id\": \"pm.debug_investigation.target_bound.schema.v1\""
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
-          },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "scope_identity": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2378,
-              "line_end": 2378,
-              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.target_bound\","
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PASS"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "replay_idempotency": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2382,
-              "line_end": 2382,
-              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2362,
-              "line_end": 2362,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PASS"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "retention": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2375,
-              "line_end": 2375,
-              "quote": "family or retention remains PENDING_RETENTION_DECISION."
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "redaction_custody": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2405,
-              "line_end": 2405,
-              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PASS"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "transitions": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-576",
-              "line_start": 2354,
-              "line_end": 2354,
-              "quote": "and binding revision. target_bindings is a newly authored closed ref-only join, not a replacement target"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PASS"
-          },
-          "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
-        },
-        "consumers_checkpoints": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
               "line_start": 2387,
               "line_end": 2387,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2386,
+              "line_end": 2386,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.target_bound@1.0.0,"
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2412,
+              "line_end": 2412,
+              "quote": "Producer binding: owner.debug.investigation.target_bound@1.0.0 is the exact emitting handler above."
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2388,
+              "line_end": 2388,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/target_bound; operation_id"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/target_bound",
+              "line_start": 568,
+              "line_end": 568,
+              "quote": "\"$id\": \"pm.debug_investigation.target_bound.schema.v1\""
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2422,
+              "line_end": 2422,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.target_bound\","
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2426,
+              "line_end": 2426,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2456,
+              "line_end": 2456,
+              "quote": "changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for"
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2449,
+              "line_end": 2449,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2412,
+              "line_end": 2412,
+              "quote": "Producer binding: owner.debug.investigation.target_bound@1.0.0 is the exact emitting handler above."
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2431,
+              "line_end": 2431,
               "quote": "Consumer binding: reader.debug.investigation.target_bound@1.0.0 is the direct transient history reader"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2419,
-              "line_end": 2419,
+              "line_start": 2463,
+              "line_end": 2463,
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-576",
-              "line_start": 2425,
-              "line_end": 2425,
+              "line_start": 2469,
+              "line_end": 2469,
               "quote": "history or sibling records. Positive/negative oracles are the target_bound cases in Plans/debug_investigation_event_fixtures.json"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-285",
-              "line_start": 7254,
-              "line_end": 7254,
-              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
+              "path": "Plans/debug_investigation_event_fixtures.json",
+              "unit": "target_bound",
+              "line_start": 4183,
+              "line_end": 4183,
+              "quote": "\"event_type\": \"debug.investigation.target_bound\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         }
       },
       "pass_count": 10,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2.",
+        "Earlier lane-local retention marker still needs integration with current G02 assignment; no new Jared choice is required."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json",
         "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.verification_recorded",
@@ -2275,8 +2124,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-577",
-          "line_start": 2469,
-          "line_end": 2469,
+          "line_start": 2513,
+          "line_end": 2513,
           "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.verification_recorded@1.0.0,"
         }
       ],
@@ -2293,578 +2142,572 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2470,
-              "line_end": 2470,
+              "line_start": 2514,
+              "line_end": 2514,
               "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2469,
-              "line_end": 2469,
+              "line_start": 2513,
+              "line_end": 2513,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.verification_recorded@1.0.0,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2493,
-              "line_end": 2493,
+              "line_start": 2537,
+              "line_end": 2537,
               "quote": "Producer binding: owner.debug.investigation.verification_recorded@1.0.0 is the exact emitting handler"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2471,
-              "line_end": 2471,
+              "line_start": 2515,
+              "line_end": 2515,
               "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/verification_recorded; operation_id"
             },
             {
               "path": "Plans/debug_investigation_event_payloads.schema.json",
               "unit": "#/$defs/verification_recorded",
-              "line_start": 576,
-              "line_end": 576,
+              "line_start": 616,
+              "line_end": 616,
               "quote": "\"$id\": \"pm.debug_investigation.verification_recorded.schema.v1\""
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2503,
-              "line_end": 2503,
+              "line_start": 2547,
+              "line_end": 2547,
               "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.verification_recorded\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2507,
-              "line_end": 2507,
+              "line_start": 2551,
+              "line_end": 2551,
               "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
-            },
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-577",
-              "line_start": 2487,
-              "line_end": 2487,
-              "quote": "Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2500,
-              "line_end": 2500,
-              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+              "line_start": 2581,
+              "line_end": 2581,
+              "quote": "changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2530,
-              "line_end": 2530,
+              "line_start": 2574,
+              "line_end": 2574,
               "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2480,
-              "line_end": 2480,
-              "quote": "The investigation verifier emits after the evidence artifacts and bounded verification summary commit."
+              "line_start": 2537,
+              "line_end": 2537,
+              "quote": "Producer binding: owner.debug.investigation.verification_recorded@1.0.0 is the exact emitting handler"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2512,
-              "line_end": 2512,
+              "line_start": 2556,
+              "line_end": 2556,
               "quote": "Consumer binding: reader.debug.investigation.verification_recorded@1.0.0 is the direct transient history"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2544,
-              "line_end": 2544,
+              "line_start": 2588,
+              "line_end": 2588,
               "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PASS: exact writer policy; Project/application fences; inline-body refusals; LF identifiers; caller semantic digest excludes Storage assignments; transient checkpoint and failure-exit oracles. Whole-checker mutations reject defects. Native NOT_RUN.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-577",
-              "line_start": 2550,
-              "line_end": 2550,
+              "line_start": 2594,
+              "line_end": 2594,
               "quote": "history or sibling records. Positive/negative oracles are the verification_recorded cases in Plans/debug_investigation_event_fixtures.json"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-285",
-              "line_start": 7254,
-              "line_end": 7254,
-              "quote": "family with corrupted positives/oracles; success masquerading as a negative must exit nonzero."
+              "path": "Plans/debug_investigation_event_fixtures.json",
+              "unit": "verification_recorded",
+              "line_start": 4531,
+              "line_end": 4531,
+              "quote": "\"event_type\": \"debug.investigation.verification_recorded\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
+            "source": "REVIEW-astra-3.md",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 3 re-grade against Astra 2; exact owner/schema and full-checker standing probes support this cell. Native execution NOT_RUN."
+          "change": "carried",
+          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
         }
       },
       "pass_count": 10,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: PENDING_RETENTION_DECISION",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2.",
+        "Earlier lane-local retention marker still needs integration with current G02 assignment; no new Jared choice is required."
       ],
       "static_checks_seen": [
         "scripts/pm-debug-investigation-events.py",
-        "Plans/debug_investigation_event_fixtures.json",
         "scripts/pm-debug-investigation-standing-checks.py"
       ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     },
     {
       "event_type": "debug.investigation.state_changed",
       "family_id": "event-family-debug-investigation-state-changed",
       "family_revision": null,
       "registry_pointer": null,
-      "disposition": "UNDISPOSITIONED",
-      "outcome": "blocked_on_Jared",
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
       "disposition_evidence": [
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-578",
-          "line_start": 2594,
-          "line_end": 2594,
-          "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+          "line_start": 2638,
+          "line_end": 2638,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.state_changed@1.0.0,"
         }
       ],
       "current_owner_units": [
-        "CV-578"
+        "CV-578",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "finding": "Exact event remains absent from the unchanged family registry. Preparation is not admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
-            },
-            {
-              "path": "Plans/event_family_registry.json",
-              "unit": "registry header (all family rows inspected for absence)",
-              "line_start": 5,
-              "line_end": 5,
-              "quote": "\"registry_revision\": \"2026-11-04.1\","
+              "line_start": 2639,
+              "line_end": 2639,
+              "quote": "prepared without admission. DL-428 resolves the former owner conflict; Assistant Chat ACD-078/079/082"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "owner_doc": {
-          "status": "CONFLICT",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "11.0A",
-              "line_start": 1174,
-              "line_end": 1174,
-              "quote": "**Closed investigation lifecycle:**"
-            },
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "11.0A",
-              "line_start": 1200,
-              "line_end": 1200,
-              "quote": "- `failed` pairs with `stop_reason_code = investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.t"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2638,
+              "line_end": 2638,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.state_changed@1.0.0,"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "CONFLICT"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "producer": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+              "line_start": 2688,
+              "line_end": 2688,
+              "quote": "Producer binding: owner.debug.investigation.state_changed@1.0.0 is the exact emitting handler above."
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "ABSENT"
-          },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
-        },
-        "scope_identity": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "ABSENT"
-          },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
-        },
-        "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "ABSENT"
-          },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
-        },
-        "retention": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
-          },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
-        },
-        "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
-          "evidence": [
-            {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
-            }
-          ],
-          "prior": {
-            "source": "REVIEW-astra-2.md",
-            "status": "PARTIAL"
-          },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
-        },
-        "transitions": {
-          "status": "CONFLICT",
-          "representation": "exact_normative_owner",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
-          "evidence": [
-            {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "11.0A",
-              "line_start": 1174,
-              "line_end": 1174,
-              "quote": "**Closed investigation lifecycle:**"
+              "line_start": 2640,
+              "line_end": 2640,
+              "quote": "owns the lifecycle. CV-123/124 and section 3.5 remain minimum payload owners. Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/state_changed."
             },
             {
-              "path": "Plans/assistant-chat-design.md",
-              "unit": "11.0A",
-              "line_start": 1200,
-              "line_end": 1200,
-              "quote": "- `failed` pairs with `stop_reason_code = investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.t"
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/state_changed",
+              "line_start": 817,
+              "line_end": 817,
+              "quote": "\"$id\": \"pm.debug_investigation.state_changed.schema.v1\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2698,
+              "line_end": 2698,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.state_changed\","
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2702,
+              "line_end": 2702,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family adopts current Storage G02 Project retention, original terminal-transition anchor, protected obligations, unchanged TTL/count and no derived family value.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2733,
+              "line_end": 2733,
+              "quote": "= RP-OPERATIONAL-2555D@1.0.0, explicitly assigned to all nine G02 names in current Storage Case L-3."
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Case L-3 G02",
+              "line_start": 17594,
+              "line_end": 17594,
+              "quote": "- G02, debug investigations (9): `debug.investigation.started`, `debug.investigation.state_changed`, `debug.investigation.target_bound`, `debug.investigation.context_item_added`, `debug.investigation."
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2725,
+              "line_end": 2725,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2656,
+              "line_end": 2656,
+              "quote": "Exactly six stop_reason_code values pair with failed: investigation.verification_failed, investigation.no_repro_observed,"
+            }
+          ],
+          "prior": {
+            "source": "REVIEW-astra-3.md",
             "status": "CONFLICT"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+              "line_start": 2707,
+              "line_end": 2707,
+              "quote": "Consumer binding: reader.debug.investigation.state_changed@1.0.0 is the direct transient history reader"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+              "line_start": 2745,
+              "line_end": 2745,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-578",
-              "line_start": 2594,
-              "line_end": 2594,
-              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+              "line_start": 2751,
+              "line_end": 2751,
+              "quote": "history or sibling records. Positive/negative oracles are the state_changed cases in Plans/debug_investigation_event_fixtures.json"
+            },
+            {
+              "path": "Plans/debug_investigation_event_fixtures.json",
+              "unit": "state_changed",
+              "line_start": 4950,
+              "line_end": 4950,
+              "quote": "\"event_type\": \"debug.investigation.state_changed\","
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-2.md",
+            "source": "REVIEW-astra-3.md",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Existing held-row grade retained; round 3 selects no product answer."
+          "change": "upgraded",
+          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
         }
       },
       "pass_count": 0,
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "PRODUCT: CV-578 lifecycle failed-state owner decision",
-        "PRODUCT: retention assignment",
-        "Exact-family individual admission"
+        "Membership remains absent; separate admission is required.",
+        "NUMRULE and guard-table/shared-tool adoption plus Sol/Astra review remain part 2."
       ],
-      "static_checks_seen": [],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "scripts/pm-debug-investigation-standing-checks.py"
+      ],
       "native_execution": "NOT_RUN",
-      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+      "notes": "Sweep part 1 only; no overall READY claim, admission or native evidence. Historical original and source/proof inputs are explicit static projections."
     }
   ],
   "registry": {
@@ -3169,5 +3012,141 @@
     ],
     "native_execution": "NOT_RUN",
     "evidence_quotes_validated": 161
+  },
+  "sweep_part_1": {
+    "decisions": [
+      "DL-428",
+      "DL-429"
+    ],
+    "ready": false,
+    "reason": "Part 2 shared number rule, shared guard-isolation proof and final review not complete.",
+    "before_grades": {
+      "debug.investigation.context_item_added": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.context_item_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.exported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.imported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.instrumentation_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PARTIAL",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PARTIAL"
+      },
+      "debug.investigation.started": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.target_bound": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.verification_recorded": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "CONFLICT",
+        "producer": "ABSENT",
+        "closed_payload_schema": "ABSENT",
+        "scope_identity": "ABSENT",
+        "replay_idempotency": "ABSENT",
+        "retention": "PARTIAL",
+        "redaction_custody": "PARTIAL",
+        "transitions": "CONFLICT",
+        "consumers_checkpoints": "ABSENT",
+        "compatibility_withdrawal": "ABSENT",
+        "positive_negative_oracles": "ABSENT"
+      }
+    }
   }
 }
