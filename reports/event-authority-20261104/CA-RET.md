@@ -83,7 +83,7 @@ DL-401's card says a 7-year group found to belong to no Project returns to Jared
 
 The same question exists for three **90-day** groups, because the approved terms of the pending `RP-TELEMETRY-90D@1.0.0` count per Project; the independent clock question also remains open. The card raised it only for 7-year groups (its G05 alternative "90 days (counted in the same app-wide bucket)" shows the same need); the lead decides whether it goes on the card:
 - G08 hook records (3): same plugin evidence.
-- G26: **only `model.catalog_refreshed`** has an established no-project counting question here. It comes from `cmd.model.refresh` with optional `project_id` (`Plans/UI_Command_Catalog.md:8579`).
+- G26: **only `model.catalog_refreshed`** has an established no-project counting question here. It comes from `cmd.model.refresh` with optional `project_id` (`Plans/UI_Command_Catalog.md:8578`).
 - G12: **no-project preview history**, with owner scope mapping still needed, not all seven names. Browser previews in an application chat check their permitted folder instead of requiring a Project (`Plans/assistant-chat-design.md:183`). Storage lists three preview session events (`Plans/storage-plan.md:1309`); their application payload/adoption needs owner reconciliation. The four `dev.session.*` names require `project_id` (`Plans/UI_Command_Catalog.md:919`).
 
 Checked and not a question: G14 reads the Project's `.puppet-master/config.json` (`Plans/newtools.md:504`); `plan.decomposition_degraded` requires `project_id` and Orchestrator needs a Project (`Plans/Contracts_V0.md:2665-2673`, `Plans/assistant-chat-design.md:183`); `lsp.server.lifecycle_changed` requires `project_id` (`Plans/Contracts_V0.md:948`). `format.applied` names no scope (`Plans/Formatters_System.md:69-83`); not listed.
@@ -250,3 +250,8 @@ The first automated invocations of `verify-spec-lock` and `lint-contractrefs` ex
 ## Batch 1 integration citation update (2026-11-05; CA-RET review)
 
 The reviewed lane state above remains historical. The integration includes the answers branch: DL-401 is at `Plans/Decision_Log.md:4414` and DL-404 at `:4534`. SP-291 now carries DL-401 in both `depends_on` (`Plans/storage-plan.md:23934`) and `source_lineage`; the incomplete telemetry clock and every no-project counting question remain unchanged. B2's three row-assignment citations (`Plans/storage-plan.md:17427`, `:17429`, `:17431`) and policy-object citation (`Plans/storage_value_registry.json:558`) are still accurate. The current SP-349/SP-351 unit headings are `Plans/storage-plan.md:29094` and `:29294`. Dated check claims and original source hashes above refer to the named lane commits, not the integrated tree.
+
+
+## Batch 1 review F1: frozen model-refresh citation
+
+The historical model-refresh premise at line 86 retains `Plans/UI_Command_Catalog.md:8578`, read at `16acf7594a3fe8559af89491b895f440b314b99e`. Its separate current locator is `BATCH1_CURRENT:Plans/UI_Command_Catalog.md:8581` at `3304fae93ef11246717134e80a0ddcbc6221d8a6`; both excerpts are byte-identical. See `reports/event-authority-20261105/BATCH1-citation-locators.md` and its revision-keyed JSON for all 25 restored citation occurrences and all 273 rechecked mapping records (272 byte-identical live spans and one removed source-only row).
