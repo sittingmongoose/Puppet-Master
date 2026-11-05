@@ -577,8 +577,11 @@ class SchemaCatalog:
             node = self.nodes[key]
             if type(node) is bool:
                 return True
-            allowed = ATOMIC_SCHEMA | {"required", "dependentRequired", "dependencies", "$ref"} | ANNOTATIONS | {"$defs", "definitions"}
-            if set(node) - allowed or any(isinstance(v, (dict, bool)) for v in node.get("dependencies", {}).values()):
+            # Only total predicates can be inverted as one predicate. Negating
+            # a typed assertion (minimum/length/required/etc.) also requires its
+            # applicability domain; dropping it would cut BOTH requirements.
+            allowed = {"type", "const", "enum", "$ref"} | ANNOTATIONS | {"$defs", "definitions"}
+            if set(node) - allowed:
                 return False
             return assertion_count(key) == 1 and all(simple_negative(child) for child, via in self.edges[key] if via == "$ref")
         def unsafe_negative(key):

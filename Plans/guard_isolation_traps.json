@@ -1387,6 +1387,96 @@
         -1
       ],
       "label_keyword": "minimum"
+    },
+    {
+      "id": "round3-negated-domain-number",
+      "kind": "round3_negated_domain",
+      "expected": "negated typed assertion also requires its applicability domain; no aggregate cut is permitted",
+      "schema": {
+        "not": {
+          "minimum": 0
+        }
+      },
+      "control": -1,
+      "heldout": [
+        0,
+        "text"
+      ],
+      "label_keyword": "minimum",
+      "label_path": [
+        "not"
+      ],
+      "label_count": 1
+    },
+    {
+      "id": "round3-negated-domain-string",
+      "kind": "round3_negated_domain",
+      "expected": "negated typed assertion also requires its applicability domain; no aggregate cut is permitted",
+      "schema": {
+        "not": {
+          "minLength": 1
+        }
+      },
+      "control": "",
+      "heldout": [
+        "a",
+        17
+      ],
+      "label_keyword": "minLength",
+      "label_path": [
+        "not"
+      ],
+      "label_count": 1
+    },
+    {
+      "id": "round3-negated-domain-object",
+      "kind": "round3_negated_domain",
+      "expected": "negated typed assertion also requires its applicability domain; no aggregate cut is permitted",
+      "schema": {
+        "not": {
+          "required": [
+            "x"
+          ]
+        }
+      },
+      "control": {},
+      "heldout": [
+        {
+          "x": 1
+        },
+        17
+      ],
+      "label_keyword": "required",
+      "label_path": [
+        "not"
+      ],
+      "label_count": 1
+    },
+    {
+      "id": "round3-negated-domain-array",
+      "kind": "round3_negated_domain",
+      "expected": "negated typed assertion also requires its applicability domain; no aggregate cut is permitted",
+      "schema": {
+        "not": {
+          "uniqueItems": true
+        }
+      },
+      "control": [
+        1,
+        1
+      ],
+      "heldout": [
+        [
+          1,
+          2
+        ],
+        "text"
+      ],
+      "label_keyword": "uniqueItems",
+      "label_path": [
+        "not"
+      ],
+      "label_count": 1
     }
   ]
 }
