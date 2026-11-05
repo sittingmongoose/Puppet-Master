@@ -1,3 +1,100 @@
+# DT — Sweep part 1: DL-430 and DL-436 applied; shared tools pending
+
+**Source head:** `8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6`. **Branch:** `plans/ea-w2-tools-gates-approvals-20261104`. Rebased all 33 commits from `4b82bc8d3b105b78a09e4c311722ca27323cec39` onto pinned `origin/main` `e42ce235b4711325ced818c777f070c3ee0d7952`. Only generated shards/index conflicted; upstream generated files were retained during replay, then regenerated from final sources. No canonical source conflict was merged by hand.
+
+**Part 1 is complete. READY remains false.** Seventeen DT contracts remain prepared without admission; every oracle cell is PARTIAL until the number and shared guard tools pass and are adopted in part 2. No admission, native execution, runtime authentication, durability, or governance clearance is claimed. Original-owner, payload-pack and SP-278 authentication remain assumed adapters. This section and DT-self-grade.json supersede every status below.
+
+## Sweep part 1: findings and responses
+
+| Item | Response, commit, location and verification |
+|---|---|
+| **Deck 2 3.d / DL-430 / F1** | **Fixed**, `adc6449ead1e114f97007d99265805f8607434b8`. A FileSafe block saves only its dedicated FileSafe refusal entry, with zero tool.denied appends. Tools and FileSafe agree; the tool view keeps the reason and ordered allowed recovery actions, separate from execution failure and without automatic retry. Updated CV-610, SP-590, ATS-295, the contract map, emission predicate and fixtures. Locations: `Plans/Tools.md:1496`; `Plans/FileSafe.md:2845`; `Plans/Contracts_V0.md:24870`; `Plans/storage-plan.md:30012`; `Plans/Automated_Testing_System.md:7442`; `scripts/pm-dt-event-contracts.py:381`. Verify: complete checker and emission-regression.py. Both faulty emitter variants fail the entire checker on FileSafe cases only. |
+| **Deck 2 4.f / DL-436** | **Fixed**, `8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6`. Removed the Doctor blocked row and its DT self-grade row; wrote no DT Doctor contract, schema or reset policy. `Plans/dt_event_contracts.json:1136` pins DS15 `8791f549ae15b84d3d3583cdd7c21c6f65788127` on `origin/plans/ea-w2-section15-newtools-20261104`, `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326`, `Plans/ds15_deck2_contracts.json` and ATS-329. Verify: ds15-contract-reference.json; DT has 17 owned rows and an empty blocked array. |
+| **F16** | **Part 2**, exact location `scripts/pm-dt-event-contracts.py:170` through the RFC8785 call at `scripts/pm-dt-event-contracts.py:176`; approval blocked_sequence enters this same complete caller-semantic projection. The reviewer probe still reproduces **51** accepted exact-integer digest exceptions at 2^53, 2^53+1 and u64 max across 17 families, with 17 safe-integer controls and 17 equal-float successes. This is diagnostic evidence, not PASS. No number helper, cap, serializer or history-recipe selector was added; all number/source/identity/digest functions and the DT schema are unchanged from 4b82bc8d3b. Verify: large-retry.py, large-retry.json and scope-and-number-preservation.json. |
+| **S1 / S2** | **Retained fixed**, original cap-free fix `eee8f2ce43` and the subsequent fix-6 controls, now rebased. Current locations: `scripts/pm-dt-event-contracts.py:437`, `scripts/pm-dt-event-contracts.py:530`, `scripts/pm-dt-event-contracts.py:570`, `scripts/pm-dt-event-contracts.py:613`. Reviewer type-sweep.py runs **5236** flag cases: zero wrong-type acceptances, no false inline/ref-body acceptance, and no malformed envelope writer acceptance. |
+| **Fixture isolation / stale copies** | **Fixed**, `adc6449ead1e114f97007d99265805f8607434b8` and `8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6`. The FileSafe emission vector now contains exactly denial_origin, policy_decision and dispatch_state; compared with its valid policy-emission base, only denial_origin differs. No unconsumed policy reason/action copies remain. Its expected result is no_emission; the full source-join vector is renamed filesafe_block_never_emits_tool_denied. Locations: `Plans/dt_event_contract_fixtures.json:103830` and `Plans/dt_event_contract_fixtures.json:103131`. Verify: emission-regression.py proves the boundary vector changes outcome under the precise faulty FileSafe behavior and every other emission vector keeps its result. |
+| **Review's missing-stage fixture note** | **Already repaired at the supplied head; retained.** The lane's actual checker builds a missing-stage negative from a valid prepared source, not a completed source with a stale completion commitment: `scripts/pm-dt-event-contracts.py:1398`. The local schema corpus follows the same rule at scripts/pm-dt-guard-isolation.py:497. The review distinguishes its old generic helper clones from the published corpus. Full proof-inventory migration is part 2; no local proof machinery was rebuilt. |
+| **F2–F15 from earlier reviews** | **Retained fixed** in the supplied fix-6 implementation, with no guard weakened. Complete checker remains 17 families / 27435 assertions, including runtime mapping, dispatch-score provenance, absent Usage identity, web/batch, retention, trailing LF, caller-only retries, eager refs, retained replay-only originals, independent stage bounds, frozen recovery custody and existing identity round trips. F14's stale derived-content issue is reverified by shard check and top-level index validation, both pass after the rebase/regeneration. |
+
+The landed decisions are cited directly; no Decision Log entry was authored. Jared's recorded words in each entry are “i approve all of it”; the following quotations are the approved card option text, as labelled by the Decision Log:
+
+**DL-430**, `Plans/Decision_Log.md:5099`:
+
+> **A (recommended):** Save only the FileSafe refusal entry when FileSafe blocks an action. Reserve general tool-denial history for policy or user refusals. Show FileSafe’s reason and allowed recovery actions in the tool view. Correct both Tools and FileSafe to say this. A block stays distinct from execution failure and never retries automatically.
+
+**DL-436**, `Plans/Decision_Log.md:5257`:
+
+> **A (recommended):** Save the notice the first time Doctor’s readiness check finds the setting for that optional custom browser tool absent for that Project. An earlier run with the setting present leaves the chance unused. Once issued, the notice never resets for configuration edits or removing/re-adding the setting. A clone or import gets a fresh chance only if it creates a separate new Project with its own saved ID. Restoring the same Project preserves whether the notice was already shown. If an older backup cannot prove that, do not guess and show a duplicate. Later checks still save their ordinary check result.
+
+DS15's prepared SMPFS-326 implements the first readiness check finding the setting absent, preserves the chance after an earlier configured check, never resets on configuration edits or removal/re-addition, uses a fresh chance only for a genuinely separate saved Project ID, preserves same-Project restore state, and suppresses a duplicate when older backup evidence cannot prove it. This is a cited DS15 contract, not a DT copy or admission. DS15's own current grades remain its responsibility.
+
+## Family grades before and after
+
+For the **17 DT-owned families**, **181 PASS / 4 PARTIAL / 17 ABSENT / 2 CONFLICT → 166 PASS / 21 PARTIAL / 17 ABSENT / 0 CONFLICT**, 204 cells. The two FileSafe conflict cells improve to PASS. All 17 oracle cells change PASS → PARTIAL because F16 and shared proof remain outstanding. Membership stays ABSENT. The former 18th Doctor row (1 PASS / 3 PARTIAL / 8 ABSENT) is removed and delegated to DS15, not counted as a DT grade improvement. **408 exact evidence quotes** and every declared contract hash were refreshed against the current source head.
+
+| Family | Before PASS/12 | After PASS/12 |
+|---|---:|---:|
+| `approval.requested` | 11 | 10 |
+| `approval.granted` | 11 | 10 |
+| `approval.denied` | 11 | 10 |
+| `approval.timeout` | 11 | 10 |
+| `config.migrated` | 11 | 10 |
+| `gate.evaluation_started` | 11 | 10 |
+| `gate.failed` | 11 | 10 |
+| `gate.passed` | 11 | 10 |
+| `requirements.clarification_requested` | 10 | 9 |
+| `run.background_enqueued` | 11 | 10 |
+| `tool.denied` | 9 | 10 |
+| `tool.execution_completed` | 11 | 10 |
+| `tool.execution_started` | 11 | 10 |
+| `tool.invoked` | 11 | 10 |
+| `usage.event` | 10 | 9 |
+| `worktree.created` | 10 | 9 |
+| `worktree.deleted` | 10 | 9 |
+
+The four inherited retention PARTIAL cells remain: requirements.clarification_requested, usage.event, worktree.created and worktree.deleted. No extra retention answer or feature decision is inferred in this narrowly assigned sweep. All families additionally have the open oracle cell; none is READY.
+
+## Verification
+
+| Check | Exit / result |
+|---|---|
+| Complete DT checker | 0; **17 / 27435**, pass. |
+| FileSafe emitter fault controls | Probe 0; each faulty full checker **1**, only FileSafe cases fail. |
+| Reviewer type probes | 0; **5236** flag cases, zero false acceptances; envelope/body probes refuse wrong types. |
+| F16 large-counter diagnostic | 0 as diagnostic; **51 known digest failures remain**, not a numeric PASS. |
+| Shard generation / index generation | 0 / 0. Fifteen ignored currentness files hash-match. Only the six edited document groups changed: automated_testing_system, contracts_v0, filesafe, storage-plan, storage_value_registry and tools. |
+| Shard check / index validate | 0 / 0; both top-level pass. Index readiness remains blocked_runtime_certification_incomplete. |
+| Storage recovery self-test | 0; **22/22**. |
+| Storage profile | **1**, 41 errors; pinned main also **1**, same 41, **zero added/removed**. Main checker and every input it reads were checked/extracted at the pinned main revision. |
+| Scope / recipe preservation | 0; only denial_emission differs among model functions; DT schema and number recipes unchanged; no protected path changed. |
+| Full guard tables / shared tool | **Not rerun or refactored in part 1**. Existing tables below are historical. Part 2 must establish shared predicate proof and undergo Sol/Astra review. |
+
+Compact command, status, source pin, grade and evidence records: reports/event-authority-20261104/DT-sweep-p1.json. No aggregate governance gates, seal or native pass is claimed. Edited canon leaves governance staleness for the separately assigned integration/reseal phase.
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/checker-final.json` | `a74b3086edae60d5e5ed120b300bb7a32b1ffca69c7d9d84c756237e5b18084f` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.json` | `ce4f437deece3c6d1487b521e3fc619335b2e67730590d23269b6848d3f2daef` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep.json` | `ab59290dee05d9a6dc9c9280b0ccbb4d0a4ea407be31b009e140742c5ca50cf6` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry.json` | `9895d0ec016bc8a3b1abf78ccad9ad4ec2ee1000863db0cbcde0ed46a7722330` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-generate.json` | `26c095b4864c76a28018bcd03b437fcc746f08c9e59dcd1128e26285351e8f53` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-generate.json` | `30ab2faed7bf76eafa974ef8348d6860e09b291c4d67d4b43a3f18ddc2d8a3f3` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-check.json` | `bb0bee76498588bda400411e345702fc74d0a79997d931d7b950958cb9bc0004` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-validate.json` | `99f4a8860a2dcfe5c5bad6633023d5f0282c31134300dc02b51e3ffff453378f` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-recovery.json` | `e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a` |
+| `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile-comparison.json` | `87290dfdd9ab29715d4d58f01947fdd0ccebe67e0835703555070b72ab638059` |
+
+## Part 2 items
+
+1. **F16 / shared NUMRULE:** adopt CV-1100, SP-1100, SP-1101 and the approved shared helper at producer_semantic_bytes (scripts/pm-dt-event-contracts.py:170–176), including admitted u64 producer_sequence_id and approval blocked_sequence. Cover 2^53 boundaries, adjacent exact integers, u64 max, equal float forms, physical number bytes and authenticated write-time recipe selection for retained history. Preserve exact source counters and Storage u64 metadata. Do not silently cast large integers, normalize physical floats, erase signed zero or cap u64 at 2^53.
+2. **Shared guard tables/tool:** convert the existing checker guards to the approved named-predicate tables after the tool passes. Replace local AST/schema proof with the common tool, including split compound predicates, exact same-predicate duplicate sites and the full fixture corpus. No new local proof machinery was written in this round. Current source locations: scripts/pm-dt-guard-isolation.py:17, :482 and :657; scripts/pm-dt-standing-checks.py:204. Regrade all seventeen oracle cells and obtain the prescribed Sol/Astra review after both tools are adopted. **No READY before then.**
+
+**IDs:** no new IDs. Existing CV-600..616, SP-580..596 and ATS-290..298 retained. DL-430/DL-436 are landed decisions; SMPFS-326/ATS-329 stay DS15-owned. No pm-mail, subagent, admission, event-registry append, Decision Log change, governance artifact edit, landing lock or main push. The worktree is removed after publication; final branch/remote delivery pins are in sweep-p1/delivery.json.
+
+---
+
+Earlier-round material below is **superseded source lineage**, including its prior grades and stopped FileSafe/Doctor wording. It is not the current sweep status.
+
 # DT-FIX6 — Exact authority types; F16 handed to NUMRULE
 
 ## Review round 6: findings and responses

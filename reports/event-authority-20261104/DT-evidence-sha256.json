@@ -168,5 +168,38 @@
     "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/DT-fix6-progress.json": "11b0947c0c8cceddfab2d4581167c9a1739cd8f63bfef364a98eca5b226bf1e8",
     "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/DT-fix6-publication.json": "d6210a5e882dd24ccc43782cf8e17cd5ae382f07af14efb4b1d1fc383d31de4a"
   },
-  "delivery_paths": "Report artifacts use persistent shared delivery paths; raw evidence stays under fix6/final."
+  "delivery_paths": "Report artifacts use persistent shared delivery paths; raw evidence stays under fix6/final.",
+  "current_sweep": {
+    "phase": "sweep_part1",
+    "source_head": "8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6",
+    "record": "reports/event-authority-20261104/DT-sweep-p1.json",
+    "record_sha256": "aa89ac228a6d1c5aa281d1ca30e5e520e48904adba09e6354e2e97672008116a",
+    "ready": false,
+    "guard_proof_status": "PART2_PENDING",
+    "prior_entries": "fix-6 historical evidence at their recorded source revisions; superseded for current grades/status",
+    "evidence": {
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/checker-final.json": "a74b3086edae60d5e5ed120b300bb7a32b1ffca69c7d9d84c756237e5b18084f",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/ds15-contract-reference.json": "98a18db62e1d1a798b3fdb3eb8040c0a91d6c3cb8dbd6992cbb4aec0239825a8",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.json": "ce4f437deece3c6d1487b521e3fc619335b2e67730590d23269b6848d3f2daef",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.py": "4e9ebf46b1b20fd37e56994ee70d44e20b847e5bcd2b2e07b44e631499458355",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.stdout.json": "a241be82dea75ba9ea5797686742324d2fa057cc80b1eccc2daecb44b9bf2a35",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/grade-comparison.json": "0c6de67943db77072bc08fe01dedca53aca9dc30bf42d05ccae68d034cf67701",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-generate.json": "30ab2faed7bf76eafa974ef8348d6860e09b291c4d67d4b43a3f18ddc2d8a3f3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-validate.json": "99f4a8860a2dcfe5c5bad6633023d5f0282c31134300dc02b51e3ffff453378f",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry-summary.json": "95feeb7a53aa428fa06c7f7ff50fad246dd93b903a94a5ba9ad51d3a67e73e4a",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry.json": "9895d0ec016bc8a3b1abf78ccad9ad4ec2ee1000863db0cbcde0ed46a7722330",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry.py": "cd1cf40deaf6e3e73485ebbca651705b4c5455f85aa57eb7c789136e8593e4df",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/scope-and-number-preservation.json": "27cfa17a2017736315c47882df137ed6696ab3786cc56437db26ed1cc7ff4ff8",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-check.json": "bb0bee76498588bda400411e345702fc74d0a79997d931d7b950958cb9bc0004",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-generate.json": "26c095b4864c76a28018bcd03b437fcc746f08c9e59dcd1128e26285351e8f53",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile-comparison.json": "87290dfdd9ab29715d4d58f01947fdd0ccebe67e0835703555070b72ab638059",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile-main.json": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile.json": "2ae3547ccf844ed510908987ec26a179e199a54365b8d75a0301b6cc392723c3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-recovery.json": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/targeted-checks.json": "03aaf76336d96a2cc7a42adfe9876e75107c2f632aeee0f7793d6a03cd449b91",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep-summary.json": "d4bcf1cb3d614e5c45a1b272d53b67bd986baeb0fb3a9cad26e3e6260841c6fd",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep.json": "ab59290dee05d9a6dc9c9280b0ccbb4d0a4ea407be31b009e140742c5ca50cf6",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep.py": "328eb00681155a597cbb8eb8878eb737f998700eb88742d0d78eb141d52de386"
+    }
+  }
 }
