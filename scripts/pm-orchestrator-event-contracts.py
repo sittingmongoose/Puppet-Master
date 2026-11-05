@@ -119,6 +119,14 @@ def board_storage_checks(schema, fixtures, storage, owner):
     spec.loader.exec_module(coordination)
     expected = coordination.expected_svr_rows()['coordination_event_records']
     assert row == expected, 'actual_coordination_storage_member_drift'
+    # Negative: the same row with one sentence back on the retired branch citation differs from the
+    # expected row in that field alone, so the comparison above refuses a stale copy on either side.
+    landed = 'is landed in this registry (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`)'
+    retired = 'remains on origin/plans/ea-storage-retention-20261104'
+    assert row['retention_compaction'].count(landed) == 1 and retired not in row['retention_compaction']
+    drifted = dict(row, retention_compaction=row['retention_compaction'].replace(landed, retired))
+    assert drifted != expected and [k for k in row if drifted[k] != row[k]] == ['retention_compaction']
+    checks += 1
     original = json.loads((ROOT / 'Plans/coordination_event_payloads.schema.json').read_text())
     for name in ['lineage_envelope', 'non_secret_ref'] + [coordination.DEF_BY_TYPE[t] for t in coordination.SEVEN] + ['debug_mirror_exported']:
         definition = copy.deepcopy(original['$defs'][name])

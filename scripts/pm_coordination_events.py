@@ -896,7 +896,8 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
             "and keep their own policies. Each SP-720..722 board member joins its actual same-scope "
             "Server/thread/crew/run to the first durable terminal canonical Run record; an unresolved "
             "completion is ineligible for expiry. Board archive is visibility only. The DL-085 assignment "
-            "remains on origin/plans/ea-storage-retention-20261104; its Q1/Q3 are integration follow-ups."
+            "is landed in this registry (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); "
+            "its Q1/Q3 are integration follow-ups."
         ),
         "redaction_no_secret_rule": (
             "Original agent members: only IDs, refs, hashes, enums, integers, timestamps and CV-353's bounded status and operation "
