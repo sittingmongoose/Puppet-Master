@@ -28549,9 +28549,11 @@ canonical_text: >-
   on reports exactly what it reported before. The rule also covers closure rows over source rows that are
   non-actionable only by the compatibility inference: those rows predate the explicit repair_required field, so
   whether they need repair is inferred, and a historical closure that over-covers them leaves nothing unrepaired. A
-  row that states repair_required or finding_level, or a closure row added later, keeps that error. The same answer,
-  relayed by the coordinator, extends the supplemental pass to every June audit with an uncovered actionable row; a
-  row closes only if its repair is real against current canon.
+  row that states repair_required or finding_level, or a closure row added later, keeps that error. Jared's answer
+  names the supplemental pass for audit-20260619-002 only. The coordinator (pm7-build, 2026-11-05, pm-mail
+  1105030457-ade2) applied the same approved option to the other June audits with uncovered actionable rows; that
+  extension is a coordinator resolution, not Jared's words, and under it a row closes only if its repair is real
+  against current canon.
 gui_related: false
 gui_classification_reason: Records a governance decision about historical audit validation; no GUI contract changes.
 split_recommended: false

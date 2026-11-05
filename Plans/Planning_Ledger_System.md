@@ -1630,8 +1630,9 @@ canonical_text: The per-audit closure check of scripts/pm-audit-closure.py appli
   closed LEGACY_AUDIT_DIRS list, and to no other directory, and only while each is still its historical self - the
   real directory Plans/.audits/<name> with no symlink in its path, whose files match the frozen inventory
   Plans/.audits/_legacy_format_inventory.json (pinned by SHA-256 in the validator; only repair_closure_matrix.jsonl
-  may grow, by appended lines, and only its frozen rows count as historical). Appended matrix rows, new content under
-  a listed name and edited historical files get the full rules. For those directories only, it reports these format and
+  may grow, by appended lines, and only its frozen rows count as historical). Appended matrix rows, files added after
+  the freeze (a new report, source artifact or matrix), new content under a listed name and edited historical files
+  get the full rules. For those directories only, it reports these format and
   schema-evolution errors as one warning per directory instead of as errors - missing or empty audit_id, ledger_id,
   baseline_ref, subject_ref or observation_ref; an absent audit_scope_manifest.jsonl or repair_impact_matrix.jsonl,
   and the scope manifest's family coverage while that file is absent; audit-finding and closure-matrix row fields
