@@ -25,7 +25,11 @@ export default async function (t) {
       const e=document.querySelector('#chatPanel'), r=e?.getBoundingClientRect();
       const key=r && [r.x,r.y,r.width,r.height].join(',');
       const prior=window.__podChatGeometry;
-      const ready=PMW.chatCol.widthPx()===560 && !document.body.hasAttribute('data-ph-closing');
+      const mode=document.body.dataset.phDrawer, state=PM56_DEMO.getState().historyMode;
+      // earlyPin can precede History's first normalising render. Neither owner
+      // alone is ready while they disagree about whether the drawer is open.
+      const coherent=(mode==='closed' && state==='closed') || (['open','pinned'].includes(mode) && state==='floating');
+      const ready=coherent && PMW.chatCol.widthPx()===560 && !document.body.hasAttribute('data-ph-closing');
       window.__podChatGeometry={key,count:ready && prior?.key===key ? prior.count+1 : 0};
       return ready && r?.width>0 && window.__podChatGeometry.count>=4;
     }, null, {polling:'raf',timeout:10000});
