@@ -45,6 +45,33 @@ def node_key(row):
     return row["path"], row["origin"], row["pointer"]
 
 
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON key: " + key)
+        result[key] = value
+    return result
+
+
+def _markdown_fences(text):
+    """CommonMark backtick/tilde fences, including an unclosed final fence."""
+    opening, start, body = None, None, []
+    for line_no, line in enumerate(text.splitlines(keepends=True), 1):
+        if opening is None:
+            match = re.match(r"^ {0,3}(`{3,}|~{3,})([^\n]*)", line)
+            if match and (match.group(1)[0] == "~" or "`" not in match.group(2)):
+                opening, start, body = match.group(1), line_no, []
+        elif re.fullmatch(r" {0,3}" + re.escape(opening[0]) +
+                          "{" + str(len(opening)) + r",}[ \t]*\r?\n?", line):
+            yield start, "".join(body)
+            opening = None
+        else:
+            body.append(line)
+    if opening is not None:
+        yield start, "".join(body)
+
+
 def scan(root=ROOT):
     rows, errors = [], []
 
@@ -70,20 +97,32 @@ def scan(root=ROOT):
         path = file.relative_to(root).as_posix()
         try:
             data = file.read_bytes()
-            if not any(field.encode() in data for field in FIELDS) or b"properties" not in data:
+            # Literal keys or any escaped/UTF-16 spelling must be decoded.
+            # Never require a literal "properties" or literal field spelling:
+            # valid JSON can escape either key and still declare the same node.
+            literal_candidate = (b'"properties"' in data and
+                                 any(field.encode() in data for field in FIELDS))
+            if (not file.name.endswith(".schema.json") and not literal_candidate and
+                    b"\\u" not in data and b"\x00" not in data):
                 continue
             if file.suffix == ".json":
-                inspect(json.loads(data), path, "json")
+                inspect(json.loads(data, object_pairs_hook=_unique_object), path, "json")
             elif file.suffix == ".jsonl":
                 for line_no, line in enumerate(data.splitlines(), 1):
-                    if b"properties" in line and any(field.encode() in line for field in FIELDS):
-                        inspect(json.loads(line), path, "jsonl:" + str(line_no))
+                    if line.strip() and ((b'"properties"' in line and
+                                          any(field.encode() in line for field in FIELDS)) or
+                                         b"\\u" in line or b"\x00" in line):
+                        inspect(json.loads(line, object_pairs_hook=_unique_object), path, "jsonl:" + str(line_no))
             else:
                 text = data.decode("utf-8")
-                for match in re.finditer(r"^```([^\n]*)\n(.*?)^```", text, re.M | re.S):
-                    body = match.group(2)
-                    if "properties" in body and any(field in body for field in FIELDS):
-                        inspect(json.loads(body), path, "fence:" + str(text[:match.start()].count("\n") + 1))
+                for line_no, body in _markdown_fences(text):
+                    try:
+                        value = json.loads(body, object_pairs_hook=_unique_object)
+                    except ValueError:
+                        if "properties" in body and any(field in body for field in FIELDS):
+                            raise
+                        continue
+                    inspect(value, path, "fence:" + str(line_no))
         except (ValueError, OSError, RecursionError) as error:
             errors.append({"path": path, "error": str(error)})
     return rows, errors
