@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7353
+Source lines: L6713-L7359
 
-Source SHA256: `4db24ef59eb3dc78b5eae868648ddc0bdf299178ed54e00d0671bd7658d96c2b`
+Source SHA256: `de36c6f4e01cd38d6ec40cf5fb4d73a86198d6a0500e5a0989842197250c910e`
 
 ---
 
@@ -116,13 +116,13 @@ unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: |-
-  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use the final F-d/A/D spelling map; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
+  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use their final canonical IDs in Plans/settings_inventory.json; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
 
   Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5 keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive offer. Retired Goal worker/verifier rows stay non-offered pending their explicit owner retirement. The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census defect, not repaired by inventing another category or silently changing the denominator. Human origin edits, agent narrowest/mode handling and protected Always/source acceptance remain distinct.
 
   Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
 
-  Model acceptance uses A's lead-accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
+  Model acceptance uses Plans/Models_System.md's accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
 gui_related: false
 gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
   not visual implementation.
@@ -136,10 +136,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -203,10 +203,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -275,10 +276,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -342,10 +344,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -410,10 +413,11 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -470,7 +474,7 @@ canonical_text: |-
 
   Scenario evidence covers all changed Settings rows/panel/managers/copy; Split Projects/New Project and owner recovery; No project/draft/folder/Computer/offline; explicit read coverage/incoming requests; both conversions/report/Undo; app Goal/Crew/Plan/Deep Plan/Build At/Schedule Manager/pause; grant review/live targets/Stop/Undo; and allowed computer-use strip/Stop. Check all ten look variants, effective Reduced Motion, narrow/long-content reflow, accessible labels/reasons, keyboard/pointer equivalence, stale/late returns and stable focus. Keep the one Assistant node, board/rail/menu/hover/overlay/sound/loader owners, all PM7 Glass/FO-22/service-refusal rules and native source/composer capture-return fences. Cached/partial/offline/unknown data never presents healthy/zero/none or completed effects.
 
-  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Phase 2 runs focused checks after interface/companion freeze, serial derived-file generation and authorized full-tree aggregates; no raw capture, baseline excuse or governance reseal is introduced here.
+  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Run the adopted static contract, Settings, wiring and touch checks against the current owner and companion editions; these checks provide no new runtime proof, and no raw capture, baseline excuse or governance reseal is introduced here.
 gui_related: true
 gui_classification_reason: This unit governs visible controls, context, feedback, accessibility or visual acceptance.
 depends_on:
@@ -488,10 +492,14 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
-  no new runtime proof follows here.
+- Run the adopted static contract checks against the current owner and companion editions;
+  no new runtime proof follows from these checks.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
+- scripts/pm-plans-verify.py
+- scripts/pm7-build-check.py
+- scripts/pm7-canon-check.py
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -558,7 +566,7 @@ canonical_text: |-
 
   These are a static contract model and adversarial fixtures. They do not execute MemoryMaintenance, authenticate real SP-286 receipts, validate physical SeglogFrameV2 bytes or prove redb/filesystem atomicity/flush, native crash recovery, backup/restore or read-time deletion/permission races. Those native obligations remain NOT_RUN. Static success confers no Event Authority, retention assignment or deletion policy. The four monthly-summary/prune families have conditional payload and operation definitions under ATS-316; activation still requires their own admission, operation/result retention resolution and an authenticated binding of the DL-446/DL-447 cutoffs. Card 6 supplies those cutoff values; the independent activation gates remain.
 
-  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Round-11 preservation checks compare exact primitive types before values recursively, including selected and unselected originals, nested evidence/version/metadata values and full expected results. Dedup input flags must be exact Booleans; output flags must match exact Boolean originals or the explicitly permitted Boolean archived state. Boolean/integer aliases, typed floats, strings, null, arrays and objects have isolated one-field negatives. Full-checker wrong typed expected results must fail. Compare owner-admitted creation instants and elapsed idle durations with every fractional digit preserved, without truncation or a precision cap; retained timestamp spellings and commitments stay unchanged. Early, equal and late 90/180-day boundaries cover edit, access, creation fallback and capture at 9, 18 and 40 fractional digits; creation-order and stable-note-ID tie cases cover the same precisions. The dedup no-project input has coherent Project copies and a separate foreign-Project join negative. Minimum group size, unique IDs and original existence each have their own negative and per-predicate removal witness with peers enabled. The general local proof inventory and compound cuts remain S4 for shared-tool adoption; this round does not claim a complete check-11 proof from that local tool. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe and guard-proof machinery issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
+  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Round-11 preservation checks compare exact primitive types before values recursively, including selected and unselected originals, nested evidence/version/metadata values and full expected results. Dedup input flags must be exact Booleans; output flags must match exact Boolean originals or the explicitly permitted Boolean archived state. Boolean/integer aliases, typed floats, strings, null, arrays and objects have isolated one-field negatives. Full-checker wrong typed expected results must fail. Compare owner-admitted creation instants and elapsed idle durations with every fractional digit preserved, without truncation or a precision cap; retained timestamp spellings and commitments stay unchanged. Early, equal and late 90/180-day boundaries cover edit, access, creation fallback and capture at 9, 18 and 40 fractional digits; creation-order and stable-note-ID tie cases cover the same precisions. The dedup no-project input has coherent Project copies and a separate foreign-Project join negative. Minimum group size, unique IDs and original existence each have their own negative and per-predicate removal witness with peers enabled. The general local proof inventory and compound cuts remain S4 for shared-tool adoption; this round does not claim a complete check-11 proof from that local tool. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe and guard-proof machinery issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -615,7 +623,7 @@ canonical_text: For memory.monthly_summary.started, memory.monthly_summary.compl
   unresolved refs including dormant branches fail. Bounds enforce 16 KiB and trailing LF rejection. Physical transactions,
   receipts, flushes and native GUI execution are NOT_RUN. No admission or runtime activation is authorized by these tests.
 
-  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Round-11 preservation checks compare exact primitive types before values recursively, including selected and unselected originals, nested evidence/version/metadata values and full expected results. Dedup input flags must be exact Booleans; output flags must match exact Boolean originals or the explicitly permitted Boolean archived state. Boolean/integer aliases, typed floats, strings, null, arrays and objects have isolated one-field negatives. Full-checker wrong typed expected results must fail. Compare owner-admitted creation instants and elapsed idle durations with every fractional digit preserved, without truncation or a precision cap; retained timestamp spellings and commitments stay unchanged. Early, equal and late 90/180-day boundaries cover edit, access, creation fallback and capture at 9, 18 and 40 fractional digits; creation-order and stable-note-ID tie cases cover the same precisions. The dedup no-project input has coherent Project copies and a separate foreign-Project join negative. Minimum group size, unique IDs and original existence each have their own negative and per-predicate removal witness with peers enabled. The general local proof inventory and compound cuts remain S4 for shared-tool adoption; this round does not claim a complete check-11 proof from that local tool. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe and guard-proof machinery issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
+  Card 6 policy oracles execute scripts/pm_memory_policy.py through each exact --family checker using Plans/memory_card6_policy_fixtures.json. DL-444/DL-445 positives cover oldest creation time, same-time stable-ID tie, preserved evidence/merge history, archive-only copies and excluded pins. Negative post-states carry one semantic defect, with survivor-dependent archive/link/lineage copies changed coherently for a wrong-survivor case. DL-446/DL-447 positives and refusals cover 89/90 and 179/180 idle days, exact duration boundaries, scores 0.0999/0.10 and 0.0499/0.05, independent edit/access fallback, both conditions together, each Project separately and refusal of no-project execution. Each negative must produce only its named failed predicate; the full checker must exit nonzero on a wrong oracle. Round-11 preservation checks compare exact primitive types before values recursively, including selected and unselected originals, nested evidence/version/metadata values and full expected results. Dedup input flags must be exact Booleans; output flags must match exact Boolean originals or the explicitly permitted Boolean archived state. Boolean/integer aliases, typed floats, strings, null, arrays and objects have isolated one-field negatives. Full-checker wrong typed expected results must fail. Compare owner-admitted creation instants and elapsed idle durations with every fractional digit preserved, without truncation or a precision cap; retained timestamp spellings and commitments stay unchanged. Early, equal and late 90/180-day boundaries cover edit, access, creation fallback and capture at 9, 18 and 40 fractional digits; creation-order and stable-note-ID tie cases cover the same precisions. The dedup no-project input has coherent Project copies and a separate foreign-Project join negative. Minimum group size, unique IDs and original existence each have their own negative and per-predicate removal witness with peers enabled. The general local proof inventory and compound cuts remain S4 for shared-tool adoption; this round does not claim a complete check-11 proof from that local tool. Snapshot usefulness scores remain owner-declared values outside integer identity recipes. No count cutoff, lane-local serializer or native proof is introduced. Existing number/format recipe and guard-proof machinery issues are shared-sweep items, not repaired here. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
 gui_related: true
 gui_classification_reason: Includes unavailable Memory-panel button contract.
 depends_on:

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L30262
+Source lines: L28166-L30371
 
-Source SHA256: `df5a309fdd04a5e02ad1ee17f29bb1b2baf67ad10772d1d69fd6f9da97c2872e`
+Source SHA256: `08edbb754e7f7eea1d2cfbf9e883e88e5e1cafe4db6959489e45d56460db1d61`
 
 ---
 
@@ -909,8 +909,8 @@ acceptance_criteria:
 - Sparse row/head/snapshot/mirror/index storage has one value authority and same-key revision maps.
 - Join Undo/backup/retention is explicit and contains no secrets or offline writes.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -962,7 +962,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Application work uses the same seglog, two redb files, payload packs, render pages/index engines and storage lock/maintenance/backup owners as Project counterparts, under SP-345’s app-data root and actual Server. App scope is not a Project Vault and holds no project_home_server_id before conversion. The attached table is the exclusive physical app key map for ordinary chat/root/recovery/UI/notebook/browser/runtime records; version/schema/source selection is CV-366. Raw missing Project interpolation, main-root fallback, per-thread infinite app buckets and new live JSON are forbidden. Source/context authority uses exact Host/Environment/roots, not the configured display path alone.
   Place/folder records bind actual Server/Host/Environment and canonical path identity/currentness, draft_id before first message and thread_id thereafter. Concurrent first save/command adopts one folder exactly once. Visible chat folders live outside PM data in the Computer’s configured no-project chat root; no talk-only folder, rename relocation or implicit delete. Disconnected chat metadata remains named/read-only; continuation needs the real current writer. Request/outbox continuity remains the existing thread owner; facade preview is local and does not create its own storage family. Client close does not stop the Server’s admitted work.
-  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart is a required F-d resolution to the existing named policy/anchor, never a new policy ID or a production registration.
+  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart must resolve through Plans/storage_value_registry.json to the existing named policy/anchor, never a new policy ID or a production registration.
   One app index builder/publication slot and source token/checkpoint domain preserve exact Server/thread/root/generation. Source read, compaction, restore/revert and FileSafe use actual absolute Host/root and all canonical source/currentness/permission/writer/Stop/recovery gates; replay rebuilds only derived views, never canonical authority. App notebook keeps its five existing parent kinds and 16 KiB inline/64 KiB request, 512-token/2 KiB capsule, 1,024-token/4 KiB combined injection limits. Memory stays thread-private with 350-token capsule and existing verification/evidence; public_safe taught rules remain distinct. Cross-read grants never authorize notebook/private-memory access.
   Browser creation/reset, Eval, terminal and layout adopt their whole app CV-366 source graphs or remain unavailable. Protected auth is not app browser automation, capture, restore or export content. Live PTY/process/kernel/controller/ports remain on original Computer through conversion; future sessions re-resolve. App Home/panels/boards use exact Server/app/workspace keys, named layouts/presets stay per person, board snapshots match saved scope/Server only, and converted Project UI loads independently. Canonical app records/held payloads join coherent Full Server Backup, derived pages/indexes rebuild; counterpart source/dedupe/rollback/retention and deletion deadlines remain. Chat Undo expiry cannot purge independently retained notebook/checkpoint/task/audit authority.
   Developer-session application families are dev_session_record_application and eval_session_record_application, using DebugSessionRecordStorageApplicationV1 and EvalSessionRecordStorageApplicationV1 in Plans/developer_session_application_contracts.schema.json. They inherit the Project counterpart tier later_gui_or_feature_projection, RP-DEBUG-30D, mandatory canonical backup/restore and independent holds. The source graph selects the actual debugger/evaluator broker for lifecycle, source/lease/generation, read/checkpoint and retention. BRS-033 restores exact history/session metadata as stopped or reconciliation-required, never a live adapter/kernel/lease or current permission grant. No browser family is their custody and no second engine is introduced.
@@ -981,8 +981,8 @@ acceptance_criteria:
 - App buckets match counterpart bounds; held canonical source never evicts as a cache.
 - No root/Host/thread aliasing, canonical reconstruction or unsupported native-source fallback.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1107,8 +1107,8 @@ acceptance_criteria:
 - Failure/restart/resume/cancel/Undo preserve settled effects, original source and target authority.
 - Backups and retention avoid dual-live restoration or early independent authority purge.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1182,8 +1182,8 @@ acceptance_criteria:
 - Original Project/historical/certified graph remains unchanged and ordinary bindings immutable.
 - Canonical task/audit and Stop survive moves, restore and chat Undo expiry with counterpart limits.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1257,9 +1257,9 @@ Every application key begins with its distinct versioned family prefix and actua
 | `goal_receipt` → `goal_receipt_application` | `goal_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `goal_runtime_lineage_record` → `goal_runtime_lineage_record_application` | `goal_runtime_lineage_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `collaboration_definition` → `collaboration_definition_application` | `collaboration_definition.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(definition_id)}` | canonical; `RP-CONFIG-CURRENT` |
-| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-RUNTIME-365D` |
-| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-RUNTIME-365D` |
-| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
+| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
+| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
 | `crew_auto` → `crew_auto_application` | `crew_auto.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; `RP-CONFIG-CURRENT` |
 | `crew_board_message` → `crew_board_message_application` | `crew_board_message.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}` | canonical; `RP-COORDINATION-180D` |
 | `coordination_agent` → `coordination_agent_application` | `coordination_agent.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(agent_id)}` | derived; `RP-PROJECTION-3GEN` |
@@ -1299,8 +1299,8 @@ acceptance_criteria:
 - Pause physical birth/key/wrapper/CAS/epochs/read/backup/refusal are coherent and separate from Project.
 - Stop/conversion/timer/restore races cannot double-run or clear a newer latch.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1388,8 +1388,8 @@ acceptance_criteria:
 - Restore/conversion preserves old evidence without transferring authority or clearing Stop/holds.
 - Action list reads existing receipts and no new live JSON/event engine.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1460,7 +1460,7 @@ canonical_text: |-
 
   Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
 
-  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1519,7 +1519,7 @@ canonical_text: |-
 
   Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
 
-  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105.
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1990,7 +1990,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
 
   DL-446 answers DL-403 for this exact job with E-CARDS-2 Card 6.c option A. Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
 
-  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105. History reads do not
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
   refuses.
@@ -2007,8 +2007,8 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   Result refs are opaque and grant no access.
 
 
-  Retention for this exact Project event is RP-OPERATIONAL-2555D@1.0.0 under DL-401/G04, on unlanded origin/plans/ea-retention-cards1-20261104
-  at 2663667e14346235daaa561d193e959422640b6e: 2,555 days, terminal-transition anchor, 2,000,000 per Project, refuse
+  Retention for this exact Project event is RP-OPERATIONAL-2555D@1.0.0 under DL-401/G04, landed in Plans/Decision_Log.md on main with the CA-RET assignment in Plans/storage-plan.md and Plans/storage_value_registry.json
+  (read on this lane at origin/plans/ea-retention-cards1-20261104 2663667e14346235daaa561d193e959422640b6e): 2,555 days, terminal-transition anchor, 2,000,000 per Project, refuse
   new records at cap, all existing holds/live/recovery/backup references override expiry. Counts/outcomes only,
   never memory text. This supersedes only SP-636''s pending EVENT assignment for this adoption. Canonical operation/result
   custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves
@@ -2136,7 +2136,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
 
   DL-446 answers DL-403 for this exact job with E-CARDS-2 Card 6.c option A. Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
 
-  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447 on origin/plans/ea-cards2-answers-20261105. History reads do not
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main. History reads do not
   require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
   source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
   refuses.
@@ -2153,8 +2153,8 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.m
   Result refs are opaque and grant no access.
 
 
-  Retention for this exact Project event is RP-OPERATIONAL-2555D@1.0.0 under DL-401/G04, on unlanded origin/plans/ea-retention-cards1-20261104
-  at 2663667e14346235daaa561d193e959422640b6e: 2,555 days, terminal-transition anchor, 2,000,000 per Project, refuse
+  Retention for this exact Project event is RP-OPERATIONAL-2555D@1.0.0 under DL-401/G04, landed in Plans/Decision_Log.md on main with the CA-RET assignment in Plans/storage-plan.md and Plans/storage_value_registry.json
+  (read on this lane at origin/plans/ea-retention-cards1-20261104 2663667e14346235daaa561d193e959422640b6e): 2,555 days, terminal-transition anchor, 2,000,000 per Project, refuse
   new records at cap, all existing holds/live/recovery/backup references override expiry. Counts/outcomes only,
   never memory text. This supersedes only SP-637''s pending EVENT assignment for this adoption. Canonical operation/result
   custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves
