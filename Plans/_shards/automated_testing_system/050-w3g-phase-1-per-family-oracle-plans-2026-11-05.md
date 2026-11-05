@@ -1,0 +1,240 @@
+# Shard 050: W3G phase 1 per-family oracle plans (2026-11-05)
+
+Source: `Plans/Automated_Testing_System.md`
+
+Source lines: L7239-L7468
+
+Source SHA256: `36efbcb57a3de6332493b17f4c4173e6d964223829253d2f43efc8ea3e7f6390`
+
+---
+
+## W3G phase 1 per-family oracle plans (2026-11-05)
+
+### ATS-1260 - W3G APR per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1260
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for assistant_plan.build_started, assistant_plan.cancelled,
+  assistant_plan.completed, assistant_plan.created, assistant_plan.exported, assistant_plan.version_created, assistant_plan.wizard_handoff_created.
+  Each exact family has its own positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json;
+  no sibling fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after
+  the reviewed NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Criterion 12 is PARTIAL; no executable oracle or native
+  result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- APR-1500
+- APR-1501
+- APR-1502
+- APR-1503
+- APR-1504
+- APR-1505
+- APR-1506
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.build_started
+- assistant_plan.cancelled
+- assistant_plan.completed
+- assistant_plan.created
+- assistant_plan.exported
+- assistant_plan.version_created
+- assistant_plan.wizard_handoff_created
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+### ATS-1261 - W3G ERS per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1261
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for external_research.budget_denied, external_research.finding_classified,
+  external_research.job_terminal, external_research.packet_delivered, external_research.topic_started. Each exact
+  family has its own positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json;
+  no sibling fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after
+  the reviewed NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Criterion 12 is PARTIAL; no executable oracle or native
+  result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- ERS-1507
+- ERS-1508
+- ERS-1509
+- ERS-1510
+- ERS-1511
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- external_research.budget_denied
+- external_research.finding_classified
+- external_research.job_terminal
+- external_research.packet_delivered
+- external_research.topic_started
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+### ATS-1262 - W3G GRS per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1262
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for goal.paused, goal.resumed. Each exact family has its own
+  positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json; no sibling
+  fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after the reviewed
+  NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Criterion 12 is PARTIAL; no executable oracle or native
+  result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- GRS-1512
+- GRS-1513
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- goal.paused
+- goal.resumed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+### ATS-1263 - W3G WN per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1263
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for notebook.checkpoint_committed, notebook.checkpoint_failed,
+  notebook.entry_committed, notebook.entry_superseded, notebook.transition_state_changed. Each exact family has
+  its own positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json;
+  no sibling fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after
+  the reviewed NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Criterion 12 is PARTIAL; no executable oracle or native
+  result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- WN-1514
+- WN-1515
+- WN-1516
+- WN-1517
+- WN-1518
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- notebook.checkpoint_committed
+- notebook.checkpoint_failed
+- notebook.entry_committed
+- notebook.entry_superseded
+- notebook.transition_state_changed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```

@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18959,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22167,
+    "node_count": 7483,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T01:50:32Z",
+  "generated_at_utc": "2026-11-05T05:36:04Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -4488,8 +4488,8 @@
         "source_location": {
           "heading": "17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)",
           "heading_level": 3,
-          "heading_line": 1607,
-          "line": 1619,
+          "heading_line": 2011,
+          "line": 2023,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -4499,8 +4499,8 @@
         "source_location": {
           "heading": "APR-071 - Plan Card Schedule Line And The Two Plan-Bound Crew Modes",
           "heading_level": 3,
-          "heading_line": 1942,
-          "line": 1944,
+          "heading_line": 2346,
+          "line": 2348,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -4510,8 +4510,8 @@
         "source_location": {
           "heading": "APR-072 - The Assistant Grills The User When Grill Me Is On",
           "heading_level": 3,
-          "heading_line": 2008,
-          "line": 2010,
+          "heading_line": 2412,
+          "line": 2414,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -4521,8 +4521,8 @@
         "source_location": {
           "heading": "APR-073 - Application Assistant Plan Identity And Deep Planning",
           "heading_level": 3,
-          "heading_line": 2081,
-          "line": 2083,
+          "heading_line": 2485,
+          "line": 2487,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -4532,8 +4532,8 @@
         "source_location": {
           "heading": "APR-074 - Application Build Exact Scheduling And Immutable Conversion",
           "heading_level": 3,
-          "heading_line": 2152,
-          "line": 2154,
+          "heading_line": 2556,
+          "line": 2558,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -22682,8 +22682,8 @@
         "source_location": {
           "heading": "GRS-003 - Invisible Planning Wizard Goal Boundary",
           "heading_level": 3,
-          "heading_line": 1186,
-          "line": 1188,
+          "heading_line": 1308,
+          "line": 1310,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22693,8 +22693,8 @@
         "source_location": {
           "heading": "GRS-007 - Goal Replan Event For Material Changes",
           "heading_level": 3,
-          "heading_line": 1481,
-          "line": 1483,
+          "heading_line": 1603,
+          "line": 1605,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22704,8 +22704,8 @@
         "source_location": {
           "heading": "GRS-019 - Autonomous Recovery And Exact Blockers",
           "heading_level": 3,
-          "heading_line": 2306,
-          "line": 2308,
+          "heading_line": 2428,
+          "line": 2430,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22715,8 +22715,8 @@
         "source_location": {
           "heading": "GRS-022 - Goal Runtime Risk Register",
           "heading_level": 3,
-          "heading_line": 2510,
-          "line": 2512,
+          "heading_line": 2632,
+          "line": 2634,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22726,8 +22726,8 @@
         "source_location": {
           "heading": "GRS-025 - Goal UI Styling, Persistence Substrate, And Provider Defaults",
           "heading_level": 3,
-          "heading_line": 2679,
-          "line": 2681,
+          "heading_line": 2801,
+          "line": 2803,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22737,8 +22737,8 @@
         "source_location": {
           "heading": "GRS-031 - Approve And Build Launch, Parallel Enforcement, And Atomic Activation",
           "heading_level": 3,
-          "heading_line": 4392,
-          "line": 4394,
+          "heading_line": 4514,
+          "line": 4516,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22748,8 +22748,8 @@
         "source_location": {
           "heading": "GRS-033 - P1-AGENT-FOCUS-WATCHDOG",
           "heading_level": 3,
-          "heading_line": 4533,
-          "line": 4535,
+          "heading_line": 4655,
+          "line": 4657,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22759,8 +22759,8 @@
         "source_location": {
           "heading": "GRS-034 - P1-INTERRUPT-CANCEL-SETTLEMENT",
           "heading_level": 3,
-          "heading_line": 4626,
-          "line": 4628,
+          "heading_line": 4748,
+          "line": 4750,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22770,8 +22770,8 @@
         "source_location": {
           "heading": "GRS-035 - P0-AGENT-CONTROL-PLANE-ENVELOPE",
           "heading_level": 3,
-          "heading_line": 4716,
-          "line": 4718,
+          "heading_line": 4838,
+          "line": 4840,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22781,8 +22781,8 @@
         "source_location": {
           "heading": "GRS-036 - P0-SUBAGENT-EXECUTION-CONTRACT",
           "heading_level": 3,
-          "heading_line": 4833,
-          "line": 4835,
+          "heading_line": 4955,
+          "line": 4957,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22792,8 +22792,8 @@
         "source_location": {
           "heading": "GRS-037 - P0-LOOP-BREAKER-TAXONOMY",
           "heading_level": 3,
-          "heading_line": 4924,
-          "line": 4926,
+          "heading_line": 5046,
+          "line": 5048,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22803,8 +22803,8 @@
         "source_location": {
           "heading": "GRS-038 - P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
           "heading_level": 3,
-          "heading_line": 5016,
-          "line": 5018,
+          "heading_line": 5138,
+          "line": 5140,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22814,8 +22814,8 @@
         "source_location": {
           "heading": "GRS-039 - P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
           "heading_level": 3,
-          "heading_line": 5091,
-          "line": 5093,
+          "heading_line": 5213,
+          "line": 5215,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22825,8 +22825,8 @@
         "source_location": {
           "heading": "GRS-042 - Case L Canonical Goal Receipt Recovery Truth",
           "heading_level": 3,
-          "heading_line": 5402,
-          "line": 5404,
+          "heading_line": 5524,
+          "line": 5526,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22836,8 +22836,8 @@
         "source_location": {
           "heading": "GRS-043 - Case L Goal Event And Recovery Admission",
           "heading_level": 3,
-          "heading_line": 5450,
-          "line": 5452,
+          "heading_line": 5572,
+          "line": 5574,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22847,8 +22847,8 @@
         "source_location": {
           "heading": "GRS-045 - Bounded Advisory Consumers And Goal Control Fail Closure",
           "heading_level": 3,
-          "heading_line": 1000,
-          "line": 1002,
+          "heading_line": 1122,
+          "line": 1124,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22858,8 +22858,8 @@
         "source_location": {
           "heading": "GRS-047 - Goal Handoff Command And Local-Projection Closure",
           "heading_level": 3,
-          "heading_line": 878,
-          "line": 880,
+          "heading_line": 1000,
+          "line": 1002,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22869,8 +22869,8 @@
         "source_location": {
           "heading": "GRS-048 - Goal V2 Record And Retired Field Prohibition",
           "heading_level": 3,
-          "heading_line": 376,
-          "line": 378,
+          "heading_line": 498,
+          "line": 500,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22880,8 +22880,8 @@
         "source_location": {
           "heading": "GRS-051 - Manual Stop Precedence Over Every Automatic Resume",
           "heading_level": 3,
-          "heading_line": 538,
-          "line": 540,
+          "heading_line": 660,
+          "line": 662,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22891,8 +22891,8 @@
         "source_location": {
           "heading": "GRS-052 - Retired Child Goals And Their Replacement Owners",
           "heading_level": 3,
-          "heading_line": 594,
-          "line": 596,
+          "heading_line": 716,
+          "line": 718,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22902,8 +22902,8 @@
         "source_location": {
           "heading": "GRS-054 - Goal Change Authority And Two-Path Revision",
           "heading_level": 3,
-          "heading_line": 682,
-          "line": 684,
+          "heading_line": 804,
+          "line": 806,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22913,8 +22913,8 @@
         "source_location": {
           "heading": "GRS-055 - Goal And To-Dos Are Activity Domains",
           "heading_level": 3,
-          "heading_line": 745,
-          "line": 747,
+          "heading_line": 867,
+          "line": 869,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22924,8 +22924,8 @@
         "source_location": {
           "heading": "18. Goal Activity Detail Presentation and Bound Plan Synchronization (APR-059)",
           "heading_level": 3,
-          "heading_line": 5650,
-          "line": 5668,
+          "heading_line": 5772,
+          "line": 5790,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22935,8 +22935,8 @@
         "source_location": {
           "heading": "GRS-060 - Historical child-status event disposition",
           "heading_level": 3,
-          "heading_line": 5713,
-          "line": 5715,
+          "heading_line": 5835,
+          "line": 5837,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22946,8 +22946,8 @@
         "source_location": {
           "heading": "GRS-061 - Historical Goal degradation and current projection quality",
           "heading_level": 3,
-          "heading_line": 5790,
-          "line": 5792,
+          "heading_line": 5912,
+          "line": 5914,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22957,8 +22957,8 @@
         "source_location": {
           "heading": "GRS-062 - Exact historical Goal scheduling contract",
           "heading_level": 3,
-          "heading_line": 5912,
-          "line": 5914,
+          "heading_line": 6034,
+          "line": 6036,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22968,8 +22968,8 @@
         "source_location": {
           "heading": "GRS-064 - Shared Goal Body Currentness And Accepted History",
           "heading_level": 3,
-          "heading_line": 6174,
-          "line": 6176,
+          "heading_line": 6296,
+          "line": 6298,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22979,8 +22979,8 @@
         "source_location": {
           "heading": "GRS-069 - Exact historical goal.progressed contract",
           "heading_level": 3,
-          "heading_line": 6597,
-          "line": 6599,
+          "heading_line": 6719,
+          "line": 6721,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -22990,8 +22990,8 @@
         "source_location": {
           "heading": "GRS-070 - Exact historical goal.replanned contract",
           "heading_level": 3,
-          "heading_line": 6689,
-          "line": 6691,
+          "heading_line": 6811,
+          "line": 6813,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23001,8 +23001,8 @@
         "source_location": {
           "heading": "GRS-071 - Exact historical goal.stopped contract",
           "heading_level": 3,
-          "heading_line": 6781,
-          "line": 6783,
+          "heading_line": 6903,
+          "line": 6905,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23012,8 +23012,8 @@
         "source_location": {
           "heading": "GRS-072 - Exact historical goal.verification_decided contract",
           "heading_level": 3,
-          "heading_line": 6872,
-          "line": 6874,
+          "heading_line": 6994,
+          "line": 6996,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23023,8 +23023,8 @@
         "source_location": {
           "heading": "GRS-073 - Current explicit Goal cancellation",
           "heading_level": 3,
-          "heading_line": 6964,
-          "line": 6966,
+          "heading_line": 7086,
+          "line": 7088,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23034,8 +23034,8 @@
         "source_location": {
           "heading": "GRS-086 - Application Goal Birth Continuation And Versioned Custody",
           "heading_level": 3,
-          "heading_line": 8204,
-          "line": 8206,
+          "heading_line": 8326,
+          "line": 8328,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23045,8 +23045,8 @@
         "source_location": {
           "heading": "GRS-087 - Immutable Goal Conversion And Linked Destination Birth",
           "heading_level": 3,
-          "heading_line": 8287,
-          "line": 8289,
+          "heading_line": 8409,
+          "line": 8411,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -41492,8 +41492,8 @@
         "source_location": {
           "heading": "WN-021 - App Scratch Notebook And Fenced Project Conversion",
           "heading_level": 3,
-          "heading_line": 929,
-          "line": 931,
+          "heading_line": 1222,
+          "line": 1224,
           "path": "Plans/Working_Notebook.md"
         }
       },
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7422,
+  "plan_unit_count": 7483,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2743,
+      "high": 2804,
       "low": 9,
       "medium": 30,
       "standard": 4640
@@ -42947,6 +42947,7 @@
       "event_driven_gui_projection_alignment": 1,
       "event_envelope_compatibility_break": 1,
       "event_observation_misrepresented_as_goal_action": 1,
+      "event_original_authority_or_replay_loss": 61,
       "event_payload_gap": 1,
       "event_payload_schema_owner_split_drift": 1,
       "event_record_envelope_drift": 1,
@@ -45863,7 +45864,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7265,
       "retired": 195,
       "superseded": 23
     },
@@ -45933,7 +45934,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5614,
+      "requirement": 5675,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46048,7 +46049,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e",
+        "expected": "6ed6a88a49390154ff43cdf1ac7bc284996076ce283887ad5039e63c8ddf58ce",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -46060,7 +46061,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "36efbcb57a3de6332493b17f4c4173e6d964223829253d2f43efc8ea3e7f6390",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46098,6 +46099,34 @@
         "error": "pnc019_source_hash_stale",
         "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Contracts_V0.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/External_Research.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Goal_Runtime_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Working_Notebook.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage-plan.md"
       },
       {
         "bulk_registration_allowed": false,

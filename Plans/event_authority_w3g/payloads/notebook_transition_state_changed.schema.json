@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event-authority-w3g/notebook_transition_state_changed/1.0.0/schema.json",
+  "title": "notebook.transition_state_changed prepared payload selectors; no admission",
+  "$defs": {
+    "ProjectPayloadV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "owner_operation_id",
+        "scope",
+        "source_record_ref",
+        "source_record_sha256",
+        "source_schema_id",
+        "source_schema_version",
+        "source_receipt_ref",
+        "notebook_id",
+        "thread_id",
+        "computer_ref",
+        "notebook_scope_kind",
+        "transition_id",
+        "from_state",
+        "to_state",
+        "reason",
+        "transition_record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.notebook.transition_state_changed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "notebook.transition_state_changed"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          ]
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_record_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_schema_version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "computer_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_scope_kind": {
+          "type": "string",
+          "enum": [
+            "thread",
+            "worker_lineage",
+            "coordinator_run",
+            "participant",
+            "shared_slice"
+          ]
+        },
+        "transition_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "from_state": {
+          "type": "string",
+          "enum": [
+            "requested",
+            "preparing",
+            "checkpointed",
+            "admitted",
+            "activated",
+            "recovered_resumed",
+            "deferred",
+            "denied",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "to_state": {
+          "type": "string",
+          "enum": [
+            "requested",
+            "preparing",
+            "checkpointed",
+            "admitted",
+            "activated",
+            "recovered_resumed",
+            "deferred",
+            "denied",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "proactive_before_overflow",
+            "pressure_rising",
+            "pre_overflow_material_progress",
+            "overflow_imminent",
+            "model_change",
+            "recovery_reconstruction"
+          ]
+        },
+        "transition_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        }
+      }
+    },
+    "ApplicationPayloadV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "owner_operation_id",
+        "scope",
+        "source_record_ref",
+        "source_record_sha256",
+        "source_schema_id",
+        "source_schema_version",
+        "source_receipt_ref",
+        "notebook_id",
+        "thread_id",
+        "computer_ref",
+        "notebook_scope_kind",
+        "transition_id",
+        "from_state",
+        "to_state",
+        "reason",
+        "transition_record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.notebook.transition_state_changed.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "notebook.transition_state_changed"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_record_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_schema_version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "computer_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_scope_kind": {
+          "type": "string",
+          "enum": [
+            "thread",
+            "worker_lineage",
+            "coordinator_run",
+            "participant",
+            "shared_slice"
+          ]
+        },
+        "transition_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "from_state": {
+          "type": "string",
+          "enum": [
+            "requested",
+            "preparing",
+            "checkpointed",
+            "admitted",
+            "activated",
+            "recovered_resumed",
+            "deferred",
+            "denied",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "to_state": {
+          "type": "string",
+          "enum": [
+            "requested",
+            "preparing",
+            "checkpointed",
+            "admitted",
+            "activated",
+            "recovered_resumed",
+            "deferred",
+            "denied",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "proactive_before_overflow",
+            "pressure_rising",
+            "pre_overflow_material_progress",
+            "overflow_imminent",
+            "model_change",
+            "recovery_reconstruction"
+          ]
+        },
+        "transition_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        }
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ProjectPayloadV1"
+    },
+    {
+      "$ref": "#/$defs/ApplicationPayloadV1"
+    }
+  ]
+}

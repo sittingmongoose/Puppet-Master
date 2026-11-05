@@ -6135,12 +6135,31 @@
     "SP-336",
     "GRS-061",
     "GRS-065",
+    "APR-1500",
+    "APR-1501",
+    "APR-1502",
+    "APR-1503",
+    "APR-1504",
+    "APR-1505",
+    "APR-1506",
+    "ERS-1507",
+    "ERS-1508",
+    "ERS-1509",
+    "ERS-1510",
+    "ERS-1511",
+    "GRS-1512",
+    "GRS-1513",
     "SP-265",
     "SP-271",
     "SP-285",
     "SP-300",
     "SP-302",
     "SP-303",
+    "WN-1514",
+    "WN-1515",
+    "WN-1516",
+    "WN-1517",
+    "WN-1518",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -6177,11 +6196,34 @@
     "SP-347",
     "CV-335",
     "SP-289",
+    "SP-1500",
+    "SP-1501",
+    "SP-1502",
+    "SP-1503",
+    "SP-1504",
+    "SP-1505",
+    "ATS-1260",
+    "SP-1506",
+    "SP-1507",
+    "SP-1508",
+    "SP-1509",
+    "SP-1510",
+    "ATS-1261",
+    "SP-1511",
+    "SP-1512",
+    "ATS-1262",
+    "SP-1513",
     "EP-116",
     "OP-036",
     "RGV-019",
     "UF-102",
     "SP-269",
+    "SP-1514",
+    "SP-1515",
+    "SP-1516",
+    "SP-1517",
+    "ATS-1263",
+    "SP-1518",
     "ACD-087",
     "CV-336",
     "PS-134",
@@ -6796,6 +6838,25 @@
     "PDS-023",
     "PLS-024",
     "SIR-055",
+    "CV-1500",
+    "CV-1501",
+    "CV-1502",
+    "CV-1503",
+    "CV-1504",
+    "CV-1505",
+    "CV-1506",
+    "CV-1507",
+    "CV-1508",
+    "CV-1509",
+    "CV-1510",
+    "CV-1511",
+    "CV-1512",
+    "CV-1513",
+    "CV-1514",
+    "CV-1515",
+    "CV-1516",
+    "CV-1517",
+    "CV-1518",
     "CV-367",
     "SP-349",
     "SP-353",
@@ -13450,6 +13511,111 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "APR-1500",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1500",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1500",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1501",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1501",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1501",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1502",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1502",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1502",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1503",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1503",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1503",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1504",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1504",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1504",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1505",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1505",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1505",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1506",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1506",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-1506",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ARC-001",
       "to": "ARC-002"
     },
@@ -15527,6 +15693,101 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1260",
+      "to": "APR-1500"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1260",
+      "to": "APR-1501"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1260",
+      "to": "APR-1502"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1260",
+      "to": "APR-1503"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1260",
+      "to": "APR-1504"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1260",
+      "to": "APR-1505"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1260",
+      "to": "APR-1506"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1261",
+      "to": "ERS-1507"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1261",
+      "to": "ERS-1508"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1261",
+      "to": "ERS-1509"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1261",
+      "to": "ERS-1510"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1261",
+      "to": "ERS-1511"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1262",
+      "to": "GRS-1512"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1262",
+      "to": "GRS-1513"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1263",
+      "to": "WN-1514"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1263",
+      "to": "WN-1515"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1263",
+      "to": "WN-1516"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1263",
+      "to": "WN-1517"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-1263",
+      "to": "WN-1518"
     },
     {
       "edge_type": "depends_on",
@@ -23755,6 +24016,156 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-1500",
+      "to": "APR-1500"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1500",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1500",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1501",
+      "to": "APR-1501"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1501",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1501",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1502",
+      "to": "APR-1502"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1502",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1502",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1503",
+      "to": "APR-1503"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1503",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1503",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1504",
+      "to": "APR-1504"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1504",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1504",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1505",
+      "to": "APR-1505"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1505",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1505",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1506",
+      "to": "APR-1506"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1506",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1506",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1507",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1507",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1507",
+      "to": "ERS-1507"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1508",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1508",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1508",
+      "to": "ERS-1508"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1509",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1509",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1509",
+      "to": "ERS-1509"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-151",
       "to": "CV-027"
     },
@@ -23762,6 +24173,141 @@
       "edge_type": "depends_on",
       "from": "CV-151",
       "to": "CV-149"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1510",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1510",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1510",
+      "to": "ERS-1510"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1511",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1511",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1511",
+      "to": "ERS-1511"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1512",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1512",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1512",
+      "to": "GRS-1512"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1513",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1513",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1513",
+      "to": "GRS-1513"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1514",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1514",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1514",
+      "to": "WN-1514"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1515",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1515",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1515",
+      "to": "WN-1515"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1516",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1516",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1516",
+      "to": "WN-1516"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1517",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1517",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1517",
+      "to": "WN-1517"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1518",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1518",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-1518",
+      "to": "WN-1518"
     },
     {
       "edge_type": "depends_on",
@@ -31287,6 +31833,81 @@
       "edge_type": "depends_on",
       "from": "ERS-014",
       "to": "ERS-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1507",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1507",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1507",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1508",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1508",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1508",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1509",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1509",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1509",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1510",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1510",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1510",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1511",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1511",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ERS-1511",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -40197,6 +40818,36 @@
       "edge_type": "depends_on",
       "from": "GRS-087",
       "to": "SIR-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1512",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1512",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1512",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1513",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1513",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-1513",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -78055,6 +78706,206 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-1500",
+      "to": "APR-1500"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1500",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1500",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1500",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1501",
+      "to": "APR-1501"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1501",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1501",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1501",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1502",
+      "to": "APR-1502"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1502",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1502",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1502",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1503",
+      "to": "APR-1503"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1503",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1503",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1503",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1504",
+      "to": "APR-1504"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1504",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1504",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1504",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1505",
+      "to": "APR-1505"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1505",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1505",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1505",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1506",
+      "to": "APR-1506"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1506",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1506",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1506",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1507",
+      "to": "ERS-1507"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1507",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1507",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1507",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1508",
+      "to": "ERS-1508"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1508",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1508",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1508",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1509",
+      "to": "ERS-1509"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1509",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1509",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1509",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-151",
       "to": "PDS-003"
     },
@@ -78072,6 +78923,186 @@
       "edge_type": "depends_on",
       "from": "SP-151",
       "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1510",
+      "to": "ERS-1510"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1510",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1510",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1510",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1511",
+      "to": "ERS-1511"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1511",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1511",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1511",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1512",
+      "to": "GRS-1512"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1512",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1512",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1512",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1513",
+      "to": "GRS-1513"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1513",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1513",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1513",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1514",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1514",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1514",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1514",
+      "to": "WN-1514"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1515",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1515",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1515",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1515",
+      "to": "WN-1515"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1516",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1516",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1516",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1516",
+      "to": "WN-1516"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1517",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1517",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1517",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1517",
+      "to": "WN-1517"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1518",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1518",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1518",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-1518",
+      "to": "WN-1518"
     },
     {
       "edge_type": "depends_on",
@@ -100540,6 +101571,81 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "WN-1514",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1514",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1514",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1515",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1515",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1515",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1516",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1516",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1516",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1517",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1517",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1517",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1518",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1518",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WN-1518",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "WS-001",
       "to": "WS-002"
     },
@@ -117219,7 +118325,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:55Z",
+  "generated_at_utc": "2026-11-05T05:36:03Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -129250,8 +130356,8 @@
       "source_location": {
         "heading": "Working Notebook Plan Identity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1532,
-        "line": 1536,
+        "heading_line": 1936,
+        "line": 1940,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129267,8 +130373,8 @@
       "source_location": {
         "heading": "17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)",
         "heading_level": 3,
-        "heading_line": 1607,
-        "line": 1619,
+        "heading_line": 2011,
+        "line": 2023,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129284,8 +130390,8 @@
       "source_location": {
         "heading": "17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)",
         "heading_level": 3,
-        "heading_line": 1607,
-        "line": 1682,
+        "heading_line": 2011,
+        "line": 2086,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129301,8 +130407,8 @@
       "source_location": {
         "heading": "APR-016 - Original Goal Plan binding participation",
         "heading_level": 3,
-        "heading_line": 1732,
-        "line": 1734,
+        "heading_line": 2136,
+        "line": 2138,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129318,8 +130424,8 @@
       "source_location": {
         "heading": "Exact original bound selection",
         "heading_level": 4,
-        "heading_line": 1870,
-        "line": 1880,
+        "heading_line": 2274,
+        "line": 2284,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129335,8 +130441,8 @@
       "source_location": {
         "heading": "APR-071 - Plan Card Schedule Line And The Two Plan-Bound Crew Modes",
         "heading_level": 3,
-        "heading_line": 1942,
-        "line": 1944,
+        "heading_line": 2346,
+        "line": 2348,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129352,8 +130458,8 @@
       "source_location": {
         "heading": "APR-072 - The Assistant Grills The User When Grill Me Is On",
         "heading_level": 3,
-        "heading_line": 2008,
-        "line": 2010,
+        "heading_line": 2412,
+        "line": 2414,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129369,8 +130475,8 @@
       "source_location": {
         "heading": "APR-073 - Application Assistant Plan Identity And Deep Planning",
         "heading_level": 3,
-        "heading_line": 2081,
-        "line": 2083,
+        "heading_line": 2485,
+        "line": 2487,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -129386,8 +130492,127 @@
       "source_location": {
         "heading": "APR-074 - Application Build Exact Scheduling And Immutable Conversion",
         "heading_level": 3,
-        "heading_line": 2152,
-        "line": 2154,
+        "heading_line": 2556,
+        "line": 2558,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1500",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "APR-1500 - assistant_plan.build_started: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1031,
+        "line": 1033,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1501",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "APR-1501 - assistant_plan.cancelled: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1088,
+        "line": 1090,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1502",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "APR-1502 - assistant_plan.completed: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1146,
+        "line": 1148,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1503",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "APR-1503 - assistant_plan.created: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1203,
+        "line": 1205,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1504",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "APR-1504 - assistant_plan.exported: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1260,
+        "line": 1262,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1505",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "APR-1505 - assistant_plan.version_created: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1317,
+        "line": 1319,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-1506",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "APR-1506 - assistant_plan.wizard_handoff_created: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1375,
+        "line": 1377,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -131330,6 +132555,74 @@
       },
       "status": "accepted",
       "unit_type": "acceptance_gate"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1260",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ATS-1260 - W3G APR per-family oracle plans",
+        "heading_level": 3,
+        "heading_line": 7241,
+        "line": 7243,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1261",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ATS-1261 - W3G ERS per-family oracle plans",
+        "heading_level": 3,
+        "heading_line": 7303,
+        "line": 7305,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1262",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ATS-1262 - W3G GRS per-family oracle plans",
+        "heading_level": 3,
+        "heading_line": 7361,
+        "line": 7363,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-1263",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ATS-1263 - W3G WN per-family oracle plans",
+        "heading_level": 3,
+        "heading_line": 7412,
+        "line": 7414,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -140784,6 +142077,176 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1500",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1500 - assistant_plan.build_started: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24473,
+        "line": 24475,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1501",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1501 - assistant_plan.cancelled: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24546,
+        "line": 24548,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1502",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1502 - assistant_plan.completed: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24619,
+        "line": 24621,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1503",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1503 - assistant_plan.created: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24692,
+        "line": 24694,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1504",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1504 - assistant_plan.exported: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24765,
+        "line": 24767,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1505",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1505 - assistant_plan.version_created: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24838,
+        "line": 24840,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1506",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1506 - assistant_plan.wizard_handoff_created: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24911,
+        "line": 24913,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1507",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1507 - external_research.budget_denied: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 24984,
+        "line": 24986,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1508",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1508 - external_research.finding_classified: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25056,
+        "line": 25058,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1509",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1509 - external_research.job_terminal: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25128,
+        "line": 25130,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "persona_runtime_snapshot_fields",
       "gui_related": false,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -140799,6 +142262,159 @@
       },
       "status": "accepted",
       "unit_type": "compatibility_disposition"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1510",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1510 - external_research.packet_delivered: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25200,
+        "line": 25202,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1511",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1511 - external_research.topic_started: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25272,
+        "line": 25274,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1512",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1512 - goal.paused: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25344,
+        "line": 25346,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1513",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1513 - goal.resumed: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25416,
+        "line": 25418,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1514",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1514 - notebook.checkpoint_committed: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25488,
+        "line": 25490,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1515",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1515 - notebook.checkpoint_failed: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25561,
+        "line": 25563,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1516",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1516 - notebook.entry_committed: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25634,
+        "line": 25636,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1517",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1517 - notebook.entry_superseded: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25707,
+        "line": 25709,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-1518",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "CV-1518 - notebook.transition_state_changed: closed payload and identity",
+        "heading_level": 3,
+        "heading_line": 25780,
+        "line": 25782,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "personasnapshot_compatibility_label",
@@ -157744,6 +159360,91 @@
         "heading_level": 3,
         "heading_line": 643,
         "line": 645,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-1507",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ERS-1507 - external_research.budget_denied: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 725,
+        "line": 727,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-1508",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ERS-1508 - external_research.finding_classified: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 783,
+        "line": 785,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-1509",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ERS-1509 - external_research.job_terminal: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 841,
+        "line": 843,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-1510",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ERS-1510 - external_research.packet_delivered: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 899,
+        "line": 901,
+        "path": "Plans/External_Research.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/External_Research.md",
+      "plan_unit_id": "ERS-1511",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "ERS-1511 - external_research.topic_started: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 957,
+        "line": 959,
         "path": "Plans/External_Research.md"
       },
       "status": "accepted",
@@ -177377,8 +179078,8 @@
       "source_location": {
         "heading": "GRS-001 - Native Goal Mode Scope And Retired Prompt Boundary",
         "heading_level": 3,
-        "heading_line": 311,
-        "line": 313,
+        "heading_line": 433,
+        "line": 435,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177394,8 +179095,8 @@
       "source_location": {
         "heading": "GRS-002 - One Runtime Engine With Three Product Integrations",
         "heading_level": 3,
-        "heading_line": 1101,
-        "line": 1103,
+        "heading_line": 1223,
+        "line": 1225,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177411,8 +179112,8 @@
       "source_location": {
         "heading": "GRS-003 - Invisible Planning Wizard Goal Boundary",
         "heading_level": 3,
-        "heading_line": 1186,
-        "line": 1188,
+        "heading_line": 1308,
+        "line": 1310,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177428,8 +179129,8 @@
       "source_location": {
         "heading": "GRS-004 - Whole-Goal Coherence With Sharded Inputs",
         "heading_level": 3,
-        "heading_line": 1265,
-        "line": 1267,
+        "heading_line": 1387,
+        "line": 1389,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177445,8 +179146,8 @@
       "source_location": {
         "heading": "GRS-005 - Durable Goal State And Event Log",
         "heading_level": 3,
-        "heading_line": 1353,
-        "line": 1355,
+        "heading_line": 1475,
+        "line": 1477,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177462,8 +179163,8 @@
       "source_location": {
         "heading": "GRS-006 - Scheduler Continuation And Revisioned Goal Updates",
         "heading_level": 3,
-        "heading_line": 1412,
-        "line": 1414,
+        "heading_line": 1534,
+        "line": 1536,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177479,8 +179180,8 @@
       "source_location": {
         "heading": "GRS-007 - Goal Replan Event For Material Changes",
         "heading_level": 3,
-        "heading_line": 1481,
-        "line": 1483,
+        "heading_line": 1603,
+        "line": 1605,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177496,8 +179197,8 @@
       "source_location": {
         "heading": "GRS-008 - Objective Attachments And Phase-Bound Snapshots",
         "heading_level": 3,
-        "heading_line": 1535,
-        "line": 1537,
+        "heading_line": 1657,
+        "line": 1659,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177513,8 +179214,8 @@
       "source_location": {
         "heading": "GRS-009 - Worker Role Separation And Bounded Authority",
         "heading_level": 3,
-        "heading_line": 1608,
-        "line": 1610,
+        "heading_line": 1730,
+        "line": 1732,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177530,8 +179231,8 @@
       "source_location": {
         "heading": "GRS-010 - Model Role Policy And Certification-Tier Verifier Requirements",
         "heading_level": 3,
-        "heading_line": 1684,
-        "line": 1686,
+        "heading_line": 1806,
+        "line": 1808,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177547,8 +179248,8 @@
       "source_location": {
         "heading": "GRS-011 - Provider-Neutral Escalation Triggers",
         "heading_level": 3,
-        "heading_line": 1759,
-        "line": 1761,
+        "heading_line": 1881,
+        "line": 1883,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177564,8 +179265,8 @@
       "source_location": {
         "heading": "GRS-012 - Goal Completion Receipt Authority",
         "heading_level": 3,
-        "heading_line": 1819,
-        "line": 1821,
+        "heading_line": 1941,
+        "line": 1943,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177581,8 +179282,8 @@
       "source_location": {
         "heading": "GRS-013 - Risk-Tiered Completion Certification",
         "heading_level": 3,
-        "heading_line": 1889,
-        "line": 1891,
+        "heading_line": 2011,
+        "line": 2013,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177598,8 +179299,8 @@
       "source_location": {
         "heading": "GRS-014 - Verifier Unavailable And Evidence Retention Policy",
         "heading_level": 3,
-        "heading_line": 1947,
-        "line": 1949,
+        "heading_line": 2069,
+        "line": 2071,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177615,8 +179316,8 @@
       "source_location": {
         "heading": "GRS-015 - Progress Fingerprints, Budgets, And Validators",
         "heading_level": 3,
-        "heading_line": 2014,
-        "line": 2016,
+        "heading_line": 2136,
+        "line": 2138,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177632,8 +179333,8 @@
       "source_location": {
         "heading": "GRS-016 - Parallel Child Goals And Parent Completion Authority",
         "heading_level": 3,
-        "heading_line": 2080,
-        "line": 2082,
+        "heading_line": 2202,
+        "line": 2204,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177649,8 +179350,8 @@
       "source_location": {
         "heading": "GRS-017 - Child Goal Write Authority And Single-Writer Leases",
         "heading_level": 3,
-        "heading_line": 2157,
-        "line": 2159,
+        "heading_line": 2279,
+        "line": 2281,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177666,8 +179367,8 @@
       "source_location": {
         "heading": "GRS-018 - Task Template Catalog And Goal-Type Completion Criteria",
         "heading_level": 3,
-        "heading_line": 2215,
-        "line": 2217,
+        "heading_line": 2337,
+        "line": 2339,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177683,8 +179384,8 @@
       "source_location": {
         "heading": "GRS-019 - Autonomous Recovery And Exact Blockers",
         "heading_level": 3,
-        "heading_line": 2306,
-        "line": 2308,
+        "heading_line": 2428,
+        "line": 2430,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177700,8 +179401,8 @@
       "source_location": {
         "heading": "GRS-020 - Approval Boundaries For High-Risk Goal Actions",
         "heading_level": 3,
-        "heading_line": 2391,
-        "line": 2393,
+        "heading_line": 2513,
+        "line": 2515,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177717,8 +179418,8 @@
       "source_location": {
         "heading": "GRS-021 - Goal Compile Acceptance And Governance Boundary",
         "heading_level": 3,
-        "heading_line": 2446,
-        "line": 2448,
+        "heading_line": 2568,
+        "line": 2570,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177734,8 +179435,8 @@
       "source_location": {
         "heading": "GRS-022 - Goal Runtime Risk Register",
         "heading_level": 3,
-        "heading_line": 2510,
-        "line": 2512,
+        "heading_line": 2632,
+        "line": 2634,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177751,8 +179452,8 @@
       "source_location": {
         "heading": "GRS-023 - Reference Patterns Are Lineage, Not Canonical Owners",
         "heading_level": 3,
-        "heading_line": 2559,
-        "line": 2561,
+        "heading_line": 2681,
+        "line": 2683,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177768,8 +179469,8 @@
       "source_location": {
         "heading": "GRS-024 - Legacy Chain Wizard Compatibility And Plan Graph Runtime Boundary",
         "heading_level": 3,
-        "heading_line": 2625,
-        "line": 2627,
+        "heading_line": 2747,
+        "line": 2749,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177785,8 +179486,8 @@
       "source_location": {
         "heading": "GRS-025 - Goal UI Styling, Persistence Substrate, And Provider Defaults",
         "heading_level": 3,
-        "heading_line": 2679,
-        "line": 2681,
+        "heading_line": 2801,
+        "line": 2803,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177802,8 +179503,8 @@
       "source_location": {
         "heading": "GRS-026 - Orchestrator GoalRun Runtime Envelope",
         "heading_level": 3,
-        "heading_line": 4022,
-        "line": 4024,
+        "heading_line": 4144,
+        "line": 4146,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177819,8 +179520,8 @@
       "source_location": {
         "heading": "GRS-027 - Verification Repair Loop And Certification Policy",
         "heading_level": 3,
-        "heading_line": 4093,
-        "line": 4095,
+        "heading_line": 4215,
+        "line": 4217,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -177836,8 +179537,8 @@
       "source_location": {
         "heading": "GRS-028 - Planning Wizard Approval To PlanCompile Boundary",
         "heading_level": 3,
-        "heading_line": 4218,
-        "line": 4220,
+        "heading_line": 4340,
+        "line": 4342,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177853,8 +179554,8 @@
       "source_location": {
         "heading": "GRS-029 - Hands-Off Autonomy And HITL Boundary",
         "heading_level": 3,
-        "heading_line": 4275,
-        "line": 4277,
+        "heading_line": 4397,
+        "line": 4399,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177870,8 +179571,8 @@
       "source_location": {
         "heading": "GRS-030 - Plans-To-Code Goal Completion Certification",
         "heading_level": 3,
-        "heading_line": 4329,
-        "line": 4331,
+        "heading_line": 4451,
+        "line": 4453,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177887,8 +179588,8 @@
       "source_location": {
         "heading": "GRS-031 - Approve And Build Launch, Parallel Enforcement, And Atomic Activation",
         "heading_level": 3,
-        "heading_line": 4392,
-        "line": 4394,
+        "heading_line": 4514,
+        "line": 4516,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177904,8 +179605,8 @@
       "source_location": {
         "heading": "GRS-032 - Goal Runtime Host Capability Consumption Boundary",
         "heading_level": 3,
-        "heading_line": 1036,
-        "line": 1038,
+        "heading_line": 1158,
+        "line": 1160,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177921,8 +179622,8 @@
       "source_location": {
         "heading": "GRS-033 - P1-AGENT-FOCUS-WATCHDOG",
         "heading_level": 3,
-        "heading_line": 4533,
-        "line": 4535,
+        "heading_line": 4655,
+        "line": 4657,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177938,8 +179639,8 @@
       "source_location": {
         "heading": "GRS-034 - P1-INTERRUPT-CANCEL-SETTLEMENT",
         "heading_level": 3,
-        "heading_line": 4626,
-        "line": 4628,
+        "heading_line": 4748,
+        "line": 4750,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177955,8 +179656,8 @@
       "source_location": {
         "heading": "GRS-035 - P0-AGENT-CONTROL-PLANE-ENVELOPE",
         "heading_level": 3,
-        "heading_line": 4716,
-        "line": 4718,
+        "heading_line": 4838,
+        "line": 4840,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177972,8 +179673,8 @@
       "source_location": {
         "heading": "GRS-036 - P0-SUBAGENT-EXECUTION-CONTRACT",
         "heading_level": 3,
-        "heading_line": 4833,
-        "line": 4835,
+        "heading_line": 4955,
+        "line": 4957,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -177989,8 +179690,8 @@
       "source_location": {
         "heading": "GRS-037 - P0-LOOP-BREAKER-TAXONOMY",
         "heading_level": 3,
-        "heading_line": 4924,
-        "line": 4926,
+        "heading_line": 5046,
+        "line": 5048,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178006,8 +179707,8 @@
       "source_location": {
         "heading": "GRS-038 - P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
         "heading_level": 3,
-        "heading_line": 5016,
-        "line": 5018,
+        "heading_line": 5138,
+        "line": 5140,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178023,8 +179724,8 @@
       "source_location": {
         "heading": "GRS-039 - P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
         "heading_level": 3,
-        "heading_line": 5091,
-        "line": 5093,
+        "heading_line": 5213,
+        "line": 5215,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178040,8 +179741,8 @@
       "source_location": {
         "heading": "GRS-040 - GRS-040",
         "heading_level": 3,
-        "heading_line": 5164,
-        "line": 5166,
+        "heading_line": 5286,
+        "line": 5288,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178057,8 +179758,8 @@
       "source_location": {
         "heading": "GRS-041 - FABLE Goal Runtime Event Payload Closure",
         "heading_level": 3,
-        "heading_line": 5211,
-        "line": 5213,
+        "heading_line": 5333,
+        "line": 5335,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178074,8 +179775,8 @@
       "source_location": {
         "heading": "GRS-042 - Case L Canonical Goal Receipt Recovery Truth",
         "heading_level": 3,
-        "heading_line": 5402,
-        "line": 5404,
+        "heading_line": 5524,
+        "line": 5526,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178091,8 +179792,8 @@
       "source_location": {
         "heading": "GRS-043 - Case L Goal Event And Recovery Admission",
         "heading_level": 3,
-        "heading_line": 5450,
-        "line": 5452,
+        "heading_line": 5572,
+        "line": 5574,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178108,8 +179809,8 @@
       "source_location": {
         "heading": "GRS-044 - Durable Server-Owned Goal Lineage",
         "heading_level": 3,
-        "heading_line": 968,
-        "line": 970,
+        "heading_line": 1090,
+        "line": 1092,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178125,8 +179826,8 @@
       "source_location": {
         "heading": "GRS-045 - Bounded Advisory Consumers And Goal Control Fail Closure",
         "heading_level": 3,
-        "heading_line": 1000,
-        "line": 1002,
+        "heading_line": 1122,
+        "line": 1124,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178142,8 +179843,8 @@
       "source_location": {
         "heading": "GRS-046 - Frozen Goal Route And Explicit Rebind",
         "heading_level": 3,
-        "heading_line": 912,
-        "line": 914,
+        "heading_line": 1034,
+        "line": 1036,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178159,8 +179860,8 @@
       "source_location": {
         "heading": "GRS-047 - Goal Handoff Command And Local-Projection Closure",
         "heading_level": 3,
-        "heading_line": 878,
-        "line": 880,
+        "heading_line": 1000,
+        "line": 1002,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178176,8 +179877,8 @@
       "source_location": {
         "heading": "GRS-048 - Goal V2 Record And Retired Field Prohibition",
         "heading_level": 3,
-        "heading_line": 376,
-        "line": 378,
+        "heading_line": 498,
+        "line": 500,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178193,8 +179894,8 @@
       "source_location": {
         "heading": "GRS-049 - Retired Goal Role Cast And Model-Role Policy",
         "heading_level": 3,
-        "heading_line": 439,
-        "line": 441,
+        "heading_line": 561,
+        "line": 563,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178210,8 +179911,8 @@
       "source_location": {
         "heading": "GRS-050 - Durable Host Continuation And Evidence-Gated Completion",
         "heading_level": 3,
-        "heading_line": 480,
-        "line": 482,
+        "heading_line": 602,
+        "line": 604,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178227,8 +179928,8 @@
       "source_location": {
         "heading": "GRS-051 - Manual Stop Precedence Over Every Automatic Resume",
         "heading_level": 3,
-        "heading_line": 538,
-        "line": 540,
+        "heading_line": 660,
+        "line": 662,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178244,8 +179945,8 @@
       "source_location": {
         "heading": "GRS-052 - Retired Child Goals And Their Replacement Owners",
         "heading_level": 3,
-        "heading_line": 594,
-        "line": 596,
+        "heading_line": 716,
+        "line": 718,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178261,8 +179962,8 @@
       "source_location": {
         "heading": "GRS-053 - Internal Caller Boundary And Workflow-Owned State",
         "heading_level": 3,
-        "heading_line": 637,
-        "line": 639,
+        "heading_line": 759,
+        "line": 761,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178278,8 +179979,8 @@
       "source_location": {
         "heading": "GRS-054 - Goal Change Authority And Two-Path Revision",
         "heading_level": 3,
-        "heading_line": 682,
-        "line": 684,
+        "heading_line": 804,
+        "line": 806,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178295,8 +179996,8 @@
       "source_location": {
         "heading": "GRS-055 - Goal And To-Dos Are Activity Domains",
         "heading_level": 3,
-        "heading_line": 745,
-        "line": 747,
+        "heading_line": 867,
+        "line": 869,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178312,8 +180013,8 @@
       "source_location": {
         "heading": "GRS-056 - Goal V1 To V2 Migration With Dropped-Field Custody",
         "heading_level": 3,
-        "heading_line": 804,
-        "line": 806,
+        "heading_line": 926,
+        "line": 928,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178329,8 +180030,8 @@
       "source_location": {
         "heading": "Working Notebook Authority Boundary Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 5606,
-        "line": 5610,
+        "heading_line": 5728,
+        "line": 5732,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178346,8 +180047,8 @@
       "source_location": {
         "heading": "18. Goal Activity Detail Presentation and Bound Plan Synchronization (APR-059)",
         "heading_level": 3,
-        "heading_line": 5650,
-        "line": 5668,
+        "heading_line": 5772,
+        "line": 5790,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178363,8 +180064,8 @@
       "source_location": {
         "heading": "GRS-060 - Historical child-status event disposition",
         "heading_level": 3,
-        "heading_line": 5713,
-        "line": 5715,
+        "heading_line": 5835,
+        "line": 5837,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178380,8 +180081,8 @@
       "source_location": {
         "heading": "GRS-061 - Historical Goal degradation and current projection quality",
         "heading_level": 3,
-        "heading_line": 5790,
-        "line": 5792,
+        "heading_line": 5912,
+        "line": 5914,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178397,8 +180098,8 @@
       "source_location": {
         "heading": "GRS-062 - Exact historical Goal scheduling contract",
         "heading_level": 3,
-        "heading_line": 5912,
-        "line": 5914,
+        "heading_line": 6034,
+        "line": 6036,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178414,8 +180115,8 @@
       "source_location": {
         "heading": "GRS-064 - Shared Goal Body Currentness And Accepted History",
         "heading_level": 3,
-        "heading_line": 6174,
-        "line": 6176,
+        "heading_line": 6296,
+        "line": 6298,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178431,8 +180132,8 @@
       "source_location": {
         "heading": "GRS-065 - Original Standard Workflow Certification Decision",
         "heading_level": 3,
-        "heading_line": 6275,
-        "line": 6277,
+        "heading_line": 6397,
+        "line": 6399,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178448,8 +180149,8 @@
       "source_location": {
         "heading": "GRS-066 - Original Goal creation command settlement",
         "heading_level": 2,
-        "heading_line": 6347,
-        "line": 6349,
+        "heading_line": 6469,
+        "line": 6471,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178465,8 +180166,8 @@
       "source_location": {
         "heading": "GRS-067 - Passive Creation Observation And Independent Command Result",
         "heading_level": 3,
-        "heading_line": 6429,
-        "line": 6431,
+        "heading_line": 6551,
+        "line": 6553,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178482,8 +180183,8 @@
       "source_location": {
         "heading": "GRS-068 - Original Objective Update Acceptance And Effect Settlement",
         "heading_level": 3,
-        "heading_line": 6514,
-        "line": 6515,
+        "heading_line": 6636,
+        "line": 6637,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178499,8 +180200,8 @@
       "source_location": {
         "heading": "GRS-069 - Exact historical goal.progressed contract",
         "heading_level": 3,
-        "heading_line": 6597,
-        "line": 6599,
+        "heading_line": 6719,
+        "line": 6721,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178516,8 +180217,8 @@
       "source_location": {
         "heading": "GRS-070 - Exact historical goal.replanned contract",
         "heading_level": 3,
-        "heading_line": 6689,
-        "line": 6691,
+        "heading_line": 6811,
+        "line": 6813,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178533,8 +180234,8 @@
       "source_location": {
         "heading": "GRS-071 - Exact historical goal.stopped contract",
         "heading_level": 3,
-        "heading_line": 6781,
-        "line": 6783,
+        "heading_line": 6903,
+        "line": 6905,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178550,8 +180251,8 @@
       "source_location": {
         "heading": "GRS-072 - Exact historical goal.verification_decided contract",
         "heading_level": 3,
-        "heading_line": 6872,
-        "line": 6874,
+        "heading_line": 6994,
+        "line": 6996,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178567,8 +180268,8 @@
       "source_location": {
         "heading": "GRS-073 - Current explicit Goal cancellation",
         "heading_level": 3,
-        "heading_line": 6964,
-        "line": 6966,
+        "heading_line": 7086,
+        "line": 7088,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178584,8 +180285,8 @@
       "source_location": {
         "heading": "GRS-074 - Original execution association authority",
         "heading_level": 3,
-        "heading_line": 7063,
-        "line": 7065,
+        "heading_line": 7185,
+        "line": 7187,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178601,8 +180302,8 @@
       "source_location": {
         "heading": "GRS-075 - Current Workflow Child-Goal Retirement Admission",
         "heading_level": 3,
-        "heading_line": 7180,
-        "line": 7182,
+        "heading_line": 7302,
+        "line": 7304,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178618,8 +180319,8 @@
       "source_location": {
         "heading": "Terminal branch preservation",
         "heading_level": 4,
-        "heading_line": 7262,
-        "line": 7270,
+        "heading_line": 7384,
+        "line": 7392,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178635,8 +180336,8 @@
       "source_location": {
         "heading": "Explicit current reader and later lifecycle boundary",
         "heading_level": 4,
-        "heading_line": 7462,
-        "line": 7476,
+        "heading_line": 7584,
+        "line": 7598,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178652,8 +180353,8 @@
       "source_location": {
         "heading": "Explicit unproved installation prerequisites",
         "heading_level": 4,
-        "heading_line": 7585,
-        "line": 7591,
+        "heading_line": 7707,
+        "line": 7713,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178669,8 +180370,8 @@
       "source_location": {
         "heading": "GRS-079 - Exact original Workflow started-v3 semantics and read roles",
         "heading_level": 3,
-        "heading_line": 7662,
-        "line": 7680,
+        "heading_line": 7784,
+        "line": 7802,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178686,8 +180387,8 @@
       "source_location": {
         "heading": "GRS-080 - Positive original cancelled-v3 semantics and bounded read roles",
         "heading_level": 3,
-        "heading_line": 7734,
-        "line": 7754,
+        "heading_line": 7856,
+        "line": 7876,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178703,8 +180404,8 @@
       "source_location": {
         "heading": "GRS-081 - Original Workflow Goal cancellation private current inspection",
         "heading_level": 3,
-        "heading_line": 7812,
-        "line": 7822,
+        "heading_line": 7934,
+        "line": 7944,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178720,8 +180421,8 @@
       "source_location": {
         "heading": "GRS-082 — Fresh Standard Workflow certification original source (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 7891,
-        "line": 7893,
+        "heading_line": 8013,
+        "line": 8015,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178737,8 +180438,8 @@
       "source_location": {
         "heading": "GRS-083 — Original certified producer composition and source-only authority (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 7988,
-        "line": 7990,
+        "heading_line": 8110,
+        "line": 8112,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178754,8 +180455,8 @@
       "source_location": {
         "heading": "GRS-084 — Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8048,
-        "line": 8050,
+        "heading_line": 8170,
+        "line": 8172,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178771,8 +180472,8 @@
       "source_location": {
         "heading": "GRS-085 — Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 8132,
-        "line": 8134,
+        "heading_line": 8254,
+        "line": 8256,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178788,8 +180489,8 @@
       "source_location": {
         "heading": "GRS-086 - Application Goal Birth Continuation And Versioned Custody",
         "heading_level": 3,
-        "heading_line": 8204,
-        "line": 8206,
+        "heading_line": 8326,
+        "line": 8328,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -178805,8 +180506,42 @@
       "source_location": {
         "heading": "GRS-087 - Immutable Goal Conversion And Linked Destination Birth",
         "heading_level": 3,
-        "heading_line": 8287,
-        "line": 8289,
+        "heading_line": 8409,
+        "line": 8411,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-1512",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "GRS-1512 - goal.paused: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 284,
+        "line": 286,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-1513",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "GRS-1513 - goal.resumed: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 344,
+        "line": 346,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -224849,6 +226584,176 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1500",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1500 - assistant_plan.build_started: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 29481,
+        "line": 29483,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1501",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1501 - assistant_plan.cancelled: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 29563,
+        "line": 29565,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1502",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1502 - assistant_plan.completed: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 29646,
+        "line": 29648,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1503",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1503 - assistant_plan.created: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 29728,
+        "line": 29730,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1504",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1504 - assistant_plan.exported: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 29810,
+        "line": 29812,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1505",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1505 - assistant_plan.version_created: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 29890,
+        "line": 29892,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1506",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1506 - assistant_plan.wizard_handoff_created: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 29972,
+        "line": 29974,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1507",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1507 - external_research.budget_denied: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30053,
+        "line": 30055,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1508",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1508 - external_research.finding_classified: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30132,
+        "line": 30134,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1509",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1509 - external_research.job_terminal: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30211,
+        "line": 30213,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "storage_batch_178_chat_runtime_state",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -224860,6 +226765,159 @@
         "heading_level": 3,
         "heading_line": 11305,
         "line": 11307,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1510",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1510 - external_research.packet_delivered: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30291,
+        "line": 30293,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1511",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1511 - external_research.topic_started: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30371,
+        "line": 30373,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1512",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1512 - goal.paused: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30451,
+        "line": 30453,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1513",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1513 - goal.resumed: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30535,
+        "line": 30537,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1514",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1514 - notebook.checkpoint_committed: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30619,
+        "line": 30621,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1515",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1515 - notebook.checkpoint_failed: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30700,
+        "line": 30702,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1516",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1516 - notebook.entry_committed: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30780,
+        "line": 30782,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1517",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1517 - notebook.entry_superseded: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30860,
+        "line": 30862,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-1518",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "SP-1518 - notebook.transition_state_changed: Storage adoption and value reuse",
+        "heading_level": 3,
+        "heading_line": 30940,
+        "line": 30942,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -243014,8 +245072,93 @@
       "source_location": {
         "heading": "WN-021 - App Scratch Notebook And Fenced Project Conversion",
         "heading_level": 3,
-        "heading_line": 929,
-        "line": 931,
+        "heading_line": 1222,
+        "line": 1224,
+        "path": "Plans/Working_Notebook.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "plan_unit_id": "WN-1514",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "WN-1514 - notebook.checkpoint_committed: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 882,
+        "line": 884,
+        "path": "Plans/Working_Notebook.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "plan_unit_id": "WN-1515",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "WN-1515 - notebook.checkpoint_failed: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 940,
+        "line": 942,
+        "path": "Plans/Working_Notebook.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "plan_unit_id": "WN-1516",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "WN-1516 - notebook.entry_committed: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 998,
+        "line": 1000,
+        "path": "Plans/Working_Notebook.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "plan_unit_id": "WN-1517",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "WN-1517 - notebook.entry_superseded: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1056,
+        "line": 1058,
+        "path": "Plans/Working_Notebook.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_w3g_phase1",
+      "gui_related": false,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "plan_unit_id": "WN-1518",
+      "reasoning_tier": "high",
+      "risk_class": "event_original_authority_or_replay_loss",
+      "source_location": {
+        "heading": "WN-1518 - notebook.transition_state_changed: prepared event contract",
+        "heading_level": 3,
+        "heading_line": 1113,
+        "line": 1115,
         "path": "Plans/Working_Notebook.md"
       },
       "status": "accepted",
@@ -243402,10 +245545,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 18959,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22167,
+    "node_count": 7483,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -720,6 +720,298 @@ The following durable event families are specified as candidates with planned pa
 
 ContractRef: ContractName:Plans/External_Research.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md
 
+<!-- W3G phase 1 owner block: newly authored, prepared without admission. -->
+
+### ERS-1507 - external_research.budget_denied: prepared event contract
+
+```yaml
+plan_unit_id: ERS-1507
+unit_type: requirement
+status: accepted
+owner_doc: Plans/External_Research.md
+canonical_text: Newly authored owner contract for external_research.budget_denied alone under deck-2 9.a A (DL-450);
+  prepared without admission. A denied admission records captured usage, bounded allowance, retained unresolved
+  usage and cap before the next request. It never denies a response that already happened, erases a retained unresolved
+  charge, or increments admitted-response count on refusal. Same-arm/same-stage averaging starts only after two
+  fully reconciled jobs.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/External_Research.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- external_research.budget_denied
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** ExternalResearch admission gate immediately before the next model request. Reuse ERS-008/009, research_budget_receipt and the actual durable request meter/native usage records. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1507 selects `Plans/event_authority_w3g/payloads/external_research_budget_denied.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. This family remains Project-only; no app research topic is invented. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. A denied admission records captured usage, bounded allowance, retained unresolved usage and cap before the next request. It never denies a response that already happened, erases a retained unresolved charge, or increments admitted-response count on refusal. Same-arm/same-stage averaging starts only after two fully reconciled jobs.
+
+**Replay, consumer and checkpoints.** SP-1507 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.external_research.budget_denied.history.v1@1.0.0` is the sole newly authored family history reader for External Research status/packet history under the research and chat owners. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1507 binds retention as `PENDING_RETENTION_DECISION`. G16 names planning-document annotations, not research budget refusals; no exact event retention assignment was found. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1261` and the `external_research.budget_denied` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1507, ContractName:Plans/storage-plan.md#SP-1507
+
+### ERS-1508 - external_research.finding_classified: prepared event contract
+
+```yaml
+plan_unit_id: ERS-1508
+unit_type: requirement
+status: accepted
+owner_doc: Plans/External_Research.md
+canonical_text: Newly authored owner contract for external_research.finding_classified alone under deck-2 9.a A
+  (DL-450); prepared without admission. Record one original finding classification and credit decision. correction/capability/product_choice/unsupported_or_covered
+  retain their exact meaning and landing path. credited requires the same delivered proposition and supporting passage;
+  partial is never credit; candidate remains outside the union with rejection checks. An adjudicator cannot add
+  to the union.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/External_Research.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- external_research.finding_classified
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** ExternalResearch finding classification/adjudication owner. Reuse ERS-004/013, research_finding_record and genuine delivered assertion/citation/union-owner evidence. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1508 selects `Plans/event_authority_w3g/payloads/external_research_finding_classified.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. This family remains Project-only; no app research topic is invented. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. Record one original finding classification and credit decision. correction/capability/product_choice/unsupported_or_covered retain their exact meaning and landing path. credited requires the same delivered proposition and supporting passage; partial is never credit; candidate remains outside the union with rejection checks. An adjudicator cannot add to the union.
+
+**Replay, consumer and checkpoints.** SP-1508 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.external_research.finding_classified.history.v1@1.0.0` is the sole newly authored family history reader for External Research status/packet history under the research and chat owners. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1508 binds retention as `PENDING_RETENTION_DECISION`. G16 does not name this research classification/credit family; the underlying finding/union record is separate. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1261` and the `external_research.finding_classified` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1508, ContractName:Plans/storage-plan.md#SP-1508
+
+### ERS-1509 - external_research.job_terminal: prepared event contract
+
+```yaml
+plan_unit_id: ERS-1509
+unit_type: requirement
+status: accepted
+owner_doc: Plans/External_Research.md
+canonical_text: Newly authored owner contract for external_research.job_terminal alone under deck-2 9.a A (DL-450);
+  prepared without admission. Exactly one terminal outcome finished/responses/time/budget/other names the genuine
+  bound_by. The runtime result and durable meter determine it, never an adapter label alone. Responses already made
+  remain recorded; missing native cost records preserve unresolved charges. Event delivery or replay never starts
+  a replacement job.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/External_Research.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- external_research.job_terminal
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** ExternalResearch job-end reconciliation owner after durable runtime result and request-meter capture. Reuse ERS-008/009/010, research_job_record, native runtime result, durable request meter and research_run_manifest. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1509 selects `Plans/event_authority_w3g/payloads/external_research_job_terminal.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. This family remains Project-only; no app research topic is invented. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. Exactly one terminal outcome finished/responses/time/budget/other names the genuine bound_by. The runtime result and durable meter determine it, never an adapter label alone. Responses already made remain recorded; missing native cost records preserve unresolved charges. Event delivery or replay never starts a replacement job.
+
+**Replay, consumer and checkpoints.** SP-1509 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.external_research.job_terminal.history.v1@1.0.0` is the sole newly authored family history reader for External Research status/packet history under the research and chat owners. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1509 binds retention as `PENDING_RETENTION_DECISION`. A research_job_id or manifest is not an Executor/PlanRun identity; G16 and Run year cannot supply an event clock by analogy. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1261` and the `external_research.job_terminal` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1509, ContractName:Plans/storage-plan.md#SP-1509
+
+### ERS-1510 - external_research.packet_delivered: prepared event contract
+
+```yaml
+plan_unit_id: ERS-1510
+unit_type: requirement
+status: accepted
+owner_doc: Plans/External_Research.md
+canonical_text: Newly authored owner contract for external_research.packet_delivered alone under deck-2 9.a A (DL-450);
+  prepared without admission. A delivered packet references its exact artifact and nonempty cards. Each card derives
+  from one capability or product_choice union finding. Text-only labels, one-at-a-time presentation and the DL-036
+  response set remain. Delivery approves nothing, lands no capability, writes no answer and performs no subject-owner
+  action.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/External_Research.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- external_research.packet_delivered
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** ExternalResearch packet owner after the chat artifact/decision-card owner confirms original delivery. Reuse ERS-005/007, research_decision_packet/research_decision_card and actual destination thread delivery receipt under DL-036. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1510 selects `Plans/event_authority_w3g/payloads/external_research_packet_delivered.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. This family remains Project-only; no app research topic is invented. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. A delivered packet references its exact artifact and nonempty cards. Each card derives from one capability or product_choice union finding. Text-only labels, one-at-a-time presentation and the DL-036 response set remain. Delivery approves nothing, lands no capability, writes no answer and performs no subject-owner action.
+
+**Replay, consumer and checkpoints.** SP-1510 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.external_research.packet_delivered.history.v1@1.0.0` is the sole newly authored family history reader for External Research status/packet history under the research and chat owners. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1510 binds retention as `PENDING_RETENTION_DECISION`. G16 covers the listed planning-document events, not this new research packet delivery event; chat artifact content remains separately governed. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1261` and the `external_research.packet_delivered` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1510, ContractName:Plans/storage-plan.md#SP-1510
+
+### ERS-1511 - external_research.topic_started: prepared event contract
+
+```yaml
+plan_unit_id: ERS-1511
+unit_type: requirement
+status: accepted
+owner_doc: Plans/External_Research.md
+canonical_text: Newly authored owner contract for external_research.topic_started alone under deck-2 9.a A (DL-450);
+  prepared without admission. The host freezes the exact Project/snapshot/brief and original protocol/runtime identities
+  before jobs. Discovery/study stages see only admitted inputs; frozen plans enter only reconcile/compare, and decisions/answers/packets
+  are never research input. A changed binary or post-job freeze fails closed. No missing Project or brief admits
+  a partial run.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/External_Research.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- external_research.topic_started
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** ExternalResearch topic admission host, before first job admission. Reuse ERS-002/003/014, exact real Project, frozen plans snapshot, product brief and original run manifest. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1511 selects `Plans/event_authority_w3g/payloads/external_research_topic_started.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. This family remains Project-only; no app research topic is invented. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. The host freezes the exact Project/snapshot/brief and original protocol/runtime identities before jobs. Discovery/study stages see only admitted inputs; frozen plans enter only reconcile/compare, and decisions/answers/packets are never research input. A changed binary or post-job freeze fails closed. No missing Project or brief admits a partial run.
+
+**Replay, consumer and checkpoints.** SP-1511 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.external_research.topic_started.history.v1@1.0.0` is the sole newly authored family history reader for External Research status/packet history under the research and chat owners. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1511 binds retention as `PENDING_RETENTION_DECISION`. G16 is not an exact assignment to research-topic start; frozen source and manifest retention do not automatically assign this extra event. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1261` and the `external_research.topic_started` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1511, ContractName:Plans/storage-plan.md#SP-1511
+
 ## 4. Integration Surfaces
 
 | Surface | Integration | Owner of surface |
