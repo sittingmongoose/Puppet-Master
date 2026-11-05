@@ -8325,6 +8325,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Contracts_V0.md#CV-420, ContractName:Plans/storage-plan.md#SP-426, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** Original stop source adoption: EP-1110/EP-1111 and SP-1110 supply the complete fresh birth, original source/method/result, first/full-value receipt and terminal publication contract.
+
 ### GRS-201 - Current goal_run.blocked contract
 
 ```yaml
@@ -8391,6 +8394,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Contracts_V0.md#CV-421, ContractName:Plans/storage-plan.md#SP-427, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** Original block source adoption: EP-1110/EP-1112 and SP-1111 supply the complete fresh birth, cause-owned original source/method/result, first/full-value receipt and scheduler publication contract.
+
 ### GRS-202 - Run-history projection extension for stopped and blocked rows
 
 ```yaml
@@ -8399,7 +8405,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It extends GRS-085's mandatory per-run projection, as DL-080 requires, to same-run goal_run.blocked v3 and goal_run.stopped v3 rows, only for a run whose birth used a fresh Workflow source edition that lists EP-200's writers. For such a run the reducer accepts started, then any of blocked and stopped by D-R16 and D-R21, blocked -> blocked and stopped -> stopped with a higher GoalRun revision, and positive D06 cancelled from blocked or stopped; certified from blocked or stopped is a conflicting lifecycle and halts. On every other birth, and for any v2 row of either family, the row stays unsupported and halts before it, exactly as GRS-085 says today. SP-428 owns the projection value and checkpoint delta.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It extends GRS-085's mandatory per-run projection, as DL-080 requires, to same-run goal_run.blocked v3 and goal_run.stopped v3 rows, only for a run whose birth used a fresh Workflow source edition that lists EP-200's writers. For such a run the reducer accepts started, then any of blocked and stopped by D-R16 and D-R21, blocked -> blocked and stopped -> stopped with a higher GoalRun revision, and positive D06 cancelled from blocked or stopped; certified from blocked or stopped is a conflicting lifecycle and halts. On every other birth, and for any v2 row of either family, the row stays unsupported and halts before it, exactly as GRS-085 says today. SP-428 explicitly adopts the concrete SP-1112 profile, physical keys, whole checkpoint schema and atomic CAS/cutover contract; GRS-1110 fixes the fresh-birth map.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -8451,7 +8457,7 @@ owner_hints:
 
 **Rule table** (same run, after a verified `goal_run.started`): `started -> blocked`, `started -> stopped`, `blocked -> blocked` (higher revision, new evidence), `blocked -> stopped`, `stopped -> stopped` (higher revision, new settlement or recovery evidence), `blocked -> cancelled` and `stopped -> cancelled` (positive D06), `started -> cancelled` and `started -> certified` as before. Halts: `blocked -> certified`, `stopped -> certified`, `stopped -> blocked`, anything after `cancelled` or `certified`, a revision that is not exactly one higher, a v2 row of either family, `goal_run.replanned` (still unsupported until its own contract). The projection never infers a Goal state, and a `stopped` row with `resumable=true` gives no resume authority.
 
-**Why only qualifying births.** GRS-085 is bound to the `all_writers.v7` birth and the `prepare.v2` producer source. A v7 birth cannot produce these rows (EP-200), so extending its reducer would change nothing real and would risk accepting rows from an unlisted writer. The extension therefore applies only where the source edition lists the writers.
+**Why only qualifying births.** GRS-085 is bound to the `all_writers.v7` birth and the `prepare.v2` producer source. A v7 birth cannot produce these rows (EP-200), so extending its reducer would change nothing real and would risk accepting rows from an unlisted writer. The extension therefore applies only to the genuine EP-1110 fresh source edition under GRS-1110; its installed descriptor is independently authenticated and cannot be supplied as an admission flag.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/storage-plan.md#SP-428, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Decision_Log.md#DL-080
 
@@ -8889,3 +8895,67 @@ The executing Workflow/run owns tool checks and evidence; Permissions owns polic
 The unchanged whole Project v2 resource `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` at `Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#` and original v1 compatibility route retain their exact historical bytes/semantics. Current four-state Goal/currentness and Workflow facts never fill historical gaps or resurrect old Goal structure. SP-433 owns the sole exact historical reader `storage.goal_tool_check_recorded_history_read.v1@1.0.0`, explicitly adopted by SP-339 pm inspect and F3-666 only for that EventRecord's original interpretation. Neither pm tail nor pm export invokes it; their generic raw read remains SP-339. No current Goal state, To-Do, notification, continuation, tool action, certification or replacement event is derived. Withdrawing this reader disables interpretation and preserves original custody. CV-426 qualifies every old current-write roster/matrix claim for this exact family. ATS-211 covers conditional original-lawful and refusal oracles; no historical instance or native reader is asserted.
 
 **Approved checkpoint follow-up.** Withdraw only `goal.tool_check_recorded`'s unused application edition at the next registry checkpoint under Card 3 A; keep old Project records, v2 schema and retention unchanged. This branch records the approved instruction and edits neither registry nor app schema/source edition. It does not choose permanent frozen registration or future app writers.
+
+
+### GRS-1110 - Fresh-birth stop/block mapping and passive history
+
+```yaml
+plan_unit_id: GRS-1110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Newly authored DL-045 owner contract. GRS-200 independently adopts EP-1111/SP-1110 for goal_run.stopped;
+  GRS-201 independently adopts EP-1112/SP-1111 for goal_run.blocked. GRS-202 adopts EP-1110 qualifying fresh
+  birth and the concrete SP-1112/SB5 consumer/checkpoint profile. For GRS-085 fresh-birth mapping only, the
+  full original started/positive-D06-cancelled/clean-certified branch arguments and all original source predicates
+  are explicitly rebound through resource-map.json to the fresh source edition; historical v7/native generations
+  retain GRS-085 unchanged. Stop and block events preserve Goal objective/revision/four-state lifecycle and
+  never grant a resume, Replan, action or certification. Every source transition uses actual D01/native revision,
+  exact cause/settlement and first receipt; readers independently resolve original source and current disclosure
+  fences before and after helpers. Application goal_run.stopped remains Jared question 7.a; no application contract
+  or answer is authored. Application goal_run.blocked remains dormant.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- GRS-085
+- GRS-200
+- GRS-201
+- GRS-202
+- EP-1110
+- EP-1111
+- EP-1112
+- SP-1112
+unblocks: []
+acceptance_criteria:
+- Fresh mapping never enrolls an old birth or upgrades an old generation.
+- Each stop/block original source joins unchanged Goal context and advancing native revision field by field.
+- Historical lawful originals survive current live-state/writer changes; current views require exact complete
+  frontier and native/Goal graph.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/Executor_Protocol.md#EP-1111, ContractName:Plans/Executor_Protocol.md#EP-1112, ContractName:Plans/storage-plan.md#SP-1112

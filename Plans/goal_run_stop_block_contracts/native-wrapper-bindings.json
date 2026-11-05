@@ -1,0 +1,173 @@
+{
+  "status": "PREPARED_NO_REGISTRY_CHANGE",
+  "bindings": [
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v8",
+      "new_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v8.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageWorkflowBirth",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+      "new_schema_id": "pm.storage_value.executor_workflow_current_pointer.v2.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageCurrentPointer",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+      "new_schema_id": "pm.storage_value.executor_workflow_workflow_head.v8.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageWorkflowHead",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "new_schema_id": "pm.storage_value.executor_workflow_workflow_update.v8.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageWorkflowUpdate",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+      "new_schema_id": "pm.storage_value.executor_workflow_inventory_head.v2.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageInventoryHead",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+      "new_schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageCoverageBirth",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+      "new_schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageSchedulerControl",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_dispatch_admission.v2",
+      "new_schema_id": "pm.storage_value.executor_workflow_dispatch_admission.v2.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageDispatchAdmission",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_handoff_ack.v2",
+      "new_schema_id": "pm.storage_value.executor_workflow_handoff_ack.v2.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageHandoffAck",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_scheduler_stop.v2",
+      "new_schema_id": "pm.storage_value.executor_workflow_scheduler_stop.v2.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageSchedulerStop",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_mutation_origin.v2",
+      "new_schema_id": "pm.storage_value.executor_workflow_mutation_origin.v2.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageMutationOrigin",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v8",
+      "new_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v8.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json#/$defs/StorageWorkflowMutationOrigin",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_standard_result.v4",
+      "new_schema_id": "pm.storage_value.workflow_standard_result.v4.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/6446a67755ae7f5b0c5cd7c158eb68721db044bbea620c23c9d92e0d19291fd9.schema.json#/$defs/StorageWorkflowResult",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_standard_origin.v4",
+      "new_schema_id": "pm.storage_value.workflow_standard_origin.v4.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/6446a67755ae7f5b0c5cd7c158eb68721db044bbea620c23c9d92e0d19291fd9.schema.json#/$defs/StorageWorkflowOrigin",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+      "new_schema_id": "pm.storage_value.workflow_cancel_intent.v3.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3251d11f5333041b3b8b9832412251d60d2223221da082a801f58a03e6a136ea.schema.json#/$defs/StorageIntent",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_cancel_control.v3",
+      "new_schema_id": "pm.storage_value.workflow_cancel_control.v3.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3251d11f5333041b3b8b9832412251d60d2223221da082a801f58a03e6a136ea.schema.json#/$defs/StorageControl",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_cancel_result.v7",
+      "new_schema_id": "pm.storage_value.workflow_cancel_result.v7.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3251d11f5333041b3b8b9832412251d60d2223221da082a801f58a03e6a136ea.schema.json#/$defs/StorageResult",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_cancel_origin.v7",
+      "new_schema_id": "pm.storage_value.workflow_cancel_origin.v7.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3251d11f5333041b3b8b9832412251d60d2223221da082a801f58a03e6a136ea.schema.json#/$defs/StorageOrigin",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_cancel_event_candidate.v3",
+      "new_schema_id": "pm.storage_value.workflow_cancel_event_candidate.v3.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3251d11f5333041b3b8b9832412251d60d2223221da082a801f58a03e6a136ea.schema.json#/$defs/StorageEventCandidate",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_start_candidate.v6",
+      "new_schema_id": "pm.storage_value.workflow_start_candidate.v6.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3575a81a5a16e06dd0de221c640d1f798cae22abbc07270c4c3f79186527bb6a.schema.json#/$defs/StorageCandidate",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_start_commit.v1",
+      "new_schema_id": "pm.storage_value.workflow_start_commit.v1.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3575a81a5a16e06dd0de221c640d1f798cae22abbc07270c4c3f79186527bb6a.schema.json#/$defs/StorageCommit",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_start_control.v1",
+      "new_schema_id": "pm.storage_value.workflow_start_control.v1.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3575a81a5a16e06dd0de221c640d1f798cae22abbc07270c4c3f79186527bb6a.schema.json#/$defs/StorageControl",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_start_origin.v6",
+      "new_schema_id": "pm.storage_value.workflow_start_origin.v6.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/3575a81a5a16e06dd0de221c640d1f798cae22abbc07270c4c3f79186527bb6a.schema.json#/$defs/StorageOrigin",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    },
+    {
+      "old_schema_id": "pm.storage_value.workflow_standard_capture_origin.v4",
+      "new_schema_id": "pm.storage_value.workflow_standard_capture_origin.v4.stop_block.v1",
+      "new_schema_version": "1.0.0",
+      "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/standard/80ee3f944d0de51e321abff6f1b4edd6e1d1e46dd11f8f63c82e65ebe2d301eb.schema.json#/$defs/StorageStandardCaptureOrigin",
+      "key_codec": "Exact original physical key codec, only on genuinely absent fresh-birth keys; no old row reinterpretation."
+    }
+  ]
+}

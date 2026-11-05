@@ -1,0 +1,406 @@
+{
+  "schema_version": "1.0.0",
+  "oracle_units": [
+    "ATS-1110",
+    "ATS-1111",
+    "ATS-1112"
+  ],
+  "claim": "TEST_ONLY bounded original-owner store state machine; never actual installation or complete native integration.",
+  "common_negatives": [
+    {
+      "id": "old_profile",
+      "path": [
+        "profile"
+      ],
+      "value": "pm.executor.workflow_source.all_writers.v7",
+      "refusal": "registration/profile"
+    },
+    {
+      "id": "forged_birth_operation",
+      "path": [
+        "actual_birth",
+        "original_registration"
+      ],
+      "value": "forged",
+      "refusal": "birth/original"
+    },
+    {
+      "id": "forged_birth_profile",
+      "path": [
+        "actual_birth",
+        "profile"
+      ],
+      "value": "forged",
+      "refusal": "birth/profile"
+    },
+    {
+      "id": "writer_not_registered",
+      "path": [
+        "actual_registration",
+        "writers"
+      ],
+      "value": [],
+      "refusal": "registration/writer"
+    },
+    {
+      "id": "foreign_birth",
+      "path": [
+        "actual_birth",
+        "scope",
+        "project_id"
+      ],
+      "value": "foreign",
+      "refusal": "birth/scope"
+    },
+    {
+      "id": "wrong_route",
+      "path": [
+        "route"
+      ],
+      "value": "cmd.runtime.replan",
+      "refusal": "route"
+    },
+    {
+      "id": "permission_denied",
+      "path": [
+        "permission"
+      ],
+      "value": false,
+      "refusal": "authority/permission"
+    },
+    {
+      "id": "recovery_held",
+      "path": [
+        "recovery_hold"
+      ],
+      "value": true,
+      "refusal": "authority/recovery"
+    },
+    {
+      "id": "storage_readonly",
+      "path": [
+        "storage_writable"
+      ],
+      "value": false,
+      "refusal": "authority/storage"
+    },
+    {
+      "id": "writer_withdrawn",
+      "path": [
+        "writer_withdrawn"
+      ],
+      "value": true,
+      "refusal": "writer/withdrawal"
+    },
+    {
+      "id": "missing_native",
+      "path": [
+        "native_key"
+      ],
+      "value": "missing",
+      "refusal": "native/exists"
+    },
+    {
+      "id": "missing_cause",
+      "path": [
+        "cause_key"
+      ],
+      "value": "missing",
+      "refusal": "cause/exists"
+    },
+    {
+      "id": "expected_revision_wrong_type",
+      "path": [
+        "expected_revision"
+      ],
+      "value": "3",
+      "refusal": "native/revision_type"
+    },
+    {
+      "id": "stale_expected_revision",
+      "path": [
+        "expected_revision"
+      ],
+      "value": 2,
+      "refusal": "native/revision"
+    },
+    {
+      "id": "current_replay_only",
+      "path": [
+        "event",
+        "replay_policy"
+      ],
+      "value": "projector_replay_only",
+      "refusal": "event/replay_policy"
+    },
+    {
+      "id": "wrong_append_family",
+      "path": [
+        "late_append_family"
+      ],
+      "value": "goal.completed",
+      "refusal": "event/dispatch"
+    },
+    {
+      "id": "wrong_family",
+      "path": [
+        "event",
+        "event_type"
+      ],
+      "value": "goal.completed",
+      "refusal": "event/family"
+    },
+    {
+      "id": "foreign_scope",
+      "path": [
+        "event",
+        "project_id"
+      ],
+      "value": "foreign",
+      "refusal": "event/scope"
+    },
+    {
+      "id": "foreign_run",
+      "path": [
+        "event",
+        "run_id"
+      ],
+      "value": "foreign",
+      "refusal": "event/run"
+    },
+    {
+      "id": "wrong_goal_context",
+      "path": [
+        "event",
+        "payload",
+        "goal_revision"
+      ],
+      "value": 99,
+      "refusal": "event/goal_revision"
+    },
+    {
+      "id": "wrong_expected_native",
+      "path": [
+        "event",
+        "payload",
+        "expected_goal_run_revision"
+      ],
+      "value": 2,
+      "refusal": "event/expected"
+    },
+    {
+      "id": "wrong_next_native",
+      "path": [
+        "event",
+        "payload",
+        "goal_run_revision"
+      ],
+      "value": 5,
+      "refusal": "event/successor"
+    },
+    {
+      "id": "forged_inner_key",
+      "path": [
+        "event",
+        "payload",
+        "idempotency_key"
+      ],
+      "value": "forged",
+      "refusal": "event/inner_key"
+    },
+    {
+      "id": "foreign_payload_selector",
+      "path": [
+        "event",
+        "payload_schema_id"
+      ],
+      "value": "wrong",
+      "refusal": "event/payload_selector"
+    },
+    {
+      "id": "arbitrary_semantic_digest",
+      "path": [
+        "supplied_digest"
+      ],
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "refusal": "event/digest"
+    },
+    {
+      "id": "native_changed_at_final",
+      "path": [
+        "final_change"
+      ],
+      "value": "native",
+      "refusal": "final/native"
+    },
+    {
+      "id": "permission_changed_at_final",
+      "path": [
+        "final_change"
+      ],
+      "value": "permission",
+      "refusal": "final/permission"
+    },
+    {
+      "id": "source_changed_at_final",
+      "path": [
+        "final_change"
+      ],
+      "value": "source",
+      "refusal": "final/source"
+    },
+    {
+      "id": "outer_inner_requested_account_ref",
+      "path": [
+        "event",
+        "requested_account_ref"
+      ],
+      "value": "different",
+      "refusal": "event/join/requested_account_ref"
+    },
+    {
+      "id": "outer_inner_effective_account_ref",
+      "path": [
+        "event",
+        "effective_account_ref"
+      ],
+      "value": "different",
+      "refusal": "event/join/effective_account_ref"
+    },
+    {
+      "id": "outer_inner_actor_ref",
+      "path": [
+        "event",
+        "actor_ref"
+      ],
+      "value": "different",
+      "refusal": "event/join/actor_ref"
+    },
+    {
+      "id": "outer_inner_correlation_id",
+      "path": [
+        "event",
+        "correlation_id"
+      ],
+      "value": "different",
+      "refusal": "event/join/correlation_id"
+    },
+    {
+      "id": "cause_scope",
+      "path": [
+        "sources",
+        "$cause",
+        "scope"
+      ],
+      "value": {
+        "storage_instance_id": "foreign"
+      },
+      "refusal": "cause/scope"
+    },
+    {
+      "id": "cause_operation_id",
+      "path": [
+        "sources",
+        "$cause",
+        "operation_id"
+      ],
+      "value": "foreign",
+      "refusal": "cause/operation"
+    },
+    {
+      "id": "cause_native_revision",
+      "path": [
+        "sources",
+        "$cause",
+        "native_revision"
+      ],
+      "value": 2,
+      "refusal": "cause/revision"
+    },
+    {
+      "id": "cause_kind",
+      "path": [
+        "sources",
+        "$cause",
+        "kind"
+      ],
+      "value": "wrong",
+      "refusal": "cause/kind"
+    },
+    {
+      "id": "cause_issuer",
+      "path": [
+        "sources",
+        "$cause",
+        "issuer"
+      ],
+      "value": "wrong",
+      "refusal": "cause/issuer"
+    },
+    {
+      "id": "cause_complete",
+      "path": [
+        "sources",
+        "$cause",
+        "complete"
+      ],
+      "value": false,
+      "refusal": "cause/complete"
+    },
+    {
+      "id": "cause_unresolved",
+      "path": [
+        "sources",
+        "$cause",
+        "unresolved"
+      ],
+      "value": [
+        "pending"
+      ],
+      "refusal": "cause/unresolved"
+    },
+    {
+      "id": "native_foreign_scope",
+      "path": [
+        "sources",
+        "$native",
+        "scope"
+      ],
+      "value": {
+        "project_id": "foreign"
+      },
+      "refusal": "native/scope"
+    },
+    {
+      "id": "foreign_inner_event_family",
+      "path": [
+        "event",
+        "payload",
+        "event_name"
+      ],
+      "value": "goal.completed",
+      "refusal": "event/payload_schema"
+    },
+    {
+      "id": "foreign_inner_project",
+      "path": [
+        "event",
+        "payload",
+        "project_id"
+      ],
+      "value": "foreign",
+      "refusal": "event/payload_scope"
+    },
+    {
+      "id": "foreign_inner_run",
+      "path": [
+        "event",
+        "payload",
+        "payload",
+        "goal_run_id"
+      ],
+      "value": "foreign",
+      "refusal": "event/payload_run"
+    }
+  ]
+}

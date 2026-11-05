@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28673-L30396
+Source lines: L28679-L30599
 
-Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
+Source SHA256: `a571ff92dcc112d94254aa5c14574b037c930f941a1565a8e1b6ef3a74f591fe`
 
 ---
 
@@ -1732,3 +1732,200 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 **Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-207, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+
+### SP-1110 - Original goal_run.stopped operation custody and reference route
+
+```yaml
+plan_unit_id: SP-1110
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored DL-045 owner contract for exactly goal_run.stopped Project v3; SP-426 adopts
+  this complete SB4 physical contract by name. Each original StopIntent/Control/NativeResult/Origin/Result has
+  its own closed 1.0.0 MessagePack wrapper and exact reversible storage/Project/run/operation key in physical-families.json.
+  Full original native/D01/cause/Goal and Event sources are independently acquired through SB1; selectors and
+  hashes are transport only. Adopt SP-286 eleven-field first AppendReceipt and strict v2 full-value original
+  resolution, ordinary SeglogFrameV2/Storage append, CV-339 caller-semantic retry domain and SP-337 durable
+  content-addressed packs for every oversized source/Event/terminal part. Measure the complete encoded wrapper
+  after externalization against 16 KiB, refusing incomplete or over-limit compact records without truncating
+  required members. Original non-rebuildable custody reuses RP-AUTHORITY-INDEFINITE and coherent native/D01/cause/Event/frame/first-receipt/payload
+  backup; referenced content keeps its own owner lifetime. Current access/deletion/hold/restore controls apply
+  to every read/restore; no missing original is recreated. Same operation returns original results, unknown
+  stays recovery_required, withdrawal cuts off new writes at the final predicate and withdraws readers separately.
+  Prepared without admission; no registry is changed.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- CV-1110
+- SP-426
+- SP-286
+- SP-337
+- CV-339
+unblocks: []
+acceptance_criteria:
+- Every original operation key and complete wrapper resolves to its own exact schema/version and authentic issuing
+  provenance.
+- Independently resolved original receipt/Event metadata and every semantic retry field agree; no arbitrary
+  digest is trusted.
+- All stored parts, SP-337 refs, coherent backup/restore and source lifetime are checked without creating a
+  new retention policy.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-1111, ContractName:Plans/storage-plan.md#SP-426, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337, ContractName:Plans/Contracts_V0.md#CV-339
+
+
+### SP-1111 - Original goal_run.blocked operation custody and reference route
+
+```yaml
+plan_unit_id: SP-1111
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored DL-045 owner contract for exactly goal_run.blocked Project v3; SP-427 adopts
+  this complete SB4 physical contract by name. Each original BlockIntent/Control/NativeResult/Origin/Result
+  has its own closed 1.0.0 MessagePack wrapper and exact reversible storage/Project/run/operation key in physical-families.json.
+  Full original native/D01/cause/Goal and Event sources are independently acquired through SB1; selectors and
+  hashes are transport only. Adopt SP-286 eleven-field first AppendReceipt and strict v2 full-value original
+  resolution, ordinary SeglogFrameV2/Storage append, CV-339 caller-semantic retry domain and SP-337 durable
+  content-addressed packs for every oversized source/Event/terminal part. Measure the complete encoded wrapper
+  after externalization against 16 KiB, refusing incomplete or over-limit compact records without truncating
+  required members. Original non-rebuildable custody reuses RP-AUTHORITY-INDEFINITE and coherent native/D01/cause/Event/frame/first-receipt/payload
+  backup; referenced content keeps its own owner lifetime. Current access/deletion/hold/restore controls apply
+  to every read/restore; no missing original is recreated. Same operation returns original results, unknown
+  stays recovery_required, withdrawal cuts off new writes at the final predicate and withdraws readers separately.
+  Prepared without admission; no registry is changed.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- CV-1110
+- SP-427
+- SP-286
+- SP-337
+- CV-339
+unblocks: []
+acceptance_criteria:
+- Every original operation key and complete wrapper resolves to its own exact schema/version and authentic issuing
+  provenance.
+- Independently resolved original receipt/Event metadata and every semantic retry field agree; no arbitrary
+  digest is trusted.
+- All stored parts, SP-337 refs, coherent backup/restore and source lifetime are checked without creating a
+  new retention policy.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-1112, ContractName:Plans/storage-plan.md#SP-427, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-337, ContractName:Plans/Contracts_V0.md#CV-339
+
+
+### SP-1112 - Concrete fresh stop/block projection and checkpoint
+
+```yaml
+plan_unit_id: SP-1112
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored DL-045 owner contract adopted by SP-428 and GRS-202. SB5 defines owner.goal_run.stop_block.project_prefix.v1
+  and sole lower publisher owner.storage.goal_run.stop_block.publish.v1, plus read_historical.v1/read_current.v1
+  under owner.goal_run.stop_block, version 1.0.0. Exact physical row is goal_run_stop_block_projection.v1:K(project_id):K(goal_run_id)
+  in goal_run_stop_block_projection.v1@<generation_id>; exact checkpoint in checkpoints is goal_run_stop_block_checkpoint.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id).
+  Closed StorageProjection/StorageCheckpoint roots are in contracts.schema.json. Adopt SP-278 and DL-076 full
+  nine-field durable tokens including the whole thirteen-field source_selection; no redb_snapshot_id is persisted.
+  Actual generic full global prefix, original native birth/profile/cause/first receipt and each complete original
+  branch authenticate every row, including off-run no-ops and genuine gap proofs. SB5 fixes anchor/frontier
+  recipes, full preimage CAS, atomic row-plus-checkpoint publication, isolated staging/full-scan rebuild and
+  complete-current-frontier cutover. Existing v7 roots/generations are immutable. Reuse RP-PROJECTION-3GEN,
+  existing 604800-second retired eligibility and true holds; derived values are excluded from backup and rebuilt
+  after restore. No current view from a historical prefix or pending original result, and no action authority
+  follows.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- SP-428
+- SP-278
+- SP-1110
+- SP-1111
+- GRS-202
+unblocks: []
+acceptance_criteria:
+- Full original source and generic frontier are independently authenticated before helper calls and after the
+  last helper at each owner boundary.
+- Entire row/root/frontier transaction commits together or neither, and stale generic or own preimages abort.
+- Cutover selects only a fully covered staged current frontier; unsupported/malformed rows halt before the row
+  without checkpoint progress.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-428, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-1110, ContractName:Plans/storage-plan.md#SP-1111, ContractName:Plans/Goal_Runtime_System.md#GRS-202

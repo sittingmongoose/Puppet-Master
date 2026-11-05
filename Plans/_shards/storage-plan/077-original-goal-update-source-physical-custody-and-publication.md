@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24514-L27210
+Source lines: L24514-L27216
 
-Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
+Source SHA256: `a571ff92dcc112d94254aa5c14574b037c930f941a1565a8e1b6ef3a74f591fe`
 
 ---
 
@@ -2423,6 +2423,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** This exact stopped family explicitly adopts SP-1110 original physical operation/source/receipt custody and SB2/SB4 SP-337 reference/size/backup/withdrawal protocols.
+
 ### SP-427 - Current goal_run.blocked persistence, identity and withdrawal
 
 ```yaml
@@ -2490,6 +2493,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** This exact blocked family explicitly adopts SP-1111 original physical operation/source/receipt custody and SB3/SB4 SP-337 reference/size/backup/withdrawal protocols.
+
 ### SP-428 - Run-history projection delta for stopped and blocked rows
 
 ```yaml
@@ -2553,7 +2559,7 @@ owner_hints:
 
 **Value delta.** The added members are `lifecycle_status` (`started | blocked | stopped | cancelled | certified`), `projected_goal_run_revision` (canonical nonnegative integer) and `last_supported_event_id`. A blocked row also records its `blocked_reason_code` and `block_receipt_ref`; a stopped row records `stop_reason_code`, `resumable` and `safe_point_ref`. They are copied from the verified original row only; nothing is derived from current native state.
 
-**Physical families and retention.** The value and checkpoint stay in the derived redb file and are never backed up (DL-270, BRS-027/028); a restore rebuilds them. `RP-PROJECTION-3GEN` governs generations. The schema version of the new profile and its physical key recipe are fixed when the fresh Workflow source edition that qualifies a birth is written; until then no qualifying birth exists and nothing is stored under this profile.
+**Physical families and retention.** The value and checkpoint stay in the derived redb file and are never backed up (DL-270, BRS-027/028); a restore rebuilds them. `RP-PROJECTION-3GEN` governs generations. SP-1112 now fixes the complete 1.0.0 profile, exact physical keys, full StorageProjection/StorageCheckpoint schemas, anchor/frontier and CAS/cutover protocol for EP-1110 fresh births. Installation and per-family selector adoption remain separate; no existing birth or generation is converted.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-312, ContractName:Plans/storage-plan.md#SP-317, ContractName:Plans/Decision_Log.md#DL-080
 

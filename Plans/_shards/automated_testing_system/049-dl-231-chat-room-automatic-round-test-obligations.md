@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7471
+Source lines: L6715-L7658
 
-Source SHA256: `441121857cf08caee41815ac7bd0b3b7feec2957f3fd96cbb297fdd72571134d`
+Source SHA256: `bbd961ea65f8c2ae357ea3538d4f73aa3c539e8a78976764ae68daedbdf127a2`
 
 ---
 
@@ -710,7 +710,7 @@ owner_hints:
 - Plans/Automated_Testing_System.md
 ```
 
-The fixture lists, per family, what stays open: the fresh Workflow source edition that installs EP-200's writers, and native settlement, append and projector evidence.
+The original ATS-212 fixture remains a bounded table/model suite. ATS-1110 independently adopts the EP-1111 stopped source paths; ATS-1111 independently adopts the EP-1112 blocked source paths; ATS-1112 adopts the EP-1110 fresh source and SP-1112 projection/checkpoint paths. The fresh source contract is now authored; complete inherited native-argument/custody oracle integration and the shared sweep remain open. Native settlement, append and projector execution stays NOT_RUN.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
 
@@ -765,3 +765,190 @@ The independent exact families goal.blocked (GRS-203/SP-429/CV-422) and goal.com
 No native execution is claimed. The physical original host source/pending-result edition and native method installation remain unbound in GRS-203/204 and SP-429/430; these oracle cells stay PARTIAL. A missing ordinary contract is not a new Jared product question. DL-081 exception-route integration is separately refused until Goal/Workflow/HITL owns its actual original authority.
 
 Round 1 oracle qualification (ATS-210/212): replay-only normal append and equal retry refuse before dedupe; semantic-body comparison is computed from CV-339 caller fields, with Storage-only sequence/observed/persisted changes returning the original receipt. Cancellation late assignment compares the complete key set and all immutable members. Stop/block projection tests verified original rows, original admitted source/installed writers/profile, authentic-birth descriptor binding, exact expected and successor revisions, new repeated evidence and matching Storage/checkpoint identities. Positive fresh-source fixtures are explicitly conditional and do not install a Workflow edition. goal.updated, goal_run.stopped and goal_run.blocked retain PARTIAL oracle cells alongside the already acknowledged producer/coordinator/current-inspection gaps.
+
+
+### ATS-1110 - Original stopped source-path oracles
+
+```yaml
+plan_unit_id: ATS-1110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored DL-045 owner contract extending ATS-212 for stop. Plans/goal_run_stop_block_contracts/oracle-fixtures.json
+  and python3 scripts/pm_goal_own_a_oracles.py name separate complete-path test-only source-store cases, original
+  request/cause/native/D01/frozen Event/first receipt/publication or source/reducer/checkpoint paths, immutable
+  lost-ack recovery, exact family/selector/identity and source withdrawal. Legal/repeated/illegal edges, original
+  receipts, semantic conflict, replay-only refusal, malformed/foreign source/format/type inputs, oversized references,
+  crash/CAS/cutover and lawful retained history are independently specified. Test-only owner registries are
+  synthetic and confer no actual native source installation. Every new predicate names its single-defect negative
+  in the emitted inventory for the shared guard-isolation sweep; a synthetic descriptor or missing full native
+  argument never upgrades a grade. Original DG checkers remain required; native execution stays NOT_RUN. Full
+  inherited native schema/source integration and shared number/format/guard machinery are reported independently
+  where not exercised, with PARTIAL oracle grade until closed.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- ATS-212
+- EP-1111
+- SP-1110
+unblocks: []
+acceptance_criteria:
+- Separate stop positives and one-defect negatives run through the declared whole bounded path, not a sibling
+  case.
+- Original source-store bytes are independently resolved; claimed matching flags or digests cannot authorize
+  an operation.
+- Report actual case counts/exit codes, uncovered original boundaries and every guard-to-negative mapping without
+  overstating native or depth status.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-212, ContractName:Plans/Executor_Protocol.md#EP-1111, ContractName:Plans/storage-plan.md#SP-1110
+
+
+### ATS-1111 - Original blocked source-path oracles
+
+```yaml
+plan_unit_id: ATS-1111
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored DL-045 owner contract extending ATS-212 for block. Plans/goal_run_stop_block_contracts/oracle-fixtures.json
+  and python3 scripts/pm_goal_own_a_oracles.py name separate complete-path test-only source-store cases, original
+  request/cause/native/D01/frozen Event/first receipt/publication or source/reducer/checkpoint paths, immutable
+  lost-ack recovery, exact family/selector/identity and source withdrawal. Legal/repeated/illegal edges, original
+  receipts, semantic conflict, replay-only refusal, malformed/foreign source/format/type inputs, oversized references,
+  crash/CAS/cutover and lawful retained history are independently specified. Test-only owner registries are
+  synthetic and confer no actual native source installation. Every new predicate names its single-defect negative
+  in the emitted inventory for the shared guard-isolation sweep; a synthetic descriptor or missing full native
+  argument never upgrades a grade. Original DG checkers remain required; native execution stays NOT_RUN. Full
+  inherited native schema/source integration and shared number/format/guard machinery are reported independently
+  where not exercised, with PARTIAL oracle grade until closed.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- ATS-212
+- EP-1112
+- SP-1111
+unblocks: []
+acceptance_criteria:
+- Separate block positives and one-defect negatives run through the declared whole bounded path, not a sibling
+  case.
+- Original source-store bytes are independently resolved; claimed matching flags or digests cannot authorize
+  an operation.
+- Report actual case counts/exit codes, uncovered original boundaries and every guard-to-negative mapping without
+  overstating native or depth status.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-212, ContractName:Plans/Executor_Protocol.md#EP-1112, ContractName:Plans/storage-plan.md#SP-1111
+
+
+### ATS-1112 - Fresh source and projection/checkpoint oracles
+
+```yaml
+plan_unit_id: ATS-1112
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored DL-045 owner contract extending ATS-212 for projection. Plans/goal_run_stop_block_contracts/oracle-fixtures.json
+  and python3 scripts/pm_goal_own_a_oracles.py name separate complete-path test-only source-store cases, original
+  request/cause/native/D01/frozen Event/first receipt/publication or source/reducer/checkpoint paths, immutable
+  lost-ack recovery, exact family/selector/identity and source withdrawal. Legal/repeated/illegal edges, original
+  receipts, semantic conflict, replay-only refusal, malformed/foreign source/format/type inputs, oversized references,
+  crash/CAS/cutover and lawful retained history are independently specified. Test-only owner registries are
+  synthetic and confer no actual native source installation. Every new predicate names its single-defect negative
+  in the emitted inventory for the shared guard-isolation sweep; a synthetic descriptor or missing full native
+  argument never upgrades a grade. Original DG checkers remain required; native execution stays NOT_RUN. Full
+  inherited native schema/source integration and shared number/format/guard machinery are reported independently
+  where not exercised, with PARTIAL oracle grade until closed.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- ATS-212
+- EP-1110
+- SP-1112
+- GRS-1110
+unblocks: []
+acceptance_criteria:
+- Separate projection positives and one-defect negatives run through the declared whole bounded path, not a
+  sibling case.
+- Original source-store bytes are independently resolved; claimed matching flags or digests cannot authorize
+  an operation.
+- Report actual case counts/exit codes, uncovered original boundaries and every guard-to-negative mapping without
+  overstating native or depth status.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-212, ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/storage-plan.md#SP-1112, ContractName:Plans/Goal_Runtime_System.md#GRS-1110

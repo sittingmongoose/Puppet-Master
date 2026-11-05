@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L7319-L8512
+Source lines: L7319-L8515
 
-Source SHA256: `b9791ffd5a1fbb0d1329e21e37500f4db8c6a1ee11d4deaf620ebbc628799e59`
+Source SHA256: `6f4fb34c9b4fb7cb3a75101f9b26ef6bd745ec8d44175fb5b3c8931e58e22636`
 
 ---
 
@@ -390,6 +390,9 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, ContractName:Plans/executor_cancellation_contracts/realm-entry-boundaries.json, ContractName:Plans/executor_cancellation_contracts/physical-families.json, ContractName:Plans/executor_cancellation_schema_resources.json
+
+
+**DG-OWN-A adoption.** Fresh stop/block adoption: EP-1110 supplies a separately named whole fresh source edition; EP-1111/EP-1112 are its original stop/block participants. Every v7/retained branch of this unit stays unchanged.
 
 ### EP-119 - Original bounded safe-stop, FileSafe and disposable Process sources
 
