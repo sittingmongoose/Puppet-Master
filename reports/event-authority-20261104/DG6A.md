@@ -1,3 +1,78 @@
+# DG6A — Sweep part 1 (text pass)
+
+Branch `plans/ea-w2-gui-concerns-20261104`; lane input `5c7b434364d88fe44cffa60185237ad6f7298101`; rebased onto `origin/main` `2989975e8f8a4a1e49235e8ae2095b3df7ea0321`. Technical head `1a3c3be654` (citations `72326566ea`; self-grade relocation `1a3c3be654`); this report commit is self-inclusive. Text pass only: rebase, landed citations, deck confirmation, checker runs, regeneration. No checker, fixture, schema or proof edit; no Decision Log entry, admission, registry append or governance artifact.
+
+Rebased commit mapping for round 10: B1 `d065f3c664` -> `806ee0517c`; B2 `e635cb861f` -> `eac56c62de`; round-10 report `5c7b434364` -> `7fb1ec33ec`. **B1 and B2 remain fixed, awaiting review** (fixed in round 10, not yet re-reviewed).
+
+This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+## Sweep part 1 (text pass): findings and responses
+
+| Item | Change (commit) | Where / how to verify |
+|---|---|---|
+| Rebase onto `origin/main` | 35 lane commits replayed; zero non-derived conflicts | Every unmerged path during the rebase was under `Plans/_shards/**` or `Plans/.plan_index/**` (942+ unmerged entries at the first stop alone). They were resolved only by wholesale side-taking to let the replay proceed, then rewritten by full regeneration at the head (`72326566ea`); no shard or index file was hand-merged. Verify: `git log --oneline origin/main..HEAD` shows the 35 replayed commits; `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` exits 0 (status pass, 99 source documents). |
+| Landed citation — owner text (9 sites) | `72326566ea` | `Plans/FinalGUISpec.md:50683`, `:50751`, `:50819`, `:50881`, `:50949`, `:51017`, `:51085`, `:51153`, `:51221`: "Pending Decision Log companion: plans/ea-cards2-answers-20261105; no Decision Log entry is authored here." -> "Decision Log companion landed as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here." Only the citation words changed; every lineage pin, SHA and the deck SHA-256 are untouched. Verify: `grep -c "cards2-answers" Plans/FinalGUISpec.md` -> 0. |
+| Landed citation — lane report | `72326566ea` | `reports/event-authority-20261104/DG6A.md:121` at that commit (round-9 historical section; shifted down by this prepended section at the final head): "being written on `plans/ea-cards2-answers-20261105`" -> "since landed in `Plans/Decision_Log.md` on `main` (batch 1)". Verify: `git grep -n "cards2-answers" 72326566ea -- reports/event-authority-20261104/DG6A.md` -> no match; at the final head the string appears only in this sweep-p1 section's before/after quotes. |
+| Landed citation — self-grade | `72326566ea` | `reports/event-authority-20261104/DG6A.self-grade.json`: 9 family notes ("... on pending companion branch plans/ea-cards2-answers-20261105." -> "... , landed in Plans/Decision_Log.md (batch 1).") and 9 `"decision_log_companion_branch"` values -> `"Plans/Decision_Log.md (landed, batch 1)"`. JSON parses; 0 remaining `cards2-answers` occurrences. |
+| Self-grade citation lines after the rebase | `1a3c3be654` | The rebase moved cited owner text: the A5 grade/citation audit inside `pm-dg6a-final-regression-check.py` failed first (`Plans/storage-plan.md:29487` quote no longer on that line). All **379** structured evidence refs were re-checked byte-for-byte against the rebased owner text: 106 resolve unchanged, **273 relocated** to their current lines, **0 missing, 0 ambiguous**; only `line_start`/`line_end` changed. Verify: `python3 scripts/pm-dg6a-final-regression-check.py --audit-grade-only` exits 0. |
+| Deck confirmation — E-CARDS-2 5.a..5.g = DL-437..443 | no change needed | Each landed Decision Log option A text is byte-identical to the owner unit's embedded card text (see table below). All nine units confirmed; nothing was written or altered. |
+| Regeneration | `72326566ea` | `pm-shard-plans.py --generate` (exit 0, status pass, 99 docs) then `pm-plan-index.py generate` (exit 0, 7522 plan units) then `pm-shard-plans.py --check` (exit 0). Currentness edition copied into `Plans/.audits/` and `diff -r` clean before generating. Regenerated shard changes are confined to the six owner documents this branch edits (`finalguispec`, `storage_value_registry`, `storage-plan`, `contracts_v0`, `automated_testing_system`, `orchestrator_page`) plus the four `.plan_index` JSON files; no other document's shards changed. |
+
+### Deck items 5.a..5.g confirmed byte for byte
+
+| Item | Landed entry (`Plans/Decision_Log.md`) | Owner text (`Plans/FinalGUISpec.md`) | Result |
+|---|---|---|---|
+| 5.a / DL-437 | `:5291` (option A) | `:50685` (F3-706 bundle.note_created), `:50753` (F3-707 bundle.note_status_changed), `:50821` (F3-708 bundle.annotation_state_changed) | byte-identical ×3 |
+| 5.b / DL-438 | `:5315` | `:50883` (F3-709 concern.assigned) | byte-identical |
+| 5.c / DL-439 | `:5339` | `:50951` (F3-710 concern.evidence_linked) | byte-identical |
+| 5.d / DL-440 | `:5363` | `:51019` (F3-711 concern.promoted) | byte-identical |
+| 5.e / DL-441 | `:5387` | `:51087` (F3-712 concern.reopened) | byte-identical |
+| 5.f / DL-442 | `:5411` | `:51155` (F3-713 concern.resolved) | byte-identical |
+| 5.g / DL-443 | `:5435` | `:51223` (F3-714 concern.updated) | byte-identical |
+
+Jared's verbatim "i approve all of it", the fast-reply rule selecting A, and the deck SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30` are unchanged in the report and owner units.
+
+### Lane checker runs (serial, one at a time)
+
+| Command (all under `scripts/`) | Exit |
+|---|---|
+| `pm-alert-event-contracts-check.py --family alert.acknowledged` / `alert.dismissed` / `alert.rule_muted` / `alert.snoozed` | 0 / 0 / 0 / 0 |
+| `pm-panel-event-contracts-check.py --family panel.redocked` / `panel.undocked` | 0 / 0 |
+| `pm-concern-created-contracts-check.py --family concern.created` | 0 (622 cases, status pass) |
+| `pm-card5-event-contracts-check.py --family` each of the nine manifest families | 0 ×9 |
+| `pm-dg6a-domain-check.py --family` seven old families | `concern.created` 0; six alert/panel selections 1 — the known S2 stale expectation, unchanged from cycle 9: assertion `('…', 'number field', {'schema': 'Plans/event_payloads/attention/alert_acknowledged.schema.json', 'field': ('properties', 'prior_revision'), 'value': '18446744073709551616'})` at `pm-dg6a-domain-check.py:101` via `:142`. Listed, not fixed (number handling is part 2). |
+| `pm-dg6a-guard-check.py --family` seven old families | 0 ×7 (the nine navigation proof rows inside it remain the S1 part-2 item) |
+| `pm-dg6a-final-regression-check.py --family` seven old families | 0 ×7 (after the self-grade line relocation; includes the A5 unmodified grade/citation/hold audit, now exit 0). First run failed the A5 audit on stale lines; five runs paused on the runner's under-6-GiB gate and were rerun clean once memory recovered. |
+| `pm-storage-profile-check.py` | 1 on this head and 1 on a clean `origin/main` worktree with the identical 41-error set (byte-compared: 41 common, 0 branch-only, 0 main-only) — pre-existing, not lane-caused. |
+| `pm-shard-plans.py --generate` / `--check` | 0 / 0 |
+| `pm-plan-index.py generate` / `validate` | 0 / **0 (status pass, zero failures)** |
+
+One operator error recorded for honesty: a `pm-card5-event-contracts-check.py --family concern.created` invocation exits 1 (`StopIteration`) because `concern.created` is not a card5 manifest family; the nine manifest families all pass, and `concern.created` passes under its own checker.
+
+### Index findings: new or also on main
+
+`pm-plan-index.py validate` exits **0 / status pass / zero failures** at this head, and also **0 / pass** at a clean `origin/main` worktree (`2989975e8f`, same copied currentness edition). There are no index findings to classify. The pre-rebase branch's 22-23 known failures (21 legacy ledger-shape rows, the DL-302 comparison, PLS-025) do not exist at this head or on current main.
+
+### Family grades
+
+Carried unchanged from the last review (cycle 9 independent re-grade; round 10 recorded B1/B2 repairs without re-grading): all sixteen families **9 PASS / 2 PARTIAL / 1 ABSENT** — C1 membership ABSENT, C7 retention PARTIAL / `PENDING_RETENTION_DECISION`, C12 PARTIAL pending the shared guard-tool and number-rule adoption. Native execution NOT_RUN. This text pass does not re-grade any family.
+
+## For an Opus or Sol worker
+
+1. **B1 (cycle-9 blocking) — fixed in round 10, awaiting review.** Old `d065f3c664`, rebased `806ee0517c`. The checker now loads each of the seventeen declared Storage registry rows, validates their metaschemas, eagerly closes every reference including unused definitions, and requires type-aware content equality with the tested companions: `scripts/pm-card5-event-contracts-check.py:50` and `:388`. The review asked for registered-schema drift/unvisited-ref negatives with positive controls; round 10 added 136 CLI negatives and nine controls. Needs the cycle-10 re-review.
+2. **B2 (cycle-9 blocking) — fixed in round 10, awaiting review.** Old `e635cb861f`, rebased `eac56c62de`. Standalone-payload timestamp probes with reconciled command/record/commitment copies: `scripts/pm-dg6a-final-regression-check.py:66`, `:140`; `scripts/pm-concern-created-contracts-check.py:163`; additive `payload_cases` in `Plans/concern_created_contracts/concern_created.fixtures.json`. The review asked for a genuine standalone payload case or reconciled copies; round 10 did both (25 malformed timestamp negatives). Needs the cycle-10 re-review.
+3. **`Plans/card5_event_contracts/manifest.json:4`** still reads `"decision_branch": "plans/ea-cards2-answers-20261105"`. It is a checker-read data file (loaded by `scripts/pm-card5-event-contracts-check.py:380`), so this text pass leaves it; the value is unused by the checker. Update it to the landed `Plans/Decision_Log.md` citation when data edits are authorized.
+4. **Cycle-9 note 4 (derived/integration state) — resolved by this rebase, no action left.** Index validate now passes at this head and at clean main (see above); the old 22-23 failure set no longer exists.
+
+## Part 2 items
+
+1. **S1 — shared proof machinery and guard tables.** `scripts/pm-dg6a-guard-check.py:389`, `:407-413`: the nine `history_shape` rows still pop the early-return rejection and bypass remaining reader checks (cycle-8/9 finding; bytes unchanged this pass). Adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105` across all sixteen families, inventory runtime/schema/retained-retry/Card 5 predicates, cut compound rules per field/predicate, require same-field/same-predicate site-by-site duplicate proofs, and restructure the lane checker into guard tables once the tool passes.
+2. **S2 — shared number rule.** Adopt CV-1100/SP-1100/SP-1101 for `scripts/pm-dg6a-domain.py:66-69`, CV-680..686 wording, the embedded operation/state schemas, the F3-706..714 codecs and authenticated historical dispatch. No lane-local cap, serializer, physical-float normalization, signed-zero erasure or Storage-uint64 2^53 cap.
+3. **Stale number-boundary expectations (S2, reproduced this pass).** `scripts/pm-dg6a-domain-check.py:140-142` (six alert/panel selections exit 1 at standalone `prior_revision` 18446744073709551616; assertion at `:101`) and the range/physical expectations in `scripts/pm-dg6a-final-regression-check.py:144-148`. Align with the shared owner domains during S2 adoption; do not restore lowered schema maxima.
+4. **Date-time gate.** The existing enforced date-time/UUID grammar is unchanged; no new format rule. This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+Initial resources: 102 GB root free / 8 GiB available RAM; all heavy commands serial; the final-regression runs paused once below the 6-GiB gate and resumed at 8 GiB. Sparse worktree `/home/sittingmongoose/pm-worktrees/DG6A-p1t`; the clean-main comparison worktree was removed after the validate/profile comparison. No pm-mail, no subagents, no `main` push, no `rm -rf`.
+
 # DG6A — review round 10
 
 Branch `plans/ea-w2-gui-concerns-20261104`; reviewed input `22fc9d0ef738e700efd16ed185dea91d6e058c83`. **B1 fixed in `d065f3c664cfee2627a116ad8c4e99f11b4a24b5`; B2 fixed in `e635cb861fe7470e593858b358bfde5a54b40245`.** The final report/grade commit is self-inclusive. Complete family reruns consume technical head `e635cb861fe7470e593858b358bfde5a54b40245`. Exact source hashes are in `fix10/consumed-sources.json`.
