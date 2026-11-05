@@ -5,7 +5,7 @@
   "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
   "validator_id": "pm.plans.audits.event_authority.independent_validator",
   "validator_before_sha256": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
-  "validator_after_sha256": "de9d85130aafed77f87bc365d94218db3992691a7e95285739b2c7c802e24321",
+  "validator_after_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
   "prior_receipt": {
     "path": "reports/event-authority-20261104/seal-check-multifamily-step-receipt.json",
     "sha256": "7d57ebde79f1b5ddc5acb224d16c0133bad924259677758b1d02adbbcd2f5882"
@@ -38,7 +38,7 @@
   "contract_depth_complete": false,
   "change": "Add a separate strictly pinned recount input and verify every original source fingerprint. Require unchanged August checks and complete outcomes for all 249 recount names in one run. Add only the anchored fourth byte link to the existing receipt chain.",
   "preserved_requirements": [
-    "No August list, fingerprint, freeze digest, earlier receipt or existing record is rewritten.",
+    "No August list, fingerprint, freeze digest, earlier receipt or existing record is rewritten by this amendment. Snapshot receipt identities resolve at fixed Git revisions; the inherited default working-tree receipt remains runtime output.",
     "Every original August predicate and per-family decision, full admission record and twelve-cell depth requirement remains.",
     "Cards remain unresolved; input custody alone earns no approval; no admission, registry or application writer follows.",
     "Stop and report if canon moving since August makes an unchanged August check impossible.",
@@ -52,6 +52,7 @@
     "CA-SEAL",
     "CA-SEAL-FIX1 through CA-SEAL-FIX8",
     "CA-SEAL2 (Codex)",
-    "every other fix worker"
+    "every other fix worker",
+    "CA-SEAL2-FIX1 (Codex)"
   ]
 }

@@ -799,6 +799,11 @@ RECOUNT_LIST = "reports/event-authority-20261104/census-recount-20261104/NEW-LIS
 RECOUNT_RECEIPT_SHA = "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709"
 RECOUNT_LIST_SHA = "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c"
 RECOUNT_REVISION = "16acf7594a3fe8559af89491b895f440b314b99e"
+RECOUNT_RECEIPT_REVISION = "c53e4199ae94ca853a197354f3f9e7f296cf1efc"
+# Revision-qualified history; the working-tree receipt path is runtime output.
+AUGUST_RECEIPT_PATH = "Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json"
+AUGUST_RECEIPT_REVISION = "17c842445a2623bb0334ba8d6932e7a6bf088967"
+AUGUST_RECEIPT_SHA = "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e"
 RECOUNT_CHANGE = "reports/event-authority-20261105/seal-check-recount-receipt.json"
 RECOUNT_AUTHOR = "codex:CA-SEAL2-20261105"
 RECOUNT_BEFORE_SHA = "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91"
@@ -1031,7 +1036,8 @@ def recount_outcomes(names, admitted):
                 lines = raw.decode("utf-8").splitlines()
                 if (type(start) is not int or type(end) is not int or not 1 <= start <= end <= len(lines)
                         or hashlib.sha256(raw).hexdigest() != cite["sha256"]
-                        or name not in "\n".join(lines[start-1:end])):
+                        or not re.search(r"(?<![A-Za-z0-9_.])" + re.escape(name) + r"(?![A-Za-z0-9_.])",
+                                         "\n".join(lines[start-1:end]))):
                     raise ValueError("recount exclusion evidence fingerprint/span mismatch: " + name)
         elif outcome == "decision_card":
             if set(row) != {"event_type", "outcome", "card"} or type(row.get("card")) is not dict:
@@ -1073,11 +1079,13 @@ def recount_snapshot_pins():
     def observed(path):
         return sha256_file(path) if path.is_file() else None
     return {
-        "august": {"receipt_path": str((HERE / "receipts" / "event_authority_validator_receipt.json").relative_to(REPO)),
-                   "receipt_sha256": observed(HERE / "receipts" / "event_authority_validator_receipt.json"),
+        "august": {"receipt_path": AUGUST_RECEIPT_PATH,
+                   "receipt_revision": AUGUST_RECEIPT_REVISION, "receipt_sha256": AUGUST_RECEIPT_SHA,
                    "inventory_sha256": observed(CENSUS / "CURRENT_SOURCE_INVENTORY.json"),
                    "denominator_sha256": observed(DENOM)},
-        "recount": {"receipt_path": RECOUNT_RECEIPT, "receipt_sha256": observed(REPO / RECOUNT_RECEIPT),
+        "recount": {"receipt_path": RECOUNT_RECEIPT, "receipt_revision": RECOUNT_RECEIPT_REVISION,
+                    "receipt_sha256": RECOUNT_RECEIPT_SHA,
+                    "observed_receipt_sha256": observed(REPO / RECOUNT_RECEIPT),
                     "expected_receipt_sha256": RECOUNT_RECEIPT_SHA,
                     "list_path": RECOUNT_LIST, "list_sha256": observed(REPO / RECOUNT_LIST),
                     "expected_list_sha256": RECOUNT_LIST_SHA},

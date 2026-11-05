@@ -1,0 +1,397 @@
+{
+  "schema_id": "pm.assurance.event_authority.CA_SEAL2_fix1_results.v1",
+  "status": "targeted_pass_repository_findings_unchanged",
+  "reviewed_head": "1f98f81de9d6939e78da819ebc2441cda3a4454a",
+  "validator_pins": {
+    "status": "pass",
+    "reviewed_head": "1f98f81de9d6939e78da819ebc2441cda3a4454a",
+    "protected_files_verified_byte_identical": 1463,
+    "plans_changed_only": [
+      "Plans/.audits/event-authority-2026-08-12/independent-validator/INDEPENDENT_EA_VALIDATOR_SPEC.md",
+      "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py"
+    ],
+    "validator_round1_before_sha256": "de9d85130aafed77f87bc365d94218db3992691a7e95285739b2c7c802e24321",
+    "validator_after_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+    "fourth_change_original_before_sha256": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
+    "pending_fourth_receipt_sha256": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da",
+    "CRLF_preserved": true
+  },
+  "checks": {
+    "status": "pass",
+    "checks": 99,
+    "passed": 99,
+    "failed": 0,
+    "real_frozen_source_custody": {
+      "receipt_sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
+      "list_sha256": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c",
+      "source_revision": "16acf7594a3fe8559af89491b895f440b314b99e",
+      "verified_sources": 597
+    }
+  },
+  "guard_removal": {
+    "status": "pass",
+    "variants": 27,
+    "mutation_cells": 2673,
+    "baseline_negative_calls": 73,
+    "all_other_rejection_reasons_unchanged": true,
+    "all_guards_restored": true,
+    "rows": [
+      {
+        "guard": "R02_exact_source_event_token",
+        "negatives_that_accept": [
+          "negative_exclusion_dotted_sibling",
+          "negative_exclusion_prefix",
+          "negative_exclusion_suffix"
+        ],
+        "other_negatives_still_reject": 70
+      },
+      {
+        "guard": "R03_fourth_anchor_only",
+        "negatives_that_accept": [
+          "negative_missing_fourth_anchor"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R03_source_member_count_only",
+        "negatives_that_accept": [
+          "negative_missing_source_member"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R03_path_control_only",
+        "negatives_that_accept": [
+          "negative_unsafe_source_path_control"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_receipt_complete_byte_pin",
+        "negatives_that_accept": [
+          "negative_one_changed_receipt_byte"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_source_byte_count_only",
+        "negatives_that_accept": [
+          "negative_wrong_source_byte_count"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_validator_before_sha256_direct_only",
+        "negatives_that_accept": [],
+        "other_negatives_still_reject": 73
+      },
+      {
+        "guard": "R04_validator_before_sha256_bridge_only",
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_before_sha256"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_validator_before_sha256_both_same_predicate_sites",
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_before_sha256",
+          "negative_change_validator_before_sha256"
+        ],
+        "other_negatives_still_reject": 71
+      },
+      {
+        "guard": "R04_validator_after_sha256_direct_only",
+        "negatives_that_accept": [],
+        "other_negatives_still_reject": 73
+      },
+      {
+        "guard": "R04_validator_after_sha256_bridge_only",
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_after_sha256"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_validator_after_sha256_both_same_predicate_sites",
+        "negatives_that_accept": [
+          "legacy_predicate_preserved_under_validator_after_sha256",
+          "negative_change_validator_after_sha256"
+        ],
+        "other_negatives_still_reject": 71
+      },
+      {
+        "guard": "R04_schema_id_value_only",
+        "negatives_that_accept": [
+          "negative_change_schema_id"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_authority_ref_value_only",
+        "negatives_that_accept": [
+          "negative_change_authority_ref"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_authority_section_sha256_value_only",
+        "negatives_that_accept": [
+          "negative_change_authority_section_sha256"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_validator_path_value_only",
+        "negatives_that_accept": [
+          "negative_change_validator_path"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_validator_id_value_only",
+        "negatives_that_accept": [
+          "negative_change_validator_id"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_prior_receipt_value_only",
+        "negatives_that_accept": [
+          "negative_change_prior_receipt"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_recount_receipt_value_only",
+        "negatives_that_accept": [
+          "negative_change_recount_receipt"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_recount_list_value_only",
+        "negatives_that_accept": [
+          "negative_change_recount_list"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_certification_scope_value_only",
+        "negatives_that_accept": [
+          "negative_change_certification_scope"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_author_task_value_only",
+        "negatives_that_accept": [
+          "negative_change_author_task"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_seal_authorized_only",
+        "negatives_that_accept": [
+          "negative_change_seal_authorized"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_admission_authorized_only",
+        "negatives_that_accept": [
+          "negative_change_admission_authorized"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_definition_writing_authorized_only",
+        "negatives_that_accept": [
+          "negative_change_definition_writing_authorized"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_app_recording_authorized_only",
+        "negatives_that_accept": [
+          "negative_change_app_recording_authorized"
+        ],
+        "other_negatives_still_reject": 72
+      },
+      {
+        "guard": "R04_contract_depth_complete_only",
+        "negatives_that_accept": [
+          "negative_change_contract_depth_complete"
+        ],
+        "other_negatives_still_reject": 72
+      }
+    ]
+  },
+  "snapshot_default_path": {
+    "status": "pass",
+    "runs": [
+      {
+        "run": 1,
+        "exit": 1,
+        "default_output_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json",
+        "output_before_sha256": "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e",
+        "output_after_sha256": "e8c3e73ea2327bb398d17e7a816b3036f044ab2eb2a119f6644d9435c74142e3",
+        "resolved_snapshot_identities": {
+          "august": {
+            "receipt_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json",
+            "receipt_revision": "17c842445a2623bb0334ba8d6932e7a6bf088967",
+            "declared_sha256": "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e",
+            "resolved_sha256": "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e",
+            "bytes": 6948,
+            "matches": true
+          },
+          "recount": {
+            "receipt_path": "reports/event-authority-20261104/census-recount-20261104/RECEIPT.json",
+            "receipt_revision": "c53e4199ae94ca853a197354f3f9e7f296cf1efc",
+            "declared_sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
+            "resolved_sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
+            "bytes": 350509,
+            "matches": true
+          }
+        },
+        "final_approval": false
+      },
+      {
+        "run": 2,
+        "exit": 1,
+        "default_output_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json",
+        "output_before_sha256": "e8c3e73ea2327bb398d17e7a816b3036f044ab2eb2a119f6644d9435c74142e3",
+        "output_after_sha256": "8c5a7acb9568a74ecf82608b89502cd53ffcf7b51c54b6be4b4ce125687e1264",
+        "resolved_snapshot_identities": {
+          "august": {
+            "receipt_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json",
+            "receipt_revision": "17c842445a2623bb0334ba8d6932e7a6bf088967",
+            "declared_sha256": "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e",
+            "resolved_sha256": "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e",
+            "bytes": 6948,
+            "matches": true
+          },
+          "recount": {
+            "receipt_path": "reports/event-authority-20261104/census-recount-20261104/RECEIPT.json",
+            "receipt_revision": "c53e4199ae94ca853a197354f3f9e7f296cf1efc",
+            "declared_sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
+            "resolved_sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
+            "bytes": 350509,
+            "matches": true
+          }
+        },
+        "final_approval": false
+      }
+    ]
+  },
+  "legacy_differential": {
+    "status": "pass",
+    "old_exit": 1,
+    "new_exit": 1,
+    "old_failures": 10,
+    "new_failures": 12,
+    "all_original_failures_and_order_preserved": true,
+    "all_original_named_checks_equal": true,
+    "all_original_input_pins_equal": true,
+    "original_main_AST_prefix_unchanged": true,
+    "original_functions_changed": [
+      "multi_family_receipt_state",
+      "post_august_validator_pin",
+      "main",
+      "build_receipt"
+    ],
+    "new_only_failures": [
+      {
+        "error": "recount_change_receipt_invalid",
+        "detail": "DL-451 prose entry missing or duplicated"
+      },
+      {
+        "error": "recount_input_or_outcome_invalid",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/PM-Experiments/CA-SEAL2-default-7lxngiag/Plans/.audits/event-authority-2026-08-12/recount/OUTCOMES.json'"
+      }
+    ]
+  },
+  "shard_check": {
+    "docs_checked": 99,
+    "failures": [],
+    "shards_checked": 3092,
+    "source_count": 99,
+    "status": "pass"
+  },
+  "index_comparison": {
+    "status": "pass",
+    "index_top_level_status": "fail",
+    "findings": 23,
+    "failure_array_identical_to_reviewed_head": true,
+    "review_index_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/index-head.json",
+    "review_index_sha256": "436dbbed61bd01aad733529e7064df29a8c3f652f5d1c83981428c72db9d63cc"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/CA-SEAL2-checks.py",
+      "sha256": "79a0a6bdd9c912f55e44f209e67fac622e990b19e9e385200c18ab18c925b099"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/guard_removal.py",
+      "sha256": "c5c82a640ff455c13a95f2d971fef6da2c8113bcb249c861af9bf8e5f0594dc4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/default_entrypoint.py",
+      "sha256": "a2c5607dd161cfe9c34005c1fd3a1722f4c0a5aec7814aa3ccbdf91c80efaa08"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/audit_evidence.py",
+      "sha256": "06672c7ffd1a93928416a42b29312ab37678098989985ba47704f519c181a468"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/check-results.json",
+      "sha256": "f0d16eb6f8010f32bc035441d47a6f767eb0f2d28d10b96efde467828c202570"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/restored-check-results.json",
+      "sha256": "f0d16eb6f8010f32bc035441d47a6f767eb0f2d28d10b96efde467828c202570"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/guard-removal-results.json",
+      "sha256": "1b357bae4a7f78a30428d635d51197a2fb0191045c2a83b6ab1665737a45c2b7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/snapshot-default-path-results.json",
+      "sha256": "44677bac3cc0d460c24f286b79bba9b4f9ac1cb934ef35722227810bd382c5e3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/legacy-differential.json",
+      "sha256": "6011ce7fd7b5215bfbf46e17a15282335fa1798212dff95f8b8c83a7eac8c8e2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/scope-and-pins.json",
+      "sha256": "42eeff3461f2c83674bd843694d0328b70bbdec92460f7e03bdf14052723f2e5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/shard-check.json",
+      "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/index-validate.json",
+      "sha256": "f74a76396d9c7db82072f5b4a2fe640bcf0095bfc03fe3d40d6b4c7271565f96"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/index-comparison.json",
+      "sha256": "54dc3fb8864cf0d934215373391be0d166194deb85b3e6a2871daff50f5b0613"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/currentness-copy.json",
+      "sha256": "a41214c87f05c437202a163475beac4a79847ea18f880707b79f25d7981ca9b7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix1/review-evidence-audit.json",
+      "sha256": "71ad4ff393d4a4e227b35457b641b259a109bc0df41e2dab07acab2af6e55f8f"
+    }
+  ],
+  "limits": [
+    "Preparation only; no final approval, admission, registry change, seal or main push.",
+    "Actual CLI exits 1 preserve ten August failures plus two pending recount failures.",
+    "Complete shared-tool guard inventory remains a sweep item.",
+    "No event families, new bindings or PlanUnit IDs; family grades N/A before and after."
+  ]
+}
