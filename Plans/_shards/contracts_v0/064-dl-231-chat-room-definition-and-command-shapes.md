@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23953-L25198
+Source lines: L23953-L25225
 
-Source SHA256: `78bea48cf2776237af5ea065994c62d383549c9175b66f83641b70bef85f18c2`
+Source SHA256: `fdce2a1bfb027e1a56156d8ce90585b145ca7522e8d2bcbfeaf4ef120155dd0d`
 
 ---
 
@@ -603,6 +603,9 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-550, ContractName:Plans/FileS
 
 
 
+
+**Selected-original custody for `filesafe.command_denied` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
+
 ### CV-551 - filesafe.destructive_override_denied closed contract
 
 ```yaml
@@ -683,6 +686,9 @@ The original override request supplies maximum_expires_at computed by its owner 
 ContractRef: ContractName:Plans/storage-plan.md#SP-551, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
 
 
+
+
+**Selected-original custody for `filesafe.destructive_override_denied` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
 
 ### CV-552 - filesafe.destructive_override_granted closed contract
 
@@ -766,6 +772,9 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-552, ContractName:Plans/FileS
 
 
 
+
+**Selected-original custody for `filesafe.destructive_override_granted` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
+
 ### CV-553 - filesafe.destructive_override_requested closed contract
 
 ```yaml
@@ -845,6 +854,9 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-553, ContractName:Plans/FileS
 
 
 
+
+**Selected-original custody for `filesafe.destructive_override_requested` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
+
 ### CV-554 - filesafe.guard_init_failed closed contract
 
 ```yaml
@@ -921,6 +933,9 @@ For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id
 ContractRef: ContractName:Plans/storage-plan.md#SP-554, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
 
 
+
+
+**Selected-original custody for `filesafe.guard_init_failed` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
 
 ### CV-555 - filesafe.path_denied closed contract
 
@@ -1000,6 +1015,9 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-555, ContractName:Plans/FileS
 
 
 
+
+**Selected-original custody for `filesafe.path_denied` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
+
 ### CV-556 - filesafe.policy_degraded closed contract
 
 ```yaml
@@ -1077,6 +1095,9 @@ For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id
 ContractRef: ContractName:Plans/storage-plan.md#SP-556, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
 
 
+
+
+**Selected-original custody for `filesafe.policy_degraded` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
 
 ### CV-557 - safe_point.created closed contract
 
@@ -1168,6 +1189,9 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-557, ContractName:Plans/FileS
 
 
 
+
+**Selected-original custody for `safe_point.created` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.
+
 ### CV-558 - safe_point.restored closed contract
 
 ```yaml
@@ -1254,3 +1278,6 @@ For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id
 restore_recovery_required remains a recorded unresolved outcome, never permission to dispatch; replay cannot clear the original recovery hold. Every restore outcome joins the original transaction and full equality evidence; restored_with_conflicts is refused.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-558, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+**Selected-original custody for `safe_point.restored` (review round 7, R6-B1).** At current owner acceptance and each original-body read, validate the independently selected source itself under its original source schema and existing original commitment recipe. Recompute that selected record's own accepted_source_sha256 before comparing its complete value to the candidate, recursively preserving exact object/array structure and primitive types: boolean true is never integer 1, and integer 1 is never float 1.0. A caller-valid source or matching Python value comparison cannot authenticate the selected record. A missing, malformed, uncommitted or differently typed selected source refuses. Do not coerce, restamp, replace original custody or apply live-writer admission to retained sources. Authentic retained records keep the recipe they were written with; event-only reads still depend on retained issued EventRecord/receipt custody and remain independent of disposed source bodies. Shared number-domain and authenticated frozen-recipe adoption remain sweep items, not a new lane-local serializer or cap.

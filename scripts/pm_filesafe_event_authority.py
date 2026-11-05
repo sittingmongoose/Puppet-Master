@@ -61,6 +61,47 @@ def source_commitment(source):
         return semantic_hash('accepted_source',preimage)
     return hashlib.sha256(storage_owner().canonical_messagepack_bytes(preimage)).hexdigest()
 
+
+def exact_value_equal(left, right):
+    """Compare complete JSON values without Python's bool/int/float aliases.
+
+    This is a join, not a new serializer or commitment recipe. Float hex keeps
+    signed zero distinct when an authentic original recipe admits a float.
+    """
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return (left.keys() == right.keys()
+                and all(exact_value_equal(left[k], right[k]) for k in left))
+    if type(left) is list:
+        return (len(left) == len(right)
+                and all(exact_value_equal(a, b) for a, b in zip(left, right)))
+    if type(left) is float:
+        return left.hex() == right.hex()
+    return type(left) in (str, int, bool, type(None)) and left == right
+
+
+def selected_source_failures(family, source, bank):
+    """Verify selected original custody before joining it to the caller's view.
+
+    Use the existing original-source schema and commitment recipe on both write
+    and body-history paths. Do not apply current writer epochs/numeric admission
+    to a retained original, coerce its primitives or restamp its commitment.
+    """
+    selected = bank['sources'].get(source['source_ref'])
+    if selected is None:
+        return ['selected_source_missing']
+    if list(context(family)[1]('source').iter_errors(selected)):
+        return ['selected_source_schema']
+    try:
+        if source_commitment(selected) != selected['accepted_source_sha256']:
+            return ['selected_source_commitment']
+    except (KeyError, ValueError, TypeError, OverflowError):
+        return ['selected_source_commitment']
+    if not exact_value_equal(selected, source):
+        return ['selected_source_join']
+    return []
+
 @lru_cache(maxsize=None)
 def context(family):
     slug=family.replace('.','_')
@@ -342,7 +383,7 @@ def materialization_failures(family, candidate, bank):
     def require(condition,code):
         if not condition: failures.append(code)
     # Independently selected immutable source, not self-authentication by its hash.
-    require(bank['sources'].get(source['source_ref'])==source,'original_source_not_selected')
+    require(not selected_source_failures(family,source,bank),'original_source_not_selected')
     require(source['storage_instance_id']==bank['storage_instance_id'] and source['writer_epoch']==bank['writer_epoch'],'original_owner_epoch')
     require(source_commitment(source)==source['accepted_source_sha256'],'source_commitment')
     require(source['original_result']==p,'original_result_join')
@@ -562,7 +603,7 @@ class ProtocolOracle:
                 # A separate body-dependent request retains the original owner's
                 # availability fence. An event-row read never recreates a body.
                 source=c['source'];request=source['original_request']
-                if (list(context(self.family)[1]('source').iter_errors(source)) or self.bank['sources'].get(source['source_ref'])!=source
+                if (list(context(self.family)[1]('source').iter_errors(source)) or selected_source_failures(self.family,source,self.bank)
                     or source_commitment(source)!=source['accepted_source_sha256']
                     or source['original_result']!=event_payload(self.family,c['event'],self.bank)[0]):
                     return 'read_unavailable'
