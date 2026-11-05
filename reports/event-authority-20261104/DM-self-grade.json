@@ -2183,8 +2183,8 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 998,
-              "line_end": 998,
+              "line_start": 1051,
+              "line_end": 1051,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
               "file_sha256": "67e38cba4450dfb5b7048d36bd451c4063bfede9760c40861b2c817417145077"
             }
@@ -2291,8 +2291,8 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1004,
-              "line_end": 1004,
+              "line_start": 1057,
+              "line_end": 1057,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
               "file_sha256": "67e38cba4450dfb5b7048d36bd451c4063bfede9760c40861b2c817417145077"
             }
@@ -2399,8 +2399,8 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1005,
-              "line_end": 1005,
+              "line_start": 1058,
+              "line_end": 1058,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
               "file_sha256": "67e38cba4450dfb5b7048d36bd451c4063bfede9760c40861b2c817417145077"
             }
@@ -4092,8 +4092,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6054,
-              "line_end": 6054,
+              "line_start": 6107,
+              "line_end": 6107,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
               "file_sha256": "759e3a0d5c2a0132ff9479ee1c06c273aadab97d69b73dc28950b9383f4235a3"
             }
@@ -4158,8 +4158,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6055,
-              "line_end": 6055,
+              "line_start": 6108,
+              "line_end": 6108,
               "quote": "application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)} exactly under CV-366.",
               "file_sha256": "759e3a0d5c2a0132ff9479ee1c06c273aadab97d69b73dc28950b9383f4235a3"
             }
@@ -4208,8 +4208,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6060,
-              "line_end": 6060,
+              "line_start": 6113,
+              "line_end": 6113,
               "quote": "Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING marker no",
               "file_sha256": "759e3a0d5c2a0132ff9479ee1c06c273aadab97d69b73dc28950b9383f4235a3"
             }
@@ -4316,8 +4316,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6061,
-              "line_end": 6061,
+              "line_start": 6114,
+              "line_end": 6114,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
               "file_sha256": "759e3a0d5c2a0132ff9479ee1c06c273aadab97d69b73dc28950b9383f4235a3"
             }
@@ -4361,8 +4361,8 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6056,
-              "line_end": 6056,
+              "line_start": 6109,
+              "line_end": 6109,
               "quote": "At most 16 KiB stays inline with payload_ref=null. Above 16 KiB, SP-337 owns the pack bytes/index:",
               "file_sha256": "759e3a0d5c2a0132ff9479ee1c06c273aadab97d69b73dc28950b9383f4235a3"
             },
