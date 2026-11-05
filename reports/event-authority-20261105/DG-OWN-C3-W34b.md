@@ -44,7 +44,7 @@ The twelve-cell grade stays **10/12** before and after: `PASS PASS PASS PASS PAS
 
 The worker's own heavy commands run serially with PM_GOAL_AUDIT_WORKERS=1 and pause only below 6 GB available. I initially misread the rule as a machine-wide slot and waited on unrelated jobs; Jared corrected that interpretation at 13:56Z, and the supervisors were changed to memory-only gating. No peer process was stopped or modified. The live fifteen-file ignored currentness edition was copied coherently and archived before index generation. No aggregate gate, governance seal, baseline refresh, admission or main landing is run here.
 
-DG history is still running; its final exit is pending.
+DG history completed with status PASS (6,143 cases / 6,032 negatives; 650 guard rows / 345 type assertions). Its earlier outer runner exited 143 while the checker continued. The raw process exit was reaped before capture, so it is recorded as NOT_CAPTURED, not an observed 0. The unchanged print_result helper was then run against the completed immutable result and returned 0; that verifies result/exit mapping only and is not a second semantic run.
 
 | Command | Exit |
 |---|---:|
@@ -61,6 +61,8 @@ DG history is still running; its final exit is pending.
 | `index-generate` | 0 |
 | `shard-check` | 0 |
 | `index-validate` | 1 |
+| `dg-history` | NOT_CAPTURED; completed result PASS |
+| `dg-history-exit-reporter` | 0 |
 | `new-source-ast` | 0 |
 | `diff-check` | 0 |
 
@@ -85,7 +87,7 @@ Retained evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/d
 |---|---|
 | `qualification.json` | `958738c919cc4c83e88396b01873b35cf97b47639fa03f6099ceeecde5ecfe4d` |
 | `full-completion.json` | `958738c919cc4c83e88396b01873b35cf97b47639fa03f6099ceeecde5ecfe4d` |
-| `checks.json` | `7f72f5fc173d0097598ba9e65c1189bf7f05ebeafddd8aac3776ae0c918f355f` |
+| `checks.json` | `56f903a69a8323f04b654c84b1763227c9576e9b657d4a56d160307110fb0dd2` |
 | `id-scan.json` | `93b9b4eb4fd8b4fdb11c62672aef05d051a0c91d66eb59fc0440faeae5976e28` |
 | `id-scan-final.json` | `118d74fb0f716dab7bf758b28a74495bde37dd5121a85bda121789657dd324e5` |
 | `source-search.json` | `f252b0ae086091860f5ea469219a2140c5f2f00b6835fcdba7c6c1ba89c8f0bb` |
@@ -99,8 +101,10 @@ Retained evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/d
 | `derived-scope.json` | `d6a21a332cbe0d1dfa29c21a6a6f2c03cb29cbd7c9977af124730807bb05618b` |
 | `index-attribution.json` | `622f40fa26644c20b10d88bd869676b92b505ea91d5da088e7a2370b7bcf430d` |
 | `key-recipe-correction.json` | `5d8a201048c1abeacd14557c89bc7e54f924dfb3d23ba94cb7f6385006a60ea2` |
-| `check-output-manifest.json` | `eef7f0475ee5698b33d46d956c8d815083563522437552a2a83f9e131b262185` |
+| `check-output-manifest.json` | `dfd8bca5baaea517802a7f0c7a8b00793c52181244dc774e9c715447e110702b` |
 | `all-key-reference-inventory.json` | `17be221218d014c64cf3a430d226a9665a2287794ee3904b5bc6532b9cdda6d5` |
 | `reference-data-locations.json` | `719cc76e30f41b575267993e69e820aeba6f3c29a6509c555571e8140442fd19` |
+| `history-completion.json` | `e07d1f4a387d7db51787bc52f53121e0c2e0de20e12083f1ef489fd4f13825e9` |
+| `history-exit.json` | `70a7420f6c3ddd4a69e9c8f05d6e284e34928151c904ff9a14b7bcab9167669b` |
 
 **Stopped product question: none. Whole W4 completion: NOT_COMPLETE.**
