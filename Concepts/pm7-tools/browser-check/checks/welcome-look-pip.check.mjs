@@ -40,12 +40,16 @@ function installSampler() {
 	requestAnimationFrame(tick);
 	const r1 = (v) => Math.round(v * 10) / 10;
 	const box = (b) => [r1(b.left), r1(b.top), r1(b.right), r1(b.bottom)];
-	// the box a node's own pose (its transform attribute) puts its content at, on screen
+	// the box a node's own pose (its transform attribute) puts its content at, on screen. The list's items are composed
+	// into a matrix of our own: consolidate() would rewrite the live list of the rig it measures (FO-58)
 	const poseBox = (g) => {
-		const list = g.transform && g.transform.baseVal, m0 = list && list.numberOfItems ? list.consolidate().matrix : null;
-		const P = g.parentNode && g.parentNode.getScreenCTM ? g.parentNode.getScreenCTM() : null;
-		if (!m0 || !P) return null;
-		const m = P.multiply(m0), b = g.getBBox();
+		const list = g.transform && g.transform.baseVal;
+		let m0 = null;
+		if (list && list.numberOfItems) { m0 = new DOMMatrix(); for (let i = 0; i < list.numberOfItems; i++) { const t = list.getItem(i).matrix; m0 = m0.multiply(new DOMMatrix([t.a, t.b, t.c, t.d, t.e, t.f])); } }
+		const S = g.parentNode && g.parentNode.getScreenCTM ? g.parentNode.getScreenCTM() : null;
+		if (!m0 || !S) return null;
+		// (getScreenCTM gives an SVGMatrix, whose multiply takes only another SVGMatrix: both are DOMMatrix here)
+		const m = new DOMMatrix([S.a, S.b, S.c, S.d, S.e, S.f]).multiply(m0), b = g.getBBox();
 		const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => [m.a * x + m.c * y + m.e, m.b * x + m.d * y + m.f]);
 		return [r1(Math.min(...pts.map((p) => p[0]))), r1(Math.min(...pts.map((p) => p[1]))), r1(Math.max(...pts.map((p) => p[0]))), r1(Math.max(...pts.map((p) => p[1])))];
 	};
@@ -58,6 +62,8 @@ function installSampler() {
 			fr.svg = box(svg);
 			fr.hx = hd.hasAttribute('transform') ? 1 : 0; fr.cx = ctl && ctl.hasAttribute('transform') ? 1 : 0;
 			fr.hp = box(hd.getBoundingClientRect()); fr.hq = poseBox(hd);
+			// FO-58: the read leaves the rig as written (its transform list keeps one item per function in the attribute)
+			fr.tl = hd.transform.baseVal.numberOfItems; fr.tf = ((hd.getAttribute('transform') || '').match(/[a-z]+\(/gi) || []).length;
 			fr.cp = ctl ? box(ctl.getBoundingClientRect()) : null;
 			fr.gp = st.gPip && st.gPip.style.transform ? 1 : 0;   // Pip trying on a look (its flip): its own scale
 			if (b && b.isConnected) {
@@ -159,7 +165,7 @@ export default async function (t) {
 		await loc.focus(); await t.page.keyboard.press('Enter');
 	};
 	const menuOpen = async () => { if (!(await f.locator('#pm-o55-onboarding .o55-lookmenu').count())) { await press(btn); await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 }); await f.waitForTimeout(350); } };
-	const rows = [], bad = [], tally = {}, dumps = [], causes = [];
+	const rows = [], bad = [], tally = {}, dumps = [], causes = [], altered = [];
 	let changes = 0, frames = 0;
 	for (let rep = 0; rep < reps; rep++) for (const look of looks) {
 		const [fam, mode] = look.split('-');
@@ -177,6 +183,7 @@ export default async function (t) {
 			t.mark(`${look}: ${kind} ${arg}`);
 			await f.locator(sel).click({ timeout: 30000 });
 			const fr = await collect(f);
+			fr.forEach((x, k) => { if (x.tf && x.tl !== x.tf) altered.push(`${look} ${kind} ${arg} frame ${k + 1}: ${x.tl} items for ${x.tf} functions`); });
 			if (t.args.dump) dumps.push({ look, kind, arg, frames: fr });   // --set dump=<file.json>: every frame read, for review
 			// the causes, read off the page in each look: Pip's head group has no transition of its own; the bubble is placed with
 			// `translate` (NieR's dialogue box is not placed by the stage)
@@ -222,6 +229,7 @@ export default async function (t) {
 	t.log(`${changes} look changes, ${frames} frames read; bad frames by kind: ${Object.entries(tally).map(([k, v]) => `${k} ${v}`).join(', ') || 'none'}`);
 	await t.check('every look change was made on Welcome', changes >= looks.length && (await f.evaluate(() => window.O55.S.sess.screen)) === 'welcome', `${changes} changes`);
 	const kindsBad = (ks) => bad.filter((b) => ks.includes(b.k)).map((b) => b.text);
+	await t.check(`FO-58: reading Pip's pose leaves its transform list as the rig wrote it, in every frame (${frames} frames)`, !altered.length, altered.slice(0, 4).join('; '));
 	await t.check(`FO-40: after each look change Pip is painted in its pose in every frame (${changes} changes, ${frames} frames)`, !tally['no-stage'] && !tally.unplaced && !tally['off-pose'] && !tally['out-of-band'], kindsBad(['no-stage', 'unplaced', 'off-pose', 'out-of-band']).slice(0, 6).join('; '));
 	await t.check(`FO-44: the greeting bubble is painted at its place and never over Pip (${changes} changes)`, !tally['bubble-off-place'] && !tally['bubble-over-pip'], kindsBad(['bubble-off-place', 'bubble-over-pip']).slice(0, 6).join('; '));
 	const eased = causes.filter((c) => c.dur > 0), placed = causes.filter((c) => c.placed), moved = placed.filter((c) => !c.bubbleTranslate || /translate/.test(c.bubbleTransform || ''));

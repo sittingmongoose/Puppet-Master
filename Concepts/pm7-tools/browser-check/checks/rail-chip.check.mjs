@@ -12,7 +12,8 @@
 // an offset from where it sat before the change. A frame where it is more than 1.5 px off is a late frame; there must be
 // none, and it must end where it started on the item. The wizard has no language switch besides Plain English and Expert.
 // --set selftest=throw (a rail step that throws inside its frame callback) and --set selftest=jump (p77's Continue replaced
-// by a jump past nas-identity) break the case on purpose: the check must fail, the first in that frame.
+// by a jump past nas-identity) break the case on purpose: the check must fail, the first in that frame; --set
+// selftest=cached (the scan case meets a cached list) must fail too.
 const FRAMES = 24;
 
 // window.__chipKind picks the strip: 'rail' or 'seg'
@@ -106,9 +107,10 @@ async function pass(t, f, kind, steps, sizes, out) {
 		if (!rest.lens) { out.noChip.push(`${kind}:${look}`); continue; }
 		out.withChip.push(`${kind}:${look}`);
 		if (!rest.covers) out.bad.push(`${kind} ${look} at rest: the chip does not cover "${rest.pos.name}"`);
-		// strict: late frames fail. The window's size is changed by viewport emulation, not by a person's resize, and the SSH
-		// tabs' rows there showed 1-2 late frames on integration 61b70dca1f with and without p77's change (none at M6): those
-		// rows report their late frames and are judged on where the chip ends (lane found's report, p77)
+		// strict: late frames fail, the window's size rows of both strips too. The SSH tabs' window-height rows were only
+		// reported (1-2 late frames since 61b70dca1f) until SW-25: 60-ui-core's holdColumn re-centred the held column on a
+		// resize inside an unchanged scroller, which glass.js's size watch never saw (fo-welcome b49b1402a4); they are strict
+		// now, and fail on a page without that fix
 		const judge = (name, before, frames, end, strict = true) => {
 			const last = frames[frames.length - 1];
 			const mx = Math.round((last.pos.x - before.pos.x) * 10) / 10, my = Math.round((last.pos.y - before.pos.y) * 10) / 10;
@@ -131,7 +133,7 @@ async function pass(t, f, kind, steps, sizes, out) {
 			const t0 = Date.now();
 			const frames = await framesNow(f, FRAMES).catch((e) => { throw new Error(`${kind} ${look} window ${w}x${h}: a frame callback threw, ${Date.now() - t0} ms after the resize: ${String(e && e.message || e).split('\n')[0]}`); });
 			await f.waitForTimeout(700);
-			judge(`window ${w}x${h}`, before, frames, await f.evaluate(measure), kind !== 'seg');
+			judge(`window ${w}x${h}`, before, frames, await f.evaluate(measure));
 		}
 	}
 }
@@ -170,16 +172,48 @@ export default async function (t) {
 	await t.check('M6: the SSH tabs screen opens (nas-find)', nas === 'nas-find', `screen ${nas}`, { hard: true });
 	await f.waitForFunction(() => document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-o55-do="device"]').length >= 2, null, { timeout: 15000 });
 	await f.waitForTimeout(1200);
-	// the scan's arrival re-centres the content too: SMB, then SSH again, and the chip must end on SSH once the list is back
 	await f.evaluate(() => { window.__chipKind = 'seg'; });
 	const tab = (v) => f.evaluate((a) => document.querySelector(`#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-seg button[data-arg="${a}"]`).click(), v);
-	await tab('smb'); await f.waitForTimeout(1200); await tab('ssh');
-	const scanBefore = await f.evaluate(measureSrc());
-	await f.waitForFunction(() => document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-o55-do="device"]').length >= 2, null, { timeout: 15000 });
-	await f.waitForTimeout(900);
-	const scanAfter = await f.evaluate(measureSrc());
-	t.log(`seg scan: tabs moved ${scanAfter.pos.y - scanBefore.pos.y} px as the list came back; chip at ${scanAfter.lens ? scanAfter.dx + ', ' + scanAfter.dy : 'gone'} px from SSH`);
-	await t.check('M6: after a scan lists the devices, the chip is on the SSH tab', scanAfter.lens && Math.abs(scanAfter.dy) <= 1.5 && Math.abs(scanAfter.dx) <= 1.5 && scanAfter.pos.name === 'SSH', JSON.stringify(scanAfter));
+	const listed = () => f.waitForFunction(() => document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-o55-do="device"]').length >= 2, null, { timeout: 15000 });
+	// SW-42: the scan case once went SMB, then SSH again, and met the cached list, so nothing arrived. Now the page's own
+	// discovery is reset first (O55.flow.reset of 'discover:ssh', as on a first visit to the step), so going back to SSH
+	// shows "Looking for devices" and then the list. In each look the frames from the tab press until 24 frames after the
+	// list arrives are read: the scan must have run, and the chip must end on SSH. The tabs do not move as the list
+	// arrives: the column's top is held from the moment the screen comes in (60-ui-core holdColumn, p76) and only a resize
+	// centres it again, so a scan is not a re-centre and the chip has nothing to follow here (the device-card and window
+	// rows test that). Movement and the frames off the tab are logged, not judged: they are rAF reads, and a one-frame
+	// reading needs a film to confirm. --set selftest=cached keeps the cached list (the old case): it must fail.
+	const scanBad = [], scanRows = [];
+	for (const look of (t.args.looks ? t.args.looks.split(',') : LOOKS)) {
+		const why = await lookOn(f, look); if (why) { scanBad.push(`${look}: ${why}`); continue; }
+		await go(['nas-find']); await listed(); await f.waitForTimeout(1200);
+		await tab('smb'); await f.waitForTimeout(1200); await tab('ssh'); await listed(); await f.waitForTimeout(900);
+		const rest = await f.evaluate(measureSrc());
+		await tab('smb'); await f.waitForTimeout(1200);
+		if (t.args.selftest !== 'cached') await f.evaluate(() => window.O55.flow.reset(window.O55.S, 'discover:ssh'));
+		const r = await f.evaluate(([mSrc]) => new Promise((res, rej) => {
+			const m = (0, eval)('(' + mSrc + ')'), L = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) ', out = []; let arrived = -1, looked = false;
+			requestAnimationFrame(() => { try {
+				document.querySelector(L + '.o55-seg button[data-arg="ssh"]').click();
+				const tick = () => { try {
+					const cards = document.querySelectorAll(L + '.o55-card[data-o55-do="device"]').length, looking = !!document.querySelector(L + '[data-key="scan"]');
+					looked = looked || looking; out.push(Object.assign(m(), { cards, looking }));
+					if (arrived < 0 && looked && cards >= 2) arrived = out.length - 1;
+					if ((arrived >= 0 && out.length >= arrived + 24) || out.length >= 360) res({ out, arrived, looked }); else requestAnimationFrame(tick);
+				} catch (e) { rej(e); } };
+				requestAnimationFrame(tick);
+			} catch (e) { rej(e); } });
+		}), [measureSrc().toString()]);
+		if (!r.looked || r.arrived < 0) { scanBad.push(`${look}: no scan ran (the list was there at once: a cached scan proves nothing)`); scanRows.push(`${look}: cached`); continue; }
+		const pre = r.out[Math.max(0, r.arrived - 1)], last = r.out[r.out.length - 1], moved = Math.round((last.pos.y - pre.pos.y) * 10) / 10;
+		const judged = r.out.slice(Math.max(0, r.arrived - 2));
+		const off = (x) => !x.lens || Math.abs(x.dx - rest.dx) > 1.5 || Math.abs(x.dy - rest.dy) > 1.5;
+		const late = rest.lens ? judged.filter(off).length : 0;
+		scanRows.push(`${look}: scan ran, list after ${r.arrived} frames; tabs moved ${sign(moved)} px as it arrived; ${rest.lens ? `frames off the tab ${late}/${judged.length} (logged); chip at the end ${last.lens ? sign(Math.round((last.dx - rest.dx) * 10) / 10) + ', ' + sign(Math.round((last.dy - rest.dy) * 10) / 10) + ' px' : 'gone'}` : 'no chip in this look'}`);
+		if (rest.lens && off(last)) scanBad.push(`${look}: once the scan's list arrived the chip ended off the SSH tab (${last.lens ? last.dx + ', ' + last.dy : 'gone'})`);
+	}
+	scanRows.forEach((x) => t.log('seg scan ' + x));
+	await t.check('M6/SW-42: a scan that really runs (not a cached list) ends with the chip on the SSH tab, in every look', scanBad.length === 0, scanBad.join('; '));
 	await pass(t, f, 'seg', [
 		['Media server chosen', card('Media server')], ['Home NAS chosen', card('Home NAS')]
 	], [[1920, 900], [1920, 1080]], out);

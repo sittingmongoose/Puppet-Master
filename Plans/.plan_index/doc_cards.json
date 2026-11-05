@@ -221,7 +221,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "b4bcd48a1debc9400d00f32f37649ef2c1e43fe38efaab38fc4ea946d7dfbd69",
+      "sha256": "048e5da55b7cc3fe1009461554f5433781a7ab03ecde1054f96d953b063b7c67",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 69
@@ -3421,7 +3421,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "15df9ed3508b90683979c3b365810cd89cba46ef428dc390c6a6e969e33f5058",
+      "sha256": "7d656c16709718bb8e5a46619dd3507baddd341e2591db9edb092a87bba9b283",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "retired": 152
@@ -5759,9 +5759,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 59,
-        "True": 207
+        "True": 206
       },
-      "heading_count": 439,
+      "heading_count": 438,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5881,9 +5881,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 21199,
+      "line_count": 21152,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 266,
+      "plan_unit_count": 265,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -6149,7 +6149,6 @@
         "DL-298",
         "DL-299",
         "DL-300",
-        "DL-301",
         "DL-302"
       ],
       "reasoning_tiers": [
@@ -6163,7 +6162,6 @@
         "account_switch_vocabulary_drift",
         "activity_rollback_scope",
         "agent_mark_presentation_drift",
-        "appearance_choice_or_compatibility_drift",
         "approval_anchor_evidence_governance_drift",
         "assistant_hosted_routing_provider_default_drift",
         "automation_manual_stop_precedence",
@@ -6324,15 +6322,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "ebc27f0d7bfd00dc58c54870b2894b23cce0d87fd94a790917f99a38daefc282",
+      "sha256": "31bd8137c7ae377b7271f6d563b812be84eae55c1fed0e0a4db9c4e89afb4f31",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 266
+        "accepted": 265
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 153,
+        "decision": 152,
         "decision_record": 24,
         "requirement": 88
       },
@@ -6357,7 +6355,6 @@
         "Plans/pip_parts.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json#/$defs/source_control_command_disabled_reason",
-        "Settings Theme and scheme controls, title-bar quick switch, Project reload and Auto OS appearance changes.",
         "exact Case L 76-decision set-equality check",
         "exact supplemental nine-packet set-equality check",
         "exact supplemental three-packet set-equality check",
@@ -8759,7 +8756,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "fd873c198322441004a9befbb773cb3aca16df666f65e6a6d6193b073d90ecc1",
+      "sha256": "9dac730e10cfcc426ed0bfbe21fb8fca7e801acb648d9efa2760be95c5dc2bce",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 653,
@@ -9599,7 +9596,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 8355,
+      "line_count": 8357,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -9771,7 +9768,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e",
+      "sha256": "860f27ab0e44a3817daf74ef55416f5773bf78644e735f19ba2892827990c3d7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
@@ -10824,7 +10821,7 @@
         "p1_security_release_supply_chain_hardening",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "bc4d54be39448384803b538a3ebf2b300d792a86f2f10e33117fbb9bffa29dab",
+      "sha256": "9539f6d43a5bd1956ca4f7350026d0a12c52571967fd736b20270c9fe83d9403",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 101
@@ -13497,7 +13494,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "50897a3ae37c1829176411dbf7276fc7da1b8fc4b02ee4556631e7154378e0d7",
+      "sha256": "a5ff69d2472c5d5935bc2f9da119c526ab5bbbf3d86eeff28e50426a28d98928",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 440,
@@ -14484,10 +14481,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 22,
+        "False": 23,
         "True": 2
       },
-      "heading_count": 38,
+      "heading_count": 40,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
@@ -14540,9 +14537,9 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1538,
+      "line_count": 1615,
       "path": "Plans/Planning_Ledger_System.md",
-      "plan_unit_count": 24,
+      "plan_unit_count": 25,
       "plan_unit_ids": [
         "PLS-001",
         "PLS-002",
@@ -14567,7 +14564,8 @@
         "PLS-021",
         "PLS-022",
         "PLS-023",
-        "PLS-024"
+        "PLS-024",
+        "PLS-025"
       ],
       "reasoning_tiers": [
         "high",
@@ -14585,6 +14583,7 @@
         "fable_residual_ledger_service_boundary_drift",
         "false_completion",
         "governance_boundary",
+        "governance_integrity",
         "implementation_readiness",
         "migration_compatibility",
         "owner_drift",
@@ -14597,16 +14596,16 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "69d0137f54c7f3b67e2419917297e7ae3670050443d4336bf7bf7cc0eee1bbc5",
+      "sha256": "c288dd3c0060975ed691af1790bf1e515698c0013b111bda5d2dcd88cdbd6c64",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 24
+        "accepted": 25
       },
       "title": "Planning Ledger System",
       "unit_type_counts": {
         "constraint": 1,
         "decision": 1,
-        "requirement": 21,
+        "requirement": 22,
         "schema_contract": 1
       },
       "validation_surfaces": [
@@ -14633,6 +14632,7 @@
         "Repeated external audits reuse closed findings unless upstream content, PM coverage, or source family changed.",
         "future bootstrap ledger validate matrix checks",
         "python3 -m unittest tests/test_pm_audit_closure.py",
+        "python3 scripts/pm-audit-closure.py self-test",
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
@@ -14643,6 +14643,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-audit-closure",
         "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         "python3 scripts/pm-shard-plans.py --check",
@@ -17382,7 +17383,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "7e58f2ab5e6852e0cd94770b67f10ac99652bd94bcf7940ee5100cdd176f9da5",
+      "sha256": "32d7069dd628e1076d7f1ea3eb26f8578336610cd126e5ce392920ce0a0ffb69",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 171,
@@ -17698,7 +17699,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5652,
+      "line_count": 5647,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 60,
       "plan_unit_ids": [
@@ -17819,7 +17820,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "09c295a2b5b5f32dc6c9fb3d7e47991c95b8760de61a1e1e85c706e91536593a",
+      "sha256": "1652ab14825f790df6f90ac25938bc88f8bdf91aefc496d81fafad9d8c6beabd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 60
@@ -20057,7 +20058,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 19644,
+      "line_count": 19645,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 197,
       "plan_unit_ids": [
@@ -20340,7 +20341,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "65ff10c2d213bd0be25d930c588f591a5d324a2ef6bd2f47c37e717d20e44e99",
+      "sha256": "212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -21539,7 +21540,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T05:07:06Z",
+  "generated_at_utc": "2026-11-05T04:24:46Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21547,8 +21548,8 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3631,
-      "True": 3792
+      "False": 3632,
+      "True": 3791
     },
     "plan_unit_count": 7423,
     "source_preserving_unit_count": 0,
@@ -21586,7 +21587,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 176,
+      "decision": 175,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -21623,7 +21624,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5614,
+      "requirement": 5615,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

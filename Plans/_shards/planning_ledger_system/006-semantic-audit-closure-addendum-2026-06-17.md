@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L513-L672
+Source lines: L513-L673
 
-Source SHA256: `69d0137f54c7f3b67e2419917297e7ae3670050443d4336bf7bf7cc0eee1bbc5`
+Source SHA256: `c288dd3c0060975ed691af1790bf1e515698c0013b111bda5d2dcd88cdbd6c64`
 
 ---
 
@@ -18,8 +18,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
-  Deep semantic audit and repair cycles use the global
-  Plans/.audits/_semantic_closure_registry.jsonl registry to make audit
+  Deep semantic audit and repair cycles use the global semantic closure registry,
+  Plans/.audits/_semantic_closure_registry.jsonl, to make audit
   findings durable across runs. Registry rows preserve closure_id, finding_key,
   finding_family, ledger_id, audit_ids, source_atom_ids, plan_unit_ids,
   owner_docs, consumer_docs, detail_keys, exact_tokens, closure_status,
@@ -113,6 +113,7 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:atom-0054
   - source_ref:chat:2026-06-17-semantic-closure-registry-support
 preserved_exact_tokens:
+  - "semantic closure registry"
   - "Plans/.audits/_semantic_closure_registry.jsonl"
   - "Planning Wizard"
   - "Plan Wizard"
