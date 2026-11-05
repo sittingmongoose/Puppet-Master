@@ -142,5 +142,23 @@
     "exit_code": 0,
     "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix5/standing-final-group6.json",
     "sha256": "67fd0fd7a21c43023ff43b6d692b8dbf6f501124af3fa1a676b312e5076a3b0b"
+  },
+  "published-index-e389beaf.json": {
+    "command": "python3 scripts/pm-plan-index.py validate at published e389beaf; top-level fail, 22 unchanged-path comparison/ledger failures",
+    "exit_code": 1,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix5/published-index-e389beaf.json",
+    "sha256": "ad0bfe8ea1a311b77ed34917ab70b6083969dc374785154c4abd93fb7bb3fe5f"
+  },
+  "published-shard-e389beaf.json": {
+    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json at published e389beaf",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix5/published-shard-e389beaf.json",
+    "sha256": "434b40c6c08273146c15e78d0dd6a02789a25a54f5e8e0966059d816649c1daa"
+  },
+  "published-index-baseline-drift.json": {
+    "command": "prove every failing path and validator unchanged since reviewed head; DL-302 introduced only on newer origin/main",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix5/published-index-baseline-drift.json",
+    "sha256": "88f9db37a3f1f4c4c152c2ef4cd54959110c2630ea1e2b2218ed750735e7ca8a"
   }
 }
