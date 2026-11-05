@@ -70,9 +70,27 @@
       workspace: o.workspace || null, entity: o.entity || null, mode: o.mode || null, endpoint: o.endpoint || null,
       via: o.via, at: new Date().toISOString(), state: 'ready' };
   }
+  /* A key result reports one account, not the provider's aggregate readiness. Keep the actual record and
+     operation generation: removing it, replacing the session, or editing another key ends that result's speech. */
+  const keyResults = new WeakMap();
+  /* What each key field last held when it was edited, for this page only (a key is never stored). The field reports
+     the same edit twice (input, then change on blur or when a redraw takes the focused field away): only a value that
+     differs is an edit, so a result's speech ends on every real edit and never on that repeat (FO-63). */
+  const keySeen = new WeakMap();
+  function speechOwner(S, key) { return (keyResults.get(S.sess) || new Map()).get(key) || null; }
+  function speechLive(S, owner) {
+    const a = S.sess.ai || {}, r = (a.accounts || {})[owner.provider];
+    return S.sess.screen === 'ai' && (a.list || []).includes(owner.record) && !!r
+      && r.attempt === owner.attempt && (r.keyRevision || 0) === owner.revision;
+  }
   function addAccount(S, p, o) {
     const r = R(S, p.id), e = record(S, p, Object.assign({ row: r }, o));
     A(S).list.push(e);
+    if (o.via === 'key') {
+      if (!keyResults.has(S.sess)) keyResults.set(S.sess, new Map());
+      const operation = 'key:' + p.id + ':' + r.attempt;
+      keyResults.get(S.sess).set(operation, { kind: 'ai-account', operation, provider: p.id, record: e, attempt: r.attempt, revision: r.keyRevision || 0 });
+    }
     Object.assign(r, { state: 'ready', adding: false, manage: false, dup: null, removing: null, remote: null, ctx: null });
     S.save(); O55.ui.refresh();
     O55.ui.charm(S.root.querySelector(`[data-key="pv-${p.id}"]`), pname(p), 'spark');
@@ -474,6 +492,10 @@
           payload: { provider_entry_id: p.settings, auth_family: w.family || 'api_key', method: 'api_key', host_id: host(S).id }, sound: { fail: 'warn' }, /* a refused key is a soft warning under its field */
           onDone: () => {
             if (!current()) return;
+            /* Success removes this field, including any unsubmitted replacement draft.
+               Clear its DOM value too, before removal can dispatch an unchanged blur/change. */
+            const field = S.root.querySelector('#o55f-key-' + id); if (field) field.value = '';
+            r.keyTyped = false; r.replaced = false;
             addAccount(S, p, { via: 'key', workspace: p.context === 'project' && r.project ? T('ai.ctx.project.named', { project: r.project }) : null });
           },
           onFail: () => { if (!current()) return; r.state = 'keyEntry'; S.save(); O55.ui.refresh(); }
@@ -533,14 +555,21 @@
     },
     /* a field's input: a key, a pasted code or a server password is only noted as typed; the server's address and
        username are kept (they are not secret) */
-    bind: new Proxy({}, { get: (t, key) => (S, v) => {
+    bind: new Proxy({}, { get: (t, key) => (S, v, el) => {
       const [kind, id] = String(key).split(':'), r = A(S).accounts[id]; if (!r) return;
       if (kind === 'ocAddr' || kind === 'ocUser' || kind === 'project') { r[kind === 'ocAddr' ? 'endpoint' : kind === 'ocUser' ? 'user' : 'project'] = v; S.save(); O55.ui.refresh(); return; }
       const flag = kind === 'paste' ? 'pasteTyped' : kind === 'ocPass' ? 'secretTyped' : 'keyTyped';
+      if (kind === 'key') {
+        /* (a field nothing was typed in holds nothing: a check, Cancel or another way empties it without an event) */
+        const before = !r.keyTyped ? '' : el && keySeen.has(el) ? keySeen.get(el) : null;
+        if (v === before) return;
+        if (el) keySeen.set(el, v);
+        r.keyRevision = (r.keyRevision || 0) + 1;
+      }
       const had = !!r[flag]; r[flag] = v.length > 0;
       /* a new key or code takes the last refusal away from under its field (Opus p62) */
       if (kind === 'key' || kind === 'paste') if (clearRefusal(S, (kind === 'key' ? 'key:' : 'code:') + id + ':' + (r.attempt || 0), r)) return;
-      if (had !== r[flag]) { S.save(); O55.ui.refresh(); }
+      if (kind === 'key' || had !== r[flag]) { S.save(); O55.ui.refresh(); }
     } }),
     onBack: () => false
   });
@@ -800,5 +829,5 @@
 
   /* the provider whose account was added last on the work computer (the stage's tick lands on its orb: Opus p51) */
   const lastReady = (S) => { const l = A(S).list.filter((e) => e.state === 'ready' && e.host === host(S).id); return l.length ? l[l.length - 1].provider : null; };
-  O55.ai = { readyIds, freeReady, shortlist, pname, mono, accounts: (S) => A(S).list.slice(), host, lastReady };
+  O55.ai = { speechOwner, speechLive, readyIds, freeReady, shortlist, pname, mono, accounts: (S) => A(S).list.slice(), host, lastReady };
 })();

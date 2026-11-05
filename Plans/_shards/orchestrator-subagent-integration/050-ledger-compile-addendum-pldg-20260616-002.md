@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31390-L31497
+Source lines: L31390-L31504
 
-Source SHA256: `a5ff69d2472c5d5935bc2f9da119c526ab5bbbf3d86eeff28e50426a28d98928`
+Source SHA256: `efa0d584b565514addf6b0c0c42d53bf36adf36ce886cfdafbae81600129d900`
 
 ---
 
@@ -19,6 +19,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. SubagentPolicy governs fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory-subagent rules with default limits of 4 parallel children, 8 children per wave, 3 waves per GoalRun, 2000000 microusd per wave, 16000 estimated tokens per wave, 900000 wall-clock ms per child, 2 retry attempts per child, 1 retry attempt per wave, and 30000 ms retry backoff for provider_transient, rate_limit, tool_timeout, or coordination_conflict only.
+  SubagentPolicy cost controls may reduce exploratory fanout, but cannot disable required verification, receipts, independent review where its owner requires it, or certification gates.
 gui_related: false
 gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
@@ -31,6 +32,7 @@ acceptance_criteria:
   - SubagentPolicy receipts record evaluated thresholds, selected child count, parallelism cap, cost ceiling, retry budget, capability lanes, write policy, and compatibility aliases consumed.
   - Default limits are measurable in children, waves, microusd, estimated tokens, bytes, refs, write targets, wall-clock ms, and tool rounds; hard-limit exceedance blocks the wave rather than silently widening scope.
   - SubagentPolicy limits cannot exceed the parent Run_Modes run-envelope budget or remaining budget.
+  - Cost limits may reduce exploratory fanout while preserving required verification, receipts, independent review where its owner requires it, and certification gates.
   - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
   - Parent synthesis and high-end certification remain required for meaningful completion.
   - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
@@ -61,9 +63,14 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0088
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0092
   - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
   - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0003
 preserved_exact_tokens:
+  - "cost controls"
+  - "exploratory fanout"
+  - "independent review"
+  - "certification gates"
   - "subagents are used extensively"
   - "bounded"
   - "cost per wave"
