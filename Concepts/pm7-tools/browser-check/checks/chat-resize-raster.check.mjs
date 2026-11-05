@@ -11,11 +11,19 @@ import {captureResize, classifyResize} from '../helpers/resize-raster.mjs';
 // the parent's frame and fires its resize event one rendering update later, so the first new-sized frame is the column
 // at its old width beside the shrunk centre (the dock still beside 479 px), on every build; there the cover must arrive
 // no later than on the control and stay once shown. The 360 px floor in every frame is also chat-sweep's rAF case.
-// --set control=<page> measures a control build in the same browser, order-balanced (C H H C ...), --set reps=N pairs.
+// On both surfaces the child's first new-sized frame must come no later than on the control: the median of the time
+// from the resize to the first frame that is no longer the old image (firstNewMs), judged on its own, not through the
+// time to the settled cover; on the opaque surface also the time the parent shows the old image clipped (retainedMs).
+// --set control=<page> measures a control build in the same browser, order-balanced (C H H C C H ...), --set reps=N
+// pairs (default 6: three pairs could not tell a 100 ms difference from this machine's noise). The summary keeps every
+// value, sorted, with the pairwise differences, not only the medians.
 // --set sandbox=1 opaque only, =0 normal only; both by default.
 const FROM = 1390, TO = 1177, HEIGHT = 900;
 const url = p => /^https?:/.test(p) ? p : pathToFileURL(p).href;
 const median = a => { const s = [...a].sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null; };
+const r1 = v => v == null ? null : Math.round(v * 10) / 10;
+// every value, sorted, with min, median and max: a median alone hid how far three pairs scattered
+const dist = a => { const v = a.filter(x => x != null).sort((x, y) => x - y).map(r1); return {n: v.length, min: v[0] ?? null, median: r1(median(v)), max: v.at(-1) ?? null, sorted: v}; };
 
 async function shrinkOnce(t, f, page, opaque, label, dir) {
 	const el = await f.frameElement();
@@ -56,7 +64,7 @@ async function surface(t, opaque) {
 	if (opaque) await (await f.frameElement()).evaluate(e => e.setAttribute('sandbox', 'allow-scripts allow-forms allow-popups allow-downloads'));
 	const head = t.args.page || new URL('../../../PMConcept7.html', import.meta.url).pathname;
 	const control = t.args.control;
-	const reps = Number(t.args.reps || 3);
+	const reps = Number(t.args.reps || 6);
 	const order = [];
 	for (let i = 0; i < reps; i++) order.push(...(control ? (i % 2 ? ['head', 'control'] : ['control', 'head']) : ['head']));
 	const dir = join(t.run.dir, opaque ? 'opaque' : 'normal');
@@ -72,17 +80,28 @@ async function surface(t, opaque) {
 		if (opaque) await t.check(tag + ' first new-sized frame is the settled cover, no docked or other intermediate frame', !r.error && r.firstNewKind === 'final' && r.intermediate.length === 0, JSON.stringify({firstNewKind: r.firstNewKind, intermediate: r.intermediate}));
 		await t.check(tag + ' the cover stays once shown', !r.error && r.unsettled.length === 0, JSON.stringify({unsettled: r.unsettled}));
 	}
-	const key = opaque ? 'retainedMs' : 'settledMs';
-	const stat = which => runs[which].map(r => r[key]).filter(v => v != null);
-	const summary = {surface: opaque ? 'opaque' : 'normal', measure: key, head: stat('head'), control: stat('control'), headMedian: median(stat('head')), controlMedian: median(stat('control')),
-		controlIntermediate: runs.control.map(r => r.intermediate?.length ?? null), headFirstNew: runs.head.map(r => r.firstNewMs), controlFirstNew: runs.control.map(r => r.firstNewMs),
-		headSettled: runs.head.map(r => r.settledMs), controlSettled: runs.control.map(r => r.settledMs)};
+	const name = opaque ? 'opaque' : 'normal';
+	const of = (which, key) => runs[which].map(r => r[key] ?? null);
+	// pairwise head - control in run order (each pair is one C H or H C step of the balanced order)
+	const pairs = key => runs.head.map((r, i) => r[key] != null && runs.control[i]?.[key] != null ? r1(r[key] - runs.control[i][key]) : null).filter(v => v != null);
+	const measures = ['firstNewMs', 'settledMs', ...(opaque ? ['retainedMs'] : [])];
+	const summary = {surface: name, reps, order, measures: Object.fromEntries(measures.map(k => [k, {head: dist(of('head', k)), control: dist(of('control', k)), headMinusControl: dist(pairs(k))}])),
+		headFirstNewKind: runs.head.map(r => r.firstNewKind), controlFirstNewKind: runs.control.map(r => r.firstNewKind),
+		headIntermediate: runs.head.map(r => r.intermediate?.length ?? null), controlIntermediate: runs.control.map(r => r.intermediate?.length ?? null)};
 	t.log('resize raster ' + JSON.stringify(summary));
 	writeFileSync(join(dir, 'summary.json'), JSON.stringify(summary, null, 1));
-	if (opaque) await t.check('opaque parent shows the old image clipped (measured) on the head', stat('head').length === runs.head.length, JSON.stringify(summary));
-	if (control && opaque) await t.check('opaque settledMs head median <= control median', median(summary.headSettled) != null && median(summary.headSettled) <= median(summary.controlSettled), JSON.stringify(summary));
-	if (control) await t.check(`${summary.surface} ${key} head median <= control median`, summary.headMedian != null && summary.controlMedian != null && summary.headMedian <= summary.controlMedian, JSON.stringify(summary));
-	if (t.args.maxMs) await t.check(`${summary.surface} ${key} head median <= ${t.args.maxMs} ms`, summary.headMedian != null && summary.headMedian <= Number(t.args.maxMs), JSON.stringify(summary));
+	const m = summary.measures;
+	await t.check(`${name} first new-sized frame measured on every head shrink`, m.firstNewMs.head.n === runs.head.length, JSON.stringify(m.firstNewMs.head));
+	if (opaque) await t.check('opaque parent shows the old image clipped (measured) on the head', m.retainedMs.head.n === runs.head.length, JSON.stringify(m.retainedMs.head));
+	if (control) {
+		const le = (k, label) => t.check(`${name} ${label}: head median <= control median`, m[k].head.median != null && m[k].control.median != null && m[k].head.median <= m[k].control.median,
+			JSON.stringify({head: m[k].head, control: m[k].control, headMinusControl: m[k].headMinusControl}));
+		// the first new-sized frame on its own: the cover settling sooner does not excuse a later first frame
+		await le('firstNewMs', 'first new-sized frame after the resize (firstNewMs)');
+		if (opaque) await le('retainedMs', 'old image shown clipped (retainedMs)');
+		await le('settledMs', 'settled cover (settledMs)');
+	}
+	if (t.args.maxMs) await t.check(`${name} firstNewMs head median <= ${t.args.maxMs} ms`, m.firstNewMs.head.median != null && m.firstNewMs.head.median <= Number(t.args.maxMs), JSON.stringify(m.firstNewMs.head));
 }
 
 export const tests = {
