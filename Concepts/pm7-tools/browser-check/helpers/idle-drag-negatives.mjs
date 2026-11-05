@@ -55,3 +55,20 @@ export const mutations = {
     ]
   ]
 };
+
+// node helpers/idle-drag-negatives.mjs <head.html> <scratch-directory>
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+    const src = fs.readFileSync(process.argv[2], 'utf8'), out = process.argv[3];
+    fs.mkdirSync(out, { recursive: true });
+    for (const [name, changes] of Object.entries(mutations)) {
+        let text = src;
+        for (const [before, after] of changes) {
+            if (text.split(before).length !== 2) throw new Error(`${name}: mutation target must occur once: ${before}`);
+            text = text.replace(before, after);
+        }
+        fs.writeFileSync(path.join(out, name + '.html'), text + `\n<!-- idle-drag-selftest:${name} -->\n`);
+    }
+}
