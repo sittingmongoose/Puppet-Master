@@ -110,6 +110,44 @@ def storage_schema_cases(registry, family, schemas):
     return observations
 
 
+def decision_citation_errors(manifest, family, log):
+    """The manifest names the landed log; the family's decision and exact option text must be there."""
+    if manifest.get('decision_source') != 'Plans/Decision_Log.md':
+        return ['decision_source']
+    if 'decision_branch' in manifest:
+        return ['decision_branch_retained']
+    heading = '### ' + family['decision'] + ': '
+    if log.count(heading) != 1:
+        return ['decision_entry']
+    start = log.index(heading)
+    end = log.find('\n### ', start + 1)
+    section = log[start:end if end != -1 else len(log)]
+    if type(family['option_a']) is not str or '- **A (recommended):** ' + family['option_a'] + '\n' not in section + '\n':
+        return ['decision_option_text']
+    return []
+
+
+def decision_citation_cases(manifest, family, log):
+    """One-defect citation controls, built from the intact manifest entry."""
+    assert not decision_citation_errors(manifest, family, log)
+    observations = [dict(name='decision_citation', stage='decision_citation', expected=[], actual=[])]
+    foreign = next(f['decision'] for f in manifest['families'] if f['decision'] != family['decision'])
+    cases = (
+        ('stale_branch_source', {'decision_source': 'plans/ea-cards2-answers-20261105'}, {}, 'decision_source'),
+        ('source_not_string', {'decision_source': ['Plans/Decision_Log.md']}, {}, 'decision_source'),
+        ('old_branch_key_kept', {'decision_branch': 'plans/ea-cards2-answers-20261105'}, {}, 'decision_branch_retained'),
+        ('unknown_decision', {}, {'decision': 'DL-99999'}, 'decision_entry'),
+        ('foreign_decision', {}, {'decision': foreign}, 'decision_option_text'),
+        ('changed_option_text', {}, {'option_a': family['option_a'] + ' Changed.'}, 'decision_option_text'),
+        ('option_text_not_string', {}, {'option_a': [family['option_a']]}, 'decision_option_text'),
+    )
+    for name, manifest_change, family_change, refusal in cases:
+        actual = decision_citation_errors({**manifest, **manifest_change}, {**family, **family_change}, log)
+        assert actual == [refusal], (family['event_type'], name, actual)
+        observations.append(dict(name='decision_citation:' + name, stage='decision_citation', expected=[refusal], actual=actual))
+    return observations
+
+
 def operation_guards(operation, family, schema):
     if schema_errors(operation, schema):
         return {'operation_schema': False}
@@ -389,6 +427,7 @@ def main():
     errors = storage_schema_errors(registry, family, schemas)
     assert not errors, errors
     observations = storage_schema_cases(registry, family, schemas)
+    observations += decision_citation_cases(manifest, family, (ROOT / 'Plans/Decision_Log.md').read_text())
     # Run the value oracles on the registered schemas whose exact companion
     # identity/content, metaschema and eager reference closure were just checked.
     for surface in ('operation', 'checkpoint'):
