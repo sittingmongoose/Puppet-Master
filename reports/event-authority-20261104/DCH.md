@@ -1,3 +1,126 @@
+# DCH — review round 6
+
+Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `a785466dc54f2b8efae7cf9aeb18472d2ce4764e`. Source/fix commit: `22221e04071cb5516fd50a13cec998386a7bb586`. This report commit follows those source bytes.
+
+All seventeen families are prepared without admission at the worker self-grade **10 PASS / 1 PARTIAL retention / 1 ABSENT membership**, after Sol cycle 6's **9 PASS / 2 PARTIAL / 1 ABSENT**. The upgraded cell is positive_negative_oracles. Independent re-review remains pending. Native execution remains NOT_RUN. **Stop stays held for Jared**, with its unchanged question and separate **0 PASS / 5 PARTIAL / 7 ABSENT** assessment.
+
+## Review round 6: findings and responses
+
+- **C6-B1 — fixed (`22221e04071cb5516fd50a13cec998386a7bb586`).** `scripts/pm_dch_events.py:148` checks every actual `storage_instance_id` against Storage's own UUID descriptor in `Plans/event_record_index_checkpoint.schema.json` before resolution or hashing. `resolve_body()` also validates its explicit context. All selected/registered DCH checkpoint current/history instance slots now require the exact UUID type/format/length. SP-610–626 bind those checks to independently read original Storage commitments and source/token/selection/pack contexts. Both payload editions in every family have coherently re-keyed/recommitted null, bool, integer, array, object, empty, overlong, malformed and LF context negatives. Valid second-Store histories remain positive. The shared type/context guard has independently flipping witnesses; restoring the UUID defect makes each family's complete checker fail.
+- **C6-B2 — fixed (`22221e04071cb5516fd50a13cec998386a7bb586`).** CV-630–646 and SP-610–626 choose the exact I-JSON safe integer domain **|n| <= 9007199254740991**, preserving every tighter field minimum/maximum. Owned payload/checkpoint schemas, the DCH-only EventRecord conditional, recursive input admission, RFC8785 retry commitment and SP-236 encoding apply the same range. No unrelated EventRecord family is capped. Readers/writers/checkpoint joins refuse out-of-domain input; retries return `invalid_input_type`. Known encoder-domain refusals remain contained, without rounding, stringification or uncaught IntegerDomainError/OverflowError. Tests cover the last admissible value/successor, signed endpoints for permitted exit codes, uint64 max, uint64 max+1 and 2^100. Every checkpoint current/history integer has a raw schema upper-bound witness. The encoder's own bound is removed independently and its +/- successor negatives flip. Admission and encoder restorations separately fail all seventeen complete family checks.
+- **C6-B3 — fixed (`22221e04071cb5516fd50a13cec998386a7bb586`).** `scripts/pm_dch_events.py:293` resolves the actual retained started record through `historical_read_valid()` with its own Storage context, exact original commitment, supported envelope/payload edition and current custody before terminal joins. It resolves verified SP-337 bodies and never applies current append policy to the historical start. ACD-622/623, CV-642/643/644 and SP-624 state this obligation. Both terminal families and both editions cover both Stores, both transports and both ordinary/compatibility policies after live-state changes: **32 retained-start positives**, with independent forged, withdrawn, foreign and access refusals. Earlier started-source mutations now carry coherent independent commitments so their original schema/relationship defects remain isolated. Restored compatibility/reference/default-Store restrictions each fail both terminal families.
+
+No finding is disputed. No guard is weakened. All earlier source fixes, **17,430 refusal cases** and **4,923 frozen schema witnesses** remain present. The integer/UUID changes strengthen existing technical bindings under the explicit round-six repair scope; no consumer, projector, key recipe, retention/deletion choice, feature, admission or Stop record is invented. The per-family searches and premise checks in the prior report remain pinned lineage.
+
+## Family grades before and after
+
+P=PASS, Pa=PARTIAL, A=ABSENT. Before is the independent cycle-6 grade; after is the source-pinned worker grade. Every row has its own current ACD/CV/SP and new round-six citations.
+
+| Family | Before | After | Ordinary assertions |
+|---|---|---|---:|
+| `bundle.selection_forward_blocked` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,300 |
+| `bundle.selection_sent_to_chat` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,334 |
+| `chat.message` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,316 |
+| `chat.thread_archived` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,428 |
+| `chat.thread_created` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,294 |
+| `chat.thread_deleted` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,294 |
+| `chat.thread_worktree_bound` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,292 |
+| `chat.thread_worktree_create_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,288 |
+| `chat.thread_worktree_merge_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,296 |
+| `chat.thread_worktree_merged` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,300 |
+| `chat.thread_worktree_pr_created` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,312 |
+| `chat.thread_worktree_pr_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,292 |
+| `chat.thread_worktree_pre_merge_test_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,610 |
+| `chat.thread_worktree_pre_merge_test_passed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,560 |
+| `chat.thread_worktree_pre_merge_test_started` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,292 |
+| `chat.thread_worktree_renamed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,290 |
+| `chat.thread_worktree_unbound` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 1,288 |
+
+## Complete guard table
+
+[DCH-guard-removal.md](DCH-guard-removal.md) and [DCH-guard-negative-index.json](DCH-guard-negative-index.json) record **6,161 guard rows**, **19,382 refusal witnesses**, **22,640 direct cases** and the exact rejected complement of each flipping set. The seventeen runs are serial, with one guard or named duplicate set removed and restored per row. Shared/dependency cases deduplicate by exact identity in the combined table. Zero mandatory negatives are unproved; zero rows lack flips; zero mutation exceptions count as rejection. All **51** missing-generation containment controls still refuse, with no early-success shortcut.
+
+The frozen schema inventory now has **7,389 primitive constraints** (7,031 earlier clauses retained, with strengthened Storage-instance shapes and added numeric bounds). Every earlier frozen negative remains byte-for-byte in the fixture list. The failed-test base/conditional exit-code bounds constrain the same slot and are a named duplicate set. Existing schema/semantic, scope-edition, selected/registered and zero-exit duplicate sets remain named. The numeric encoder has its own removal row. Unchanged-blocker certificates reuse only deterministic baseline rejections; every potentially admitting removal is reevaluated. Overflow/no-crash controls are separate positive refusal checks, not invented flipping negatives for unencodable bytes.
+
+## All eleven standing checks
+
+| # | How the class is ruled out |
+|---:|---|
+| 1 | Each family refuses projector_replay_only on current append/retry; retained compatibility readers have separate positives. |
+| 2 | Exact CV-366 lowercase UTF-8 application keys and incompatible-key/LF negatives remain. |
+| 3 | Exact encoded project~ partitions, reversible Project identity and coherently re-keyed wrong partitions remain. |
+| 4 | Full EventRecord/checkpoint byte bounds and verified SP-337 custody remain; retained referenced starts now resolve correctly too. |
+| 5 | Both selected/registered current/history schemas retain exact-end identifiers and LF refusals; UUID contexts add their own LF case. |
+| 6 | Exactly 21 caller-semantic fields enter retry hashing; Storage-only sequence/timestamp changes retain original-result positives. Numeric admission precedes hashing. |
+| 7 | Actual Store, event, source commitment, key/ref, full-index frontier/dataset and publication joins remain coherent and independently negated. |
+| 8 | Failed tests refuse actual exit zero; passed tests require actual zero; timeout/process-error/nonzero controls and fabricated-field refusals remain. |
+| 9 | Complete selected/registered/envelope reference closure is checked before instances; hidden/file/dynamic/cyclic controls remain. |
+| 10 | All family histories/checkpoints and both terminal starts accept retained valid ordinary/compatibility/inline/reference/second-Store originals after live changes; unsupported, forged, withdrawn and foreign originals refuse. |
+| 11 | The whole serial table proves each guard or named duplicate set, all earlier witnesses are preserved, and all unrelated containment controls still refuse. |
+
+## All eleven Astra defect classes
+
+| Item | Fresh evidence |
+|---:|---|
+| 1 | Identity/key/digest and joined source/frontier/publication forgeries refuse; malformed context negatives carry coherent derived IDs and commitments. |
+| 2 | Storage context is a valid actual UUID; exact original encoded-record commitments verify assigned sequences/timestamps. Metadata-only retry positives remain separate. |
+| 3 | Retained-history policy is used on every original path, including terminal starts; later live state grants no authority and does not invalidate retained evidence. |
+| 4 | Exact schema/type/format rules prevent mixed scalar interpretations; physical numeric aliases share bytes while unsupported runtime forms refuse before semantic use. |
+| 5 | Complete reference-graph negatives and valid recursive/file controls execute in every family. |
+| 6 | Entire event bodies, complete current/history checkpoints and physical pointers are measured; maximum-array references retain custody and access checks. |
+| 7 | Exact-family retained original custody precedes checkpoint and terminal publication; foreign/withdrawn/missing-reference controls refuse independently. |
+| 8 | Every recorded refusal has an independently flipping guard or named duplicate set; no stale hash, post-state or other observational copy masks it. |
+| 9 | The self-grade uses 17 own family rows, current exact citations and fresh serial proofs; membership/RT/native limits stay explicit. |
+| 10 | All seventeen test 1/1.0/1e0, -0/0 and invalid JSON 01. Safe-domain endpoints and successors cover schema, admission, retry and physical encoding; no rounding/stringification or crash is accepted. |
+| 11 | Every family tests string booleans/numbers, null, arrays, nested objects and bool/integer aliases across payload, access, pack and retry paths. Coherent malformed actual Storage contexts and terminal started-access forms extend that sweep. |
+
+## Verification and scope
+
+| Check | Exit | Result |
+|---|---:|---|
+| Seventeen complete selected-family pm_dch_events.py runs | 0 each | 22,786 assertions, both editions and checkpoint, zero failures |
+| Seventeen serial pm_dch_guard_proofs.py runs | 0 each | Full combined 6,161-row table; 19,382 refusal witnesses; 51 containment controls |
+| Serial defect restorations | 0 campaign | 105 runs: 37 earlier lane branches, 57 C6 restorations and 11 round-five restorations; expected exits, zero exceptions |
+| pm-shard-plans.py --generate / --check | 0 / 0 | 99 sources / 3,138 shards; changed owners only the six edited sources |
+| pm-plan-index.py generate | 0 | Top-level pass; 7,473 PlanUnits / 30,024 acceptance units; no new IDs |
+| pm-plan-index.py validate / unchanged-base overlay | 1 / 1 | Current 22 failures all occur on base; base has one additional stale readiness artifact. Zero new failure |
+| pm-storage-profile-check.py | 1 baseline | Exact prior 41 errors, byte-identical |
+| pm-assistant-contract-check.py | 1 baseline | Same gaps_found; only six edited-source hashes differ; errors and Projects-refresh failures empty |
+| Source/derived/citation scope audits | 0 | 52 canonical pairs; 37 refined units; all current prepared citations exact; foreign owner bytes/profile content and held Stop preserved |
+| git diff --check | 0 | No whitespace errors |
+
+All checks run one family/job at a time, without parallel workers or subagents. The resource monitor aborts below 6 GiB available; no monitored run reached that floor (minimum across final campaigns/stages exceeded 15 GiB). Initial `free -g` available was 18 GB; initial root disk was 77 GB free, above the 50 GB disk floor. The detached sparse DCH-fix6 worktree is removed after the report push. Fifteen ignored currentness files were copied and SHA-256 matched before index generation. No main push, landing lock, reseal, registry admission/append, Decision Log entry, test-file edit or new PlanUnit ID occurs. Initial inbox read preceded the no-mail brief; no mailbox write or later mailbox use occurred.
+
+The DCH-only EventRecord conditional leaves every older clause and every other family unchanged. Storage value registry changes are confined to the seventeen exact schema copies; full nested profile/foreign-row equality is verified. Owner changes are confined to ACD-622/623, CV-630–646, SP-610–626 and ATS-305; every other owner byte, including Stop, is preserved. Generated shards belong only to assistant-chat-design, contracts_v0, storage-plan, automated_testing_system, event_record.schema and storage_value_registry. Index row changes stay within the four edited owner docs. No all-origin ID clearance, governance or native certification is claimed; no ID is minted and the review's wider current-main audit remains integration work.
+
+**IDs used:** existing **ACD-610–626, CV-630–646, SP-610–626, ATS-305**. New PlanUnit/acceptance IDs: **none**. Local report labels: **G0001–G6161**, **N0001–N19382**. **Stop stays held for Jared.**
+
+## Retained evidence
+
+Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round6/`. `SHA256SUMS` pins retained inputs, helpers and outputs; report and self-grade copies are also in the parent DCH draft directory. Main outputs:
+
+| Path | SHA-256 |
+|---|---|
+| `summary.json` | `71d0836cb84580d8ae4ade756bb5ece6424768591d15f4f510713e1758f9496d` |
+| `guard-removal.json` | `9800b85e48c9958341952487fb36b41d0de3bab8cd81629a9136eeecfff222be` |
+| `serial-campaign.json` | `19860b3fba4f2e69b7b2d39b01cfd5ad2a47f3863bed84e2371e87821996c195` |
+| `serial-regressions.json` | `487e4c05c24305359789002d2a88f1db31d9c58e3446e5cbf14140c301f27d4b` |
+| `broader-comparison.json` | `6a49268128669521bda6f7df463c000ea05c6342b3b2aa6cfb27146de1bc62e6` |
+| `scope-audit.json` | `32539ff3a7a693adb4e81ad170109dc3467c9517504f1b3407e8adc458e4b962` |
+| `derived-scope.json` | `9427060508d351bf4219aaa6f6dbd4876a4c430dcf38a38abec2678b17b084bf` |
+| `grade-citation-check.json` | `dbcf4c978c0c011da125420c4b1103c3cdcaca706a7b2fc68819c8a17770b438` |
+| `earlier-negative-preservation.json` | `c6841905e95a747a9d571e7dc37691546aa05fcf3577a7c237437d385279eefe` |
+| `currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
+| `shard-generate.json` | `59211a7490089d02e12c1bee53260a18e7f1bac149a9736278fb765b9f31fa20` |
+| `shard-check.json` | `07f057d315fd728009c987886ccbccd75177debcdea6c1c628fe52452fbd50e9` |
+| `index-generate.json` | `dcb67c500d21464cb1942ce9b21fa5e385d9f0316fc97feddfcc606e04600b52` |
+| `index-validate.json` | `63db086e6dc9b5caf450eff25fe4302ad2cb1ccf220d78f3053df147ddb338af` |
+| `base-index-validate.json` | `5143035024b5ab72833867077ea01bbcbdefc54740e52181e421e7491298e211` |
+
+---
+
+# Prior reports — historical; round 6 above supersedes preparation claims
+
 # DCH — review round 5
 
 Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `d36809af13ae4a666a425b8632f3d6af9acde44c`. Assessed source/fix commit: `198a28e67da8770ea346ef65e6f4786ee220cc30`. This report commit follows those source bytes.
