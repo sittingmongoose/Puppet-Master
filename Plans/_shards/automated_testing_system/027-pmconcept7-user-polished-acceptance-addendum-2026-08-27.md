@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L3594-L4273
 
-Source SHA256: `74e08935317099611852be8e770f35267919a304f6d8fd77a220701a1401e8c3`
+Source SHA256: `0b9b4c13f16e87c69725f8898ee72fda237277debba2b2e0b51e75aa5f7cfb1b`
 
 ---
 
@@ -53,7 +53,7 @@ acceptance_criteria:
   - "The golden matrix contains exactly GUI-USG-001 through GUI-USG-008, GUI-CBP-001, GUI-CBP-002, GUI-ROUTE-001, GUI-RAW-001, and GUI-RAP-001 with no duplicate or unexpected fixture identity."
   - "Each golden row has surfaces, source_lineage, must, and must_not assertions, and each identity has a matching standalone case fixture."
   - "Companion matrices cover all thirteen rooms, At a glance/Detailed/Diagnostics, curated semantic sizes, complete-or-hidden tiers, measured physical content/placeholder footprints, stable identity-based insertion intent, Usage live occupied-neighbor pointer-resize preview with accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), and the recovered width families; chart fixture expectations preserve the full ordered accessible series while checking exactly one visible in-plot label for every painted vertical bar, including zero bars, measured direct or vertical-lane placement keeps each label horizontally associated with its own bar, inside the plot, and pairwise non-overlapping without suppression, declared-unit formatting includes exactly two currency decimals for attempt-charge integer cents, and title/Latest/distinct-peak composition remains complete."
-  - "Fresh, migrated, invalid-reference, and prototype-key fixtures encode expected current defaults, settled restore, and preview-state exclusion without claiming that those behaviors executed."
+  - Fresh, genuine supported-migration and invalid-reference fixtures encode current defaults, settled restore and preview-state exclusion without claiming execution.
   - "Fixture expectations forbid unknown, hidden, disabled, unsupported, partial, missing, and redacted values from being represented as zero, success, settled, or authoritative; live rendering remains browser-audit work."
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures and python3 scripts/pm-validate-pm7-gui-fixtures.py validate both pass for static fixture representation; runtime, visual, motion, and migration acceptance still requires fresh browser execution, raw receipts, and independent review."
   - "Accounts room fixtures list every account of a provider as its own row (three ChatGPT / Codex accounts as three rows in both Accounts and Plans & limits), show Use this account only when supports_manual_set_active is true and expect one cmd.account.select_profile per use with a confirmation first when the account is past its provider's switch point, and expect the card body and Details to dispatch nothing."

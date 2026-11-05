@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L29655
+Source lines: L28166-L29764
 
-Source SHA256: `b38225291db34ab2b7c9114af6e83b43663e009241a4921bb79039712a9d98a4`
+Source SHA256: `a4de0fe7ebfc9d7001956de40ab12610776935c6acba8670199fa2417114ff01`
 
 ---
 
@@ -909,8 +909,8 @@ acceptance_criteria:
 - Sparse row/head/snapshot/mirror/index storage has one value authority and same-key revision maps.
 - Join Undo/backup/retention is explicit and contains no secrets or offline writes.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -962,7 +962,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Application work uses the same seglog, two redb files, payload packs, render pages/index engines and storage lock/maintenance/backup owners as Project counterparts, under SP-345’s app-data root and actual Server. App scope is not a Project Vault and holds no project_home_server_id before conversion. The attached table is the exclusive physical app key map for ordinary chat/root/recovery/UI/notebook/browser/runtime records; version/schema/source selection is CV-366. Raw missing Project interpolation, main-root fallback, per-thread infinite app buckets and new live JSON are forbidden. Source/context authority uses exact Host/Environment/roots, not the configured display path alone.
   Place/folder records bind actual Server/Host/Environment and canonical path identity/currentness, draft_id before first message and thread_id thereafter. Concurrent first save/command adopts one folder exactly once. Visible chat folders live outside PM data in the Computer’s configured no-project chat root; no talk-only folder, rename relocation or implicit delete. Disconnected chat metadata remains named/read-only; continuation needs the real current writer. Request/outbox continuity remains the existing thread owner; facade preview is local and does not create its own storage family. Client close does not stop the Server’s admitted work.
-  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart is a required F-d resolution to the existing named policy/anchor, never a new policy ID or a production registration.
+  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart must resolve through Plans/storage_value_registry.json to the existing named policy/anchor, never a new policy ID or a production registration.
   One app index builder/publication slot and source token/checkpoint domain preserve exact Server/thread/root/generation. Source read, compaction, restore/revert and FileSafe use actual absolute Host/root and all canonical source/currentness/permission/writer/Stop/recovery gates; replay rebuilds only derived views, never canonical authority. App notebook keeps its five existing parent kinds and 16 KiB inline/64 KiB request, 512-token/2 KiB capsule, 1,024-token/4 KiB combined injection limits. Memory stays thread-private with 350-token capsule and existing verification/evidence; public_safe taught rules remain distinct. Cross-read grants never authorize notebook/private-memory access.
   Browser creation/reset, Eval, terminal and layout adopt their whole app CV-366 source graphs or remain unavailable. Protected auth is not app browser automation, capture, restore or export content. Live PTY/process/kernel/controller/ports remain on original Computer through conversion; future sessions re-resolve. App Home/panels/boards use exact Server/app/workspace keys, named layouts/presets stay per person, board snapshots match saved scope/Server only, and converted Project UI loads independently. Canonical app records/held payloads join coherent Full Server Backup, derived pages/indexes rebuild; counterpart source/dedupe/rollback/retention and deletion deadlines remain. Chat Undo expiry cannot purge independently retained notebook/checkpoint/task/audit authority.
   Developer-session application families are dev_session_record_application and eval_session_record_application, using DebugSessionRecordStorageApplicationV1 and EvalSessionRecordStorageApplicationV1 in Plans/developer_session_application_contracts.schema.json. They inherit the Project counterpart tier later_gui_or_feature_projection, RP-DEBUG-30D, mandatory canonical backup/restore and independent holds. The source graph selects the actual debugger/evaluator broker for lifecycle, source/lease/generation, read/checkpoint and retention. BRS-033 restores exact history/session metadata as stopped or reconciliation-required, never a live adapter/kernel/lease or current permission grant. No browser family is their custody and no second engine is introduced.
@@ -981,8 +981,8 @@ acceptance_criteria:
 - App buckets match counterpart bounds; held canonical source never evicts as a cache.
 - No root/Host/thread aliasing, canonical reconstruction or unsupported native-source fallback.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1107,8 +1107,8 @@ acceptance_criteria:
 - Failure/restart/resume/cancel/Undo preserve settled effects, original source and target authority.
 - Backups and retention avoid dual-live restoration or early independent authority purge.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1185,8 +1185,8 @@ acceptance_criteria:
 - Original Project/historical/certified graph remains unchanged and ordinary bindings immutable.
 - Canonical task/audit and Stop survive moves, restore and chat Undo expiry with counterpart limits.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1260,9 +1260,9 @@ Every application key begins with its distinct versioned family prefix and actua
 | `goal_receipt` → `goal_receipt_application` | `goal_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `goal_runtime_lineage_record` → `goal_runtime_lineage_record_application` | `goal_runtime_lineage_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `collaboration_definition` → `collaboration_definition_application` | `collaboration_definition.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(definition_id)}` | canonical; `RP-CONFIG-CURRENT` |
-| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-RUNTIME-365D` |
-| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-RUNTIME-365D` |
-| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
+| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
+| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
 | `crew_auto` → `crew_auto_application` | `crew_auto.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; `RP-CONFIG-CURRENT` |
 | `crew_board_message` → `crew_board_message_application` | `crew_board_message.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}` | canonical; `RP-COORDINATION-180D` |
 | `coordination_agent` → `coordination_agent_application` | `coordination_agent.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(agent_id)}` | derived; `RP-PROJECTION-3GEN` |
@@ -1302,8 +1302,8 @@ acceptance_criteria:
 - Pause physical birth/key/wrapper/CAS/epochs/read/backup/refusal are coherent and separate from Project.
 - Stop/conversion/timer/restore races cannot double-run or clear a newer latch.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1391,8 +1391,8 @@ acceptance_criteria:
 - Restore/conversion preserves old evidence without transferring authority or clearing Stop/holds.
 - Action list reads existing receipts and no new live JSON/event engine.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1449,7 +1449,7 @@ AgentCoordinator alone prepares `crew.board_message_posted` via `AgentCoordinato
 
 **Read and custody.** The operating reader is `reader.orchestrator.crew_board_message_posted.history.v1@1.0.0`, adopting SP-278 and its original generic index/checkpoint, exactly as OSI-681 states. This board EventRecord is not an agent lifecycle input to storage.coordination_projector.v1; an unknown agent-reducer route refuses. Coherent backup retains canonical message/operation/source/full receipt, this EventRecord and reachable payload-store bytes. Restore revalidates scope, source, admission and current fences before publication, with no reconstruction of canonical messages from events. CV-353's IDs/refs/bounded-text restriction continues unchanged for the original agent members. For this board member, OSI-299/OSI-681 specifically allow sanitized subject/body or body reference on posted messages, acknowledgement identities on reads and bounded sanitized archive_reason on archives. No credential, raw prompt/model dump, tool argument, file/diff blob, environment value or private cross-thread data may leak; scan/redact before commit and recheck source permission, deletion/tombstone and hold fences before disclosing even inline text. Holds retain custody without restoring deleted visibility.
 
-**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment cited to origin/plans/ea-storage-retention-20261104; this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
+**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment as landed in `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
 
 **Oracles.** ATS-360 and python3 scripts/pm-orchestrator-event-contracts.py validate both scope editions against this actual coordination_event_records member, exact key/member census, source/envelope/Run joins and rejection of missing, additional, foreign-scope, source-edition, anchor and conflicting-key cases. Body boundaries are enforced on the stored posted member as on its source schema. Native append/body/receipt/backup/replay/deletion/withdrawal cases remain authored NOT_RUN; fixture truth never admits a writer.
 
@@ -1494,7 +1494,7 @@ AgentCoordinator alone prepares `crew.board_message_read` via `AgentCoordinator 
 
 **Read and custody.** The operating reader is `reader.orchestrator.crew_board_message_read.history.v1@1.0.0`, adopting SP-278 and its original generic index/checkpoint, exactly as OSI-682 states. This board EventRecord is not an agent lifecycle input to storage.coordination_projector.v1; an unknown agent-reducer route refuses. Coherent backup retains canonical message/operation/source/full receipt, this EventRecord and reachable payload-store bytes. Restore revalidates scope, source, admission and current fences before publication, with no reconstruction of canonical messages from events. CV-353's IDs/refs/bounded-text restriction continues unchanged for the original agent members. For this board member, OSI-299/OSI-682 specifically allow sanitized subject/body or body reference on posted messages, acknowledgement identities on reads and bounded sanitized archive_reason on archives. No credential, raw prompt/model dump, tool argument, file/diff blob, environment value or private cross-thread data may leak; scan/redact before commit and recheck source permission, deletion/tombstone and hold fences before disclosing even inline text. Holds retain custody without restoring deleted visibility.
 
-**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment cited to origin/plans/ea-storage-retention-20261104; this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
+**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment as landed in `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
 
 **Oracles.** ATS-360 and python3 scripts/pm-orchestrator-event-contracts.py validate both scope editions against this actual coordination_event_records member, exact key/member census, source/envelope/Run joins and rejection of missing, additional, foreign-scope, source-edition, anchor and conflicting-key cases. Body boundaries are enforced on the stored posted member as on its source schema. Native append/body/receipt/backup/replay/deletion/withdrawal cases remain authored NOT_RUN; fixture truth never admits a writer.
 
@@ -1539,7 +1539,7 @@ AgentCoordinator alone prepares `crew.board_messages_archived` via `AgentCoordin
 
 **Read and custody.** The operating reader is `reader.orchestrator.crew_board_messages_archived.history.v1@1.0.0`, adopting SP-278 and its original generic index/checkpoint, exactly as OSI-683 states. This board EventRecord is not an agent lifecycle input to storage.coordination_projector.v1; an unknown agent-reducer route refuses. Coherent backup retains canonical message/operation/source/full receipt, this EventRecord and reachable payload-store bytes. Restore revalidates scope, source, admission and current fences before publication, with no reconstruction of canonical messages from events. CV-353's IDs/refs/bounded-text restriction continues unchanged for the original agent members. For this board member, OSI-299/OSI-683 specifically allow sanitized subject/body or body reference on posted messages, acknowledgement identities on reads and bounded sanitized archive_reason on archives. No credential, raw prompt/model dump, tool argument, file/diff blob, environment value or private cross-thread data may leak; scan/redact before commit and recheck source permission, deletion/tombstone and hold fences before disclosing even inline text. Holds retain custody without restoring deleted visibility.
 
-**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment cited to origin/plans/ea-storage-retention-20261104; this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
+**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment as landed in `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
 
 **Oracles.** ATS-360 and python3 scripts/pm-orchestrator-event-contracts.py validate both scope editions against this actual coordination_event_records member, exact key/member census, source/envelope/Run joins and rejection of missing, additional, foreign-scope, source-edition, anchor and conflicting-key cases. Body boundaries are enforced on the stored posted member as on its source schema. Native append/body/receipt/backup/replay/deletion/withdrawal cases remain authored NOT_RUN; fixture truth never admits a writer.
 
