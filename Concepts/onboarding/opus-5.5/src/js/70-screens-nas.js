@@ -102,12 +102,14 @@
           const pBad = n.port != null && n.port !== '' && !portOk(n.port);
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port == null ? '22' : n.port, cls: 'o55-field-port', error: pBad ? T('nas.find.portBad') : '', invalid: pBad })}</div>`;
           out += H('nas-find:addr', [{ label: '192.168.1.20', outcome: 'works', fills: [['addr', '192.168.1.20'], ['port', '22']] }, { label: '192.168.1.99', outcome: 'noAnswer', fills: [['addr', '192.168.1.99']] }, { label: '192.168.1.20:99999', outcome: 'wrong', fills: [['addr', '192.168.1.20'], ['port', '99999']] }], { when: !addrKnown(S, n.addr) || pBad });
+        } else if (st && st.state === 'failed') {
+          out += C.note(T('pip.say.nas-find.failed'), 'warn');
         } else if (!st || st.state !== 'done') {
           out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
-          const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
-            .concat(S.env.devices.filter((d) => !(n.purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
+          const cards = discoveryCards(S);
           const chosen = n.choice ? n.choice.id + (n.choice.cfg ? '|cfg' : '') : n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
+          if (!cards.length) out += C.note(T('pip.say.nas-find.empty'), 'info');
           out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
           about = '';
         }
@@ -969,5 +971,18 @@
     }
     return (dv ? dv.name + ' · ' : '') + path;
   }
-  O55.nas = { dev, N, pubLine, entry, transport, endPair, remember, placeLabel };
+  /* the check a NAS step runs, by the key the step itself reads for the inputs on show: Pip's lines for the step belong
+     to it (55-scenes.js speech, FO-41: Pip stayed on the opening line after the check passed, and kept a line after the
+     account it was for had changed) */
+  function checkKey(S, screen) {
+    const n = N(S);
+    if (screen === 'nas-smb') { const sh = shareOf(S); return sh ? smbKey(n, sh) : null; }
+    if (screen === 'nas-nfs') return shareOf(S) ? nfsKey(S) : null;
+    if (screen === 'nas-mounted') return n.volume ? 'mounted:' + n.volume : null;
+    if (screen === 'nas-install') return n.device ? installKey(S) : null;
+    return null;
+  }
+  const discoveryCards = (S) => S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
+            .concat(S.env.devices.filter((d) => !(N(S).purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
+  O55.nas = { dev, picked, discoveryCards, N, pubLine, entry, transport, endPair, remember, placeLabel, checkKey };
 })();

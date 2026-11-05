@@ -88,7 +88,7 @@ export default async function (t) {
 					for (const r of range.getClientRects()) {
 						if (r.width < 4 || r.height < 6) continue;
 						if (r.left < clip.left - 0.5 || r.right > clip.right + 0.5 || r.top < clip.top - 0.5 || r.bottom > clip.bottom + 0.5) continue;
-						out.push({ key: `${txt.slice(0, 40)}|${li++}|${el.className}`, text: txt.slice(0, 40), cls: `${el.tagName.toLowerCase()}.${String(el.className).split(' ').filter(Boolean).slice(0, 2).join('.')}`, size: c.fontSize, x: r.left - wb.left, y: r.top - wb.top, w: r.width, h: r.height });
+						out.push({ key: `${txt.slice(0, 40)}|${li++}|${el.className}`, text: txt.slice(0, 40), cls: `${el.tagName.toLowerCase()}.${String(el.className).split(' ').filter(Boolean).slice(0, 2).join('.')}`, size: c.fontSize, font: c.fontFamily, weight: c.fontWeight, color: c.color, x: r.left - wb.left, y: r.top - wb.top, w: r.width, h: r.height });
 					}
 				}
 				return { rect: { x: Math.max(0, wb.left), y: Math.max(0, wb.top), width: Math.min(wb.width, innerWidth - Math.max(0, wb.left)), height: Math.min(wb.height, innerHeight - Math.max(0, wb.top)) }, ox: Math.max(0, wb.left) - wb.left, oy: Math.max(0, wb.top) - wb.top, runs: out };
@@ -108,7 +108,7 @@ export default async function (t) {
 				for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4, px = [png.data[i], png.data[i + 1], png.data[i + 2]], cr = ratio(px, ground); if (cr > best) { best = cr; stem = px; } }
 				if (!stepLines.has(curStep)) stepLines.set(curStep, new Set()); stepLines.get(curStep).add(run.key);
 				const was = seen.get(run.key);
-				if (!was || best < was.cr) seen.set(run.key, { cr: best, text: run.text, cls: run.cls, size: run.size, stem: stem.map(Math.round), ground: ground.map(Math.round), where: label });
+				if (!was || best < was.cr) seen.set(run.key, { cr: best, text: run.text, cls: run.cls, size: run.size, font: run.font, weight: run.weight, color: run.color, stem: stem.map(Math.round), ground: ground.map(Math.round), where: label });
 			}
 		};
 		// each scroller in the window, wheeled from its top to its bottom, read at every stop
@@ -171,6 +171,12 @@ export default async function (t) {
 		fails.forEach((x) => { bad.push(`${look}: "${x.text}" ${x.cr.toFixed(2)}:1`); t.log(`${look} FAILS "${x.text}" ${x.cr.toFixed(2)}:1 (${x.cls} ${x.size}; stem rgb(${x.stem}) on rgb(${x.ground}); ${x.where})`); });
 		// the walk itself must have happened: a window that could not be walked, or was walked short, fails here
 		const problems = [];
+		// FO-65: these formerly renderer-sensitive lines must actually be sampled, not silently skipped.
+		for (const [name, match] of [['SSH Ed25519 subtitle', x => /Ed25519/.test(x.text) && /o55g-cardsub/.test(x.cls)], ['Git access rail', x => /Git access/.test(x.text)]]) {
+			const readings = [...seen.values()].filter(match);
+			if (!readings.length) problems.push(`${name} was not read from painted pixels`);
+			readings.forEach(x => t.log(`${look} FO-65 ${name}: ${x.cr.toFixed(2)}:1; stem rgb(${x.stem}) on rgb(${x.ground}); ${x.size} ${x.weight} ${x.font}; CSS ${x.color}`));
+		}
 		const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
 		if (!same(rail, STEPS)) problems.push(`the window names ${rail.join(' › ') || 'no steps'} (expected ${STEPS.join(' › ')})`);
 		if (!same(visited, STEPS)) problems.push(`the walk went ${visited.join(' › ') || 'nowhere'} (expected ${STEPS.join(' › ')})`);

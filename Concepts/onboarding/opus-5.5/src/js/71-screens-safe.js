@@ -164,6 +164,8 @@
       if (same(cur) && ['waiting', 'code'].includes(cur.state)) { cur.state = 'failed'; cur.failed = true; S.save(); O55.ui.refresh(); }
     } });
   }
+  /* The introduction and body share the known-account decision (F32-1). */
+  const knownSigninAccount = (S) => { const si = SI(S); return si.kind === 'forge' && si.state === 'idle' && !si.another ? accountFor(S, si.service) : null; };
   def('online-signin', {
     seed: (S) => seedOnline(S, false),
     /* (a sign-in still waiting when the person goes Back is given up: a later Sign in starts a new attempt the old wait can
@@ -177,7 +179,15 @@
        true of the tokens it then asked for); what a token reaches is said in its form, before it is pasted */
     /* (signed in with a token: the reach was said before the paste and is no longer shown, so the lead no longer points
        below, final-onb FO-32) */
-    lead: (S) => { const si = SI(S); return T(si.kind !== 'forge' ? 'online.signin.leadCloud' : methodsOf(S, si)[0] === 'token' ? (si.state === 'done' ? 'online.signin.leadTokenDone' : 'online.signin.leadToken') : 'online.signin.lead', { name: si.name }); },
+    /* (the way in on show, not only the service's first: Use an access token instead on a server that also signs in in the
+       browser said "{name}'s page shows the access it asks for" over the token form and after the token signed in, a page
+       that never opened, FO-32's variant) */
+    lead: (S) => {
+      const si = SI(S); if (si.kind !== 'forge') return T('online.signin.leadCloud', { name: si.name });
+      if (knownSigninAccount(S)) return T('online.signin.leadKnown', { name: si.name });
+      const first = methodsOf(S, si)[0] === 'token', byToken = si.state === 'done' ? first || md(S).forge_auth_method === 'token' : first || si.state === 'token';
+      return T(!byToken ? 'online.signin.lead' : si.state === 'done' ? 'online.signin.leadTokenDone' : 'online.signin.leadToken', { name: si.name });
+    },
     body(S) {
       const si = SI(S), env = si.kind === 'forge' ? world(S) : { accounts: [], signup: true }, methods = methodsOf(S, si);
       /* a server with no sign-in app for Puppet Master (another Forgejo or Gitea server) signs in with an access token */
@@ -187,8 +197,8 @@
          where it refused silently, sweep SW-39) */
       if (si.state === 'done' && staleSignIn(S, si)) return `<div class="o55-banner o55-banner-warn" data-key="signin-stale">${C.small('spark', 18)}<span>${U.esc(T('online.signin.stale', { name: si.name }))}</span></div>`;
       if (si.state === 'done') return `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('online.signin.signedIn', { account: si.account }))}</span></div>`;
-      const known = si.kind === 'forge' ? accountFor(S, si.service) : null;
-      if (si.state === 'idle' && known && !si.another) {
+      const known = knownSigninAccount(S);
+      if (known) {
         out += C.cards('useKnown', [{ v: known, glyph: 'person', title: T('online.signin.connected', { account: known }), sub: T('online.signin.connectedSub') }], known, {});
         out += `<div class="o55-sublinks" data-key="another">${C.link(T('online.signin.another'), 'another')}</div>`;
         return out;
@@ -267,7 +277,7 @@
       create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { forge_target: targetOf(si), kind: 'signup', name: si.name, url: si.kind === 'forge' ? O55.official.forgeUrl(S, si.service, 'signup') : null }); O55.ui.refresh(); },
       signupBack(S) { const si = SI(S); si.state = 'idle'; si.another = true; S.save(); O55.ui.refresh(); },
       tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
-      tokenOff(S) { const si = SI(S); si.state = 'idle'; si.tokenTyped = false; F.reset(S, 'token:' + si.service); S.save(); O55.ui.refresh(); },
+      tokenOff(S) { const si = SI(S); si.attempt = (si.attempt || 0) + 1; si.state = 'idle'; si.tokenTyped = false; F.reset(S, 'token:' + si.service); S.save(); O55.ui.refresh(); },
       tokenCheck(S) {
         if (!siOffered(S)) return;
         const si = SI(S), i = S.root.querySelector('#o55f-token'), v = i ? i.value.trim() : ''; if (i) i.value = '';

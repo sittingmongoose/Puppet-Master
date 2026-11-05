@@ -1,13 +1,14 @@
 {
   "audit_id": "audit-20260618-006-prd-planning-wizard-semantic-fidelity",
-  "effective_status": "BLOCKED",
+  "effective_status": "PASS_WITH_WARNINGS",
   "effective_terminal_report": "audit_report.json",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "notes": [
-    "BLOCKED is effective only while repair_required_count is greater than zero or no later no-repair terminal evidence exists."
+    "Historical status artifacts are preserved but superseded by this effective status projection.",
+    "No open actionable repair is represented by this audit effective status."
   ],
-  "original_repair_required_count": 66,
-  "repair_required_count": 61,
+  "original_repair_required_count": 5,
+  "repair_required_count": 0,
   "repair_required_count_source": "closure_validation",
   "schema_id": "pm.audit_effective_status.v1",
   "status_sources": {
@@ -19,6 +20,9 @@
     "post_repair_status": null,
     "terminal_state_status": null
   },
-  "superseded_historical_reports": [],
-  "terminal_repair_state": "repair_required"
+  "superseded_historical_reports": [
+    "FINAL_REPORT.md",
+    "audit_report.json"
+  ],
+  "terminal_repair_state": "no_repair_required"
 }

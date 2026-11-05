@@ -28644,3 +28644,194 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/orchestrator-subagent-integration.md
 ```
+
+### DL-337 - Independent Review Stays A Free Choice, On By Default
+
+Jared answered stream C's card 1 on 2026-11-05 ("on by default, always free"): users may turn off independent review of their own work, including high-risk work. The Settings toggle stays on by default and always free. GRS-027's rule scaling independent review to the risk tier is retired. The Models System floor on the verifier model stays.
+
+```yaml
+plan_unit_id: DL-337
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-337 records Jared's answer of 2026-11-05 to stream C's card 1, "Can users turn off independent review on high-risk work?": "on by default, always free." Independent review stays a user choice on every piece of work: Settings planning.verification.independent-review ("Never let the builder grade its own work") remains on by default and always free to turn off, including on high-risk work. The superseded GRS-027 requirement that independent review scale with the risk or certification tier is retired; GRS-049 stands, so review is chosen by its owner rather than imposed by Goal. MS-128's rule that the verifier or adjudicator model cannot be downgraded below the risk tier stays in force: it governs the model a review uses when a review runs, not whether one runs. This decision covers the review of a user's own work: the Orchestrator and Executor verification that GRS-027's risk-tier rule described, and the Settings toggle. It does not change the evidence rules for Puppet Master's own deliverables, such as F3-524's two independent reviews of high-risk campaign spans, which certify the product's GUI evidence rather than a user's run.
+  OSI-428's cost-control sentence now reads that cost controls cannot disable required verification, receipts, independent review where its owner requires it, or certification gates. Ledger correction corr-0011 retires atom-0055's risk-tiered independent-review requirement without editing the atom record.
+gui_related: false
+gui_classification_reason: Records a product decision about an existing Settings toggle; no GUI contract changes.
+split_recommended: false
+depends_on: [F3-524, GRS-049, MS-128, OSI-428]
+unblocks: []
+acceptance_criteria:
+  - Settings planning.verification.independent-review stays a toggle, on by default, that the user may turn off on any work.
+  - No active Orchestrator or Executor owner requires the independent review of a user's run to scale with the risk or certification tier.
+  - Evidence rules for Puppet Master's own deliverables, including F3-524's reviews of high-risk campaign spans, are unchanged.
+  - OSI-428 says cost controls cannot disable independent review where its owner requires it.
+  - MS-128's verifier and adjudicator model floor is unchanged.
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
+  - python3 scripts/pm-plan-index.py validate
+risk_class: review_policy_drift
+reasoning_tier: high
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T17:02:41Z: Jared's answer \"on by default, always free\" to stream C card 1, relayed in pm-mail 1105170344-5b48"
+  - "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/C-QUESTIONS-2.md (card 1)"
+  - "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl#corr-0011"
+preserved_exact_tokens:
+  - "DL-337"
+  - "on by default, always free"
+  - "independent review where its owner requires it"
+owner_hints:
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Models_System.md
+```
+
+### DL-338 - An Exhausted Repair Budget Stops The Run Or Asks For An Approved Exception
+
+Jared deferred card 2 to the recommendation on 2026-11-05 ("The rest I will defer to your recommendations"): option A. The Settings choice "Finish, marked not fully checked" is replaced by "Stop and ask me to approve an exception", which uses the DL-081 approved verification exception route. No degraded run state is added.
+
+```yaml
+plan_unit_id: DL-338
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-338 records Jared's answer of 2026-11-05 to stream C's card 2, "What happens when fix attempts run out?": "The rest I will defer to your recommendations." The recommendation was option A. Settings planning.verification.repair-budget-exhaustion offers block (default and recommended, "Stop the work") and ask_exception ("Stop and ask me to approve an exception"); the former degraded value ("Finish, marked not fully checked") is removed. EP-103 states the behavior: an exhausted repair budget stops the run blocked with BlockedReasonCode budget_exhausted, and with ask_exception that stop also asks the project owner, through the DL-081 approved verification exception route, whether to finish as completed_with_approved_verification_exception, with the approver and remaining risks recorded and never shown as a clean pass. Until the DL-081 route contract is written (GRS-065 keeps it separately unbound), ask_exception leaves the run blocked. GoalRunStatus gains no degraded value.
+  Ledger correction corr-0011 records that atom-0049's degraded outcome is realized as this blocked stop and exception request, and retires its exact-token requirement degraded, without editing the atom record.
+gui_related: true
+gui_classification_reason: Changes the choices of an existing Settings row.
+split_recommended: false
+depends_on: [DL-081, EP-103, GRS-065]
+unblocks: []
+acceptance_criteria:
+  - Settings planning.verification.repair-budget-exhaustion offers exactly block and ask_exception, with block the default.
+  - EP-103 says an exhausted repair budget stops the run blocked, and ask_exception only requests an owner exception through the DL-081 route.
+  - No active owner defines a degraded run state or a finish marked not fully checked.
+  - This decision does not bind the DL-081 route contract.
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
+  - python3 scripts/pm-plan-index.py validate
+risk_class: false_completion
+reasoning_tier: high
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Executor_Protocol.md
+  - Plans/settings_inventory.json
+  - Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T17:02:41Z: Jared's answer \"The rest I will defer to your recommendations\" covering stream C card 2, relayed in pm-mail 1105170344-5b48"
+  - "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/C-QUESTIONS-2.md (card 2)"
+  - "Plans/Decision_Log.md#DL-081"
+  - "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/corrections.jsonl#corr-0011"
+preserved_exact_tokens:
+  - "DL-338"
+  - "ask_exception"
+  - "budget_exhausted"
+  - "completed_with_approved_verification_exception"
+owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/settings_inventory.json
+```
+
+### DL-339 - Migration Run 001 Is History Only
+
+Jared deferred card 3 to the recommendation on 2026-11-05 ("The rest I will defer to your recommendations"): option A. Migration run pds-20260611-001-standardize-plans is a frozen historical record that no check validates.
+
+```yaml
+plan_unit_id: DL-339
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-339 records Jared's answer of 2026-11-05 to stream C's card 3, "Must the oldest migration record still pass its own check?": "The rest I will defer to your recommendations." The recommendation was option A. Plans/.plan_migration/pds-20260611-001-standardize-plans is frozen history: no landing check, gate, reseal or audit closure validates it against the live Plans, and its batch hashes and declared missing-document list are never refreshed. Its artifacts stay byte-for-byte as recorded. On main 82e3204346 its own validator reported 58 failures, which measure how far the Plans have moved since June 2026 and are not defects. Run 002 keeps its role: the aggregate checks validate it, and every current snapshot declares it superseded (2026-11-04). Closure rows that claimed run 001 passes its validator close as retired by this decision.
+gui_related: false
+gui_classification_reason: Records the validation scope of a historical migration run; no GUI contract changes.
+split_recommended: false
+depends_on: [PDS-014]
+unblocks: []
+acceptance_criteria:
+  - No check validates pds-20260611-001-standardize-plans against the live Plans.
+  - No file under Plans/.plan_migration/pds-20260611-001-standardize-plans changes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: governance_integrity
+reasoning_tier: medium
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T17:02:41Z: Jared's answer \"The rest I will defer to your recommendations\" covering stream C card 3, relayed in pm-mail 1105170344-5b48"
+  - "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/C-QUESTIONS-2.md (card 3)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/questions-2/pds001-validate-82e3204346.json"
+preserved_exact_tokens:
+  - "DL-339"
+  - "pds-20260611-001-standardize-plans"
+owner_hints:
+  - Plans/Plan_Document_System.md
+```
+
+### DL-340 - The June Legacy Rule Reads Four Older Words As Passed
+
+Jared approved stream C's question Q-A on 2026-11-05 ("i approve all of it", option 1): in the 55 June audit directories only, the compatibility inference reads four older words as passed. This record lists the words, the limit and the counts.
+
+```yaml
+plan_unit_id: DL-340
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-340 records Jared's answer of 2026-11-05 ("i approve all of it", 2026-11-05T04:33:13Z) to stream C's question Q-A, option 1, confirmed by the coordinator pm7-build on 2026-11-05 (mail 1105170615-ec65) after DL-334 landed. In the 55 June directories of the legacy format rule (PLS-026), when the run requests no companion file (closure matrix, audit report, effective status, scope manifest or impact matrix) as a source and reads no input through a symlink, and only for a frozen file other than the closure matrix, whose frozen part is only a prefix, the compatibility inference of scripts/pm-audit-closure.py reads four older words as passed: the claim statuses pass, supported_by_source_atoms and previously_closed, and a validator result with status expected_fail whose command is one of five governance commands (pm-plans-verify.py run-gates, verify-spec-lock, validate-evidence and validate-plan-graph, and pm-shard-plans.py --check). Those five failed in June only on stale generated files, which a governance seal refreshes. Every other field of such a row keeps its meaning (an issue list, an overclaim list or a failing status still makes the row actionable), and any other expected_fail result stays actionable. Directories from July 2026 on, files added after the freeze, and edited or symlinked files get the full rules.
+  Counts on the 2026-11-05 tree: 151 source rows carry one of the words and were actionable by inference, and 150 of them no longer are. 29 pass rows of audit-20260616-005 and 61 supported_by_source_atoms rows of audit-20260618-006 were uncovered. 5 expected_fail results each in audit-20260617-013 and audit-20260617-014 were uncovered. 50 pass rows of audit-20260618-007 already had historical closure rows, so their closures now count as over-coverage there. The one previously_closed row (audit-20260619-001, planunit_source_claims.jsonl line 31) stays actionable, because it lists extra source atoms. The per-audit errors of the 55 directories go from 12,764 to 12,759, and passing directories from 19 to 21 (17 to 19 when effective_status.json is required). The effective_status.json projections of audit-20260616-005 (repair_required_count 33 to 4, still BLOCKED), audit-20260617-013, audit-20260617-014 and audit-20260618-006 (now PASS_WITH_WARNINGS) are regenerated. No other audit directory changes. The registry report keeps its status, row count, error count and error kinds; only the current digests in 142 pre-existing stale-hash diagnostics change, because this branch edits files they hash.
+gui_related: false
+gui_classification_reason: Records a governance decision about historical audit validation; no GUI contract changes.
+split_recommended: false
+depends_on: [DL-334, PLS-026]
+unblocks: []
+acceptance_criteria:
+  - Only the 55 listed June directories read the four words as passed, only in a run that requests no companion file as a source and reads no input through a symlink, and only in frozen files other than the closure matrix.
+  - An expected_fail result counts as passed only for the five named governance commands.
+  - A row with an issue list, an overclaim list or a failing status stays actionable whatever its claim status.
+  - The audit directories outside the list are unchanged, and the registry report keeps its status, counts and error kinds.
+validation_surfaces:
+  - python3 scripts/pm-audit-closure.py self-test
+  - python3 scripts/pm-plan-index.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Ledger_System.md
+  - scripts/pm-audit-closure.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T04:33:13Z: Jared's answer \"i approve all of it\" to stream C's questions Q-A and Q-C"
+  - "pm-mail 1105170615-ec65 (coordinator pm7-build, 2026-11-05): build Q-A; the 55 June directories only; the change record lists the words and the counts"
+preserved_exact_tokens:
+  - "DL-340"
+  - "supported_by_source_atoms"
+  - "previously_closed"
+  - "expected_fail"
+owner_hints:
+  - Plans/Planning_Ledger_System.md
+```
