@@ -346,11 +346,86 @@ def is_definitions_block(block: str) -> bool:
         except Exception:  # noqa: BLE001 - discovery never raises; fall back to the raw text
             return DEFS_ROOT_KEY in block
     for node in nodes:
-        if isinstance(node, yaml.MappingNode):
-            for key, _value in node.value:
-                if isinstance(key, yaml.ScalarNode) and key.value == DEFS_ROOT_KEY:
-                    return True
+        if isinstance(node, yaml.MappingNode) and _mapping_has_root_key(node, set()):
+            return True
     return False
+
+
+YAML_MERGE_TAG = "tag:yaml.org,2002:merge"
+
+
+def _is_merge_key(key: Any) -> bool:
+    return isinstance(key, yaml.ScalarNode) and (key.tag == YAML_MERGE_TAG or (key.value == "<<" and key.style is None))
+
+
+def _mapping_has_root_key(node: yaml.MappingNode, seen: set[int]) -> bool:
+    """Whether a mapping node has the root key, literally or through YAML merge keys (`<<`), whose
+    merged mappings and aliases are followed with cycle protection (Q5 Astra r1)."""
+    if id(node) in seen:
+        return False
+    seen.add(id(node))
+    for key, value in node.value:
+        if _is_merge_key(key):
+            targets = value.value if isinstance(value, yaml.SequenceNode) else [value]
+            if any(isinstance(t, yaml.MappingNode) and _mapping_has_root_key(t, seen) for t in targets):
+                return True
+        elif isinstance(key, yaml.ScalarNode) and key.value == DEFS_ROOT_KEY:
+            return True
+    return False
+
+
+def _block_uses_merge(block: str) -> bool:
+    """Whether a well-formed block uses a YAML merge key anywhere (cycle-safe walk)."""
+    try:
+        nodes = list(yaml.compose_all(block, Loader=yaml.SafeLoader))
+    except Exception:  # noqa: BLE001 - malformed blocks are reported as YAML errors
+        return False
+    seen: set[int] = set()
+    stack = [n for n in nodes if n is not None]
+    while stack:
+        node = stack.pop()
+        if id(node) in seen:
+            continue
+        seen.add(id(node))
+        if isinstance(node, yaml.MappingNode):
+            for key, value in node.value:
+                if _is_merge_key(key):
+                    return True
+                stack.extend([key, value])
+        elif isinstance(node, yaml.SequenceNode):
+            stack.extend(node.value)
+    return False
+
+
+def _has_key_anywhere(data: Any, wanted: str) -> bool:
+    """Whether any mapping in parsed data has the key, whatever its YAML spelling (cycle-safe)."""
+    seen: set[int] = set()
+    stack = [data]
+    while stack:
+        item = stack.pop()
+        if id(item) in seen:
+            continue
+        seen.add(id(item))
+        if isinstance(item, dict):
+            if wanted in item:
+                return True
+            stack.extend(item.values())
+        elif isinstance(item, list):
+            stack.extend(item)
+    return False
+
+
+def json_equal(a: Any, b: Any) -> bool:
+    """Equality of JSON values by type: a boolean never equals a number, recursively."""
+    if isinstance(a, bool) or isinstance(b, bool):
+        return isinstance(a, bool) and isinstance(b, bool) and a == b
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return a == b
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(json_equal(x, y) for x, y in zip(a, b))
+    if isinstance(a, dict) and isinstance(b, dict):
+        return a.keys() == b.keys() and all(json_equal(a[k], b[k]) for k in a)
+    return type(a) is type(b) and a == b
 
 
 def parse_units(text: str, rel: str, *, strict: bool) -> tuple[dict[str, Unit], list[str]]:
@@ -1019,9 +1094,9 @@ def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | Non
         return candidate if constraint_value_ok(key, candidate) else None
 
     if kind == "enum":
-        return value in as_list(spec.get("values"))
+        return any(json_equal(value, candidate) for candidate in as_list(spec.get("values")))
     if kind == "const":
-        return value == spec.get("value")
+        return json_equal(value, spec.get("value"))
     if kind == "boolean":
         return isinstance(value, bool)
     if kind == "integer":
@@ -1434,8 +1509,10 @@ def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
             if block.error is not None:
                 rep.add("C14", "block_yaml_error", detail=f"line {block.line}: {block.error}", **base)
                 continue
-            if "plan_unit_id:" in block.text:
+            if "plan_unit_id:" in block.text or _has_key_anywhere(block.data, "plan_unit_id"):
                 rep.add("C14", "block_contains_plan_unit_id", detail=f"line {block.line}", **base)
+            if _block_uses_merge(block.text):
+                rep.add("C14", "block_yaml_merge_not_allowed", detail=f"line {block.line}", **base)
             if not isinstance(block.data, dict) or set(block.data) != {"command_payload_definitions"} or not isinstance(block.data["command_payload_definitions"], dict):
                 rep.add("C14", "block_top_level_malformed", detail=f"line {block.line}", **base)
                 continue
@@ -2483,6 +2560,38 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     def _(fx: Fixture) -> None:
         fx.doc_suffix["Plans/Probe_Doc.md"] = "\n\n```yaml\n" + '{note: "x' + chr(92) + 'U00110000"}' + "\n```\n"
 
+    @case("fail C14: definitions supplied through a root YAML merge are detected and the merge is rejected", 1, {"C14"})
+    def _(fx: Fixture) -> None:
+        fx.doc_suffix["Plans/Probe_Doc.md"] = ("\n\n```yaml\nbase: &b\n  command_payload_definitions:\n    format: pm.command_payload_definitions.v1\n"
+                                               "<<: *b\n```\n")
+
+    @case("fail C14: a merged duplicate definitions block in a separate document is not lost", 1, {"C14"})
+    def _(fx: Fixture) -> None:
+        fx.doc_suffix["Plans/Probe_Doc.md"] = ("\n\n```yaml\nx: &d {command_payload_definitions: {format: pm.command_payload_definitions.v1, "
+                                               "owner_unit: CRAU-116, overlay: Plans/UI_Command_Catalog.md#UCC-230, definitions: []}}\n<<: [*d]\n```\n")
+
+    @case("fail C14: a quoted plan_unit_id key inside a block is forbidden", 1, {"C14"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["meta"] = {
+            "type": "object", "fields": {"plan_unit_id": {"type": "string", "required": False, "default": "none",
+                                                          "provenance": "canon", "source": "fixture"}},
+            "required": False, "default": "none", "provenance": "canon", "source": "fixture"}
+
+    for label, spec in [("const true default against const 1", {"type": "const", "value": 1, "default": True}),
+                        ("const 1 default against const true", {"type": "const", "value": True, "default": 1}),
+                        ("const 0 default against const false", {"type": "const", "value": False, "default": 0}),
+                        ("nested const list with a boolean for a number", {"type": "const", "value": [1, {"a": 0}], "default": [True, {"a": 0}]})]:
+        @case(f"fail C06: {label} (typed JSON equality)", 1, {"C06"})
+        def _(fx: Fixture, spec=spec) -> None:
+            _defs(fx, "cmd.docker.image.tag")["args"]["probe"] = dict(spec, required=False, provenance="canon", source="fixture")
+
+    for label, spec in [("const 1 default equals const 1", {"type": "const", "value": 1, "default": 1}),
+                        ("const true default equals const true", {"type": "const", "value": True, "default": True}),
+                        ("nested const equal", {"type": "const", "value": [1, {"a": False}], "default": [1, {"a": False}]})]:
+        @case(f"pass: {label}", 0, set())
+        def _(fx: Fixture, spec=spec) -> None:
+            _defs(fx, "cmd.docker.image.tag")["args"]["probe"] = dict(spec, required=False, provenance="canon", source="fixture")
+
     for label, text in [("multi-line double-quoted scalar", 'description: "The text\ncommand_payload_definitions: false\nis illustrative."'),
                         ("multi-line single-quoted scalar", "description: 'The text\ncommand_payload_definitions: false\nis illustrative.'"),
                         ("literal block scalar", "description: |\n  command_payload_definitions: false"),
@@ -2571,25 +2680,61 @@ def self_test() -> int:
             failures += 1
             print(f"     expected exit={exit_expected} errors={sorted(errors_expected)} warnings={sorted(warnings_expected)}; "
                   f"got exit={exit_code} stderr={stderr!r} stdout={stdout[:500]!r}")
-    total = len(cases) + len(cli_cases)
+    usage_cases = [("cli usage --json with a missing option value", ["--json", "--plans-root"]),
+                   ("cli usage --json with an unknown option", ["--json", "--bogus-option"]),
+                   ("cli usage --json with a nonexistent plans root", ["--json", "--plans-root", "/nonexistent/pm-defs-check-root"])]
+    for name, args in usage_cases:
+        run = subprocess.run([sys.executable, str(Path(__file__).resolve()), *args], capture_output=True, text=True)
+        try:
+            body = json.loads(run.stdout)
+            ok = run.returncode == 2 and run.stderr == "" and body.get("status") == "error" and bool(body.get("error"))
+        except json.JSONDecodeError:
+            ok = False
+        print(f"{'ok' if ok else 'FAIL'} {name}")
+        if not ok:
+            failures += 1
+            print(f"     got exit={run.returncode} stdout={run.stdout[:300]!r} stderr={run.stderr[:300]!r}")
+    total = len(cases) + len(cli_cases) + len(usage_cases)
     print(f"self-test: {total - failures}/{total} cases passed")
     return 0 if failures == 0 else 1
 
 
+class _UsageError(Exception):
+    pass
+
+
+class _JsonAwareParser(argparse.ArgumentParser):
+    def error(self, message: str) -> None:  # type: ignore[override]
+        raise _UsageError(message)
+
+
+def _usage_failure(message: str, want_json: bool, parser: argparse.ArgumentParser | None = None) -> int:
+    if want_json:
+        print(json.dumps({"check": "command-payload-defs", "status": "error", "error": message}, indent=2, sort_keys=True))
+    else:
+        if parser is not None:
+            parser.print_usage(sys.stderr)
+        print(f"command-payload-defs: error: {message}", file=sys.stderr)
+    return 2
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    raw_args = list(sys.argv[1:] if argv is None else argv)
+    want_json = "--json" in raw_args
+    parser = _JsonAwareParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--json", action="store_true", help="print the sorted machine report")
     parser.add_argument("--self-test", action="store_true", help="run the in-memory fixture cases; reads no repository file")
     parser.add_argument("--plans-root", type=Path, default=ROOT / "Plans", help="Plans directory (default: this repository's)")
     try:
-        args = parser.parse_args(argv)
-    except SystemExit as exc:
+        args = parser.parse_args(raw_args)
+    except _UsageError as exc:
+        return _usage_failure(str(exc), want_json, parser)
+    except SystemExit as exc:  # --help
         return 2 if exc.code else 0
     if args.self_test:
         return self_test()
     if not args.plans_root.is_dir():
-        print(f"error: --plans-root {args.plans_root} is not a directory", file=sys.stderr)
-        return 2
+        return _usage_failure(f"--plans-root {args.plans_root} is not a directory", want_json)
     try:
         result = run_check(Corpus(plans_root=args.plans_root.resolve()))
     except ParseError as exc:
