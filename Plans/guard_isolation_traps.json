@@ -773,6 +773,602 @@
       "id": "F4-round2-negated-ref-peer",
       "kind": "review_negated_ref_peer",
       "expected": "negated ref to a two-field conjunction refuses cuts while the independent positive z guard proves"
+    },
+    {
+      "id": "A-B1-draft-06-implicit",
+      "kind": "round3_legacy_contains",
+      "expected": "implicit existential contains is a live atomic obligation; missing witness FAILs",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "contains": {
+          "const": 1
+        }
+      },
+      "control": [
+        1
+      ],
+      "heldout": [
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "A-B1-draft-06-ignored-zero",
+      "kind": "round3_legacy_contains",
+      "expected": "implicit existential contains is a live atomic obligation; missing witness FAILs",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "contains": {
+          "const": 1
+        },
+        "minContains": 0
+      },
+      "control": [
+        1
+      ],
+      "heldout": [
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "A-B1-draft-06-ignored-max",
+      "kind": "round3_legacy_contains",
+      "expected": "implicit existential contains is a live atomic obligation; missing witness FAILs",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "contains": {
+          "const": 1
+        },
+        "maxContains": 0
+      },
+      "control": [
+        1
+      ],
+      "heldout": [
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "A-B1-draft-07-implicit",
+      "kind": "round3_legacy_contains",
+      "expected": "implicit existential contains is a live atomic obligation; missing witness FAILs",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "contains": {
+          "const": 1
+        }
+      },
+      "control": [
+        1
+      ],
+      "heldout": [
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "A-B1-draft-07-ignored-zero",
+      "kind": "round3_legacy_contains",
+      "expected": "implicit existential contains is a live atomic obligation; missing witness FAILs",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "contains": {
+          "const": 1
+        },
+        "minContains": 0
+      },
+      "control": [
+        1
+      ],
+      "heldout": [
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "A-B1-draft-07-ignored-max",
+      "kind": "round3_legacy_contains",
+      "expected": "implicit existential contains is a live atomic obligation; missing witness FAILs",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "contains": {
+          "const": 1
+        },
+        "maxContains": 0
+      },
+      "control": [
+        1
+      ],
+      "heldout": [
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "A-B2-extend",
+      "kind": "round3_code_refusal",
+      "expected": "proved x cannot hide an unsupported accumulated y refusal",
+      "source": "def check(value, errors):\n    if value[\"x\"] < 0:\n        raise ValueError(\"bad_x\")\n    if value[\"y\"] < 0:\n        errors.extend(['bad_y'])\n",
+      "errors_argument": true,
+      "control": {
+        "x": 0,
+        "y": 0
+      },
+      "negative": {
+        "x": -1,
+        "y": 0
+      },
+      "heldout": [
+        {
+          "x": 0,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "id": "A-B2-iadd",
+      "kind": "round3_code_refusal",
+      "expected": "proved x cannot hide an unsupported accumulated y refusal",
+      "source": "def check(value, errors):\n    if value[\"x\"] < 0:\n        raise ValueError(\"bad_x\")\n    if value[\"y\"] < 0:\n        errors += ['bad_y']\n",
+      "errors_argument": true,
+      "control": {
+        "x": 0,
+        "y": 0
+      },
+      "negative": {
+        "x": -1,
+        "y": 0
+      },
+      "heldout": [
+        {
+          "x": 0,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "id": "A-B2-slice",
+      "kind": "round3_code_refusal",
+      "expected": "proved x cannot hide an unsupported accumulated y refusal",
+      "source": "def check(value, errors):\n    if value[\"x\"] < 0:\n        raise ValueError(\"bad_x\")\n    if value[\"y\"] < 0:\n        errors[len(errors):] = ['bad_y']\n",
+      "errors_argument": true,
+      "control": {
+        "x": 0,
+        "y": 0
+      },
+      "negative": {
+        "x": -1,
+        "y": 0
+      },
+      "heldout": [
+        {
+          "x": 0,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "id": "A-B2-clear-extend",
+      "kind": "round3_code_refusal",
+      "expected": "proved x cannot hide an unsupported accumulated y refusal",
+      "source": "def check(value, errors):\n    if value[\"x\"] < 0:\n        raise ValueError(\"bad_x\")\n    if value[\"y\"] < 0:\n        errors.clear(); errors.extend(['bad_y'])\n",
+      "errors_argument": true,
+      "control": {
+        "x": 0,
+        "y": 0
+      },
+      "negative": {
+        "x": -1,
+        "y": 0
+      },
+      "heldout": [
+        {
+          "x": 0,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "id": "A-B2-insert",
+      "kind": "round3_code_refusal",
+      "expected": "proved x cannot hide an unsupported accumulated y refusal",
+      "source": "def check(value, errors):\n    if value[\"x\"] < 0:\n        raise ValueError(\"bad_x\")\n    if value[\"y\"] < 0:\n        errors.insert(0, 'bad_y')\n",
+      "errors_argument": true,
+      "control": {
+        "x": 0,
+        "y": 0
+      },
+      "negative": {
+        "x": -1,
+        "y": 0
+      },
+      "heldout": [
+        {
+          "x": 0,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "id": "A-B2-item",
+      "kind": "round3_code_refusal",
+      "expected": "proved x cannot hide an unsupported accumulated y refusal",
+      "source": "def check(value, errors):\n    if value[\"x\"] < 0:\n        raise ValueError(\"bad_x\")\n    if value[\"y\"] < 0:\n        errors[:] = ['bad_y']\n",
+      "errors_argument": true,
+      "control": {
+        "x": 0,
+        "y": 0
+      },
+      "negative": {
+        "x": -1,
+        "y": 0
+      },
+      "heldout": [
+        {
+          "x": 0,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "id": "A-B2-helper",
+      "kind": "round3_code_refusal",
+      "expected": "proved x cannot hide an unsupported accumulated y refusal",
+      "source": "def accumulate(errors, code):\n    errors.extend([code])\ndef check(value, errors):\n    if value[\"x\"] < 0:\n        raise ValueError(\"bad_x\")\n    if value[\"y\"] < 0:\n        accumulate(errors, 'bad_y')\n",
+      "errors_argument": true,
+      "control": {
+        "x": 0,
+        "y": 0
+      },
+      "negative": {
+        "x": -1,
+        "y": 0
+      },
+      "heldout": [
+        {
+          "x": 0,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "id": "A-B3-chain-single",
+      "kind": "round3_code_expression",
+      "expected": "chain cannot register as one predicate; aggregate and held-out peer remain unproved",
+      "source": "def check(value):\n    if not (0 <= value[\"x\"] <= 10):\n        raise ValueError(\"range\")\n    return True\n",
+      "control": {
+        "x": 5
+      },
+      "heldout": [
+        {
+          "x": 11
+        }
+      ],
+      "aggregate": true
+    },
+    {
+      "id": "A-B3-chain-aggregate",
+      "kind": "round3_code_expression",
+      "expected": "chain cannot register as one predicate; aggregate and held-out peer remain unproved",
+      "source": "def check(value):\n    if not (0 <= value[\"x\"] <= 10):\n        raise ValueError(\"range\")\n    return True\n",
+      "control": {
+        "x": 5
+      },
+      "heldout": [
+        {
+          "x": -1
+        },
+        {
+          "x": 11
+        }
+      ],
+      "aggregate": true
+    },
+    {
+      "id": "A-B3-return-name",
+      "kind": "round3_code_expression",
+      "expected": "no whole-expression registration for unresolved predicate structure",
+      "source": "def check(value):\n    allowed = value[\"x\"] >= 0 and value[\"y\"] >= 0\n    return allowed\n",
+      "control": {
+        "x": 5,
+        "y": 5
+      },
+      "heldout": [
+        {
+          "x": -1,
+          "y": 5
+        },
+        {
+          "x": 5,
+          "y": -1
+        }
+      ],
+      "require_call": false,
+      "aggregate": true
+    },
+    {
+      "id": "A-B3-return-ternary",
+      "kind": "round3_code_expression",
+      "expected": "no whole-expression registration for unresolved predicate structure",
+      "source": "def check(value):\n    return False if value[\"x\"] < 0 or value[\"y\"] < 0 else True\n",
+      "control": {
+        "x": 5,
+        "y": 5
+      },
+      "heldout": [
+        {
+          "x": -1,
+          "y": 5
+        },
+        {
+          "x": 5,
+          "y": -1
+        }
+      ],
+      "require_call": false,
+      "aggregate": true
+    },
+    {
+      "id": "A-B3-return-chain",
+      "kind": "round3_code_expression",
+      "expected": "no whole-expression registration for unresolved predicate structure",
+      "source": "def check(value):\n    return 0 <= value[\"x\"] <= 10\n",
+      "control": {
+        "x": 5,
+        "y": 5
+      },
+      "heldout": [
+        {
+          "x": -1,
+          "y": 5
+        },
+        {
+          "x": 11,
+          "y": 5
+        }
+      ],
+      "require_call": false,
+      "aggregate": true
+    },
+    {
+      "id": "A-B3-require-chain",
+      "kind": "round3_code_expression",
+      "expected": "no whole-expression registration for unresolved predicate structure",
+      "source": "def check(value):\n    require(0 <= value[\"x\"] <= 10, \"range\")\n",
+      "control": {
+        "x": 5,
+        "y": 5
+      },
+      "heldout": [
+        {
+          "x": -1,
+          "y": 5
+        },
+        {
+          "x": 11,
+          "y": 5
+        }
+      ],
+      "require_call": true,
+      "aggregate": true
+    },
+    {
+      "id": "A-B3-return-opaque",
+      "kind": "round3_code_expression",
+      "expected": "no whole-expression registration for unresolved predicate structure",
+      "source": "def opaque(value):\n    return value[\"x\"] >= 0 and value[\"y\"] >= 0\ndef check(value):\n    return opaque(value)\n",
+      "control": {
+        "x": 5,
+        "y": 5
+      },
+      "heldout": [
+        {
+          "x": -1,
+          "y": 5
+        },
+        {
+          "x": 5,
+          "y": -1
+        }
+      ],
+      "require_call": false,
+      "aggregate": true
+    },
+    {
+      "id": "A-B4-conditional",
+      "kind": "round3_negated_routing",
+      "expected": "routing/applicability under negation has unclassified obligations",
+      "schema": {
+        "not": {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "x"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "n": {
+                "minimum": 0
+              }
+            }
+          }
+        }
+      },
+      "control": {
+        "mode": "x",
+        "n": -1
+      },
+      "heldout": [
+        {
+          "mode": "x",
+          "n": 0
+        },
+        {
+          "mode": "y",
+          "n": -1
+        }
+      ],
+      "label_keyword": "minimum",
+      "label_path": [
+        "not",
+        "then",
+        "properties",
+        "n"
+      ]
+    },
+    {
+      "id": "A-B4-properties",
+      "kind": "round3_negated_routing",
+      "expected": "routing/applicability under negation has unclassified obligations",
+      "schema": {
+        "not": {
+          "properties": {
+            "x": {
+              "minimum": 0
+            }
+          }
+        }
+      },
+      "control": {
+        "x": -1
+      },
+      "heldout": [
+        {
+          "x": 0
+        },
+        {}
+      ],
+      "label_keyword": "minimum",
+      "label_path": [
+        "not",
+        "properties",
+        "x"
+      ]
+    },
+    {
+      "id": "A-B4-no-guard",
+      "kind": "round3_negated_routing",
+      "expected": "routing/applicability under negation has unclassified obligations",
+      "schema": {
+        "not": {
+          "if": {
+            "const": "a"
+          },
+          "then": false
+        }
+      },
+      "control": "a",
+      "heldout": [
+        "b"
+      ],
+      "label_keyword": null,
+      "label_path": []
+    },
+    {
+      "id": "A-B4-nested",
+      "kind": "round3_negated_routing",
+      "expected": "routing/applicability under negation has unclassified obligations",
+      "schema": {
+        "not": {
+          "not": {
+            "properties": {
+              "x": {
+                "minimum": 0
+              }
+            }
+          }
+        }
+      },
+      "control": {
+        "x": 0
+      },
+      "heldout": [
+        {
+          "x": -1
+        }
+      ],
+      "label_keyword": "minimum",
+      "label_path": [
+        "not",
+        "not",
+        "properties",
+        "x"
+      ]
+    },
+    {
+      "id": "A-B5-pattern-single",
+      "kind": "round3_pattern",
+      "expected": "syntax and CR/LF predicates in one regex cannot get whole-pattern credit",
+      "schema": {
+        "pattern": "^(?![\\s\\S]*[\\r\\n])ref:[a-z]+$"
+      },
+      "control": "ref:abc",
+      "heldout": [
+        "BAD",
+        "ref:abc\n"
+      ],
+      "label_keyword": "pattern",
+      "label_count": 1
+    },
+    {
+      "id": "A-B5-pattern-aggregate",
+      "kind": "round3_pattern",
+      "expected": "syntax and CR/LF predicates in one regex cannot get whole-pattern credit",
+      "schema": {
+        "pattern": "^(?![\\s\\S]*[\\r\\n])ref:[a-z]+$"
+      },
+      "control": "ref:abc",
+      "heldout": [
+        "BAD",
+        "ref:abc\n"
+      ],
+      "label_keyword": "pattern",
+      "label_count": 2
+    },
+    {
+      "id": "A-B5-independent-clauses",
+      "kind": "round3_pattern_witnesses",
+      "expected": "syntax-only and LF-only cuts preserve each other; original rejects both"
+    },
+    {
+      "id": "A-resource-finite",
+      "kind": "round3_memory_finite",
+      "expected": "reject nonfinite thresholds / freshly sample each boundary / recheck RSS on resume"
+    },
+    {
+      "id": "A-resource-fresh",
+      "kind": "round3_memory_fresh",
+      "expected": "reject nonfinite thresholds / freshly sample each boundary / recheck RSS on resume"
+    },
+    {
+      "id": "A-resource-resume",
+      "kind": "round3_memory_resume",
+      "expected": "reject nonfinite thresholds / freshly sample each boundary / recheck RSS on resume"
+    },
+    {
+      "id": "round3-complete-vocabulary-audit",
+      "kind": "round3_keyword_audit",
+      "expected": "all four dialects, every keyword, positive/negative/nested-not audited; unsupported stays unclassified"
+    },
+    {
+      "id": "round3-python-construct-audit",
+      "kind": "round3_python_audit",
+      "expected": "each refusal/condition grammar either has exact own/peer cuts or remains unclassified"
+    },
+    {
+      "id": "round3-distinct-matcher-and-activation-invariants",
+      "kind": "round3_invariant_context",
+      "expected": "different contains matchers / schema-dependency antecedents never automatically become duplicate predicates"
     }
   ]
 }

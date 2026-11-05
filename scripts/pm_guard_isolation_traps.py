@@ -38,6 +38,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("round3_"):
+        return round3_probe(g, trap, memory, uri)
     if kind.startswith("review_"):
         return review_probe(g, trap, memory, uri)
     if kind == "native_schema_alias":
@@ -310,7 +312,7 @@ def check(v):
         acceptance_predicate = kind == "predicate_return" and candidate["action"] == "predicate"
         if candidate["function"] == "require":
             dispositions[candidate["id"]] = g.Classification(candidate["id"], "selector", "parameterized enforcement helper; each caller acceptance predicate separately inventoried")
-        elif candidate["action"] in ("return", "predicate") and not acceptance_predicate:
+        elif (candidate["action"] in ("return", "predicate") or candidate["expression"] in ("Outcome.accept()", "errors")) and not acceptance_predicate:
             dispositions[candidate["id"]] = g.Classification(candidate["id"], "selector", "accepting terminal return; no rejection")
         elif kind == "unexposed_code":
             continue
@@ -335,7 +337,7 @@ def check(v):
                 modules=[module], code_dispositions=dispositions)
     if kind == "unexposed_code":
         report = g.run(s, memory=memory)
-        return report, sum(f["kind"] == "uninventoried_code_site" for f in report["failures"]) == 2
+        return report, all(any(f["kind"] == "uninventoried_code_site" and f['site']['action']=='raise' and repr(field) in f['site']['expression'] for f in report['failures']) for field in ('x','y'))
     if kind == "duplicate_code":
         invariant = module.sites[ids[0]].guard.invariant
         s.duplicates = [g.Duplicate("same-x", tuple(ids[:2]), invariant, "same /x >=0 repeated at two exact sites")]
@@ -350,6 +352,205 @@ def check(v):
     if kind == "changed_code":
         return report, any(m["actual"] == {"accepted": False, "code": "bad_y"} for m in report["masked_negatives"])
     return report, report["status"] == "PASS" and all(r["proved"] for r in report["rows"])
+
+
+def round3_probe(g, trap, memory, uri):
+    """Astra's exact false clearances plus conservative grammar boundaries."""
+    import ast
+    import copy
+    from jsonschema import validators
+    kind = trap['kind']
+    if kind == 'round3_python_audit':
+        rows = python_audit(g, memory)
+        return {'rows': rows, 'totals': {k: sum(r['disposition'] == k for r in rows) for k in ('atomic_cuts', 'fails_closed')}}, all(x['caught'] for x in rows)
+    if kind == 'round3_invariant_context':
+        reports = []
+        for schema, good, bad, keyword in [
+            ({'allOf': [{'contains': {'const': 1}}, {'contains': {'const': 2}}]}, [1, 2], [], 'minContains'),
+            ({'dependentSchemas': {'a': {'required': ['x']}, 'b': {'required': ['x']}}}, {'a': 1, 'b': 1, 'x': 1}, {'a': 1, 'b': 1}, 'required'),
+            ({'dependencies': {'a': {'required': ['x']}, 'b': {'required': ['x']}}}, {'a': 1, 'b': 1, 'x': 1}, {'a': 1, 'b': 1}, 'required'),
+        ]:
+            cat = g.SchemaCatalog({uri: schema})
+            sites = tuple(x.id for x in cat.guards.values() if x.keyword == keyword)
+            def runner(v, state):
+                return g.Outcome.accept() if state.schema.validator(uri).is_valid(v) else g.Outcome.refuse('schema')
+            suite = g.Suite(trap['id'], runner, [g.Control('valid', good, 'synthetic')],
+                [g.Negative('both', bad, 'bad-dupe', 'schema', 'valid', 'deliberately conflated independent predicates')], cat,
+                duplicates=[g.Duplicate('bad-dupe', sites, cat.guards[sites[0]].invariant, 'same field and keyword is insufficient')])
+            reports.append(g.run(suite, memory=memory))
+        return {'reports': reports}, all(r['status'] == 'FAIL' and any('merges distinct' in f.get('error', '') for f in r['failures']) for r in reports)
+    if kind == 'round3_keyword_audit':
+        rows = keyword_audit(g)
+        failing = [x for x in rows if x['disposition'] == 'fails_closed']
+        allowed = [x for x in rows if x['disposition'] == 'atomic_cuts']
+        return {'rows': rows, 'totals': {k: sum(r['disposition'] == k for r in rows) for k in ('atomic_cuts', 'fails_closed', 'zero_predicates')}}, (
+            bool(allowed) and bool(failing) and all(r['atomic_contract_valid'] for r in rows) and
+            {r['dialect'] for r in rows} == {c.__name__ for c in g.SUPPORTED_DIALECTS} and
+            all(r['disposition'] == 'fails_closed' for r in rows if r['keyword'] in ('pattern', 'format', 'patternProperties', '$vocabulary', '<unknown>') or (r['keyword'] in ('unevaluatedItems', 'unevaluatedProperties') and r['dialect'] in ('Draft201909Validator', 'Draft202012Validator'))))
+    if kind == 'round3_memory_finite':
+        blocked = []
+        for key in ('max_rss', 'pause_when_low', 'resume_at', 'poll', 'low_timeout'):
+            for value in (float('nan'), float('inf'), float('-inf')):
+                try: g.MemoryGate(**{key: value})
+                except g.IsolationError: blocked.append([key, repr(value)])
+        return {'blocked': blocked}, len(blocked) == 15
+    if kind == 'round3_memory_fresh':
+        now, available, samples, sleeps = [0.0], [7], [], []
+        def sample(): samples.append(available[0]); return available[0]
+        def sleep(sec): sleeps.append(sec); now[0] += sec; available[0] = 7
+        gate = g.MemoryGate(max_rss=0, pause_when_low=6, resume_at=7, available=sample, sleep=sleep, clock=lambda: now[0])
+        gate.check(); available[0] = 5; now[0] = .5; gate.check()
+        return {'samples': samples, 'sleeps': sleeps}, samples == [7, 5, 7] and sleeps == [120]
+    if kind == 'round3_memory_resume':
+        from types import SimpleNamespace
+        original, rss, available, reads = g.resource.getrusage, [10], [5], []
+        def usage(who): reads.append(rss[0]); return SimpleNamespace(ru_maxrss=rss[0] * (1024 * 1024 if g.sys.platform == 'darwin' else 1024))
+        def sleep(sec): rss[0] = 200; available[0] = 7
+        g.resource.getrusage = usage
+        try:
+            gate = g.MemoryGate(max_rss=100, pause_when_low=6, resume_at=7, available=lambda: available[0], sleep=sleep)
+            try: gate.check()
+            except g.IsolationError as exc: return {'error': str(exc), 'rss_reads': reads}, 'max-rss exceeded' in str(exc) and reads == [10, 200]
+            return {'rss_reads': reads}, False
+        finally: g.resource.getrusage = original
+    if kind == 'round3_pattern_witnesses':
+        values = ['ref:abc', 'BAD', 'ref:abc\n']
+        patterns = {'original': r'^(?![\s\S]*[\r\n])ref:[a-z]+$',
+                    'syntax-cut-only': r'^(?![\s\S]*[\r\n])[\s\S]*$', 'line-feed-cut-only': r'^ref:[a-z]+$'}
+        observations = {k: [validators.Draft202012Validator({'pattern': v}).is_valid(x) for x in values] for k, v in patterns.items()}
+        return {'values': values, 'independent_predicate_witnesses': observations}, observations == {
+            'original': [True, False, False], 'syntax-cut-only': [True, True, False], 'line-feed-cut-only': [True, False, True]}
+    if 'schema' in trap:
+        catalog = g.SchemaCatalog({uri: trap['schema']})
+        def runner(value, state):
+            return g.Outcome.accept() if state.schema.validator(uri).is_valid(value) else g.Outcome.refuse('schema')
+        suite = g.Suite(trap['id'], runner, [g.Control('valid', trap['control'], 'synthetic')], [], catalog)
+        report = g.run(suite, memory=memory)
+        native = validators.validator_for(trap['schema'])(trap['schema'])
+        refused = [not native.is_valid(v) for v in trap.get('heldout', [])]
+        blocked = []
+        for guard in catalog.guards.values():
+            if guard.classification == 'unclassified':
+                try: catalog.mutated(frozenset([guard.id]))
+                except g.IsolationError: blocked.append(guard.id)
+        labelled = None
+        if trap.get('label_keyword'):
+            target = next(x.id for x in catalog.guards.values() if x.keyword == trap['label_keyword'] and x.path == tuple(trap.get('label_path', [])))
+            suite.negatives = [g.Negative(str(i), v, target, 'schema', 'valid', 'independent predicate '+str(i)) for i, v in enumerate(trap['heldout'][:trap.get('label_count', 1)])]
+            labelled = g.run(suite, memory=memory)
+        return {'report': report, 'labelled_report': labelled, 'heldout_rejected': refused, 'blocked_cuts': blocked}, (
+            report['status'] == 'FAIL' and bool(report['unproved_guards']) and all(refused) and
+            (labelled is None or labelled['status'] == 'FAIL') and
+            (bool(blocked) if kind != 'round3_legacy_contains' else any(x.keyword == 'minContains' and x.classification == 'guard' and x.predicate_count == 1 for x in catalog.guards.values())))
+    source = trap['source']
+    def require(ok, code):
+        if not ok: raise ValueError(code)
+    ns = {'require': require}; exec(source, ns)
+    module = g.AstGuards('round3', source, ns)
+    candidates = module.candidates()
+    dispositions = {c['id']: g.Classification(c['id'], 'selector', 'literal successful terminal return') for c in candidates if c['expression'] == 'True'}
+    ids = []
+    # List-refusal probes retain their real, independently proved x guard. The
+    # unsupported y writes must still prevent that nonempty proof clearing.
+    for c in candidates:
+        if c['action'] == 'raise' and "['x']" in c['expression']:
+            ids.append(module.register(c, 'bad_x', g.Invariant('/x', 'x >= 0')))
+    def runner(value, state):
+        errors = []
+        try:
+            result = state.modules['round3'].check(value, errors) if trap.get('errors_argument') else state.modules['round3'].check(value)
+        except ValueError as exc: return g.Outcome.refuse(str(exc))
+        if trap.get('errors_argument'): return g.Outcome.refuse(errors[0]) if errors else g.Outcome.accept()
+        if trap.get('require_call'): return g.Outcome.accept()
+        return g.Outcome.accept() if result is True else g.Outcome.refuse('range')
+    negatives = [g.Negative('x', trap['negative'], ids[0], 'bad_x', 'valid', 'only x') ] if ids else []
+    suite = g.Suite(trap['id'], runner, [g.Control('valid', trap['control'], 'synthetic')], negatives, modules=[module], code_dispositions=dispositions)
+    report = g.run(suite, memory=memory)
+    independent = [g.asdict(runner(v, suite.state())) for v in trap.get('heldout', [])]
+    blocked = []
+    for c in candidates:
+        if c['action'] == 'unsupported':
+            try: module.register(c, 'range', g.Invariant('/x', 'claimed lower bound'))
+            except g.IsolationError: blocked.append(c['id'])
+    aggregate = None
+    if trap.get('aggregate'):
+        target = next(c['id'] for c in candidates if c['action'] == 'unsupported')
+        attempted = copy.copy(suite)
+        attempted.negatives = [g.Negative(str(i), v, target, 'range', 'valid', 'separate bound/field predicate '+str(i)) for i, v in enumerate(trap['heldout'])]
+        aggregate = g.run(attempted, memory=memory)
+    return {'source': source, 'candidates': candidates, 'report': report, 'aggregate_report': aggregate, 'independent_refusals': independent, 'blocked_registrations': blocked}, (
+        report['status'] == 'FAIL' and bool(report['unproved_guards']) and bool(blocked) and
+        (aggregate is None or aggregate['status'] == 'FAIL') and
+        all(not x['accepted'] and 'error' not in x for x in independent) and
+        (not ids or any(r['id'] == ids[0] and r['proved'] and r['flips'] == ['x'] for r in report['rows'])))
+
+
+def keyword_audit(g):
+    """Executable 4-dialect x 3-context vocabulary audit (not a general prover).
+
+    Each cell uses the same complete catalog as adapters; unknown keywords and
+    unsupported grammars must have visible unclassified obligations. The guide
+    defines the scope/zero-predicate rules, rather than inferring from samples.
+    """
+    samples = {k: {k: 1} for k in ('minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf',
+        'minLength', 'maxLength', 'minItems', 'maxItems', 'minProperties', 'maxProperties')}
+    samples.update({
+        'type': {'type': 'number'}, 'const': {'const': 1}, 'enum': {'enum': [1, 2]},
+        'pattern': {'pattern': '^x$'}, 'format': {'format': 'date-time'}, 'uniqueItems': {'uniqueItems': True},
+        'required': {'required': ['x']}, 'dependentRequired': {'dependentRequired': {'x': ['y']}},
+        'dependencies': {'dependencies': {'x': ['y']}}, 'dependentSchemas': {'dependentSchemas': {'x': {'required': ['y']}}},
+        'properties': {'properties': {'x': {'minimum': 0}}}, 'patternProperties': {'patternProperties': {'^x$': {'minimum': 0}}},
+        'additionalProperties': {'additionalProperties': False}, 'unevaluatedProperties': {'unevaluatedProperties': False},
+        'items': {'items': {'minimum': 0}}, 'prefixItems': {'prefixItems': [{'minimum': 0}]},
+        'additionalItems': {'items': [{}], 'additionalItems': False}, 'unevaluatedItems': {'unevaluatedItems': False},
+        'propertyNames': {'propertyNames': {'minLength': 2}}, 'contains': {'contains': {'const': 1}},
+        'minContains': {'contains': {'const': 1}, 'minContains': 2},
+        'maxContains': {'contains': {'const': 1}, 'minContains': 0, 'maxContains': 2},
+        'allOf': {'allOf': [{'minimum': 0}]}, 'anyOf': {'anyOf': [{'minimum': 0}]},
+        'oneOf': {'oneOf': [{'minimum': 0}, {'maximum': 10}]}, 'not': {'not': {'minimum': 0}},
+        'if': {'if': {'const': 1}, 'then': False}, 'then': {'if': {'const': 1}, 'then': False},
+        'else': {'if': {'const': 1}, 'else': False},
+        '$ref': {'$ref': '#/definitions/n', 'definitions': {'n': {'minimum': 0}}},
+        '$dynamicRef': {'$dynamicRef': '#/definitions/n', 'definitions': {'n': {'minimum': 0}}},
+        '$recursiveRef': {'$recursiveAnchor': True, '$recursiveRef': '#'},
+        '$defs': {'$defs': {'n': {'minimum': 0}}}, 'definitions': {'definitions': {'n': {'minimum': 0}}},
+        '$boolean': False, '$vocabulary': {'$vocabulary': {'https://review.invalid/vocabulary': True}},
+        'contentSchema': {'contentSchema': {'minimum': 0}}, '<unknown>': {'x-unknown-rejection': 1},
+    })
+    annotation_values = {'$id': 'https://pm.invalid/audit-id', '$anchor': 'n', '$dynamicAnchor': 'n', '$recursiveAnchor': True,
+        '$comment': 'audit', 'title': 'audit', 'description': 'audit', 'default': 1, 'examples': [1],
+        'deprecated': True, 'readOnly': True, 'writeOnly': True, 'contentEncoding': 'base64', 'contentMediaType': 'application/json'}
+    samples.update({k: {k: v} for k, v in annotation_values.items()})
+    rows = []
+    for cls in g.SUPPORTED_DIALECTS:
+        assert set(cls.VALIDATORS) <= set(samples), 'new validator keyword must be audited explicitly'
+        dialect = cls.META_SCHEMA.get('$id', cls.META_SCHEMA.get('id'))
+        for keyword, fragment in {**samples, '$schema': {}}.items():
+            # Tuple items were removed in 2020-12; audit the ignored additionalItems keyword with the valid modern items shape.
+            if keyword == 'additionalItems' and cls is g.validators.Draft202012Validator:
+                fragment = {'items': {}, 'additionalItems': False}
+            for context, wrap in (('positive', lambda x: x), ('negative', lambda x: {'not': x}),
+                                  ('nested_not', lambda x: {'not': {'not': x}})):
+                local = g.schema_copy(fragment)
+                if isinstance(local, dict):
+                    if cls is g.validators.Draft202012Validator and '$recursiveAnchor' in local:
+                        local['$recursiveAnchor'] = 'n'  # deprecated 2020-12 meta-schema spelling
+                    for ref in ('$ref', '$dynamicRef'):
+                        if local.get(ref) == '#/definitions/n':
+                            local[ref] = '#' + ('/not' if context == 'negative' else '/not/not' if context == 'nested_not' else '') + '/definitions/n'
+                body = wrap(local)
+                if type(body) is bool: body = {'allOf': [body]}
+                body = {'$schema': dialect, **body}
+                cat = g.SchemaCatalog({'https://pm.invalid/keyword-audit': body})
+                active = [x for x in cat.guards.values() if x.classification == 'guard']
+                unresolved = [x for x in cat.guards.values() if x.classification == 'unclassified']
+                rows.append({'keyword': keyword, 'dialect': cls.__name__, 'context': context,
+                    'disposition': 'fails_closed' if unresolved else 'atomic_cuts' if active else 'zero_predicates',
+                    'atomic_predicates': len(active), 'unclassified_obligations': len(unresolved),
+                    'cuts': sorted(set(x.cut for x in active)),
+                    'classifications': sorted(set(x.classification for x in cat.guards.values())),
+                    'atomic_contract_valid': all(x.predicate_count == 1 and x.cut == g.SCHEMA_CUTS[x.keyword] for x in active)})
+    return rows
 
 
 def review_probe(g, trap, memory, uri):
@@ -386,7 +587,7 @@ def review_probe(g, trap, memory, uri):
         independent = g.asdict(runner({'x': -1}, suite.state()))
         return dict(source=source, report=report, candidates=candidates, independent_negative=independent), (
             report['status'] == 'FAIL' and report['controls'][0]['outcome'] == g.asdict(g.Outcome.accept()) and
-            independent == g.asdict(g.Outcome.refuse('bad_x')) and len(candidates) == 1 and
+            independent == g.asdict(g.Outcome.refuse('bad_x')) and bool(candidates) and
             candidates[0]['function'] == ('Checker.check' if kind == 'review_assigned_class_append' else 'check') and
             candidates[0]['action'] == 'unsupported' and bool(candidates[0].get('reason')) and
             candidates[0]['id'] in report['unproved_guards'] and
@@ -699,3 +900,61 @@ def review_probe(g, trap, memory, uri):
         masking_code = 'copy' if kind=='review_stale' else 'bad'
         return report, report['status']=='FAIL' and any(x['negative']=='x' and x['actual']==g.asdict(g.Outcome.refuse(masking_code)) for x in report['masked_negatives'])
     raise AssertionError('unimplemented review trap: '+kind)
+
+
+def python_audit(g, memory):
+    """Behavioral cut/peer tests for falsy returns and an AST seam census."""
+    bodies = {'raise': 'raise ValueError("bad")', 'return-False': 'return False',
+        'return-None': 'return None', 'return-bare': 'return', 'return-zero': 'return 0',
+        'return-float-zero': 'return 0.0', 'return-empty-string': 'return ""',
+        'return-list': 'return []', 'return-dict': 'return {}', 'return-set': 'return set()'}
+    specs = {name: ('def check(v):\n    if v["x"] < 0:\n        '+body+'\n    if v["y"] < 0:\n        return False\n    return True\n', name not in ('return-list', 'return-dict', 'return-set')) for name, body in bodies.items()}
+    specs.update({
+        'return-and': ('def check(v):\n    return v["x"] >= 0 and v["y"] >= 0\n', True),
+        'return-or-not': ('def check(v):\n    return not (v["x"] < 0 or v["y"] < 0)\n', True),
+        'return-chain': ('def check(v):\n    return 0 <= v["x"] <= 10\n', False),
+        'return-conditional': ('def check(v):\n    return False if v["x"] < 0 or v["y"] < 0 else True\n', False),
+        'return-name': ('def check(v):\n    allowed = v["x"] >= 0 and v["y"] >= 0\n    return allowed\n', False),
+        'return-negated-name': ('def check(v):\n    errors = [x for x in v.values() if x < 0]\n    return not errors\n', False),
+        'conditional-compound-return': ('def check(v):\n    if True:\n        return v["x"] >= 0 and v["y"] >= 0\n', False),
+        'implicit-falsy-return': ('def check(v):\n    if v["x"] >= 0:\n        return True\n', False),
+        'require-chain': ('def check(v):\n    require(0 <= v["x"] <= 10, "bad")\n    return True\n', False),
+        'opaque-helper': ('def check(v):\n    helper(v)\n    return True\n', False),
+        'extend': ('def check(v, errors):\n    if v["x"] < 0:\n        errors.extend(["bad"])\n', False),
+        'iadd': ('def check(v, errors):\n    if v["x"] < 0:\n        errors += ["bad"]\n', False),
+        'slice-assignment': ('def check(v, errors):\n    if v["x"] < 0:\n        errors[len(errors):] = ["bad"]\n', False),
+        'insert': ('def check(v, errors):\n    if v["x"] < 0:\n        errors.insert(0, "bad")\n', False),
+        'item-assignment': ('def check(v, errors):\n    if v["x"] < 0:\n        errors[0] = "bad"\n', False),
+        'append-clauses': ('def check(v, errors):\n    if v["x"] < 0 or v["y"] < 0:\n        errors.append("bad")\n    return True\n', True),
+        'require-clauses': ('def check(v):\n    require(v["x"] >= 0 and v["y"] >= 0, "bad")\n    return True\n', True),
+        'assert-clauses': ('def check(v):\n    assert v["x"] >= 0 and v["y"] >= 0, "bad"\n    return True\n', True),
+    })
+    rows = []
+    for name, (source, supported) in specs.items():
+        def require(ok, code):
+            if not ok: raise ValueError(code)
+        ns = {'require': require}; exec(source, ns)
+        mod = g.AstGuards('python-audit', source, ns); candidates = mod.candidates()
+        dispositions, ids = {}, {}
+        for c in candidates:
+            if c['expression'] == 'True' and c['action'] == 'predicate':
+                dispositions[c['id']] = g.Classification(c['id'], 'selector', 'literal successful terminal return')
+            elif c['action'] != 'unsupported':
+                field = 'x' if "['x']" in c['expression'] else 'y'
+                ids[field] = mod.register(c, 'bad', g.Invariant('/'+field, 'nonnegative'))
+        def runner(value, state):
+            errors = []
+            try:
+                result = state.modules['python-audit'].check(value, errors) if 'errors):' in source else state.modules['python-audit'].check(value)
+            except (ValueError, AssertionError): return g.Outcome.refuse('bad')
+            return g.Outcome.accept() if result is True and not errors else g.Outcome.refuse('bad')
+        suite = g.Suite('python-audit/'+name, runner, [g.Control('valid', {'x': 1, 'y': 1}, 'synthetic')],
+            [g.Negative(f, {'x': -1 if f == 'x' else 1, 'y': -1 if f == 'y' else 1}, gid, 'bad', 'valid', f+' only') for f, gid in ids.items()],
+            modules=[mod], code_dispositions=dispositions)
+        report = g.run(suite, memory=memory)
+        caught = (report['status'] == 'PASS' and len(report['rows']) == 2 and all(r['proved'] and r['flips'] == [f] for f, gid in ids.items() for r in report['rows'] if r['id'] == gid)) if supported else (
+            report['status'] == 'FAIL' and any(c['action'] == 'unsupported' and c['id'] in report['unproved_guards'] for c in candidates))
+        rows.append({'construct': name, 'disposition': 'atomic_cuts' if supported else 'fails_closed',
+            'predicates': len(ids), 'candidates': candidates, 'report_status': report['status'], 'caught': caught,
+            'rows': report['rows'], 'unproved_guards': report['unproved_guards']})
+    return rows

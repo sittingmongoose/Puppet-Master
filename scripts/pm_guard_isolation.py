@@ -14,6 +14,7 @@ from dataclasses import asdict, dataclass, field, replace
 import hashlib
 import importlib.util
 import json
+import math
 from pathlib import Path
 import resource
 import struct
@@ -132,6 +133,9 @@ class Guard:
     reference_trail: tuple = ()
     input_path: tuple = ()
     dialect: str = ""
+    predicate_count: int | None = None  # None = unknown, NEVER an atomic cut
+    cut: str = ""                    # explicit allow-list strategy; empty = no cut
+    activation_context: tuple = ()
 
 
 @dataclass(frozen=True)
@@ -194,9 +198,62 @@ ARRAYS = ("allOf", "anyOf", "oneOf", "prefixItems")
 SCALARS = ("type", "const", "enum", "minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum",
            "multipleOf", "minLength", "maxLength", "pattern", "format", "minItems", "maxItems",
            "uniqueItems", "minProperties", "maxProperties")
-ANNOTATIONS = {"$schema", "$id", "$anchor", "$dynamicAnchor", "$comment", "$vocabulary",
+ANNOTATIONS = {"$schema", "$id", "$anchor", "$dynamicAnchor", "$recursiveAnchor", "$comment", "$vocabulary",
                "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly",
                "contentEncoding", "contentMediaType"}
+
+# Proof credit is opt-in. A known keyword, AST node or physical enforcement
+# site is NOT necessarily one predicate. This is the engine's cut allow-list;
+# the guide's audit tables include unsupported, ignored and routing cases too.
+SUPPORTED_DIALECTS = (validators.Draft6Validator, validators.Draft7Validator,
+                      validators.Draft201909Validator, validators.Draft202012Validator)
+ATOMIC_SCHEMA = frozenset(SCALARS) - {"pattern", "format"}
+SCHEMA_CUTS = {**{k: "delete-one-assertion" for k in ATOMIC_SCHEMA},
+    "type": "type-with-typed-membership", "required": "remove-one-required-member",
+    "dependentRequired": "remove-one-dependency-member", "dependencies": "remove-one-dependency-member",
+    "$boolean": "replace-one-boolean", "minContains": "weaken-only-lower-match-count",
+    "maxContains": "remove-only-upper-match-count", "oneOf:maxMatches": "retain-nonzero-match-remove-exclusivity"}
+UNSUPPORTED_SCHEMA = {"pattern", "format", "patternProperties", "unevaluatedItems", "unevaluatedProperties"}
+
+
+def python_atom_reason(expression):
+    """Only transparent, side-effect-free Boolean atoms get automatic cuts.
+
+    Names/accesses and one comparison are adapter-bound input predicates. Calls
+    outside the tiny read-only view grammar and compound/dataflow expressions
+    need a separately inventoried atomic seam. Chains are deliberately refused:
+    rewriting them as `and` would evaluate shared operands twice.
+    """
+    def value(node):
+        if isinstance(node, (ast.Name, ast.Constant)):
+            return True
+        if isinstance(node, ast.Attribute):
+            return value(node.value)
+        if isinstance(node, ast.Subscript):
+            return value(node.value) and value(node.slice)
+        if isinstance(node, (ast.List, ast.Tuple, ast.Set)):
+            return all(value(x) for x in node.elts)
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
+            return value(node.operand)
+        if isinstance(node, ast.Call) and not node.keywords:
+            if isinstance(node.func, ast.Name) and node.func.id in ("len", "type"):
+                return len(node.args) == 1 and value(node.args[0])
+            if isinstance(node.func, ast.Attribute) and node.func.attr == "get":
+                return (1 <= len(node.args) <= 2 and value(node.func.value) and
+                        isinstance(node.args[0], ast.Constant) and all(value(x) for x in node.args))
+            if isinstance(node.func, ast.Attribute) and node.func.attr == "encode":
+                return value(node.func.value) and all(isinstance(x, ast.Constant) for x in node.args)
+        return False
+    if isinstance(expression, ast.Compare):
+        if len(expression.ops) != 1:
+            return "chained comparison carries multiple predicates; evaluation-order-preserving adapter required"
+        if value(expression.left) and value(expression.comparators[0]):
+            return ""
+    elif isinstance(expression, (ast.Name, ast.Attribute, ast.Subscript, ast.Constant)) and value(expression):
+        return ""
+    elif isinstance(expression, ast.Call) and value(expression):
+        return ""
+    return "expression outside atomic Boolean allow-list (conditional expression, opaque call or dataflow); atomic adapter required"
 
 
 def children(node: dict):
@@ -242,8 +299,10 @@ class SchemaCatalog:
         self.entry_targets = {}
         self.special_entries = set()
         self.mixed_entries = set()
+        self.unsupported_entries = {}
         self.dialects = {}
         self.ineffective = {}
+        self.bindings = []
         self._make_registry()
         self._inventory()
 
@@ -384,12 +443,13 @@ class SchemaCatalog:
                 # validate the same input field. A lane must bind that explicitly.
                 subject = doc + "#" + pointer(path)
                 val = node.get(keyword) if isinstance(node, dict) else node
-                if keyword == "minContains" and val is None:
+                if keyword == "minContains" and (val is None or self.dialects[(doc, path)] in (validators.Draft6Validator, validators.Draft7Validator)):
                     val = 1
                 predicate = encoded([keyword, member if member is not None else val])
                 dialect = self.dialects[(doc, path)]
                 effective_keyword = keyword.split(":", 1)[0]
-                if keyword != "$boolean" and kind != "extension" and not self._effective(node, effective_keyword, dialect):
+                implicit_contains = keyword == "minContains" and "contains" in node and self._effective(node, "contains", dialect)
+                if keyword != "$boolean" and kind != "extension" and not implicit_contains and not self._effective(node, effective_keyword, dialect):
                     classification = "unreachable"
                     why = (dialect.__name__ + ": $ref siblings are ignored" if "$ref" in node and effective_keyword != "$ref" and
                            dialect in (validators.Draft3Validator, validators.Draft4Validator, validators.Draft6Validator, validators.Draft7Validator)
@@ -423,7 +483,7 @@ class SchemaCatalog:
                 if isinstance(names, list):
                     for name in names:
                         add("dependencies", encoded([trigger, name]))
-            for keyword in ("additionalProperties", "unevaluatedProperties", "items", "prefixItems",
+            for keyword in ("properties", "patternProperties", "additionalProperties", "unevaluatedProperties", "items", "prefixItems",
                             "additionalItems", "unevaluatedItems", "propertyNames", "dependentSchemas",
                             "allOf", "anyOf", "oneOf", "not", "if", "then", "else", "contains"):
                 if keyword not in node:
@@ -435,10 +495,20 @@ class SchemaCatalog:
                         why="applicator/branch; child assertions are inventoried individually" if keyword != "if"
                         else "if selects then/else; its own validation result never rejects")
             if "contains" in node:
-                add("minContains", kind="schema", classification="redundant" if node.get("minContains") == 0 else None,
-                    why="minContains=0 imposes no count restriction" if node.get("minContains") == 0 else evidence or "implicit minimum is 1 when minContains is absent")
+                zero_count = self.dialects[(doc, path)] in (validators.Draft201909Validator, validators.Draft202012Validator) and node.get("minContains") == 0
+                add("minContains", kind="schema", classification="redundant" if zero_count else None,
+                    why="minContains=0 imposes no count restriction" if zero_count else evidence or "contains requires at least one match unless an effective minContains overrides it")
                 if "maxContains" in node:
                     add("maxContains")
+            else:
+                for keyword in ("minContains", "maxContains"):
+                    if keyword in node:
+                        add(keyword, classification="redundant", why="count keyword without contains has no effect")
+            if "$vocabulary" in node:
+                add("$vocabulary", kind="extension", classification="unclassified",
+                    why="custom vocabulary declaration requires an explicit validator/atomic adapter")
+            if "$schema" in node and validators.validator_for(node, default=None) not in SUPPORTED_DIALECTS:
+                add("$schema", kind="extension", classification="unclassified", why="unsupported or unknown schema dialect")
             if "oneOf" in node:
                 add("oneOf:maxMatches", kind="schema", why=evidence or "oneOf forbids more than one matching alternative; branch assertions retain the nonzero obligation")
             for keyword in ("$ref", "$dynamicRef", "$recursiveRef"):
@@ -484,6 +554,9 @@ class SchemaCatalog:
                 if self.dialects[key] is not self.dialects[root]:
                     self.mixed_entries.add(entry)
                     self.special_entries.add(entry)
+                if isinstance(self.nodes[key], dict) and any(k in self.nodes[key] and self._effective(self.nodes[key], k, self.dialects[key]) for k in ("unevaluatedItems", "unevaluatedProperties")):
+                    self.unsupported_entries[entry] = "unevaluated coverage depends on peer annotations; context-bound per-predicate adapter required"
+                    self.special_entries.add(entry)
                 pending.extend(child for child, _ in self.possible_edges[key])
         result, visited_nodes = {}, set()
         def assertion_count(key, stack=frozenset()):
@@ -497,12 +570,27 @@ class SchemaCatalog:
                 if count > 1:
                     break
             return count
-        def visit(entry, key, trail, input_path, mode, polarity, stack, negative_compound=False):
+        def simple_negative(key):
+            # Applicability itself is an acceptance requirement under negation
+            # (e.g. not/properties requires the property to exist). Count leaves
+            # only in a same-input conjunction of scalar atoms and ordinary refs.
+            node = self.nodes[key]
+            if type(node) is bool:
+                return True
+            allowed = ATOMIC_SCHEMA | {"required", "dependentRequired", "dependencies", "$ref"} | ANNOTATIONS | {"$defs", "definitions"}
+            if set(node) - allowed or any(isinstance(v, (dict, bool)) for v in node.get("dependencies", {}).values()):
+                return False
+            return assertion_count(key) == 1 and all(simple_negative(child) for child, via in self.edges[key] if via == "$ref")
+        def unsafe_negative(key):
+            # The complete not subtree must be understood, including routing
+            # that creates requirements without any explicit assertion leaf.
+            return not simple_negative(key)
+        def visit(entry, key, trail, input_path, mode, polarity, stack, negative_compound=False, activation=()):
             if key in stack:
                 self.special_entries.add(entry)
                 return
             visited_nodes.add(key)
-            negative_compound = negative_compound or (polarity < 0 and assertion_count(key) > 1)
+            negative_compound = negative_compound or (polarity < 0 and unsafe_negative(key))
             for original in by_node.get(key, []):
                 classification, evidence = original.classification, original.evidence
                 if entry in self.mixed_entries and original.kind not in ("routing", "reference"):
@@ -523,27 +611,55 @@ class SchemaCatalog:
                     noop = original.classification == "redundant"
                     classification = "redundant" if noop and polarity > 0 else "guard"
                     evidence = original.evidence if classification == "redundant" else ""
-                if classification == "guard" and polarity < 0 and negative_compound:
+                if negative_compound:
                     classification, evidence = "unclassified", "compound negative schema context has no peer-preserving atomic cut; expose a context-bound adapter seam"
+                # Unsupported grammar is never waived just because it appears
+                # inside a selector. Its hidden predicates may control rejection.
+                if classification not in ("unreachable",) and original.keyword in UNSUPPORTED_SCHEMA:
+                    classification, evidence = "unclassified", "keyword outside per-predicate cut allow-list: " + original.keyword + "; declare context-bound atomic clauses in an adapter"
+                if self.dialects[key] not in SUPPORTED_DIALECTS:
+                    classification, evidence = "unclassified", "dialect outside supported draft-06/07/2019-09/2020-12 allow-list"
+                if mode == "unsupported":
+                    classification, evidence = "unclassified", "unsupported applicator context (oneOf exclusivity, pattern routing or unevaluated coverage); atomic adapter required"
+                if entry in self.unsupported_entries:
+                    classification, evidence = "unclassified", self.unsupported_entries[entry]
+                node = self.nodes[key]
+                if isinstance(node, dict) and original.keyword == "not" and unsafe_negative((key[0], key[1] + ("not",))):
+                    classification, evidence = "unclassified", "negated routing/applicability or compound expression needs a context-bound atomic adapter"
+                if isinstance(node, dict) and original.keyword in ("anyOf", "oneOf") and not node[original.keyword]:
+                    classification, evidence = "unclassified", "empty alternative set rejects without a child predicate; atomic adapter required"
                 gid = original.id + "@" + digest([entry, trail, input_path])[:16]
                 # An occurrence includes the input field and its branch/reference
                 # route. Physical assertion addresses alone never merge fields.
+                cut = SCHEMA_CUTS.get(original.keyword, "") if classification == "guard" else ""
+                if classification == "guard" and not cut:
+                    classification, evidence = "unclassified", "no allow-listed per-predicate cut for this construct"
                 result[gid] = replace(original, id=gid, entry_uri=entry, reference_trail=trail,
                     input_path=input_path, polarity=polarity, classification=classification,
-                    evidence=evidence, invariant=Invariant(entry + "#" + pointer(input_path), encoded([original.invariant.predicate, polarity])))
+                    evidence=evidence, invariant=Invariant(entry + "#" + pointer(input_path), encoded([
+                        original.invariant.predicate, polarity, activation,
+                        [key[0], key[1]] if original.keyword in ("minContains", "maxContains", "oneOf:maxMatches") else None])),
+                    activation_context=activation,
+                    predicate_count=1 if cut else None if classification == "unclassified" else 0, cut=cut)
             edges = self.possible_edges[key] if entry in self.mixed_entries else self.edges[key]
             for child, via in edges:
-                child_mode, child_polarity, child_input, child_trail = mode, polarity, input_path, trail
+                child_mode, child_polarity, child_input, child_trail, child_activation = mode, polarity, input_path, trail, activation
                 if via in ("$dynamicRef", "$recursiveRef"):
                     self.special_entries.add(entry)
                 if via in ("$ref", "$dynamicRef", "$recursiveRef"):
                     child_trail += ((key, child),)
                 elif via in ("if", "contains"):
                     child_mode = "selector"
+                elif via == "oneOf":
+                    child_mode = "unsupported"
                 elif via == "not":
                     child_polarity *= -1
                 elif via in ("then", "else") and "if" not in self.nodes[key]:
                     continue
+                if via in ("then", "else"):
+                    child_activation += (("conditional", key, via),)
+                elif via in ("dependentSchemas", "dependencies"):
+                    child_activation += (("property-present", input_path, child[1][-1]),)
                 elif via == "properties":
                     child_input += (child[1][-1],)
                 elif via == "patternProperties":
@@ -552,21 +668,24 @@ class SchemaCatalog:
                     child_input += (child[1][-1] if isinstance(child[1][-1], int) else "*",)
                 elif via in ("additionalProperties", "unevaluatedProperties", "propertyNames"):
                     child_input += ("@" + via,)
-                visit(entry, child, child_trail, child_input, child_mode, child_polarity, stack | {key}, negative_compound)
+                if mode == "unsupported" or via in UNSUPPORTED_SCHEMA:
+                    child_mode = "unsupported"
+                visit(entry, child, child_trail, child_input, child_mode, child_polarity, stack | {key}, negative_compound, child_activation)
         for entry, key in self.entry_targets.items():
             visit(entry, key, (), (), "guard", 1, set())
         for guard in prototypes.values():
             if (guard.document, guard.path) not in visited_nodes:
                 result[guard.id] = replace(guard, classification="unreachable",
-                    evidence="no evaluation occurrence from declared roots " + encoded(self.roots))
+                    evidence="no evaluation occurrence from declared roots " + encoded(self.roots), predicate_count=0, cut="")
         for gid, guard in list(result.items()):
             if guard.entry_uri in self.special_entries and guard.classification == "guard":
                 result[gid] = replace(guard, classification="unclassified",
-                    evidence="recursive/dynamic reference occurrences need an explicit context-bound adapter; broad physical cuts are forbidden")
+                    evidence="recursive/dynamic reference occurrences need an explicit context-bound adapter; broad physical cuts are forbidden", cut="", predicate_count=None)
         for entry in self.special_entries:
             gid = "schema-context:" + entry
-            reason = ("mixed-dialect evaluation needs an explicit context-bound adapter; declared resource dialect is not the calling evaluation context"
-                      if entry in self.mixed_entries else "recursive/dynamic occurrence inventory needs an explicit adapter seam")
+            reason = (self.unsupported_entries.get(entry) or
+                      ("mixed-dialect evaluation needs an explicit context-bound adapter; declared resource dialect is not the calling evaluation context"
+                      if entry in self.mixed_entries else "recursive/dynamic occurrence inventory needs an explicit adapter seam"))
             result[gid] = Guard(gid, "unsupported_context", entry,
                 Invariant(entry, "context-bound mixed-dialect evaluation" if entry in self.mixed_entries else "context-bound recursive/dynamic evaluation"),
                 classification="unclassified", evidence=reason)
@@ -652,6 +771,7 @@ class SchemaCatalog:
         if not evidence.strip():
             raise IsolationError("invariant binding requires evidence")
         self.guards[guard_id] = replace(self.guards[guard_id], invariant=invariant, evidence=evidence)
+        self.bindings.append({"guard": guard_id, "invariant": asdict(invariant), "evidence": evidence})
 
     def mutated(self, cuts: frozenset[str]):
         docs, frames, aliases = self._reference_frames()
@@ -659,7 +779,7 @@ class SchemaCatalog:
             guard = self.guards.get(gid)
             if guard is None:
                 continue                    # code guard, checked by Suite
-            if guard.classification != "guard":
+            if guard.classification != "guard" or guard.predicate_count != 1 or guard.cut != SCHEMA_CUTS.get(guard.keyword):
                 raise IsolationError(f"cannot cut {guard.classification} site {gid}")
             if (guard.entry_uri, guard.reference_trail) not in frames:
                 raise IsolationError("assertion has no isolated evaluation occurrence " + gid)
@@ -680,7 +800,12 @@ class SchemaCatalog:
                 trigger, name = json.loads(guard.member)
                 node[keyword][trigger].remove(name)
             elif keyword == "minContains":
-                node[keyword] = 0
+                if self.dialects[(guard.document, guard.path)] in (validators.Draft6Validator, validators.Draft7Validator):
+                    # Legacy contains IS the implicit >=1 predicate; minContains
+                    # is not a legacy keyword and cannot weaken it.
+                    del node["contains"]
+                else:
+                    node[keyword] = 0
             elif keyword == "maxContains":
                 del node[keyword]
             elif keyword == "oneOf:maxMatches":
@@ -804,7 +929,7 @@ class AstGuards:
     def _calls(self, node):
         call = node.value if isinstance(node, ast.Expr) else node
         refusal = (isinstance(call, ast.Call) and
-            ((isinstance(call.func, ast.Attribute) and call.func.attr == "append") or
+            ((isinstance(call.func, ast.Attribute) and call.func.attr in ("append", "extend", "insert", "clear", "pop", "remove", "update", "setdefault", "__setitem__", "__iadd__")) or
              (isinstance(call.func, ast.Name) and call.func.id in ("refuse", "reject", "fail"))))
         predicate = isinstance(node, ast.Call) and ast.unparse(node.func) in self.call_predicates
         return refusal, predicate
@@ -822,18 +947,38 @@ class AstGuards:
                     arg_index = self.call_predicates[ast.unparse(node.func)] if checkcall else None
                     if checkcall and arg_index >= len(node.args):
                         raise IsolationError("guard call uses keyword/missing predicate: supply an explicit adapter boundary")
-                    expression = node.args[arg_index] if checkcall else node.value if predicate else node.test if isinstance(node, ast.Assert) else condition.test if condition else node
+                    expression = node.args[arg_index] if checkcall else (node.value if node.value is not None else ast.Constant(None)) if predicate else node.test if isinstance(node, ast.Assert) else condition.test if condition else node
                     leaves = list(self._leaves(expression))
                     action = ("checkcall" if checkcall else "predicate" if predicate else "raise" if isinstance(node, ast.Raise) else
                               "assert" if isinstance(node, ast.Assert) else "call" if refusal_call else "return")
                     for clause, expression in leaves:
                         identity = digest([name, ast.dump(node, include_attributes=False), clause,
                                            ast.dump(expression, include_attributes=False)])[:16]
+                        reason = python_atom_reason(expression)
+                        if isinstance(node, ast.Raise) and condition is None and isinstance(node.exc, ast.Call) and all(isinstance(x, ast.Constant) for x in node.exc.args):
+                            reason = ""   # unconditional single refusal; no control will pass unless unreachable
+                        if isinstance(node, ast.Return):
+                            if isinstance(node.value, (ast.Name, ast.Attribute, ast.Subscript)) or (condition is None and isinstance(expression, (ast.Name, ast.Attribute, ast.Subscript))):
+                                reason = "returned name/access may carry accumulated or compound predicates; dataflow adapter required"
+                            elif condition is not None and node.value is not None and not isinstance(node.value, ast.Constant):
+                                reason = "conditional return value may carry additional predicates; atomic adapter required"
+                        if isinstance(node, ast.Raise) and isinstance(node.exc, ast.Call) and any(isinstance(x, (ast.Call, ast.IfExp, ast.BoolOp, ast.NamedExpr)) for arg in node.exc.args for x in ast.walk(arg)):
+                            reason = "refusal payload evaluates additional expressions; atomic adapter required"
+                        if isinstance(fn, ast.AsyncFunctionDef):
+                            reason = "async guard requires an explicit atomic adapter"
+                        if isinstance(node, ast.Raise) and node.cause is not None:
+                            reason = "translated/chained raise needs an atomic adapter preserving exception origin"
+                        if refusal_call and isinstance(node, ast.Expr) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr != "append":
+                            reason = "list/container mutation may accumulate multiple refusals; atomic adapter required"
                         result.append({"function": name, "line": node.lineno,
                             "column": node.col_offset, "action": action,
                             "clause": clause or None,
                             "expression": ast.unparse(expression), "fingerprint": identity,
-                            "id": f"code:{self.name}:{name}:{identity}"})
+                            "id": f"code:{self.name}:{name}:{identity}",
+                            "reason": reason, "predicate_count": None if reason else 1,
+                            "cut": "" if reason else "replace-one-Boolean-leaf" if clause or predicate or checkcall or isinstance(node, ast.Assert) else "skip-one-refusal-statement"})
+                        if reason:
+                            result[-1]["action"] = "unsupported"
                 for child in ast.iter_child_nodes(node):
                     # Else bodies are NOT governed by the if's true test.
                     next_condition = node if isinstance(node, ast.If) and child in node.body else condition
@@ -841,11 +986,33 @@ class AstGuards:
             walk(fn)
         inventoried = {(r["line"], r["column"]) for r in result}
         parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
+        # Every call and mutation is either a covered refusal/predicate, a
+        # narrowly allow-listed read-only view, or an explicit unsupported seam.
+        covered = {(r["line"], r["column"]) for r in result}
+        def covered_expression(node):
+            owner = node
+            while owner in parents:
+                owner = parents[owner]
+                if isinstance(owner, (ast.Raise, ast.Return, ast.Assert)) or self._calls(owner)[1]:
+                    return (owner.lineno, owner.col_offset) in covered
+                if isinstance(owner, ast.If):
+                    return node in ast.walk(owner.test) and not python_atom_reason(node)
+            return False
         for node in ast.walk(self.tree):
             refusal_call, checkcall = self._calls(node)
             if refusal_call and isinstance(node, ast.Call) and isinstance(parents.get(node), ast.Expr):
                 continue                    # standalone expression already has one site
-            if not (isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or refusal_call or checkcall) or (node.lineno, node.col_offset) in inventoried:
+            mutation = isinstance(node, (ast.AugAssign, ast.Delete, ast.NamedExpr, ast.Global, ast.Nonlocal))
+            if isinstance(node, (ast.Assign, ast.AnnAssign)):
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                fresh_empty_list = (all(isinstance(x, ast.Name) for x in targets) and isinstance(node.value, ast.List) and not node.value.elts)
+                # A consumed call already has its own unsupported seam; don't
+                # duplicate that obligation at its assignment parent.
+                consumed_call = isinstance(node.value, ast.Call)
+                mutation = not fresh_empty_list and not consumed_call
+            opaque_call = (isinstance(node, ast.Call) and not covered_expression(node) and bool(python_atom_reason(node)))
+            unsupported_flow = isinstance(node, (ast.With, ast.AsyncWith, ast.Try, ast.TryStar, ast.Match, ast.Yield, ast.YieldFrom, ast.Await, ast.AsyncFor))
+            if not (isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or refusal_call or checkcall or mutation or opaque_call or unsupported_flow) or (node.lineno, node.col_offset) in inventoried:
                 continue
             owner, ancestry = node, []
             while owner in parents:
@@ -856,8 +1023,15 @@ class AstGuards:
             identity = digest([name, ast.dump(node, include_attributes=False)])[:16]
             result.append({"function": name, "line": node.lineno, "column": node.col_offset,
                 "action": "unsupported", "clause": None, "expression": ast.unparse(node),
-                "reason": "nested/class/module guard or refusal call with a consumed result requires an explicit atomic adapter seam",
-                "fingerprint": identity, "id": f"code:{self.name}:{name}:{identity}"})
+                "reason": "call, mutation, dataflow or unsupported control/nested/class/module context requires an explicit atomic adapter seam",
+                "fingerprint": identity, "id": f"code:{self.name}:{name}:{identity}", "predicate_count": None, "cut": ""})
+        for name, fn in self.functions.items():
+            if fn.body and not isinstance(fn.body[-1], (ast.Return, ast.Raise)):
+                identity = digest([name, "implicit-falsy-return"])[:16]
+                result.append({"function": name, "line": fn.end_lineno, "column": fn.col_offset,
+                    "action": "unsupported", "clause": None, "expression": "<implicit return None>",
+                    "reason": "fallthrough returns a falsy value; adapter must declare whether this is an accepting helper or refusal",
+                    "fingerprint": identity, "id": f"code:{self.name}:{name}:{identity}", "predicate_count": None, "cut": ""})
         # Identical text at two sites still has two identities (stable occurrence suffix).
         counts = {}
         for row in result:
@@ -868,9 +1042,9 @@ class AstGuards:
     def register(self, candidate: dict, code: str, invariant: Invariant, *, evidence="") -> str:
         actual = next((c for c in self.candidates() if c["id"] == candidate["id"]), None)
         if actual != candidate:
-            raise IsolationError("stale/forged AST candidate")
-        if candidate["action"] == "unsupported":
-            raise IsolationError("nested/class/module guard requires an explicit adapter seam; cannot silently omit it")
+            raise IsolationError("stale/substituted AST candidate")
+        if candidate["action"] == "unsupported" or candidate.get("predicate_count") != 1 or not candidate.get("cut"):
+            raise IsolationError("unsupported construct requires an explicit atomic adapter seam: " + candidate.get("reason", "no per-predicate cut"))
         if self.functions[candidate["function"]].decorator_list:
             raise IsolationError("decorated guard needs an explicit adapter seam preserving the wrapper; cannot drop decorators")
         gid = candidate["id"]
@@ -879,7 +1053,8 @@ class AstGuards:
         if not code or not invariant.subject or not invariant.predicate:
             raise IsolationError("code site needs exact refusal code and field/predicate invariant")
         g = Guard(gid, "code", f"{self.name}:{candidate['function']}:{candidate['line']}:{candidate['clause']}",
-                  invariant, evidence=evidence or "registered exact AST refusal predicate", refusal_code=code)
+                  invariant, evidence=evidence or "registered exact AST refusal predicate", refusal_code=code,
+                  predicate_count=1, cut=candidate["cut"])
         self.sites[gid] = CodeSite(g, candidate["function"], candidate["line"], candidate["column"], candidate["action"],
                                    candidate["clause"], candidate["fingerprint"])
         return gid
@@ -950,7 +1125,7 @@ class AstGuards:
 
                 def atom(self, expression, path, accepting):
                     if not path:
-                        return ast.copy_location(ast.Constant(accepting), expression)
+                        return ast.copy_location(ast.Constant(accepting), expression) if expression is not None else ast.Constant(accepting)
                     step, *rest = path
                     if step == "not" and isinstance(expression, ast.UnaryOp) and isinstance(expression.op, ast.Not):
                         expression.operand = self.atom(expression.operand, rest, not accepting)
@@ -1006,7 +1181,13 @@ class Suite:
         for item in self.classifications:
             if item.guard not in result or not item.evidence.strip() or item.kind not in ("selector", "unreachable", "redundant", "format_sweep"):
                 raise IsolationError(f"invalid guard classification {item}")
-            result[item.guard] = replace(result[item.guard], classification=item.kind, evidence=item.evidence)
+            if result[item.guard].classification == "unclassified":
+                # An assertion with no sound cut is not a selector merely
+                # because a caller supplied that label. Preserve the obligation;
+                # context-bound adapter/engine work must expose its predicates.
+                result[item.guard] = replace(result[item.guard], evidence=result[item.guard].evidence + "; adapter declaration (still unproved): " + item.kind + ": " + item.evidence)
+            else:
+                result[item.guard] = replace(result[item.guard], classification=item.kind, evidence=item.evidence)
         return result
 
     def state(self, cuts=frozenset()):
@@ -1031,11 +1212,18 @@ class MemoryGate:
     """
     def __init__(self, max_rss=2048, pause_when_low=0, resume_at=None, poll=120, low_timeout=2700,
                  *, available=None, sleep=time.sleep, clock=time.monotonic):
+        def finite(value):
+            try:
+                return type(value) in (int, float) and math.isfinite(value)
+            except OverflowError:
+                return False
+        if not all(finite(x) for x in (max_rss, pause_when_low, poll, low_timeout)) or (resume_at is not None and not finite(resume_at)):
+            raise IsolationError("memory limits must be finite numeric thresholds")
         self.max_rss, self.low = max_rss, pause_when_low
         self.resume = resume_at if resume_at is not None else pause_when_low + 1
         self.poll, self.timeout = poll, low_timeout
         self.available = available or self.available_gib
-        self.sleep, self.clock, self.next_sample = sleep, clock, 0
+        self.sleep, self.clock = sleep, clock
         if max_rss < 0 or pause_when_low < 0 or self.resume < pause_when_low or poll <= 0 or low_timeout <= 0:
             raise IsolationError("invalid memory limits")
 
@@ -1046,11 +1234,14 @@ class MemoryGate:
                 return int(line.split()[1]) // (1024 * 1024)
         raise IsolationError("MemAvailable unavailable; supply a platform available-memory callback")
 
-    def check(self):
+    def _check_rss(self):
         peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1024 * 1024 if sys.platform == "darwin" else 1024)
         if self.max_rss and peak > self.max_rss:
             raise IsolationError(f"max-rss exceeded: {peak:.1f} MiB > {self.max_rss}")
-        if not self.low or self.clock() < self.next_sample:
+
+    def check(self):
+        self._check_rss()
+        if not self.low:
             return
         available = self.available()
         if available < self.low:
@@ -1066,7 +1257,8 @@ class MemoryGate:
                 print(f"guard-isolation paused: {available} GiB available; resume at {self.resume}", file=sys.stderr, flush=True)
                 self.sleep(self.poll)
                 available = self.available()
-        self.next_sample = self.clock() + 1
+                self._check_rss()
+            self._check_rss()       # resume cannot escape a peak accumulated in the pause
 
 
 def typed_changes(left, right, path=()):
@@ -1096,7 +1288,8 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None) -> dic
     gate = memory or MemoryGate()
     report = {"version": 1, "suite": suite.name, "status": "FAIL", "inventory": [], "controls": [],
               "negatives": [], "rows": [], "duplicates": [], "unproved_guards": [],
-              "masked_negatives": [], "failures": [], "evaluations": 0}
+              "masked_negatives": [], "failures": [], "evaluations": 0,
+              "trust_decisions": [], "classifications_require_review": []}
     def fail(kind, **facts):
         report["failures"].append({"kind": kind, **facts})
     try:
@@ -1112,7 +1305,29 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None) -> dic
             if c.boundary not in ("append", "retry", "retained_history", "synthetic"):
                 raise IsolationError(f"unknown complete-path boundary {c.boundary}")
         report["inventory"] = [asdict(g) for g in sorted(guards.values(), key=lambda g: g.id)]
+        # These are obligations of EVERY adopting reviewer, including PASS
+        # reports. Outcome observations cannot establish any of these claims.
+        report["trust_decisions"].extend([
+            {"kind": "complete_path_callback", "runner": getattr(suite.runner, "__qualname__", type(suite.runner).__name__),
+             "review": "callback executes the product boundary; constructing a validator or manufacturing outcomes is insufficient"},
+            {"kind": "refusal_translation", "codes": sorted({n.code for n in negatives.values()}),
+             "review": "only product refusals are translated; assertions and internal crashes must propagate"}])
+        if suite.schema:
+            report["trust_decisions"].append({"kind": "consumer_input_occurrences", "roots": list(suite.schema.roots),
+                "review": "each root is bound to a distinct consumer/input occurrence; reusing one root for two inputs broadens a cut; construction alone does not prove validator invocation"})
+            report["trust_decisions"].extend({"kind": "schema_invariant_binding", **b} for b in suite.schema.bindings)
+        report["trust_decisions"].extend({"kind": "schema_classification", **asdict(item)} for item in suite.classifications)
+        report["trust_decisions"].extend({"kind": "duplicate_equivalence", **asdict(d),
+            "review": "same field AND predicate; single-specimen per-site results cannot establish equality"} for d in suite.duplicates)
         for module in suite.modules:
+            report["trust_decisions"].append({"kind": "code_module_closure", "module": module.name, "source_sha256": module.source_hash,
+                "predicate_helpers": module.call_predicates,
+                "dynamic_subject_contexts": [{"line": n.lineno, "expression": ast.unparse(n)} for n in ast.walk(module.tree)
+                    if isinstance(n, (ast.For, ast.While, ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp))],
+                "review": "all helper/module sources are included, read-only views have standard semantics, and cloned code is actually invoked"})
+            report["trust_decisions"].extend({"kind": "code_predicate_binding", "guard": s.guard.id,
+                "invariant": asdict(s.guard.invariant), "evidence": s.guard.evidence,
+                "review": "one input subject/predicate per occurrence; loop/dynamic subjects and structured comparisons need separate bindings"} for s in module.sites.values())
             for candidate in module.candidates():
                 gid = candidate["id"]
                 if gid not in module.sites:
@@ -1124,6 +1339,7 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None) -> dic
                         report["unproved_guards"].append(gid)
                     else:
                         report["inventory"].append({**candidate, "classification": disposition.kind, "evidence": disposition.evidence})
+                        report["trust_decisions"].append({"kind": "code_disposition", **asdict(disposition)})
         for d in duplicate.values():
             if d.id in guards or len(d.sites) < 2 or len(set(d.sites)) != len(d.sites) or not d.evidence.strip():
                 raise IsolationError(f"invalid duplicate declaration {d.id}")
