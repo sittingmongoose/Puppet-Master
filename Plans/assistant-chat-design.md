@@ -1176,7 +1176,8 @@ Threads may contain ordinary turns, historical investigations, and at most one a
 - `blocked` — waiting on a prerequisite such as approval, target availability, or revalidation.
 - `attention_required` — user input or human review is needed before the investigation may continue.
 - `verifying` — the investigation is in its verification stage and has not yet reached a terminal conclusion.
-- `failed_cleanup` — the investigation found or fixed something, but cleanup could not be completed.
+- `failed` — an unsuccessful ending for exactly the six reasons in DL-428; the specific reason is saved.
+- `failed_cleanup` — temporary debugging changes or connections could not be cleaned up; this cleanup-recovery state stays separate from Failed (DL-428/DL-429).
 - `resolved` — verification passed and required cleanup completed (or was explicitly preserved under a documented hold).
 - `cancelled` — the user or runtime stopped the investigation without resolving it.
 - `superseded` — replaced by a newer investigation targeting a different subject or a newer branch of the same problem.
@@ -1184,7 +1185,7 @@ Threads may contain ordinary turns, historical investigations, and at most one a
 Required lifecycle rules:
 - A thread may hold multiple historical investigations, but only one investigation may be non-terminal (`active`, `blocked`, `attention_required`, `verifying`, or `failed_cleanup`) for prompt injection and mutation-capable automation at a time.
 - Choosing a new debug target in a thread with a non-terminal investigation must default to continuing the current investigation. Switching to a materially different target requires an explicit supersede action that marks the older investigation `superseded`.
-- `resolved`, `cancelled`, and `superseded` investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser/dev sessions.
+- `resolved`, `failed`, `cancelled`, and `superseded` investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser/dev sessions.
 - Reopening a terminal investigation for new live work creates a new investigation lineage entry linked by `supersedes_investigation_id` unless the prior investigation is still in a resumable non-terminal state.
 - `blocked`, `attention_required`, `verifying`, and `failed_cleanup` investigations reopen against the same `investigation_id` when the bound target, runtime identity, and worktree identity are still valid.
 - Thread restore must rehydrate the visible Investigation Context header, linked artifacts, requested/effective debug posture, revalidation reason (if any), and frozen target bindings without silently rebinding to a different target; this no-silent-rebind rule applies at resume-time before any mutation-capable automation continues.
@@ -1192,6 +1193,8 @@ Required lifecycle rules:
 - `failed_cleanup` investigations reopen directly into cleanup-recovery state; PM must not start a new mutation-capable debug loop against the same target until residue is resolved, rolled back, or explicitly promoted into the durable fix lane.
 
 **Revalidation reasons** that prevent silent resume include at minimum target replacement, auth/account switch, worktree or branch drift, HEAD drift for bound file/worktree targets, expired instrumentation, and stale safe-point or remediation lineage.
+
+DL-428 adds Failed as a terminal historical state; opening it never restarts work. New live work creates the existing linked investigation. Cleanup failed stays separate. CV-578 owns the exact state_changed event contract.
 
 **Deterministic final-state mapping:**
 - `resolved` pairs with `stop_reason_code = investigation.resolved_verified` or `investigation.analysis_only_completed`.
@@ -7383,42 +7386,55 @@ plan_unit_id: ACD-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Threads may contain multiple historical investigations, but only one non-terminal investigation may be active for prompt injection and mutation-capable automation at a time.
+canonical_text: Threads may contain multiple historical investigations, but only one non-terminal investigation
+  may be active for prompt injection and mutation-capable automation at a time. DL-428 adds failed as
+  a terminal historical state for exactly the six existing unsuccessful stop reasons; save the specific
+  reason and retain failed_cleanup separately.
 gui_related: false
-gui_classification_reason: Investigation lifecycle and prompt/mutation eligibility are workflow/runtime behavior.
-depends_on: [ACD-071]
-unblocks: [ACD-079, ACD-080, ACD-081, ACD-082, ACD-083]
+gui_classification_reason: Investigation lifecycle and prompt/mutation eligibility are workflow/runtime
+  behavior.
+depends_on:
+- ACD-071
+unblocks:
+- ACD-079
+- ACD-080
+- ACD-081
+- ACD-082
+- ACD-083
 acceptance_criteria:
-  - A thread can retain multiple historical investigations.
-  - Only one active, blocked, attention_required, verifying, or failed_cleanup investigation is eligible for prompt injection and mutation-capable automation at a time.
+- A thread can retain multiple historical investigations.
+- Only one active, blocked, attention_required, verifying, or failed_cleanup investigation is eligible
+  for prompt injection and mutation-capable automation at a time.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: debug_lifecycle
 reasoning_tier: high
 context_scope: debug_investigation
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/storage-plan.md
-  - Plans/Runtime_Artifacts_Panel.md
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
 node_compile_hint:
   mode: debug_investigation_lifecycle
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+- Plans/Decision_Log.md#DL-428
 preserved_exact_tokens:
-  - "active"
-  - "blocked"
-  - "attention_required"
-  - "verifying"
-  - "failed_cleanup"
-  - "resolved"
-  - "cancelled"
-  - "superseded"
+- active
+- blocked
+- attention_required
+- verifying
+- failed_cleanup
+- resolved
+- cancelled
+- superseded
+- failed
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Runtime_Artifacts_Panel.md
+- Plans/assistant-chat-design.md
+- Plans/Runtime_Artifacts_Panel.md
 ```
 
 ### ACD-079 - Debug Reopen And Supersede
@@ -7428,37 +7444,44 @@ plan_unit_id: ACD-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Switching debug targets in a thread with a non-terminal investigation defaults to continuing the current investigation; materially different targets require explicit supersede, and terminal investigations reopen as historical views unless new lineage is created.
+canonical_text: Switching debug targets in a thread with a non-terminal investigation defaults to continuing
+  the current investigation; materially different targets require explicit supersede, and terminal investigations
+  reopen as historical views unless new lineage is created.
 gui_related: false
 gui_classification_reason: Investigation supersession and reopen lineage are workflow/runtime behavior.
-depends_on: [ACD-078]
-unblocks: [ACD-080, ACD-081]
+depends_on:
+- ACD-078
+unblocks:
+- ACD-080
+- ACD-081
 acceptance_criteria:
-  - A materially different debug target requires an explicit supersede action.
-  - resolved, cancelled, and superseded investigations reopen as historical views by default.
-  - New live work from a terminal investigation creates a new investigation lineage linked by supersedes_investigation_id.
+- A materially different debug target requires an explicit supersede action.
+- resolved, failed, cancelled, and superseded investigations reopen as historical views by default; new
+  live work uses the existing linked-investigation rule (DL-428).
+- New live work from a terminal investigation creates a new investigation lineage linked by supersedes_investigation_id.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: debug_reopen
 reasoning_tier: high
 context_scope: debug_investigation
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/storage-plan.md
-  - Plans/Runtime_Artifacts_Panel.md
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
 node_compile_hint:
   mode: debug_reopen_supersede
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
 preserved_exact_tokens:
-  - "supersedes_investigation_id"
+- supersedes_investigation_id
 negative_constraints:
-  - "resolved, cancelled, and superseded investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser/dev sessions."
+- resolved, cancelled, and superseded investigations reopen as historical views by default; they do not
+  silently restart automation, instrumentation, or browser/dev sessions.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
 ```
 
 ### ACD-080 - Debug Restore Context Surface

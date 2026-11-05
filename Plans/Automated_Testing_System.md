@@ -7242,26 +7242,26 @@ plan_unit_id: ATS-285
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: Seven prepared exact families in Plans/debug_investigation_event_fixtures.json own
-  positive closed payload and negative missing-required/unknown-field/version/scope/identity/changed-digest/admission/retention/withdrawal
-  cases in scripts/pm-debug-investigation-events.py. The eighth candidate, instrumentation_state_changed,
-  is HELD_FOR_JARED under CV-574; its structurally closed draft and refusal probes prove no positive
-  transition. Every candidate requires dedupe_by_idempotency_key for current append/retry, separately
-  refuses projector_replay_only, append_once and dedupe_by_event_id, and uses the encoded
-  Project partition. started tests cited owner-supported resolution cases, including read-only Crew,
-  Debug binding, planning posture and approved execution handoff, without a universal tuple table, and actual
-  payload/envelope/owner Project/investigation/thread/run joins. context_item_state_changed uses a real
-  active-to-revoked positive and an equal-state zero-append negative. verification_recorded refuses a
-  schema-valid body above 16 KiB inline; SP-337 payload reference custody remains a native obligation.
-  Every prepared family has application-scope refusal, raw/line-feed partition refusal, retry comparisons
-  over only the caller semantic fields from EventRecord, and a none_required family-checkpoint assertion.
-  target_bound rejects malformed and trailing-LF SHA-256 values. The full-checker regression runner
-  scripts/pm-debug-investigation-standing-checks.py exercises all eight standing checks per prepared
-  family with corrupted positives/oracles; success masquerading as a negative must exit nonzero.
-  No case for a sibling proves a family. Native first-receipt
-  crash, source-generation/CAS, original-ref permission/deletion and withdrawal/rebuild obligations in
-  that fixture remain NOT_RUN. debug.investigation.state_changed is deliberately absent pending CV-578;
-  no synthetic answer or test decides its lifecycle.
+canonical_text: Nine prepared exact families in Plans/debug_investigation_event_fixtures.json have independent
+  closed-payload, identity, Project join, replay/idempotency, original-receipt, custody, compatibility
+  and withdrawal oracles in scripts/pm-debug-investigation-events.py. DL-428 state_changed covers all
+  six Failed reasons and rejects every other failure pairing, separates failed_cleanup, compares original
+  before-state/phase, refuses terminal in-place restart and preserves historical opening/new-linked-work
+  semantics. DL-429 instrumentation_state_changed covers every approved transition row and each source
+  alternative, all eight legal pairs, whole-lane never-needed proof, verified removal including detach,
+  exact visible leftovers/recovery, retry authorization/count/attempt ceiling, pending handoff acceptance,
+  retained responsibility on failure, no second unaccepted handoff, no cleaned restart, restore/permission/overlap
+  guards and immutable original detail joins. Each current writer/retry refuses projector_replay_only;
+  every family has its own missing-field/version/unknown-field, encoded project partition, changed semantic
+  digest, native custody/CAS/permission/withdrawal obligations and none_required transient-checkpoint
+  assertion. The pre-existing seven contracts and mode-resolution cases retain their prior scope. Eagerly
+  resolve every schema reference, including unvisited definitions; malformed references fail the whole
+  checker. Retained original positives ignore current live transition state and current-writer replay
+  policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
+  promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures
+  use projected original facts; they never prove native receipt, proof dereference, payload-pack, writer
+  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. NUMRULE adoption
+  and shared guard-table isolation are part-2 work; no local number or proof helper is introduced.
 gui_related: false
 gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
   its surface.
@@ -7275,6 +7275,7 @@ depends_on:
 - CV-576
 - CV-577
 - SP-570
+- CV-578
 unblocks: []
 acceptance_criteria:
 - Exact family remains unadmitted until its own integration landing and all open product cells close.
@@ -7295,6 +7296,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/Contracts_V0.md#CV-123
 - reports/event-authority-20261104/DDBG.md
+- Plans/Decision_Log.md#DL-428
+- Plans/Decision_Log.md#DL-429
 preserved_exact_tokens:
 - ATS-285
 negative_constraints:

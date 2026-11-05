@@ -6,9 +6,11 @@ import hashlib
 import json
 from pathlib import Path
 from jsonschema import Draft202012Validator
+from pm_debug_investigation_transitions import (
+    lifecycle_refusal, instrumentation_refusal, resolve_all_schema_refs, cleanup_retry_refusal)
 
 ROOT = Path(__file__).resolve().parents[1]
-HELD_EVENT = 'debug.investigation.instrumentation_state_changed'
+INSTRUMENTATION_EVENT = 'debug.investigation.instrumentation_state_changed'
 
 
 def writer_policy_refusal(case):
@@ -71,8 +73,10 @@ def candidate_refusal(case, validator):
     # native verification obligation rather than a fabricated pack-store model.
     if len(json.dumps(payload, ensure_ascii=False, separators=(',', ':')).encode()) > 16384:
         return 'payload_reference_required'
-    if case['event_type'] == HELD_EVENT:
-        return 'instrumentation_mapping_unresolved'
+    if case['event_type'] == INSTRUMENTATION_EVENT:
+        return instrumentation_refusal(case)
+    if case['event_type'] == 'debug.investigation.state_changed':
+        return lifecycle_refusal(case)
     return None
 
 def patched_case(case, patches):
@@ -101,9 +105,39 @@ def refusal(case, admitted=False, retention='PENDING_RETENTION_DECISION', withdr
         return 'retention_unresolved'
     return None
 
+def retained_refusal(case, original, withdrawn=False):
+    """Read the original Storage projection, never the current owner transition.
+
+    Source authentication and historical admission/recipe custody are native
+    obligations. These vectors compare a selected original with the offered read.
+    """
+    if withdrawn:
+        return 'withdrawn'
+    if original['original_admission'] != (case['event_type'], '1.0.0'):
+        return 'historical_admission_mismatch'
+    if original['recipe_ref'] != 'debug-project-rfc8785-v1':
+        return 'historical_recipe_mismatch'
+    frozen = original['case']
+    if case['event_type'] != frozen['event_type']:
+        return 'foreign_history'
+    if identity(case['event_type'], case['project_id'], case['payload']) != tuple(frozen['expected_identity']):
+        return 'forged_history_identity'
+    if semantic_digest(case) != semantic_digest(frozen):
+        return 'forged_history_body'
+    for key in ('sequence_id', 'observed_at_utc', 'persisted_at_utc'):
+        if case['envelope'].get(key) != frozen['envelope'].get(key):
+            return 'forged_storage_metadata'
+    return None
+
 def main():
     schema = json.loads((ROOT/'Plans/debug_investigation_event_payloads.schema.json').read_text())
     fixture = json.loads((ROOT/'Plans/debug_investigation_event_fixtures.json').read_text())
+    try:
+        resolve_all_schema_refs(schema)
+        Draft202012Validator.check_schema(schema)
+    except (KeyError, ValueError, TypeError) as exc:
+        print(json.dumps({'status': 'FAIL', 'failures': ['unresolved_schema_reference: ' + str(exc)]}))
+        return True
     registry = json.loads((ROOT/'Plans/event_family_registry.json').read_text())
     admitted = {r['event_type'] for r in registry['families']}
     failures = []
@@ -117,13 +151,33 @@ def main():
         definition = schema['$defs'][name]
         Draft202012Validator.check_schema(definition)
         validator = Draft202012Validator(definition)
-        held = event == HELD_EVENT
-        check(validator.is_valid(payload), event + ': structural held candidate' if held else event + ': positive payload')
-        check(candidate_refusal(case, validator) == ('instrumentation_mapping_unresolved' if held else None),
-              event + ': held candidate refusal' if held else event + ': positive semantic joins/transition')
-        check(case.get('outcome') == 'held_for_jared' if held else case.get('outcome') != 'held_for_jared', event + ': exact hold disposition')
-        if held:
-            check(bool(case.get('hold_question')), event + ': exact unanswered question')
+        check(validator.is_valid(payload), event + ': positive payload')
+        check(candidate_refusal(case, validator) is None, event + ': positive semantic joins/transition')
+        check(case.get('outcome') != 'held_for_jared', event + ': resolved decision hold')
+        for transition in case.get('transition_cases', []):
+            probe = patched_case(case, transition['patches'])
+            check(candidate_refusal(probe, validator) == transition['expected_refusal'],
+                  event + ': transition ' + transition['case'])
+        if name in ('instrumentation_state_changed', 'state_changed'):
+            check(case.get('retention_policy_ref') == 'RP-OPERATIONAL-2555D@1.0.0',
+                  event + ': exact current G02 Project policy')
+        if name == 'instrumentation_state_changed':
+            request_validator = Draft202012Validator(schema['$defs']['cleanup_retry_request'])
+            for request in case['retry_request_cases']:
+                inputs = {key: request[key] for key in ('retries_used', 'authorized')}
+                check(request_validator.is_valid(inputs), event + ': typed retry request')
+                check(cleanup_retry_refusal(**inputs) == request['expected_refusal'],
+                      event + ': initiation ' + request['case'])
+            required_kinds = set(schema['$defs']['instrumentation_change_detail']['properties']['transition_kind']['enum'])
+            covered = {patched_case(case, row['patches'])['detail_records']['detail:op1']['transition_kind']
+                       for row in case['transition_cases']}
+            check(covered == required_kinds, event + ': every DL-429 transition kind has a positive')
+        if name == 'state_changed':
+            failed_reasons = {patched_case(case, row['patches'])['payload'].get('stop_reason_code')
+                              for row in case['transition_cases']
+                              if patched_case(case, row['patches'])['payload']['state'] == 'failed'}
+            from pm_debug_investigation_transitions import FAILED_REASONS
+            check(failed_reasons == set(FAILED_REASONS), event + ': all six Failed endings have positives')
         check(event not in admitted, event + ': must remain unadmitted')
         checks = 2
         for key in definition['required']:
@@ -169,7 +223,10 @@ def main():
         # Each fixture's negative is executed by the same candidate gate as its
         # positive. Merely changing an identity preimage cannot prove a join.
         for negative in case['negative_cases']:
-            bad = patched_case(case, negative['patches'])
+            negative_base = patched_case(case, negative.get('base_patches', {}))
+            check(candidate_refusal(negative_base, validator) is None,
+                  event + ': valid base for ' + negative['case'])
+            bad = patched_case(negative_base, negative['patches'])
             reason = candidate_refusal(bad, validator)
             check(reason == negative['expected_refusal'], event + ': ' + negative['case'])
             appends = int(reason is None)
@@ -184,6 +241,28 @@ def main():
             check(refusal(bad_policy, admitted=True, retention='resolved') == reason,
                   event + ': current append/retry refuses ' + policy)
         check(bool(case.get('native_oracles')) and all(o.get('execution_status') == 'NOT_RUN' for o in case['native_oracles']), event + ': authored native obligations retained, NOT_RUN')
+        # The reader-only historical replay policy is valid in its original
+        # retained edition; current writer gating must not reach that original.
+        historical = patched_case(case, {'envelope.replay_policy': 'projector_replay_only'})
+        original = {'case': copy.deepcopy(historical), 'original_admission': (event, '1.0.0'),
+                    'recipe_ref': 'debug-project-rfc8785-v1'}
+        historical['owner_record']['investigation_id'] = 'different-live-investigation'
+        if 'lifecycle_source' in historical:
+            historical['lifecycle_source']['state'] = 'resolved'
+        if 'instrumentation_source' in historical:
+            historical['instrumentation_source']['state'] = 'cleaned'
+        check(retained_refusal(historical, original) is None, event + ': retained original ignores live state/writer policy')
+        check(retained_refusal(historical, original, withdrawn=True) == 'withdrawn', event + ': historical withdrawal')
+        forged = patched_case(historical, {'payload.operation_id': 'forged'})
+        check(retained_refusal(forged, original) == 'forged_history_identity', event + ': historical forged identity')
+        forged = patched_case(historical, {'payload.' + case['mutation_field']: case['mutation_value']})
+        check(retained_refusal(forged, original) == 'forged_history_body', event + ': historical forged body')
+        forged = patched_case(historical, {'envelope.sequence_id': 999})
+        check(retained_refusal(forged, original) == 'forged_storage_metadata', event + ': historical Storage-assigned sequence')
+        weak = dict(original, recipe_ref='caller-selected-old-recipe')
+        check(retained_refusal(historical, weak) == 'historical_recipe_mismatch', event + ': original recipe cannot be selected by caller')
+        foreign = dict(original, original_admission=('other.family', '1.0.0'))
+        check(retained_refusal(historical, foreign) == 'historical_admission_mismatch', event + ': exact original admission')
         original_key, original_id = identity(event, case['project_id'], payload)
         check([original_key, original_id] == case['expected_identity'], event + ': exact identity vector')
         check(identity(event, 'other-project', payload) != (original_key, original_id), event + ': scope substitution')
@@ -207,14 +286,13 @@ def main():
             check(same == (retry['expected_result'] == 'original_receipt'),
                   event + ': retry ' + retry['case'])
         # This is a transient-reader fixture assertion, not a new checkpoint.
-        check(held or case.get('family_checkpoint') == 'none_required', event + ': no durable family checkpoint')
+        check(case.get('family_checkpoint') == 'none_required', event + ': no durable family checkpoint')
         check(refusal(case) == 'unregistered', event + ': admission refusal')
         check(refusal(case, admitted=True) == 'retention_unresolved', event + ': retention refusal')
         check(refusal(case, admitted=True, retention='resolved', withdrawn=True) == 'withdrawn', event + ': withdrawal refusal')
-        rows.append({'event_type':event,'schema_checks':checks,'outcome':'held_for_jared' if held else 'prepared_without_admission','native_execution':'NOT_RUN'})
-    check(len(rows) == 8 and len({r['event_type'] for r in rows}) == 8, 'eight distinct draft families')
-    check(sum(r['outcome'] == 'prepared_without_admission' for r in rows) == 7, 'seven prepared families; instrumentation held')
-    check('state_changed' not in schema['$defs'], 'owner question cannot be answered by a schema')
+        rows.append({'event_type':event,'schema_checks':checks,'outcome':'prepared_without_admission','native_execution':'NOT_RUN'})
+    check(len(rows) == 9 and len({r['event_type'] for r in rows}) == 9, 'nine distinct prepared families')
+    check(sum(r['outcome'] == 'prepared_without_admission' for r in rows) == 9, 'nine prepared families')
     check(bool(fixture.get('native_obligations')), 'shared native obligations retained, NOT_RUN')
     print(json.dumps({'status':'FAIL' if failures else 'PASS','rows':rows,'failures':failures,'scope':'Static payload/identity/refusal oracles only; native NOT_RUN.'},indent=2))
     return bool(failures)

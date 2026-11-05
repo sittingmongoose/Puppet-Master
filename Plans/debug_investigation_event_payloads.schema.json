@@ -227,21 +227,23 @@
       "$id": "pm.debug_investigation.imported.schema.v1"
     },
     "instrumentation_state_changed": {
+      "$id": "pm.debug_investigation.instrumentation_state_changed.schema.v1",
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "schema_version",
         "investigation_id",
         "operation_id",
         "instrumentation_id",
         "scope_kind",
+        "reason_code",
+        "detail_ref",
+        "schema_version",
+        "previous_state",
         "state",
+        "previous_rollback_state",
         "rollback_state"
       ],
       "properties": {
-        "schema_version": {
-          "const": "1.0.0"
-        },
         "investigation_id": {
           "type": "string",
           "minLength": 1,
@@ -258,16 +260,15 @@
           "maxLength": 256
         },
         "scope_kind": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
+          "enum": [
+            "env_config_activation",
+            "ephemeral_tool_install",
+            "wrapper_launcher",
+            "temporary_source_patch",
+            "debugger_or_profiler_attach"
+          ]
         },
-        "state": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "rollback_state": {
+        "reason_code": {
           "type": "string",
           "minLength": 1,
           "maxLength": 256
@@ -276,10 +277,49 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "previous_state": {
+          "enum": [
+            "planned",
+            "active",
+            "collecting",
+            "cleanup_pending",
+            "cleanup_failed",
+            "cleaned"
+          ]
+        },
+        "state": {
+          "enum": [
+            "planned",
+            "active",
+            "collecting",
+            "cleanup_pending",
+            "cleanup_failed",
+            "cleaned"
+          ]
+        },
+        "previous_rollback_state": {
+          "enum": [
+            "not_needed",
+            "pending",
+            "succeeded",
+            "failed",
+            "superseded"
+          ]
+        },
+        "rollback_state": {
+          "enum": [
+            "not_needed",
+            "pending",
+            "succeeded",
+            "failed",
+            "superseded"
+          ]
         }
-      },
-      "$id": "pm.debug_investigation.instrumentation_state_changed.schema.v1",
-      "$comment": "HELD_FOR_JARED under CV-574: structurally closed draft only; no state/source mapping or transition semantics is claimed. No current candidate may append."
+      }
     },
     "started": {
       "type": "object",
@@ -574,6 +614,442 @@
         }
       },
       "$id": "pm.debug_investigation.verification_recorded.schema.v1"
+    },
+    "instrumentation_change_detail": {
+      "$id": "pm.debug_investigation.instrumentation_change_detail.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instrumentation_id",
+        "operation_id",
+        "target_ref",
+        "previous_owner_ref",
+        "owner_ref",
+        "proof_ref",
+        "recovery_ref",
+        "linked_work_ref",
+        "remaining_obligation_refs",
+        "whole_lane_never_needed_undoing",
+        "no_leftovers",
+        "removal_verified",
+        "retry_authorized",
+        "previous_attempt_failed",
+        "handoff_approved",
+        "durable_fix_approved",
+        "owner_accepted",
+        "handoff_pending",
+        "invasive",
+        "restore_receipt_verified",
+        "permission_verified",
+        "overlap_present",
+        "target_leftovers_present",
+        "target_leftovers_promoted",
+        "retry_count_before",
+        "retry_count_after",
+        "attempt_number",
+        "transition_kind",
+        "handoff_kind",
+        "handoff_committed"
+      ],
+      "properties": {
+        "instrumentation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "previous_owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "proof_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovery_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "linked_work_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remaining_obligation_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "whole_lane_never_needed_undoing": {
+          "type": "boolean"
+        },
+        "no_leftovers": {
+          "type": "boolean"
+        },
+        "removal_verified": {
+          "type": "boolean"
+        },
+        "retry_authorized": {
+          "type": "boolean"
+        },
+        "previous_attempt_failed": {
+          "type": "boolean"
+        },
+        "handoff_approved": {
+          "type": "boolean"
+        },
+        "durable_fix_approved": {
+          "type": "boolean"
+        },
+        "owner_accepted": {
+          "type": "boolean"
+        },
+        "handoff_pending": {
+          "type": "boolean"
+        },
+        "invasive": {
+          "type": "boolean"
+        },
+        "restore_receipt_verified": {
+          "type": "boolean"
+        },
+        "permission_verified": {
+          "type": "boolean"
+        },
+        "overlap_present": {
+          "type": "boolean"
+        },
+        "target_leftovers_present": {
+          "type": "boolean"
+        },
+        "target_leftovers_promoted": {
+          "type": "boolean"
+        },
+        "retry_count_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "retry_count_after": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "transition_kind": {
+          "enum": [
+            "installation_succeeded",
+            "collection_started",
+            "collection_paused_or_finished",
+            "ended_never_needed",
+            "leftovers_require_cleanup",
+            "inspection_never_needed",
+            "removal_succeeded",
+            "removal_failed",
+            "retry_begins",
+            "retry_outcome_succeeded",
+            "retry_outcome_failed",
+            "responsibility_handoff",
+            "receiving_owner_begins",
+            "receiving_owner_cannot_retry",
+            "replacement_never_needed"
+          ]
+        },
+        "handoff_kind": {
+          "enum": [
+            "none",
+            "replacement",
+            "durable_fix"
+          ]
+        },
+        "handoff_committed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "state_changed": {
+      "$id": "pm.debug_investigation.state_changed.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "previous_state",
+        "previous_phase",
+        "phase",
+        "state"
+      ],
+      "properties": {
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "attention_required_reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stop_reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "budget_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "blocked_reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "previous_state": {
+          "enum": [
+            "active",
+            "blocked",
+            "attention_required",
+            "verifying",
+            "failed_cleanup",
+            "resolved",
+            "failed",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "state": {
+          "enum": [
+            "active",
+            "blocked",
+            "attention_required",
+            "verifying",
+            "failed_cleanup",
+            "resolved",
+            "failed",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "previous_phase": {
+          "enum": [
+            "target_binding",
+            "baseline_capture",
+            "instrumentation",
+            "reproduction",
+            "analysis",
+            "repair",
+            "verification",
+            "cleanup"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "target_binding",
+            "baseline_capture",
+            "instrumentation",
+            "reproduction",
+            "analysis",
+            "repair",
+            "verification",
+            "cleanup"
+          ]
+        },
+        "verification_strength": {
+          "enum": [
+            "none",
+            "weak",
+            "strong"
+          ]
+        }
+      }
+    },
+    "lifecycle_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "phase",
+        "verification_qualified",
+        "cleanup_completed",
+        "documented_preservation_hold"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "active",
+            "blocked",
+            "attention_required",
+            "verifying",
+            "failed_cleanup",
+            "resolved",
+            "failed",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "target_binding",
+            "baseline_capture",
+            "instrumentation",
+            "reproduction",
+            "analysis",
+            "repair",
+            "verification",
+            "cleanup"
+          ]
+        },
+        "verification_qualified": {
+          "type": "boolean"
+        },
+        "cleanup_completed": {
+          "type": "boolean"
+        },
+        "documented_preservation_hold": {
+          "type": "boolean"
+        }
+      }
+    },
+    "instrumentation_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instrumentation_id",
+        "scope_kind",
+        "target_ref",
+        "owner_ref",
+        "state",
+        "cleanup_result",
+        "retry_count",
+        "previous_attempt_failed",
+        "handoff_pending"
+      ],
+      "properties": {
+        "instrumentation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "state": {
+          "enum": [
+            "planned",
+            "active",
+            "collecting",
+            "cleanup_pending",
+            "cleanup_failed",
+            "cleaned"
+          ]
+        },
+        "cleanup_result": {
+          "enum": [
+            "not_needed",
+            "pending",
+            "succeeded",
+            "failed",
+            "superseded"
+          ]
+        },
+        "retry_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "previous_attempt_failed": {
+          "type": "boolean"
+        },
+        "handoff_pending": {
+          "type": "boolean"
+        }
+      }
+    },
+    "cleanup_retry_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retries_used",
+        "authorized"
+      ],
+      "properties": {
+        "retries_used": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "authorized": {
+          "type": "boolean"
+        }
+      }
     }
   }
 }

@@ -1284,10 +1284,14 @@
         "schema_version": "1.0.0",
         "investigation_id": "i1",
         "operation_id": "op1",
-        "instrumentation_id": "scrubbed",
-        "scope_kind": "scrubbed",
-        "state": "scrubbed",
-        "rollback_state": "scrubbed"
+        "instrumentation_id": "probe1",
+        "scope_kind": "temporary_source_patch",
+        "previous_state": "planned",
+        "state": "active",
+        "previous_rollback_state": "not_needed",
+        "rollback_state": "pending",
+        "reason_code": "installation_succeeded",
+        "detail_ref": "detail:op1"
       },
       "project_id": "p1",
       "checks": [
@@ -1308,25 +1312,37 @@
         "debug:74730f16b0b4392297cd77d8b32112c8b28edcf4f658f7623a59eb075f389ab6",
         "evt_debug_74730f16b0b4392297cd77d8b32112c8b28edcf4f658f7623a59eb075f389ab6"
       ],
-      "mutation_field": "rollback_state",
-      "mutation_value": "different-outcome",
+      "mutation_field": "reason_code",
+      "mutation_value": "installation_completed",
       "native_oracles": [
         {
-          "case": "instrumentation_state_changed-transition-held",
-          "given": "Source field mapping and transition predicate remain unanswered under CV-574.",
-          "expected": "No positive transition claim or append until Jared resolves the exact owner question.",
+          "case": "instrumentation-full-DL429",
+          "given": "Every approved edge, every original lane and source alternative, including whole-lane never-needed proof, detach-only residue, partial installs, failure and uncertain cleanup, accepted and failed handoffs, durable-fix approval and two retries.",
+          "expected": "Exactly one synced original receipt per real state/result change with reason, before/after values, immutable referenced evidence and remaining obligations. Reprocessing returns original custody with zero effects.",
           "execution_status": "NOT_RUN"
         },
         {
-          "case": "instrumentation_state_changed-transition-negative",
-          "given": "missing restore receipt prevents invasive installation; residual cleanup cannot be reported successful",
-          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "case": "instrumentation-effects-and-target-exclusion",
+          "given": "Original recovery snapshot before every temporary change, narrowed permission, exact introduced setting values, two investigations sharing a target, and old cleanup still owed.",
+          "expected": "No mutation before original restore/permission; no overlapping changes or new code-changing work until residue is undone/resolved/promoted; automatically clean on replacement/end, detach temporary sessions, retain visible recovery.",
           "execution_status": "NOT_RUN"
         },
         {
-          "case": "instrumentation_state_changed-custody-replay-withdrawal",
+          "case": "verification_recorded-custody-replay-withdrawal",
           "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
           "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "instrumentation_state_changed-original-retention-anchor",
+          "given": "Original terminal investigation outcome, retry/recovery/read later, unresolved cleanup, a protected original, an unexpired full operational bucket, and eligible expiry at original anchor + 220752000 seconds.",
+          "expected": "Keep the original G02 Project policy clock, hold/reference/recovery/backup protections and per-Project count. Refuse overflow without evicting unexpired or protected originals; only eligible expired records compact. No replay resets anchor and no transient family cursor/result is retained.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "instrumentation-original-proof-and-obligation-continuity",
+          "given": "An apparently valid detail with forged proof refs or changed original detail bytes, and receiving/retrying/handoff work with earlier outstanding obligations.",
+          "expected": "Verify original operation/detail/proof and target/lane identity, recompute each source digest from its original, preserve every still-outstanding obligation through handoff/acceptance/retry, and reject foreign/forged proof or arbitrary digest before append. Clear obligations only after original whole-lane never-needed or removal evidence; uncertain handoff keeps old responsibility. Independently externalize oversize EventRecord and detail bodies under SP-337.",
           "execution_status": "NOT_RUN"
         }
       ],
@@ -1363,24 +1379,2245 @@
           "expected_appends": 0
         },
         {
-          "case": "round-1 scrubbed labels cannot establish a transition",
-          "patches": {},
-          "expected_refusal": "instrumentation_mapping_unresolved",
+          "case": "current writer and retry cannot select append_once",
+          "patches": {
+            "envelope.replay_policy": "append_once"
+          },
+          "expected_refusal": "writer_policy_mismatch",
           "expected_appends": 0
         },
         {
-          "case": "invented instrumentation labels",
+          "case": "current writer and retry cannot select dedupe_by_event_id",
           "patches": {
-            "payload.scope_kind": "made_up_scope",
-            "payload.state": "made_up_state",
-            "payload.rollback_state": "made_up_rollback"
+            "envelope.replay_policy": "dedupe_by_event_id"
           },
-          "expected_refusal": "instrumentation_mapping_unresolved",
+          "expected_refusal": "writer_policy_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "application edition is not admitted by this Project contract",
+          "patches": {
+            "envelope.scope_kind": "application",
+            "envelope.project_id": null,
+            "scope_partition": "app"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "encoded Project partition with trailing LF",
+          "patches": {
+            "scope_partition": "project~cDE\n"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "oversized invalid inline string cannot bypass schema",
+          "patches": {
+            "payload.operation_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "stale previous collector state",
+          "patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "installation_failed_before_changes",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          }
+        },
+        {
+          "case": "stale previous cleanup result",
+          "patches": {
+            "payload.previous_rollback_state": "superseded"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "inspection_never_needed",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "inspection_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          }
+        },
+        {
+          "case": "original source join payload.instrumentation_id",
+          "patches": {
+            "payload.instrumentation_id": "foreign"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join payload.scope_kind",
+          "patches": {
+            "payload.scope_kind": "env_config_activation"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join detail_records.detail:op1.instrumentation_id",
+          "patches": {
+            "detail_records.detail:op1.instrumentation_id": "foreign"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join detail_records.detail:op1.operation_id",
+          "patches": {
+            "detail_records.detail:op1.operation_id": "foreign"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join detail_records.detail:op1.target_ref",
+          "patches": {
+            "detail_records.detail:op1.target_ref": "foreign"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join detail_records.detail:op1.previous_owner_ref",
+          "patches": {
+            "detail_records.detail:op1.previous_owner_ref": "foreign"
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join detail_records.detail:op1.retry_count_before",
+          "patches": {
+            "detail_records.detail:op1.retry_count_before": 1,
+            "detail_records.detail:op1.retry_count_after": 1
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join detail_records.detail:op1.previous_attempt_failed",
+          "patches": {
+            "detail_records.detail:op1.previous_attempt_failed": true
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "original source join detail_records.detail:op1.handoff_pending",
+          "patches": {
+            "detail_records.detail:op1.handoff_pending": true
+          },
+          "expected_refusal": "instrumentation_source_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "missing original detail",
+          "patches": {
+            "payload.detail_ref": "detail:missing"
+          },
+          "expected_refusal": "detail_unavailable",
+          "expected_appends": 0
+        },
+        {
+          "case": "unproved whole lane",
+          "patches": {
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": false
+          },
+          "expected_refusal": "whole_lane_never_needed_proof_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "ended_never_needed",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          }
+        },
+        {
+          "case": "ended_never_needed leftovers prevent Cleaned",
+          "patches": {
+            "detail_records.detail:op1.no_leftovers": false
+          },
+          "expected_refusal": "leftovers_prevent_cleaned",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "ended_never_needed",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          }
+        },
+        {
+          "case": "ended_never_needed missing proof ref",
+          "patches": {
+            "detail_records.detail:op1.proof_ref": null
+          },
+          "expected_refusal": "proof_ref_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "ended_never_needed",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          }
+        },
+        {
+          "case": "removal_succeeded leftovers prevent Cleaned",
+          "patches": {
+            "detail_records.detail:op1.no_leftovers": false
+          },
+          "expected_refusal": "leftovers_prevent_cleaned",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "succeeded",
+            "payload.reason_code": "removal_succeeded",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "removal_succeeded",
+            "detail_records.detail:op1.removal_verified": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:removed",
+            "detail_records.detail:op1.attempt_number": 1
+          }
+        },
+        {
+          "case": "removal_succeeded missing proof ref",
+          "patches": {
+            "detail_records.detail:op1.proof_ref": null
+          },
+          "expected_refusal": "proof_ref_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "succeeded",
+            "payload.reason_code": "removal_succeeded",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "removal_succeeded",
+            "detail_records.detail:op1.removal_verified": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:removed",
+            "detail_records.detail:op1.attempt_number": 1
+          }
+        },
+        {
+          "case": "actual removal cannot be Not needed",
+          "patches": {
+            "detail_records.detail:op1.removal_verified": true
+          },
+          "expected_refusal": "actual_removal_is_not_not_needed",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "ended_never_needed",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          }
+        },
+        {
+          "case": "removal success must be verified",
+          "patches": {
+            "detail_records.detail:op1.removal_verified": false
+          },
+          "expected_refusal": "verified_removal_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "succeeded",
+            "payload.reason_code": "removal_succeeded",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "removal_succeeded",
+            "detail_records.detail:op1.removal_verified": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:removed",
+            "detail_records.detail:op1.attempt_number": 1
+          }
+        },
+        {
+          "case": "failure obligations cannot disappear",
+          "patches": {
+            "detail_records.detail:op1.remaining_obligation_refs": []
+          },
+          "expected_refusal": "remaining_obligations_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "removal_failed",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "removal_failed",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.attempt_number": 1
+          }
+        },
+        {
+          "case": "failure recovery link cannot disappear",
+          "patches": {
+            "detail_records.detail:op1.recovery_ref": null
+          },
+          "expected_refusal": "recovery_link_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "removal_failed",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "removal_failed",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.attempt_number": 1
+          }
+        },
+        {
+          "case": "handoff_approval_required",
+          "patches": {
+            "detail_records.detail:op1.handoff_approved": false
+          },
+          "expected_refusal": "handoff_approval_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          }
+        },
+        {
+          "case": "durable_fix_approval_required",
+          "patches": {
+            "detail_records.detail:op1.durable_fix_approved": false
+          },
+          "expected_refusal": "durable_fix_approval_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          }
+        },
+        {
+          "case": "linked_work_required",
+          "patches": {
+            "detail_records.detail:op1.linked_work_ref": null
+          },
+          "expected_refusal": "linked_work_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          }
+        },
+        {
+          "case": "new_responsible_owner_required",
+          "patches": {
+            "detail_records.detail:op1.owner_ref": "owner:old"
+          },
+          "expected_refusal": "new_responsible_owner_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          }
+        },
+        {
+          "case": "handoff_kind_required",
+          "patches": {
+            "detail_records.detail:op1.handoff_kind": "none"
+          },
+          "expected_refusal": "handoff_kind_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          }
+        },
+        {
+          "case": "owner changed without handoff",
+          "patches": {
+            "detail_records.detail:op1.owner_ref": "foreign"
+          },
+          "expected_refusal": "responsibility_changed_without_handoff",
+          "expected_appends": 0
+        },
+        {
+          "case": "receiving owner has not accepted",
+          "patches": {
+            "detail_records.detail:op1.owner_accepted": false
+          },
+          "expected_refusal": "receiving_owner_acceptance_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "receiving_owner_begins",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "receiving_owner_begins",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.owner_accepted": true,
+            "detail_records.detail:op1.retry_authorized": true,
+            "detail_records.detail:op1.retry_count_after": 1,
+            "detail_records.detail:op1.attempt_number": 2
+          }
+        },
+        {
+          "case": "retry requires authorization",
+          "patches": {
+            "detail_records.detail:op1.retry_authorized": false
+          },
+          "expected_refusal": "retry_authorization_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_failed",
+            "payload.previous_rollback_state": "failed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "retry_begins",
+            "instrumentation_source.state": "cleanup_failed",
+            "instrumentation_source.cleanup_result": "failed",
+            "detail_records.detail:op1.transition_kind": "retry_begins",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.retry_authorized": true,
+            "detail_records.detail:op1.retry_count_after": 1,
+            "detail_records.detail:op1.attempt_number": 2
+          }
+        },
+        {
+          "case": "retry count must increment",
+          "patches": {
+            "detail_records.detail:op1.retry_count_after": 0,
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": "retry_count_mismatch",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_failed",
+            "payload.previous_rollback_state": "failed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "retry_begins",
+            "instrumentation_source.state": "cleanup_failed",
+            "instrumentation_source.cleanup_result": "failed",
+            "detail_records.detail:op1.transition_kind": "retry_begins",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.retry_authorized": true,
+            "detail_records.detail:op1.retry_count_after": 1,
+            "detail_records.detail:op1.attempt_number": 2
+          }
+        },
+        {
+          "case": "handoff cannot reset retries",
+          "patches": {
+            "detail_records.detail:op1.retry_count_after": 1
+          },
+          "expected_refusal": "retry_count_mismatch",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          }
+        },
+        {
+          "case": "retry attempt number",
+          "patches": {
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": "attempt_number_mismatch",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_failed",
+            "payload.previous_rollback_state": "failed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "retry_begins",
+            "instrumentation_source.state": "cleanup_failed",
+            "instrumentation_source.cleanup_result": "failed",
+            "detail_records.detail:op1.transition_kind": "retry_begins",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.retry_authorized": true,
+            "detail_records.detail:op1.retry_count_after": 1,
+            "detail_records.detail:op1.attempt_number": 2
+          }
+        },
+        {
+          "case": "handoff cannot run cleanup",
+          "patches": {
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": "no_cleanup_attempt_allowed",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          }
+        },
+        {
+          "case": "cannot exhaust without failure",
+          "patches": {
+            "instrumentation_source.previous_attempt_failed": false,
+            "detail_records.detail:op1.previous_attempt_failed": false
+          },
+          "expected_refusal": "previous_failure_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "receiving_owner_cannot_retry",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "receiving_owner_cannot_retry",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.owner_accepted": true
+          }
+        },
+        {
+          "case": "authorized available retry must resume",
+          "patches": {
+            "detail_records.detail:op1.retry_authorized": true
+          },
+          "expected_refusal": "available_authorized_retry_must_resume",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "receiving_owner_cannot_retry",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "receiving_owner_cannot_retry",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.owner_accepted": true
+          }
+        },
+        {
+          "case": "restore_receipt_required",
+          "patches": {
+            "detail_records.detail:op1.restore_receipt_verified": false
+          },
+          "expected_refusal": "restore_receipt_required",
+          "expected_appends": 0
+        },
+        {
+          "case": "narrowed_permission_required",
+          "patches": {
+            "detail_records.detail:op1.permission_verified": false
+          },
+          "expected_refusal": "narrowed_permission_required",
+          "expected_appends": 0
+        },
+        {
+          "case": "overlap on same target",
+          "patches": {
+            "detail_records.detail:op1.overlap_present": true
+          },
+          "expected_refusal": "overlapping_temporary_changes",
+          "expected_appends": 0
+        },
+        {
+          "case": "target leftovers block new code changes",
+          "patches": {
+            "detail_records.detail:op1.target_leftovers_present": true
+          },
+          "expected_refusal": "target_cleanup_unresolved",
+          "expected_appends": 0
+        },
+        {
+          "case": "unchanged observation",
+          "patches": {
+            "payload.state": "planned",
+            "payload.rollback_state": "not_needed"
+          },
+          "expected_refusal": "no_op",
+          "expected_appends": 0
+        },
+        {
+          "case": "valid tokens invalid pair",
+          "patches": {
+            "payload.rollback_state": "succeeded"
+          },
+          "expected_refusal": "invalid_status_result_pair",
+          "expected_appends": 0
+        },
+        {
+          "case": "unapproved edge",
+          "patches": {
+            "payload.state": "collecting"
+          },
+          "expected_refusal": "transition_not_allowed",
+          "expected_appends": 0
+        },
+        {
+          "case": "Cleaned cannot restart",
+          "patches": {
+            "payload.previous_state": "cleaned",
+            "payload.previous_rollback_state": "succeeded",
+            "payload.state": "active",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "installation_succeeded",
+            "instrumentation_source.state": "cleaned",
+            "instrumentation_source.cleanup_result": "succeeded",
+            "detail_records.detail:op1.transition_kind": "installation_succeeded"
+          },
+          "expected_refusal": "cleaned_requires_linked_probe",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type no_leftovers 'false'",
+          "patches": {
+            "detail_records.detail:op1.no_leftovers": "false"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type no_leftovers '0'",
+          "patches": {
+            "detail_records.detail:op1.no_leftovers": "0"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type no_leftovers None",
+          "patches": {
+            "detail_records.detail:op1.no_leftovers": null
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type no_leftovers []",
+          "patches": {
+            "detail_records.detail:op1.no_leftovers": []
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type no_leftovers {}",
+          "patches": {
+            "detail_records.detail:op1.no_leftovers": {}
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type removal_verified 'false'",
+          "patches": {
+            "detail_records.detail:op1.removal_verified": "false"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type removal_verified '0'",
+          "patches": {
+            "detail_records.detail:op1.removal_verified": "0"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type removal_verified None",
+          "patches": {
+            "detail_records.detail:op1.removal_verified": null
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type removal_verified []",
+          "patches": {
+            "detail_records.detail:op1.removal_verified": []
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type removal_verified {}",
+          "patches": {
+            "detail_records.detail:op1.removal_verified": {}
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type retry_authorized 'false'",
+          "patches": {
+            "detail_records.detail:op1.retry_authorized": "false"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type retry_authorized '0'",
+          "patches": {
+            "detail_records.detail:op1.retry_authorized": "0"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type retry_authorized None",
+          "patches": {
+            "detail_records.detail:op1.retry_authorized": null
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type retry_authorized []",
+          "patches": {
+            "detail_records.detail:op1.retry_authorized": []
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type retry_authorized {}",
+          "patches": {
+            "detail_records.detail:op1.retry_authorized": {}
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type invasive 'false'",
+          "patches": {
+            "detail_records.detail:op1.invasive": "false"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type invasive '0'",
+          "patches": {
+            "detail_records.detail:op1.invasive": "0"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type invasive None",
+          "patches": {
+            "detail_records.detail:op1.invasive": null
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type invasive []",
+          "patches": {
+            "detail_records.detail:op1.invasive": []
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type invasive {}",
+          "patches": {
+            "detail_records.detail:op1.invasive": {}
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type restore_receipt_verified 'false'",
+          "patches": {
+            "detail_records.detail:op1.restore_receipt_verified": "false"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type restore_receipt_verified '0'",
+          "patches": {
+            "detail_records.detail:op1.restore_receipt_verified": "0"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type restore_receipt_verified None",
+          "patches": {
+            "detail_records.detail:op1.restore_receipt_verified": null
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type restore_receipt_verified []",
+          "patches": {
+            "detail_records.detail:op1.restore_receipt_verified": []
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type restore_receipt_verified {}",
+          "patches": {
+            "detail_records.detail:op1.restore_receipt_verified": {}
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type permission_verified 'false'",
+          "patches": {
+            "detail_records.detail:op1.permission_verified": "false"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type permission_verified '0'",
+          "patches": {
+            "detail_records.detail:op1.permission_verified": "0"
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type permission_verified None",
+          "patches": {
+            "detail_records.detail:op1.permission_verified": null
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type permission_verified []",
+          "patches": {
+            "detail_records.detail:op1.permission_verified": []
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong detail type permission_verified {}",
+          "patches": {
+            "detail_records.detail:op1.permission_verified": {}
+          },
+          "expected_refusal": "invalid_detail",
+          "expected_appends": 0
+        },
+        {
+          "case": "detail independently exceeds inline limit",
+          "patches": {
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:0:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:2:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:3:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:4:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:5:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:6:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:7:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:8:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:9:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:10:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:11:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:12:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:13:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:14:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:15:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:16:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:17:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:18:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:19:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:20:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:21:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:22:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:23:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:24:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:25:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:26:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:27:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:28:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:29:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:30:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:31:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:32:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:33:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:34:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:35:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:36:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:37:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:38:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:39:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:40:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:41:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:42:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:43:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:44:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:45:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:46:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:47:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:48:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:49:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:50:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:51:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:52:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:53:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:54:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:55:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:56:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:57:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:58:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:59:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:60:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:61:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:62:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:63:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:64:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:65:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:66:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:67:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:68:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:69:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:70:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:71:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:72:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:73:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:74:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:75:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:76:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:77:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:78:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:79:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:80:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:81:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:82:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:83:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:84:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:85:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:86:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:87:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:88:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:89:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:90:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:91:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:92:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:93:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:94:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:95:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:96:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:97:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:98:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "obligation:99:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            ]
+          },
+          "expected_refusal": "detail_payload_reference_required",
+          "expected_appends": 0
+        },
+        {
+          "case": "second handoff waits for acceptance",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true
+          },
+          "expected_refusal": "receiving_acceptance_before_second_handoff",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "work:new",
+            "detail_records.detail:op1.owner_ref": "owner:new",
+            "detail_records.detail:op1.handoff_kind": "replacement"
+          }
+        },
+        {
+          "case": "closed state",
+          "patches": {
+            "payload.state": "invented"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "closed previous_state",
+          "patches": {
+            "payload.previous_state": "invented"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "closed rollback_state",
+          "patches": {
+            "payload.rollback_state": "invented"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "closed previous_rollback_state",
+          "patches": {
+            "payload.previous_rollback_state": "invented"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.previous_attempt_failed 'false'",
+          "patches": {
+            "instrumentation_source.previous_attempt_failed": "false"
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.previous_attempt_failed '0'",
+          "patches": {
+            "instrumentation_source.previous_attempt_failed": "0"
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.previous_attempt_failed None",
+          "patches": {
+            "instrumentation_source.previous_attempt_failed": null
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.previous_attempt_failed []",
+          "patches": {
+            "instrumentation_source.previous_attempt_failed": []
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.previous_attempt_failed {}",
+          "patches": {
+            "instrumentation_source.previous_attempt_failed": {}
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.handoff_pending 'false'",
+          "patches": {
+            "instrumentation_source.handoff_pending": "false"
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.handoff_pending '0'",
+          "patches": {
+            "instrumentation_source.handoff_pending": "0"
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.handoff_pending None",
+          "patches": {
+            "instrumentation_source.handoff_pending": null
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.handoff_pending []",
+          "patches": {
+            "instrumentation_source.handoff_pending": []
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type instrumentation_source.handoff_pending {}",
+          "patches": {
+            "instrumentation_source.handoff_pending": {}
+          },
+          "expected_refusal": "invalid_instrumentation_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "retry count is unchanged outside retry",
+          "patches": {
+            "detail_records.detail:op1.retry_count_after": 1
+          },
+          "expected_refusal": "retry_count_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "uncertain handoff preserves prior responsibility",
+          "base_patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          },
+          "patches": {
+            "detail_records.detail:op1.handoff_committed": false
+          },
+          "expected_refusal": "handoff_not_committed",
+          "expected_appends": 0
+        },
+        {
+          "case": "scope taxonomy is exactly N2-133",
+          "patches": {
+            "payload.scope_kind": "invented_scope",
+            "instrumentation_source.scope_kind": "invented_scope"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "all temporary changes need a recovery snapshot",
+          "base_patches": {
+            "detail_records.detail:op1.invasive": false
+          },
+          "patches": {
+            "detail_records.detail:op1.restore_receipt_verified": false
+          },
+          "expected_refusal": "restore_receipt_required",
           "expected_appends": 0
         }
       ],
-      "outcome": "held_for_jared",
-      "hold_question": "Which exact source fields and closed value domains map to instrumentation_state_changed.scope_kind, state and rollback_state, and which previous-to-next transitions (including cleanup failure, retry and supersession) emit an event versus no event? MiscPlan names collector_state/cleanup_result, Storage names scope/state/cleanup_outcome, and the feature list names six lifecycle states without those mappings or transitions."
+      "outcome": "prepared_without_admission",
+      "instrumentation_source": {
+        "instrumentation_id": "probe1",
+        "scope_kind": "temporary_source_patch",
+        "target_ref": "target:1",
+        "state": "planned",
+        "cleanup_result": "not_needed",
+        "owner_ref": "owner:old",
+        "retry_count": 0,
+        "previous_attempt_failed": false,
+        "handoff_pending": false
+      },
+      "detail_records": {
+        "detail:op1": {
+          "instrumentation_id": "probe1",
+          "operation_id": "op1",
+          "target_ref": "target:1",
+          "previous_owner_ref": "owner:old",
+          "owner_ref": "owner:old",
+          "proof_ref": null,
+          "recovery_ref": null,
+          "linked_work_ref": null,
+          "remaining_obligation_refs": [],
+          "retry_count_before": 0,
+          "retry_count_after": 0,
+          "attempt_number": 0,
+          "transition_kind": "installation_succeeded",
+          "handoff_kind": "none",
+          "whole_lane_never_needed_undoing": false,
+          "no_leftovers": false,
+          "removal_verified": false,
+          "retry_authorized": false,
+          "previous_attempt_failed": false,
+          "handoff_approved": false,
+          "durable_fix_approved": false,
+          "owner_accepted": false,
+          "handoff_pending": false,
+          "invasive": true,
+          "restore_receipt_verified": true,
+          "permission_verified": true,
+          "overlap_present": false,
+          "target_leftovers_present": false,
+          "target_leftovers_promoted": false,
+          "handoff_committed": true
+        }
+      },
+      "family_checkpoint": "none_required",
+      "retry_cases": [
+        {
+          "case": "Storage assignment sequence_id changes without semantic conflict",
+          "patches": {
+            "envelope.sequence_id": 77
+          },
+          "expected_result": "original_receipt",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "Storage assignment observed_at_utc changes without semantic conflict",
+          "patches": {
+            "envelope.observed_at_utc": "2026-11-04T12:00:00Z"
+          },
+          "expected_result": "original_receipt",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "Storage assignment persisted_at_utc changes without semantic conflict",
+          "patches": {
+            "envelope.persisted_at_utc": "2026-11-04T12:00:01Z"
+          },
+          "expected_result": "original_receipt",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic actor_ref changes digest",
+          "patches": {
+            "envelope.actor_ref": "changed-actor_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic requested_account_ref changes digest",
+          "patches": {
+            "envelope.requested_account_ref": "changed-requested_account_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic effective_account_ref changes digest",
+          "patches": {
+            "envelope.effective_account_ref": "changed-effective_account_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic occurred_at_utc changes digest",
+          "patches": {
+            "envelope.occurred_at_utc": "2026-11-04T09:00:00Z"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic producer_sequence_id changes digest",
+          "patches": {
+            "envelope.producer_sequence_id": 1
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic correlation_id changes digest",
+          "patches": {
+            "envelope.correlation_id": "changed-correlation_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic causation_event_id changes digest",
+          "patches": {
+            "envelope.causation_event_id": "changed-causation_event_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic parent_event_id changes digest",
+          "patches": {
+            "envelope.parent_event_id": "changed-parent_event_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic payload_schema_id changes digest",
+          "patches": {
+            "envelope.payload_schema_id": "changed-payload_schema_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic payload_ref changes digest",
+          "patches": {
+            "envelope.payload_ref": "changed-payload_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic redaction_profile changes digest",
+          "patches": {
+            "envelope.redaction_profile": "redacted"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic migration changes digest",
+          "patches": {
+            "envelope.migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "migration:changed",
+              "compatibility_event_type": null
+            }
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic node_id changes digest",
+          "patches": {
+            "envelope.node_id": "changed-node_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic attempt_id changes digest",
+          "patches": {
+            "envelope.attempt_id": "changed-attempt_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic idempotency_key changes digest",
+          "patches": {
+            "envelope.idempotency_key": "changed-idempotency_key"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic scope_kind changes digest",
+          "patches": {
+            "envelope.scope_kind": "application"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic project_id changes digest",
+          "patches": {
+            "envelope.project_id": "other-project"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic thread_id changes digest",
+          "patches": {
+            "envelope.thread_id": "other-thread"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic run_id changes digest",
+          "patches": {
+            "envelope.run_id": "other-run"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        }
+      ],
+      "transition_cases": [
+        {
+          "case": "installation succeeds",
+          "patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "active",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "installation_succeeded",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "installation_succeeded"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "collection starts",
+          "patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "collecting",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "collection_started",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "collection_started"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "collection stops installed",
+          "patches": {
+            "payload.previous_state": "collecting",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "active",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "collection_paused_or_finished",
+            "instrumentation_source.state": "collecting",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "collection_paused_or_finished"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "whole lane never needed undoing from planned",
+          "patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "installation_failed_before_changes",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "leftovers start cleanup from planned",
+          "patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "partial_install_failed",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "leftovers_require_cleanup",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "whole lane never needed undoing from active",
+          "patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "collection_failed_whole_lane_had_no_changes",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "leftovers start cleanup from active",
+          "patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "work_ended_with_leftovers",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "leftovers_require_cleanup",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "whole lane never needed undoing from collecting",
+          "patches": {
+            "payload.previous_state": "collecting",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "collection_failed_whole_lane_had_no_changes",
+            "instrumentation_source.state": "collecting",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "ended_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "leftovers start cleanup from collecting",
+          "patches": {
+            "payload.previous_state": "collecting",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "work_ended_with_leftovers",
+            "instrumentation_source.state": "collecting",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "leftovers_require_cleanup",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "inspection proves never needed from ('cleanup_pending', 'pending')",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "inspection_never_needed",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "inspection_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "inspection proves never needed from ('cleanup_pending', 'superseded')",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "inspection_never_needed",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "inspection_never_needed",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "inspection proves never needed from ('cleanup_failed', 'failed')",
+          "patches": {
+            "payload.previous_state": "cleanup_failed",
+            "payload.previous_rollback_state": "failed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "inspection_never_needed",
+            "instrumentation_source.state": "cleanup_failed",
+            "instrumentation_source.cleanup_result": "failed",
+            "detail_records.detail:op1.transition_kind": "inspection_never_needed",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "removal succeeded including detach",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "succeeded",
+            "payload.reason_code": "removal_succeeded",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "removal_succeeded",
+            "detail_records.detail:op1.removal_verified": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:removed",
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "removal failed including detach",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "removal_failed",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "removal_failed",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "authorized first retry",
+          "patches": {
+            "payload.previous_state": "cleanup_failed",
+            "payload.previous_rollback_state": "failed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "retry_begins",
+            "instrumentation_source.state": "cleanup_failed",
+            "instrumentation_source.cleanup_result": "failed",
+            "detail_records.detail:op1.transition_kind": "retry_begins",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.retry_authorized": true,
+            "detail_records.detail:op1.retry_count_after": 1,
+            "detail_records.detail:op1.attempt_number": 2
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "authorized second retry",
+          "patches": {
+            "payload.previous_state": "cleanup_failed",
+            "payload.previous_rollback_state": "failed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "retry_begins",
+            "instrumentation_source.state": "cleanup_failed",
+            "instrumentation_source.cleanup_result": "failed",
+            "detail_records.detail:op1.transition_kind": "retry_begins",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "instrumentation_source.retry_count": 1,
+            "detail_records.detail:op1.retry_count_before": 1,
+            "detail_records.detail:op1.retry_authorized": true,
+            "detail_records.detail:op1.retry_count_after": 2,
+            "detail_records.detail:op1.attempt_number": 3
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "retry_outcome_succeeded",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "succeeded",
+            "payload.reason_code": "retry_outcome_succeeded",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "retry_outcome_succeeded",
+            "detail_records.detail:op1.removal_verified": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:removed",
+            "detail_records.detail:op1.attempt_number": 2,
+            "instrumentation_source.retry_count": 1,
+            "detail_records.detail:op1.retry_count_before": 1,
+            "detail_records.detail:op1.retry_count_after": 1
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "retry_outcome_failed",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "retry_outcome_failed",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "retry_outcome_failed",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "instrumentation_source.retry_count": 1,
+            "detail_records.detail:op1.retry_count_before": 1,
+            "detail_records.detail:op1.retry_count_after": 1,
+            "detail_records.detail:op1.attempt_number": 2
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement handoff from planned",
+          "patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "work:new",
+            "detail_records.detail:op1.owner_ref": "owner:new",
+            "detail_records.detail:op1.handoff_kind": "replacement"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement handoff from active",
+          "patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "work:new",
+            "detail_records.detail:op1.owner_ref": "owner:new",
+            "detail_records.detail:op1.handoff_kind": "replacement"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement handoff from collecting",
+          "patches": {
+            "payload.previous_state": "collecting",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "collecting",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "work:new",
+            "detail_records.detail:op1.owner_ref": "owner:new",
+            "detail_records.detail:op1.handoff_kind": "replacement"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement handoff from cleanup_pending",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "work:new",
+            "detail_records.detail:op1.owner_ref": "owner:new",
+            "detail_records.detail:op1.handoff_kind": "replacement"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement handoff from cleanup_failed",
+          "patches": {
+            "payload.previous_state": "cleanup_failed",
+            "payload.previous_rollback_state": "failed",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "cleanup_failed",
+            "instrumentation_source.cleanup_result": "failed",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "work:new",
+            "detail_records.detail:op1.owner_ref": "owner:new",
+            "detail_records.detail:op1.handoff_kind": "replacement"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "explicit approved durable fix handoff",
+          "patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "superseded",
+            "payload.reason_code": "responsibility_handoff",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "responsibility_handoff",
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "detail_records.detail:op1.handoff_approved": true,
+            "detail_records.detail:op1.durable_fix_approved": true,
+            "detail_records.detail:op1.linked_work_ref": "fix:approved",
+            "detail_records.detail:op1.owner_ref": "owner:fix",
+            "detail_records.detail:op1.handoff_kind": "durable_fix"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "receiving owner starts initial removal",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "receiving_owner_begins",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "receiving_owner_begins",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "detail_records.detail:op1.owner_accepted": true,
+            "detail_records.detail:op1.attempt_number": 1
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "receiving owner starts failed-attempt retry",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleanup_pending",
+            "payload.rollback_state": "pending",
+            "payload.reason_code": "receiving_owner_begins",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "receiving_owner_begins",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.owner_accepted": true,
+            "detail_records.detail:op1.retry_authorized": true,
+            "detail_records.detail:op1.retry_count_after": 1,
+            "detail_records.detail:op1.attempt_number": 2
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "receiving owner accepts but retry unauthorized",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "receiving_owner_cannot_retry",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "receiving_owner_cannot_retry",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.owner_accepted": true
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "receiving owner accepts exhausted retries",
+          "patches": {
+            "payload.previous_state": "cleanup_pending",
+            "payload.previous_rollback_state": "superseded",
+            "payload.state": "cleanup_failed",
+            "payload.rollback_state": "failed",
+            "payload.reason_code": "receiving_owner_cannot_retry",
+            "instrumentation_source.state": "cleanup_pending",
+            "instrumentation_source.cleanup_result": "superseded",
+            "detail_records.detail:op1.transition_kind": "receiving_owner_cannot_retry",
+            "instrumentation_source.handoff_pending": true,
+            "detail_records.detail:op1.handoff_pending": true,
+            "detail_records.detail:op1.remaining_obligation_refs": [
+              "obligation:connection"
+            ],
+            "detail_records.detail:op1.recovery_ref": "recovery:1",
+            "instrumentation_source.previous_attempt_failed": true,
+            "detail_records.detail:op1.previous_attempt_failed": true,
+            "detail_records.detail:op1.owner_accepted": true,
+            "detail_records.detail:op1.retry_authorized": true,
+            "instrumentation_source.retry_count": 2,
+            "detail_records.detail:op1.retry_count_before": 2,
+            "detail_records.detail:op1.retry_count_after": 2
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement no undoing from planned",
+          "patches": {
+            "payload.previous_state": "planned",
+            "payload.previous_rollback_state": "not_needed",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "new_linked_work_replaced_probe",
+            "instrumentation_source.state": "planned",
+            "instrumentation_source.cleanup_result": "not_needed",
+            "detail_records.detail:op1.transition_kind": "replacement_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane",
+            "detail_records.detail:op1.linked_work_ref": "work:new"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement no undoing from active",
+          "patches": {
+            "payload.previous_state": "active",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "new_linked_work_replaced_probe",
+            "instrumentation_source.state": "active",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "replacement_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane",
+            "detail_records.detail:op1.linked_work_ref": "work:new"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "replacement no undoing from collecting",
+          "patches": {
+            "payload.previous_state": "collecting",
+            "payload.previous_rollback_state": "pending",
+            "payload.state": "cleaned",
+            "payload.rollback_state": "not_needed",
+            "payload.reason_code": "new_linked_work_replaced_probe",
+            "instrumentation_source.state": "collecting",
+            "instrumentation_source.cleanup_result": "pending",
+            "detail_records.detail:op1.transition_kind": "replacement_never_needed",
+            "detail_records.detail:op1.whole_lane_never_needed_undoing": true,
+            "detail_records.detail:op1.no_leftovers": true,
+            "detail_records.detail:op1.proof_ref": "proof:whole-lane",
+            "detail_records.detail:op1.linked_work_ref": "work:new"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "existing N2-133 scope env_config_activation",
+          "patches": {
+            "payload.scope_kind": "env_config_activation",
+            "instrumentation_source.scope_kind": "env_config_activation"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "existing N2-133 scope ephemeral_tool_install",
+          "patches": {
+            "payload.scope_kind": "ephemeral_tool_install",
+            "instrumentation_source.scope_kind": "ephemeral_tool_install"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "existing N2-133 scope wrapper_launcher",
+          "patches": {
+            "payload.scope_kind": "wrapper_launcher",
+            "instrumentation_source.scope_kind": "wrapper_launcher"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "existing N2-133 scope temporary_source_patch",
+          "patches": {
+            "payload.scope_kind": "temporary_source_patch",
+            "instrumentation_source.scope_kind": "temporary_source_patch"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "existing N2-133 scope debugger_or_profiler_attach",
+          "patches": {
+            "payload.scope_kind": "debugger_or_profiler_attach",
+            "instrumentation_source.scope_kind": "debugger_or_profiler_attach"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "non-invasive temporary change still has recovery snapshot",
+          "patches": {
+            "detail_records.detail:op1.invasive": false
+          },
+          "expected_refusal": null
+        }
+      ],
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retry_request_cases": [
+        {
+          "case": "initial-failure first retry",
+          "retries_used": 0,
+          "authorized": true,
+          "expected_refusal": null
+        },
+        {
+          "case": "first-retry-failure second retry",
+          "retries_used": 1,
+          "authorized": true,
+          "expected_refusal": null
+        },
+        {
+          "case": "no third retry after both used",
+          "retries_used": 2,
+          "authorized": true,
+          "expected_refusal": "retry_ceiling"
+        },
+        {
+          "case": "first retry is unauthorized",
+          "retries_used": 0,
+          "authorized": false,
+          "expected_refusal": "retry_authorization_required"
+        }
+      ]
     },
     {
       "event_type": "debug.investigation.started",
@@ -2708,6 +4945,783 @@
           "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
         }
       ]
+    },
+    {
+      "event_type": "debug.investigation.state_changed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "previous_state": "verifying",
+        "previous_phase": "verification",
+        "phase": "verification",
+        "state": "failed",
+        "stop_reason_code": "investigation.verification_failed"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect",
+        "encoded_project_partition",
+        "replay_only_not_appendable"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:90ea2f522e0aa86a1ebff9cfe84029f748fbda568dd5f2d7aab131fd38c243e7",
+        "evt_debug_90ea2f522e0aa86a1ebff9cfe84029f748fbda568dd5f2d7aab131fd38c243e7"
+      ],
+      "mutation_field": "stop_reason_code",
+      "mutation_value": "investigation.no_repro_observed",
+      "native_oracles": [
+        {
+          "case": "lifecycle-DL428-six-endings",
+          "given": "Each of the six Failed stop reasons, and a cleanup failure separately.",
+          "expected": "Save Failed with the exact reason once; cleanup failure remains failed_cleanup. Missing or unrelated reasons cannot claim Failed.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "lifecycle-history-and-new-work",
+          "given": "Open Failed history, then request new live work; separately recover a nonterminal failed_cleanup investigation.",
+          "expected": "Opening produces no event, prompt injection or instrumentation. New work gets fresh linked investigation; cleanup recovery retains original identity and revalidates target/runtime/worktree.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "verification_recorded-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "state_changed-original-retention-anchor",
+          "given": "Original terminal investigation outcome, retry/recovery/read later, unresolved cleanup, a protected original, an unexpired full operational bucket, and eligible expiry at original anchor + 220752000 seconds.",
+          "expected": "Keep the original G02 Project policy clock, hold/reference/recovery/backup protections and per-Project count. Refuse overflow without evicting unexpired or protected originals; only eligible expired records compact. No replay resets anchor and no transient family cursor/result is retained.",
+          "execution_status": "NOT_RUN"
+        }
+      ],
+      "scope_partition": "project~cDE",
+      "envelope": {
+        "scope_kind": "project",
+        "project_id": "p1",
+        "thread_id": "t1",
+        "run_id": "r1",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "payload_ref": null
+      },
+      "owner_record": {
+        "project_id": "p1",
+        "investigation_id": "i1",
+        "thread_id": "t1",
+        "run_id": "r1"
+      },
+      "negative_cases": [
+        {
+          "case": "compatibility replay policy cannot append or retry",
+          "patches": {
+            "envelope.replay_policy": "projector_replay_only"
+          },
+          "expected_refusal": "replay_only_not_appendable",
+          "expected_appends": 0
+        },
+        {
+          "case": "raw project partition",
+          "patches": {
+            "scope_partition": "p1"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "current writer and retry cannot select append_once",
+          "patches": {
+            "envelope.replay_policy": "append_once"
+          },
+          "expected_refusal": "writer_policy_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "current writer and retry cannot select dedupe_by_event_id",
+          "patches": {
+            "envelope.replay_policy": "dedupe_by_event_id"
+          },
+          "expected_refusal": "writer_policy_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "application edition is not admitted by this Project contract",
+          "patches": {
+            "envelope.scope_kind": "application",
+            "envelope.project_id": null,
+            "scope_partition": "app"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "encoded Project partition with trailing LF",
+          "patches": {
+            "scope_partition": "project~cDE\n"
+          },
+          "expected_refusal": "project_scope_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "oversized invalid inline string cannot bypass schema",
+          "patches": {
+            "payload.operation_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed refuses investigation.cleanup_failed",
+          "patches": {
+            "payload.stop_reason_code": "investigation.cleanup_failed"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed refuses investigation.cancelled_by_user",
+          "patches": {
+            "payload.stop_reason_code": "investigation.cancelled_by_user"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed refuses investigation.resolved_verified",
+          "patches": {
+            "payload.stop_reason_code": "investigation.resolved_verified"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed refuses made_up",
+          "patches": {
+            "payload.stop_reason_code": "made_up"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed reason cannot label resolved verification_failed",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.verification_failed"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed reason cannot label resolved no_repro_observed",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.no_repro_observed"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed reason cannot label resolved budget_exhausted",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.budget_exhausted"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed reason cannot label resolved runtime_unavailable",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.runtime_unavailable"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed reason cannot label resolved target_unreachable",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.target_unreachable"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed reason cannot label resolved adapter_unavailable",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.adapter_unavailable"
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "stale original state",
+          "patches": {
+            "payload.previous_state": "active"
+          },
+          "expected_refusal": "stale_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "stale original phase",
+          "patches": {
+            "payload.previous_phase": "analysis"
+          },
+          "expected_refusal": "stale_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "terminal cannot resume",
+          "patches": {
+            "payload.previous_state": "failed",
+            "lifecycle_source.state": "failed",
+            "payload.state": "active",
+            "payload.stop_reason_code": "investigation.verification_failed"
+          },
+          "expected_refusal": "terminal_requires_linked_investigation",
+          "expected_appends": 0
+        },
+        {
+          "case": "unchanged lifecycle tuple",
+          "patches": {
+            "payload": {
+              "schema_version": "1.0.0",
+              "investigation_id": "i1",
+              "operation_id": "op1",
+              "previous_state": "verifying",
+              "previous_phase": "verification",
+              "phase": "verification",
+              "state": "verifying"
+            }
+          },
+          "expected_refusal": "no_op",
+          "expected_appends": 0
+        },
+        {
+          "case": "no original verification qualification",
+          "patches": {
+            "lifecycle_source.verification_qualified": false
+          },
+          "expected_refusal": "verification_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.resolved_verified"
+          }
+        },
+        {
+          "case": "cleanup still owed",
+          "patches": {
+            "lifecycle_source.cleanup_completed": false
+          },
+          "expected_refusal": "cleanup_required",
+          "expected_appends": 0,
+          "base_patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.resolved_verified"
+          }
+        },
+        {
+          "case": "attention missing reason",
+          "patches": {
+            "payload.state": "attention_required",
+            "payload.stop_reason_code": "investigation.attention_required"
+          },
+          "expected_refusal": "attention_reason_required",
+          "expected_appends": 0
+        },
+        {
+          "case": "blocked missing reason",
+          "patches": {
+            "payload.state": "blocked",
+            "payload.stop_reason_code": "investigation.blocked"
+          },
+          "expected_refusal": "blocked_reason_required",
+          "expected_appends": 0
+        },
+        {
+          "case": "Failed requires reason",
+          "patches": {
+            "payload": {
+              "schema_version": "1.0.0",
+              "investigation_id": "i1",
+              "operation_id": "op1",
+              "previous_state": "verifying",
+              "previous_phase": "verification",
+              "phase": "verification",
+              "state": "failed"
+            }
+          },
+          "expected_refusal": "state_reason_mismatch",
+          "expected_appends": 0
+        },
+        {
+          "case": "unknown state",
+          "patches": {
+            "payload.state": "invented"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "unknown phase",
+          "patches": {
+            "payload.phase": "invented"
+          },
+          "expected_refusal": "invalid_payload",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.verification_qualified 'false'",
+          "patches": {
+            "lifecycle_source.verification_qualified": "false"
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.verification_qualified '0'",
+          "patches": {
+            "lifecycle_source.verification_qualified": "0"
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.verification_qualified None",
+          "patches": {
+            "lifecycle_source.verification_qualified": null
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.verification_qualified []",
+          "patches": {
+            "lifecycle_source.verification_qualified": []
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.verification_qualified {}",
+          "patches": {
+            "lifecycle_source.verification_qualified": {}
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.cleanup_completed 'false'",
+          "patches": {
+            "lifecycle_source.cleanup_completed": "false"
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.cleanup_completed '0'",
+          "patches": {
+            "lifecycle_source.cleanup_completed": "0"
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.cleanup_completed None",
+          "patches": {
+            "lifecycle_source.cleanup_completed": null
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.cleanup_completed []",
+          "patches": {
+            "lifecycle_source.cleanup_completed": []
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.cleanup_completed {}",
+          "patches": {
+            "lifecycle_source.cleanup_completed": {}
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.documented_preservation_hold 'false'",
+          "patches": {
+            "lifecycle_source.documented_preservation_hold": "false"
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.documented_preservation_hold '0'",
+          "patches": {
+            "lifecycle_source.documented_preservation_hold": "0"
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.documented_preservation_hold None",
+          "patches": {
+            "lifecycle_source.documented_preservation_hold": null
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.documented_preservation_hold []",
+          "patches": {
+            "lifecycle_source.documented_preservation_hold": []
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        },
+        {
+          "case": "wrong original type lifecycle_source.documented_preservation_hold {}",
+          "patches": {
+            "lifecycle_source.documented_preservation_hold": {}
+          },
+          "expected_refusal": "invalid_lifecycle_source",
+          "expected_appends": 0
+        }
+      ],
+      "family_checkpoint": "none_required",
+      "retry_cases": [
+        {
+          "case": "Storage assignment sequence_id changes without semantic conflict",
+          "patches": {
+            "envelope.sequence_id": 77
+          },
+          "expected_result": "original_receipt",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "Storage assignment observed_at_utc changes without semantic conflict",
+          "patches": {
+            "envelope.observed_at_utc": "2026-11-04T12:00:00Z"
+          },
+          "expected_result": "original_receipt",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "Storage assignment persisted_at_utc changes without semantic conflict",
+          "patches": {
+            "envelope.persisted_at_utc": "2026-11-04T12:00:01Z"
+          },
+          "expected_result": "original_receipt",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic actor_ref changes digest",
+          "patches": {
+            "envelope.actor_ref": "changed-actor_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic requested_account_ref changes digest",
+          "patches": {
+            "envelope.requested_account_ref": "changed-requested_account_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic effective_account_ref changes digest",
+          "patches": {
+            "envelope.effective_account_ref": "changed-effective_account_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic occurred_at_utc changes digest",
+          "patches": {
+            "envelope.occurred_at_utc": "2026-11-04T09:00:00Z"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic producer_sequence_id changes digest",
+          "patches": {
+            "envelope.producer_sequence_id": 1
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic correlation_id changes digest",
+          "patches": {
+            "envelope.correlation_id": "changed-correlation_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic causation_event_id changes digest",
+          "patches": {
+            "envelope.causation_event_id": "changed-causation_event_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic parent_event_id changes digest",
+          "patches": {
+            "envelope.parent_event_id": "changed-parent_event_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic payload_schema_id changes digest",
+          "patches": {
+            "envelope.payload_schema_id": "changed-payload_schema_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic payload_ref changes digest",
+          "patches": {
+            "envelope.payload_ref": "changed-payload_ref"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic redaction_profile changes digest",
+          "patches": {
+            "envelope.redaction_profile": "redacted"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic migration changes digest",
+          "patches": {
+            "envelope.migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": "migration:changed",
+              "compatibility_event_type": null
+            }
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic node_id changes digest",
+          "patches": {
+            "envelope.node_id": "changed-node_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic attempt_id changes digest",
+          "patches": {
+            "envelope.attempt_id": "changed-attempt_id"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic idempotency_key changes digest",
+          "patches": {
+            "envelope.idempotency_key": "changed-idempotency_key"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic scope_kind changes digest",
+          "patches": {
+            "envelope.scope_kind": "application"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic project_id changes digest",
+          "patches": {
+            "envelope.project_id": "other-project"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic thread_id changes digest",
+          "patches": {
+            "envelope.thread_id": "other-thread"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        },
+        {
+          "case": "caller semantic run_id changes digest",
+          "patches": {
+            "envelope.run_id": "other-run"
+          },
+          "expected_result": "semantic_digest_changed",
+          "source_ref": "Plans/Contracts_V0.md#EventRecord producer_semantic_digest"
+        }
+      ],
+      "lifecycle_source": {
+        "state": "verifying",
+        "phase": "verification",
+        "verification_qualified": true,
+        "cleanup_completed": true,
+        "documented_preservation_hold": false
+      },
+      "transition_cases": [
+        {
+          "case": "Failed verification_failed",
+          "patches": {
+            "payload.stop_reason_code": "investigation.verification_failed"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "Failed no_repro_observed",
+          "patches": {
+            "payload.stop_reason_code": "investigation.no_repro_observed"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "Failed budget_exhausted",
+          "patches": {
+            "payload.stop_reason_code": "investigation.budget_exhausted"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "Failed runtime_unavailable",
+          "patches": {
+            "payload.stop_reason_code": "investigation.runtime_unavailable"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "Failed target_unreachable",
+          "patches": {
+            "payload.stop_reason_code": "investigation.target_unreachable"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "Failed adapter_unavailable",
+          "patches": {
+            "payload.stop_reason_code": "investigation.adapter_unavailable"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "failed_cleanup cleanup_failed",
+          "patches": {
+            "payload.state": "failed_cleanup",
+            "payload.stop_reason_code": "investigation.cleanup_failed"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "resolved resolved_verified",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.resolved_verified"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "resolved analysis_only_completed",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.analysis_only_completed"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "attention_required attention_required",
+          "patches": {
+            "payload.state": "attention_required",
+            "payload.stop_reason_code": "investigation.attention_required",
+            "payload.attention_required_reason_code": "manual_repro_required"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "blocked blocked",
+          "patches": {
+            "payload.state": "blocked",
+            "payload.stop_reason_code": "investigation.blocked",
+            "payload.blocked_reason_code": "approval_required"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "cancelled cancelled_by_user",
+          "patches": {
+            "payload.state": "cancelled",
+            "payload.stop_reason_code": "investigation.cancelled_by_user"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "superseded superseded",
+          "patches": {
+            "payload.state": "superseded",
+            "payload.stop_reason_code": "investigation.superseded"
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "phase only actual change",
+          "patches": {
+            "payload": {
+              "schema_version": "1.0.0",
+              "investigation_id": "i1",
+              "operation_id": "op1",
+              "previous_state": "verifying",
+              "previous_phase": "verification",
+              "phase": "cleanup",
+              "state": "verifying"
+            }
+          },
+          "expected_refusal": null
+        },
+        {
+          "case": "documented preservation hold",
+          "patches": {
+            "payload.state": "resolved",
+            "payload.stop_reason_code": "investigation.resolved_verified",
+            "lifecycle_source.cleanup_completed": false,
+            "lifecycle_source.documented_preservation_hold": true
+          },
+          "expected_refusal": null
+        }
+      ],
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0"
     }
   ],
   "native_obligations": [

@@ -2057,37 +2057,73 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.instrumentation_state_changed@1.0.0,
-  drafted without admission; HELD_FOR_JARED and not prepared. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners.
-  Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/instrumentation_state_changed;
+  prepared without admission. DL-429 resolves the former hold. CV-123/124 and section 3.5 remain the minimum
+  semantic and ref-only owners. Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/instrumentation_state_changed.
   operation_id is the immutable original owner operation identity, never allocated on retry. This is the
-  preserved Project edition: EventRecord.project_id is required and equals the actual investigation''s
-  project; started.payload.project_id repeats it. Optional run/thread envelope joins, when present in
-  either owner record or payload, must match the original investigation. No empty Project, ambient focus
-  fallback or invented app Project is permitted. CV-365/366 and SP-349 retain the distinct application
-  edition; this contract does not claim application admission.
+  preserved Project edition: EventRecord.project_id equals the actual investigation Project; optional
+  run/thread joins equal the original owner. No ambient focus or invented Project is permitted; CV-365/366
+  and SP-349 retain the separately unadmitted application edition.
 
 
-  HELD_FOR_JARED: this family has no authorized transition mapping and is not prepared. The structural
-  schema and conditional technical bindings below preserve draft work only; neither a scrubbed placeholder
-  nor equality with an unspecified manifest can establish a positive event. Current candidates are refused
-  as instrumentation_mapping_unresolved with zero append, even after hypothetical admission and retention
-  resolution. MiscPlan M-079 requires collector lifecycle transitions but does not declare them; its field
-  addendum names collector_state and cleanup_result. The Storage debug investigation record names manifest scope, state and
-  cleanup_outcome. feature-list section 6A names planned, active, collecting, cleanup_pending, cleaned and
-  cleanup_failed, but supplies no source-to-event mapping, rollback_state domain or transition predicates.
-  The Runtime Artifacts streaming/incremental contract names lifecycle/cleanup evidence without closing these fields. No source
-  selects a mapping among them. Exact Jared question: Which exact source fields and closed value domains
-  map to instrumentation_state_changed.scope_kind, state and rollback_state, and which previous-to-next
-  transitions (including cleanup failure, retry and supersession) emit an event versus no event?
+  Newly authored source binding: the instrumentation coordinator in MiscPlan M-079 owns the original instrumentation_manifest
+  item. scope_kind equals that item''s declared scope under newtools N2-133, exactly env_config_activation,
+  ephemeral_tool_install, wrapper_launcher, temporary_source_patch or debugger_or_profiler_attach, never
+  EventRecord.scope_kind; state equals collector_state and manifest.state; rollback_state equals cleanup_result
+  and manifest.cleanup_outcome. Before values are previous_state and previous_rollback_state from that
+  same original lane. The six state tokens are planned, active, collecting, cleanup_pending, cleanup_failed,
+  cleaned; the five result tokens are not_needed, pending, succeeded, failed, superseded. detail_ref is
+  required and resolves the original operation''s closed instrumentation_change_detail schema in the same
+  companion. It records reason, target and lane, before/after responsible owners, linked work, remaining
+  obligations, recovery and proof refs, attempt number and unchanged or incremented retry count. Detail
+  and evidence originals remain in existing instrumentation lineage custody, not a new stored-value family.
+  Their bodies are independently subject to SP-337''s 16 KiB inline rule, not merely the EventRecord body.
+  Verify source identity, scope, permission, original reference custody and all joined fields before append;
+  do not trust a caller''s manifest, proof flag or detail hash. Static fixture projections are not native
+  custody evidence.
 
 
-  Conditional producer is the investigation instrumentation coordinator in the existing MiscPlan cleanup
-  lane for this instrumentation_id; the unresolved mapping fences it before append. The existing cleanup
-  obligations remain: invasive installation requires the original restore-point
-  receipt and narrowed permission before mutation; collect/remove follow the installed lane identity;
-  unresolved residue stays visible and failed cleanup cannot publish success; env/config cleanup restores
-  exactly the introduced value. Replay never installs, collects, removes or rolls back anything. None
-  of these obligations answers the held transition question or the separate CV-578 lifecycle question.
+  DL-429 is the complete transition authority. Creation is planned/not_needed and emits no change event.
+  installation_succeeded: planned/not_needed -> active/pending. collection_started: active/pending ->
+  collecting/pending. collection_paused_or_finished: collecting/pending -> active/pending. ended_never_needed:
+  planned/not_needed, active/pending or collecting/pending -> cleaned/not_needed, only with whole-lane
+  proof that nothing ever required undoing and no change, process or attachment remains. leftovers_require_cleanup:
+  any of those three -> cleanup_pending/pending, with exact known or possible obligations and recovery
+  link; automatically attempt cleanup. inspection_never_needed: cleanup_pending/pending, cleanup_pending/superseded
+  or cleanup_failed/failed -> cleaned/not_needed only with that same never-needed proof; preserve prior
+  uncertainty/failure and never relabel actual removal. removal_succeeded: cleanup_pending/pending ->
+  cleaned/succeeded, with verified undoing and no remaining temporary resources, including debugger/profiler
+  detach. removal_failed: cleanup_pending/pending -> cleanup_failed/failed, with visible files, settings,
+  processes or connections and recovery link even when disk files are clean. retry_begins: cleanup_failed/failed
+  -> cleanup_pending/pending only when authorized, incrementing retries by one; at most two retries after
+  initial attempt. retry_outcome_succeeded or retry_outcome_failed uses the same success or failure edge
+  and proof as removal. responsibility_handoff: planned/not_needed, active/pending, collecting/pending,
+  cleanup_pending/pending or cleanup_failed/failed -> cleanup_pending/superseded, preserving retries and
+  exact obligations, recording old/new responsible owners and linked work. Replacement triggers automatic
+  cleanup; durable-fix promotion requires the existing explicit approval. Handoff proves no removal. receiving_owner_begins:
+  cleanup_pending/superseded -> cleanup_pending/pending after receiving-owner acceptance, preserving retry
+  count unless resuming after a failed attempt, which requires authorization and increments under the
+  same ceiling. receiving_owner_cannot_retry: cleanup_pending/superseded -> cleanup_failed/failed after
+  acceptance with a previous failed attempt and either no retry authorization or two retries used; run
+  no attempt. replacement_never_needed: planned/not_needed, active/pending or collecting/pending -> cleaned/not_needed
+  with replacement reason, linked work and whole-lane never-needed/no-leftovers proof. These fifteen named
+  technical cases distinguish success/failure outcomes within the card''s fourteen rows; they authorize
+  no other edge or pair.
+
+
+  The only pairs are planned/not_needed, active/pending, collecting/pending, cleanup_pending/pending,
+  cleanup_pending/superseded, cleanup_failed/failed, cleaned/not_needed and cleaned/succeeded. Equal before/after
+  emits no event. Re-read, replay, repeated result and repeated handoff add nothing. A second handoff
+  waits for receiving-owner acceptance; failed or uncertain handoff keeps old responsibility and status.
+  Failed cleanup without authorized available retry stays failed with visible residue. Cleaned never restarts:
+  a later installation gets a new linked probe. No new code-changing work on that target until residue
+  is resolved, undone or explicitly promoted; two investigations may not add overlapping temporary changes.
+  Every temporary installation or change requires its original recovery snapshot/restore receipt before
+  changes and narrowed permission (DL-429); labeling a temporary change non-invasive never removes that
+  prerequisite. Exact temporary setting restoration and secret scrubbing remain mandatory. Pending during
+  active/collecting means later removal is owed, not that removal is running. A preserved change or accepted
+  follow-up is not cleaned. Historical reads apply original write-time rules and do not consult live transition
+  state; forged or withdrawn originals still refuse. Readers never install, collect, remove, detach or
+  hand off responsibility on replay.
 
 
   Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only
@@ -2140,11 +2176,17 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   inaccessible refs yield unavailable/omitted evidence, never raw fallback. Bounded summary strings are
   scrubbed before persistence and preserve omission/redaction state in their original referenced owner
   record; no raw logs, binary bytes, credentials, cookies or secrets may enter the payload. This contract
-  changes no evidence deletion right or lifetime. retention_policy_ref = PENDING_RETENTION_DECISION for
-  this history; candidate classes are Case L-3 operational history, authority history, or thread-lifetime
-  Chat content where a thread exists. No choice, TTL, count eviction or orphan-thread rule is authorized
-  here. It owns no additional stored value; the pre-existing deferred debug_investigation_record.v1 inventory
-  is not materialized by these transient readers.
+  changes no evidence deletion right or lifetime. For this exact Project family, retention_policy_ref
+  = RP-OPERATIONAL-2555D@1.0.0, explicitly assigned to all nine G02 names in current Storage Case L-3.
+  The immutable anchor is the original recorded terminal transition finishing this investigation operation,
+  never re-reading, retry or recovery. Keep 2,555 days / 220,752,000 seconds, at most 2,000,000 records
+  in the existing per-Project operational policy bucket, fail closed on overflow, and compact only eligible
+  expired records under the original hold/reference/recovery/backup protections; unfinished cleanup remains
+  protected. No family result/cursor is persisted, so there is no additional derived retention. DL-429
+  selects no additional lifetime. The distinct application bucket in DL-416 remains outside this preserved
+  Project writer edition and requires its own scope reconciliation, never a guessed Project. It owns no
+  additional stored value; the pre-existing deferred debug_investigation_record.v1 inventory is not materialized
+  by these transient readers.
 
 
   Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions
@@ -2185,10 +2227,12 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/Contracts_V0.md#CV-123
 - reports/event-authority-20261104/DDBG.md
+- Plans/Decision_Log.md#DL-429
+- Plans/newtools.md#N2-133
 preserved_exact_tokens:
 - CV-574
 negative_constraints:
-- No admission, retention decision, native readiness or governance seal.
+- No admission, new retention decision, native readiness or governance seal.
 ```
 
 ### CV-575 - debug.investigation.started
@@ -2584,19 +2628,129 @@ negative_constraints:
 - No admission, retention decision, native readiness or governance seal.
 ```
 
-### CV-578 - state_changed owner question
+### CV-578 - debug.investigation.state_changed
 
 ```yaml
 plan_unit_id: CV-578
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design
-  section 11.0A declares a closed lifecycle omitting failed, but its Deterministic final-state mapping
-  requires failed for six stop reasons. Which lifecycle governs: is failed admitted, or do those outcomes
-  map to an already listed state (and which)? No answer or state mapping is supplied by this unit. Retention
-  remains PENDING_RETENTION_DECISION independently. CV-123 payload minima and all existing owner text
-  are preserved.'
+canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.state_changed@1.0.0,
+  prepared without admission. DL-428 resolves the former owner conflict; Assistant Chat ACD-078/079/082
+  owns the lifecycle. CV-123/124 and section 3.5 remain minimum payload owners. Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/state_changed.
+  This preserved Project edition joins the actual investigation Project, investigation_id and optional
+  run/thread across owner, envelope and payload; no invented Project or ambient selection. CV-365/366
+  and SP-349 retain the distinct application edition without admission here.
+
+
+  The investigation lifecycle coordinator emits only after it accepts an actual change to the original
+  phase/state tuple under investigation/thread exclusion. previous_state and previous_phase compare with
+  that original owner record; phase and state are the accepted successor, never inferred from a sibling
+  verification or cleanup event. The eight phases are target_binding, baseline_capture, instrumentation,
+  reproduction, analysis, repair, verification and cleanup. The nine states are active, blocked, attention_required,
+  verifying, failed_cleanup, resolved, failed, cancelled and superseded. A phase-only change is recorded;
+  an identical tuple is a zero-append no-op. Creation belongs to started, not this change event. This
+  event does not independently authorize a workflow transition, mutate a target or bypass revalidation.
+
+
+  Exactly six stop_reason_code values pair with failed: investigation.verification_failed, investigation.no_repro_observed,
+  investigation.budget_exhausted, investigation.runtime_unavailable, investigation.target_unreachable
+  and investigation.adapter_unavailable. Save the specific reason; every other reason with failed is refused,
+  and those six cannot label another state. failed_cleanup remains separate with investigation.cleanup_failed.
+  resolved uses investigation.resolved_verified or investigation.analysis_only_completed; attention_required
+  uses investigation.attention_required plus attention_required_reason_code; blocked uses investigation.blocked
+  plus blocked_reason_code; cancelled uses investigation.cancelled_by_user; superseded uses investigation.superseded.
+  active/verifying carry no stop reason. budget_kind is present on a budget stop when supplied by its
+  original budget owner, never fabricated; verification_strength uses none/weak/strong from its existing
+  owner. An attention reason uses Chat''s closed Debug attention taxonomy; blocked reasons retain their
+  shared owner. Reject stale before values, missing/mismatched reason, invented state/phase, terminal
+  in-place restart and a resolved claim without original verification/cleanup qualification. Original
+  verification may be analysis-only; an explicit documented preservation hold remains lawful under Chat
+  11.0A and does not call a probe Cleaned.
+
+
+  failed, resolved, cancelled and superseded are terminal historical views. Opening later creates no event
+  or live work; new live work uses a fresh investigation linked by supersedes_investigation_id under the
+  existing reopening rule. failed_cleanup remains resumable cleanup recovery and blocks new code-changing
+  debugging on the same target until residue is resolved, undone or explicitly promoted. Reopen revalidates
+  target/runtime/worktree identity, never silently rebinds. Historical readers verify retained records
+  by original admission, original recipe and receipt without applying current live state, permission-to-mutate
+  or current writer replay policy to the original; forged, foreign or withdrawn originals still refuse.
+  Historical reading and projector replay never resume automation, attach a target or inject prompts.
+
+
+  Current writer/retry policy is dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only
+  and refuses normal append as replay_only_not_appendable. EventRecord inline bodies are at most 16 KiB;
+  larger bodies use SP-337 BLAKE3 payload references with byte size and media type, durable before the
+  referencing receipt. No inline base64 body is admitted.
+
+
+  Producer binding: owner.debug.investigation.state_changed@1.0.0 is the exact emitting handler above.
+  Under the actual investigation owner exclusion it freezes the semantic EventRecord, commits referenced
+  bodies first, checks the exact-family admission and selected version, then appends through Storage''s
+  normal SeglogFrameV2 path. It explicitly adopts SP-286/CV-339 storage.first_append_receipt.resolve.v2,
+  including DL-270''s SP-347 full-value v2 custody. Public success and any dependent work wait for that
+  original synced first AppendReceipt. Uncertain append is resolved from original custody before retry;
+  unresolved custody fences progress. This draft permits no append while the registry lacks this exact
+  family or retention remains PENDING_RETENTION_DECISION.
+
+
+  Identity: idempotency_key is "debug:" + lowercase SHA-256 of RFC 8785 canonical JSON ["debug.investigation.state_changed",
+  project_id, investigation_id, operation_id]. event_id is "evt_debug_" + that same digest. The original
+  operation allocates operation_id once from fresh entropy before submission, preserving it through recovery;
+  a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
+  immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
+  receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
+  are Storage assignments, never part of producer identity.
+
+
+  Consumer binding: reader.debug.investigation.state_changed@1.0.0 is the direct transient history reader
+  for this exact family, used by consumer.debug.investigation.state_changed.context@1.0.0 (Assistant Investigation
+  Context) and consumer.debug.investigation.state_changed.artifacts@1.0.0 (Runtime Artifacts grouping).
+  It selects the exact project/investigation and this event type from the generic EventRecord index, then
+  verifies the referenced canonical frame. It explicitly adopts SP-278: authentic CURRENT/manifest source
+  selection, generation anchor, survivor inventory, durable watermark, excluded ranges, complete examined
+  bounds and exact filter completeness are required. The generic projector remains projector.storage.event_record_index@1.0.0
+  with its SP-278 key/value schema and atomic prior-frontier CAS, never a family-specific writer. Family
+  checkpoint is none_required: this reader persists neither cursor nor result, reads the complete retained
+  range on every open, and discards its result when source generation/frontier changes. It never advances
+  a durable family cursor. The nine-field durable token is the SP-278 read_token definition minus redb_snapshot_id
+  (DL-076); a live snapshot id is ephemeral only. No stored read token or snapshot is introduced. Stale,
+  gap or incomplete source proof returns unavailable, never a successful empty history. Rebuild repeats
+  the full verified scan; no reader performs owner commands, evidence collection, prompt injection or
+  external effects on replay. Current prompt/mutation eligibility is rechecked with the owning investigation,
+  not inferred from a historical event.
+
+
+  Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt
+  backup and verified restore. Runtime Artifacts keeps original evidence/manifests under its own policies
+  and source identity; the investigation owner keeps binding/item/instrumentation originals. Check scope,
+  current read permission, deletion/tombstone and revocation at each dereference and export; missing or
+  inaccessible refs yield unavailable/omitted evidence, never raw fallback. Bounded summary strings are
+  scrubbed before persistence and preserve omission/redaction state in their original referenced owner
+  record; no raw logs, binary bytes, credentials, cookies or secrets may enter the payload. This contract
+  changes no evidence deletion right or lifetime. For this exact Project family, retention_policy_ref
+  = RP-OPERATIONAL-2555D@1.0.0, explicitly assigned to all nine G02 names in current Storage Case L-3.
+  The immutable anchor is the original recorded terminal transition finishing this investigation operation,
+  never re-reading, retry or recovery. Keep 2,555 days / 220,752,000 seconds, at most 2,000,000 records
+  in the existing per-Project operational policy bucket, fail closed on overflow, and compact only eligible
+  expired records under the original hold/reference/recovery/backup protections; unfinished cleanup remains
+  protected. No family result/cursor is persisted, so there is no additional derived retention. DL-429
+  selects no additional lifetime. The distinct application bucket in DL-416 remains outside this preserved
+  Project writer edition and requires its own scope reconciliation, never a guessed Project. It owns no
+  additional stored value; the pre-existing deferred debug_investigation_record.v1 inventory is not materialized
+  by these transient readers.
+
+
+  Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions
+  are quarantined before append/projection, never coerced. An older attention_reason_code is historical
+  migration input only and grants no current write. Withdrawal first fences this exact producer, drains/resolves
+  in-flight original receipt custody under the Storage writer gate, records the cutoff frontier in the
+  existing maintenance evidence, disables both named consumers, discards their transient results and rebuilds
+  from the verified retained source only after explicit reader reauthorization. It does not erase canonical
+  history or sibling records. Positive/negative oracles are the state_changed cases in Plans/debug_investigation_event_fixtures.json
+  and scripts/pm-debug-investigation-events.py; native append/crash/CAS/ref-permission/withdrawal obligations
+  remain NOT_RUN. Other investigation families supply no admission or depth proof for this one.'
 gui_related: false
 gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
   its surface.
@@ -2614,6 +2768,10 @@ reasoning_tier: high
 context_scope: event_authority_debug_20261104
 implementation_surfaces:
 - Plans/Contracts_V0.md
+- Plans/debug_investigation_event_payloads.schema.json
+- Plans/debug_investigation_event_fixtures.json
+- scripts/pm-debug-investigation-events.py
+- scripts/pm_debug_investigation_transitions.py
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -2622,10 +2780,11 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - Plans/Contracts_V0.md#CV-123
 - reports/event-authority-20261104/DDBG.md
+- Plans/Decision_Log.md#DL-428
 preserved_exact_tokens:
 - CV-578
 negative_constraints:
-- No admission, retention decision, native readiness or governance seal.
+- No admission, new retention decision, native readiness or governance seal.
 ```
 
 ---

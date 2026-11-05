@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = 'Plans/debug_investigation_event_fixtures.json'
 CHECKER = 'scripts/pm-debug-investigation-events.py'
 INPUTS = (FIXTURE, CHECKER, 'Plans/debug_investigation_event_payloads.schema.json',
-          'Plans/event_family_registry.json')
+          'Plans/event_family_registry.json', 'scripts/pm_debug_investigation_transitions.py')
 
 
 def patch(case, patches):
@@ -144,6 +144,46 @@ def main():
                     run('B1 reject old universal Crew restriction', fixture, event, reject=True)
                 finally:
                     schema_path.write_bytes(schema_bytes)
+        # New decisions retain independently executable fixture negatives. A
+        # promoted bad positive must fail the whole checker for its own family.
+        for index, original in enumerate(fixture['cases']):
+            if not original.get('transition_cases'):
+                continue
+            event = original['event_type']
+            data = copy.deepcopy(fixture)
+            data['cases'][index]['retention_policy_ref'] = 'invented-policy'
+            run('reject wrong G02 Project policy', data, event, reject=True)
+            # The ordinary checker already executes every negative and proves
+            # its starting candidate is valid. Promote the boundaries most
+            # likely to regress; repeating every wrong-type spelling here
+            # would rerun the same complete suite hundreds of times.
+            promoted = {'stale previous collector state', 'stale previous cleanup result',
+                        'retry count must increment', 'scope taxonomy is exactly N2-133',
+                        'uncertain handoff preserves prior responsibility',
+                        'all temporary changes need a recovery snapshot',
+                        'unproved whole lane', 'detail independently exceeds inline limit',
+                        'second handoff waits for acceptance', 'Cleaned cannot restart',
+                        'Failed requires reason', 'terminal cannot resume',
+                        'cleanup still owed', 'no original verification qualification'}
+            for negative in original['negative_cases']:
+                if negative['case'] not in promoted:
+                    continue
+                data = copy.deepcopy(fixture)
+                patch(data['cases'][index], negative.get('base_patches', {}))
+                patch(data['cases'][index], negative['patches'])
+                run('decision negative: ' + negative['case'], data, event, reject=True)
+        # A dangling reference in an unvisited branch must produce explicit
+        # FAIL, rather than a success exit or an unrelated schema exception.
+        schema_path = scratch / INPUTS[2]
+        schema_bytes = schema_path.read_bytes()
+        schema = json.loads(schema_bytes)
+        schema['$defs']['unvisited'] = {'$ref': '#/$defs/no_such_definition'}
+        try:
+            schema_path.write_text(json.dumps(schema))
+            run('C9 unresolved reference in unvisited definition', fixture,
+                'unresolved_schema_reference', reject=True)
+        finally:
+            schema_path.write_bytes(schema_bytes)
         # Restore and verify once after all deliberately corrupted copies.
         run('restored baseline', fixture)
     print(json.dumps({'status': 'FAIL' if failures else 'PASS', 'probes': len(rows),

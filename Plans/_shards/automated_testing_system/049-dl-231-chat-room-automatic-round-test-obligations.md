@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7236
+Source lines: L6713-L7305
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `6b0e47287e80cae7d987b0a6eda31791e987046c0a447c8cc12bb639e451ec6d`
 
 ---
 
@@ -532,3 +532,72 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-285 - Debug family independent event oracles
+
+```yaml
+plan_unit_id: ATS-285
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Nine prepared exact families in Plans/debug_investigation_event_fixtures.json have independent
+  closed-payload, identity, Project join, replay/idempotency, original-receipt, custody, compatibility
+  and withdrawal oracles in scripts/pm-debug-investigation-events.py. DL-428 state_changed covers all
+  six Failed reasons and rejects every other failure pairing, separates failed_cleanup, compares original
+  before-state/phase, refuses terminal in-place restart and preserves historical opening/new-linked-work
+  semantics. DL-429 instrumentation_state_changed covers every approved transition row and each source
+  alternative, all eight legal pairs, whole-lane never-needed proof, verified removal including detach,
+  exact visible leftovers/recovery, retry authorization/count/attempt ceiling, pending handoff acceptance,
+  retained responsibility on failure, no second unaccepted handoff, no cleaned restart, restore/permission/overlap
+  guards and immutable original detail joins. Each current writer/retry refuses projector_replay_only;
+  every family has its own missing-field/version/unknown-field, encoded project partition, changed semantic
+  digest, native custody/CAS/permission/withdrawal obligations and none_required transient-checkpoint
+  assertion. The pre-existing seven contracts and mode-resolution cases retain their prior scope. Eagerly
+  resolve every schema reference, including unvisited definitions; malformed references fail the whole
+  checker. Retained original positives ignore current live transition state and current-writer replay
+  policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
+  promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures
+  use projected original facts; they never prove native receipt, proof dereference, payload-pack, writer
+  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. NUMRULE adoption
+  and shared guard-table isolation are part-2 work; no local number or proof helper is introduced.
+gui_related: false
+gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
+  its surface.
+depends_on:
+- CV-570
+- CV-571
+- CV-572
+- CV-573
+- CV-574
+- CV-575
+- CV-576
+- CV-577
+- SP-570
+- CV-578
+unblocks: []
+acceptance_criteria:
+- Exact family remains unadmitted until its own integration landing and all open product cells close.
+- Named positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-debug-investigation-events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_debug_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-123
+- reports/event-authority-20261104/DDBG.md
+- Plans/Decision_Log.md#DL-428
+- Plans/Decision_Log.md#DL-429
+preserved_exact_tokens:
+- ATS-285
+negative_constraints:
+- No admission, retention decision, native readiness or governance seal.
+```

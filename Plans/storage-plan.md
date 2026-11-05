@@ -1102,10 +1102,12 @@ canonical_text: 'debug.investigation.context_item_added@1.0.0 independently adop
   is none_required because the complete retained history is re-read and no result or cursor is persisted.
   Newly authored owner contract: reader.debug.investigation.instrumentation_state_changed@1.0.0, with
   the two CV-574 named operating consumers; no durable family projection is materialized. retention_policy_ref
-  = PENDING_RETENTION_DECISION; Case L-3 operational, authority and Chat-content candidate classes require
-  RT/Jared adjudication. This family is HELD_FOR_JARED under CV-574 and not prepared: field/domain
-  mapping and transition predicates remain unanswered. The reader and checkpoint bindings are conditional
-  draft work only; no positive transition or append is authorized by this adoption.
+  = RP-OPERATIONAL-2555D@1.0.0 from the exact G02 assignment in current Storage Case L-3, anchored to
+  the original terminal transition finishing the investigation operation. Its 2,555-day TTL, 2,000,000
+  per-Project operational bucket, fail-closed overflow and hold/reference/recovery/backup protections
+  are unchanged; unresolved cleanup protects its originals. There is no derived retained result/cursor
+  or new lifetime. DL-429 closes the previous field/domain and transition hold. This family is prepared
+  without admission; readers never perform a probe or cleanup effect.
 
 
   debug.investigation.started@1.0.0 independently adopts its own CV-575 full producer, identity, custody,
@@ -1132,7 +1134,19 @@ canonical_text: 'debug.investigation.context_item_added@1.0.0 independently adop
   Newly authored owner contract: reader.debug.investigation.verification_recorded@1.0.0, with the two
   CV-577 named operating consumers; no durable family projection is materialized. retention_policy_ref
   = PENDING_RETENTION_DECISION; Case L-3 operational, authority and Chat-content candidate classes require
-  RT/Jared adjudication. Preparing this family grants no append admission.'
+  RT/Jared adjudication. Preparing this family grants no append admission.
+
+
+  debug.investigation.state_changed@1.0.0 independently adopts its own CV-578 full producer, identity,
+  custody, transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint is
+  none_required because the complete retained history is re-read and no result or cursor is persisted.
+  Newly authored owner contract: reader.debug.investigation.state_changed@1.0.0, with the two CV-578 named
+  operating consumers; no durable family projection is materialized. DL-428 closes the previous Failed
+  lifecycle conflict. This family is prepared without admission; readers never resume automation or mutate
+  a target on replay. This Project edition selects the existing G02 assignment RP-OPERATIONAL-2555D@1.0.0
+  with the original investigation terminal-transition anchor, its 2,555-day TTL, 2,000,000 per-Project
+  operational bucket, fail-closed overflow and unchanged hold/reference/recovery/backup protections. No
+  new lifetime or derived value is introduced.'
 gui_related: false
 gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
   its surface.
@@ -1147,6 +1161,7 @@ depends_on:
 - CV-575
 - CV-576
 - CV-577
+- CV-578
 unblocks: []
 acceptance_criteria:
 - Exact family remains unadmitted until its own integration landing and all open product cells close.
