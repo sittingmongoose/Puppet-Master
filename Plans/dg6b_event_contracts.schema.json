@@ -9738,6 +9738,256 @@
           }
         }
       ]
+    },
+    "persona_selected_resolution_storage": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_id": {
+              "const": "pm.persona.selected_resolution.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "requested_persona": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?![\\s\\S])"
+            },
+            "effective_persona": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?![\\s\\S])"
+            },
+            "persona_selection_source": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "selection_reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "persona_override_scope": {
+              "enum": [
+                null,
+                "thread",
+                "run",
+                "node",
+                "attempt",
+                "actor"
+              ]
+            },
+            "persona_override_owner_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "runtime_snapshot_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
+              "maxLength": 512
+            },
+            "runtime_snapshot_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "persona_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "owner_result_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
+              "maxLength": 512
+            },
+            "selection_target_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+(?![\\s\\S])",
+              "maxLength": 512
+            },
+            "runtime_lineage": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "thread_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "run_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "node_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "attempt_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "actor_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256,
+                      "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "thread_id",
+                "run_id",
+                "node_id",
+                "attempt_id",
+                "actor_id"
+              ]
+            }
+          },
+          "required": [
+            "schema_id",
+            "schema_version",
+            "requested_persona",
+            "effective_persona",
+            "persona_selection_source",
+            "selection_reason",
+            "persona_override_scope",
+            "persona_override_owner_id",
+            "runtime_snapshot_ref",
+            "runtime_snapshot_sha256",
+            "operation_id",
+            "persona_id",
+            "owner_result_ref",
+            "selection_target_ref",
+            "runtime_lineage"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "persona_override_scope": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "persona_override_owner_id": {
+                    "const": null
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "persona_override_owner_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_id": {
+              "const": "pm.persona.selected_resolution.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "payload_ref": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "blake3_id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+                  "minLength": 64,
+                  "maxLength": 64
+                },
+                "byte_size": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 18446744073709551615
+                },
+                "media_type": {
+                  "const": "application/msgpack"
+                }
+              },
+              "required": [
+                "blake3_id",
+                "byte_size",
+                "media_type"
+              ]
+            }
+          },
+          "required": [
+            "schema_id",
+            "schema_version",
+            "payload_ref"
+          ]
+        }
+      ]
     }
   }
 }

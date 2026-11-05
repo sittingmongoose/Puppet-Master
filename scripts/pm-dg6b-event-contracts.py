@@ -4,15 +4,141 @@ import copy
 import datetime
 import hashlib
 import json
+import re
 from functools import cache
 from pathlib import Path
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator as JsonSchemaValidator, FormatChecker, validators
 ROOT = Path(__file__).resolve().parents[1]
+
+# JSON Schema's mathematical integer includes 1.0. The selected physical codec
+# accepts built-in integers only. Use that same domain at every typed boundary.
+Draft202012Validator = validators.extend(JsonSchemaValidator, type_checker=
+    JsonSchemaValidator.TYPE_CHECKER.redefine('integer', lambda checker, value: type(value) is int))
+
+
+def same_value(left, right):
+    """Exact typed equality; bool/int and int/float are never interchangeable."""
+    from pm_event_index_binding import binding_bytes
+    try:
+        return binding_bytes(left) == binding_bytes(right)
+    except (TypeError, ValueError, UnicodeError):
+        return False
+
+
+def closed(properties, optional=()):
+    return {'type': 'object', 'additionalProperties': False, 'properties': properties,
+            'required': [key for key in properties if key not in optional]}
+
+
+@cache
+def adapter_schema(kind, name=''):
+    """Closed synthetic proof adapters, never a new native storage format."""
+    string = {'type': 'string'}
+    nullable = {'type': ['string', 'null']}
+    boolean = {'type': 'boolean'}
+    if kind == 'record':
+        properties = {key: {'type': 'object'} for key in
+                      ('payload', 'source', 'event_record', 'durable_read_token')}
+        properties.update(scope_partition=string, resolved_payload={'type': ['object', 'null']},
+                          label=string, expected_error=string)
+        return closed(properties, ('label', 'expected_error'))
+    if kind == 'source':
+        properties = {key: string for key in ('storage_instance_id', 'actor_ref')}
+        properties.update({key: nullable for key in ('requested_account_ref', 'effective_account_ref')})
+        properties.update({key: boolean for key in ('writer_current', 'access_current')})
+        properties['frozen_payload'] = {'type': 'object'}
+        if name.startswith('persona.'):
+            properties.update({key: {'type': 'object'} for key in ('request', 'result')})
+            properties['owner_request_ref'] = string
+            properties.update({key: boolean for key in ('protected_id', 'computer_mirror',
+                'confirmation_current', 'source_verified', 'cas_current', 'reach_allows_no_project',
+                'definition_writer_current')})
+            if name == 'persona.selected':
+                properties['resolution'] = {'type': 'object'}
+                properties['resolution_value'] = {'type': 'object'}
+                properties['resolved_resolution'] = {'type': ['object', 'null']}
+        else:
+            properties['scope'] = workflow_scope_schema()
+        return closed(properties)
+    if kind == 'history':
+        properties = {key: boolean for key in ('retained', 'authentic', 'admitted_when_written',
+            'reader_current', 'family_withdrawn', 'access_current', 'body_deleted')}
+        properties.update({key: {'type': 'object'} for key in ('original', 'storage_record')})
+        properties['live_state'] = closed({key: boolean for key in ('writer_current',
+            'definition_writer_current', 'account_authenticated', 'plugin_loaded', 'persona_exists',
+            'cas_current', 'selection_current')})
+        properties.update(label=string, expected_error=string)
+        return closed(properties, ('label', 'expected_error'))
+    if kind == 'storage':
+        return closed({'authenticated': boolean, 'storage_instance_id': string,
+                       'scope_partition': string, 'event_record_bytes_hex': string})
+    if kind == 'resolved':
+        return closed({'ref': string, 'blake3_id': string, 'byte_size': {'type': 'integer', 'minimum': 0},
+                       'media_type': string, 'bytes_hex': string, 'durable': boolean, 'access_current': boolean})
+    raise ValueError('unknown_adapter_kind')
+
+
+def adapter_contract(kind, value, name=''):
+    if list(Draft202012Validator(adapter_schema(kind, name), format_checker=FORMAT).iter_errors(value)):
+        raise ValueError('adapter_schema')
+
+
+def payload_contract(name, payload, schema=None):
+    schema = schema if schema is not None else load_plan('Plans/dg6b_event_contracts.schema.json')
+    if list(Draft202012Validator(schema['$defs'][name.replace('.', '_')], format_checker=FORMAT).iter_errors(payload)):
+        raise ValueError('payload_schema')
+
+
+def type_shape(definition):
+    """Types at low-level relational helpers; full schemas remain at dispatch.
+
+    Keep relational/schema refusals independently testable without ever reading
+    a field as the wrong type. Enum/const-only properties still have exact types.
+    """
+    result = {key: copy.deepcopy(definition[key]) for key in
+              ('type', 'required', 'additionalProperties') if key in definition}
+    if 'type' not in result and ('const' in definition or 'enum' in definition):
+        values = definition.get('enum', [definition.get('const')])
+        names = {type(None): 'null', bool: 'boolean', int: 'integer', str: 'string', list: 'array', dict: 'object'}
+        result['type'] = sorted({names[type(value)] for value in values})
+    if 'properties' in definition:
+        result['properties'] = {key: type_shape(value) for key, value in definition['properties'].items()}
+    if 'items' in definition:
+        result['items'] = type_shape(definition['items'])
+    for keyword in ('anyOf', 'oneOf'):
+        if keyword in definition:
+            result['anyOf'] = [type_shape(value) for value in definition[keyword]]
+    return result
+
+
+@cache
+def payload_type_definition(name):
+    return type_shape(load_plan('Plans/dg6b_event_contracts.schema.json')['$defs'][name.replace('.', '_')])
+
+
+def payload_type_contract(name, payload):
+    definition = payload_type_definition(name)
+    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(payload)):
+        raise ValueError('payload_types')
 
 
 @cache
 def load_plan(path):
-    return json.loads((ROOT / path).read_text())
+    return strict_json((ROOT / path).read_text())
+
+
+def strict_json(text):
+    def unique_pairs(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('duplicate_json_key')
+            result[key] = value
+        return result
+    try:
+        return json.loads(text, object_pairs_hook=unique_pairs)
+    except json.JSONDecodeError as exc:
+        raise ValueError('invalid_json') from exc
 
 
 def resolve_schema_graph(schema):
@@ -59,6 +185,8 @@ def resolve_schema_graph(schema):
 
 def make_operation(name, case):
     p, source, event = case['payload'], case['source'], case['event_record']
+    payload_contract(name, p)
+    adapter_contract('source', source, name)
     return {'schema_id': 'pm.storage_value.' + name.replace('.', '_') + '_operation.v1',
             'schema_version': '1.0.0', 'event_type': name, 'scope_key': source_scope_key(source),
             'server_id': source_scope(source)['server_id'], 'actor_ref': source['actor_ref'],
@@ -70,13 +198,17 @@ def make_operation(name, case):
 
 def store_operation(logical, force_reference=False):
     """SP-337 physical value: complete logical operation or closed reference."""
+    return store_value(logical, ('schema_id', 'schema_version', 'event_type'), force_reference)
+
+
+def store_value(logical, routing_keys, force_reference=False):
     from blake3 import blake3
     from pm_event_index_binding import binding_bytes
     body = binding_bytes(logical)
     if len(body) <= 16384 and not force_reference:
         return copy.deepcopy(logical), None
     digest = blake3(body).hexdigest()
-    value = {key: logical[key] for key in ('schema_id', 'schema_version', 'event_type')}
+    value = {key: logical[key] for key in routing_keys}
     value['payload_ref'] = {'blake3_id': digest, 'byte_size': len(body), 'media_type': 'application/msgpack'}
     resolved = {'ref': 'ref:payload/' + digest, **value['payload_ref'], 'bytes_hex': body.hex(),
                 'durable': True, 'access_current': True}
@@ -92,10 +224,10 @@ def operation_value_size(body):
 def operation_contract(name, value, resolved, expected, schema):
     import msgpack
     from pm_event_index_binding import binding_bytes
-    operation_value_size(binding_bytes(value))
     definition = schema['$defs'][name.replace('.', '_') + '_operation']
     if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(value)):
         raise ValueError('operation_schema')
+    operation_value_size(binding_bytes(value))
     if 'payload_ref' in value:
         ref = value['payload_ref']
         try:
@@ -115,7 +247,7 @@ def operation_contract(name, value, resolved, expected, schema):
     else:
         logical = value
     # Authenticated bytes alone do not prove original payload/receipt custody.
-    if logical != expected:
+    if not same_value(logical, expected):
         raise ValueError('operation_source_join')
     return logical
 
@@ -126,11 +258,12 @@ def history_contract(name, case, schema):
     Original source evidence remains frozen. live_state describes subsequent
     disconnect/update/delete/CAS/selection state and never grants read access.
     """
-    if not case['retained'] or not case['authentic'] or not case['admitted_when_written']:
+    adapter_contract('history', case)
+    if case['retained'] is not True or case['authentic'] is not True or case['admitted_when_written'] is not True:
         raise ValueError('historical_provenance')
-    if case['family_withdrawn'] or not case['reader_current']:
+    if case['family_withdrawn'] is not False or case['reader_current'] is not True:
         raise ValueError('historical_withdrawn')
-    if not case['access_current'] or case['body_deleted']:
+    if case['access_current'] is not True or case['body_deleted'] is not False:
         raise ValueError('historical_access')
     # Frozen source admission is checked at its original boundary. Neither the
     # current writer policy nor later live state selects a historical reader.
@@ -148,6 +281,7 @@ def historical_storage_contract(original, storage_record):
     intentionally excludes Storage sequence/time and cannot prove this join.
     """
     from pm_event_index_binding import binding_bytes
+    adapter_contract('storage', storage_record)
     if storage_record['authenticated'] is not True:
         raise ValueError('historical_storage_source')
     if (storage_record['storage_instance_id'] != original['durable_read_token']['storage_instance_id']
@@ -157,6 +291,7 @@ def historical_storage_contract(original, storage_record):
         raise ValueError('historical_storage_record')
 
 def identity(name, payload, scope_key, server_id=None):
+    payload_type_contract(name, payload)
     preimage = [name, payload['storage_instance_id'], scope_key, payload['operation_id'], payload['revision']]
     digest = hashlib.sha256(json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
     scope = payload.get('scope')
@@ -171,15 +306,16 @@ def identity(name, payload, scope_key, server_id=None):
 
 
 def original_server_required(server_id):
-    if not server_id:
+    if type(server_id) is not str or not server_id:
         raise ValueError('original_server_required')
 
 def semantic(name, payload, scope_key, event_id, original=None, server_id=None):
+    payload_type_contract(name, payload)
     if name.startswith('auth.github.') and scope_key != 'application':
         raise ValueError('scope')
     if identity(name, payload, scope_key, server_id)[0] != event_id:
         raise ValueError('identity')
-    if original is not None and original != payload:
+    if original is not None and not same_value(original, payload):
         raise ValueError('original_payload_conflict')
     if name == 'plugin.hook.blocked' and payload['hook_name'] not in (
             'pre_tool_invoke', 'pre_attempt_start', 'pre_node_dispatch'):
@@ -194,12 +330,16 @@ FORMAT = FormatChecker()
 
 @FORMAT.checks("date-time", raises=(ValueError, TypeError))
 def utc_datetime(value):
-    if not isinstance(value, str) or not value.endswith("Z"):
+    if type(value) is not str or re.fullmatch(
+            r'[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z', value) is None:
         return False
     datetime.datetime.fromisoformat(value[:-1] + "+00:00")
     return True
 
 def persona_scope_key(payload):
+    scope_schema = workflow_scope_schema()
+    if list(Draft202012Validator(scope_schema).iter_errors(payload.get('scope'))):
+        raise ValueError('scope')
     return json.dumps([payload['scope']['server_id'], payload['scope']['scope_partition']],
                       ensure_ascii=False, separators=(',', ':'))
 
@@ -208,8 +348,11 @@ def persona_semantic(name, payload, scope_key, source):
     """Static original-source oracle; not native authorization or source proof."""
     import base64
     p, s = payload, source
+    payload_type_contract(name, p)
+    adapter_contract('source', s, name)
+    persona_io_contract(p['command_id'], s)
     scope = p['scope']
-    if persona_scope_key(p) != scope_key or scope != s['request']['scope']:
+    if persona_scope_key(p) != scope_key or not same_value(scope, s['request'].get('scope')):
         raise ValueError('scope')
     if scope['scope_kind'] == 'project':
         expected = 'project~' + base64.urlsafe_b64encode(scope['project_id'].encode()).decode().rstrip('=')
@@ -220,42 +363,42 @@ def persona_semantic(name, payload, scope_key, source):
         raise ValueError('home_scope')
     if name != 'persona.selected' and p['home_kind'] == 'library' and scope['scope_kind'] != 'application':
         raise ValueError('home_scope')
-    if not s['access_current']:
+    if s['access_current'] is not True:
         raise ValueError('access')
     # Event-writer admission is independent of the definition-write lease.
-    if not s['writer_current']:
+    if s['writer_current'] is not True:
         raise ValueError('writer')
-    if name != 'persona.exported' and not s['definition_writer_current']:
+    if name != 'persona.exported' and s['definition_writer_current'] is not True:
         raise ValueError('definition_writer')
     if name in ('persona.created', 'persona.deleted', 'persona.imported', 'persona.updated'):
-        if s['computer_mirror']:
+        if s['computer_mirror'] is not False:
             raise ValueError('mirror')
-        if s['protected_id']:
+        if s['protected_id'] is not False:
             raise ValueError('protected')
-    if name == 'persona.deleted' and not s['confirmation_current']:
+    if name == 'persona.deleted' and s['confirmation_current'] is not True:
         raise ValueError('confirmation')
-    if name in ('persona.deleted', 'persona.updated', 'persona.imported') and not s['cas_current']:
+    if name in ('persona.deleted', 'persona.updated', 'persona.imported') and s['cas_current'] is not True:
         raise ValueError('cas')
-    if name == 'persona.imported' and not s['source_verified']:
+    if name == 'persona.imported' and s['source_verified'] is not True:
         raise ValueError('source_trust')
-    if name == 'persona.selected' and scope['scope_kind'] == 'application' and not s['reach_allows_no_project']:
+    if name == 'persona.selected' and scope['scope_kind'] == 'application' and s['reach_allows_no_project'] is not True:
         raise ValueError('reach')
     request, result = s['request'], s['result']
-    if p != s['frozen_payload'] or p['owner_request_ref'] != s['owner_request_ref']:
+    if not same_value(p, s['frozen_payload']) or not same_value(p['owner_request_ref'], s['owner_request_ref']):
         raise ValueError('original_source_join')
     for key in ('command_id', 'scope', 'client_id', 'persona_id', 'source_id', 'source_revision',
                 'source_sha256', 'project_version_id', 'reach_ref', 'expected_owner_revision', 'return_context_ref'):
-        if p[key] != request[key]:
+        if not same_value(p[key], request.get(key)):
             raise ValueError('original_source_join')
     for payload_key, result_key in [('command_id', 'command_id'), ('operation_id', 'operation_id'),
             ('persona_id', 'persona_id'), ('revision', 'owner_revision'), ('content_sha256', 'content_sha256'),
             ('result_status', 'status'), ('owner_result_ref', 'owner_result_ref'),
             ('owner_readback_ref', 'readback_ref'), ('return_context_ref', 'return_context_ref')]:
-        if p[payload_key] != result[result_key]:
+        if not same_value(p[payload_key], result.get(result_key)):
             raise ValueError('original_source_join')
-    if p['storage_instance_id'] != s['storage_instance_id'] or p['home_ref'] != request['destination_home_ref']:
+    if not same_value(p['storage_instance_id'], s['storage_instance_id']) or not same_value(p['home_ref'], request.get('destination_home_ref')):
         raise ValueError('original_source_join')
-    if p['content_sha256'] != request['whole_record_sha256']:
+    if not same_value(p['content_sha256'], request.get('whole_record_sha256')):
         raise ValueError('original_source_join')
     source_fields = [p[k] for k in ('source_id', 'source_revision', 'source_sha256')]
     if name == 'persona.created':
@@ -282,15 +425,17 @@ def persona_semantic(name, payload, scope_key, source):
         elif (override not in ('thread', 'run', 'node', 'attempt', 'actor')
               or owner is None or owner == 'tier_id' or owner != lineage[override + '_id']):
             raise ValueError('override_lineage')
-        if lineage != s['resolution']['runtime_lineage']:
+        if not same_value(lineage, s['resolution'].get('runtime_lineage')):
             raise ValueError('original_source_join')
         for key in ('requested_persona', 'effective_persona', 'persona_selection_source', 'selection_reason',
                     'persona_override_scope', 'persona_override_owner_id', 'runtime_snapshot_ref', 'runtime_snapshot_sha256'):
-            if p[key] != s['resolution'][key]:
+            if not same_value(p[key], s['resolution'].get(key)):
                 raise ValueError('original_source_join')
         for key in ('operation_id', 'persona_id', 'owner_result_ref', 'selection_target_ref'):
-            if p[key] != s['resolution'][key]:
+            if not same_value(p[key], s['resolution'].get(key)):
                 raise ValueError('original_source_join')
+        resolution_storage_contract(s['resolution_value'], s['resolved_resolution'], s['resolution'],
+                                    load_plan('Plans/dg6b_event_contracts.schema.json'))
 
 
 def selected_result_contract(value, shared, registry):
@@ -299,9 +444,65 @@ def selected_result_contract(value, shared, registry):
         raise ValueError('selected_result_schema')
 
 
+def persona_io_contract(command, source):
+    for kind in ('request', 'result'):
+        definition, registry = persona_io_definition(command, kind)
+        if list(Draft202012Validator(definition, registry=registry, format_checker=FORMAT).iter_errors(source[kind])):
+            raise ValueError('source_io_schema')
+
+
+@cache
+def persona_io_definition(command, kind):
+    from referencing import Registry, Resource
+    shared = load_plan('Plans/shared_integration_runtime.schema.json')
+    resource = Resource.from_contents(strict_patterns(shared))
+    registry = Registry().with_resources([(shared['$id'], resource),
+        ('https://puppetmaster.local/Plans/shared_integration_runtime.schema.json', resource)])
+    verb = command.split('.')[-1]
+    definition = strict_patterns(shared['$defs']['persona_' + verb + '_' + kind + '_v2'])
+    return definition, registry
+
+
 def resolution_contract(value, schema):
-    if list(Draft202012Validator(schema['$defs']['persona_selected_resolution']).iter_errors(value)):
+    if list(Draft202012Validator(schema['$defs']['persona_selected_resolution'], format_checker=FORMAT).iter_errors(value)):
         raise ValueError('resolution_schema')
+
+
+def store_resolution(logical, force_reference=False):
+    # Reuse the existing SP-337 complete-value route. No new physical family.
+    return store_value(logical, ('schema_id', 'schema_version'), force_reference)
+
+
+def resolution_value_size(body):
+    if len(body) > 16384:
+        raise ValueError('resolution_value_too_large')
+
+
+def resolution_storage_contract(value, resolved, expected, schema):
+    import msgpack
+    from pm_event_index_binding import binding_bytes
+    definition = schema['$defs']['persona_selected_resolution_storage']
+    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(value)):
+        raise ValueError('resolution_storage_schema')
+    resolution_value_size(binding_bytes(value))
+    if 'payload_ref' in value:
+        ref = value['payload_ref']
+        try:
+            body = bytes.fromhex(resolved['bytes_hex']) if resolved is not None else b''
+            transport(body, 'ref:payload/' + ref['blake3_id'], resolved)
+            if any(not same_value(ref[key], resolved[key]) for key in ('blake3_id', 'byte_size', 'media_type')):
+                raise ValueError('payload_ref_integrity')
+            logical = msgpack.unpackb(body, raw=False, strict_map_key=True)
+            if binding_bytes(logical) != body:
+                raise ValueError('payload_ref_integrity')
+        except (TypeError, KeyError, msgpack.UnpackException) as exc:
+            raise ValueError('payload_ref_integrity') from exc
+    else:
+        logical = value
+    resolution_contract(logical, schema)
+    if not same_value(logical, expected):
+        raise ValueError('resolution_source_join')
+    return logical
 
 
 def check_persona(row, schema):
@@ -309,7 +510,7 @@ def check_persona(row, schema):
     name, p = row['event_type'], row['valid']
     slug = name.replace('.', '_')
     shared = json.loads((ROOT / 'Plans/shared_integration_runtime.schema.json').read_text())
-    resource = Resource.from_contents(shared)
+    resource = Resource.from_contents(strict_patterns(shared))
     registry = Registry().with_resources([(shared['$id'], resource),
         ('https://puppetmaster.local/Plans/shared_integration_runtime.schema.json', resource)])
     verb = {'created': 'create', 'deleted': 'delete', 'exported': 'export', 'imported': 'import',
@@ -378,7 +579,11 @@ def check_persona(row, schema):
 
 
 def source_scope(source):
-    return source['request']['scope'] if 'request' in source else source['scope']
+    scope = source['request'].get('scope') if 'request' in source else source.get('scope')
+    definition = workflow_scope_schema()
+    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(scope)):
+        raise ValueError('scope')
+    return scope
 
 
 def source_scope_key(source):
@@ -408,6 +613,10 @@ def stage_contract(name, case, schema):
     stage = case['stage']
     if stage == 'operation_value_size':
         return operation_value_size(bytes.fromhex(case['body_hex']))
+    if stage == 'resolution_value_size':
+        return resolution_value_size(bytes.fromhex(case['body_hex']))
+    if stage == 'adapter_schema':
+        return adapter_contract(case['kind'], case['value'], name)
     if stage == 'transport':
         return transport(bytes.fromhex(case['body_hex']), case['payload_ref'], case['resolved'])
     if stage == 'reference_availability':
@@ -415,10 +624,7 @@ def stage_contract(name, case, schema):
     if stage == 'partition':
         return partition_contract(case['scope'], case['scope_partition'])
     if stage == 'payload_schema':
-        if list(Draft202012Validator(schema['$defs'][name.replace('.', '_')],
-                                    format_checker=FORMAT).iter_errors(case['payload'])):
-            raise ValueError('payload_schema')
-        return
+        return payload_contract(name, case['payload'], schema)
     if stage == 'operation_schema':
         if list(Draft202012Validator(schema['$defs'][name.replace('.', '_') + '_operation'],
                                     format_checker=FORMAT).iter_errors(case['value'])):
@@ -453,6 +659,19 @@ def strict_patterns(value):
     return value
 
 
+@cache
+def workflow_scope_schema():
+    return strict_patterns(load_plan('Plans/shared_integration_runtime.schema.json')['$defs']['WorkflowScopeV2'])
+
+
+@cache
+def durable_token_schema():
+    definition = strict_patterns(load_plan('Plans/event_record_index_checkpoint.schema.json')['$defs']['read_token'])
+    definition['required'].remove('redb_snapshot_id')
+    del definition['properties']['redb_snapshot_id']  # DL-076: live-only
+    return definition
+
+
 def transport(body_bytes, payload_ref, resolved):
     """SP-337 byte-stage oracle, before family payload schema dispatch.
 
@@ -473,14 +692,18 @@ def transport(body_bytes, payload_ref, resolved):
 
 
 def reference_available(payload_ref, resolved):
-    if (resolved is None or resolved['ref'] != payload_ref or not resolved['durable']
-            or not resolved['access_current']):
+    if resolved is not None:
+        adapter_contract('resolved', resolved)
+    if (resolved is None or resolved['ref'] != payload_ref or resolved['durable'] is not True
+            or resolved['access_current'] is not True):
         raise ValueError('payload_ref_unavailable')
 
 
 def append_contract(name, case, schema, original=None):
     """Current append/retry policy; never used to admit historical readers."""
+    adapter_contract('record', case)
     e = case['event_record']
+    event_record_contract(e)
     if e.get('replay_policy') == 'projector_replay_only':
         raise ValueError('replay_only_not_appendable')
     if e.get('replay_policy') != 'dedupe_by_idempotency_key':
@@ -490,7 +713,7 @@ def append_contract(name, case, schema, original=None):
         if (e['event_id'], e['idempotency_key']) != (
                 original['event_record']['event_id'], original['event_record']['idempotency_key']):
             raise ValueError('retry_identity')
-        if semantic_record(e) != semantic_record(original['event_record']):
+        if not same_value(semantic_record(e), semantic_record(original['event_record'])):
             raise ValueError('idempotency_conflict')
     return digest
 
@@ -499,24 +722,24 @@ def record_contract(name, case, schema):
     """Immutable envelope, payload and frozen at-write source validation."""
     import rfc8785
     from pm_event_index_binding import binding_bytes
+    adapter_contract('record', case)
     p, s, e = case['payload'], case['source'], case['event_record']
-    envelope = load_plan('Plans/event_record.schema.json')
-    if list(Draft202012Validator(envelope, format_checker=FORMAT).iter_errors(e)):
-        raise ValueError('event_record_schema')
-    if list(Draft202012Validator(schema['$defs'][name.replace('.', '_')],
-                               format_checker=FORMAT).iter_errors(p)):
-        raise ValueError('payload_schema')
+    event_record_contract(e)
+    payload_contract(name, p, schema)
+    if e['payload_ref'] is None:
+        payload_contract(name, e['payload'], schema)
+    adapter_contract('source', s, name)
     scope = source_scope(s)
-    if not s['writer_current']:
+    if s['writer_current'] is not True:
         raise ValueError('writer')
-    if not s['access_current']:
+    if s['access_current'] is not True:
         raise ValueError('access')
-    if p != s['frozen_payload'] or p['storage_instance_id'] != s['storage_instance_id']:
+    if not same_value(p, s['frozen_payload']) or not same_value(p['storage_instance_id'], s['storage_instance_id']):
         raise ValueError('original_source_join')
     if name.startswith('auth.github.') and scope['scope_kind'] != 'application':
         raise ValueError('scope')
     partition_contract(scope, case['scope_partition'])
-    scope_schema = load_plan('Plans/shared_integration_runtime.schema.json')['$defs']['WorkflowScopeV2']
+    scope_schema = workflow_scope_schema()
     if list(Draft202012Validator(scope_schema).iter_errors(scope)):
         raise ValueError('scope')
     sk = source_scope_key(s)
@@ -542,13 +765,11 @@ def record_contract(name, case, schema):
             raise ValueError('envelope_source_join')
     body_bytes = binding_bytes(p)  # byte-stage input only, not the SP-278 digest domain
     transport(body_bytes, e['payload_ref'], case['resolved_payload'])
-    if e['payload'] != (p if e['payload_ref'] is None else {}):
+    if not same_value(e['payload'], p if e['payload_ref'] is None else {}):
         raise ValueError('payload_transport_join')
     # This is the adopted generic read-token/storage join, not a new checkpoint.
     token = case['durable_read_token']
-    read_schema = strict_patterns(load_plan('Plans/event_record_index_checkpoint.schema.json')['$defs']['read_token'])
-    read_schema['required'].remove('redb_snapshot_id')
-    del read_schema['properties']['redb_snapshot_id']  # DL-076: live-only, never durable
+    read_schema = durable_token_schema()
     if list(Draft202012Validator(read_schema, format_checker=FORMAT).iter_errors(token)):
         raise ValueError('checkpoint_schema')
     if (token['storage_instance_id'] != p['storage_instance_id']
@@ -556,6 +777,12 @@ def record_contract(name, case, schema):
             or token['checkpoint_key'] != 'event_record_index_checkpoint.v1:' + p['storage_instance_id']):
         raise ValueError('checkpoint_storage_join')
     return hashlib.sha256(rfc8785.dumps(semantic_record(e))).hexdigest()
+
+
+def event_record_contract(event):
+    envelope = load_plan('Plans/event_record.schema.json')
+    if list(Draft202012Validator(envelope, format_checker=FORMAT).iter_errors(event)):
+        raise ValueError('event_record_schema')
 
 
 def expect_failure(call, expected, name, label):
@@ -608,6 +835,12 @@ def check_append_contract(row, schema):
         expect_failure(lambda: append_contract(name, case, schema), case['expected_error'], name, case['label'])
     for case in row['operation_cases']:
         call = lambda: operation_contract(name, case['value'], case['resolved'], case['logical'], schema)
+        if 'expected_error' in case:
+            expect_failure(call, case['expected_error'], name, case['label'])
+        else:
+            call()
+    for case in row.get('resolution_cases', []):
+        call = lambda: resolution_storage_contract(case['value'], case['resolved'], case['logical'], schema)
         if 'expected_error' in case:
             expect_failure(call, case['expected_error'], name, case['label'])
         else:
@@ -680,7 +913,9 @@ def preparation_contract(expected, fixtures, grade, registry, values, schema):
 def run(fixtures_path=None):
     schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
     resolved_references = resolve_schema_graph(schema)
-    fixtures = json.loads((fixtures_path or ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
+    fixtures = strict_json((fixtures_path or ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
+    expect_failure(lambda: strict_json('{"x":1,"x":2}'), 'duplicate_json_key', 'shared', 'duplicate_json_key')
+    expect_failure(lambda: strict_json('{"x":01}'), 'invalid_json', 'shared', 'leading_zero')
     expected = {'auth.github.authenticated', 'auth.github.device_code.issued', 'auth.github.disconnected',
                 'auth.github.failed', 'auth.github.token.polling', 'plugin.hook.blocked', 'plugin.hook.error',
                 'plugin.hook.invoked', 'plugin.load_failed', 'plugin.loaded', 'plugin.permission.override',

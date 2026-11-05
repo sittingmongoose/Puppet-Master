@@ -38,6 +38,11 @@ class SchemaCheckCache:
         return checked_schema(json.dumps(schema, sort_keys=True))
 
 
+SCHEMA_GUARDS = {'payload_schema', 'payload_types', 'event_record_schema', 'checkpoint_schema',
+                 'operation_schema', 'resolution_schema', 'resolution_storage_schema',
+                 'selected_result_schema', 'source_io_schema', 'adapter_schema'}
+
+
 def reason(node):
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 'ValueError':
         arg = node.args[0]
@@ -68,7 +73,7 @@ def guard_inventory(source):
     return guards
 
 
-def module_for(source, disabled=None):
+def module_for(source, disabled=None, capture=None):
     class Remove(ast.NodeTransformer):
         function = None
 
@@ -105,7 +110,25 @@ def module_for(source, disabled=None):
     ast.fix_missing_locations(tree)
     namespace = {'__file__': str(CHECKER), '__name__': 'dg6b_guard_mutant'}
     exec(compile(tree, str(CHECKER), 'exec'), namespace)
-    namespace['Draft202012Validator'] = SchemaCheckCache
+    actual_validator = namespace['Draft202012Validator']
+    class ExactValidator:
+        def __new__(cls, definition, *args, **kwargs):
+            actual = actual_validator(definition, *args, **kwargs)
+            if capture is None:
+                return actual
+            class Observed:
+                def iter_errors(self, instance):
+                    errors = list(actual.iter_errors(instance))
+                    if errors:
+                        capture.append((copy.deepcopy(definition), copy.deepcopy(instance), kwargs, errors))
+                    return iter(errors)
+                def __getattr__(self, key):
+                    return getattr(actual, key)
+            return Observed()
+        @staticmethod
+        def check_schema(schema):
+            return checked_schema(json.dumps(schema, sort_keys=True))
+    namespace['Draft202012Validator'] = ExactValidator
     return namespace
 
 
@@ -133,7 +156,7 @@ def build_probes(stock, schema, fixtures):
             case = {'stage': 'payload_schema', 'payload': bad}
             add(name, 'payload_schema/' + str(index), 'payload_schema',
                 lambda m, s, c=case, n=name: m['stage_contract'](n, c, s))
-        for kind in ('append_invalid', 'operation_cases', 'history_cases', 'retry_cases', 'semantic_invalid', 'stage_cases'):
+        for kind in ('append_invalid', 'operation_cases', 'resolution_cases', 'history_cases', 'retry_cases', 'semantic_invalid', 'stage_cases'):
             for c in row.get(kind, []):
                 if 'expected_error' not in c:
                     continue
@@ -142,6 +165,8 @@ def build_probes(stock, schema, fixtures):
                     fn = lambda m, s, c=c, n=name: m['append_contract'](n, c, s)
                 elif kind == 'operation_cases':
                     fn = lambda m, s, c=c, n=name: m['operation_contract'](n, c['value'], c['resolved'], c['logical'], s)
+                elif kind == 'resolution_cases':
+                    fn = lambda m, s, c=c: m['resolution_storage_contract'](c['value'], c['resolved'], c['logical'], s)
                 elif kind == 'history_cases':
                     fn = lambda m, s, c=c, n=name: m['history_contract'](n, c, s)
                 elif kind == 'retry_cases':
@@ -156,6 +181,14 @@ def build_probes(stock, schema, fixtures):
             bad_source = copy.deepcopy(row['source'])
             bad_source['definition_writer_current'] = False
             add(name, 'extra/definition_writer', 'definition_writer',
+                lambda m, s, n=name, p=payload, sk=row['scope_key'], src=bad_source: m['persona_semantic'](n, p, sk, src))
+        wrong_type = {**payload, 'revision': '1'}
+        add(name, 'extra/payload_types', 'payload_types',
+            lambda m, s, n=name, p=wrong_type: m['payload_type_contract'](n, p))
+        if name.startswith('persona.'):
+            bad_source = copy.deepcopy(row['source'])
+            bad_source['request']['unknown_field'] = True
+            add(name, 'extra/source_io_schema', 'source_io_schema',
                 lambda m, s, n=name, p=payload, sk=row['scope_key'], src=bad_source: m['persona_semantic'](n, p, sk, src))
         if name == 'persona.created':
             variant = next(v for v in row['valid_variants'] if v['payload']['command_id'] == 'cmd.persona.duplicate')
@@ -247,7 +280,7 @@ def build_probes(stock, schema, fixtures):
         add(name, 'extra/event_record_schema', 'event_record_schema',
             lambda m, s, c=bad, n=name: m['append_contract'](n, c, s))
         bad = copy.deepcopy(base)
-        bad['event_record']['payload'] = {}
+        bad['event_record']['payload']['subject_ref'] = 'ref:subject/different'
         add(name, 'extra/payload_transport_join', 'payload_transport_join',
             lambda m, s, c=bad, n=name: m['append_contract'](n, c, s))
         original = copy.deepcopy(base)
@@ -288,6 +321,12 @@ def build_probes(stock, schema, fixtures):
                 lambda m, s, n=n, ff=ff, gg=gg, rr=rr, vv=vv: m['preparation_contract']({n}, ff, gg, rr, vv, s))
     add('shared', 'original_server_required', 'original_server_required',
         lambda m, s: m['original_server_required'](None))
+    add('shared', 'unknown_adapter_kind', 'unknown_adapter_kind',
+        lambda m, s: m['adapter_schema']('unknown'))
+    add('shared', 'duplicate_json_key', 'duplicate_json_key',
+        lambda m, s: m['strict_json']('{"x":1,"x":2}'))
+    add('shared', 'invalid_json', 'invalid_json',
+        lambda m, s: m['strict_json']('{"x":01}'))
     add('shared', 'unknown_oracle_stage', 'unknown_oracle_stage',
         lambda m, s: m['stage_contract']('', {'stage': 'unknown'}, s))
     add('shared', 'success_cannot_prove_failure', 'failure_oracle',
@@ -298,6 +337,124 @@ def build_probes(stock, schema, fixtures):
         m['expect_failure'](reject, 'wanted', 'shared', 'reason')
     add('shared', 'wrong_reason_cannot_prove_failure', 'failure_error_reason', wrong_reason)
     return probes
+
+
+def schema_leaves(error, value):
+    """Select the actual carrier branch; retain every check inside that branch."""
+    if error.validator == 'oneOf' and error.context:
+        branch = 1 if isinstance(value, dict) and 'payload_ref' in value else 0
+        children = [e for e in error.context if list(e.schema_path)[0] == branch]
+        return [leaf for child in children for leaf in schema_leaves(child, value)]
+    if error.validator == 'anyOf' and error.context:
+        # A union rejects through each alternative. Removing either alternative's
+        # exact type rule is an independent test of that union's same-field guard.
+        return [leaf for child in error.context for leaf in schema_leaves(child, value)]
+    return [error]
+
+
+def schema_guard_proof(source, schema, probes):
+    """Remove actual schema keywords, never the whole validation function.
+
+    Complete-path rejection is checked first. Flip/stay proof runs at the exact
+    failing validator boundary, retaining all unrelated fields and keywords.
+    Unchanged schema resources are hash-compared, not disabled or substituted.
+    """
+    captured = []
+    observer = module_for(source, capture=captured)
+    records, failures = [], []
+    for p in probes:
+        if p['guard'] not in SCHEMA_GUARDS:
+            continue
+        captured.clear()
+        actual = outcome(p['call'], observer, schema)
+        if actual != p['stock'] or not captured:
+            failures.append({'id': p['id'], 'phase': 'schema_capture', 'actual': actual})
+            continue
+        definition, value, kwargs, errors = captured[-1]
+        # A bare selected-owner reference has no other local constraints.
+        # Resolve it through the actual selected registry before keyword edits.
+        while set(definition) == {'$ref'}:
+            definition = kwargs['registry'].resolver().lookup(definition['$ref']).contents
+        digest = hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
+        leaves = [leaf for error in errors for leaf in schema_leaves(error, value)]
+        records.append({'id': p['id'], 'schema_sha256': digest, 'definition': definition,
+                        'value': value, 'kwargs': kwargs, 'leaves': leaves})
+    groups = {}
+    links = {}
+    for r in records:
+        by_field = {}
+        for e in r['leaves']:
+            path = tuple(e.absolute_schema_path)
+            key = (r['schema_sha256'], path)
+            groups.setdefault(key, {'record': r, 'path': path})
+            by_field.setdefault(tuple(e.absolute_path), []).append(key)
+        for keys in by_field.values():
+            # Same-field duplicate enforcement only: e.g. root/scope key
+            # patterns and the maximum UTF-8 key bound. Different fields never
+            # form a removal set (the seven old Persona masks must fail here).
+            for key in keys:
+                links.setdefault(key, set()).update(keys)
+    components, visited = [], set()
+    for key in groups:
+        if key in visited:
+            continue
+        pending, component = [key], set()
+        while pending:
+            item = pending.pop()
+            if item in component:
+                continue
+            component.add(item)
+            pending.extend(links.get(item, ()))
+        visited.update(component)
+        components.append(component)
+    table = []
+    validator = observer['JsonSchemaValidator']
+    exact = observer['Draft202012Validator']
+    for component in sorted(components, key=repr):
+        digest, path = sorted(component, key=repr)[0]
+        group = groups[(digest, path)]
+        # Break Python construction aliases: editing one JSON schema location
+        # must never edit another property that reused the same Python dict.
+        definition = json.loads(json.dumps(group['record']['definition']))
+        paths = [item[1] for item in sorted(component, key=repr)]
+        try:
+            for location in paths:
+                node = definition
+                for key in location[:-1]:
+                    node = node[key]
+                del node[location[-1]]
+        except (KeyError, TypeError):
+            failures.append({'phase': 'schema_path', 'schema_sha256': digest, 'path': list(path)})
+            continue
+        flips, stays, wrong, evaluations = [], [], [], 0
+        targets = {r['id'] for r in records if r['schema_sha256'] == digest
+                   and any(tuple(e.absolute_schema_path) in paths for e in r['leaves'])}
+        for r in records:
+            if r['schema_sha256'] != digest:
+                stays.append(r['id'])
+                continue
+            evaluations += 1
+            errors = list(exact(definition, **r['kwargs']).iter_errors(r['value']))
+            if not errors:
+                if r['id'] in targets:
+                    flips.append(r['id'])
+                else:
+                    wrong.append({'id': r['id'], 'error': 'unrelated schema negative accepted'})
+            elif r['id'] in targets:
+                wrong.append({'id': r['id'], 'error': 'masked schema negative',
+                              'remaining': [{'field': list(e.absolute_path), 'guard': list(e.absolute_schema_path)} for e in errors]})
+            else:
+                stays.append(r['id'])
+        row = {'guard': 'schema:' + digest[:12] + ':' + '/'.join(map(str, path)),
+               'schema_sha256': digest, 'removed_keywords': [list(location) for location in paths],
+               'duplicate_reason': ('Same-field duplicate enforcement; every exact keyword is named.'
+                                    if len(paths) > 1 else None),
+               'negatives_that_flip': flips, 'negatives_that_stay_rejected': stays,
+               'boundary_evaluations': evaluations, 'unchanged_resource_proofs': len(records)-evaluations,
+               'unexpected': wrong}
+        table.append(row)
+        failures.extend({'guard': row['guard'], **w} for w in wrong)
+    return table, failures, len(records)
 
 
 def run():
@@ -324,6 +481,9 @@ def run():
         if guard not in covered:
             failures.append({'guard': guard, 'phase': 'inventory', 'error': 'no negative'})
             continue
+        if guard in SCHEMA_GUARDS:
+            # Tested below by actual keyword removal, never broad erasure.
+            continue
         mutant = module_for(source, guard)
         flips, stays, wrong = [], [], []
         for p in probes:
@@ -341,6 +501,10 @@ def run():
         table.append({'guard': guard, 'locations': inventory[guard], 'negatives_that_flip': flips,
                       'negatives_that_stay_rejected': stays, 'unexpected': wrong})
         print(guard, 'flip', len(flips), 'stay', len(stays), 'unexpected', len(wrong), flush=True)
+    schema_table, schema_failures, schema_negative_count = schema_guard_proof(source, schema, probes)
+    failures.extend(schema_failures)
+    print('schema keywords', len(schema_table), 'negatives', schema_negative_count,
+          'unexpected', len(schema_failures), flush=True)
     for path, digest in inputs.items():
         if hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != digest:
             failures.append({'path': path, 'phase': 'input_stability', 'error': 'input changed during proof'})
@@ -350,6 +514,7 @@ def run():
             'method': __doc__, 'input_sha256': inputs, 'negative_count': len(probes), 'guard_count': len(inventory),
             'families': sorted({p['family'] for p in probes if p['family'] != 'shared'}),
             'inventory': inventory, 'guard_removal_table': table, 'failures': failures,
+            'schema_guard_removal_table': schema_table, 'schema_negative_count': schema_negative_count,
             'restored_full_checker': stock_result['status']}
 
 

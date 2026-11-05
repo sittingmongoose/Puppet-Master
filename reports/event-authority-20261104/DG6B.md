@@ -1,3 +1,7 @@
+## Whole-branch authority audit restored in round 6
+
+The complete nineteen-family search, current-source hashes and matching lines, negative evidence, newly authored bindings, 26 existing IDs, and DL-045/DL-076 premise/application pairs are in [DG6B.authority-audit.json](DG6B.authority-audit.json), SHA-256 `a257be4cc03ffa9fc291f0938c5fc755886c254ecd3c45521793b995a8903a9e`. It searches fetched origin/main `c76d1cf756d504a91655a978dcee9f3ead7562d3`; the later origin/main maintenance changes preserve DG6B behavior and all consumed selected definitions; the audit records that recheck. Repair-round history below is separate from this whole-branch inventory.
+
 # DG6B — review round 5, prepared without admission
 
 Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input: `dd694fd1fd24e3317c24e9297d6fafed41439c2c`. Fixed contract commit: **`51aff0e2358dc21bb2a822556b7b745315c6d567`**. Worker: DG6B-FIX5, VM. First of the two authorized technical rounds after the extra round. Native execution: **NOT_RUN**.
