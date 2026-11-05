@@ -146,6 +146,7 @@ def catalogue(m, fixtures):
         add('retry.current_policy',family+':unknown_retry_policy','current_retry',(row,e,a),(row,unknown,a),no_if("incoming.get('replay_policy') != 'dedupe_by_idempotency_key'"),lambda x:x[0]=='return_original_without_effect')
         retry_family_edits = no_if("incoming.get('event_type') != row['event_type']")
         retry_schema_edits = no_if("incoming.get('payload_schema_id') != expected_schema")
+        mutants['retry.family_schema_duplicate'] = tuple(retry_family_edits + retry_schema_edits)
         for field, value, guard, edits in (
             ('event_type', 'foreign.family', 'retry.family', retry_family_edits),
             ('payload_schema_id', 'pm.payload.foreign', 'retry.schema', retry_schema_edits),
