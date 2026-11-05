@@ -39,6 +39,8 @@ def example_suite():
 def probe(g, trap, memory):
     kind = trap["kind"]
     uri = "https://pm.invalid/traps/" + trap["id"] + ".json"
+    if kind.startswith("round8_"):
+        return round8_probe(g, trap, memory)
     if kind.startswith("round7_"):
         return round7_probe(g, trap, memory)
     if kind.startswith("round6_"):
@@ -1527,3 +1529,64 @@ def round7_probe(g, trap, memory):
         # The x-only cut admits only the x defect; the untouched assertion still refuses y.
         return {'cut_vector': vector, 'candidate': target['id']}, vector == [True, True, False]
     raise ValueError('unknown round7 trap ' + trap['kind'])
+
+
+ROUND8_DEBUG = ('def check(v):\n'
+                '    if v["x"] < 0 or v["y"] > __debug__:\n'
+                '        raise ValueError("bad")\n'
+                '    return 0\n')
+
+
+def round8_probe(g, trap, memory):
+    """Review C8-B1/B2: originals must be exactly the optimize=0 compilation of the
+    supplied source (constants included), directly bound, with no dynamic export."""
+    def refused(source, env):
+        try:
+            g.AstGuards('round8/' + trap['id'], source, env)
+        except g.IsolationError as exc:
+            return True, str(exc)
+        return False, ''
+    if trap['kind'] == 'round8_same_source_debug':
+        rows = []
+        for level in (1, 2):
+            env = {}
+            exec(compile(ROUND8_DEBUG, '<optimized>', 'exec', optimize=level, dont_inherit=True), env)
+            rows.append((level,) + refused(ROUND8_DEBUG, env))
+        return {'rows': rows}, all(r[1] for r in rows)
+    if trap['kind'] == 'round8_nested_constant':
+        rows = []
+        for name, body in (('inner-function', '    def inner():\n        return __debug__\n    flag = inner()\n'),
+                           ('lambda', '    flag = (lambda: __debug__)()\n'),
+                           ('generator', '    flag = any(__debug__ for _ in (0,))\n')):
+            source = 'def check(v):\n' + body + '    if v["x"] < 0 or v["y"] > flag:\n        raise ValueError("bad")\n    return 0\n'
+            env = {}
+            exec(compile(source, '<optimized>', 'exec', optimize=2, dont_inherit=True), env)
+            rows.append((name,) + refused(source, env))
+        return {'rows': rows}, all(r[1] for r in rows)
+    if trap['kind'] == 'round8_mismatched_operand':
+        supplied = 'def check(v):\n    assert v["aux"] >= 0, "a"\n    if v["x"] < 0:\n        raise ValueError("bad")\n    return 0\n'
+        env = {}
+        exec(compile(supplied.replace('"aux"', '"y"'), '<other>', 'exec', optimize=0, dont_inherit=True), env)
+        ok, message = refused(supplied, env)
+        return {'message': message}, ok
+    if trap['kind'] == 'round8_dynamic_export':
+        source = ROUND8_DEBUG + 'def __getattr__(name):\n    if name == "check":\n        return _real_check\n    raise AttributeError(name)\n'
+        env = {}
+        exec(compile(source, '<export>', 'exec', optimize=1, dont_inherit=True), env)
+        env['_real_check'] = env.pop('check')
+        ok, message = refused(source, env)
+        return {'message': message}, ok
+    if trap['kind'] == 'round8_absent_original':
+        module = g.AstGuards('round8/absent', ROUND8_DEBUG, {})
+        try:
+            module.clone(frozenset())
+        except g.IsolationError as exc:
+            return {'message': str(exc)}, 'absent' in str(exc)
+        return {}, False
+    if trap['kind'] == 'round8_matching_original_runs':
+        env = {}
+        exec(compile(ROUND8_DEBUG, '<original>', 'exec', optimize=0, dont_inherit=True), env)
+        module = g.AstGuards('round8/match', ROUND8_DEBUG, env)
+        clone = module.clone(frozenset())
+        return {'baseline': clone.check({'x': 0, 'y': 0})}, clone.check({'x': 0, 'y': 0}) == 0
+    raise ValueError('unknown round8 trap ' + trap['kind'])

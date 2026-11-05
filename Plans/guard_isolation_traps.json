@@ -3102,6 +3102,36 @@
       "id": "C7-clone-keeps-assertions",
       "kind": "round7_clone_keeps_assertions",
       "expected": "an x-only cut clone keeps the untouched assertion: cut vector accept/accept/refuse"
+    },
+    {
+      "id": "C8-same-source-debug",
+      "kind": "round8_same_source_debug",
+      "expected": "an original compiled at optimize 1 or 2 whose only difference is a folded __debug__ constant is refused"
+    },
+    {
+      "id": "C8-nested-constant",
+      "kind": "round8_nested_constant",
+      "expected": "optimized __debug__ constants inside an inner function, lambda or generator are compared and refused"
+    },
+    {
+      "id": "C8-mismatched-operand",
+      "kind": "round8_mismatched_operand",
+      "expected": "an original whose string operand differs from the supplied source is refused"
+    },
+    {
+      "id": "C8-dynamic-export",
+      "kind": "round8_dynamic_export",
+      "expected": "a module-level __getattr__ export is refused"
+    },
+    {
+      "id": "C8-absent-original",
+      "kind": "round8_absent_original",
+      "expected": "clone refuses a source function absent from the namespace before any baseline runs"
+    },
+    {
+      "id": "C8-matching-original-runs",
+      "kind": "round8_matching_original_runs",
+      "expected": "the exact optimize=0 original is accepted and its baseline runs"
     }
   ]
 }

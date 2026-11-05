@@ -1020,35 +1020,60 @@ class CodeSite:
 
 
 def _code_fingerprint(code):
-    """Bytecode of a code object and every nested code object (line tables excluded)."""
-    return (code.co_code, tuple(_code_fingerprint(const) for const in code.co_consts
-                                if isinstance(const, types.CodeType)))
+    """Semantic identity of a code object, recursively (review C8-B1).
 
-
-def _require_unoptimized(module_name, function_name, node, original):
-    """Review C7-B1: cut clones compile with optimize=0, so the original must too.
-
-    Optimized compilation removes assertions and folds __debug__. If that changes
-    this function's bytecode, the supplied original must equal the optimize=0
-    compilation of the same source; otherwise a clone would differ from the
-    original in more than the declared cut, and the run fails closed.
+    Covers the instructions and every table they index: constants (with their
+    exact types and values, so True/False, 0/0.0/-0.0 and strings differ),
+    names, locals, free and cell variables, argument counts, flags and the
+    exception table. Only source positions are excluded (file name, first line
+    and line table), because the same source compiled whole or alone differs
+    there and nowhere else.
     """
-    fn = copy.deepcopy(node)
-    fn.decorator_list = []
-    module = ast.fix_missing_locations(ast.Module(body=[fn], type_ignores=[]))
-    references = []
-    for level in (0, 2):
-        code = compile(module, "<guard-isolation-optimization-reference>", "exec", optimize=level)
-        references.append(next(const for const in code.co_consts
-                               if isinstance(const, types.CodeType) and const.co_name == function_name))
-    unoptimized, optimized = (_code_fingerprint(c) for c in references)
-    if unoptimized == optimized or original is None:
-        # No original in the namespace: nothing to compare. Its uncut baseline
-        # cannot run, so a missing original fails on its own, never as a PASS.
+    def constant(value):
+        if isinstance(value, types.CodeType):
+            return ("code", _code_fingerprint(value))
+        if isinstance(value, (tuple, frozenset)):
+            items = [constant(item) for item in value]
+            return (type(value).__name__, tuple(sorted(items, key=repr) if isinstance(value, frozenset) else items))
+        return (type(value).__name__, repr(value))
+    return (code.co_name, code.co_code, tuple(constant(c) for c in code.co_consts), code.co_names,
+            code.co_varnames, code.co_freevars, code.co_cellvars, code.co_argcount,
+            code.co_posonlyargcount, code.co_kwonlyargcount, code.co_flags, code.co_exceptiontable)
+
+
+def _future_flags(tree):
+    """Compiler flags for the source's own `from __future__ import ...` lines."""
+    import __future__
+    flags = 0
+    for node in tree.body:
+        if isinstance(node, ast.ImportFrom) and node.module == "__future__":
+            for alias in node.names:
+                feature = getattr(__future__, alias.name, None)
+                flags |= getattr(feature, "compiler_flag", 0)
+    return flags
+
+
+def _reference_code(tree, function_name):
+    """The optimize=0 compilation of the supplied source, never inheriting this module's flags."""
+    code = compile(tree, "<guard-isolation-reference>", "exec", optimize=0, dont_inherit=True)
+    return next(const for const in code.co_consts
+                if isinstance(const, types.CodeType) and const.co_name == function_name)
+
+
+def _require_matching_original(module_name, function_name, tree, original):
+    """Reviews C7-B1 and C8-B1: a cut clone may differ from its original only by the cut.
+
+    Clones compile the source at optimize=0 with the source's own future flags,
+    so every directly bound original must be exactly that compilation (whatever
+    its optimization sensitivity). Anything else fails closed. An absent
+    original is refused by clone() before any baseline or cut runs (C8-B2).
+    """
+    if original is None:
         return
-    if not isinstance(original, types.FunctionType) or _code_fingerprint(original.__code__) != unoptimized:
+    if not isinstance(original, types.FunctionType) or (
+            _code_fingerprint(original.__code__) != _code_fingerprint(_reference_code(tree, function_name))):
         raise IsolationError(f"{module_name}.{function_name}: the original is not the optimize=0 compilation of its "
-                             "source (assertions or __debug__ code differ); cut clones would not match it")
+                             "supplied source; cut clones would not match it")
 
 
 class AstGuards:
@@ -1072,8 +1097,14 @@ class AstGuards:
         # assertions that the declared cut never touched.
         if sys.flags.optimize:
             raise IsolationError(f"guard isolation must run without -O/-OO (sys.flags.optimize={sys.flags.optimize})")
+        if "__getattr__" in namespace:
+            # Review C8-B2: a dynamic module export can supply a baseline the
+            # source does not describe; it cannot be verified against the cut.
+            raise IsolationError(f"{name}: a module-level __getattr__ export is unsupported; bind each checked function directly")
+        self.future_flags = _future_flags(self.tree)
         for function_name, node in self.functions.items():
-            _require_unoptimized(name, function_name, node, namespace.get(function_name))
+            if not node.decorator_list:
+                _require_matching_original(name, function_name, self.tree, namespace.get(function_name))
         # Call name -> index of its acceptance predicate. Only the predicate
         # argument is cut; the helper, its code and other arguments remain.
         self.call_predicates = {"require": 0} if call_predicates is None else dict(call_predicates)
@@ -1397,6 +1428,12 @@ class AstGuards:
         return gid
 
     def clone(self, cuts: frozenset[str]):
+        # Review C8-B2: every undecorated source function must be directly bound
+        # to its verified original, or the baseline is not the code being cut.
+        for function_name, node in self.functions.items():
+            if not node.decorator_list and not isinstance(self.namespace.get(function_name), types.FunctionType):
+                raise IsolationError(f"{self.name}.{function_name}: the source function is absent from the supplied "
+                                     "namespace; its baseline cannot be verified against the cut source")
         module = types.ModuleType(self.name)
         namespace = module.__dict__
         namespace.update(self.namespace)
@@ -1455,7 +1492,8 @@ class AstGuards:
                 raise IsolationError(f"AST cuts did not match exactly: {name}")
             tree.decorator_list = []        # do not rerun import-time decorators/caches
             exec(compile(ast.fix_missing_locations(ast.Module(body=[tree], type_ignores=[])),
-                         f"<guard-isolation:{self.name}:{self.source_hash}>", "exec", optimize=0), namespace)
+                         f"<guard-isolation:{self.name}:{self.source_hash}>", "exec", optimize=0,
+                         flags=self.future_flags, dont_inherit=True), namespace)
         return module
 
 

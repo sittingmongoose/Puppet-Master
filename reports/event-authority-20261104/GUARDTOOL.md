@@ -462,3 +462,18 @@ Preflight: **106 GB disk / 19 GiB available RAM**. Heavy checks ran one at a tim
   - `C7-optimized-process`: a subprocess under `python -O` is refused.
   - `C7-clone-keeps-assertions`: the reviewer's exact source; the x-only cut vector is accept / accept / refuse, so the untouched assertion still refuses the y defect.
 - Verification: `python3 scripts/pm_guard_isolation.py --self-test` gives **PASS, 204/204 traps** (201 earlier and 3 new). The census gate passes at 82 classes × 5 positions, the coverage gate passes, and the cross-product is 945 cells with 72 verified per-atom credits. `reports/event-authority-20261105/GUARDTOOL-SELF-TEST.json` is updated.
+
+## Review round 8: findings and responses (lead fix, 2026-11-05)
+
+Sol cycle 8 (`reviews/GUARDTOOL-sol/REVIEW-cycle8.md`) showed the round-7 equality check was incomplete. Fixed by the stream E lead.
+
+- **C8-B1: the fingerprint ignored constants.** `_code_fingerprint()` is now a semantic identity: instructions, typed constants (recursively, so `True`/`False`, `0`/`0.0`/`-0.0` and strings differ), names, locals, free and cell variables, argument counts, flags and the exception table. Only source positions are excluded. `_require_matching_original()` now compares **every** undecorated, directly bound original with `_reference_code()`, the `optimize=0`, `dont_inherit` compilation of the supplied source including its own `__future__` imports, whether or not optimization changes it. A mismatch fails closed.
+- **C8-B2: an absent original was skipped.** `AstGuards` refuses a module-level `__getattr__`. `clone()` refuses, before any baseline or cut runs, when an undecorated source function is not directly bound in the supplied namespace. Clones compile with `optimize=0`, `dont_inherit=True` and the source's own future flags.
+- **Traps (6 new):**
+  - `C8-same-source-debug`: a `__debug__` fold at optimize levels 1 and 2 is refused.
+  - `C8-nested-constant`: the same fold inside an inner function, a lambda or a generator is refused.
+  - `C8-mismatched-operand`: an original whose string operand differs from the supplied source is refused.
+  - `C8-dynamic-export`: a module `__getattr__` is refused.
+  - `C8-absent-original`: `clone()` refuses a source function absent from the namespace.
+  - `C8-matching-original-runs`: the exact original is accepted and its baseline runs.
+- **Self-test:** `python3 scripts/pm_guard_isolation.py --self-test` gives **PASS, 210/210**. The census, coverage and cross-product gates are unchanged at 945 cells and 72 credited.

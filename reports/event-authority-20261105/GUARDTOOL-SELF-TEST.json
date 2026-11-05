@@ -1,9 +1,9 @@
 {
   "status": "PASS",
-  "caught": 204,
-  "trap_count": 204,
-  "old": 201,
-  "new": 3,
+  "caught": 210,
+  "trap_count": 210,
+  "old": 204,
+  "new": 6,
   "implementation_commit": "ec841e41cf272c43c829d6a8996a101b735dec4b",
   "core_fix_commit": "ff7fb58db46861b403abce778960b91301d2a83c",
   "meaning": "Bounded complete-path input-atom cuts; unknown paths and grammar stay unclassified.",
@@ -1102,6 +1102,36 @@
       "id": "C7-clone-keeps-assertions",
       "expected": "an x-only cut clone keeps the untouched assertion: cut vector accept/accept/refuse",
       "caught": true
+    },
+    {
+      "id": "C8-same-source-debug",
+      "expected": "an original compiled at optimize 1 or 2 whose only difference is a folded __debug__ constant is refused",
+      "caught": true
+    },
+    {
+      "id": "C8-nested-constant",
+      "expected": "optimized __debug__ constants inside an inner function, lambda or generator are compared and refused",
+      "caught": true
+    },
+    {
+      "id": "C8-mismatched-operand",
+      "expected": "an original whose string operand differs from the supplied source is refused",
+      "caught": true
+    },
+    {
+      "id": "C8-dynamic-export",
+      "expected": "a module-level __getattr__ export is refused",
+      "caught": true
+    },
+    {
+      "id": "C8-absent-original",
+      "expected": "clone refuses a source function absent from the namespace before any baseline runs",
+      "caught": true
+    },
+    {
+      "id": "C8-matching-original-runs",
+      "expected": "the exact optimize=0 original is accepted and its baseline runs",
+      "caught": true
     }
   ],
   "C6_B1": {
@@ -1127,5 +1157,18 @@
       "C7-clone-keeps-assertions"
     ],
     "fixed_by": "stream E lead (small review fix), round 7"
+  },
+  "C8": {
+    "findings": "reviews/GUARDTOOL-sol/REVIEW-cycle8.md C8-B1 (fingerprint ignored constants) and C8-B2 (module __getattr__ export bypassed the absent-original skip)",
+    "fix": "semantic code fingerprint (instructions, typed constants, names, locals, free/cell vars, arg counts, flags, exception table); every undecorated original must equal the optimize=0 compilation of the supplied source with its own future flags; module __getattr__ refused; clone refuses absent originals; clones compile optimize=0, dont_inherit, source future flags",
+    "traps": [
+      "C8-same-source-debug",
+      "C8-nested-constant",
+      "C8-mismatched-operand",
+      "C8-dynamic-export",
+      "C8-absent-original",
+      "C8-matching-original-runs"
+    ],
+    "fixed_by": "stream E lead (small review fix), round 8"
   }
 }
