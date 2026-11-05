@@ -1,3 +1,162 @@
+# Round 10: deck-2 Card 6 applied
+
+**Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Assessed implementation commit:** `66e99fd527764dd8bdc2399718cba4f5d796f316`. **Starting head:** `2b7af59cd2332bfa2e5f3ce275b47fc8a1530cb7`. This round applies Jared's answers; it is not a review fix.
+
+**Result:** all twelve exact families remain prepared without admission. Card 6 resolves the duplicate survivor/disposition and the two cutoff choices. Membership remains **ABSENT**, retention **PARTIAL**, native execution **NOT_RUN**. No automatic job or Memory-panel button gains runtime approval from this draft. Earlier source-pinned reports below are lineage; their open survivor/cutoff questions and report-only proposals are superseded by this section.
+
+**Jared's verbatim answer:** “i approve all of it”. `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md` records that answer. The presented deck's fast-reply rule maps it to A on every item; the option wording is the deck author's text, not an additional Jared quote. Card 6 source is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md`, SHA-256 `6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30`. DL-444..DL-447 are cited on unlanded `origin/plans/ea-cards2-answers-20261105`; this lane writes no Decision Log entry.
+
+## Items and premise checks
+
+| Item | Current premise and applied behavior | Changed owner locations |
+|---|---|---|
+| **6.a / DL-444** | Section 7.2 still merges eligible identical embed_text_hash memories. Oldest original creation time survives; same-time ties use the unchanging note ID. Preserve every original EvidenceRef and the merge record. Pins remain excluded; skip a merge that pin protection forbids. Existing eligibility is not broadened. | `Plans/assistant-memory-subsystem.md:404`, `:3184`, `:3236`; `Plans/storage-plan.md:29509`, `:29568`; `Plans/Contracts_V0.md:24492`, `:24539` |
+| **6.b / DL-445** | Other eligible originals are archived, retain identities/evidence/versions/survivor links and remain in history. Automatic deletion is forbidden; user deletion only. | Same exact dedup units, plus `Plans/memory_maintenance_contracts.json` approved_policy rows and `scripts/pm_memory_policy.py:48` |
+| **6.c / DL-446** | Monthly summary remains Note-only with the existing monthly grouping. Select only idle **>=90 days AND usefulness <0.10**, separately inside each Project. Create the summary and archive every selected original with refs/versions retained. | `Plans/assistant-memory-subsystem.md:416`; `Plans/storage-plan.md:30037`, `:30183`; `Plans/memory_archive_contracts.json`; `scripts/pm_memory_policy.py:21` |
+| **6.d / DL-447** | Prune/archive remains archive-only and eligible kinds are not narrowed to Notes. Select only idle **>=180 days AND usefulness <0.05**, separately inside each Project. | `Plans/assistant-memory-subsystem.md:418`; `Plans/Contracts_V0.md:24903`, `:25046`; `Plans/memory_archive_contracts.json`; `scripts/pm_memory_policy.py:21` |
+
+For both archive jobs, idle time starts at the later of the last edit and last access, substituting creation independently for each absent value. Compare exact elapsed duration, without rounding down the age or rounding scores. The usefulness ranking remains section 6.3's existing computed value, with captured inputs, per-kind/Done decay and zero for each missing search score. Pins are excluded before scoring. No count trigger or new eligibility condition is introduced.
+
+The entire approved 6.c/6.d option A text is preserved in section 7.2 and in each exact affected family contract, including the no-project rule: if an outside-Project chat later gets its own fully specified/reviewed saved maintenance record and separate recording approval, only that calling chat is evaluated; chats and Projects are never pooled. These choices supply no outside-Project execution permission. AMS-054's scope separation, UCC-085 commands, admission, unresolved operation/result retention, source/CAS/permission/withdrawal and original-start custody gates remain. DL-446/DL-447 answer only DL-403's missing-cutoffs condition; missing authenticated policy binding still refuses `cutoffs_unavailable`. DL-402's archive-only, user-only deletion and pin rules remain. Section 7.2 contains no archive-or-delete wording.
+
+## Exact option and Sources lines inspected
+
+**6.a / DL-444 — deck option A:** Keep the oldest eligible memory by original creation time, breaking a tie by the unchanging note ID. Preserve every original evidence reference and the record of which copies were merged. If pin protection prevents that merge, skip it. You keep the earliest note ID and its history links.
+
+**Sources (verbatim deck line):** `MAIN:Plans/assistant-memory-subsystem.md:398-412`; `DMEM:Plans/assistant-memory-subsystem.md:3156-3174`; `ANS:Plans/Decision_Log.md:4514-4516`; `evidence:reviews/DMEM-sol/REVIEW-astra-2.md:74-80`; `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`.
+
+**6.b / DL-445 — deck option A:** Archive the other eligible originals, preserving their identities, evidence references, versions and links to the survivor. They remain available in history and are never automatically deleted. You see one active memory for the merged group.
+
+**Sources (verbatim deck line):** `MAIN:Plans/assistant-memory-subsystem.md:404-406`; `ANS:Plans/Decision_Log.md:4514-4516`; `RET:Plans/storage-plan.md:17487-17487`; `evidence:reviews/DMEM-sol/REVIEW-astra-2.md:74-80`; `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`.
+
+**6.c / DL-446 — deck option A:** Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+
+**Sources (verbatim deck line):** `ANS:Plans/Decision_Log.md:4514-4532`; `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:709-718`; `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:786-799`; `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`; `MAIN:Plans/assistant-memory-subsystem.md:344-359`; `MAIN:Plans/assistant-memory-subsystem.md:464-481`; `evidence:reviews/cards2-sol/REVIEW.md:173-173`.
+
+**6.d / DL-447 — deck option A:** Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+
+**Sources (verbatim deck line):** `ANS:Plans/Decision_Log.md:4514-4532`; `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:709-718`; `origin/plans/ea-w2-memory-maintenance-20261104@77323e87d65908dbce2ea655ee344b6185a13ff1:reports/event-authority-20261104/DMEM.md:786-799`; `evidence:reviews/DMEM-sol/REVIEW-cycle4.md:3-7`; `MAIN:Plans/assistant-memory-subsystem.md:344-359`; `MAIN:Plans/assistant-memory-subsystem.md:464-481`; `evidence:reviews/cards2-sol/REVIEW.md:173-173`.
+
+## Oracles and one-defect cases
+
+`Plans/memory_card6_policy_fixtures.json` has **123 templates: 35 positives and 88 negatives**. Running each through its exact started/completed family executes **70 positive and 176 negative policy cases**. The archive fixture corpus also appends **24** selection/corpus negatives. Existing fixtures are preserved after removing only the newly added transient snapshot fields and appended cases; no retained event, operation, digest, receipt, schema, registry value or old mutation changes.
+
+- **Duplicate positives:** oldest creation despite recent edits; order independence; equal creation times with stable-ID tie; equal instants with different zone spelling; unselected pinned original remains unchanged. Ref union, original refs, versions, merge history and archived-copy survivor links are checked independently.
+- **Duplicate negatives:** coherently wrong survivor/tie choice updates all dependent lineage/archive/link copies; visible merged copy; missing original; lost survivor/copy evidence; lost version; missing survivor link; changed original metadata; lost current/prior merge evidence; changed pin; pinned/archived/foreign/nonidentical candidates; no-project input; wrong flag types. Each negative has its own defect.
+- **Cutoff positives/refusals:** 89/90 and 179/180 days, one second on each side of the inclusive age boundary, score 0.0999/0.10/0.1001 and 0.0499/0.05/0.0501, exact lower scores, independent missing-edit/access fallbacks, recently edited/accessed originals, second Project, pooled/foreign/no-project inputs, pins, already archived originals, Note-only summary and existing non-Note kinds for prune. Crowding bypasses neither condition; an unselected pin needs no score. String/Boolean/null/array/object scores and malformed timestamp/zone/LF/type forms refuse.
+- **Actual Project join:** successful settlement joins the captured selection corpus to the operation's Project, in addition to checking each selected memory. A complete foreign corpus cannot pass by relabeling its own snapshot alone (`scripts/pm_memory_archive_events.py:181`).
+- **Single-defect accounting:** every new selection/post-state negative enumerates exactly its named failed predicate; input-candidate negatives change one source invariant. Existing archive guard/complement checks remain enabled and cover the appended runtime selection guards. No lane-local proof script was rebuilt. Full shared-tool proof adoption remains a sweep item; this is not a claim that the old lane-local proof now inventories every new assertion.
+- **Failure propagation:** six read-only full-checker probes flip one expected archived flag in a passing new oracle; all exit **1** with the intended assertion, never success.
+
+## Per-family outcome and twelve-criterion self-grade
+
+P=PASS, Q=PARTIAL, A=ABSENT. Criterion order is membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles. Each grade vector below supplies all twelve cells; the JSON provides exact current path/line/quote evidence for every cell.
+
+| Exact family | Final checker exit | New policy positives / negatives | Before P/Q/A | After P/Q/A | Twelve cells |
+|---|---:|---:|---:|---:|---|
+| `memory.dedup_sweep.completed` | 0 | 4 / 19 | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.dedup_sweep.started` | 0 | 4 / 19 | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.index.lexical.rebuild.completed` | 0 | unchanged policy | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.index.lexical.rebuild.started` | 0 | unchanged policy | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.index.semantic.rebuild.completed` | 0 | unchanged policy | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.index.semantic.rebuild.started` | 0 | unchanged policy | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.monthly_summary.completed` | 0 | 14 / 35 | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.monthly_summary.started` | 0 | 14 / 35 | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.prune_archive.completed` | 0 | 17 / 34 | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.prune_archive.started` | 0 | 17 / 34 | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.verification_sweep.completed` | 0 | unchanged policy | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+| `memory.verification_sweep.started` | 0 | unchanged policy | 10/1/1 | 10/1/1 | A P P P P P Q P P P P P |
+
+Totals remain **120 PASS / 12 PARTIAL / 12 ABSENT**. Six policy-affected families close their Card 6 choices without upgrading admission or unresolved retention. The other six families retain their policies and pass the complete checker. Assessment is the implementation commit above; report-only commits add no product change. Independent review remains required.
+
+## Standing checks and Astra classes
+
+1. **Forged/contradictory inputs:** old coherent identity/digest/custody negatives remain; the new complete-foreign-corpus negative checks operation/selection Project agreement, and wrong-survivor negatives rebind every dependent copy.
+2. **Storage metadata:** original uint64 and metadata-only retry suites run unchanged, including exact owner range and bad types. No Storage cap is added.
+3. **History in both directions:** old canonical, compatibility and replay-only history positives still run, with access/withdrawal/forgery refusals. Archive history remains readable without today's cutoff resolver; current selection guards never run on old originals.
+4. **One field read two ways:** score comparisons consume captured owner numeric values directly; type checks exclude Boolean/string/container authority. No score is normalized through integer identity code.
+5. **Dormant refs:** existing eager resolution and unresolved-reference negatives run in every applicable family; no schema reference changes.
+6. **Whole-value sizes:** old envelope/operation 16 KiB and SP-337 tests remain. New rich selection snapshots are transient oracle inputs, not additional persisted payload fields or a new storage value.
+7. **Custody on every path:** existing before/commit original-start custody, settled failure, retry, replay, recovery, writer and reader suites remain enabled.
+8. **Masked negatives:** new predicates have isolated negatives; only one new named postcondition fails per invalid output. Shared guard-isolation adoption is pending rather than rebuilding the lane-local proof machinery.
+9. **Honest grades:** admission ABSENT, retention PARTIAL, native NOT_RUN; no native receipt/transaction/flush/crash/backup/GUI/race claim.
+10. **Number spellings:** S1/S2 remain for CV-1100/SP-1100 shared adoption. This round adds no number caps or serializers and changes no existing number function, physical-value normalization or signed-zero rule.
+10a. **Historical write recipes:** S3 remains for SP-1101 shared adoption. The old retained-number/recipe controls run unchanged; no stricter current predicate reaches retained history.
+11. **Types:** old boundary type suites run; new score and dedup flag type negatives refuse. Pins are excluded before scores are read.
+12. **Formats:** reuse the owner's already enforced timestamp grammar; new selection-time missing-zone/LF/empty/wrong-type negatives refuse. No new lane-local format/recipe edition is introduced.
+
+The eleven standing checks also retain current-writer replay-only refusal, canonical Application-key refusal, encoded Project partitions, 16 KiB/SP-337, LF guards, semantic-only retry equality, exact checkpoint-storage joins, nonzero failure exit, eager refs, retained-history access and isolated negatives. The existing full owner numeric/format paragraphs and old generic schemas are byte-preserved.
+
+## Checks, resources and remaining boundaries
+
+| Check | Exit / outcome |
+|---|---|
+| `shard-generate` | 0 / pass |
+| `shard-check` | 0 / pass |
+| `index-generate` | 0 / pass |
+| `index-validate` | 1 / fail: 22 pre-existing failures; no new/removed failures versus fix9/index-validate.json |
+| `scope-audit` | 0 / pass |
+| `derived-scope` | 0 / pass |
+| `failure-propagation` | 0 / pass |
+| `regrade-validation` | 0 / pass |
+| `git diff --check` | 0 / pass |
+
+Index validation is **not a pass**: the same 22 failures from round nine remain, with zero new or removed rows. They are pre-existing invalid ledger records/current-main retention differences; `index-baseline-comparison.json` records the exact comparison. The four edited owners alone change shard directories (231 shard paths); no unrelated document shard is changed. Fifteen currentness inputs were copied and SHA-256 matched before index generation. Generated clock fields are ordinary regeneration output, not byte-preservation claims.
+
+Initial resources were 57 GB free disk and 13 GiB RAM available. An initial verification-sweep checker and a later prune/archive rerun exited 1 at the below-6-GiB resource guard; no product assertion failed. Work paused, checked again after two minutes and resumed at >=7 GiB. A second pre-check pause occurred at 5 GiB; its two-minute recheck found 15 GiB. All final exact-family checks exit 0 and run one family at a time; affected-family reruns and wrong-oracle probes are also serial.
+
+**Stopped questions:** none for 6.a..6.d; the selected options decide this round's needed behavior. Existing unresolved operation/result retention, separate review/admission, no-project edition/recording approval, shared S1/S2/S3 number/history adoption, S4 shared guard-tool adoption, current-main/index reconciliation and native proof remain integration boundaries. No approval is inferred for any of them.
+
+**IDs used:** existing DL-402, DL-403 and applied DL-444..DL-447; existing AMS-100/101, SP-630/631/638/639, CV-650/651/658/659 and ATS-315/316. No new PlanUnit or Decision Log ID. New fixture identifier `pm.memory.card6.policy_fixtures.v1`; existing contract/fixture editions remain. No new serializer or number/format recipe.
+
+No admission, registry append, Decision Log entry, governance reseal, frozen validator edit, main push, pm-mail or subagent. Only explicit lane paths are committed. The pushed sparse worktree `/home/sittingmongoose/pm-worktrees/DMEM-r10` is removed with a literal-path `git worktree remove --force` after delivery.
+
+## Round-ten evidence
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/family-results.json` — SHA-256 `645311b05ca2e14aeecf823f906c91f3b54b3d3da67bac6e9383dc8a35a9833d`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/family-summary.json` — SHA-256 `9d119b67926d87bfcccb32b71874ba36af50e29a97413f1a47ada16ff8534a1b`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/checks.json` — SHA-256 `d178d21b6f414436f3224b0f40971da82cc2eae4148ca0a50445124f2a94bf77`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/failure-propagation.json` — SHA-256 `8b02a3cf10f635deb694706e06987fb4547b3aa8fd4bede31dd9703a2db2df5e`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/scope-audit.json` — SHA-256 `579360c6768029da2b89577ac0f9d1adb089ffb4bfa9e96a81735ebde46a29cb`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/derived-scope.json` — SHA-256 `a23a30ecd73bf749247cc6b6cd04a0c717f4b5ea025388e5625a7cae9fceb7f4`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/card6-source.json` — SHA-256 `022397c651f20b2e0a72ef23895879f836a7a4174e94c59bf18f2fd74e62ba7f`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/currentness-copy.json` — SHA-256 `d01349d9da78cf24aa7d5b41291fcde95d139bac12e0e85063dcd82ca8f7a618`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/shard-generate.json` — SHA-256 `73df7255d834ada9869ec0dab6c959e585d0ea0f2f754c0f5a67268ed6d7a48f`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/shard-check.json` — SHA-256 `a471f4cd29bb5aeac3bf0eb27f14f6ee4baeec39bd3cb3a866aea09768adca69`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/index-generate.json` — SHA-256 `aa0f46ad8bc12c081d3f6084d078f9186f263d19409e47ad7c7ef3cc9a05ab21`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/index-validate.json` — SHA-256 `e892a47d1c826ee5ffa77f7ffc447ff813aa7660bb3378c7fa113f7435ff5162`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/index-baseline-comparison.json` — SHA-256 `62551e1c92ff6101d43b66b548d003fb0e48066cacf8143a59a84c81a8d29a32`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/regrade-validation.json` — SHA-256 `41727cb31afba82b0afd9597b19af0900269cd3930e2810f9b61311bcb2be149`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/initial-family-results.json` — SHA-256 `7589bb0c285fb2bf09bb2aeade38bb733c009b11bbc19a34ddecc3ee8eead0ee`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/pre-final-family-results.json` — SHA-256 `a070977d3932f2b1457fd2f6c106cdbaa738b2524b469e3a347506fbec86aab9`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/resource-pause.json` — SHA-256 `86045268316650dea063f40bdeceb243bbaa833f7718369603969d65def0d8bc`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/resource-stops.json` — SHA-256 `c1ad7df0ee1b11f539044f6ad1875e59d09b097f09fa936ac5e8f14e48f774da`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/changed-paths.json` — SHA-256 `517178e04cd3e05b81c816f8dbe89d7025b9815b914f9cc932b4af6fdec69715`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-monthly_summary-completed.json` — SHA-256 `241a07c21b502bb5d461e737bfbd7db34f4a96ef818ae66281511bead8429b8c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-monthly_summary-started.json` — SHA-256 `aed90e125e707a22b7f7794a94390464114322e87e2e4d483a8b076578bec53a`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-prune_archive-completed.json` — SHA-256 `7887687469be38c40d6a6dd8c848407d3d0bbc2a884a6d2189f2449d3dfa72dc`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-prune_archive-started.json` — SHA-256 `4ba2e463ad1f5d7410c8e9d196ab2bf35d4737b46557650ad8ef548d4ea2da28`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-dedup_sweep-completed.json` — SHA-256 `a2f9c534b8a60ebbcc68c295a680b6713d03f2a531477edb3c14c4204f07432f`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-dedup_sweep-started.json` — SHA-256 `cb68b2fbe23dcb5d80cb241ecd6cc8b8075e23ce172bd72eeecbd288c9f5b68f`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-index-lexical-rebuild-completed.json` — SHA-256 `a835cbe26631a4430a22ab8ab699d497b0bf9320ccf55d440267765d736c8927`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-index-lexical-rebuild-started.json` — SHA-256 `5a8ccd108ef8b58ee06f1beade9761d392d073e5375fa19f70ba73d6c263bec0`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-index-semantic-rebuild-completed.json` — SHA-256 `49a02ea028fb4debb1f7870e3bf439f518f24c9194f8ef62323f9d68cdedcbf9`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-index-semantic-rebuild-started.json` — SHA-256 `0f141633d44d272f2f981dc88aa47bfefbbc8ef892a01a30ca6381e6259ae1cd`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-verification_sweep-completed.json` — SHA-256 `ffb50c1cf49997cbda7b96385a4f037d50363a8389fbf6619a0b1898d74f8bf5`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-verification_sweep-started.json` — SHA-256 `57eee784cf7d97da6b84bcbdb50f59b8bc0f9d56dd8f6def0a6bef082dedfd38`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-monthly_summary-completed-wrong-oracle.stderr` — SHA-256 `acb96496eded79cb16edb40ff629e0c00de76649b4b00deafcd24e054696470b`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-monthly_summary-started-wrong-oracle.stderr` — SHA-256 `acb96496eded79cb16edb40ff629e0c00de76649b4b00deafcd24e054696470b`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-prune_archive-completed-wrong-oracle.stderr` — SHA-256 `9311ca87911e53a8ce33533076a106574b3830c187cf01669ffa38f892b5fa10`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-prune_archive-started-wrong-oracle.stderr` — SHA-256 `9311ca87911e53a8ce33533076a106574b3830c187cf01669ffa38f892b5fa10`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-dedup_sweep-completed-wrong-oracle.stderr` — SHA-256 `9351820caeb92e0a2fbfddc5f3837d89e93155d51b8cfd7e9fd0a739e97046dd`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/r10/memory-dedup_sweep-started-wrong-oracle.stderr` — SHA-256 `9351820caeb92e0a2fbfddc5f3837d89e93155d51b8cfd7e9fd0a739e97046dd`.
+
+Report and self-grade copies are in `drafts/DMEM/`; raw evidence is confined to `r10/`.
+
+---
+
+Earlier source-pinned rounds follow as lineage.
+
 # DMEM fix round 9 — Storage exact uint64 metadata
 
 Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source commit: `13030242c51899636c4d7416f27a16b14e3a8b7a`. Reviewed head: `0b3181409fc5bf24fce64c7d94fe6b3a4cc9c4ee`. Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-cycle8.md` (own-cycle8.json and source-audit.json are under its cycle8-evidence/ directory).
