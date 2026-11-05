@@ -125,4 +125,5 @@ def cases(row):
             'pm-uint schema format, integer-only canonical-JSON domain and exact descriptor re-encoding enforce one numeric representation; opaque descriptor originals are coherent.')
     from pm_dcw_opened_custody_cases import cases as opened_custody_cases
     from pm_dcw_index_cases import cases as index_cases
-    return result + opened_custody_cases(row) + index_cases(row)
+    from pm_dcw_registered_cases import cases as registered_cases
+    return result + opened_custody_cases(row) + index_cases(row) + registered_cases(row)

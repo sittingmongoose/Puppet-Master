@@ -803,8 +803,8 @@ def index_content(index, reader, authority=None):
             envelope(prepared[event['event_type']], event, compatibility=event['replay_policy'] == 'projector_replay_only', authority=authority)
         else:
             owner = registered.get(event['event_type'])
-            require(owner is not None and event['payload_schema_id'] == owner['payload_schema_id'] and
-                    Draft202012Validator(owner['payload_schema'], format_checker=FORMAT).is_valid(event['payload']), 'index_source_dispatch')
+            from pm_dcw_registered_schemas import validate_registered
+            validate_registered(owner, event)
     require(exact_equal(source['source_selection'], index_selection(source, cp['storage_instance_id'])) and
             source['manifest']['selected_segment_generation'] == source['current']['selected_segment_generation'] and
             source['manifest']['survivor_prefix_sha256'] == index_prefix(frames), 'index_source_binding')
