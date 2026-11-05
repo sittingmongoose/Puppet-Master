@@ -535,6 +535,15 @@
           "type": "string",
           "pattern": "^cmd\\.(prd_builder|planning_wizard|plan_compile)\\."
         },
+        "alias_command_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^cmd\\.(prd_builder|planning_wizard|plan_compile)\\."
+          }
+        },
         "command_kind": {
           "enum": [
             "domain_action",
