@@ -1,490 +1,136 @@
 {
-  "round": 12,
-  "source_base": "99d3427562f1af739e1014305af762e888527469",
-  "B5": "fixed; sibling-dependent probes require an independent explicit role review",
-  "B6": "fixed; exact terminal value-constraint citation required for every inventoried key",
+  "round": 13,
+  "source_base": "07cd715a3fb433094e55ea54a653beeb0bd9f35c",
+  "implementation_commit": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
+  "B7": "fixed; role authority is an allowlist of positive conjunctive paths, separate from discovery",
+  "rows_moved_to_explicit_review": [
+    [
+      "Plans/storage_value_registry.json",
+      "json",
+      "/families/84/value_schema/properties/tabs"
+    ],
+    [
+      "Plans/home_workspace_layout_v2.schema.json",
+      "json",
+      "/properties/tabs"
+    ],
+    [
+      "Plans/project_system_contracts.schema.json",
+      "json",
+      "/$defs/project_creation_recovery_context/properties/settled_effects"
+    ],
+    [
+      "Plans/settings_system_contracts.schema.json",
+      "json",
+      "/$defs/values_by_setting_id"
+    ]
+  ],
+  "rows_recited_without_class_change": [
+    {
+      "node": [
+        "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
+      ],
+      "from": "/$defs/SafeRef",
+      "to": "/$defs/SafeParameters/additionalProperties",
+      "role_from": "SafeRef",
+      "role_to": "safe_parameter_value"
+    },
+    {
+      "node": [
+        "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
+      ],
+      "from": "/$defs/SafeRef",
+      "to": "/$defs/SafeParameters/additionalProperties",
+      "role_from": "SafeRef",
+      "role_to": "safe_parameter_value"
+    },
+    {
+      "node": [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
+      ],
+      "from": "/$defs/SafeRef",
+      "to": "/$defs/SafeParameters/additionalProperties",
+      "role_from": "SafeRef",
+      "role_to": "safe_parameter_value"
+    }
+  ],
   "inventory": {
     "status": "pass",
     "nodes": 233,
     "storage_nodes": 133,
     "other_owner_nodes": 79,
-    "wildcard_non_timestamp_nodes": 7,
-    "wildcard_non_timestamp_role_nodes": 14,
-    "unclassified_nodes": 0,
-    "failures": []
+    "wildcard_non_timestamp_nodes": 3,
+    "wildcard_non_timestamp_role_nodes": 18,
+    "unclassified_nodes": 0
   },
-  "rows_moved_to_explicit_review": 5,
   "selftest": {
-    "status": "pass",
     "cases": 13372,
     "case_passes": 13372,
-    "integration_checks": 227,
-    "passed_checks": 227
+    "checks": 287,
+    "failed_checks": []
   },
-  "targeted_probes": 48,
-  "coherent_full_negatives": 2,
-  "original_full_negatives": 2,
-  "runtime": {
-    "valid_preloaded": 133,
-    "on_demand_refused": 133,
-    "callback_calls": 0,
-    "escapes": 0
-  },
-  "earlier_gate_controls": {
-    "injections_refused": 36,
-    "inventory_mutations_refused": 5,
-    "extended_mutation_gate_selftest_pairs_refused": 7,
-    "evidence_attacks": 27,
-    "name_maps": 21,
-    "name_map_value_matches": 252
-  },
-  "graph_controls": 23,
-  "battery": {
-    "samples": 653,
-    "sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3"
-  },
-  "native_authority": "NOT_RUN",
-  "guard_isolation": "SWEEP_PENDING",
-  "family_grading": "N/A",
-  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12",
-  "run_records": [
+  "targeted_probes": 53,
+  "original_probes_same_outcome": 48,
+  "adjacent_refused": 14,
+  "coherent_full_gates": [
     {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/full_git_checks.py",
-        "gate",
-        "foreign-key-full-gate"
-      ],
+      "variant": "irrelevant_if",
       "exit": 1,
-      "elapsed_seconds": 5.787475613993593,
-      "available_bytes": 12748038144,
-      "scratch_bytes": 81610566,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "54875fafd30598479ffebd07c813a52c3c3e8133c4a6d95b6a18bb78b442b2de",
-      "stdout_bytes": 628,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
+      "errors": [
+        "wildcard_role_review_required"
+      ],
+      "plan_blobs": 8968
     },
     {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/full_confirmations.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 13.216916129022138,
-      "available_bytes": 12902944768,
-      "scratch_bytes": 82021066,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "3f30a505f74bab012d5ea3183fe5131de9a1660271da4947f5f9669c7fd15d51",
-      "stdout_bytes": 1397,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/full_git_checks.py",
-        "selftest"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 480.9798693729972,
-      "available_bytes": 13459701760,
-      "scratch_bytes": 81950371,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "cbd0cbf381b139b1ec9b6b6135c984d010d7667fe5c19e4735aed89e86ba8f93",
-      "stdout_bytes": 1805,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/full_git_checks.py",
-        "gate",
-        "original-foreign-key-full-gate"
-      ],
+      "variant": "vacuous_not",
       "exit": 1,
-      "elapsed_seconds": 0.5859619789989665,
-      "available_bytes": 13126234112,
-      "scratch_bytes": 81398506,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "22f6154ccec7a762431bc87527adc8e2f73f02d9ac0c86291609cafdd7d6fe41",
-      "stdout_bytes": 12854,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/original_full_confirmations.py"
+      "errors": [
+        "wildcard_role_review_required"
       ],
-      "exit": 0,
-      "elapsed_seconds": 1.6249506110034417,
-      "available_bytes": 13273346048,
-      "scratch_bytes": 82021066,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "115731768f73180ca81a19fc9611116e55c7d259b61cace82fd9bd925768f632",
-      "stdout_bytes": 1456,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/full_git_checks.py",
-        "gate",
-        "original-sibling-full-gate"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 0.579340972006321,
-      "available_bytes": 13197684736,
-      "scratch_bytes": 81411846,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "7e50d64f2a24211028863d116f449b9fa291c1069ff4d84f8968191d7f98268c",
-      "stdout_bytes": 12854,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/full_git_checks.py",
-        "gate",
-        "sibling-full-gate"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 6.976224601006834,
-      "available_bytes": 12724228096,
-      "scratch_bytes": 81616261,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "d9f5982b32bb4556cce31d2d6c07ad4a017f39364ca58b7f2229595150f3adf6",
-      "stdout_bytes": 659,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle11-replay/targeted_checks.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 1180.8422710640007,
-      "available_bytes": 21110194176,
-      "scratch_bytes": 81950371,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "4678c50ccc20323211054de4017dc89fbdf17bfd67704ac5df953a2a7d7ac7d8",
-      "stdout_bytes": 5309,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/additional_suite.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 738.4127342230058,
-      "available_bytes": 9240137728,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "7f798cd23ee2859e00ea410f1a1caa83b024e71be68d60d38a97c2b1589c4cab",
-      "stdout_bytes": 2504,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/coherent_full.py"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 6.2951180380187,
-      "available_bytes": 11556708352,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "fb0bafabe0216833523ac51adef8210a57e930eaad9fc782474c625cedc3a562",
-      "stdout_bytes": 1031,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/coherent_integrity.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 3.2091188479971606,
-      "available_bytes": 8998998016,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "070379bd8cd2aa1299e6531566c8180d2015b1033a425160ade0b53eb2fd9b3b",
-      "stdout_bytes": 3859,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/pattern_full_confirmation.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 24.82746501499787,
-      "available_bytes": 8200728576,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "72ed72f610631d6967ddfb2e14d28a99850d60e77fcf13a202a6010749f16240",
-      "stdout_bytes": 7587,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/full_git_checks.py",
-        "gate",
-        "equivalent-pattern-full-gate"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 5.82584949399461,
-      "available_bytes": 7716421632,
-      "scratch_bytes": 81615551,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "e9d91134b8935bfb2116c2de38f8dae6854710b74e361ee7e274f49e05bd9cea",
-      "stdout_bytes": 666,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/evidence_attacks.py",
-        "--resume"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 222.1689181959955,
-      "available_bytes": 9111293952,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "4d89d43ec59251c0db384ea9ff8e7ee8d7c6dfa3c1fac2a713e7b1482f0b38e9",
-      "stdout_bytes": 1662,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/exclusion_probes.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 89.61294706299668,
-      "available_bytes": 8352964608,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "55417aac9ad6add290914b4fde07735b88228245556cee986a2163877b035420",
-      "stdout_bytes": 919,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/extended_gate_integrity.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 355.5535434789781,
-      "available_bytes": 12653453312,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "798def756fed719974708245d7ba6fc3e56b82bc401cfae3a495ddcf3512c451",
-      "stdout_bytes": 529,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/full_git_checks.py",
-        "selftest"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 507.5390931989823,
-      "available_bytes": 11283447808,
-      "scratch_bytes": 82021066,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "cbd0cbf381b139b1ec9b6b6135c984d010d7667fe5c19e4735aed89e86ba8f93",
-      "stdout_bytes": 1805,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/full_wildcard_gate.py"
-      ],
-      "exit": 1,
-      "elapsed_seconds": 285.54615340399323,
-      "available_bytes": 6554509312,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "a1be53353474a9a5103e55e4d6d96d174b65f97985c1416e510ca589b846d27a",
-      "stdout_bytes": 1393,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/probes.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 437.8256227020174,
-      "available_bytes": 12195168256,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "1dcd8148b8d9d2c1acf6f089556078d45631373b2c9c75063510b65f8cd67ab9",
-      "stdout_bytes": 3371,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/graph_attacks.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 6.799578671983909,
-      "available_bytes": 11539591168,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "44750d66127840a8233dce7d9602e72f6ee4608352d81496478a46e961f82ece",
-      "stdout_bytes": 2297,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/name_maps_audit.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 10.247484902007272,
-      "available_bytes": 6973489152,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "f91254291617e14b495420a207347e15acfb033e74f74921f11b21d24e924217",
-      "stdout_bytes": 83,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/preservation_audit.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 0.41511157402419485,
-      "available_bytes": 11359567872,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "21447dca41f977d7a02cdb04cc071d4ff8f001c176d62d266c05b01028362380",
-      "stdout_bytes": 1076,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/replay_suite.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 1230.0515148029954,
-      "available_bytes": 12252856320,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "7d64e28c1a0636700a3df64b42ae217c9daec1b5d28fa52cf6d75bd53b9e9945",
-      "stdout_bytes": 6928,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/runtime_adversarial.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 6.501573632995132,
-      "available_bytes": 12326309888,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "339c7ea0f2e7488743448e935750309a6d68782015302f9fa90fc75125adb9b3",
-      "stdout_bytes": 8982,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/runtime_probes.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 29.04244853099226,
-      "available_bytes": 13233311744,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "ab26f4dfb2381eec203c65183150b015ffaf8cc088b7dbb3bb0307baf1aca519",
-      "stdout_bytes": 108,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/injected_selftests.py",
-        "empty-citations"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 2.191984656994464,
-      "available_bytes": 9488068608,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "4524644239f218906f1fd4d09832fb1292569e992dbe1b1544d5fb5013de2458",
-      "stdout_bytes": 72443,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/injected_selftests.py",
-        "pattern"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 24.13946700899396,
-      "available_bytes": 10897031168,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "9cf3f356673512556a1f8fb5d9ffc69fb2b15f299739aedca60a701e2b540d6c",
-      "stdout_bytes": 1245,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
-    },
-    {
-      "command": [
-        "/tmp/numrule-fix12/venv/bin/python",
-        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/supplemental_runtime.py"
-      ],
-      "exit": 0,
-      "elapsed_seconds": 6.204102226998657,
-      "available_bytes": 11924549632,
-      "scratch_bytes": 81954502,
-      "head": "99d3427562f1af739e1014305af762e888527469",
-      "stdout_sha256": "6dab62e4c41eb8992d9f330519fd52bf30c2561c7c0c4b45e73ef3b212b483ba",
-      "stdout_bytes": 2177,
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stderr_bytes": 0
+      "plan_blobs": 8968
     }
   ],
-  "implementation_commit": "263a9970a8c6783c571d83ce38f68f436a87672f",
+  "earlier_full_gates": [
+    {
+      "name": "sibling-full-gate",
+      "exit": 1,
+      "errors": [
+        "wildcard_role_review_required"
+      ]
+    },
+    {
+      "name": "foreign-key-full-gate",
+      "exit": 1,
+      "errors": [
+        "wildcard_role_evidence_changed",
+        "wildcard_role_review_required"
+      ]
+    }
+  ],
+  "original_literal_gates": [
+    {
+      "name": "original-sibling-full-gate",
+      "exit": 1
+    },
+    {
+      "name": "original-foreign-key-full-gate",
+      "exit": 1
+    },
+    {
+      "name": "original-coherent-bypass-full-gate",
+      "exit": 1
+    }
+  ],
+  "earlier_controls": {
+    "runtime_valid_preloaded": 133,
+    "runtime_on_demand_refused": 133,
+    "gate_injections_refused": 25,
+    "extended_pairs": 23,
+    "evidence_attacks": 27,
+    "name_maps": 21,
+    "full_wildcard_failures": 4,
+    "graph_controls": 23
+  },
   "preservation": {
     "owner_prose": {
       "checked": 3774,
@@ -510,63 +156,8 @@
       "checked": 35,
       "changed": []
     },
-    "rows": {
-      "status": "pass",
-      "row_count": 233,
-      "structural_changes": [],
-      "moves": [
-        {
-          "node": [
-            "Plans/shared_runtime_contracts.schema.json",
-            "json",
-            "/$defs/permission_snapshot_record/properties/resolved_permissions"
-          ],
-          "from": "wildcard_non_timestamp",
-          "to": "wildcard_non_timestamp_role"
-        },
-        {
-          "node": [
-            "Plans/storage_value_registry.json",
-            "json",
-            "/families/62/value_schema/properties/resolved_permissions"
-          ],
-          "from": "wildcard_non_timestamp",
-          "to": "wildcard_non_timestamp_role"
-        },
-        {
-          "node": [
-            "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
-            "json",
-            "/$defs/permission_snapshot_record/properties/resolved_permissions"
-          ],
-          "from": "wildcard_non_timestamp",
-          "to": "wildcard_non_timestamp_role"
-        },
-        {
-          "node": [
-            "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
-            "json",
-            "/properties/resolved_permissions"
-          ],
-          "from": "wildcard_non_timestamp",
-          "to": "wildcard_non_timestamp_role"
-        },
-        {
-          "node": [
-            "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
-            "json",
-            "/properties/resolved_permissions"
-          ],
-          "from": "wildcard_non_timestamp",
-          "to": "wildcard_non_timestamp_role"
-        }
-      ],
-      "prior_independent_role_pins_unchanged": 9,
-      "roles_before": 9,
-      "roles_after": 14
-    },
-    "source_base": "99d3427562f1af739e1014305af762e888527469",
-    "head": "263a9970a8c6783c571d83ce38f68f436a87672f",
+    "source_base": "07cd715a3fb433094e55ea54a653beeb0bd9f35c",
+    "head": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
     "changed_paths": [
       "Plans/event_datetime_inventory.json",
       "scripts/pm_event_datetime_admission_checks.py",
@@ -576,14 +167,16 @@
       "scripts/pm_event_datetime_roles.json",
       "scripts/pm_event_datetime_value_probe.py"
     ],
+    "row_moves": "pass",
+    "outside_scope": [],
+    "exclusion_changes": [
+      "Plans/event_datetime_inventory.json"
+    ],
     "status": "pass"
   },
-  "infrastructure_memory_pause": {
-    "reason": "LOW_MEMORY_PAUSE",
-    "available_bytes": 6028156928,
-    "required_bytes": 6442450944,
-    "completed_evidence_cases": 20,
-    "status": "resumed; all 27 evidence cases completed with expected outcomes"
-  },
+  "native_authority": "NOT_RUN",
+  "guard_isolation": "SWEEP_PENDING",
+  "family_grading": "N/A",
+  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13",
   "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change."
 }

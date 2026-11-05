@@ -751,3 +751,100 @@ The key-only foreign same-name definition and the ordinary unrelated foreign cit
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/evidence-attacks.json` | `eefd9c1cf985617ffd22b3750a285b4d8202c6e8e4e5607804591f4b06bf80fb` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/cycle10-replay/extended-gate-integrity.json` | `69055f37001612b59e7351d3a3a3efc8417281a59cb98810ca79c67ec15300ad` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12/memory-pause.json` | `0554d69e8b32eca55378568be48aebcd0755d9e904f049eed379f8fc98ea8acc` |
+
+
+## Recheck cycle 12: findings and responses
+
+**B7 — predicate-only role evidence: fixed in `3e4378f885c83dda88f5e1ea3718e5c5ce643ae3`.** Where: `constraint_paths` and `reviewed_role` in `scripts/pm_event_datetime_value_probe.py`. Why it broke: a value-path walk that followed `if` and `not` let a definition that imposes no constraint authorize a timestamp-only value as a non-timestamp role. Fix: role authority is now an allowlist, not a walk with exceptions.
+
+**The allowlist.** A citation counts for `wildcard_non_timestamp_role` only if every field reaches it through the value schema itself, `$ref`, `$dynamicRef` or `allOf[i]`. Through `anyOf` or `oneOf` it counts only when every branch carries that same citation. Every other keyword earns nothing: `if`, `then`, `else`, `not`, `dependentSchemas`, `dependentRequired`, `dependencies`, `contains`, `prefixItems`, `items`, `additionalItems`, `properties`, `propertyNames`, `patternProperties`, nested `additionalProperties`, `unevaluated*`, `$recursiveRef` and any keyword the walker does not recognise. Each such keyword is recorded in `value_evidence.role_authority[].unproven`, and the row routes to `wildcard_role_review_required`. Annotations and subschema-free assertions (`type`, `pattern`, `minLength` and the like) route nothing.
+
+**Discovery stays separate.** `wildcard_probe` still walks everything it needs to preload the resolver and still records `value_constraint_paths`. Those paths carry no non-timestamp authority. They are used only to bind a timestamp review (`other_owner_observation`), which claims no exemption, so the cycle-11 timestamp-positive controls keep their outcomes.
+
+**Three additions beyond the brief's list, each closing the same defect class.**
+
+| Addition | Why it is needed | Effect |
+|---|---|---|
+| Whole-constraint check on any timestamp-accepting value | `allOf: [STAMP, {$ref: C}]` and `{$ref: C, pattern: STAMP}` have a literal positive path to `C`, yet their language is timestamp-only. Citing the value schema itself is also a positive path. | Once a value accepts any battery timestamp, a non-timestamp role refuses if the proven closure holds a same-instance `if`, `then`, `else`, `not` or unknown keyword, or any object-scope non-positive keyword. Member-only keywords inside a cited definition stay allowed because they never decide a string's acceptance. |
+| `timestamp_only_nodes`, a refusal-only guard for FIX11's rule that a bare timestamp shape can only be a timestamp row | The rule had no enforcement once a role record existed: a record could cite a bare timestamp pattern directly. | Each proven node runs through the real validator against the battery and 16 fixed non-timestamp strings. A node that accepts a timestamp and refuses all 16 refuses the role. These strings can only refuse, never classify or authorize. A schema written to accept one of the 16 passes this guard and still needs its pinned review, so this is not a proof of correct human judgement. |
+| Dialect-exact paths | Draft 7 and earlier ignore `$ref` siblings, and `$dynamicRef` does nothing before 2020-12. A walker reading them literally would credit a constraint the validator never applies. | Only keywords the selected dialect implements count, and legacy `$ref` siblings are dropped. |
+
+**Automatic credit.** `wildcard_non_timestamp` now also needs `automatic_credit`: every battery sample refused, no sibling dependency, and no unproven keyword for any field. A value schema that accepts a timestamp and has no record stays `other_owner_observation`, the safe direction, exactly as before.
+
+**Rows moved (4 of 233): automatic to explicit review.** No row was relabelled to stay automatic.
+
+| Row | Move | Reason |
+|---|---|---|
+| `storage_value_registry.json` `/families/84/value_schema/properties/tabs` | automatic `wildcard_non_timestamp` → explicit `wildcard_non_timestamp_role`, role `workspace_tab_record` | The value schema carries properties, additionalProperties and allOf if/then rules, which earn no automatic credit. Values are tab record objects. |
+| `home_workspace_layout_v2.schema.json` `/properties/tabs` | automatic `wildcard_non_timestamp` → explicit `wildcard_non_timestamp_role`, role `workspace_tab_record` | The value schema carries properties, additionalProperties and allOf if/then rules, which earn no automatic credit. Values are tab record objects. |
+| `project_system_contracts.schema.json` `/$defs/project_creation_recovery_context/properties/settled_effects` | automatic `wildcard_non_timestamp` → explicit `wildcard_non_timestamp_role`, role `settled_effect_record` | The value schema carries properties and additionalProperties, which earn no automatic credit. Values are closed objects. |
+| `settings_system_contracts.schema.json` `/$defs/values_by_setting_id` | automatic `wildcard_non_timestamp` → explicit `wildcard_non_timestamp_role`, role `setting_value` | The setting_value union carries items, propertyNames and additionalProperties, which earn no automatic credit. The setting_id key grammar refuses both field names. |
+
+**Rows re-cited with no class change (3).** Each `SafeParameters` row cited `/$defs/SafeRef`, which is one branch of `oneOf [SafeRef, boolean, integer, null]`. That citation no longer counts, because three branches do not carry it. Each record now cites its complete value schema under the role `safe_parameter_value`, with the value-schema fingerprints unchanged.
+
+| Row | Old citation | New citation |
+|---|---|---|
+| `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters` | `/$defs/SafeRef` | `/$defs/SafeParameters/additionalProperties` |
+| `Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters` | `/$defs/SafeRef` | `/$defs/SafeParameters/additionalProperties` |
+| `Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters` | `/$defs/SafeRef` | `/$defs/SafeParameters/additionalProperties` |
+
+**Totals.** 233 row keys unchanged: 133 Storage + 79 other-owner + 3 automatic non-timestamp + 18 explicit roles, 0 unclassified. Full gate status `pass`. All 18 role pins are independent of the regenerated inventory.
+
+**B7 reproductions (coherent recomputed fingerprints and source-derived pin, through the complete Git-backed gate).**
+
+| Variant | Full gate | Errors |
+|---|---|---|
+| irrelevant_if | exit 1 | `wildcard_role_review_required` |
+| vacuous_not | exit 1 | `wildcard_role_review_required` |
+
+Each variant's record fingerprint matches, and its inventory checksum equals its source-derived pin, so neither refusal comes from stale evidence. The gate refuses at inventory validation, before its whole-tree scan. The baseline gate is the run that scans all 8,968 committed Plans blobs, and it passes. The value language is unchanged: the closed-graph validator still accepts the timestamp and refuses `resource-id`. The production constructor refuses admission. The byte-for-byte cycle-12 bypass input also fails. With the false record removed, the same schema is a passing timestamp row.
+
+**Earlier full-gate reproductions (fresh coherent inputs).**
+
+| Reproduction | Full gate | Errors |
+|---|---|---|
+| sibling-full-gate | exit 1 | `wildcard_role_review_required` |
+| foreign-key-full-gate | exit 1 | `wildcard_role_evidence_changed`, `wildcard_role_review_required` |
+
+The literal old inputs also fail: original-sibling-full-gate, original-foreign-key-full-gate, original-coherent-bypass-full-gate.
+
+**Controls.**
+
+| Control | Result |
+|---|---|
+| Direct, `$ref`, `$dynamicRef`, `allOf`, `$ref` with a length sibling, `anyOf`/`oneOf` with every branch, whole-union citation, map-level `allOf` and every-branch `anyOf`, implicit true | All pass (self-test `datetime_role_authority_accepts_*`). |
+| 35 refused routes: both B7 variants, each non-positive keyword as the only route, object-scope forms, partial unions, timestamp conjuncts, whole-value timestamp citations, legacy-dialect forms | All fail with `wildcard_role_review_required` and a coherent fingerprint (self-test `datetime_role_authority_refuses_*`). |
+| Automatic credit | Six non-allowlisted values withheld; three clean values kept. |
+| Cycle-11 and cycle-12 probes | 48 of the 48 original probes keep their exact gate outcome. 5 added probes cover the four new records and one new referenced target; all fail on their stale pins. |
+| Adjacent cycle-12 checks | 14 of 14 refuse with `wildcard_role_review_required`. `irrelevant_if` and `vacuous_not` refuse with that error alone. |
+| Earlier cycle-10 controls | 133 valid preloaded routes and 133 on-demand refusals; 25 scanner and inventory injections refused; 23 gate/self-test mutation pairs refused; 27 evidence attacks as expected; 21 name maps; 4 injected wildcard omissions fail against all committed Plans blobs; 23 graph controls. |
+
+**Self-test.** Exit 0: 13372 of 13372 cases, 287 of 287 integration checks (60 added). No case changed. `datetime_battery_21_name_maps` now asserts 3 automatic and 18 reviewed rows.
+
+**Scope.** Changed: the probe, inventory helper, inventory schema (evidence fields only), admission checks, role records, inventory, the inventory's derived exclusion pin and this report set. Unchanged by Git blob: 3774 owner Markdown files, 517 pinned product schemas, 3299 generated shard/index files, the number implementation, corpus and registry inputs, and the date-time predicates and battery. Native authority remains NOT_RUN. Guard isolation remains SWEEP_PENDING. No family is graded.
+
+**Limits.**
+- The role records are explicit human reviews: the gate binds them to exact source and value paths, but cannot prove the reviewer's judgement of a whole-value citation.
+- `$dynamicRef` is resolved exactly from the row's own resource. An outer resource in another document could rebind a dynamic anchor, which this row-level proof does not model.
+- The battery remains a finite trigger. A value accepting only timestamps outside its 653 samples does not fire it. This is FIX11's accepted boundary and is not changed here.
+
+**Execution.** Checkers ran serially from fresh driver copies. Adaptations are listed in the evidence README. Full-tree checks used the retained Git Path adapter (I/O only) over all committed Plans blobs.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/results.json` | `33ff7f8a97acbc5409562e9cefbbe98fd0037e759713145a5bf1d4500f7d9687` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/tested-implementation.json` | `41e19dfed7466e253da6ca73f325b5493609c30b7a7058a3091fbb3d90157ae8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/preservation.json` | `422d43e4818aac84fb85a2718f5aeaf4016593515f0343b774f1e9a42586f534` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/row-moves.json` | `32c8e308d4f25fa429ede6f5c8088e96b930b3b80cecb6cc48cb1a967ab8f0dd` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle12-replay/result-assertions.json` | `5595ec433a1d9f605efd5448b04d62f3074c534c999dc48e99bcd4629f83aeda` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle12-replay/coherent-bypass.json` | `d73bcc1b9a1fb0669af4a70f9b6f4555adae9123ead56ffcc64075e631fc8c4b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle12-replay/adjacent-checks.json` | `a082839f21388e0d57149ff0cd863b8247d7ae2706e7358e0d28e16b992caea5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle12-replay/targeted-checks.json` | `baae53493608b43b53126a3cd0867135d0dd9a7d4275e7fdd163ae986ad68ff1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle12-replay/full-selftest.json` | `3e6d73d6a03fa601500568e18e50d38d73f3ac4887ac031f082121bf1aeb6aaf` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle12-replay/full-confirmations.json` | `fbfa03b48b27859047ab18b91bc5f09b733dd9e14e2866dff680763cd4d12f3b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle12-replay/original-full-confirmations.json` | `21e078f5be40c7419605a5c09f5b66d9232340ab6ac3d1bbf0df0b46b9350dc6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle10-replay/evidence-attacks.json` | `7714a5e1b0fe325dd813c819d947fc14284adfa1570fa7acaea3b66e2ff174c4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle10-replay/extended-gate-integrity.json` | `2a779fc98758786201e6a4904d89dd5444ebcafa1f33b4c62b79ea1b0c2d1365` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13/cycle10-replay/full-wildcard-gate.json` | `5ae3b6e3f6c96de9fa0bd79819335839dfd69eb2b44fc4c5b11464b75d4f0e01` |
