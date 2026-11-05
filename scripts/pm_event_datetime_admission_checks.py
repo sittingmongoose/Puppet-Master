@@ -139,6 +139,55 @@ def regression_checks(root):
             mutated["nodes"][0].update(role_evidence={"schema_identity": "WRONG"},
                                         owner_profile="invented-profile", classification="EventRecord")
         checks["datetime_inventory_rejects_" + name] = bool(inv.validate_inventory(mutated, root))
+    # B3: each mutation keeps its content checksum coherent. Rejection must
+    # come from field/value authority, not merely an out-of-date checksum.
+    coordination = next(r for r in inventory["nodes"] if
+        r["path"] == "Plans/coordination_event_payloads.schema.json" and
+        r["pointer"] == "/$defs/agent_status_updated")
+    for name in ("coherent_wrong_field", "sibling_field_pointer"):
+        mutated = copy.deepcopy(inventory)
+        row = next(r for r in mutated["nodes"] if inv.node_key(r) == inv.node_key(coordination))
+        if name == "coherent_wrong_field":
+            row["citation"] = [{"path": "Plans/Contracts_V0.md", "quote":
+                "This newly authored technical owner unit binds the existing EventRecord envelope "
+                "date_time_string format: date-time to an enforced RFC 3339 section 5.6 date-time "
+                "predicate, with section 5.7 calendar and leap-second restrictions."}]
+        else:
+            document = inv._source_document(root, row, {})
+            pointer = row["pointer"] + "/properties/agent_id"
+            row["citation"] = [{"path": row["path"], "pointer": pointer,
+                                "value": inv.at(document, pointer)}]
+        errors = inv.validate_inventory(mutated, root)
+        refreshed_pin = inv.hashlib.sha256(json.dumps(mutated).encode()).hexdigest()
+        checks["datetime_inventory_rejects_" + name] = (
+            any(e["error"] == "owner_field_schema_evidence_changed" for e in errors) and
+            inv.derived_inventory_pin(mutated, root) != refreshed_pin)
+    with tempfile.TemporaryDirectory(prefix="pm-datetime-map-value-") as temp:
+        scratch = Path(temp)
+        original = next(r for r in inventory["nodes"] if
+            r["path"] == "Plans/section15_browser_program_contracts.schema.json" and
+            r["pointer"] == "/$defs/browser_program/properties/result_schema_dependencies")
+        row = copy.deepcopy(original)
+        document = inv._source_document(root, row, {})
+        inv.at(document, row["pointer"])["additionalProperties"] = {
+            "type": "string", "format": "date-time"}
+        for path, value in ((row["path"], document), (inv.INVENTORY_SCHEMA,
+                json.loads((root / inv.INVENTORY_SCHEMA).read_text()))):
+            file = scratch / path
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_text(json.dumps(value))
+        mutated = inv.source_inventory_projection({**inventory, "nodes": [row]}, scratch)
+        # All fingerprints, exact evidence and the derived pin are refreshed;
+        # only the obsolete non-timestamp classification remains wrong.
+        mutated["nodes"][0]["classification"] = "wildcard_non_timestamp"
+        errors = inv.validate_inventory(mutated, scratch)
+        reclassified = copy.deepcopy(mutated)
+        reclassified["nodes"][0]["classification"] = "other_owner_observation"
+        checks["datetime_inventory_rejects_timestamp_map_value"] = (
+            any(e["error"] == "source_value_classification_conflict" for e in errors) and
+            not inv.validate_inventory(reclassified, scratch) and
+            inv.derived_inventory_pin(mutated, scratch) !=
+                inv.hashlib.sha256(json.dumps(mutated).encode()).hexdigest())
     # Closed-graph controls, with both current and frozen Storage targets.
     envelope = json.loads((root / "Plans/event_record.schema.json").read_text())
     corpus = json.loads((root / "Plans/event_number_recipe_corpus.json").read_text())

@@ -335,6 +335,10 @@ def scan(root=ROOT):
             citations = [part.strip().split("#", 1)[0] for part in r["citation"].split(";")]
             if not citations or any(not (root / citation).is_file() for citation in citations):
                 raise ValueError("exclusion_purpose_citation_unreadable: " + r["path"])
+            if r["path"] == INVENTORY:
+                inventory = json.loads((root / INVENTORY).read_text())
+                if r["origin"] != "json" or r["sha256"] != derived_inventory_pin(inventory, root):
+                    raise ValueError("inventory_derived_source_pin_changed")
     except (OSError, ValueError, KeyError, TypeError, RecursionError, ImportError) as error:
         return [], [{"error": "scan_exclusions_invalid", "detail": str(error)}]
 
@@ -460,6 +464,138 @@ def _source_document(root, row, cache):
     return value
 
 
+def _pointer_child(pointer, key):
+    return pointer + "/" + key.replace("~", "~0").replace("/", "~1")
+
+
+def _constraint_sources(root, row, document, pointer, cache, seen=None):
+    """Exact value constraints, following only offline schema refs/combinators.
+
+    Object properties and array items describe nested values, not the map
+    value itself. Do not mistake a tab record's timestamp member for a map
+    whose values are timestamp strings. Cyclic setting-value refs terminate.
+    """
+    from urllib.parse import urldefrag, unquote, urlsplit
+    seen = set() if seen is None else seen
+    key = (row["path"], row["origin"], pointer)
+    if key in seen:
+        return
+    seen.add(key)
+    value = at(document, pointer)
+    yield {"path": row["path"], "pointer": pointer, "value": value}
+    if not isinstance(value, dict):
+        return
+    for keyword in ("$ref", "$dynamicRef", "$recursiveRef"):
+        if keyword not in value:
+            continue
+        uri, fragment = urldefrag(value[keyword])
+        if uri and uri != at(document, row["resource_pointer"]).get("$id"):
+            path = unquote(urlsplit(uri).path).lstrip("/")
+            if not path.startswith("Plans/") or ".." in path.split("/"):
+                raise ValueError("owner evidence reference is not an offline Plans resource")
+            target = {"path": path, "origin": "json", "resource_pointer": ""}
+            target_document = _source_document(root, target, cache)
+        else:
+            target, target_document = row, document
+        if fragment and not fragment.startswith("/"):
+            raise ValueError("owner evidence requires a JSON-pointer reference")
+        target_pointer = target["resource_pointer"] + unquote(fragment)
+        yield from _constraint_sources(root, target, target_document, target_pointer, cache, seen)
+    for keyword in ("allOf", "anyOf", "oneOf"):
+        for index, _ in enumerate(value.get(keyword, [])):
+            yield from _constraint_sources(root, row, document,
+                pointer + "/" + keyword + "/" + str(index), cache, seen)
+    for keyword in ("not", "if", "then", "else"):
+        if keyword in value:
+            yield from _constraint_sources(root, row, document,
+                pointer + "/" + keyword, cache, seen)
+
+
+def _timestamp_constraint(value):
+    """Recognize timestamp formats/patterns on this value, not nested members."""
+    if not isinstance(value, dict):
+        return False
+    if value.get("format") == "date-time":
+        return True
+    pattern = _JSON_U_ESCAPE.sub(lambda m: chr(int(m.group(1), 16)), value.get("pattern", ""))
+    # Include the local Z-only timestamp constraint as well as full calendar
+    # patterns. Generic identifier / non-secret-reference patterns are not
+    # timestamp declarations merely because they accept a timestamp spelling.
+    return bool(re.search(r"(?:\[0-9\]|\\d)\{4\}", pattern) or
+                re.search(r"(?:Z|z|\[Zz\]|\[zZ\])(?:\$|\\Z)$", pattern))
+
+
+def source_owner_evidence(row, document, root=ROOT, cache=None):
+    """Recompute field/value pointers and exact constraints from this source.
+
+    Named observations retain their actual schema, including unformatted
+    string fields: evidence adds no timestamp predicate. Wildcards carry no
+    timestamp profile and must not have timestamp-string value constraints.
+    """
+    cache = {} if cache is None else cache
+    node = at(document, row["pointer"])
+    fields = declarations(node)
+    named = set(fields).intersection(node.get("properties", {}))
+    citations = []
+    if named:
+        if named != set(fields):
+            raise ValueError("mixed named/wildcard owner evidence needs classification")
+        for field in fields:
+            pointer = row["pointer"] + "/properties/" + field
+            citations.extend(_constraint_sources(root, row, document, pointer, cache))
+        classification = ("source_lineage_schema_patch" if
+                          row["classification"] == "source_lineage_schema_patch" else
+                          "other_owner_observation")
+    else:
+        if not ("propertyNames" in node or "patternProperties" in node):
+            raise ValueError("non-named declaration is not a wildcard value map")
+        classification = "wildcard_non_timestamp"
+        citations.append({"path": row["path"], "pointer": row["pointer"], "value": node})
+        value_pointers = set()
+        for field in fields:
+            patterns = [pattern for pattern in node.get("patternProperties", {})
+                        if re.search(pattern, field)]
+            if patterns:
+                value_pointers.update(_pointer_child(row["pointer"] + "/patternProperties", p)
+                                      for p in patterns)
+            elif "additionalProperties" in node:
+                value_pointers.add(row["pointer"] + "/additionalProperties")
+        for pointer in sorted(value_pointers):
+            constraints = list(_constraint_sources(root, row, document, pointer, cache))
+            if any(_timestamp_constraint(c["value"]) for c in constraints):
+                classification = "other_owner_observation"
+            citations.extend(constraints)
+    # Shared ref targets can occur in both fields; keep deterministic evidence.
+    return classification, list({(c["path"], c["pointer"]): c for c in citations}.values())
+
+
+def source_inventory_projection(inventory, root=ROOT):
+    """Rebuild source-derived assertions before hashing the inventory pin.
+
+    Storage owner citations remain reviewed CV-253/CV-1101 authority. Other
+    rows derive their evidence and classification solely from their own source.
+    The exclusion checksum cannot authenticate a changed inventory assertion.
+    """
+    import copy
+    projected, cache = copy.deepcopy(inventory), {}
+    for row in projected["nodes"]:
+        document = _source_document(root, row, cache)
+        resource, node = at(document, row["resource_pointer"]), at(document, row["pointer"])
+        row.update(fields=list(declarations(node)), resource_id=resource.get("$id"),
+                   resource_sha256=digest(resource), node_sha256=digest(node),
+                   role_evidence={"resource_title": resource.get("title"),
+                                  "schema_identity": node.get("properties", {}).get("schema_id"),
+                                  "required": node.get("required", [])})
+        if row["profile"] != "storage_utc_z":
+            row["classification"], row["citation"] = source_owner_evidence(row, document, root, cache)
+            row.pop("owner_profile", None)
+    return projected
+
+
+def derived_inventory_pin(inventory, root=ROOT):
+    return hashlib.sha256(json.dumps(source_inventory_projection(inventory, root)).encode()).hexdigest()
+
+
 def validate_inventory(inventory, root=ROOT):
     """Validate schema, structural assertions and owner evidence before use."""
     from jsonschema import Draft202012Validator
@@ -487,11 +623,7 @@ def validate_inventory(inventory, root=ROOT):
             fail("storage_owner_missing")
         if not row["owner"].strip():
             fail("owner_empty")
-        if not storage and row.get("owner_profile") not in (
-                "date-time", "coordination record timestamp profile"):
-            fail("other_owner_profile_invalid")
         quote_names_profile = False
-        effective_profile = "storage_utc_z" if storage else row.get("owner_profile", "")
         for citation in row["citation"]:
             try:
                 source = root / citation["path"]
@@ -504,17 +636,23 @@ def validate_inventory(inventory, root=ROOT):
                         texts[citation["path"]] = decode_text(source.read_bytes())
                     quote = citation["quote"]
                     valid = len(quote.split()) >= 2 and quote in texts[citation["path"]]
-                    quote_names_profile |= valid and effective_profile in quote
+                    quote_names_profile |= valid and "storage_utc_z" in quote and "CV-253" in quote
                 if not valid:
                     fail("classification_citation_changed", citation=citation)
             except (OSError, ValueError, KeyError, IndexError, TypeError):
                 fail("classification_citation_unreadable", citation=citation)
-        if not quote_names_profile:
+        if storage and not quote_names_profile:
             fail("owner_profile_quote_missing")
         try:
             document = _source_document(root, row, documents)
             resource = at(document, row["resource_pointer"])
             node = at(document, row["pointer"])
+            if not storage:
+                classification, citations = source_owner_evidence(row, document, root, documents)
+                if row["classification"] != classification:
+                    fail("source_value_classification_conflict")
+                if row["citation"] != citations:
+                    fail("owner_field_schema_evidence_changed")
             if row["classification"] == "source_lineage_schema_patch":
                 match = re.fullmatch(r"/documents/([0-9]+)/changes/[0-9]+/(?:before|after)", row["pointer"])
                 if match is None or "documents" not in document or resource.get("$id"):
@@ -552,8 +690,8 @@ def validate_inventory(inventory, root=ROOT):
                 if selector in profiles and profiles[selector] != row["profile"]:
                     fail("conflicting_resource_field_profile")
                 profiles[selector] = row["profile"]
-        except (OSError, ValueError, KeyError, IndexError, TypeError):
-            fail("inventory_source_unreadable")
+        except (OSError, ValueError, KeyError, IndexError, TypeError) as error:
+            fail("inventory_source_unreadable", detail=str(error))
     return errors
 
 
@@ -584,8 +722,11 @@ def check_inventory(root=ROOT):
             if expected_by_key[key].get(name) != value:
                 errors.append({"error": "inventory_node_changed", "node": list(key), "field": name})
     counts = Counter(row.get("profile", "unclassified") for row in expected)
+    wildcard_count = sum(row["classification"] == "wildcard_non_timestamp" for row in expected)
     return {"status": "fail" if errors else "pass", "nodes": len(actual),
-            "storage_nodes": counts["storage_utc_z"], "other_owner_nodes": counts["owner_schema"],
+            "storage_nodes": counts["storage_utc_z"],
+            "other_owner_nodes": counts["owner_schema"] - wildcard_count,
+            "wildcard_non_timestamp_nodes": wildcard_count,
             "unclassified_nodes": len(actual_by_key.keys() - expected_by_key.keys()), "failures": errors}
 
 
