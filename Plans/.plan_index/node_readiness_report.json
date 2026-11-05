@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18750,
+    "depends_on_edge_count": 19072,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21958,
-    "node_count": 7422,
+    "edge_count": 22280,
+    "node_count": 7484,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T01:50:32Z",
+  "generated_at_utc": "2026-11-05T05:35:25Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -5291,8 +5291,8 @@
         "source_location": {
           "heading": "BRS-011 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 961,
-          "line": 963,
+          "heading_line": 1543,
+          "line": 1545,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5357,8 +5357,8 @@
         "source_location": {
           "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
           "heading_level": 3,
-          "heading_line": 1012,
-          "line": 1014,
+          "heading_line": 1594,
+          "line": 1596,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5368,8 +5368,8 @@
         "source_location": {
           "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
           "heading_level": 3,
-          "heading_line": 1055,
-          "line": 1057,
+          "heading_line": 1637,
+          "line": 1639,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5379,8 +5379,8 @@
         "source_location": {
           "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
           "heading_level": 3,
-          "heading_line": 1131,
-          "line": 1133,
+          "heading_line": 1713,
+          "line": 1715,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5390,8 +5390,8 @@
         "source_location": {
           "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
           "heading_level": 3,
-          "heading_line": 1289,
-          "line": 1291,
+          "heading_line": 1871,
+          "line": 1873,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5401,8 +5401,8 @@
         "source_location": {
           "heading": "BRS-030 — Verify depth and plan resolution (2026-09-27)",
           "heading_level": 2,
-          "heading_line": 1917,
-          "line": 1925,
+          "heading_line": 2499,
+          "line": 2507,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5412,8 +5412,8 @@
         "source_location": {
           "heading": "BRS-031 - Background Backup Capture And The Shown Loss Window",
           "heading_level": 3,
-          "heading_line": 1980,
-          "line": 1982,
+          "heading_line": 2562,
+          "line": 2564,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5423,8 +5423,8 @@
         "source_location": {
           "heading": "BRS-032 - New Project backup choice and first policy",
           "heading_level": 3,
-          "heading_line": 2048,
-          "line": 2050,
+          "heading_line": 2630,
+          "line": 2632,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5434,8 +5434,8 @@
         "source_location": {
           "heading": "BRS-033 - Archive pause, app custody and conversion-aware restore",
           "heading_level": 3,
-          "heading_line": 2130,
-          "line": 2132,
+          "heading_line": 2712,
+          "line": 2714,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -31537,8 +31537,8 @@
         "source_location": {
           "heading": "RAS-011 - Remote Link Test Normalization-Only Alias",
           "heading_level": 3,
-          "heading_line": 777,
-          "line": 779,
+          "heading_line": 2279,
+          "line": 2281,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -31548,8 +31548,8 @@
         "source_location": {
           "heading": "RAS-012 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 865,
-          "line": 867,
+          "heading_line": 2367,
+          "line": 2369,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -31559,8 +31559,8 @@
         "source_location": {
           "heading": "RAS-013 - Remote-Link Test Pre-Dispatch Normalization",
           "heading_level": 3,
-          "heading_line": 916,
-          "line": 918,
+          "heading_line": 2418,
+          "line": 2420,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -31570,8 +31570,8 @@
         "source_location": {
           "heading": "RAS-014 - Route-first discovery and pairing for an existing Puppet Master",
           "heading_level": 3,
-          "heading_line": 973,
-          "line": 975,
+          "heading_line": 2475,
+          "line": 2477,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -31581,8 +31581,8 @@
         "source_location": {
           "heading": "RAS-015 - PM-owned Go tsnet connector, durable authorization, and private-route replacement",
           "heading_level": 3,
-          "heading_line": 1132,
-          "line": 1134,
+          "heading_line": 2634,
+          "line": 2636,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -35376,8 +35376,8 @@
         "source_location": {
           "heading": "SRV-011 - Trusted Client Management Command Closure",
           "heading_level": 3,
-          "heading_line": 1170,
-          "line": 1172,
+          "heading_line": 2852,
+          "line": 2854,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35387,8 +35387,8 @@
         "source_location": {
           "heading": "SRV-012 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1242,
-          "line": 1244,
+          "heading_line": 2924,
+          "line": 2926,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35398,8 +35398,8 @@
         "source_location": {
           "heading": "SRV-013 - Backup continuity and remote-endpoint provenance",
           "heading_level": 3,
-          "heading_line": 1297,
-          "line": 1299,
+          "heading_line": 2979,
+          "line": 2981,
           "path": "Plans/Server_System.md"
         }
       },
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7422,
+  "plan_unit_count": 7484,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2743,
+      "high": 2805,
       "low": 9,
       "medium": 30,
       "standard": 4640
@@ -42939,6 +42939,7 @@
       "event_authority_checkpoint_drift": 2,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
+      "event_authority_identity_custody_or_replay": 62,
       "event_authority_payload_depth_drift": 1,
       "event_authority_registration_checkpoint_drift": 1,
       "event_authority_seal_check_drift": 1,
@@ -45863,7 +45864,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7266,
       "retired": 195,
       "superseded": 23
     },
@@ -45893,7 +45894,7 @@
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
-      "contract": 5,
+      "contract": 67,
       "contract_requirement": 3,
       "data_contract": 8,
       "decision": 175,
@@ -46024,7 +46025,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "8b6ea945950d76f83a5aa741148e3a238e782cb74d36cc575a1817ce566ca944",
+        "expected": "e934c4bc58e1c58bbec95c66ef33c00c71586e4471f59bc58fa903e3e15c0361",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46060,7 +46061,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "c53c48d3acfecbf1b557f7aa0ca115cdd1ab03445609122b8bf1db4ff9f13d43",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46098,6 +46099,34 @@
         "error": "pnc019_source_hash_stale",
         "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Backup_Restore_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Contracts_V0.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Remote_Access_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Server_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage-plan.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.json"
       },
       {
         "bulk_registration_allowed": false,

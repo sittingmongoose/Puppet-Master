@@ -1878,10 +1878,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 30,
+        "False": 32,
         "True": 47
       },
-      "heading_count": 152,
+      "heading_count": 155,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -1993,9 +1993,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7236,
+      "line_count": 7360,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 77,
+      "plan_unit_count": 79,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2073,7 +2073,9 @@
         "ATS-082",
         "ATS-083",
         "ATS-084",
-        "ATS-085"
+        "ATS-085",
+        "ATS-1240",
+        "ATS-1241"
       ],
       "reasoning_tiers": [
         "high",
@@ -2097,6 +2099,7 @@
         "eli5_second_response_or_rewrite",
         "eval_policy_escape_or_false_proof",
         "event_authority_and_false_completion",
+        "event_authority_identity_custody_or_replay",
         "evidence_authority_and_false_completion",
         "false_dap_lifecycle_proof",
         "false_green_home_certification",
@@ -2144,10 +2147,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+      "sha256": "c53c48d3acfecbf1b557f7aa0ca115cdd1ab03445609122b8bf1db4ff9f13d43",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 76,
+        "accepted": 78,
         "superseded": 1
       },
       "title": "Automated Testing System",
@@ -2155,6 +2158,7 @@
         "acceptance_contract": 3,
         "acceptance_gate": 6,
         "constraint": 1,
+        "contract": 2,
         "requirement": 30,
         "schema_contract": 3,
         "validation_contract": 1,
@@ -2179,6 +2183,7 @@
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/coordination_event_admission.json",
         "Plans/coordination_event_contract_fixtures.json",
+        "Plans/event_authority_w3e_oracle_plan.json",
         "Plans/external_research_contract_fixtures.json",
         "Plans/external_research_contracts.schema.json",
         "Plans/forge_backup_tsnet_acceptance.json",
@@ -2551,10 +2556,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 10,
+        "False": 13,
         "True": 23
       },
-      "heading_count": 63,
+      "heading_count": 67,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -2594,9 +2599,9 @@
         "future security adapter registry",
         "future verify dispatcher"
       ],
-      "line_count": 2237,
+      "line_count": 2819,
       "path": "Plans/Backup_Restore_System.md",
-      "plan_unit_count": 33,
+      "plan_unit_count": 36,
       "plan_unit_ids": [
         "BRS-001",
         "BRS-002",
@@ -2613,6 +2618,9 @@
         "BRS-014",
         "BRS-015",
         "BRS-016",
+        "BRS-1400",
+        "BRS-1401",
+        "BRS-1410",
         "BRS-011",
         "BRS-017",
         "BRS-018",
@@ -2650,6 +2658,7 @@
         "destination_partial_write_or_manifest_omission",
         "destructive_restore_or_identity_collision",
         "duplicate_schedule_or_destructive_prune",
+        "event_authority_identity_custody_or_replay",
         "fabricated_recovery_or_unscoped_destructive_consent",
         "false_backup_or_restore_receipt",
         "identity_authority_or_false_completion",
@@ -2669,14 +2678,15 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "3aba3715bcd5efa073c27ecff294644e7980d06db5b0c79dc70039252f19d493",
+      "sha256": "16c1e99e6e7619d10523c1c8e876699ef8b0c967ba108b76650de5a97cf8767e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 33
+        "accepted": 36
       },
       "title": "Backup And Restore System",
       "unit_type_counts": {
         "command_binding": 1,
+        "contract": 3,
         "contract_requirement": 3,
         "integration_contract": 7,
         "migration_requirement": 2,
@@ -2697,6 +2707,7 @@
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_architecture_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_operational_safety_record",
+        "Plans/event_authority_w3e_oracle_plan.json",
         "Plans/event_family_registry.json",
         "Plans/executor_cancellation_contracts/methods.json",
         "Plans/executor_cancellation_contracts/physical-families.json",
@@ -4479,10 +4490,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 285,
+        "False": 305,
         "True": 76
       },
-      "heading_count": 561,
+      "heading_count": 582,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4586,9 +4597,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24468,
+      "line_count": 25729,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 361,
+      "plan_unit_count": 381,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4950,7 +4961,27 @@
         "CV-365",
         "CV-366",
         "CV-367",
-        "CV-368"
+        "CV-368",
+        "CV-1400",
+        "CV-1401",
+        "CV-1402",
+        "CV-1403",
+        "CV-1404",
+        "CV-1405",
+        "CV-1406",
+        "CV-1407",
+        "CV-1408",
+        "CV-1409",
+        "CV-1410",
+        "CV-1411",
+        "CV-1412",
+        "CV-1413",
+        "CV-1414",
+        "CV-1415",
+        "CV-1416",
+        "CV-1417",
+        "CV-1418",
+        "CV-1419"
       ],
       "reasoning_tiers": [
         "high",
@@ -5062,6 +5093,7 @@
         "effective_context_source_truth_confusion",
         "envelope_schema_drift",
         "event_alias_precedence_drift",
+        "event_authority_identity_custody_or_replay",
         "event_catalog_payload_owner_drift",
         "event_envelope_compatibility_break",
         "event_payload_gap",
@@ -5311,16 +5343,17 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "03b09cc13847139ac3c5ead7d952532de3895983c0e8a4be88def5e2b86b963d",
+      "sha256": "90408fde9cb46593d262545b450172ea344312e0f625ff8535c76a6ca0ec4b3f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 361
+        "accepted": 381
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 32,
         "constraint": 58,
         "consumer_requirement": 1,
+        "contract": 20,
         "future_scope_decision": 1,
         "integration_contract": 3,
         "interface_contract": 6,
@@ -5360,6 +5393,7 @@
         "Plans/event_append_receipt_contract_fixtures.json",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_append_receipt_full_value_fixtures.json",
+        "Plans/event_authority_w3e_oracle_plan.json",
         "Plans/event_family_registry.json",
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_created.schema.json",
@@ -16167,10 +16201,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 1,
+        "False": 9,
         "True": 16
       },
-      "heading_count": 44,
+      "heading_count": 53,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/Containers_Registry_and_Unraid.md",
@@ -16195,9 +16229,9 @@
         "future proxy configuration service",
         "future sole Server SSH owner and shared protected-auth broker; no implementation claimed"
       ],
-      "line_count": 1428,
+      "line_count": 2930,
       "path": "Plans/Remote_Access_System.md",
-      "plan_unit_count": 17,
+      "plan_unit_count": 25,
       "plan_unit_ids": [
         "RAS-001",
         "RAS-002",
@@ -16210,6 +16244,14 @@
         "RAS-009",
         "RAS-010",
         "RAS-017",
+        "RAS-1402",
+        "RAS-1403",
+        "RAS-1404",
+        "RAS-1405",
+        "RAS-1406",
+        "RAS-1407",
+        "RAS-1408",
+        "RAS-1409",
         "RAS-011",
         "RAS-012",
         "RAS-013",
@@ -16224,6 +16266,7 @@
         "accidental_public_internal_surface_exposure",
         "command_route_authority_and_runtime_claim_boundary",
         "connect_existing_route_order_or_trust_conflation",
+        "event_authority_identity_custody_or_replay",
         "forked_deployment_or_false_web_parity",
         "full_tailscale_or_serve_mechanics_survive_connector_supersession",
         "public_auth_callback_or_protected_session_bypass",
@@ -16239,15 +16282,16 @@
         "static_remote_contract_promoted_to_wan_readiness",
         "tailscale_identity_or_product_claim_drift"
       ],
-      "sha256": "d8b8af4e4ece810fa877c45eb2b5053b9889db5ff22cedfd7254f807df60fb2b",
+      "sha256": "70c6a7d6a382a14b5a2cf6799b20f04d60ab0b0deb1f2f50ae61a8151fb251ec",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 17
+        "accepted": 25
       },
       "title": "Remote Access System",
       "unit_type_counts": {
         "command_binding": 1,
         "compatibility_disposition": 1,
+        "contract": 8,
         "integration_contract": 3,
         "owner_boundary": 1,
         "requirement": 4,
@@ -16259,6 +16303,7 @@
       "validation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Remote_Access_System.md",
+        "Plans/event_authority_w3e_oracle_plan.json",
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/projects_refresh_command_bindings.json",
@@ -17508,10 +17553,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 3,
+        "False": 12,
         "True": 15
       },
-      "heading_count": 44,
+      "heading_count": 54,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -17539,9 +17584,9 @@
         "future sole Server SSH owner and shared protected-auth broker; no implementation claimed",
         "future trust and session services"
       ],
-      "line_count": 1526,
+      "line_count": 3208,
       "path": "Plans/Server_System.md",
-      "plan_unit_count": 18,
+      "plan_unit_count": 27,
       "plan_unit_ids": [
         "SRV-001",
         "SRV-002",
@@ -17556,6 +17601,15 @@
         "SRV-016",
         "SRV-017",
         "SRV-018",
+        "SRV-1411",
+        "SRV-1412",
+        "SRV-1413",
+        "SRV-1414",
+        "SRV-1415",
+        "SRV-1416",
+        "SRV-1417",
+        "SRV-1418",
+        "SRV-1419",
         "SRV-011",
         "SRV-012",
         "SRV-013",
@@ -17576,6 +17630,7 @@
         "dual_writer",
         "duplicate_backup_writer_or_server_connector_identity_collision",
         "duplicate_command_or_false_currentness",
+        "event_authority_identity_custody_or_replay",
         "execution_or_movement_authority_drift",
         "external_mux_server_ownership_conflict",
         "owner_scope_or_credential_authority_leak",
@@ -17585,14 +17640,15 @@
         "static_evidence_promoted_to_server_readiness",
         "visible_server_action_without_owner_wiring"
       ],
-      "sha256": "62191097669c731086b28f0dd5e7f753cf2501e5d375aba3c33375daccd7b6cb",
+      "sha256": "37a1465108c3f8e617f5fbbbc2ae31f2c6735241bbed3d448121b0f522136822",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 18
+        "accepted": 27
       },
       "title": "Server System",
       "unit_type_counts": {
         "command_binding": 1,
+        "contract": 9,
         "integration_contract": 2,
         "migration_requirement": 1,
         "owner_boundary": 2,
@@ -17607,6 +17663,7 @@
         "Plans/Automated_Testing_System.md",
         "Plans/backup_restore_system_contract_fixtures.json",
         "Plans/backup_restore_system_contracts.schema.json",
+        "Plans/event_authority_w3e_oracle_plan.json",
         "Plans/projects_refresh_command_bindings.json",
         "Plans/remote_access_system_contracts.schema.json",
         "Plans/server_system_contract_fixtures.json",
@@ -18591,10 +18648,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 231,
+        "False": 251,
         "True": 110
       },
-      "heading_count": 817,
+      "heading_count": 838,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18689,9 +18746,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29476,
+      "line_count": 31237,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 341,
+      "plan_unit_count": 361,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19033,7 +19090,27 @@
         "SP-350",
         "SP-351",
         "SP-352",
-        "SP-353"
+        "SP-353",
+        "SP-1400",
+        "SP-1401",
+        "SP-1402",
+        "SP-1403",
+        "SP-1404",
+        "SP-1405",
+        "SP-1406",
+        "SP-1407",
+        "SP-1408",
+        "SP-1409",
+        "SP-1410",
+        "SP-1411",
+        "SP-1412",
+        "SP-1413",
+        "SP-1414",
+        "SP-1415",
+        "SP-1416",
+        "SP-1417",
+        "SP-1418",
+        "SP-1419"
       ],
       "reasoning_tiers": [
         "high",
@@ -19051,6 +19128,7 @@
         "dry_method_provenance_storage_gap",
         "duplicate_first_acknowledgement_or_lost_canonical_receipt_authority",
         "durable_contract_claim_without_physical_family_or_nonpersisted_boundary",
+        "event_authority_identity_custody_or_replay",
         "event_record_storage_boundary_drift",
         "event_source_and_checkpoint_authority_drift",
         "eventrecord_scope_legacy_dedupe_drift",
@@ -19156,10 +19234,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5",
+      "sha256": "39a44d95d986eb6055177a4ab926e59d2872de42a520b63411c4a7c3bf7fa1e4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 337,
+        "accepted": 357,
         "retired": 3,
         "superseded": 1
       },
@@ -19167,6 +19245,7 @@
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "constraint": 4,
+        "contract": 20,
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
@@ -19232,6 +19311,7 @@
         "Plans/event_append_receipt_contract_fixtures.json",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_append_receipt_full_value_fixtures.json",
+        "Plans/event_authority_w3e_oracle_plan.json",
         "Plans/event_family_registry.json",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
@@ -21536,7 +21616,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T23:02:56Z",
+  "generated_at_utc": "2026-11-05T05:35:24Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21544,13 +21624,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3631,
+      "False": 3693,
       "True": 3791
     },
-    "plan_unit_count": 7422,
+    "plan_unit_count": 7484,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7266,
       "retired": 195,
       "superseded": 23
     },
@@ -21580,7 +21660,7 @@
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
-      "contract": 5,
+      "contract": 67,
       "contract_requirement": 3,
       "data_contract": 8,
       "decision": 175,

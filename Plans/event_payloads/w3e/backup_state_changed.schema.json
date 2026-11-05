@@ -1,0 +1,957 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "scope_kind",
+    "project_id",
+    "server_id",
+    "owner_operation_id",
+    "source_custody_ref",
+    "source_evidence_ref",
+    "backup_run_id",
+    "backup_id",
+    "backup_type",
+    "prior_state",
+    "state",
+    "phase_journal_ref",
+    "manifest_ref",
+    "verification_receipt_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.backup.state_changed.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "scope_kind": {
+      "enum": [
+        "application",
+        "project"
+      ]
+    },
+    "project_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "server_id": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+    },
+    "owner_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\u0000-\\u0020\\u007f]"
+      }
+    },
+    "source_custody_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\\u0000-\\u0020\\u007f]"
+      }
+    },
+    "source_evidence_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\u0000-\\u0020\\u007f]"
+      }
+    },
+    "backup_run_id": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+    },
+    "backup_id": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+    },
+    "backup_type": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_type"
+    },
+    "prior_state": {
+      "anyOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_state"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_state"
+    },
+    "phase_journal_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\u0000-\\u0020\\u007f]"
+      }
+    },
+    "manifest_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "verification_receipt_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json",
+  "title": "backup.state_changed 1.0.0 prepared payload",
+  "x-schema-id": "pm.event_payload.backup.state_changed.v1",
+  "x-family-revision": "1.0.0",
+  "description": "Newly authored owner contract; prepared without admission. Runtime and phase-2 semantic oracles are NOT_RUN. The owner_fact definition closes the complete original source snapshot/recipe graph; its SP-337 object remains owner-access controlled. The checkpoint wrapper supports complete externalized body custody.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope_kind": {
+            "const": "project"
+          }
+        },
+        "required": [
+          "scope_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "project_id": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "custody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "owner_operation_id",
+        "source_method",
+        "intent_ref",
+        "before_source_ref",
+        "after_source_ref",
+        "original_owner_result_ref",
+        "semantic_input_ref",
+        "event_id",
+        "producer_semantic_digest",
+        "append_result_ref",
+        "state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.w3e_backup_state_changed_custody.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "source_method": {
+          "const": "BackupCoordinator.backup_phase_commit@1.0.0"
+        },
+        "intent_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "before_source_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "not": {
+                "pattern": "[\\u0000-\\u0020\\u007f]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "original_owner_result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "semantic_input_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "append_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "not": {
+                "pattern": "[\\u0000-\\u0020\\u007f]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "enum": [
+            "pending_append",
+            "settled",
+            "recovery_required"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "settled"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "append_result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "not": {
+                  "pattern": "[\\u0000-\\u0020\\u007f]"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "body_inline",
+        "body_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.w3e_backup_state_changed_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "body_inline": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json#/$defs/checkpoint_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "body_ref": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "blake3_id",
+                "byte_size",
+                "media_type"
+              ],
+              "properties": {
+                "blake3_id": {
+                  "type": "string",
+                  "minLength": 64,
+                  "maxLength": 64,
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "byte_size": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "media_type": {
+                  "const": "application/msgpack"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "body_inline": {
+              "$ref": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json#/$defs/checkpoint_body"
+            },
+            "body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "body_inline": {
+              "type": "null"
+            },
+            "body_ref": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "blake3_id",
+                "byte_size",
+                "media_type"
+              ],
+              "properties": {
+                "blake3_id": {
+                  "type": "string",
+                  "minLength": 64,
+                  "maxLength": 64,
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "byte_size": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "media_type": {
+                  "const": "application/msgpack"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "description": "Physical checkpoint wrapper. Exactly one route: inline logical body, or complete SP-337 MessagePack body reference. Validate and authenticate the resolved body; full stored wrapper and each payload/index part follow SP-337/SP-340 limits."
+    },
+    "history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "payload_ref",
+        "source_custody_ref",
+        "projection_generation_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.w3e_backup_state_changed_history.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "payload_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "source_custody_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "projection_generation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        }
+      }
+    },
+    "owner_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "source_method",
+        "original_operation_id",
+        "immutable_fact_id",
+        "server_id",
+        "scope_kind",
+        "project_id",
+        "before_record",
+        "after_record",
+        "original_result_ref",
+        "source_schema_uri",
+        "source_recipe_ref",
+        "authority_evidence"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.w3e.backup_state_changed.owner_fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "source_method": {
+          "const": "BackupCoordinator.backup_phase_commit@1.0.0"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "immutable_fact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "server_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "not": {
+                "pattern": "[\\u0000-\\u0020\\u007f]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_record": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_run"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_run"
+        },
+        "original_result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "source_schema_uri": {
+          "const": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_run"
+        },
+        "source_recipe_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        },
+        "authority_evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "writer_fence",
+            "permission_or_service_authority",
+            "phase_journal_entry",
+            "capture_barrier",
+            "destination_attempt_set",
+            "verification_result"
+          ],
+          "properties": {
+            "writer_fence": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\\u0000-\\u0020\\u007f]"
+              }
+            },
+            "permission_or_service_authority": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\\u0000-\\u0020\\u007f]"
+              }
+            },
+            "phase_journal_entry": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048,
+                  "not": {
+                    "pattern": "[\\u0000-\\u0020\\u007f]"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "capture_barrier": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048,
+                  "not": {
+                    "pattern": "[\\u0000-\\u0020\\u007f]"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "destination_attempt_set": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048,
+                  "not": {
+                    "pattern": "[\\u0000-\\u0020\\u007f]"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "verification_result": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048,
+                  "not": {
+                    "pattern": "[\\u0000-\\u0020\\u007f]"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "not": {
+                  "pattern": "[\\u0000-\\u0020\\u007f]"
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "description": "All role names are fixed by this family. A nullable role is null only when the exact original source phase legitimately has no such evidence; current phase predicates still require every applicable authentic role. writer_fence and permission_or_service_authority always resolve actual owner authority at original acceptance. Current historical reads authenticate that original provenance and never require present live grant renewal."
+    },
+    "checkpoint_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consumer_id",
+        "publication_revision",
+        "status",
+        "generic_read_token",
+        "last_examined_cursor",
+        "filter_complete",
+        "projection_generation_ref"
+      ],
+      "properties": {
+        "consumer_id": {
+          "const": "projector.w3e.backup_state_changed.history@1.0.0"
+        },
+        "publication_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "status": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "generic_read_token": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "checkpoint_key",
+            "checkpoint_ref",
+            "generation_id",
+            "generation_anchor_sha256",
+            "frontier_revision",
+            "frontier_sha256",
+            "index_dataset_name",
+            "source_selection"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "checkpoint_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkpoint_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "generation_id": {
+              "type": "string",
+              "pattern": "^eig_[0-9a-f]{64}$"
+            },
+            "generation_anchor_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "frontier_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "frontier_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "index_dataset_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "current_ref",
+                "current_bytes_sha256",
+                "selected_segment_generation",
+                "manifest_ref",
+                "manifest_bytes_sha256",
+                "manifest_generation",
+                "recovery_epoch",
+                "manifest_survivor_prefix_sha256",
+                "retained_inventory_sha256",
+                "durable_watermarks_sha256",
+                "excluded_ranges_sha256",
+                "retired_inputs_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "current_ref": {
+                  "const": "storage/seglog/CURRENT"
+                },
+                "current_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "selected_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_ref": {
+                  "const": "storage/seglog/manifest.v1.msgpack"
+                },
+                "manifest_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_survivor_prefix_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retained_inventory_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "durable_watermarks_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "excluded_ranges_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retired_inputs_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        },
+        "last_examined_cursor": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+        },
+        "filter_complete": {
+          "const": true
+        },
+        "projection_generation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
+        }
+      }
+    }
+  }
+}
