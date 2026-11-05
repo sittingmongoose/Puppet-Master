@@ -10,6 +10,10 @@ for(const look of LOOKS) for(const [width,height] of [[1280,900],[740,900],[1280
  tests[`${look} ${width}x${height}`] = async t => {
   Object.assign(t.args,{look,width,height,only:'c-pair',codeOnly:1,depth:1});
   await t.viewport(width,height);
-  for(const [name,run] of Object.entries({empty,cheer,fallback,shelf,studio})) await t.step(name,()=>run(t));
+  for(const [name,run] of Object.entries({empty,cheer,fallback,shelf,studio})) await t.step(name,async()=>{
+   await run(t);
+   const size=await t.page.evaluate(()=>({width:innerWidth,height:innerHeight}));
+   await t.check('requested viewport retained',size.width===width&&size.height===height,JSON.stringify(size));
+  });
  };
 }
