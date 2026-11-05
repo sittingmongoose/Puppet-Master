@@ -154,7 +154,7 @@ The complete per-family lists and mutant SHA-256 values are in `complete-guard-r
 | 6 limits on part of a value | Exact 16,383/16,384/16,385-byte inline/pack controls and byte-integrity negatives; no new stored operation/outbox value. |
 | 7 custody on every path | Every inline/packed fresh write and retained resolver exercises full original custody; source receipt/authentication adapters remain synthetic assumptions, not native certification. |
 | 8 masked negatives | Complete table and uncached own-rule run above, including fresh packs, rebound checkpoint observations, digest and ordinal witnesses and named forwarded checks. |
-| 9 inflated grades | Only the three oracle cells upgrade; 228 cells and 718 exact excerpts checked. Membership ABSENT and native NOT_RUN remain explicit. |
+| 9 inflated grades | Only the three oracle cells upgrade; 228 cells and 677 exact excerpts checked. Membership ABSENT and native NOT_RUN remain explicit. |
 | 10 numeric spellings | Shared current boundary refuses integral floats/exponents/signed float zero before hashing or packing; all nineteen, every commitment-bearing domain and genuine retained history are covered. |
 | 11 confused types | 12,831 raw assertions across EventRecord, payload, receipt, custody/result and checkpoint/token schemas; helper flag and untyped snapshot/copy witnesses are causal. |
 
@@ -183,7 +183,7 @@ All paths are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/
 | `distinct-source-role-probes.json` | `4387642c3f89e230c7aca7f8d7c71f8457bf2e0586ee36009ecce53fd53e1dac` |
 | `cycle5-independent-probes.json` | `a690b4536919f22d41f6f0fde7666c3dd7aec7af7fc23cb481e4b940dbdebdff` |
 | `source-searches.json` | `52053ced5260bfded5595591402459f394253c1c6bbdec071a0a6fb0292d02be` |
-| `grade-source-audit.json` | `79c445f5ad4f0d75dee8d6358e8896457d319a08796f1bacd0768c8bcefc0c75` |
+| `grade-source-audit.json` | `b87c9f5b5d73593ad8363e1f8a63e5ea6060ca53a079af9499cbb9b6b9f5ad33` |
 | `currentness-copy.json` | `6cd61d1aeeb512f8ddff1d80087cffeb107a7cec0c17f5ecf44140bb60a5f8eb` |
 | `shard-check.json` | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
 | `index-validate.json` | `49f00e48b560f6ac105a1992fa88f0fb48e7ac330da1828976970316fe079961` |
