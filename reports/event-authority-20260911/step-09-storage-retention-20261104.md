@@ -225,18 +225,18 @@ Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/B2-s
 
 ## Batch 1 integration citation update (2026-11-05; B2 review)
 
-The dated report and historical application record retain the locators and hashes of their named source revisions. Current integration locators supersede those coordinates for present-day reads:
+The dated report and historical application record retain the locators and hashes of their named source revisions. Current integration locators at `3304fae93ef11246717134e80a0ddcbc6221d8a6` supersede those coordinates for present-day reads (the cited owner bytes are unchanged by review fix F2):
 
 | Premise | Current integration locator | Re-read result |
 |---|---|---|
 | DL-084/085/086 assignments | `Plans/storage-plan.md:17427`, `:17429`, `:17431` | Unmoved; the 25 row bindings remain accurate. |
 | Chat policy object and reuse check | `Plans/storage-plan.md:17423`; `Plans/storage_value_registry.json:558` | Unmoved; policy role and thread count are preserved. |
-| SP-266 successor sentence | `Plans/storage-plan.md:20262` (was `:20208` at B2 head) | Same past-tense conditional-target qualification. |
-| Application-wide operational buckets | `Plans/storage-plan.md:23859` (was `:23805` at B2 head) | DL-083/DL-089 buckets remain; CA-RET adds DL-401's separate GitHub sign-in bucket. |
-| SP-291 dependency and criterion | `Plans/storage-plan.md:23934`, `:23944` | DL-401 dependency and source lineage are present after the answers branch. |
-| Boot aggregate registry retention | `Plans/storage_value_registry.json:70955` (was `:70496` at B2 head) | Same DL-083 aggregate custody assignment; newer main registry changes are preserved. |
+| SP-266 successor sentence | `Plans/storage-plan.md:20278` (was `:20208` at B2 head) | Same past-tense conditional-target qualification. |
+| Application-wide operational buckets | `Plans/storage-plan.md:23875` (was `:23805` at B2 head) | DL-083/DL-089 buckets remain; CA-RET adds DL-401's separate GitHub sign-in bucket. |
+| SP-291 dependency and criterion | `Plans/storage-plan.md:23950`, `:23960` | DL-401 dependency and source lineage are present after the answers branch. |
+| Boot aggregate registry retention | `Plans/storage_value_registry.json:71067` (was `:70496` at B2 head) | Same DL-083 aggregate custody assignment; newer main registry changes are preserved. |
 | Contracts board rows | `Plans/Contracts_V0.md:3072-3074` (was `:3074-3076`) | Same three board families after the six lifecycle rows are removed. |
-| Application-family counterpart boundaries | `Plans/storage-plan.md:29094` (SP-349), `:29294` (SP-351) | Separate physical application families; no extension of the named EventRecord count buckets. |
+| Application-family counterpart boundaries | `Plans/storage-plan.md:29110` (SP-349), `:29310` (SP-351) | Separate physical application families; no extension of the named EventRecord count buckets. |
 | Collaborative records' lifetime | `Plans/Decision_Log.md:4534` (DL-404); `Plans/storage-plan.md:17435` | B2 Q2 is answered by DL-404 and applied by CA-RET in both scopes. |
 
 No historical application hash is restamped. Main's newer DL-302, application-compaction/FileSafe non-emitting boundaries, product-only prototype cleanup, typed application storage bindings and onboarding coverage are preserved. Neither these changes nor the re-read creates an admission or clears any retained product question.
