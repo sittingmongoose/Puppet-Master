@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 18995,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22205,
+    "node_count": 7545,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T13:57:36Z",
+  "generated_at_utc": "2026-11-05T16:59:56Z",
   "gui_related_units": {
-    "count": 3813,
+    "count": 3832,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3830,6 +3830,215 @@
           "heading_level": 3,
           "heading_line": 28976,
           "line": 28978,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-610",
+        "source_location": {
+          "heading": "ACD-610 — bundle.selection_forward_blocked",
+          "heading_level": 3,
+          "heading_line": 29059,
+          "line": 29063,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-611",
+        "source_location": {
+          "heading": "ACD-611 — bundle.selection_sent_to_chat",
+          "heading_level": 3,
+          "heading_line": 29126,
+          "line": 29130,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-612",
+        "source_location": {
+          "heading": "ACD-612 — chat.message",
+          "heading_level": 3,
+          "heading_line": 29194,
+          "line": 29198,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-613",
+        "source_location": {
+          "heading": "ACD-613 — chat.thread_archived",
+          "heading_level": 3,
+          "heading_line": 30183,
+          "line": 30187,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-614",
+        "source_location": {
+          "heading": "ACD-614 — chat.thread_created",
+          "heading_level": 3,
+          "heading_line": 29261,
+          "line": 29265,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-615",
+        "source_location": {
+          "heading": "ACD-615 — chat.thread_deleted",
+          "heading_level": 3,
+          "heading_line": 29328,
+          "line": 29332,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-616",
+        "source_location": {
+          "heading": "ACD-616 — chat.thread_worktree_bound",
+          "heading_level": 3,
+          "heading_line": 29396,
+          "line": 29400,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-617",
+        "source_location": {
+          "heading": "ACD-617 — chat.thread_worktree_create_failed",
+          "heading_level": 3,
+          "heading_line": 29463,
+          "line": 29467,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-618",
+        "source_location": {
+          "heading": "ACD-618 — chat.thread_worktree_merge_failed",
+          "heading_level": 3,
+          "heading_line": 29530,
+          "line": 29534,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-619",
+        "source_location": {
+          "heading": "ACD-619 — chat.thread_worktree_merged",
+          "heading_level": 3,
+          "heading_line": 29597,
+          "line": 29601,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-620",
+        "source_location": {
+          "heading": "ACD-620 — chat.thread_worktree_pr_created",
+          "heading_level": 3,
+          "heading_line": 29664,
+          "line": 29668,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-621",
+        "source_location": {
+          "heading": "ACD-621 — chat.thread_worktree_pr_failed",
+          "heading_level": 3,
+          "heading_line": 29730,
+          "line": 29734,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-622",
+        "source_location": {
+          "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
+          "heading_level": 3,
+          "heading_line": 29797,
+          "line": 29807,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-623",
+        "source_location": {
+          "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
+          "heading_level": 3,
+          "heading_line": 29891,
+          "line": 29901,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-624",
+        "source_location": {
+          "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
+          "heading_level": 3,
+          "heading_line": 29980,
+          "line": 29984,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-625",
+        "source_location": {
+          "heading": "ACD-625 — chat.thread_worktree_renamed",
+          "heading_level": 3,
+          "heading_line": 30048,
+          "line": 30052,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-626",
+        "source_location": {
+          "heading": "ACD-626 — chat.thread_worktree_unbound",
+          "heading_level": 3,
+          "heading_line": 30115,
+          "line": 30119,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-627",
+        "source_location": {
+          "heading": "ACD-627 — chat.response_stop_requested — request authority",
+          "heading_level": 3,
+          "heading_line": 30265,
+          "line": 30273,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-628",
+        "source_location": {
+          "heading": "ACD-628 — saved assistant-turn Stop outcome",
+          "heading_level": 3,
+          "heading_line": 30353,
+          "line": 30361,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -41967,10 +42176,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7487,
+  "plan_unit_count": 7545,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2806,
+      "high": 2864,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -43183,6 +43392,7 @@
       "event_authority_binding_scope_expansion": 1,
       "event_authority_checkpoint_approval_drift": 1,
       "event_authority_checkpoint_drift": 2,
+      "event_authority_contract": 58,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
       "event_authority_landing_granularity_drift": 1,
@@ -46116,7 +46326,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7326,
       "retired": 196,
       "superseded": 23
     },
@@ -46186,7 +46396,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5622,
+      "requirement": 5680,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46253,7 +46463,7 @@
       {
         "actual": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
         "error": "pnc019_source_hash_stale",
-        "expected": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "expected": "27afc5524a99fc68f5bf5b45ac99f6022f92927050b64be8faf37c8b694014ed",
         "source_path": "Plans/event_record.schema.json"
       },
       {
@@ -46277,7 +46487,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "00df41ae4fdb88f0465f95d87bff92ed9e47be104b78ca9d839f5a7b3f4520bc",
+        "expected": "cf0aa98a1639c29af3f49d2e4def3932c0d36b479e0450af674a776226835100",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46313,7 +46523,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "ce0adbf0df840c49451706e86d33d2c296d83b6c2db4f83abf8bf2f14bcf3fe9",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46361,6 +46571,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/00-plans-index.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46428,7 +46642,15 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/chain-wizard-flexibility.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_record.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",

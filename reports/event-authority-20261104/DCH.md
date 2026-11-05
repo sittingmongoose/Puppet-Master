@@ -1,3 +1,123 @@
+# DCH — sweep part 1
+
+Branch: `plans/ea-w2-chat-20261104`. Input: `59959a9c0f`. Rebased source head: `6039d1817d5898c9d6e45fa1c8e2ea8a5a79dd2f`. Current main used: `d5ec2f70c0d69c469796eea9b9cfdae30f281f42`. **Part 1 only; NOT_READY pending part 2 and the required reviews.** No new owner contract, number helper, proof machinery or PlanUnit ID was authored. All 58 existing DCH units and 57 schema/fixture/checker companions were preserved byte for byte through the rebase; current grade citations were refreshed.
+
+## Sweep part 1: findings and responses
+
+The latest Sol cycle is REVIEW-cycle8.md; both saved Astra reports were read. The input already includes the round-8 fixture repairs and round-9 deck-2 application. The table names their **rebased fix commits**; this sweep verifies them instead of duplicating their source changes. Original-to-rebased anchors: `1a61d45b21` → `230f4e80f9`, `7c7b7abe3d` → `a75181c58c`, `d2a5182a82` → `59125b8506`, `1ef01512c7` → `f8a0d86bee`, `26fa366c56` → `533dd89c28`.
+
+| Item | Disposition / commit | Current path:line and how to verify |
+|---|---|---|
+| **Astra B1 — replay-only current append/retry** | Fixed in `f8a0d86bee`; preserved and reverified | `scripts/pm_dch_events.py:305` — All seventeen complete CLIs execute both payload editions and original/retry/both replay-only negatives; authentic retained compatibility readers remain separate. |
+| **Astra B2 — oversized bodies forced inline** | Fixed in `f8a0d86bee`; preserved and reverified | `scripts/pm_dch_events.py:244` — Full CLIs measure the complete body, exercise 16384/16385-byte boundaries, large attachment/provenance bodies and authorized SP-337 event/checkpoint references. |
+| **Astra B3 — Storage metadata included in retry equality** | Fixed in `f8a0d86bee`; preserved and reverified | `scripts/pm_dch_events.py:316` — The 21-field caller projection and metadata-only retry positives execute in every family; every included semantic field has a mutation. |
+| **Astra B4 — checkpoint/source Store mismatches** | Fixed in `f8a0d86bee`; preserved and reverified | `scripts/pm_dch_events.py:397` — Coherent actual-Store/token/index/source/publication fixtures and independently mismatched identity/frontier cases execute in each CLI. |
+| **Astra B5 — successful test exit accepted as failure** | Fixed in `f8a0d86bee`; preserved and reverified | `scripts/pm_dch_events.py:366` — Both terminal test families check the actual retained started/outcome source, success-as-failure refusal and explicit timeout/process-error outcomes; other families refuse fabricated exit fields. |
+| **Astra-2 B1 — stale materialized checkpoint schemas and LF** | Fixed in `533dd89c28`; preserved and reverified | `scripts/pm_dch_events.py:604` — Each CLI compares the selected schema with the actual registry copy and runs populated-history and LF cases. Seventeen standalone/registered definitions remain equal. |
+| **Astra-2 B2 — unresolved unused history refs** | Fixed in `533dd89c28`; preserved and reverified | `scripts/pm_dch_events.py:40` — Each CLI resolves current/retained schema graphs eagerly and executes unresolved optional/history-reference controls before instance traversal. ATS-305 retains the standing-check obligation. |
+| **C8-B1 — two-defect pointer fixture** | Fixed in `230f4e80f9`; preserved and reverified | `scripts/pm_dch_round5_oracles.py:225` — The existing focused audit reproduces all 17 equality-only flips while the size guard and 14 other reference negatives per family stay active; restoration rejects again. The ordinary full CLIs also pass. |
+| **C8-B1 — pointer-size witness** | Fixed in `a75181c58c`; preserved and reverified | `scripts/pm_dch_round8_oracles.py:117` — Resolved as an entailed defensive bound, not a duplicate: an exact reference with the uint64 maximum byte count encodes to 131 bytes. The production size and equality guards remain distinct. No independently oversized exact reference or false flipping witness is claimed. |
+| **C7 S1/S2 — date-time and PR URI formats** | Fixed in `3d82e4fc38`; preserved and reverified | `scripts/pm_dch_formats.py:9` — Existing mandatory full-match/calendar and HTTPS grammar cases execute through the complete applicable family CLIs. Retained original-format editions stay in their existing recipe corpus. |
+| **C7 retained known-recipe regressions** | Fixed in `3d82e4fc38`; preserved and reverified | `scripts/pm_dch_round7_oracles.py:30` — Known raw-v1/normalized-v2/strict-v3 cases remain passing. This confirms those regressions only; complete retained verifier/provenance dispatch remains S4-NUM. |
+| **Deck 2 item 3.a** | Fixed in `59125b8506`; preserved and reverified | `Plans/assistant-chat-design.md:30265` — Confirmed applied as decided: ACD-627/628, CV-647, SP-627/628 and ATS-306, two closed schema editions, original request/actual turn/work/result links, saved cancellation-versus-timeout/time, original 3000 ms deadline, separate queue release and conditional restart/recovery retirement. The separate Stop CLI passes. |
+| **C8-B1 proof-merging portion** | **Part 2**, shared guard tables/tool required | Exact locations below. Old grouped proofs remain historical, never a current check-11 certificate. |
+
+The first focused-audit output capture collided with its artifact filename; that capture is marked invalid and the audit was rerun with separate output/artifact paths. No product refusal changed. No additional non-number product-guard or fixture defect was established in this sweep. Every listed earlier blocker has its existing production refusal and negative corpus intact. The focused pointer check reuses the previous audit; it is not a new proof engine or a claim that all unrelated guard predicates have been isolated. The latest incomplete independent review is not promoted to a pass.
+
+## Deck 2 item 3.a and landed authority
+
+DL-427 is now landed at `Plans/Decision_Log.md:5010`. Its approved option says:
+
+> Authorize Chat and Storage to define that saved result for the actual assistant reply and its work. Keep the link to the Stop request, exact work targeted, cancellation versus timeout, and outcome time.
+
+The remainder keeps the three-second wait, saved outcome before queue advance, separate user release and retirement only after specification plus verified restart **and** recovery. ACD-627/628, CV-647, SP-627/628 and ATS-306 preserve these requirements. `reports/event-authority-20261104/DCH-stop-retirement-application.json` still records three separate `retirement_specified_cutover_pending` applications. Actual admission, saved-record storage materialization and native cutover remain fenced. The request's DL-401 G15 assignment is landed; its saved outcome is a separate open record assignment. No new admission or registry entry is made here.
+
+## Saved Stop-outcome lifetime — OPEN for a possible later Jared card
+
+DL-406 was checked first, at `Plans/Decision_Log.md:4566`. It says the outcome is saved on the run's or turn's own record and preserves the wait/queue/conditional-retirement rules; **it does not assign the saved record's lifetime, count bucket or deletion/hold policy**. DL-427 authorizes defining the missing record and preserves those barriers; it likewise does not supply a lifetime. DL-401 G15 covers the named request history, and SP-627 explicitly leaves the newly authorized saved outcome `PENDING_RETENTION_DECISION`. Neither the turn association nor a sibling policy is treated as an answer.
+
+Exact open question, unchanged:
+
+> Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0, or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in Project and application chats?
+
+This is recorded only, not decided or submitted as a new decision card. The request-definition question is answered by DL-427 and is not reopened. Saved-record writes/materialization and retirement cutoff remain unavailable pending the assignment and required verification.
+
+## Part 2 items
+
+- **S1-NUM — remaining producer route:** `scripts/pm_dch_events.py:271`, `retry_outcome()` and CV-630–646/SP-610–626 (representative `Plans/Contracts_V0.md:24493`, `Plans/storage-plan.md:29610`). The old blanket Storage/owner 2^53 ceilings were already removed in `a75181c58c`; the ordinary write/retry corpus retains exact uint64 and uncapped owner-domain checks. Adopt CV-1100/1101 and the shared helper for producer-owned JCS route qualification, without narrowing logical owner domains or Storage uint64.
+- **S2-NUM — physical float normalization:** `scripts/pm_dch_events.py:169` and the same per-family physical clauses still convert integral floats and signed zero to integers for non-raw recipes. Adopt SP-1100 type/sign-preserving physical bytes; preserve authentic old originals.
+- **S3-NUM — float width:** `scripts/pm_dch_events.py:186` uses the packer's default float64 width. Adopt the shared exact minimal type-preserving float-width recipe, without restamping retained bytes.
+- **S4-NUM — retained provenance/full original verifier:** `scripts/pm_dch_events.py:128`, `stored_validator()` and the passive history/retry/checkpoint/retained-start routes still have the current-rule fallback and shared-current functions. Adopt SP-1101's authenticated full original recipe/resource tuple and unavailable/unsupported handling. Preserve known raw-v1/normalized-v2/strict-v3 positives; no missing-provenance fallback is declared solved here.
+- **PROOF-ID:** `scripts/pm_dch_guard_proofs.py:387` merges pattern, min/max length and format into identifier_shape.
+- **PROOF-INPUT:** `scripts/pm_dch_guard_proofs.py:241` and `:288` merge different fields/type predicates.
+- **PROOF-COMPOUND:** `scripts/pm_dch_guard_proofs.py:340` instruments compound envelope/access refusals at a shared site rather than separating every predicate.
+- **PROOF-POINTER:** `scripts/pm_dch_guard_proofs.py:291` still merges pointer size and exact-reference equality. The fixture is repaired; the legacy grouping is not. An entailed defensive bound is not a duplicate invariant.
+- **Shared-tool closure:** expose named predicate functions in guard tables, adopt `scripts/pm_guard_isolation.py`, inventory every real guard/negative, prove exact-field/exact-predicate duplicate sets site by site, compare earlier negatives, and complete Sol then Astra review after both shared tools pass. Include the separately authored Stop request/outcome surfaces. No guard-table refactor or legacy proof rerun occurs in part 1.
+
+## Family grades before and after
+
+Counts are **PASS / PARTIAL / ABSENT**, worker grades only. Each row retains membership ABSENT, retention PARTIAL and positive_negative_oracles PARTIAL. No PASS cell is awarded for the unfinished full check-11 proof. Source units and all 216 cells were checked; 657 exact citations were refreshed to rebased text. Native execution remains NOT_RUN.
+
+| Family | Before (`59959a9c0f`) | After part 1 | Complete ordinary assertions |
+|---|---|---|---:|
+| `bundle.selection_forward_blocked` | 9 / 2 / 1 | 9 / 2 / 1 | 2375 |
+| `bundle.selection_sent_to_chat` | 9 / 2 / 1 | 9 / 2 / 1 | 2409 |
+| `chat.message` | 9 / 2 / 1 | 9 / 2 / 1 | 2391 |
+| `chat.thread_archived` | 9 / 2 / 1 | 9 / 2 / 1 | 2503 |
+| `chat.thread_created` | 9 / 2 / 1 | 9 / 2 / 1 | 2369 |
+| `chat.thread_deleted` | 9 / 2 / 1 | 9 / 2 / 1 | 2369 |
+| `chat.thread_worktree_bound` | 9 / 2 / 1 | 9 / 2 / 1 | 2367 |
+| `chat.thread_worktree_create_failed` | 9 / 2 / 1 | 9 / 2 / 1 | 2363 |
+| `chat.thread_worktree_merge_failed` | 9 / 2 / 1 | 9 / 2 / 1 | 2371 |
+| `chat.thread_worktree_merged` | 9 / 2 / 1 | 9 / 2 / 1 | 2375 |
+| `chat.thread_worktree_pr_created` | 9 / 2 / 1 | 9 / 2 / 1 | 2569 |
+| `chat.thread_worktree_pr_failed` | 9 / 2 / 1 | 9 / 2 / 1 | 2367 |
+| `chat.thread_worktree_pre_merge_test_failed` | 9 / 2 / 1 | 9 / 2 / 1 | 2733 |
+| `chat.thread_worktree_pre_merge_test_passed` | 9 / 2 / 1 | 9 / 2 / 1 | 2683 |
+| `chat.thread_worktree_pre_merge_test_started` | 9 / 2 / 1 | 9 / 2 / 1 | 2367 |
+| `chat.thread_worktree_renamed` | 9 / 2 / 1 | 9 / 2 / 1 | 2365 |
+| `chat.thread_worktree_unbound` | 9 / 2 / 1 | 9 / 2 / 1 | 2363 |
+| `chat.response_stop_requested` (separate deck-2 contract) | 9 / 2 / 1 | 9 / 2 / 1 | 4540 |
+
+All seventeen ordinary CLIs pass **41,339 assertions**; the separate Stop CLI passes **4,540**. The existing focused pointer audit passes all seventeen families, with each repaired pointer negative flipping on equality-only removal while 14 unrelated reference negatives stay rejected. The complete old grouped guard campaigns were not rerun and no check-11 completion is claimed.
+
+## Verification, scope and resources
+
+Standing checks 1–10 and the ordinary Astra-class mutation corpora execute through each complete family CLI; the separate Stop suite checks the landed answer's request/result/custody/queue/recovery model. The focused pointer audit addresses the known two-defect fixture. Astra number classes 10/10a and complete proof class 8 remain part 2. These are static contract checks, not independent blind review or native source authentication, CAS or durability proof.
+
+| Derived / comparison command | Exit | Parsed status |
+|---|---:|---|
+| `shard-generate` | 0 | pass |
+| `index-generate` | 0 | pass |
+| `shard-check` | 0 | pass |
+| `index-validate` | 0 | pass |
+
+Index validation parses top-level **status=pass**, with no failures. The earlier report's 22 index failures are not carried forward. Optional baseline and broad Storage/Assistant repeats were cancelled before execution after required validation passed; baseline-comparison.json records NOT_RUN explicitly. Their old outputs remain historical, not fresh results. The prepared baseline extraction is removed. No aggregate governance or whole-tree landing check is claimed.
+
+Nas1 initially had 496 GB free disk and 16 GB available memory. Checkers ran serially after waiting for the other lane campaigns; the runner suspends below 6 GB available. Resource holds/minima and every exit are retained in the campaign outputs. Fifteen currentness files matched the shared source by SHA-256 before index generation. Generated conflicts during rebase were discarded in favor of regeneration, never hand-merged. Derived scope is audited against the four DCH Markdown owners, storage_value_registry and event_record.schema; unrelated owner bodies must remain unchanged.
+
+**IDs:** none new. Existing ACD-610–628, CV-630–647, SP-610–628, ATS-305/306 are preserved. **Bindings:** none new in this sweep. **Premises:** landed DL-406/427 checked; the lifetime premise is explicitly unanswered. No pm-mail, subagents, admission, event-family registry append, Decision Log entry, governance seal, lock or main push. The lane is pushed with an exact lease for its pre-rebase head; the literal-path worktree is removed afterward.
+
+## Evidence
+
+All outputs and the report/grade copy are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/sweep-p1/`. Raw captures and scratch stay outside the repository. SHA256SUMS pins the retained bundle; selected evidence:
+
+| File | SHA-256 |
+|---|---|
+| `fixture-results.json` | `afc05c77bbb494755cfae76b37ba2afaceef5d3be0b46b9e586cc348c75f02d9` |
+| `source-and-grade-audit.json` | `4b70af47f204d8132b9b0ef8b6fea7785759c412a9b3eead316d190e928a689a` |
+| `inputs-and-authority.json` | `49747ce5319517dce02dbdc0ffc22b1d5d64012372354a06ce651579a0d5558f` |
+| `families-results.json` | `e4617080432aba50f9929d814f371f473fa992d9391f9bd718050b4fefbdb87e` |
+| `fixture-audit.json` | `8a66e124f373f36f1365a337efb5271da206f9d6fa4feba99c4ce6ce88245882` |
+| `derived-results.json` | `23d69e547113b2ef02de86cbf4f96f4049b9065fcfac04cd83636a03abe64167` |
+| `baseline-comparison.json` | `fc52f76f3038edd894a1ab74d54b96160edf28c85a68362a960437e3aaef2f5a` |
+| `currentness-sha256.json` | `daf80cdc1395935c791eed463d54ff4d0405f90ce97f39f12e10fbb0a547f8ac` |
+| `derived-scope-audit.json` | `ddc5a1850d362c88bbaacb1892cc8ccb846ffdae21efb7c29410767d58e9a6c8` |
+
+---
+
+# Earlier reports — historical; sweep part 1 above is current
+
 # DCH — round 9
 
 Branch: `plans/ea-w2-chat-20261104`. Base: `e34286958a9045ed9fc5fc95a4e23294bbcf1686`. Assessed source bundle: `d2a5182a825c16ce882c86f3459a23dea4312265`. Report/self-grade pin commit follows; source bytes are verified separately. **This round applies an owner answer; it is not a review fix.**

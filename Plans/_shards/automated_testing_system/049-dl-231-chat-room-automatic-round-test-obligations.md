@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7236
+Source lines: L6713-L7500
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `ce0adbf0df840c49451706e86d33d2c296d83b6c2db4f83abf8bf2f14bcf3fe9`
 
 ---
 
@@ -532,3 +532,267 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-305 — DCH
+
+DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry. Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278 frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild. These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+
+Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys, and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback. These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.
+
+Review rounds 2 and 3 require all ten standing checks for every one of the seventeen families: explicit append/retry rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~ partitions; actual MessagePack inline byte boundaries and authorized SP-337 payload-reference readback; exact-end guards on every anchored identifier pattern with trailing-LF negatives; the exact producer-semantic digest field list with metadata-only retry positives and one mutation per included field plus global event-ID integrity; coherent Storage/source/token/key/ref/dataset/publication joins and independent current-frontier negatives; and rejection of successful exit 0 in the failed-test family with original started/outcome joins, nonzero/timeout/process-error positives and mismatches; complete schema-reference closure before fixture execution, including local/file references in optional, conditional and historical branches of selected and embedded registry schemas; and retained-original historical reads after live-state changes, with current access checks and refusal of withdrawn or forged events. The full checker executes the regression cases for both payload editions and every separate checkpoint family. Dependencies for this static checker are jsonschema, msgpack, blake3 and rfc8785. Native process, receipt, source-adapter, CRC, CAS, durability, custody and withdrawal obligations remain NOT_RUN. No admission or retention decision follows from a static pass.
+
+
+Review round 3 requires exact object equality between every materialized DCH checkpoint value_schema and its selected same-ID/version schema. Both definitions independently validate current and populated-history positives and reject trailing LF in every patterned current/history identifier, digest and retirement timestamp. Schema closure is independent of which fixture branches execute; an unresolved reference fails the checker as a structured failure. scripts/pm_dch_event_regressions.py supplies a separate full-checker negative for each of the ten standing checks in each family, plus the original F1-F3 and first Astra B1-B5 regressions. Retained historical lookup verifies the original encoded event commitment, original edition, scope/identity and current source/access evidence; current lifecycle or worktree state does not redefine the historical event. This fixture witness is synthetic and grants neither native proof nor admission. Manual archive remains manual under DL-287; the Stop record question remains unprepared.
+
+Review round 4 requires standing check 11 across the complete DCH lane: construct each negative from an accepted case and change exactly one contract fact; keep every observational copy and every unrelated identity, encoded commitment and source/publication witness coherent. Generation-limit negatives contain three schema-valid retired entries beyond the valid two-entry history. Unsupported historical editions carry the independently supplied commitment of those exact retained bytes; forged-byte negatives remain separate. Terminal-test event-identity negatives change the terminal payload started_event_id and preserve the valid started source. For every acceptance guard, remove only that guard in an in-memory test variant, require its own negatives to become accepted, and require all other negatives to remain rejected for their own defects; restore the guard before the next row. The retained guard-removal table identifies the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table fails acceptance. scripts/pm_dch_guard_proofs.py supplies this static proof alongside the complete ordinary checker and regression runner. No production guard may be weakened. Native execution remains NOT_RUN.
+
+Review round 5 requires actual-instance event-ID verification for both payload editions and two independent Storage instances, including inline and referenced historical and checkpoint paths. Checkpoint publication validates supported original envelope/payload editions and current custody under historical-reader policy, accepts retained compatibility originals after live-state changes, and refuses unsupported, withdrawn, forged and foreign originals. Measure the complete encoded checkpoint and every physical inline pointer at 16384/16385 bytes, including two retained generations and maximum legal reference arrays; oversized logical positives require verified SP-337 pack/index/readback custody. All seventeen families exercise numeric aliases 1/1.0/1e0 and -0/0, invalid JSON 01, and wrong-type strings, null, arrays and nested objects; declared integer slots reject non-integer runtime types before joins, while physical encoding normalizes integral aliases to one commitment/reference. Every guard-removal variant preserves every unrelated rule. A missing-generation mutant may substitute only an explicit independent lookup witness and must continue all remaining joins; withdrawn-state, last-event and publication-id containment controls must still refuse in every family. Never return early success to prove a guard. Preserve all earlier round findings and negative fixtures; native execution and Stop remain unchanged.
+
+Review round 6 requires UUID-format/type validation for every actual Storage context before source reads, with coherently re-keyed/recommitted malformed contexts in both editions of all seventeen families. Current schemas and writers preserve exact owner integer domains: Storage uint64 metadata is never capped at 2^53, and logical payload and publication integers retain their owner bounds. Retained originals select their protected original recipe as refined by round 7. Producer RFC 8785 route availability is separate from logical integer admission; physical float and retained-dispatch changes belong to the shared sweep. Test owner endpoints, successors and MessagePack overflow with structured refusals and no exception-as-rejection path. Both terminal-test families accept historically valid inline/reference/compatibility/second-Store starts after live-state changes and refuse independently forged, withdrawn and foreign starts under current custody. Sweep all eleven Astra defect classes, including numeric aliases and wrong-type forms, and rerun the complete guard table serially, one family and one guard or named duplicate set at a time. Preserve all earlier guards and witnesses; never use early success to prove a rule. Stop remains held for Jared and native execution remains NOT_RUN.
+
+Review round 7 requires C7-B1 and sweep S1/S2 in every applicable family. Plans/dch_retained_history_fixtures.json and scripts/pm_dch_round7_oracles.py supply retained cases; scripts/pm_dch_formats.py and scripts/pm_dch_format_guard_proofs.py supply mandatory formats and primitive removal checks, integrated by scripts/pm_dch_guard_proofs.py. record_number_rule() is the single numeric/schema/format/encoder selector: strict-v4 for current inputs; protected original write-receipt provenance for every retained source, compatibility record, materialized payload, checkpoint/history value, saved retry original and retained test start. Prove raw-v1 float-sequence and normalized-v2 earlier integer-domain positives in both editions of all seventeen families, both replay policies and inline/reference routes. Add retained strict-v3 format positives, independent forged-recipe/source/access/withdrawal controls, checkpoint-source and retained-start positives, and stored checkpoint/history controls. Mandatory explicit date-time calendar/full-match and RFC 3986 HTTPS grammars must work with optional format packages absent. Negatives cover missing zones, wrong separators, calendar/range errors, trailing LF, leap-second and fractional edges, and malformed PR hosts/brackets/percent encodings in both editions. Rerun the entire guard-removal table serially with no bypass, including named duplicate copies of the timestamp grammar on joined payload/EventRecord values. Keep all earlier current-write/identity, custody, numeric-domain, overflow and eleven standing-check controls. Every Astra class 1–12 and 10a gets an explicit result; native receipt authentication/execution is NOT_RUN and Stop stays held for Jared.
+
+Review round 8 replaces the masked oversized-pointer negative with an in-limit exact-reference negative. An exact SP-337 pointer has a fixed 64-hex digest and media type plus at most 20 uint64 decimal size digits; its encoded size is below 16384, so the defensive pointer-size predicate is entailed on exact references, not a duplicate of equality. Keep both predicates. Test each affected Storage field at 2^53, 2^60 and uint64 maximum and refuse overflow, negative, boolean, float and string substitutes independently. Checkpoint primitive admission probes have no stale source copies; full positive publications synchronize all copies. The legacy grouped guard table is historical evidence only: the shared pm_guard_isolation.py tool must replace merged identifiers, shared input/grouped types, compound envelope/access and size/reference removal groups. No lane proof rebuild is required by this round; admission still requires completed isolation evidence.
+
+```yaml
+plan_unit_id: ATS-305
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: '### ATS-305 — DCH
+
+
+  DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application
+  fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates
+  every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict
+  and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry.
+  Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after
+  body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278
+  frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild.
+  These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint
+  with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention
+  acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+
+
+  Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization
+  cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys,
+  and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE
+  for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended
+  to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic
+  origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback.
+  These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.
+
+
+  Review rounds 2 and 3 require all ten standing checks for every one of the seventeen families: explicit append/retry
+  rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~ partitions; actual
+  MessagePack inline byte boundaries and authorized SP-337 payload-reference readback; exact-end guards on every
+  anchored identifier pattern with trailing-LF negatives; the exact producer-semantic digest field list with metadata-only
+  retry positives and one mutation per included field plus global event-ID integrity; coherent Storage/source/token/key/ref/dataset/publication
+  joins and independent current-frontier negatives; and rejection of successful exit 0 in the failed-test family
+  with original started/outcome joins, nonzero/timeout/process-error positives and mismatches; complete schema-reference
+  closure before fixture execution, including local/file references in optional, conditional and historical branches
+  of selected and embedded registry schemas; and retained-original historical reads after live-state changes, with
+  current access checks and refusal of withdrawn or forged events. The full checker executes the regression cases
+  for both payload editions and every separate checkpoint family. Dependencies for this static checker are jsonschema,
+  msgpack, blake3 and rfc8785. Native process, receipt, source-adapter, CRC, CAS, durability, custody and withdrawal
+  obligations remain NOT_RUN. No admission or retention decision follows from a static pass.
+
+
+
+  Review round 3 requires exact object equality between every materialized DCH checkpoint value_schema and its selected
+  same-ID/version schema. Both definitions independently validate current and populated-history positives and reject
+  trailing LF in every patterned current/history identifier, digest and retirement timestamp. Schema closure is
+  independent of which fixture branches execute; an unresolved reference fails the checker as a structured failure.
+  scripts/pm_dch_event_regressions.py supplies a separate full-checker negative for each of the ten standing checks
+  in each family, plus the original F1-F3 and first Astra B1-B5 regressions. Retained historical lookup verifies
+  the original encoded event commitment, original edition, scope/identity and current source/access evidence; current
+  lifecycle or worktree state does not redefine the historical event. This fixture witness is synthetic and grants
+  neither native proof nor admission. Manual archive remains manual under DL-287; the Stop record question remains
+  unprepared.
+
+
+  Review round 4 requires standing check 11 across the complete DCH lane: construct each negative from an accepted
+  case and change exactly one contract fact; keep every observational copy and every unrelated identity, encoded
+  commitment and source/publication witness coherent. Generation-limit negatives contain three schema-valid retired
+  entries beyond the valid two-entry history. Unsupported historical editions carry the independently supplied commitment
+  of those exact retained bytes; forged-byte negatives remain separate. Terminal-test event-identity negatives change
+  the terminal payload started_event_id and preserve the valid started source. For every acceptance guard, remove
+  only that guard in an in-memory test variant, require its own negatives to become accepted, and require all other
+  negatives to remain rejected for their own defects; restore the guard before the next row. The retained guard-removal
+  table identifies the exact guard, negatives that flip, negatives that remain rejected and any equivalent schema/semantic
+  copies removed together. A masked negative, unproved guard, unexpected exception or incomplete table fails acceptance.
+  scripts/pm_dch_guard_proofs.py supplies this static proof alongside the complete ordinary checker and regression
+  runner. No production guard may be weakened. Native execution remains NOT_RUN.
+
+
+  Review round 5 requires actual-instance event-ID verification for both payload editions and two independent Storage
+  instances, including inline and referenced historical and checkpoint paths. Checkpoint publication validates supported
+  original envelope/payload editions and current custody under historical-reader policy, accepts retained compatibility
+  originals after live-state changes, and refuses unsupported, withdrawn, forged and foreign originals. Measure
+  the complete encoded checkpoint and every physical inline pointer at 16384/16385 bytes, including two retained
+  generations and maximum legal reference arrays; oversized logical positives require verified SP-337 pack/index/readback
+  custody. All seventeen families exercise numeric aliases 1/1.0/1e0 and -0/0, invalid JSON 01, and wrong-type strings,
+  null, arrays and nested objects; declared integer slots reject non-integer runtime types before joins, while physical
+  encoding normalizes integral aliases to one commitment/reference. Every guard-removal variant preserves every
+  unrelated rule. A missing-generation mutant may substitute only an explicit independent lookup witness and must
+  continue all remaining joins; withdrawn-state, last-event and publication-id containment controls must still refuse
+  in every family. Never return early success to prove a guard. Preserve all earlier round findings and negative
+  fixtures; native execution and Stop remain unchanged.
+
+
+  Review round 6 requires UUID-format/type validation for every actual Storage context before source reads, with
+  coherently re-keyed/recommitted malformed contexts in both editions of all seventeen families. Current schemas
+  and writers preserve exact owner integer domains: Storage uint64 metadata is never capped at 2^53, and logical
+  payload and publication integers retain their owner bounds. Retained originals select their protected original
+  recipe as refined by round 7. Producer RFC 8785 route availability is separate from logical integer admission;
+  physical float and retained-dispatch changes belong to the shared sweep. Test owner endpoints, successors and
+  MessagePack overflow with structured refusals and no exception-as-rejection path. Both terminal-test families
+  accept historically valid inline/reference/compatibility/second-Store starts after live-state changes and refuse
+  independently forged, withdrawn and foreign starts under current custody. Sweep all eleven Astra defect classes,
+  including numeric aliases and wrong-type forms, and rerun the complete guard table serially, one family and one
+  guard or named duplicate set at a time. Preserve all earlier guards and witnesses; never use early success to
+  prove a rule. Stop remains held for Jared and native execution remains NOT_RUN.
+
+
+  Review round 7 requires C7-B1 and sweep S1/S2 in every applicable family. Plans/dch_retained_history_fixtures.json
+  and scripts/pm_dch_round7_oracles.py supply retained cases; scripts/pm_dch_formats.py and scripts/pm_dch_format_guard_proofs.py
+  supply mandatory formats and primitive removal checks, integrated by scripts/pm_dch_guard_proofs.py. record_number_rule()
+  is the single numeric/schema/format/encoder selector: strict-v4 for current inputs; protected original write-receipt
+  provenance for every retained source, compatibility record, materialized payload, checkpoint/history value, saved
+  retry original and retained test start. Prove raw-v1 float-sequence and normalized-v2 earlier integer-domain positives
+  in both editions of all seventeen families, both replay policies and inline/reference routes. Add retained strict-v3
+  format positives, independent forged-recipe/source/access/withdrawal controls, checkpoint-source and retained-start
+  positives, and stored checkpoint/history controls. Mandatory explicit date-time calendar/full-match and RFC 3986
+  HTTPS grammars must work with optional format packages absent. Negatives cover missing zones, wrong separators,
+  calendar/range errors, trailing LF, leap-second and fractional edges, and malformed PR hosts/brackets/percent
+  encodings in both editions. Rerun the entire guard-removal table serially with no bypass, including named duplicate
+  copies of the timestamp grammar on joined payload/EventRecord values. Keep all earlier current-write/identity,
+  custody, numeric-domain, overflow and eleven standing-check controls. Every Astra class 1–12 and 10a gets an explicit
+  result; native receipt authentication/execution is NOT_RUN and Stop stays held for Jared.
+
+
+  Review round 8 replaces the masked oversized-pointer negative with an in-limit exact-reference negative. An exact
+  SP-337 pointer has a fixed 64-hex digest and media type plus at most 20 uint64 decimal size digits; its encoded
+  size is below 16384, so the defensive pointer-size predicate is entailed on exact references, not a duplicate
+  of equality. Keep both predicates. Test each affected Storage field at 2^53, 2^60 and uint64 maximum and refuse
+  overflow, negative, boolean, float and string substitutes independently. Checkpoint primitive admission probes
+  have no stale source copies; full positive publications synchronize all copies. The legacy grouped guard table
+  is historical evidence only: the shared pm_guard_isolation.py tool must replace merged identifiers, shared input/grouped
+  types, compound envelope/access and size/reference removal groups. No lane proof rebuild is required by this round;
+  admission still requires completed isolation evidence.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+- All ten standing-check mutations fail the full checker for each prepared family; selected/registered schemas agree
+  exactly, every reference resolves and populated histories are exercised.
+- 'Standing check 11 passes for every lane guard: one contract defect per negative, coherent copies and unrelated
+  commitments, own negatives accepted only when that guard is removed, all others still rejected; retain the complete
+  guard-removal table.'
+- Complete checkpoint byte/reference and original-reader boundaries, exact types and actual-instance identity have
+  isolated witnesses; generation lookup mutants preserve all downstream guards.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm_dch_event_regressions.py
+- python3 scripts/pm_dch_guard_proofs.py --out <guard-proof.json>
+- python3 scripts/pm_dch_round5_regressions.py --out <round5-regressions.json>
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- DCH
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+
+### ATS-306 — Stop request, saved outcome and retirement contract oracles
+
+DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins; current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody; actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers. Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and successful exits never count as refusal. New real guards need negatives. Shared guard-isolation adoption/proof completeness and shared number-domain/provenance defects stay explicitly PARTIAL sweep items; do not rebuild pm_dch_guard_proofs.py or introduce another lane serializer/format grammar.
+
+Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process after original-request receipt, cancellation delivery, result staging, result CAS and acknowledgement loss; restart and recover from a coherent backup; verify exact request/assistant turn/work/result bytes and first receipt, preserve the original deadline, never rerun work, keep unresolved or unsaved outcomes behind the queue barrier, require separate user release and rerun current permission/hold gates. Prove both cancelled and timeout outcomes survive restart and recovery and that a lost result cannot be mistaken for success. The static model does not certify physical sync, redb CAS, authenticated source provenance or these native crash tests. Run each of the seventeen unchanged families separately through pm_dch_events.py --family, then this separate Stop checker; record every exit code. No admission or twelve-PASS claim is implied.
+
+```yaml
+plan_unit_id: ATS-306
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: '### ATS-306 — Stop request, saved outcome and retirement contract oracles
+
+
+  DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json
+  supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment
+  and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json
+  are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover
+  schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins;
+  current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project
+  partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody;
+  actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result
+  CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers.
+  Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant
+  on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and
+  successful exits never count as refusal. New real guards need negatives. Shared guard-isolation adoption/proof
+  completeness and shared number-domain/provenance defects stay explicitly PARTIAL sweep items; do not rebuild pm_dch_guard_proofs.py
+  or introduce another lane serializer/format grammar.
+
+
+  Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process
+  after original-request receipt, cancellation delivery, result staging, result CAS and acknowledgement loss; restart
+  and recover from a coherent backup; verify exact request/assistant turn/work/result bytes and first receipt, preserve
+  the original deadline, never rerun work, keep unresolved or unsaved outcomes behind the queue barrier, require
+  separate user release and rerun current permission/hold gates. Prove both cancelled and timeout outcomes survive
+  restart and recovery and that a lost result cannot be mistaken for success. The static model does not certify
+  physical sync, redb CAS, authenticated source provenance or these native crash tests. Run each of the seventeen
+  unchanged families separately through pm_dch_events.py --family, then this separate Stop checker; record every
+  exit code. No admission or twelve-PASS claim is implied.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```

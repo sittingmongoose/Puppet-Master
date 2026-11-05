@@ -428,5 +428,183 @@
   "baseline_comparison": "r9/baseline-comparison.json",
   "retirement_applications": "reports/event-authority-20261104/DCH-stop-retirement-application.json",
   "native_execution": "NOT_RUN",
-  "no_admission": true
+  "no_admission": true,
+  "sweep_part_1": {
+    "input_head": "59959a9c0f",
+    "rebased_source_head": "6039d1817d5898c9d6e45fa1c8e2ea8a5a79dd2f",
+    "base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42",
+    "families": [
+      {
+        "label": "family-bundle_selection_forward_blocked",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2375,
+        "stdout_sha256": "a3e17712c7853eb36281dcc0cea519f5df2a06bd7fb583df57228334bf1e8001"
+      },
+      {
+        "label": "family-bundle_selection_sent_to_chat",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2409,
+        "stdout_sha256": "8c8f8f06798ebc869a9d663b42149b3ee0c462c68fdbbce484d427e6036d3b03"
+      },
+      {
+        "label": "family-chat_message",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2391,
+        "stdout_sha256": "2dbec8c521ea9e2a946ad35e4f15599062e4274b78aea24417279535019aee8c"
+      },
+      {
+        "label": "family-chat_thread_archived",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2503,
+        "stdout_sha256": "0145a1a08e8a6f4063b483e63d8799f03173817ebaed8370a5147e36d86c2d08"
+      },
+      {
+        "label": "family-chat_thread_created",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2369,
+        "stdout_sha256": "0d6539c90d0f9ca4c010a2da6a82657d3e55a4590f358eab29b744702d7bd047"
+      },
+      {
+        "label": "family-chat_thread_deleted",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2369,
+        "stdout_sha256": "f2d677592e115c729ea38f9a9719301a92142fd5e025c401be6a949914cbd6b5"
+      },
+      {
+        "label": "family-chat_thread_worktree_bound",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2367,
+        "stdout_sha256": "cf8eddcba8bc469e871868d74286b67fecf8ce75e4057fbb54bd81c0b7739ef5"
+      },
+      {
+        "label": "family-chat_thread_worktree_create_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2363,
+        "stdout_sha256": "0b1b49a641a2c6e134a4e2917e4edf090486c15bf3291f3cdea99caa01e12835"
+      },
+      {
+        "label": "family-chat_thread_worktree_merge_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2371,
+        "stdout_sha256": "33798d3c26f8038469de5fe0e3cacd164cde86d077e3aaaec66616364993e6f0"
+      },
+      {
+        "label": "family-chat_thread_worktree_merged",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2375,
+        "stdout_sha256": "d3cf53e7e97570eb39b8c7dfee4a7f32210fcad357d474ddb27250af27432ed6"
+      },
+      {
+        "label": "family-chat_thread_worktree_pr_created",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2569,
+        "stdout_sha256": "f02634c7bd6be68d2afbb70e4eb86251a4a31c8be154265e778801f030b57235"
+      },
+      {
+        "label": "family-chat_thread_worktree_pr_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2367,
+        "stdout_sha256": "b4065aa867851b777fa297967fbe17908aa53db0c37380a4da94da9c5da29859"
+      },
+      {
+        "label": "family-chat_thread_worktree_pre_merge_test_failed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2733,
+        "stdout_sha256": "fd3b5c83f4d2c73f16525e172848e80334a8ebce2b684a839978426fd2a6b10d"
+      },
+      {
+        "label": "family-chat_thread_worktree_pre_merge_test_passed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2683,
+        "stdout_sha256": "15a30a990c3919ee660620a2179a37904450ac1f73b91835dec12be768ea7f02"
+      },
+      {
+        "label": "family-chat_thread_worktree_pre_merge_test_started",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2367,
+        "stdout_sha256": "e5aea3e7b763a833985455b692eca397b949ac69db37792c20793782f7b46b46"
+      },
+      {
+        "label": "family-chat_thread_worktree_renamed",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2365,
+        "stdout_sha256": "ae5268680a93fe56d4ad543258e025f9746f3aaf66f6111368b2ccb635d10cd7"
+      },
+      {
+        "label": "family-chat_thread_worktree_unbound",
+        "exit": 0,
+        "status": "pass",
+        "checks": 2363,
+        "stdout_sha256": "5d8ba029a21583dce123809a917f0ac6a301c90b506c2a22dfeed36651065762"
+      }
+    ],
+    "stop": {
+      "exit": 0,
+      "status": "pass",
+      "checks": 4540,
+      "stdout_sha256": "b02e44c729de37ae3cd765ed4ef364aad9e4202f0e5089df9de737fbfed7d484"
+    },
+    "fixture_audit": "fixture-audit.json",
+    "derived": [
+      {
+        "label": "shard-generate",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "058694314fb57888e86382b8d038e58893e4e70820a7f4b6ea17705789073441"
+      },
+      {
+        "label": "index-generate",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "c2d028f2b063d291be17ca57b4f659c727313b07be1387e1b6f07f4936efc746"
+      },
+      {
+        "label": "shard-check",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "91a12f9200b820a0469a53718d84756f9faa777652f2ff5725b6d68849838939"
+      },
+      {
+        "label": "index-validate",
+        "exit": 0,
+        "status": "pass",
+        "stdout_sha256": "237c2449b1f814eb44ad057bffff86a4f0cf9525b23de60e7c4d1d8c720cde19"
+      }
+    ],
+    "baseline_comparison": {
+      "index-validate": {
+        "base_status": "NOT_RUN",
+        "branch_status": "pass",
+        "reason": "Required index validation passes; source units and companions unchanged. Optional broad baseline repeats were cancelled before execution."
+      },
+      "storage-profile": {
+        "base_status": "NOT_RUN",
+        "branch_status": "NOT_RUN",
+        "reason": "Required index validation passes; source units and companions unchanged. Optional broad baseline repeats were cancelled before execution."
+      },
+      "assistant-contract": {
+        "base_status": "NOT_RUN",
+        "branch_status": "NOT_RUN",
+        "reason": "Required index validation passes; source units and companions unchanged. Optional broad baseline repeats were cancelled before execution."
+      }
+    },
+    "full_guard_proof": "PARTIAL; deferred to shared tool, no legacy proof rerun",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/sweep-p1"
+  }
 }
