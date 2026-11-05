@@ -1,4 +1,5 @@
 // FO-75: no look-option pixel belongs to another control; help retains a 30px target.
+import { writeFile } from 'node:fs/promises';
 import { LOOKS } from '../browser-check.config.mjs';
 const menu='#pm-o55-onboarding .o55-lookmenu', option=':is(.o55-lookopt,.o55-lookmodes button)';
 export default async function(t) {
@@ -37,5 +38,12 @@ export default async function(t) {
    await t.check(`FO-75 held look-option right edge activates itself ${tag}`,!misses.length,JSON.stringify(misses));
   }
  }
+ const proof=[];
+ for(const screen of ['where','look','nas-find']) {
+  await f.evaluate(s=>{O55.S.lookOpen=false;O55.ui.go(s,{noHistory:true});},screen);
+  const row=await f.evaluate(screen=>{const layer=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'),choice=layer?.querySelector('.o55-card,.o55-tile');return {screen,selector:'#pm-o55-onboarding .o55-lookmenu .o55-tipq::before',matchingOriginElements:document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-tipq').length,fixtureDOM:choice?.outerHTML||null};},screen);
+  proof.push(row);await t.check(`FO-75 scoped menu rule cannot match choice fixture ${screen}`,row.matchingOriginElements===0&&!!row.fixtureDOM,JSON.stringify(row));
+ }
+ if(t.args.scopeOut)await writeFile(String(t.args.scopeOut),JSON.stringify(proof,null,2));
  await f.evaluate(()=>document.documentElement.setAttribute('data-motion','full'));await t.emulate({reducedMotion:'no-preference'});
 }
