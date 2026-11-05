@@ -236,18 +236,27 @@ def multi_family_receipt_state():
 
 
 def post_august_validator_pin() -> str:
-    """Bridge live bytes to DL-077 only through the two validator hash links.
+    """Bridge live bytes to DL-077 through the Spec Lock-pinned DL-412 receipt.
 
-    DL-077 keeps its original predicate order, messages and returned receipt pin.
+    These are byte-integrity conditions outside DL-077's original predicate.
     Full DL-412 authority and receipt semantics are checked separately for steps.
-    A missing, unreadable or broken byte chain exposes the live hash to DL-077.
+    A missing, ambiguous or broken byte anchor exposes the live hash to DL-077.
     """
     live_hash = sha256_file(Path(__file__))
     try:
-        receipt = load_json(REPO / MULTI_FAMILY_RECEIPT)
+        path = REPO / MULTI_FAMILY_RECEIPT
+        receipt = load_json(path)
         dl077 = load_json(REPO / POST_AUGUST_RECEIPT)
+        lock = load_json(ROOT / "Spec_Lock.json")
+        ssot = lock.get("canonical_ssot_hashes") if isinstance(lock, dict) else None
+        files = ssot.get("files") if isinstance(ssot, dict) else None
+        anchors = [entry for entry in files
+                   if isinstance(entry, dict) and entry.get("path") == MULTI_FAMILY_RECEIPT
+                   ] if isinstance(files, list) else []
         if (isinstance(receipt, dict) and isinstance(dl077, dict)
                 and receipt.get("validator_after_sha256") == live_hash
+                and len(anchors) == 1
+                and anchors[0].get("sha256") == sha256_file(path)
                 and receipt.get("validator_before_sha256") == dl077.get("validator_after_sha256")):
             return "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20"
     except (OSError, ValueError, TypeError, RecursionError):
