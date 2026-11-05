@@ -493,6 +493,13 @@ html[data-o55-nier][data-theme="basic-dark"] #panel-settings .o55g-wrap.o55g-wra
    3.2-3.8:1 there, FO-20's sweep) */
 html[data-o55-nier] #panel-settings .o55g-card.is-on :is(.o55g-cardsub, .o55g-cardmeta) { color: var(--text-primary); }
 
+/* FO-65: M PLUS 1's small regular stems paint lighter on Windows than on Linux. Keep the
+   parchment and type, but give secondary setup copy ink headroom on both rasterizers. */
+html[data-o55-nier] #panel-settings .o55g-wrap {
+  --text-secondary: color-mix(in srgb, var(--text-primary) 60%, var(--k3-text-2));
+  --text-muted: var(--text-secondary);
+}
+
 /* The ground. The head boot script paints <html> inline (and #pm-boot-paint) in Basic Dark before Settings load, and
    never takes it back; the parchment wins over it while NieR Mode is on. */
 html[data-o55-nier] { background: var(--background) !important; }

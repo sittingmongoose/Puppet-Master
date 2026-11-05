@@ -26,7 +26,7 @@ export const tests = Object.fromEntries(['onboarding','tour','settings'].map(rou
       await t.viewport(w,h);
       const trigger = route === 'settings' ? f.locator('select[data-setting="general.visual.theme"]').locator('..').locator('.pm51-dd-trigger') : f.locator(`[${route === 'tour' ? 'data-o55t' : 'data-o55-do'}="lookMenu"]`);
       await trigger.scrollIntoViewIfNeeded(); await trigger.focus(); await trigger.press('Enter');
-      const popup = route === 'settings' ? '.pm51-dd-menu' : '.o55-lookmenu';
+      const popup = route === 'settings' ? '.pm51-dd-list' : '.o55-lookmenu';
       await f.locator(popup).waitFor({state:'visible'}); await t.settle();
       const box = await f.locator(popup).evaluate(e => { const r=e.getBoundingClientRect(); return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,w:innerWidth,h:innerHeight}; });
       t.log(`${route} ${look} ${w}x${h}: ${JSON.stringify(box)}`);
