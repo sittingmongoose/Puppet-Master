@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11764-L12713
+Source lines: L11756-L12705
 
-Source SHA256: `ef95f86fa49a769bb027708fe45cc045405b2113067e63363b09aafeef83af1f`
+Source SHA256: `4e63072d696e548a13cfc5e00caf6c555470aa4715a2398bd944498cb5268d27`
 
 ---
 
@@ -69,7 +69,7 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.docker.container.inspect` | newly registered | |
 | `cmd.docker.container.delete` | canonical (registered below) | UCC-049 preserved token; destructive |
 | `cmd.docker.build` | alias-of `cmd.docker.build.image` (selected path) | existing section 2.5A alias |
-| `cmd.docker.image.push` | alias (existing) | `domain.image_publish` class unchanged |
+| `cmd.docker.image.push` | alias (existing); amended 2026-11-05 (DL-333): primary command | `domain.image_publish` class unchanged; its own `DockerImagePushV3Request` (UCC-217) |
 | `cmd.docker.image.tag` / `cmd.docker.image.inspect` / `cmd.docker.image.delete` | newly registered | delete is destructive |
 | `cmd.docker.compose_up` | alias-of `cmd.docker.compose.up` | alias target adjudicated by UCC-137 below |
 | `cmd.docker.compose.up` / `cmd.docker.compose.down` / `cmd.docker.compose.restart` | newly registered | whole-file group verbs beside the existing subset rows |

@@ -652,7 +652,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 | `cmd.docker.create_repository.cancel` | Cancel Repository Creation | Cancels the protected repository creation request without approving image push or registry promotion | `repository_creation_confirmation_visible` |
 | `cmd.docker.registry.promote` | Promote Registry Artifact | Promotes, copies, or retags a digest-first artifact to a selected target registry/repo/tag | `registry_source_resolved && registry_target_allowed` |
 | `cmd.docker.registry.tag_push` | Tag And Push | Applies the approved `/tag/push` action to a digest-first artifact | `registry_target_allowed && permission_allowed` |
-| `cmd.docker.image.push` | Push Image | Compatibility alias for an approved image push through Docker Manager registry publish authority | `image_selected && registry_target_allowed && permission_allowed` |
+| `cmd.docker.image.push` | Push Image | Pushes an approved image through Docker Manager registry publish authority with its own `DockerImagePushV3Request` (UCC-217); amended 2026-11-05 (DL-333), it is a primary command, not a compatibility alias | `image_selected && registry_target_allowed && permission_allowed` |
 | `cmd.docker.drift.compare` | Compare Docker Drift | Compares local Dockerfile, `/compose/bake`, and manifests with last build, publish, or deploy metadata | `docker_project_detected` |
 | `cmd.docker.cleanup.scan` | Scan Cleanup | Dry-runs prune/remove recommendations with protected asset and receipt checks | `docker_available` |
 | `cmd.docker.cleanup.prune` | Prune Selected Assets | Executes approved cleanup targets after dry-run review | `cleanup_targets_selected && permission_allowed` |
@@ -4197,9 +4197,9 @@ preserved_exact_tokens:
 negative_constraints:
 - Docker Manager registry publish commands must share permission, account, receipt, and lineage checks rather than claiming a separate event family.
 preserved_contractrefs: []
-compatibility_only_notes:
-- cmd.docker.image.push is a compatibility alias for approved image push through Docker Manager registry authority.
-stale_retired_dispositions: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.docker.image.push is a primary command with its own DockerImagePushV3Request (UCC-217); the earlier compatibility-alias note for it is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -9708,14 +9708,6 @@ command_payload_definition_map:
       unit: UCC-049
       field: compatibility_only_notes
       quote: cmd.docker.build/logs/exec/inspect are compatibility aliases
-  - token: cmd.docker.image.push
-    disposition: compatibility_alias
-    evidence:
-      doc: Plans/UI_Command_Catalog.md
-      unit: UCC-051
-      field: compatibility_only_notes
-      quote: cmd.docker.image.push is a compatibility alias
-    note: Q5 resolution 2 makes it a primary command; the alias note goes in a later commit.
   - token: cmd.docker.inspect
     disposition: compatibility_alias
     targets:
@@ -11823,7 +11815,7 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.docker.container.inspect` | newly registered | |
 | `cmd.docker.container.delete` | canonical (registered below) | UCC-049 preserved token; destructive |
 | `cmd.docker.build` | alias-of `cmd.docker.build.image` (selected path) | existing section 2.5A alias |
-| `cmd.docker.image.push` | alias (existing) | `domain.image_publish` class unchanged |
+| `cmd.docker.image.push` | alias (existing); amended 2026-11-05 (DL-333): primary command | `domain.image_publish` class unchanged; its own `DockerImagePushV3Request` (UCC-217) |
 | `cmd.docker.image.tag` / `cmd.docker.image.inspect` / `cmd.docker.image.delete` | newly registered | delete is destructive |
 | `cmd.docker.compose_up` | alias-of `cmd.docker.compose.up` | alias target adjudicated by UCC-137 below |
 | `cmd.docker.compose.up` / `cmd.docker.compose.down` / `cmd.docker.compose.restart` | newly registered | whole-file group verbs beside the existing subset rows |

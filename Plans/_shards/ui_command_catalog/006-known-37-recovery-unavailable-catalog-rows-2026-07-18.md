@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L133-L1157
 
-Source SHA256: `ef95f86fa49a769bb027708fe45cc045405b2113067e63363b09aafeef83af1f`
+Source SHA256: `4e63072d696e548a13cfc5e00caf6c555470aa4715a2398bd944498cb5268d27`
 
 ---
 
@@ -530,7 +530,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 | `cmd.docker.create_repository.cancel` | Cancel Repository Creation | Cancels the protected repository creation request without approving image push or registry promotion | `repository_creation_confirmation_visible` |
 | `cmd.docker.registry.promote` | Promote Registry Artifact | Promotes, copies, or retags a digest-first artifact to a selected target registry/repo/tag | `registry_source_resolved && registry_target_allowed` |
 | `cmd.docker.registry.tag_push` | Tag And Push | Applies the approved `/tag/push` action to a digest-first artifact | `registry_target_allowed && permission_allowed` |
-| `cmd.docker.image.push` | Push Image | Compatibility alias for an approved image push through Docker Manager registry publish authority | `image_selected && registry_target_allowed && permission_allowed` |
+| `cmd.docker.image.push` | Push Image | Pushes an approved image through Docker Manager registry publish authority with its own `DockerImagePushV3Request` (UCC-217); amended 2026-11-05 (DL-333), it is a primary command, not a compatibility alias | `image_selected && registry_target_allowed && permission_allowed` |
 | `cmd.docker.drift.compare` | Compare Docker Drift | Compares local Dockerfile, `/compose/bake`, and manifests with last build, publish, or deploy metadata | `docker_project_detected` |
 | `cmd.docker.cleanup.scan` | Scan Cleanup | Dry-runs prune/remove recommendations with protected asset and receipt checks | `docker_available` |
 | `cmd.docker.cleanup.prune` | Prune Selected Assets | Executes approved cleanup targets after dry-run review | `cleanup_targets_selected && permission_allowed` |
