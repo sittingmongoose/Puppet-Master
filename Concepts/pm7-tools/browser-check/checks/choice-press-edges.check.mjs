@@ -88,7 +88,7 @@ export default async function(t) {
  if(!t.args.width&&!t.args.screen&&!t.args.look) {
   const saved={...t.args};
   for(const [width,height] of [[740,1000],[1280,500]]) {
-   Object.assign(t.args,{width,height,look:'glass-light',screen:'look',first:1});
+   Object.assign(t.args,{width,height,look:'glass-light',screen:'look',first:1,onePx:0});
    await run(t);
   }
   Object.keys(t.args).forEach(k=>delete t.args[k]);Object.assign(t.args,saved);
