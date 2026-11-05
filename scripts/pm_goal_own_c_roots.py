@@ -29,16 +29,17 @@ class OriginalBank:
     def __init__(self, declaration, locations):
         self.registry = Registry()
         self.documents = {}
+        self.resource_origins = {}
         self.raw = {}
         for entry in declaration.get('resources', declaration.get('whole_documents', [])):
             raw = self._whole(entry, locations)
             value = pointer(json.loads(raw), entry.get('json_pointer', '').lstrip('#'))
             uri = entry['retrieval_uri']
-            self._register(uri, value)
+            self._register(uri, value, (digest(raw),entry.get('json_pointer','').lstrip('#')))
         for entry in declaration.get('embedded_resources', []):
             raw = self._whole(entry, locations)
             value = pointer(json.loads(raw), entry['json_pointer'].lstrip('#'))
-            self._register(entry['retrieval_uri'], value)
+            self._register(entry['retrieval_uri'], value, (digest(raw),entry['json_pointer'].lstrip('#')))
         self.registry = self.registry.crawl()
         for uri, value in self.documents.items():
             self._refs(value, self.registry.resolver(uri))
@@ -52,10 +53,11 @@ class OriginalBank:
         self.raw[path] = raw
         return raw
 
-    def _register(self, uri, value):
+    def _register(self, uri, value, origin):
         if uri in self.documents:
-            require('roots/no_uri_rebinding', equal(self.documents[uri], value))
+            require('roots/no_uri_rebinding', self.resource_origins[uri] == origin)
         self.documents[uri] = value
+        self.resource_origins[uri] = origin
         self.registry = self.registry.with_resource(uri, Resource.from_contents(value, default_specification=DRAFT202012))
 
     def _refs(self, node, resolver):

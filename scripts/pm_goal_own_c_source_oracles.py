@@ -318,7 +318,7 @@ class OriginalUpdateGraph:
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--output', required=True)
+    parser.add_argument('--output')
     args=parser.parse_args()
     inputs, codec = load_originals()
     bank=SchemaBank(SCHEMA)
@@ -345,6 +345,13 @@ def main():
             path.write_text(json.dumps({'$schema':'https://json-schema.org/draft/2020-12/schema','$id':'https://example.test/typed.schema.json','const':const}))
             rows.append(dict(path=str(path),sha256=digest(path.read_bytes()),retrieval_uri='https://example.test/typed.schema.json'))
         suite.case('banks/boolean_integer_schema_alias',lambda:OriginalBank(dict(resources=rows),{}),'roots/no_uri_rebinding')
+        same={'$schema':'https://json-schema.org/draft/2020-12/schema','$id':'https://example.test/bytes.schema.json','type':'object'}
+        plain=Path(temporary)/'plain.json';pretty=Path(temporary)/'pretty.json'
+        plain.write_text(json.dumps(same,separators=(',',':')));pretty.write_text(json.dumps(same,indent=2)+'\n')
+        first=dict(path=str(plain),sha256=digest(plain.read_bytes()),retrieval_uri=same['$id'])
+        duplicate=dict(resources=[first,copy.deepcopy(first)])
+        suite.case('banks/same_exact_resource_repeated',lambda:OriginalBank(duplicate,{}))
+        suite.negative('banks/same_schema_different_whole_bytes',duplicate,lambda v:v['resources'].__setitem__(1,dict(path=str(pretty),sha256=digest(pretty.read_bytes()),retrieval_uri=same['$id'])),lambda v:OriginalBank(v,{}),'roots/no_uri_rebinding')
         path=Path(temporary)/'unvisited.json'
         path.write_text(json.dumps({'$schema':'https://json-schema.org/draft/2020-12/schema','$id':'https://example.test/unused.schema.json','$defs':{'unused':{'$ref':'#/$defs/missing'}}}))
         unused=dict(resources=[dict(path=str(path),sha256=digest(path.read_bytes()),retrieval_uri='https://example.test/unused.schema.json')])
@@ -564,7 +571,8 @@ def main():
         source_oracle_sha256=digest(Path(__file__).read_bytes()),
         whole_resource_qualifier_sha256=digest((ROOT/'scripts/pm_goal_own_c_roots.py').read_bytes()),
         first_part_adapter_sha256=digest((ROOT/'scripts/pm_goal_own_c_oracles.py').read_bytes()))
-    Path(args.output).write_text(json.dumps(out,indent=2)+'\n')
+    if args.output:
+        Path(args.output).write_text(json.dumps(out,indent=2)+'\n')
     print(json.dumps({k:out[k] for k in ('status','cases','positives','negatives','failures')},indent=2))
     return 0 if not suite.failures else 1
 
