@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L29479-L35096
+Source lines: L29479-L35901
 
-Source SHA256: `a3b0480192391646e6dd577d9ce8945e405d89c3955a096ec90b9e39376a1556`
+Source SHA256: `63553eb6a4cf91b754c713210ce7353dac701bce4f6b7cca0a71f7eeef076681`
 
 ---
 
@@ -79,6 +79,13 @@ canonical_text: 'Newly authored Storage binding for forge.api.compatibility_chan
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.api.compatibility_changed count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_api_compatibility_changed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278:
@@ -119,8 +126,24 @@ canonical_text: 'Newly authored Storage binding for forge.api.compatibility_chan
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.api.compatibility_changed: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -241,6 +264,13 @@ canonical_text: 'Newly authored Storage binding for forge.connection.capabilitie
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.connection.capabilities_changed count-equality oracle uses a completely covered prefix with one
+  exact matching retained event followed by one unrelated event in the same source. Successful inclusive
+  resume revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_connection_capabilities_changed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278:
@@ -281,8 +311,24 @@ canonical_text: 'Newly authored Storage binding for forge.connection.capabilitie
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.connection.capabilities_changed: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -402,6 +448,13 @@ canonical_text: 'Newly authored Storage binding for forge.connection.reauthorize
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.connection.reauthorized count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_connection_reauthorized_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -442,8 +495,24 @@ canonical_text: 'Newly authored Storage binding for forge.connection.reauthorize
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.connection.reauthorized: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -561,6 +630,13 @@ canonical_text: 'Newly authored Storage binding for forge.connection.validated@1
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.connection.validated count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_connection_validated_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -601,8 +677,24 @@ canonical_text: 'Newly authored Storage binding for forge.connection.validated@1
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.connection.validated: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -720,6 +812,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.connected@1.0.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.mirror.connected count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_mirror_connected_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -760,8 +859,24 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.connected@1.0.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.mirror.connected: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -879,6 +994,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.degraded@1.0.0,
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.mirror.degraded count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_mirror_degraded_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -919,8 +1041,24 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.degraded@1.0.0,
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.mirror.degraded: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -1038,6 +1176,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.detached@1.0.0,
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.mirror.detached count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_mirror_detached_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -1078,8 +1223,24 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.detached@1.0.0,
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.mirror.detached: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -1198,6 +1359,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.status_changed@
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.mirror.status_changed count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_mirror_status_changed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -1238,8 +1406,24 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.status_changed@
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.mirror.status_changed: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -1358,6 +1542,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.sync_completed@
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.mirror.sync_completed count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_mirror_sync_completed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -1398,8 +1589,24 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.sync_completed@
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.mirror.sync_completed: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -1517,6 +1724,13 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.sync_started@1.
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.mirror.sync_started count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_mirror_sync_started_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -1557,8 +1771,24 @@ canonical_text: 'Newly authored Storage binding for forge.mirror.sync_started@1.
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.mirror.sync_started: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -1676,6 +1906,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.cancelled@1.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.pipeline.cancelled count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_pipeline_cancelled_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -1716,8 +1953,24 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.cancelled@1.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.pipeline.cancelled: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -1835,6 +2088,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.completed@1.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.pipeline.completed count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_pipeline_completed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -1875,8 +2135,24 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.completed@1.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.pipeline.completed: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -1994,6 +2270,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.retried@1.0.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.pipeline.retried count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_pipeline_retried_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -2034,8 +2317,24 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.retried@1.0.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.pipeline.retried: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -2153,6 +2452,13 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.started@1.0.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.pipeline.started count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_pipeline_started_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -2193,8 +2499,24 @@ canonical_text: 'Newly authored Storage binding for forge.pipeline.started@1.0.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.pipeline.started: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -2314,6 +2636,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.authority_c
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.repository.authority_changed count-equality oracle uses a completely covered prefix with one
+  exact matching retained event followed by one unrelated event in the same source. Successful inclusive
+  resume revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_repository_authority_changed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278:
@@ -2354,8 +2683,24 @@ canonical_text: 'Newly authored Storage binding for forge.repository.authority_c
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.repository.authority_changed: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -2473,6 +2818,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.created@1.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.repository.created count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_repository_created_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -2513,8 +2865,24 @@ canonical_text: 'Newly authored Storage binding for forge.repository.created@1.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.repository.created: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -2633,6 +3001,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.discovered@
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.repository.discovered count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_repository_discovered_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -2673,8 +3048,24 @@ canonical_text: 'Newly authored Storage binding for forge.repository.discovered@
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.repository.discovered: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -2796,6 +3187,13 @@ canonical_text: 'Newly authored Storage binding for forge.repository.eligibility
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.repository.eligibility_changed count-equality oracle uses a completely covered prefix with one
+  exact matching retained event followed by one unrelated event in the same source. Successful inclusive
+  resume revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_repository_eligibility_changed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278:
@@ -2836,8 +3234,24 @@ canonical_text: 'Newly authored Storage binding for forge.repository.eligibility
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.repository.eligibility_changed: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -2955,6 +3369,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.approved@1.0.0,
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.approved count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_approved_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -2995,8 +3416,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.approved@1.0.0,
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.approved: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -3128,6 +3565,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.changes_request
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.changes_requested count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_changes_requested_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278:
@@ -3168,8 +3612,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.changes_request
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.changes_requested: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -3298,6 +3758,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.closed@1.0.0, p
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.closed count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_closed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -3338,8 +3805,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.closed@1.0.0, p
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.closed: correct ID recipes, actual seed-issuance provenance, unique
+  node membership by generation_id, and selected-current existence/cardinality are independent predicates.
+  Inside this exact root the domain, storage instance, scope, event type, consumer and version are fixed;
+  the seed is the only varying preimage component. Reusing a seed with a correct recipe necessarily reuses
+  the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds. Seed uniqueness is
+  a derived fact, not a separately weakened refusal and not duplicate enforcement of the ID predicate.
+  Different seeds alone do not prove distinct IDs; repeated IDs are refused even when individual recipes are
+  correct. Seed issuance separately verifies the seed was once durably allocated by the actual Storage
+  generation allocator for this root and logical generation, before its membership was accepted; original
+  issuance remains verifiable on retry and retained-generation reads. A unique seed and correctly recomputed
+  ID do not prove that issuance. Repeated array occurrences of the same authentic node share its one genuine
+  issuance fact and fail only unique node membership, not issuance. Check membership by generation_id over
+  every node, selected or unselected; do not recast repeated membership as a second seed allocation.
+  Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by original seed and
+  exact root identity; comparison of the claimed generation_id to the computed ID belongs only to the recipe
+  predicate. Exact root/core identity equality, lifecycle/time consistency and actual source/receipt/token
+  checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -3457,6 +3940,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.created@1.0.0, 
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.created count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_created_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -3497,8 +3987,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.created@1.0.0, 
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.created: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -3616,6 +4122,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.marked_ready@1.
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.marked_ready count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_marked_ready_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -3656,8 +4169,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.marked_ready@1.
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.marked_ready: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -3775,6 +4304,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.merged@1.0.0, p
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.merged count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_merged_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -3815,8 +4351,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.merged@1.0.0, p
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.merged: correct ID recipes, actual seed-issuance provenance, unique
+  node membership by generation_id, and selected-current existence/cardinality are independent predicates.
+  Inside this exact root the domain, storage instance, scope, event type, consumer and version are fixed;
+  the seed is the only varying preimage component. Reusing a seed with a correct recipe necessarily reuses
+  the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds. Seed uniqueness is
+  a derived fact, not a separately weakened refusal and not duplicate enforcement of the ID predicate.
+  Different seeds alone do not prove distinct IDs; repeated IDs are refused even when individual recipes are
+  correct. Seed issuance separately verifies the seed was once durably allocated by the actual Storage
+  generation allocator for this root and logical generation, before its membership was accepted; original
+  issuance remains verifiable on retry and retained-generation reads. A unique seed and correctly recomputed
+  ID do not prove that issuance. Repeated array occurrences of the same authentic node share its one genuine
+  issuance fact and fail only unique node membership, not issuance. Check membership by generation_id over
+  every node, selected or unselected; do not recast repeated membership as a second seed allocation.
+  Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by original seed and
+  exact root identity; comparison of the claimed generation_id to the computed ID belongs only to the recipe
+  predicate. Exact root/core identity equality, lifecycle/time consistency and actual source/receipt/token
+  checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -3934,6 +4486,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.reopened@1.0.0,
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.reopened count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_reopened_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -3974,8 +4533,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.reopened@1.0.0,
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.reopened: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -4094,6 +4669,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.reopened
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.thread.reopened count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_thread_reopened_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -4134,8 +4716,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.reopened
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.thread.reopened: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -4254,6 +4852,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.replied@
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.thread.replied count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_thread_replied_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -4294,8 +4899,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.replied@
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.thread.replied: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -4414,6 +5035,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.resolved
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.thread.resolved count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_thread_resolved_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -4454,8 +5082,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.thread.resolved
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.thread.resolved: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -4573,6 +5217,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.updated@1.0.0, 
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.updated count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_updated_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -4613,8 +5264,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.updated@1.0.0, 
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.updated: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -4733,6 +5400,13 @@ canonical_text: 'Newly authored Storage binding for forge.review.version_created
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.review.version_created count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_review_version_created_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -4773,8 +5447,24 @@ canonical_text: 'Newly authored Storage binding for forge.review.version_created
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.review.version_created: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -4894,6 +5584,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.delivery_faile
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.webhook.delivery_failed count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_webhook_delivery_failed_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one
@@ -4934,8 +5631,24 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.delivery_faile
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.webhook.delivery_failed: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -5056,6 +5769,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.delivery_recov
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.webhook.delivery_recovered count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_webhook_delivery_recovered_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278:
@@ -5096,8 +5816,24 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.delivery_recov
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.webhook.delivery_recovered: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -5215,6 +5951,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.received@1.0.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.webhook.received count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_webhook_received_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -5255,8 +5998,24 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.received@1.0.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.webhook.received: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -5376,6 +6135,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.redelivery_que
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.webhook.redelivery_queued count-equality oracle uses a completely covered prefix with one exact
+  matching retained event followed by one unrelated event in the same source. Successful inclusive resume
+  revalidates the already-counted matching cursor, skips it, examines the unrelated final event and
+  publishes matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2
+  with the same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS;
+  repair candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_webhook_redelivery_queued_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278:
@@ -5416,8 +6182,24 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.redelivery_que
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.webhook.redelivery_queued: correct ID recipes, actual seed-issuance
+  provenance, unique node membership by generation_id, and selected-current existence/cardinality are
+  independent predicates. Inside this exact root the domain, storage instance, scope, event type, consumer
+  and version are fixed; the seed is the only varying preimage component. Reusing a seed with a correct
+  recipe necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node
+  seeds. Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement
+  of the ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
@@ -5535,6 +6317,13 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.rejected@1.0.0
   restart first revalidates the cursor event/value hash, then continues strictly after it without a second disclosure/effect.
   The cursor''s actual sequence/event/value hash must join Storage, including when the last record belongs to another
   family. A stale token/CAS/source change refuses and retries from a new coherent snapshot, without combining generations.
+  The forge.webhook.rejected count-equality oracle uses a completely covered prefix with one exact matching
+  retained event followed by one unrelated event in the same source. Successful inclusive resume revalidates
+  the already-counted matching cursor, skips it, examines the unrelated final event and publishes
+  matched_count=1 with that final genuine cursor. Its count-only negative proposes matched_count=2 with the
+  same source, coverage, cursor, durable/live token and actual predecessor revision/hash CAS; repair
+  candidate-dependent commitments without changing source or predecessor authority. Count equality is
+  separate from coverage, cursor correctness and generation-node cardinality.
 
 
   Checkpoint forge_webhook_rejected_checkpoint explicitly uses RP-PROJECTION-3GEN@1.0.0 through SP-278: one current
@@ -5575,8 +6364,24 @@ canonical_text: 'Newly authored Storage binding for forge.webhook.rejected@1.0.0
   MessagePack codec over the closed object {domain: pm.forge.history_checkpoint_generation.v1, storage_instance_id,
   scope, event_type, consumer_id, consumer_version, generation_seed_sha256}; all identity fields come from this
   exact root and the seed is actual once-persisted 256-bit entropy. This is a newly authored identity preimage using
-  the existing codec, with no numeric or timestamp algorithm. Unique node IDs/seeds, exact root/core identity equality,
-  lifecycle/time consistency and actual source/receipt/token checks are mandatory. The whole root plus all nodes
+  the existing codec, with no numeric or timestamp algorithm.
+  Generation invariants for forge.webhook.rejected: correct ID recipes, actual seed-issuance provenance,
+  unique node membership by generation_id, and selected-current existence/cardinality are independent
+  predicates. Inside this exact root the domain, storage instance, scope, event type, consumer and version
+  are fixed; the seed is the only varying preimage component. Reusing a seed with a correct recipe
+  necessarily reuses the ID. Correct recipes plus unique ID membership therefore entail distinct node seeds.
+  Seed uniqueness is a derived fact, not a separately weakened refusal and not duplicate enforcement of the
+  ID predicate. Different seeds alone do not prove distinct IDs; repeated IDs are refused even when
+  individual recipes are correct. Seed issuance separately verifies the seed was once durably allocated by
+  the actual Storage generation allocator for this root and logical generation, before its membership was
+  accepted; original issuance remains verifiable on retry and retained-generation reads. A unique seed and
+  correctly recomputed ID do not prove that issuance. Repeated array occurrences of the same authentic node
+  share its one genuine issuance fact and fail only unique node membership, not issuance. Check membership
+  by generation_id over every node, selected or unselected; do not recast repeated membership as a second
+  seed allocation. Issuance provenance uses the original durable Storage SP-278 preparation/anchor bound by
+  original seed and exact root identity; comparison of the claimed generation_id to the computed ID belongs
+  only to the recipe predicate. Exact root/core identity equality, lifecycle/time consistency and actual
+  source/receipt/token checks are mandatory. The whole root plus all nodes
   obeys the physical size ceiling. Same-generation advances CAS the entire old root value hash and the selected
   core publication revision, preserving every sibling byte; staging and activation also CAS the whole root. Atomic
   activation swaps the selector, makes only the verified target current and freezes the previous current node first
