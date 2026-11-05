@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L28530
+Source lines: L26794-L28587
 
-Source SHA256: `4b0b395198d993ff55a8c3aceef8c1f3c802c8f612fa49957caf2735a12543d1`
+Source SHA256: `3aeadcce054340ef7efe9b896a38bfd0a926741dc27f41bb1f650bb474ca4e20`
 
 ---
 
@@ -1744,4 +1744,61 @@ preserved_exact_tokens:
 owner_hints:
   - Plans/usage-feature.md
   - Plans/CLI_Bridged_Providers.md
+```
+
+### DL-334 - June Audit Directories Get A Bounded Legacy Format Rule; Uncovered Rows Get A Supplemental Closure Pass
+
+```yaml
+plan_unit_id: DL-334
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-334 records Jared's answer of 2026-11-05 ("approve all") to stream C's question 7 on the per-audit completeness
+  failures of the June audits. It is a split. (a) audit-20260619-002 gets an append-only supplemental closure pass,
+  because its uncovered row is a real gap. (b) The audit directories written before July 2026 get a legacy rule for
+  format and schema-evolution errors only; new audits stay under the full rules. The legacy rule must not excuse a
+  missing closure row or any other substantive gap in any audit. This loosens a check, and the limit is stated plainly
+  in Plans/Planning_Ledger_System.md#PLS-026. Measured on the audit data of commit 6fac1ed357 (after the
+  audit-20260619-002 and audit-20260619-004 supplemental rows), with the closure matrix required and effective status
+  optional: the 55 June directories report 44,557 per-audit errors under the earlier validator; the rule reports
+  31,793 of them as warnings and keeps 12,764 as errors, and 19 of the 55 directories pass; every directory from July
+  on reports exactly what it reported before. The rule also covers closure rows over source rows that are
+  non-actionable only by the compatibility inference: those rows predate the explicit repair_required field, so
+  whether they need repair is inferred, and a historical closure that over-covers them leaves nothing unrepaired. A
+  row that states repair_required or finding_level, or a closure row added later, keeps that error. Jared's answer
+  names the supplemental pass for audit-20260619-002 only. The coordinator (pm7-build, 2026-11-05, pm-mail
+  1105030457-ade2) applied the same approved option to the other June audits with uncovered actionable rows; that
+  extension is a coordinator resolution, not Jared's words, and under it a row closes only if its repair is real
+  against current canon.
+gui_related: false
+gui_classification_reason: Records a governance decision about historical audit validation; no GUI contract changes.
+split_recommended: false
+depends_on: [PLS-025, PDS-014]
+unblocks: []
+acceptance_criteria:
+  - "Plans/Planning_Ledger_System.md#PLS-026 states which errors the legacy rule reports as warnings and that it never excuses a missing closure row or any other substantive gap."
+  - "audit-20260619-002's uncovered planunit_source_claims.jsonl:31 row is closed by an appended matrix row and a supplemental_closure_pass record; no existing row changes."
+validation_surfaces:
+  - python3 scripts/pm-audit-closure.py self-test
+  - python3 scripts/pm-plan-index.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Ledger_System.md
+  - scripts/pm-audit-closure.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the five stream C questions; question 7 is this entry"
+  - "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/C-REPORT.md (question 7)"
+preserved_exact_tokens:
+  - "DL-334"
+  - "must not excuse a missing closure row or any other substantive gap"
+owner_hints:
+  - Plans/Planning_Ledger_System.md
 ```
