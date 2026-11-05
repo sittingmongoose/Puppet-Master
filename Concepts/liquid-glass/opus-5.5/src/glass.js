@@ -563,7 +563,7 @@
     }
     return wallpaperPaintStyle.sheet.cssRules[index].style;
   }
-  function dropFrost(rec) { rec.imgs = null; rec.decoded = null; Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
+  function dropFrost(rec) { rec.dead = true; rec.imgs = null; rec.decoded = null; Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
     frosts = rec.urls; frostKey = rec.key; frostWallUrl = rec.wall;
@@ -680,9 +680,6 @@
           dbytes: names.length * 4 * Math.ceil(c.vw * FROST_SCALE) * Math.ceil(c.vh * FROST_SCALE) };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         decodeFrost(rec);
-        /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
-        var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
-        if (!prepare) applyFrost(rec);
         while (frostCache.size && frostBytes + rec.bytes > FROST_BYTES) {
           /* Preparation may evict another cached print, never the frost still visible on the sheets (nor the outgoing
              frost a crossfade still shows) */
@@ -693,15 +690,28 @@
         }
         if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; trimDecoded(); }
         else if (prepare) { dropFrost(rec); valid = false; }
+      }
+      var waiters = job.waiters; job.waiters = [];
+      var tell = function (ok) { waiters.forEach(function (cb) { cb(ok); }); };
+      /* preparation resolves once the new pair is decoded, so the caller's commit swaps decoded images */
+      if (!valid || prepare) { if (valid && frostCache.get(key) === rec) whenDecoded(rec, function () { tell(true); }); else tell(valid); return; }
+      /* A bake for the sheets goes on them once its images are decoded too, as a kept pair does (above) and a prepared
+         one (commitWallpaper). Put on at once, the scrim and every sheet pointed at a blob not yet loaded, which Chromium
+         paints as no image at all: after a resize the app beneath showed sharp through the veil and the window until the
+         new frost came in (FO-38: 17 frames on Nas1, glass-dark-stage-860 8695-8711, between the old frost stretched and
+         the new one). Until then the old pair stays on, stretched to the new size. Both frost levels change together; an
+         older encoder can never replace half of the current wallpaper. */
+      whenDecoded(rec, function () {
+        var current = !rec.dead && epoch === bakeEpoch && isGlass() && currentWallUrl() === u && innerWidth === c.vw && innerHeight === c.vh;
+        if (!current) { if (!rec.dead && frostCache.get(key) !== rec) dropFrost(rec); tell(false); return; }
+        var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
+        applyFrost(rec);
         /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
-        if (!prepare && previous !== rec.urls && previousUncached && !(xf && previous === xf.frosts)) {
+        if (previous !== rec.urls && previousUncached && !(xf && previous === xf.frosts)) {
           Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
         }
-      }
-      /* preparation resolves once the new pair is decoded, so the caller's commit swaps decoded images */
-      var waiters = job.waiters; job.waiters = [];
-      var tell = function () { waiters.forEach(function (cb) { cb(valid); }); };
-      if (valid && prepare && frostCache.get(key) === rec) whenDecoded(rec, tell); else tell();
+        tell(true);
+      });
     }
     /* each frost is drawn at FROST_SCALE of the window and stretched back by its background-size (glass.css: / --lg-vw
        --lg-vh): a 26 px or 14 px blur holds no detail that a third of the pixels cannot carry, and the blur and the encode
@@ -1006,6 +1016,17 @@
     root.classList.remove('lg-drag-flat');
   }
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
+  /* The frost is drawn for one window size, and the flight that bakes the sheets' rims is what makes it. Back at a size the
+     page has had before, every rim is in the ring cache, so no flight ran and the last frost made (another size's) stayed
+     on, stretched, until something baked again, and then changed at that later moment (FO-38). After each sync, a frost
+     that is not this size's is asked for here unless a flight is on its way: the kept pair goes on once decoded, or a new
+     one is baked, by makeFrosts as a flight would. */
+  function ensureFrost() {
+    if (!isGlass() || bakeFlight || bakeT || bakeQ.size || dragHeld()) return;
+    var u = currentWallUrl();
+    if (!u || frostKey === u + ':' + innerWidth + 'x' + innerHeight) return;
+    withWall(function (im) { if (im && im.__lgWallUrl === currentWallUrl() && isGlass() && !bakeFlight) makeFrosts(im, function () {}); });
+  }
   function flushBakes() {
     bakeT = 0; if (!isGlass() || !bakeQ.size || bakeFlight) return;
     if (dragHeld()) { bakeHeld(); return; }
@@ -1649,7 +1670,10 @@
       prewarmIdle = 0; var q = Array.from(prewarmQ); prewarmQ.clear();
       q.forEach(function (e) { var L = e[1][0]; if (L.lens.isConnected && lenses.get(e[0]) === L) prewarm(L, e[1][1], e[0]); });
     };
-    prewarmIdle = window.requestIdleCallback ? requestIdleCallback(run, { timeout: 500 }) : setTimeout(run, 100);
+    // A resize can begin after this prewarm is queued. Shared admission withdraws it until release.
+    prewarmIdle = window.PM_BUSY && typeof window.PM_BUSY.idle === 'function'
+      ? window.PM_BUSY.idle(run, 500)
+      : window.requestIdleCallback ? requestIdleCallback(run, { timeout: 500 }) : setTimeout(run, 100);
   }
   function prewarm(L, cfg, strip) {
     if (!gpu() || !isGlass() || cfg.under) return;
@@ -2629,7 +2653,7 @@
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
     if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
-    else syncSurfaces(scopes, sheets);
+    else { syncSurfaces(scopes, sheets); ensureFrost(); }
     var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
       var found = cfg.many ? scopedNodes(cfg.sel, scopes) : [document.querySelector(cfg.sel)].filter(function (s) {
