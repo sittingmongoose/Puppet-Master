@@ -27,7 +27,6 @@ from __future__ import annotations
 import argparse
 import copy
 import datetime
-import ipaddress
 import importlib.util
 import json
 import math
@@ -39,7 +38,6 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
-from urllib.parse import urlsplit
 from urllib.parse import urlparse
 
 import yaml
@@ -126,9 +124,9 @@ UNIT_ID_RE = re.compile(r"UCC-(\d{3})")
 SNAKE_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 NAMESPACE_RE = re.compile(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*")
 BACKTICK_RE = re.compile(r"`([^`]+)`")
-# The root key starts a definitions block whether its value follows on the next line or inline
-# (`command_payload_definitions: false` is a malformed block, not prose): C14 then checks it.
-DEFS_BLOCK_RE = re.compile(r"^command_payload_definitions:(?:[ \t]|$)", re.M)
+DEFS_ROOT_KEY = "command_payload_definitions"
+# Last resort for YAML the scanner cannot read at all: the plain root key at column zero.
+DEFS_FALLBACK_RE = re.compile(r"^command_payload_definitions[ \t]*:", re.M)
 JSON_DEF_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-/]+\.json)#/\$defs/([A-Za-z0-9_]+)$")
 DOC_UNIT_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-]+\.md)#([A-Z][A-Z0-9]*-\d+)$")
 LOCAL_REF_RE = re.compile(r"^local:([A-Za-z][A-Za-z0-9_]*)$")
@@ -272,8 +270,46 @@ def line_of(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
+def _root_key_by_tokens(block: str) -> tuple[bool, bool]:
+    """(found, scanner_failed): whether a top-level mapping key spelled command_payload_definitions
+    occurs before the YAML scanner stops, in any quoting, flow or explicit-key form."""
+    depth, key_next = 0, False
+    try:
+        for token in yaml.scan(block, Loader=yaml.SafeLoader):
+            kind = type(token).__name__
+            if kind in ("BlockMappingStartToken", "BlockSequenceStartToken", "FlowMappingStartToken", "FlowSequenceStartToken"):
+                depth += 1
+            elif kind in ("BlockEndToken", "FlowMappingEndToken", "FlowSequenceEndToken"):
+                depth -= 1
+            elif kind == "KeyToken":
+                key_next = depth == 1
+                continue
+            elif kind == "ScalarToken" and key_next and token.value == DEFS_ROOT_KEY:
+                return True, False
+            key_next = False
+    except Exception:  # noqa: BLE001 - the scanner stopped; report what it saw
+        return False, True
+    return False, False
+
+
 def is_definitions_block(block: str) -> bool:
-    return DEFS_BLOCK_RE.search(block) is not None
+    """A yaml fence is a definitions block when its YAML root mapping has the key
+    command_payload_definitions, in any spelling YAML allows (plain, quoted, indented, flow or
+    explicit key), whatever its value. The composer decides for well-formed YAML, so the key text
+    inside a scalar never counts; for YAML the composer rejects, a scanner pass finds a top-level
+    key before the error, and only YAML the scanner cannot read falls back to the plain key at
+    column zero. A detected block then gets the C14 shape and format checks."""
+    try:
+        nodes = list(yaml.compose_all(block, Loader=yaml.SafeLoader))
+    except Exception:  # noqa: BLE001 - malformed YAML: fall back to tokens
+        found, scanner_failed = _root_key_by_tokens(block)
+        return found or (scanner_failed and DEFS_FALLBACK_RE.search(block) is not None)
+    for node in nodes:
+        if isinstance(node, yaml.MappingNode):
+            for key, _value in node.value:
+                if isinstance(key, yaml.ScalarNode) and key.value == DEFS_ROOT_KEY:
+                    return True
+    return False
 
 
 def parse_units(text: str, rel: str, *, strict: bool) -> tuple[dict[str, Unit], list[str]]:
@@ -578,6 +614,8 @@ def check_map(ctx: Context) -> None:
         rep.add("C14", "map_format", CATALOG, unit=MAP_UNIT, detail=str(mp.get("format")))
     if list(as_list(mp.get("type_vocabulary"))) != list(TYPE_VOCABULARY):
         rep.add("C05", "map_type_vocabulary_differs", CATALOG, unit=MAP_UNIT)
+    if sorted(as_list(mp.get("literal_default_forbidden_types"))) != sorted(LITERAL_DEFAULT_FORBIDDEN_TYPES):
+        rep.add("C05", "map_literal_default_rule_differs", CATALOG, unit=MAP_UNIT)
     if sorted(as_list(mp.get("constraint_keys"))) != sorted(CONSTRAINT_KEYS):
         rep.add("C05", "map_constraint_keys_differ", CATALOG, unit=MAP_UNIT)
     if sorted(as_list(mp.get("conditional_keys"))) != sorted(CONDITIONAL_KEYS):
@@ -856,105 +894,31 @@ def constraint_value_ok(key: str, value: Any) -> bool:
     return True
 
 
-# Primitive literal grammars (DESIGN 4.2). Each validates exactly the owner's static syntax; the
-# owners keep their runtime work (FileSafe resolves paths with realpath; webfetch normalizes before
-# routing). ASCII only: the grammars below are ASCII grammars.
-
-RFC3339_UTC_RE = re.compile(
-    r"([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?(?:[Zz]|\+00:00)", re.ASCII)
-
-
-def rfc3339_utc_ok(value: str) -> bool:
-    """RFC 3339 date-time in UTC: section 5.6 syntax with ASCII digits, `T` or `t` (5.6 note), a
-    zero offset written `Z`, `z` or `+00:00` (4.3; `-00:00` means an unknown local offset, so it is
-    not UTC), a calendar-valid date, and a leap second (`:60`) only at 23:59 on the last day of a
-    month (5.7)."""
-    if not value.isascii():
-        return False
-    match = RFC3339_UTC_RE.fullmatch(value)
-    if match is None:
-        return False
-    year, month, day, hour, minute, second = (int(g) for g in match.groups())
-    try:
-        datetime.date(year, month, day)
-    except ValueError:
-        return False
-    if hour > 23 or minute > 59 or second > 60:
-        return False
-    if second == 60:
-        last_day = (datetime.date(year + (month == 12), month % 12 + 1, 1) - datetime.timedelta(days=1)).day
-        return hour == 23 and minute == 59 and day == last_day
-    return True
+# Literal defaults of these types are refused outright (DL-333 coordinator resolution 11): the
+# owners (webfetch for URLs, FileSafe for paths, RFC 3339 consumers for timestamps) validate their
+# syntax at run time, and no definition may carry one until an owner that needs it adds its
+# validation here. Failing closed means no invalid literal can pass.
+LITERAL_DEFAULT_FORBIDDEN_TYPES = ("timestamp", "url", "path")
 
 
-URL_CHARS_RE = re.compile(r"[A-Za-z0-9\-._~:/?#\[\]@!$&'()*+,;=%]*", re.ASCII)
-PERCENT_RE = re.compile(r"%(?![0-9A-Fa-f]{2})")
-DNS_LABEL_RE = re.compile(r"(?!-)[a-z0-9-]{1,63}(?<!-)", re.ASCII)
-
-
-def absolute_url_ok(value: str) -> bool:
-    """An absolute URL in the normalized form the web URL rules require (DESIGN 4.2; Tools.md
-    webfetch: non-HTTP(S) schemes rejected, malformed URLs rejected, URLs normalized): scheme `http`
-    or `https` in lower case, a host that is a lower-case DNS name, an IPv4 address or a bracketed
-    IPv6 address, an optional port 1-65535, and only RFC 3986 characters with well-formed percent
-    escapes (no space, control or non-ASCII character)."""
-    if not value.isascii() or URL_CHARS_RE.fullmatch(value) is None or PERCENT_RE.search(value):
-        return False
-    try:
-        parts = urlsplit(value)
-        port = parts.port
-    except ValueError:
-        return False
-    if parts.scheme not in ("http", "https") or not value.startswith(parts.scheme + "://"):
-        return False
-    hostport = parts.netloc.rsplit("@", 1)[-1]
-    if hostport.endswith(":") or (port is not None and not 1 <= port <= 65535):
-        return False
-    host = hostport[: hostport.rfind("]") + 1] if hostport.startswith("[") else hostport.split(":", 1)[0]
-    if not host:
-        return False
-    if host.startswith("["):
-        try:
-            ipaddress.IPv6Address(host[1:-1])
-        except ValueError:
-            return False
-        return True
-    if host != host.lower() or len(host) > 253:
-        return False
-    labels = host.split(".")
-    if all(label.isdigit() for label in labels):
-        try:
-            ipaddress.IPv4Address(host)
-        except ValueError:
-            return False
-        return True
-    return all(DNS_LABEL_RE.fullmatch(label) for label in labels)
-
-
-WINDOWS_DRIVE_RE = re.compile(r"[A-Za-z]:[\\/]", re.ASCII)
-
-
-def normalized_absolute_path_ok(value: str) -> bool:
-    """A FileSafe-normalized absolute path, statically (DESIGN 4.2; FileSafe covers macOS, Linux and
-    Windows and resolves paths with realpath at run time, so no filesystem is consulted here): a
-    POSIX path from `/`, a Windows drive path (`C:\\` or `C:/`), or a UNC path (`\\\\server\\share`);
-    the root itself is allowed; no NUL or other control character; no empty, `.` or `..` segment."""
-    if not value or any(ord(ch) < 0x20 or ord(ch) == 0x7F for ch in value):
-        return False
-    if value.startswith("/") and not value.startswith("//"):
-        rest, seps = value[1:], "/"
-    elif WINDOWS_DRIVE_RE.match(value):
-        rest, seps = value[3:], "\\/"
-    elif value.startswith("\\\\"):
-        rest, seps = value[2:], "\\"
-        if len(re.split(r"\\", rest)) < 2:
-            return False  # a UNC path names a server and a share
-    else:
-        return False
-    if rest == "":
-        return not value.startswith("\\\\")
-    segments = re.split("[" + re.escape(seps) + "]", rest)
-    return all(segment not in ("", ".", "..") for segment in segments)
+def forbidden_literal_type(spec: dict[str, Any], value: Any) -> str | None:
+    """The forbidden type a literal default would carry, looking through list items and object
+    children the literal supplies; None when it carries none."""
+    kind = spec.get("type") if isinstance(spec, dict) else None
+    if kind in LITERAL_DEFAULT_FORBIDDEN_TYPES:
+        return kind
+    if kind == "list" and isinstance(value, list) and isinstance(spec.get("item"), dict):
+        for item in value:
+            found = forbidden_literal_type(spec["item"], item)
+            if found:
+                return found
+    if kind == "object" and isinstance(value, dict) and isinstance(spec.get("fields"), dict):
+        for child, child_value in value.items():
+            if isinstance(spec["fields"].get(child), dict):
+                found = forbidden_literal_type(spec["fields"][child], child_value)
+                if found:
+                    return found
+    return None
 
 
 def merged_constraints(spec: dict[str, Any], inherited: dict[str, Any] | None) -> dict[str, Any]:
@@ -1055,15 +1019,8 @@ def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | Non
         elif kind == "sha256":
             if re.fullmatch(r"[0-9a-f]{64}", value) is None:
                 return False
-        elif kind == "timestamp":
-            if not rfc3339_utc_ok(value):
-                return False
-        elif kind == "url":
-            if not absolute_url_ok(value):
-                return False
-        elif kind == "path":
-            if not normalized_absolute_path_ok(value):
-                return False
+        elif kind in LITERAL_DEFAULT_FORBIDDEN_TYPES:
+            return False  # never a valid literal (resolution 11); C06 literal_default_not_allowed says why
         return True
     if kind == "list":
         if not isinstance(value, list):
@@ -1196,7 +1153,11 @@ def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], re
             if spec.get("required") is True and default != "none":
                 rep.add("C06", "required_field_has_literal_default", field=name, detail=repr(default), **where)
             elif default != "none" and spec.get("type") in TYPE_VOCABULARY:
-                if not literal_ok(spec, default, inherited):
+                forbidden = forbidden_literal_type(spec, default)
+                if forbidden:
+                    rep.add("C06", "literal_default_not_allowed", field=name,
+                            detail=f"type {forbidden} takes default none (DL-333 resolution 11)", **where)
+                elif not literal_ok(spec, default, inherited):
                     rep.add("C06", "literal_default_type_mismatch", field=name, detail=repr(default), **where)
         # C11 provenance
         provenance = spec.get("provenance")
@@ -1669,6 +1630,7 @@ def fixture_map() -> dict[str, Any]:
     return {
         "format": FORMAT,
         "type_vocabulary": list(TYPE_VOCABULARY),
+        "literal_default_forbidden_types": list(LITERAL_DEFAULT_FORBIDDEN_TYPES),
         "constraint_keys": list(CONSTRAINT_KEYS),
         "conditional_keys": list(CONDITIONAL_KEYS),
         "error_narrowing": copy.deepcopy(ERROR_NARROWING),
@@ -2331,7 +2293,7 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         _defs(fx, "cmd.docker.image.tag")["args"]["manifest_path"] = {
             "type": "path", "required": False, "default": "/data/../etc/passwd", "provenance": "canon", "source": "fixture"}
 
-    @case("pass: valid timestamp, url and path literal defaults", 0, set())
+    @case("fail C06: timestamp, url and path literal defaults are not allowed (resolution 11)", 1, {"C06"})
     def _(fx: Fixture) -> None:
         args = _defs(fx, "cmd.docker.image.tag")["args"]
         args["opened_at"] = {"type": "timestamp", "required": False, "default": "2026-11-04T12:34:56Z",
@@ -2360,49 +2322,51 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         _defs(fx, "cmd.docker.image.tag")["args"]["probe"] = {
             "type": kind, "required": False, "default": default, "provenance": "canon", "source": "fixture"}
 
-    for label, kind, value, ok in [
-        ("timestamp +00:00 offset", "timestamp", "2026-11-04T12:34:56+00:00", True),
-        ("timestamp lower-case t and z", "timestamp", "2026-11-04t12:34:56.250z", True),
-        ("timestamp leap second at month end", "timestamp", "2016-12-31T23:59:60Z", True),
-        ("timestamp leap second mid-month", "timestamp", "2026-11-04T12:34:60Z", False),
-        ("timestamp leap second at 23:59 not month end", "timestamp", "2026-11-04T23:59:60Z", False),
-        ("timestamp -00:00 (unknown local offset)", "timestamp", "2026-11-04T12:34:56-00:00", False),
-        ("timestamp full-width digits", "timestamp", "\uff12\uff10\uff12\uff16-11-04T12:34:56Z", False),
-        ("timestamp hour 24", "timestamp", "2026-11-04T24:00:00Z", False),
-        ("timestamp invalid date", "timestamp", "2026-02-30T12:00:00Z", False),
-        ("url https with path", "url", "https://example.com/docs?x=1#top", True),
-        ("url http with port", "url", "http://example.com:8080/x", True),
-        ("url https IPv6 host", "url", "https://[2001:db8::1]/x", True),
-        ("url https IPv4 host", "url", "https://192.0.2.10/x", True),
-        ("url space in host", "url", "https://exa mple.com/docs", False),
-        ("url non-numeric port", "url", "https://example.com:bad/docs", False),
-        ("url port out of range", "url", "https://example.com:99999/docs", False),
-        ("url empty port", "url", "https://example.com:/docs", False),
-        ("url NUL in path", "url", "https://example.com/\x00", False),
-        ("url ftp scheme", "url", "ftp://example.com/docs", False),
-        ("url file scheme", "url", "file://example.com/docs", False),
-        ("url javascript scheme", "url", "javascript:alert(1)", False),
-        ("url upper-case host (not normalized)", "url", "https://Example.com/docs", False),
-        ("url bad percent escape", "url", "https://example.com/a%zz", False),
-        ("url invalid IPv4", "url", "https://999.1.1.1/x", False),
-        ("url label with leading hyphen", "url", "https://-bad.example.com/x", False),
-        ("path POSIX root", "path", "/", True),
-        ("path POSIX file", "path", "/tmp/manifest.yaml", True),
-        ("path Windows drive forward slashes", "path", "C:/work/manifest.yaml", True),
-        ("path Windows drive backslashes", "path", "C:\\work\\manifest.yaml", True),
-        ("path Windows drive root", "path", "C:\\", True),
-        ("path UNC share", "path", "\\\\server\\share\\dir\\file.txt", True),
-        ("path NUL in segment", "path", "/tmp/a\x00b", False),
-        ("path relative", "path", "relative/path", False),
-        ("path dot segment", "path", "/a/./b", False),
-        ("path empty interior segment", "path", "/a//b", False),
-        ("path trailing slash", "path", "/a/b/", False),
-        ("path Windows drive without separator", "path", "C:work", False),
-        ("path UNC without share", "path", "\\\\server", False),
-    ]:
-        @case(f"{'pass' if ok else 'fail C06'}: {label}", 0 if ok else 1, set() if ok else {"C06"})
+    for kind, value in [("timestamp", "2026-11-04T12:34:56Z"), ("url", "https://example.com/docs"), ("path", "/tmp/manifest.yaml"),
+                        ("timestamp", "garbage"), ("url", "https://user@@example.com/x"), ("path", "\\\\server\\share/../bad")]:
+        @case(f"fail C06: {kind} literal default {value!r} is not allowed", 1, {"C06"})
         def _(fx: Fixture, kind=kind, value=value) -> None:
             _prim(fx, kind, value)
+
+    for kind in LITERAL_DEFAULT_FORBIDDEN_TYPES:
+        @case(f"pass: {kind} field with default none", 0, set())
+        def _(fx: Fixture, kind=kind) -> None:
+            _prim(fx, kind, "none")
+
+    @case("fail C06: a url inside a list literal default is not allowed", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["mirrors"] = {
+            "type": "list", "item": {"type": "url"}, "required": False, "default": ["https://example.com/a"],
+            "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: a timestamp inside an object literal default is not allowed", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["window"] = {
+            "type": "object", "fields": {"since": {"type": "timestamp", "required": False, "default": "none",
+                                                   "provenance": "canon", "source": "fixture"}},
+            "required": False, "default": {"since": "2026-11-04T00:00:00Z"}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C05: the map's literal-default rule differs from the checker", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        fx.map["literal_default_forbidden_types"] = ["url"]
+
+    for label, text in [("double-quoted key", '"command_payload_definitions": false'),
+                        ("single-quoted key", "'command_payload_definitions': false"),
+                        ("indented root mapping", "  command_payload_definitions: false"),
+                        ("space before the colon", "command_payload_definitions : false"),
+                        ("flow mapping root", "{command_payload_definitions: false}"),
+                        ("explicit key", "? command_payload_definitions\n: false")]:
+        @case(f"fail C14: definitions block with a {label} is detected", 1, {"C14"})
+        def _(fx: Fixture, text=text) -> None:
+            fx.doc_suffix["Plans/Containers_Registry_and_Unraid.md"] = "\n\n```yaml\n" + text + "\n```\n"
+
+    for label, text in [("multi-line double-quoted scalar", 'description: "The text\ncommand_payload_definitions: false\nis illustrative."'),
+                        ("multi-line single-quoted scalar", "description: 'The text\ncommand_payload_definitions: false\nis illustrative.'"),
+                        ("literal block scalar", "description: |\n  command_payload_definitions: false"),
+                        ("nested key, not root", "outer:\n  command_payload_definitions: false")]:
+        @case(f"pass: the key text inside a {label} is prose, not a block", 0, set())
+        def _(fx: Fixture, text=text) -> None:
+            fx.doc_suffix["Plans/Containers_Registry_and_Unraid.md"] = "\n\n```yaml\n" + text + "\n```\n"
 
     for label, text, codes in [("inline false root", "command_payload_definitions: false", {"C14"}),
                                ("inline flow mapping with a wrong format", "command_payload_definitions: {format: nonsense}", {"C03", "C14"}),
