@@ -91,7 +91,10 @@ export default async function(t){
  let lowest={contrast:Infinity},totalMeasured=0;
  for(const route of routes)for(const code of reasons){
   await t.viewport(1390,900);
+  // Keep NieR active across fresh -> copied: text-transform must not change semantic assertions.
+  if(route==='copied'&&looks.includes('nier-dark')){await applyLook(t,f,'nier-dark');}
   if(route==='fresh')await freshRoute(t,f,code);else await copiedRoute(t,f,code);
+  if(route==='copied'&&looks.includes('nier-dark'))await t.check('copied route retains active NieR Dark',await f.evaluate(()=>PMLogo.look()==='nier-dark'));
   await fail(t,f,code);
   await f.evaluate(on=>O55.studio.looks.setReduced(!on),on);
   await t.check(`${route} ${code} motion still ${on?'on':'reduced'}`,await f.evaluate(on=>O55.motion.reduced()!==on,on));
@@ -101,7 +104,7 @@ export default async function(t){
   await pill.waitFor({state:'visible'});
   await t.check(`${route} ${code} row shows one expected status`,await pill.count()===1);
   const reason=await f.evaluate(code=>O55.t(code==='installed'?'ai.ready':code==='expired'?'ai.expired.title':code.startsWith('signin')?'ai.signinFail.title':code==='connection'?'ai.oc.failTitle':'ai.installFailure.'+code),code);
-  await t.check(`${route} ${code} row keeps its reason`,(await row.innerText()).replace(/\s+/g,' ').includes(reason.replace(/\s+/g,' ')));
+  await t.check(`${route} ${code} row keeps its reason`,(await row.textContent()).replace(/\s+/g,' ').includes(reason.replace(/\s+/g,' ')));
   if(await pill.count()!==1)continue;
   for(const look of looks){
    await applyLook(t,f,look);
