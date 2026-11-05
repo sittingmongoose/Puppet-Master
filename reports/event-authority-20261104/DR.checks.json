@@ -1,174 +1,195 @@
 {
-  "implementation_commit": "ec476040a569d117e5315891e6749169d57f8b6c",
-  "reviewed_head": "679bc22ad3a5109a070a064235a2ed8bca838492",
-  "status": "pass_with_sweep_and_known_integration_items",
-  "commands": [
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/historical-predecessors.json",
-      "sha256": "0b64d00ac2d761d290d113974fd4910902890c26562a1cb3690ba6927ce0961c",
-      "status": "pass",
-      "scope": null
+  "schema_id": "pm.assurance.dr.sweep_part1_checks.v1",
+  "implementation_commit": "bcf623e86b82f28f12ccc530049c6e1dd6d99c27",
+  "status": "part_1_verified_part_2_pending",
+  "baseline": {
+    "status": "pass",
+    "cases": 20564,
+    "per_family": {
+      "runtime_artifact.api_web_call": 929,
+      "shared": 33,
+      "runtime_artifact.artifact_version": 953,
+      "runtime_artifact.before_after_snapshot": 977,
+      "runtime_artifact.browser_recording": 1049,
+      "runtime_artifact.code_diff": 929,
+      "runtime_artifact.context_snapshot": 953,
+      "runtime_artifact.cost_usage": 1292,
+      "runtime_artifact.document": 953,
+      "runtime_artifact.evidence": 953,
+      "runtime_artifact.failed_attempts": 929,
+      "runtime_artifact.hitl_approval": 929,
+      "runtime_artifact.implementation_plan": 929,
+      "runtime_artifact.reasoning_summary": 929,
+      "runtime_artifact.restore_point": 2815,
+      "runtime_artifact.screenshot": 953,
+      "runtime_artifact.subagent_lineage": 929,
+      "runtime_artifact.suggested_next_steps": 929,
+      "runtime_artifact.tool_llm_trace": 1272,
+      "runtime_artifact.validation_test": 929
     },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/full-checker.json",
-      "sha256": "cfe9b50d938cb7c5a0ac98ead7949a4c3978d79b20ac25ba15d200096f887572",
-      "status": "pass",
-      "scope": null
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/complete-guard-removal.json",
-      "sha256": "f797d8ea8cb5b62bcaaa8da29b5364f63a945f3a2fea578ae6e45099255fb135",
-      "status": "pass",
-      "scope": null
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/raw-guard-proof.json",
-      "sha256": "32c0a4eb7d374eec62e20bd45ddcfd85b5f613ce7e089db45703a4c93d701285",
-      "status": "pass",
-      "scope": "round_8_new_guards_only; complete legacy raw proof deferred with shared-tool Sweep P1"
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/runtime-schemas.json",
-      "sha256": "644397af6ef28a0670e25d638f1ac2330eb21945b5ae1ede14bd9be4671acea0",
-      "status": "pass",
-      "scope": null
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/shard-check.json",
-      "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85",
-      "status": "pass",
-      "scope": null
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/index-validate.json",
-      "sha256": "5154ced4139d3823cd4d38fba7e1c3efc14a165b4ec0f35d9684180069600b44",
-      "status": "fail",
-      "scope": null
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/currentness-copy.json",
-      "sha256": "1ae1029adda6c6dc268dcad2cf216b132b6d94cbb55d4242de3502be46acea6e",
-      "status": null,
-      "scope": null
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/legacy-guard-partial.json",
-      "sha256": "260d3aff63e3e91631307b17ae7a6a993c8192300e56e897750e4159d434824b",
-      "status": "proof_machinery_sweep",
-      "scope": null
-    },
-    {
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/scope-audit.json",
-      "sha256": "b522c55c0a324f66e8a1b342e219243cdfaf75083d9759f9a78baca7dcf97f2a",
-      "status": "pass",
-      "scope": null
-    }
-  ],
-  "native_execution": "NOT_RUN",
-  "admission": "NONE",
-  "integration_note": "N1: preserve current main DL-302/units, regenerate and rerun original index validator at integration; no unrelated removal-ledger repair.",
-  "static_assertions": 20448,
-  "guard_matrix": {
-    "guard_count": 3,
-    "isolated_negative_pairs": 6910,
-    "acceptance_flips": 20,
-    "unrelated_flips": 0
+    "failures": [],
+    "family_runs": [
+      {
+        "family": "runtime_artifact.api_web_call",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 15
+      },
+      {
+        "family": "runtime_artifact.artifact_version",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.before_after_snapshot",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 11
+      },
+      {
+        "family": "runtime_artifact.browser_recording",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 10
+      },
+      {
+        "family": "runtime_artifact.code_diff",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 9
+      },
+      {
+        "family": "runtime_artifact.context_snapshot",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 10
+      },
+      {
+        "family": "runtime_artifact.cost_usage",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.document",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      },
+      {
+        "family": "runtime_artifact.evidence",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.failed_attempts",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      },
+      {
+        "family": "runtime_artifact.hitl_approval",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.implementation_plan",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      },
+      {
+        "family": "runtime_artifact.reasoning_summary",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 15
+      },
+      {
+        "family": "runtime_artifact.restore_point",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 16
+      },
+      {
+        "family": "runtime_artifact.screenshot",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.subagent_lineage",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.suggested_next_steps",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.tool_llm_trace",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.validation_test",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      }
+    ],
+    "native_execution": "NOT_RUN",
+    "admission": "NONE",
+    "mode": "baseline",
+    "checker_sha256": "2631dc37c1dea20eab99d74c5ad31363ef2c86849d000f7f32400c199b983037",
+    "trial_sha256": "2631dc37c1dea20eab99d74c5ad31363ef2c86849d000f7f32400c199b983037",
+    "validation_codec_result_caches": false,
+    "immutable_file_reads_reused_and_verified": true
   },
-  "historical_predecessor_routes": 4,
-  "new_one_defect_negative_pairs": 24,
-  "verified_evidence_quotes": 685,
-  "sweep_items": [
-    "S1",
-    "P1",
-    "N2"
-  ],
-  "earlier_evidence": "Round-7 standing/type/number suite evidence is historical, not claimed rerun in round 8.",
-  "command_runs": [
-    {
-      "name": "family-runtime_artifact.api_web_call",
-      "argv": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
-        "scripts/pm-runtime-artifact-event-drafts.py",
-        "--family",
-        "runtime_artifact.api_web_call"
-      ],
-      "exit_code": 0,
-      "seconds": 123.178,
-      "status": "pass",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/family-runtime_artifact.api_web_call.json",
-      "sha256": "d6bce9149ecc85221c0910901dc7de6e64c1d4e6aa43745dda227464549a2e16"
-    },
-    {
-      "name": "runtime-schemas",
-      "argv": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
-        "scripts/pm-plans-verify.py",
-        "validate-runtime-artifact-schemas"
-      ],
-      "exit_code": 0,
-      "seconds": 2.179,
-      "status": "pass",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/runtime-schemas.json",
-      "sha256": "644397af6ef28a0670e25d638f1ac2330eb21945b5ae1ede14bd9be4671acea0"
-    },
-    {
-      "name": "shard-check",
-      "argv": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "seconds": 114.31,
-      "status": "pass",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/shard-check.json",
-      "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85"
-    },
-    {
-      "name": "index-validate",
-      "argv": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
-      "exit_code": 1,
-      "seconds": 101.411,
+  "new_pairs": 58,
+  "individual_predicates": {
+    "trace_quota_observed": {
+      "exit": 1,
       "status": "fail",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/index-validate.json",
-      "sha256": "5154ced4139d3823cd4d38fba7e1c3efc14a165b4ec0f35d9684180069600b44"
-    }
-  ],
-  "additional_runs": [
-    {
-      "argv": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/run.py",
-        "families"
-      ],
-      "driver_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
-      "exit_code": 0,
-      "scope": "all nineteen, sequential; immutable input reuse only"
+      "cases": 20564,
+      "target_failures": 20,
+      "unrelated_failures": 0,
+      "expected_exit": 1,
+      "outcome": "caught"
     },
-    {
-      "argv": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/run.py",
-        "new-guards"
-      ],
-      "driver_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/run.py",
-      "exit_code": 0,
-      "scope": "O11-O13 against all 6910 pairs and nineteen full checkers per mutant"
+    "checkpoint_node_generation_copy": {
+      "exit": 1,
+      "status": "fail",
+      "cases": 20564,
+      "target_failures": 19,
+      "unrelated_failures": 0,
+      "expected_exit": 1,
+      "outcome": "caught"
     },
-    {
-      "argv": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix8/venv/bin/python",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/raw-guard-proof.py",
-        "/home/sittingmongoose/pm-worktrees/DR-fix8"
-      ],
-      "exit_code": 0,
-      "scope": "new guard raw corroboration, no schema/codec result caches"
+    "checkpoint_anchor_retained_event_count": {
+      "exit": 1,
+      "status": "fail",
+      "cases": 20564,
+      "target_failures": 19,
+      "unrelated_failures": 0,
+      "expected_exit": 1,
+      "outcome": "caught"
     }
-  ]
+  },
+  "index_validation": {
+    "status": "fail",
+    "failure_count": 22,
+    "failure_kinds": {
+      "plan_unit_removal_ledger_invalid": 21,
+      "plan_unit_removed_without_ledger_decision": 1
+    }
+  },
+  "native_execution": "NOT_RUN",
+  "admission": "NONE"
 }

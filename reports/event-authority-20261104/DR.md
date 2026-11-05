@@ -1,111 +1,102 @@
-# DR — fix round 8: authenticated historical restore predecessors
+# DR — Sweep part 1: quota and checkpoint negatives
 
-Branch `plans/ea-w2-runtime-artifacts-20261104`; reviewed head `679bc22ad3a5109a070a064235a2ed8bca838492`; implementation `ec476040a569d117e5315891e6749169d57f8b6c`. Delivery head is in external `drafts/DR/HEAD.txt`.
+Branch `plans/ea-w2-runtime-artifacts-20261104`; implementation `bcf623e86b82f28f12ccc530049c6e1dd6d99c27`. Reviewed head `8db97f0f445691d974755e5a3636f5a6000d3774`; rebased first onto main `d5ec2f70c0d69c469796eea9b9cfdae30f281f42`. Delivery head is recorded in the external sweep `HEAD.txt`.
 
-**Result:** C7-B1 fixed. **18/19 → 19/19 prepared without admission**, subject to the explicit sweep and integration items below. Reviewer grades **208 PASS / 1 PARTIAL / 19 ABSENT → 209 PASS / 0 PARTIAL / 19 ABSENT**. Membership is ABSENT; native execution is NOT_RUN. This self-grade does not claim independent review clearance or shared-tool proof certification.
+**C8-B1 and C8-B2 are fixed locally. All nineteen families remain NOT_READY pending part 2.** This report supersedes the round-8 claim of 19/19 prepared: the cycle-8 review graded 0/19 ready, and sweep part 1 does not upgrade that verdict. Membership stays ABSENT; native execution is NOT_RUN.
 
-## Review round 8: findings and responses
+## Sweep part 1: findings and responses
 
-- **C7-B1 — fixed (`ec476040a569d117e5315891e6749169d57f8b6c`).** Where: `scripts/pm-runtime-artifact-event-drafts.py:1035–1051`, `observation_admissible`, and `scripts/pm_runtime_artifact_round8_cases.py`. Why: the default current decoder reached an authentic retained predecessor containing original Storage `sequence_id=1.0`. Fix: independently authenticated source input carries the recorded recipe and original event/first result/custody. Verify the proposed predecessor and its SP-286 first receipt against that independent original before the historical read, refuse unsupported recipes and withdrawn sources, then decode through the supported recorded profile. Candidate decoding and the complete current canonical-source schema/exact-value join stay strict. Recipe selection never reads the candidate, supplied receipt or supplied custody. The adapter models trusted authentication; native authentication/issuance remains NOT_RUN. Verify with `historical-predecessors.json`, the actual checker’s round-8 cases, and the full nineteen-family rerun.
-- **R1 — verification rerun.** All nineteen family checkers and the complete 6,910-pair baseline pass. The 3 new-guard rows also run the complete pair inventory and all family checkers sequentially. The inherited full mutation run stopped after D01 exposed an overbroad proof cut; its remaining rows and the old incomplete uncached matrix are deferred to shared-tool Sweep P1 under FIX-ROUND. B02/B03/S07 causal certification is not claimed complete here. Resource pauses and superseded runs remain in the procedure record.
-- **S1 — sweep item retained.** Timestamp grammar is outside this one-blocker fix, as explicitly requested; see below.
-- **N1 — integration item retained.** Run the original `pm-plan-index.py validate` against the copied currentness edition. Its top-level failure is retained, not normalized into a pass. Preserve current-main units including DL-302 at integration, regenerate and rerun; do not silence unrelated removal-ledger errors.
-
-**Disputed:** none. **Stopped for Jared:** none.
-
-## Authentic historical routes and refusals
-
-| Frozen predecessor | Current successor | Result |
+| Item | Disposition and exact change | Verification |
 |---|---|---|
-| `numeric_inline` | inline | PASS |
-| `numeric_inline` | packed | PASS |
-| `numeric_packed` | inline | PASS |
-| `numeric_packed` | packed | PASS |
+| **Deck-2 assignments** | None assigned to DR in this task; no decision applied or extended. Main's DL-400..452 stay intact. | `rebase-audit.json`; no Decision Log diff. |
+| **C8-B1** | **Fixed (`bcf623e86b82f28f12ccc530049c6e1dd6d99c27`).** Where: `scripts/pm_runtime_artifact_round6_cases.py:227`, RAP-117/CV-537's already implemented quota rule at `scripts/pm-runtime-artifact-event-drafts.py:241`. Why: all old controls left quota sources absent/null. Fix: quota-present valid parents for each independent source, with only `flags.quota_observed` changed to false or null. | 20 pairs: schema plus inline/packed decode and fresh append. Every parent passes, every negative refuses. Removing only the quota predicate makes all 20 authored negative expectations fail, across all nineteen full family invocations. |
+| **C8-B2** | **Fixed (`bcf623e86b82f28f12ccc530049c6e1dd6d99c27`).** Where: `scripts/pm_runtime_artifact_guard_cases.py:186`, `:196`, `:207`; existing `checkpoint_matches` predicates at lines 607 and 656. Why: neither leaf predicate had an authored negative. Fix: every family's own valid checkpoint now supplies a wrong selected-node generation copy and a count of 2 against its verified one-event source. | 38 pairs, two per exact family. The count case recomputes only the non-target token anchor digest; the generation case keeps its correct independent map key/token/dataset. Each predicate removed alone makes exactly its nineteen authored negative expectations fail; every other expectation stays satisfied. |
+| **N1 integration** | Rebased onto current main before fixture work; DL-302 and PLS-025 are present. Regenerated shards and index with all fifteen hash-verified currentness files. No unrelated ledger or governance repair. | Original index validator: exit 1, top-level `fail`, 22 failures: `{'plan_unit_removal_ledger_invalid': 21, 'plan_unit_removed_without_ledger_decision': 1}`. Raw failures remain in `index-validate.stdout`. During verification origin/main advanced to `2989975e8f8a4a1e49235e8ae2095b3df7ea0321`; DL-336 is a later-main branch-age finding, with no Decision Log lane diff. Retain it at the next integration rebase (`main-advance.json`). |
 
-All four routes pass after reproducing the pre-fix refusal. Old issuer `b96dc768a5cc93f7e0edb82b41a7f51ca02dec7c` reproduces each frozen original's exact event/result/custody bytes. Its checker SHA-256 is `fae56bf0407dab11f389f90ad3ff471ec39a234d07209e11bbc828f2af740156`. Frozen full-original SHA-256: inline `53420e558e597fd900ed97d02a6944ac6c342280778ee6775bd562b8293130b1`, packed `0f359255f74b0a0a29e3238342f963935a4001c6933c24480e528614c028a45f`. Originals remain unchanged. Old issuance is a test control only; the producer never reissues history.
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** zero new; existing RAP-100..118 / SP-520..538 / CV-520..538 / ATS-260 remain the 58 lane units.
 
-**24 one-defect pairs:** four each for forged event bytes, forged first receipt, forged custody, withdrawn predecessor, unsupported recorded recipe, and a current candidate with an integral-float Storage number. Offered receipt copies agree in the forged-receipt case; the independent authentic original stays unchanged. Every valid control accepts and every negative refuses. No candidate, logical body, grouping, ordinal, predecessor identity or canonical-source copy is left stale to mask the named fault. Missing predecessor authentication also refuses; an untrusted caller recipe preference cannot override the independently recorded recipe. The existing 832 source-type pairs remain in the full checker.
+## Negative handoff for part-2 guard tables
 
-## New guard rows
+The labels B01/C04/C09 below are inherited diagnostic row labels, not duplicate sets. The part-1 verification cuts the exact named predicate alone, keeping every peer clause and schema rule. The complete 58-name inventory is `reports/event-authority-20261104/DR.sweep-p1-guards.json`.
 
-These are **legacy diagnostic rows**, with the proof limits in Sweep P1. The recipe-removal mutant binds the already supported historical decoder after removing recipe support; it does not invent a new historical recipe. Forwarded inspection shares H01’s withdrawn predicate, and forged custody also reaches F13. Full names and linked sites are recorded in `DR.guard-removal.json`.
+| Actual guard | Authored negatives | Own cut flips | Other new negatives stay refused |
+|---|---|---:|---:|
+| `trace_quota_observed` — quota source implies flag true | B01: `quota_quota_artifact_ref_{false,null}_{schema,inline_decode,inline_append,packed_decode,packed_append}`; identical five-route list for `quota_quota_refs_{false,null}`. Trace only. | 20/20 | 38/38 |
+| `checkpoint_node_generation_copy` — selected node copy equals root generation key | C04: `node_generation_copy`, separately for every one of the nineteen exact families. | 19/19 | 39/39 |
+| `checkpoint_anchor_retained_event_count` — anchor count equals verified one-event source count | C09: `anchor_retained_event_count`, separately for every one of the nineteen exact families. | 19/19 | 39/39 |
 
-| Guard | Predicate / boundary | Own flips | Other negatives stay refused | Full checker exit |
-|---|---|---:|---:|---:|
-| `O11` | predecessor: original event, SP-286 first result and custody authentication | 12 | 6898 | 1 |
-| `O12` | predecessor recorded recipe support and explicit historical dispatch | 4 | 6906 | 1 |
-| `O13` | predecessor: forward authenticated historical source inspection | 4 | 6906 | 1 |
+The focused audit reads the actual witness closures. Quota logical payloads differ at exactly one field; structural schema accepts both, and each pack's digest/size/reference matches its actual bytes. Generation bundles differ at exactly the node copy. Count bundles differ only at the semantic count and its recomputed observing token digest; the source, frontier coverage and dataset remain the valid one-event truth. Row, event and original receipt/custody are unchanged on both checkpoint routes. All 58 valid controls accept after each of the three individual cuts. No product guard, schema, expected answer, source truth or historical original is weakened on the branch.
+
+The full checker executes **20,564 distinct assertions** across nineteen sequential family invocations, with the identical shared assertions counted once. The pre-fix count was 20,448; the 58 added pairs contribute 116 assertions. The complete existing pair inventory grows 6,910 → **6,968**. Each deletion run evaluates that same whole lane: exactly the 20/19/19 relevant negative expectations fail, and no unrelated expectation fails. Immutable file reads alone are reused and fingerprint-verified; schema, codec, acceptance and checker outcomes are executed without result caches. This is targeted causal evidence for three review predicates, not certification of the legacy 96-row proof inventory.
 
 ## Family grades before and after
 
-P=PASS, Q=PARTIAL, A=ABSENT. Only restore_point.positive_negative_oracles changes. All other owner contracts and rubric cells retain their grades after their full family runs.
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the cycle-8 reviewer grade. Every family's checkpoint witnesses execute against its own original event/receipt/custody/source/checkpoint. `positive_negative_oracles` remains PARTIAL for P1/N2 and carried S1; membership remains ABSENT. Native NOT_RUN does not by itself lower a grade.
 
 | Exact family | Before → after |
 |---|---|
-| `runtime_artifact.api_web_call` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.artifact_version` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.before_after_snapshot` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.browser_recording` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.code_diff` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.context_snapshot` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.cost_usage` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.document` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.evidence` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.failed_attempts` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.hitl_approval` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.implementation_plan` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.reasoning_summary` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.restore_point` | 10P / 1Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.screenshot` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.subagent_lineage` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.suggested_next_steps` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.tool_llm_trace` | 11P / 0Q / 1A → 11P / 0Q / 1A |
-| `runtime_artifact.validation_test` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `runtime_artifact.api_web_call` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.artifact_version` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.before_after_snapshot` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.browser_recording` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.code_diff` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.context_snapshot` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.cost_usage` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.document` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.evidence` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.failed_attempts` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.hitl_approval` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.implementation_plan` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.reasoning_summary` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.restore_point` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.screenshot` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.subagent_lineage` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.suggested_next_steps` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.tool_llm_trace` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `runtime_artifact.validation_test` | 10P / 1Q / 1A → 10P / 1Q / 1A |
 
-## Whole-lane baseline and new-guard verification
+**190 PASS / 19 PARTIAL / 19 ABSENT / 0 CONFLICT → the same totals.** The 743 exact current citations are checked inside their named owner units/functions, with line references refreshed after rebase. Fifty-seven lane owner units remain byte-identical to the reviewed head; ATS-260 adds only explicit part-1 fixture coverage and the part-2 qualification.
 
-**20,448 assertions pass** across nineteen full family invocations, run one at a time. Immutable fixture/schema reads are reused and hash-checked; validation, codecs and guard outcomes are not cached in that rerun. The first standalone raw CLI family also passed; the superseded multi-process CLI attempt was cancelled before replacement, not run in parallel. An earlier restore trial was cancelled after family-selection changes and is not claimed as a pass. Procedure exception: the initial guard runner started during final input fingerprinting after all family checks had returned, was cancelled before its first guard row, and was restarted after the family runner exited; no family checker jobs overlapped. The later legacy matrix was superseded after its D01 machinery defect, as required by the sweep instruction.
+## Part 2 items
 
-**6,910 valid/negative pairs; 3 diagnostic guard rows; 20 owned flips; 0 unrelated flips.** Every complete mutant checker returns exit 1/status fail. Each new guard is checked against the complete lane pair inventory; the old full guard matrix is not claimed rerun. Its compound cuts, duplicate grouping and assertion inventory still require the shared tool in Sweep P1. Diagnostic rows not satisfying the inherited isolation test: `none`. These rows are classified explicitly after execution; a proof-machinery failure is not reported as an isolation pass. Raw corroboration is reported in its own evidence file at its stated scope; no missing result is inferred.
+- **N2 — shared number/recipe adoption.** `scripts/pm-runtime-artifact-event-drafts.py:159` (`canonical_numbers`), `:296` (`validator`), semantic/physical codecs and authenticated historical profile selection; `Plans/Automated_Testing_System.md:7250` ATS-260's numeric paragraph. Adopt CV-1100/SP-1100/SP-1101 and the shared helper after NUMRULE passes. No new local number helper, cap, serializer, physical-float normalization or signed-zero erasure was added. The count-2 fixture is a plain valid integer and isolates an ordinary semantic contradiction.
+- **P1 — shared proof machinery and guard tables.** `scripts/pm-runtime-artifact-guard-isolation.py`, especially D01:134 / D12:145 / C03:193 / C04:196 / O03:212 / O12:223 and forwarded aliases, plus ATS-260's legacy proof claim. Adopt the reviewed `scripts/pm_guard_isolation.py`, expose actual named predicates in tables, and prove each duplicated same-field/same-predicate site alone, then all sites together. Compound rules/refusal codes do not define duplicate sets. Use the exact per-guard negatives above. No local proof tool was rebuilt or guard-table restructure attempted in this part.
+- **S1 — carried, outside the assigned C8-B1/C8-B2 work.** `validator:296`, `scripts/requirements-runtime-artifact-drafts.txt`, and EventRecord/receipt/checkpoint/runtime-artifact date-time schema fields. Cycle 8's pinned isolated environment silently skipped date-time validation. The existing UTC Z grammar and historical-recipe preservation still need their previously requested format sweep. This item remains open; no READY claim hides it.
 
-| Guard | Owned flips | Other negatives still refused | Unrelated flips |
-|---|---:|---:|---:|
-| `O11` | 12 | 6898 | 0 |
-| `O12` | 4 | 6906 | 0 |
-| `O13` | 4 | 6906 | 0 |
+The shared tools and the later Sol/Astra review remain required. The original full legacy guard-removal, numeric/type and format campaigns were not rerun or re-certified here. The inherited `DR.guard-removal.json` describes earlier diagnostic evidence and is not the current part-1 guard handoff.
 
-Standing checks 1–11 remain in every full family suite: replay-only writer refusal, Project-only scope/application refusal, encoded Project partitions, inline/packed size and integrity, exact identifier matching, producer-semantic retry comparisons, checkpoint identity/source joins, failure exit behavior, eager reference resolution, authenticated retained history and one-defect diagnostics. Application-writer certification and native execution are not claimed.
+## Commands and evidence
 
-Astra classes 1/2/4/5/6/7/11 remain exercised by the unchanged identity/receipt/source/type/reference/size/custody cases in the full suite. Class 3 and 10a gain the authentic predecessor route. Class 8 is qualified by Sweep P1; class 9 is reflected in the grade limits. Existing numeric tests rerun but add no lane-local number policy. Class 12 remains S1. Earlier standalone standing-mutation and independent type/number campaigns are historical evidence from round 7, not asserted to have rerun here.
+DR heavyweight commands run one at a time, proceeding at 6 GB available or higher. Running commands pause below 6 GB and resume at 7 GB. The initial wrapper incorrectly waited for unrelated VM jobs; it was cancelled before its queued command started, then corrected after the user clarified per-lane serialization. Other workers are not waited on. Command JSON records preserve argv, exits, duration and memory samples. Initial disk availability was 129 GB. Shard regeneration changes only the four DR owner directories; index outputs are regenerated normally. No Spec Lock, governance evidence, auto-decisions, registry/admission, frozen validator, test file, mailbox, subagent, landing lock or main push was used.
 
-## Sweep and integration items
+| Command/evidence name | Exit | Outcome |
+|---|---:|---|
+| `shard-generate` | 0 | pass; 0 failures |
+| `index-generate` | 0 | pass; 0 failures |
+| `focused` | 0 | pass; 58 new pairs |
+| `baseline` | 0 | pass; 20564 assertions |
+| `trace_quota_observed` | 1 | fail; 20564 assertions |
+| `checkpoint_node_generation_copy` | 1 | fail; 20564 assertions |
+| `checkpoint_anchor_retained_event_count` | 1 | fail; 20564 assertions |
+| `runtime-schemas` | 0 | pass; 0 failures |
+| `shard-check` | 0 | pass; 0 failures |
+| `index-validate` | 1 | fail; 22 failures |
 
-- **Sweep S1 — timestamp grammar.** `scripts/pm-runtime-artifact-event-drafts.py:296` (`FormatChecker()`), pinned dependencies, EventRecord/receipt/checkpoint/runtime-artifact date-time fields. The pinned environment can silently skip date-time checks. Adopt the existing Contracts_V0 UTC Z grammar with range/calendar/leap/fraction controls at current write boundaries, preserving authenticated historical recipes. Review cycle 7’s `format-probes.json` records 342 wrongly accepted malformed-date route trials and exact schema pointers. No timestamp rule is changed in this fix.
-- **Sweep P1 — shared check-11 machinery.** Adopt `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105`. Replace inherited whole-condition/keyword cuts and any removal sets merging distinct predicates. Inventory assertions and prove duplicate predicates site by site: each site removed alone must leave the same defect refused; all sites removed must flip it. Existing examples include O03’s combined schema/value test and compound D/C rules. In particular, D01 removes the entire EventRecord validation, so its cut also removes the current candidate's N01 number predicate; such cross flips are an overbroad proof cut and are not fixed by merging predicate ownership. The O12 legacy forced-dispatch witness is diagnostic only and also needs the shared recipe-dispatch adapter. No local proof-tool rebuild is attempted. The original event/custody/receipt authenticators remain fixed in the event-forgery negative; they are verification truth, not regenerated observations of the tampered event. The new fixtures each carry a single defect and product guards retain refusal coverage.
-- **Sweep N2 — shared number/recipe rule.** Adopt CV-1100 / SP-1100 / SP-1101 in the cross-lane sweep, including authenticated full shared write-time recipe dispatch. This fix only uses this lane’s existing supported historical profile. It adds no number cap, serializer, physical float normalization, signed-zero erasure or recipe inferred from untrusted data.
-- **Integration N1.** The original index validator exits 1/top-level fail with 23 failures: 21 existing removal-ledger-format failures, DL-302 absent against origin/main, and a stale generated Plans/.plan_index/node_readiness_report.json. The currentness edition was freshly copied before validation. These are reported for integration; no generated readiness/governance artifact is refreshed in this fix. No unrelated owner prose or removal-ledger changes are made.
+Mutation exits 1 are the required caught defects; the baseline exits 0. `index-validate` is parsed at its top-level status and is never relabelled a pass. The currentness copy and rebase audit are read-only companions to the recorded checks. Two retained execution-driver editions differ only by per-family progress logging; `execution-driver-editions.json` identifies the edition for every run.
 
-## Authority and scope
-
-No Plans path changes from the reviewed head: RAP-113, SP-533, CV-533 and ATS-260 already require this boundary. All schemas, fixtures, frozen originals, registry files, generated shards/indexes and governance artifacts remain byte-identical. Canonical Markdown was not edited, so regeneration is unnecessary. Fifteen latest shared-currentness files were copied into the ignored audit path and hash-verified. The original shard and schema checks and index validation have their actual outcomes in `DR.checks.json`.
-
-No new owner decision, technical binding or Decision Log premise is applied. Existing DL-045/DL-075/DL-270, source/body policies, SP-278/SP-286/CV-339 and SP-337 remain as reviewed. Native source authentication/issuance, writer fences, crash/sync/CAS, backup/restore and UI stay NOT_RUN; readiness remains `blocked_runtime_certification_incomplete`.
-
-**IDs used: zero new.** Existing RAP-100..118 / SP-520..538 / CV-520..538 / ATS-260 remain 58 IDs. No admission, registry append, Decision Log entry, governance seal, mailbox use, subagent, landing lock or main push.
-
-## Evidence
-
-All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix8/`. `commands.json`, `guards-command.json` and `memory.json` retain commands, outcomes, durations and resource samples. Memory is checked before each family and guard: below 6 GB pauses; recheck every two minutes, resume at 7 GB, stop only after 45 continuous minutes below 6 GB. Disk started at 478 GB available. The sparse local worktree and temporary environment are removed after pushing; external `cleanup.json` records the result.
+All evidence below is under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/sweep-p1/`.
 
 | Evidence file | SHA-256 |
 |---|---|
-| `historical-predecessors.json` | `0b64d00ac2d761d290d113974fd4910902890c26562a1cb3690ba6927ce0961c` |
-| `full-checker.json` | `cfe9b50d938cb7c5a0ac98ead7949a4c3978d79b20ac25ba15d200096f887572` |
-| `complete-guard-removal.json` | `f797d8ea8cb5b62bcaaa8da29b5364f63a945f3a2fea578ae6e45099255fb135` |
-| `raw-guard-proof.json` | `32c0a4eb7d374eec62e20bd45ddcfd85b5f613ce7e089db45703a4c93d701285` |
-| `runtime-schemas.json` | `644397af6ef28a0670e25d638f1ac2330eb21945b5ae1ede14bd9be4671acea0` |
-| `shard-check.json` | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
-| `index-validate.json` | `5154ced4139d3823cd4d38fba7e1c3efc14a165b4ec0f35d9684180069600b44` |
-| `currentness-copy.json` | `1ae1029adda6c6dc268dcad2cf216b132b6d94cbb55d4242de3502be46acea6e` |
-| `legacy-guard-partial.json` | `260d3aff63e3e91631307b17ae7a6a993c8192300e56e897750e4159d434824b` |
-| `scope-audit.json` | `b522c55c0a324f66e8a1b342e219243cdfaf75083d9759f9a78baca7dcf97f2a` |
+| `focused.stdout` | `b3160671efbe51847074f188c54712894b34e5a6603b4a8a4e5b727ace94e197` |
+| `baseline.stdout` | `f1e4a98a63d0fed34e7d6f5dc21aaa611d34c642561f8d4ae85e54c031a7aa46` |
+| `trace_quota_observed.stdout` | `e72134830f1c56f55482e7caeff44b968e912cabd8d1cd7146f1625c8bf4f97e` |
+| `checkpoint_node_generation_copy.stdout` | `c332e4dae38292ed68867beb4191430a2f940d8b457b4547f00f8fc89e1f84b3` |
+| `checkpoint_anchor_retained_event_count.stdout` | `ace8f2afef9eebc351d05286ed75dba13af3a070bae7aebb643d1689f50c0a5b` |
+| `index-validate.stdout` | `9e6500ef5a4ccd3b75a281ef38da39ee501308801745e288484060c5052eaa23` |
+| `grade-citations.json` | `94b4d0a35f1fd6d1cdcb267262760d7db2a5ccc2dd7f7be2b9705a5a701ec9a7` |
+| `rebase-audit.json` | `8c2507700410a3cc2f740b19f575813ff01a94b266441cb4299f4296e28114d5` |
+| `currentness-copy.json` | `9786e95661f33a7839e40e4e8e5bc936e47aa812142f30724b22ab29ddccb1ab` |
+| `main-advance.json` | `13e671cc9589c36f5886aa925b4bff00f400f0c5b58f9e455642aac540dc1789` |
+
+The report, self-grade, negative handoff, command outputs and final HEAD are copied there. The detached sparse worktree and task scratch/venv are removed after the lane branch is pushed; external `cleanup.json` records completion. No other worker's process or file is removed.

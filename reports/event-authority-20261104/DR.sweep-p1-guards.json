@@ -1,0 +1,416 @@
+{
+  "schema_id": "pm.assurance.dr.sweep_part1_negative_handoff.v1",
+  "scope": "Negative inventory for later guard-table adoption; not a guard table or shared-tool certification.",
+  "implementation_commit": "bcf623e86b82f28f12ccc530049c6e1dd6d99c27",
+  "reviewed_head": "8db97f0f445691d974755e5a3636f5a6000d3774",
+  "new_negative_pairs": 58,
+  "guards": [
+    {
+      "guard": "trace_quota_observed",
+      "path": "scripts/pm-runtime-artifact-event-drafts.py",
+      "function": "copied_pairs",
+      "line": 242,
+      "predicate": "yield 'trace_flags', body['flags']['quota_observed'], True",
+      "fixture_path": "scripts/pm_runtime_artifact_round6_cases.py",
+      "fixture_line": 227,
+      "negative_count": 20,
+      "negatives": [
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_false_schema",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_false_schema_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_false_inline_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_false_inline_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_false_inline_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_false_inline_append_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_false_packed_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_false_packed_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_false_packed_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_false_packed_append_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_null_schema",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_null_schema_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_null_inline_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_null_inline_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_null_inline_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_null_inline_append_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_null_packed_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_null_packed_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_artifact_ref_null_packed_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_artifact_ref_null_packed_append_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_false_schema",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_false_schema_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_false_inline_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_false_inline_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_false_inline_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_false_inline_append_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_false_packed_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_false_packed_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_false_packed_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_false_packed_append_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_null_schema",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_null_schema_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_null_inline_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_null_inline_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_null_inline_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_null_inline_append_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_null_packed_decode",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_null_packed_decode_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "B01",
+          "case": "quota_quota_refs_null_packed_append",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_B01_quota_quota_refs_null_packed_append_negative"
+        }
+      ],
+      "single_predicate_trial": {
+        "status": "caught",
+        "full_checker_exit": 1,
+        "own_negative_failures": 20,
+        "unrelated_failures": 0
+      }
+    },
+    {
+      "guard": "checkpoint_node_generation_copy",
+      "path": "scripts/pm-runtime-artifact-event-drafts.py",
+      "function": "checkpoint_matches",
+      "line": 607,
+      "predicate": "node['generation_id'] != generation",
+      "fixture_path": "scripts/pm_runtime_artifact_guard_cases.py",
+      "fixture_line": 186,
+      "negative_count": 19,
+      "negatives": [
+        {
+          "family": "runtime_artifact.api_web_call",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.api_web_call:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.artifact_version",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.artifact_version:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.before_after_snapshot",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.before_after_snapshot:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.browser_recording",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.browser_recording:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.code_diff",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.code_diff:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.context_snapshot",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.context_snapshot:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.cost_usage",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.cost_usage:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.document",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.document:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.evidence",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.evidence:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.failed_attempts",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.failed_attempts:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.hitl_approval",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.hitl_approval:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.implementation_plan",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.implementation_plan:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.reasoning_summary",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.reasoning_summary:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.restore_point",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.restore_point:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.screenshot",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.screenshot:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.subagent_lineage",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.subagent_lineage:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.suggested_next_steps",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.suggested_next_steps:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_C04_node_generation_copy_negative"
+        },
+        {
+          "family": "runtime_artifact.validation_test",
+          "legacy_row": "C04",
+          "case": "node_generation_copy",
+          "full_checker_negative": "runtime_artifact.validation_test:S11_C04_node_generation_copy_negative"
+        }
+      ],
+      "single_predicate_trial": {
+        "status": "caught",
+        "full_checker_exit": 1,
+        "own_negative_failures": 19,
+        "unrelated_failures": 0
+      }
+    },
+    {
+      "guard": "checkpoint_anchor_retained_event_count",
+      "path": "scripts/pm-runtime-artifact-event-drafts.py",
+      "function": "checkpoint_matches",
+      "line": 656,
+      "predicate": "anchor['retained_event_count'] != 1",
+      "fixture_path": "scripts/pm_runtime_artifact_guard_cases.py",
+      "fixture_line": 196,
+      "negative_count": 19,
+      "negatives": [
+        {
+          "family": "runtime_artifact.api_web_call",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.api_web_call:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.artifact_version",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.artifact_version:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.before_after_snapshot",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.before_after_snapshot:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.browser_recording",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.browser_recording:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.code_diff",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.code_diff:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.context_snapshot",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.context_snapshot:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.cost_usage",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.cost_usage:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.document",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.document:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.evidence",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.evidence:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.failed_attempts",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.failed_attempts:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.hitl_approval",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.hitl_approval:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.implementation_plan",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.implementation_plan:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.reasoning_summary",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.reasoning_summary:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.restore_point",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.restore_point:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.screenshot",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.screenshot:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.subagent_lineage",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.subagent_lineage:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.suggested_next_steps",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.suggested_next_steps:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.tool_llm_trace",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.tool_llm_trace:S11_C09_anchor_retained_event_count_negative"
+        },
+        {
+          "family": "runtime_artifact.validation_test",
+          "legacy_row": "C09",
+          "case": "anchor_retained_event_count",
+          "full_checker_negative": "runtime_artifact.validation_test:S11_C09_anchor_retained_event_count_negative"
+        }
+      ],
+      "single_predicate_trial": {
+        "status": "caught",
+        "full_checker_exit": 1,
+        "own_negative_failures": 19,
+        "unrelated_failures": 0
+      }
+    }
+  ],
+  "part_2_items": [
+    "N2: CV-1100/SP-1100/SP-1101 shared number and authenticated recipe adoption",
+    "P1: shared pm_guard_isolation.py and named predicate tables; per-site duplicate proofs"
+  ],
+  "carried_unassigned_item": "S1 timestamp grammar"
+}
