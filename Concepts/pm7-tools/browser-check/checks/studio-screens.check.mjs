@@ -65,8 +65,10 @@ export default async function (t) {
 		for (const [tw, ids] of EXTRAS) for (const id of ids) if (!only || only.includes(id)) cases.push({ screen: id, twist: tw });
 		for (const [id, tw, pre] of PATHS) if (!only || only.includes(id)) cases.push({ screen: id, twist: tw, pre });
 	}
+	const selected = cases.filter(c => !t.args.codeOnly || c.pre?.some(([a]) => a === 'useCode'));
+	await t.check('requested Studio cases selected', selected.length > 0 && (!t.args.codeOnly || selected.length === 1), String(selected.length), {hard:true});
 	const stuck = [];
-	for (const c of cases.filter(c => !t.args.codeOnly || c.pre?.some(([a]) => a === 'useCode'))) {
+	for (const c of selected) {
 		const name = c.screen + (c.twist ? ' (' + c.twist + ')' : '') + (c.pre && c.pre.length ? ' [' + c.pre.map((x) => x.filter(Boolean).join(' ')).join(', ') + ']' : '');
 		/* each case from a clean record: a walk that left a Project being created would otherwise send the next open to
 		   Creating (by design: a Project being made is never abandoned half-made) */
@@ -138,5 +140,5 @@ export default async function (t) {
 		await t.check(`${name}: walks by clicks from its row through its next screens`, !!end, detail);
 		if (t.log) t.log(`${name}: ${detail}`);
 	}
-	await t.check('every screen in Open at one screen walks on by clicks', !stuck.length, stuck.join(', ') || `${cases.length} cases`);
+	await t.check('every screen in Open at one screen walks on by clicks', !stuck.length, stuck.join(', ') || `${selected.length} cases`);
 }

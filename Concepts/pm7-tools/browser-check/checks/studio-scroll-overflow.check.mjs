@@ -9,6 +9,7 @@ export default async function (t) {
     const nodes = [document.scrollingElement, ...document.querySelectorAll('body *')].filter((e,i,a) => a.indexOf(e) === i && e.clientHeight > 40 && e.scrollHeight > e.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(e).overflowY) && e.checkVisibility({visibilityProperty:true}));
     return nodes.map(e=>{const path=[];for(let n=e;n&&n.nodeType===1;n=n.parentElement){const tag=n.tagName.toLowerCase();const siblings=n.parentElement?[...n.parentElement.children].filter(x=>x.tagName===n.tagName):[n];path.unshift(tag+':nth-of-type('+(siblings.indexOf(n)+1)+')');}return path.join(' > ');});
   });
+  await t.check('Home has visible scrollers to audit', paths.length > 0, String(paths.length), {hard:true});
   t.log('Home visible scrollers: '+paths.length);
   try {
     for (let i=0;i<paths.length;i++) {
