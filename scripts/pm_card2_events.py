@@ -15,11 +15,47 @@ import blake3
 import msgpack
 from datetime import datetime
 import re
-from functools import lru_cache
+from functools import lru_cache, wraps
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 
 from pm_event_index_binding import binding_digest, binding_bytes
+
+# During removal/restoration the scenario objects are immutable. Cache only
+# derived bytes/digests/deltas, never guard results. Guards still execute on
+# every case; every run clears the cache, and independent predicate mutants
+# outside run() always compute afresh.
+_PROOF_INPUT_IDS = set()
+_PROOF_VALUES = None
+
+
+def proof_value(function):
+    @wraps(function)
+    def derive(value):
+        if _PROOF_VALUES is None or id(value) not in _PROOF_INPUT_IDS:
+            return function(value)
+        key = (function, id(value))
+        if key not in _PROOF_VALUES:
+            _PROOF_VALUES[key] = function(value)
+        return _PROOF_VALUES[key]
+    return derive
+
+
+binding_bytes = proof_value(binding_bytes)
+binding_digest = proof_value(binding_digest)
+validation_json = proof_value(json.dumps)
+
+
+def freeze_proof_inputs(values):
+    global _PROOF_INPUT_IDS, _PROOF_VALUES
+    _PROOF_INPUT_IDS = set()
+    def visit(value):
+        if type(value) in (dict, list):
+            _PROOF_INPUT_IDS.add(id(value))
+            for member in (value.values() if type(value) is dict else value): visit(member)
+    for value in values: visit(value)
+    _PROOF_VALUES = {}
+
 
 def timestamp_valid(value):
     if type(value) is not str or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])",value) is None:
@@ -427,6 +463,7 @@ def semantic_digest(e):
     return hashlib.sha256(rfc8785.dumps({k: e[k] for k in SEMANTIC_FIELDS})).hexdigest()
 
 
+@proof_value
 def exact_delta(c):
     before, after = records(c)
     # Absence is distinct from a field with a null value. The canonical revision
@@ -455,9 +492,9 @@ def fullmatch_bad(event_type,encoded):
     return pattern_failures(json.loads(encoded),payload_schema({'event_type':event_type}),load('card2_event_payloads.schema.json'))
 
 
-event_rule('envelope_schema', lambda e,c: envelope_bad(json.dumps(e)))
-event_rule('payload_schema', lambda e,c: payload_bad(e['event_type'],json.dumps(e['payload'])))
-event_rule('payload_fullmatch', lambda e,c: fullmatch_bad(e['event_type'],json.dumps(e['payload'])))
+event_rule('envelope_schema', lambda e,c: envelope_bad(validation_json(e)))
+event_rule('payload_schema', lambda e,c: payload_bad(e['event_type'],validation_json(e['payload'])))
+event_rule('payload_fullmatch', lambda e,c: fullmatch_bad(e['event_type'],validation_json(e['payload'])))
 event_rule('inline_size', lambda e,c: len(binding_bytes(e['payload'])) > 16384)
 event_rule('inline_reference', lambda e,c: e['payload_ref'] is not None)
 for key in ['scope_kind', 'project_id', 'thread_id']:
@@ -592,7 +629,7 @@ def token_bad(encoded):
 
 
 def token_schema_bad(c):
-    return any(token_bad(json.dumps(c['reader'][k])) for k in ['index_read_token','current_index_read_token'])
+    return any(token_bad(validation_json(c['reader'][k])) for k in ['index_read_token','current_index_read_token'])
 
 
 def t(c): return c['reader']['index_read_token']
@@ -680,7 +717,7 @@ def mutate(base, changes):
     return c
 
 
-def run(fixtures=None, event_type=None):
+def _run(fixtures=None, event_type=None):
     for name in ['card2_event_payloads.schema.json','event_record.schema.json','event_record_index_checkpoint.schema.json']:
         local_refs_resolve(load(name))
     fixtures=fixtures or load('card2_event_fixtures.json')
@@ -709,6 +746,7 @@ def run(fixtures=None, event_type=None):
         expected=case.get('guards',[case['guard']])
         if set(f)!=set(expected): errors.append({'case':case['id'],'expected':expected,'actual':f})
         negatives.append((case,c))
+    freeze_proof_inputs([*bases.values(), *(c for case,c in negatives)])
     for name in GUARDS:
         # Explicit intentional duplicate sets are removed together, not hidden by
         # suppressing a composite function. Every other predicate still runs.
@@ -739,6 +777,15 @@ def run(fixtures=None, event_type=None):
                     errors.append({'missing_positive':[f['event_type'],scope,path]})
     return {'status':'FAIL' if errors else 'PASS','native_execution':'NOT_RUN','admission':'ABSENT',
             'positives':len(bases),'negatives':len(negatives),'guard_removal_table':table,'errors':errors}
+
+
+def run(fixtures=None, event_type=None):
+    global _PROOF_VALUES, _PROOF_INPUT_IDS
+    try:
+        return _run(fixtures, event_type)
+    finally:
+        _PROOF_VALUES = None
+        _PROOF_INPUT_IDS = set()
 
 
 if __name__=='__main__':
