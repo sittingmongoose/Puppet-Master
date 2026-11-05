@@ -1,0 +1,1771 @@
+{
+  "schema_id": "pm.filesafe.card2_retention_fixtures.v1",
+  "authority": "synthetic owner-policy oracles only; native NOT_RUN; no admission",
+  "families": [
+    {
+      "event_type": "filesafe.command_denied",
+      "decision_ref": "DL-422",
+      "project_policy_ref": "RP-OPERATIONAL-2555D",
+      "cases": [
+        {
+          "id": "filesafe.command_denied.card2.before_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-29T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.exact_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired"
+        },
+        {
+          "id": "filesafe.command_denied.card2.after_seven_years",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_investigation",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "investigation"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_active_reference",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "active_reference"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_recovery",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recovery"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_backup",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "backup"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_legal_hold",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_recent_run",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recent_run"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_rollback",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "rollback"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.protected_maintenance",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "maintenance"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.command_denied.card2.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.command_denied.card2.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.command_denied.card2.full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.command_denied.card2.full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
+        },
+        {
+          "id": "filesafe.command_denied.card2.available_append",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "append"
+        },
+        {
+          "id": "filesafe.command_denied.card2.count_no_age_eviction",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000001,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.remove_project_from_list",
+          "scope_kind": "project",
+          "action": "remove_project_from_list",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.delete_project_protected",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.delete_project_unauthorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.delete_project_authorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "delete_project_data"
+        },
+        {
+          "id": "filesafe.command_denied.card2.delete_described_file",
+          "scope_kind": "project",
+          "action": "delete_described_file",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.delete_described_chat",
+          "scope_kind": "project",
+          "action": "delete_described_chat",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.command_denied.card2.application_not_decided",
+          "scope_kind": "application",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "pending_retention_decision"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_denied",
+      "decision_ref": "DL-423",
+      "project_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "cases": [
+        {
+          "id": "filesafe.destructive_override_denied.card2.before_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-29T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.exact_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.after_seven_years",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_investigation",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "investigation"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_active_reference",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "active_reference"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_recovery",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recovery"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_backup",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "backup"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_legal_hold",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_recent_run",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recent_run"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_rollback",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "rollback"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.protected_maintenance",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "maintenance"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.available_append",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "append"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.count_no_age_eviction",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000001,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.remove_project_from_list",
+          "scope_kind": "project",
+          "action": "remove_project_from_list",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.delete_project_protected",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.delete_project_unauthorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.delete_project_authorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "delete_project_data"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.delete_described_file",
+          "scope_kind": "project",
+          "action": "delete_described_file",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.delete_described_chat",
+          "scope_kind": "project",
+          "action": "delete_described_chat",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_denied.card2.application_not_decided",
+          "scope_kind": "application",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "pending_retention_decision"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_requested",
+      "decision_ref": "DL-424",
+      "project_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "cases": [
+        {
+          "id": "filesafe.destructive_override_requested.card2.before_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-29T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.exact_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.after_seven_years",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_investigation",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "investigation"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_active_reference",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "active_reference"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_recovery",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recovery"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_backup",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "backup"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_legal_hold",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_recent_run",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recent_run"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_rollback",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "rollback"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.protected_maintenance",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "maintenance"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.available_append",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "append"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.count_no_age_eviction",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000001,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.remove_project_from_list",
+          "scope_kind": "project",
+          "action": "remove_project_from_list",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.delete_project_protected",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.delete_project_unauthorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.delete_project_authorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "delete_project_data"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.delete_described_file",
+          "scope_kind": "project",
+          "action": "delete_described_file",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.delete_described_chat",
+          "scope_kind": "project",
+          "action": "delete_described_chat",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.destructive_override_requested.card2.application_not_decided",
+          "scope_kind": "application",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "pending_retention_decision"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.guard_init_failed",
+      "decision_ref": "DL-425",
+      "project_policy_ref": "RP-OPERATIONAL-2555D",
+      "cases": [
+        {
+          "id": "filesafe.guard_init_failed.card2.before_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-29T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.exact_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.after_seven_years",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_investigation",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "investigation"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_active_reference",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "active_reference"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_recovery",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recovery"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_backup",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "backup"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_legal_hold",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_recent_run",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recent_run"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_rollback",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "rollback"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.protected_maintenance",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "maintenance"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.available_append",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "append"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.count_no_age_eviction",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000001,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.remove_project_from_list",
+          "scope_kind": "project",
+          "action": "remove_project_from_list",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.delete_project_protected",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.delete_project_unauthorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.delete_project_authorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "delete_project_data"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.delete_described_file",
+          "scope_kind": "project",
+          "action": "delete_described_file",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.delete_described_chat",
+          "scope_kind": "project",
+          "action": "delete_described_chat",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.guard_init_failed.card2.application_not_decided",
+          "scope_kind": "application",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "pending_retention_decision"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.path_denied",
+      "decision_ref": "DL-426",
+      "project_policy_ref": "RP-OPERATIONAL-2555D",
+      "cases": [
+        {
+          "id": "filesafe.path_denied.card2.before_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-29T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.exact_expiry",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired"
+        },
+        {
+          "id": "filesafe.path_denied.card2.after_seven_years",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_investigation",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "investigation"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_active_reference",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "active_reference"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_recovery",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recovery"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_backup",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "backup"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_legal_hold",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_recent_run",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "recent_run"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_rollback",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "rollback"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.protected_maintenance",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [
+            "maintenance"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.anchor_not_reset_retry_saved_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "retry_saved_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.path_denied.card2.anchor_not_reset_reprocessed_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "reprocessed_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.path_denied.card2.anchor_not_reset_recovered_at_utc",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "compact_expired",
+          "recovered_at_utc": "2035-01-01T00:00:00Z"
+        },
+        {
+          "id": "filesafe.path_denied.card2.full_no_expiry",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "refuse_new"
+        },
+        {
+          "id": "filesafe.path_denied.card2.full_expired_eligible",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": true,
+          "expired_unprotected_available": true,
+          "project_delete_authorized": false,
+          "expected": "compact_expired_then_append"
+        },
+        {
+          "id": "filesafe.path_denied.card2.available_append",
+          "scope_kind": "project",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 1999999,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "append"
+        },
+        {
+          "id": "filesafe.path_denied.card2.count_no_age_eviction",
+          "scope_kind": "project",
+          "action": "compact",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2020-01-02T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000001,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.remove_project_from_list",
+          "scope_kind": "project",
+          "action": "remove_project_from_list",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.delete_project_protected",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [
+            "legal_hold"
+          ],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.delete_project_unauthorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.delete_project_authorized",
+          "scope_kind": "project",
+          "action": "delete_project_data",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": true,
+          "expected": "delete_project_data"
+        },
+        {
+          "id": "filesafe.path_denied.card2.delete_described_file",
+          "scope_kind": "project",
+          "action": "delete_described_file",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.delete_described_chat",
+          "scope_kind": "project",
+          "action": "delete_described_chat",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2035-01-01T00:00:00Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "retain"
+        },
+        {
+          "id": "filesafe.path_denied.card2.application_not_decided",
+          "scope_kind": "application",
+          "action": "append",
+          "original_saved_at_utc": "2020-01-01T00:00:00Z",
+          "now_utc": "2026-12-30T23:59:59Z",
+          "protection_refs": [],
+          "project_record_count": 2000000,
+          "storage_full": false,
+          "expired_unprotected_available": false,
+          "project_delete_authorized": false,
+          "expected": "pending_retention_decision"
+        }
+      ]
+    }
+  ]
+}

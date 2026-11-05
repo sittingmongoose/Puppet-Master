@@ -19,6 +19,7 @@ from referencing import Resource
 from referencing.jsonschema import DRAFT202012
 import pm_filesafe_event_contracts as payload_owner
 import pm_filesafe_schema_graph as schema_graph
+import pm_filesafe_retention as retention_owner
 from pm_projects_refresh_contracts import semantic_hash
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -138,6 +139,8 @@ def graph_failures(family):
     failures.extend(schema_graph.reference_failures(graph,docs,registry))
     failures.extend(schema_graph.negative_case_failures(family,graph,docs))
     failures.extend(retention_binding_failures(family,graph['retention_policy_ref']))
+    failures.extend(retention_owner.binding_failures(family,graph))
+    failures.extend(retention_owner.check(family))
     if graph['native_admission'] != 'unavailable_until_complete_owner_adoption': failures.append('admission_overclaim')
     return failures
 
