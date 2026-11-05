@@ -4,6 +4,7 @@ import copy
 import base64
 import hashlib
 import json
+import math
 import re
 from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
@@ -13,6 +14,7 @@ import jsonschema
 from pm_executor_schema_refs import check_references, check_lane_schemas, reference_cases
 import msgpack
 from blake3 import blake3
+import rfc8785
 
 ROOT = Path(__file__).resolve().parents[1]
 DATE_TIME_CHECKER = jsonschema.FormatChecker()
@@ -40,15 +42,15 @@ def validate_source_timezone(result):
 
 
 def validate_retry_classification(classification):
-    require(classification not in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'), 'no blind retry')
+    require(type(classification) is str and classification not in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'), 'no blind retry')
 
 
 def validate_retry_policy_domain(classification, limits):
-    require(classification in limits, 'classified retry policy domain')
+    require(type(classification) is str and classification in limits, 'classified retry policy domain')
 
 
 def validate_retry_after_header(header):
-    require(isinstance(header, str) and bool(header), 'original Retry-After header')
+    require(type(header) is str and bool(header), 'original Retry-After header')
 
 
 def validate_retry_after_timezone(deadline):
@@ -56,7 +58,8 @@ def validate_retry_after_timezone(deadline):
 
 
 def validate_auth_refresh(refresh):
-    require(refresh is not None and refresh['attempts'] == 1 and refresh['result'] == 'refreshed',
+    require(type(refresh) is dict and type(refresh['attempts']) is int
+            and refresh['attempts'] == 1 and refresh['result'] == 'refreshed',
             'one successful original auth refresh')
 
 
@@ -73,9 +76,19 @@ def validate_dependency_presence(dependency, field):
 
 
 def canonical(value):
-    # Fixture domain is strings, booleans, null, safe integers, lists and objects.
+    # Preserve the owner's RFC8785 recipe, including ECMAScript number bytes and
+    # UTF-16 property ordering. The fixture input domain still refuses floats.
     validate_canonical_domain(value)
-    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
+    def binary64(item):
+        if type(item) is dict:
+            return {key: binary64(child) for key, child in item.items()}
+        if type(item) is list:
+            return [binary64(child) for child in item]
+        # rfc8785 deliberately rejects Python ints outside the safe range. An
+        # exactly representable integer such as 2**60 is valid JCS input: after
+        # checking exactness, use the encoder's binary64 number serialization.
+        return float(item) if type(item) is int else item
+    return rfc8785.dumps(binary64(value)).decode('utf-8')
 
 
 def validate_canonical_domain(value):
@@ -89,11 +102,25 @@ def validate_canonical_domain(value):
             validate_canonical_domain(item)
     else:
         require(value is None or type(value) in (str, bool, int), 'canonical integer value domain')
+        if type(value) is int:
+            try:
+                number = float(value)
+            except OverflowError:
+                number = math.inf
+            require(math.isfinite(number) and int(number) == value,
+                    'canonical exact binary64 integer')
 
 
 def same_value(left, right):
     """Compare typed JSON values; Python's True == 1 cannot join source facts."""
     return canonical(left) == canonical(right)
+
+
+def string_list_contains(value, values):
+    """An identity/action grant is a list of strings, never substring membership."""
+    return (type(value) is str and bool(value) and type(values) is list
+            and all(type(item) is str and bool(item) for item in values)
+            and value in values)
 
 
 def fixture_encoding(value):
@@ -148,7 +175,7 @@ def schema_validate(path, value, *, whole_schema_refs=True):
 
 
 def valid_timestamp(value):
-    return (isinstance(value, str) and DATE_TIME.fullmatch(value) is not None
+    return (type(value) is str and DATE_TIME.fullmatch(value) is not None
             and DATE_TIME_CHECKER.conforms(value, 'date-time'))
 
 
@@ -184,10 +211,13 @@ def payload_bytes(value):
 
 def validate_payload_transport(payload, envelope, packs, viewer):
     """Compose SP-337 with the logical source body; captures are not wire schemas."""
+    require(type(envelope['storage_instance_id']) is str and bool(envelope['storage_instance_id']),
+            'payload Storage string domain')
+    validate_canonical_domain(payload)
     raw = payload_bytes(payload)
     ref = envelope['payload_ref']
     if ref is None:
-        require(envelope['payload'] == payload, 'inline logical payload join')
+        require(same_value(envelope['payload'], payload), 'inline logical payload join')
         require(len(raw) <= 16 * 1024, 'oversized_inline_payload')
         return
     require(envelope['payload'] == {}, 'referenced payload cannot remain inline')
@@ -207,7 +237,8 @@ def validate_payload_transport(payload, envelope, packs, viewer):
     require(pack['project_id'] == payload['project_id'], 'payload pack Project custody')
     require(pack['storage_instance_id'] == envelope['storage_instance_id'], 'payload pack Storage custody')
     require(pack['durable'] is True, 'payload pack before referencing record')
-    require(pack['deleted_at'] is None and viewer in pack['readers'], 'payload pack disclosure custody')
+    require(pack['deleted_at'] is None and string_list_contains(viewer, pack['readers']),
+            'payload pack disclosure custody')
 
 
 def source_observation(adapter, records):
@@ -354,10 +385,13 @@ def validate_capture(contract, payload, capture, *, historical=False):
         if slot not in expected_slots:
             continue
         record = records[slot]
+        require(type(record['ref']) is str and bool(record['ref']), 'source ref ' + slot)
         require(record['owner'] == owner, 'source owner ' + slot)
         require(record['project_id'] == scope['project_id'], 'source Project ' + slot)
         require(record['storage_instance_id'] == scope['storage_instance_id'], 'source root ' + slot)
-        require(same_value(record['revision'], capture['expected_revisions'][slot]), 'source revision ' + slot)
+        require(type(record['revision']) is int and record['revision'] >= 0
+                and type(capture['expected_revisions'][slot]) is int
+                and same_value(record['revision'], capture['expected_revisions'][slot]), 'source revision ' + slot)
         require(record['sha256'] == digest(record['body']), 'source digest ' + slot)
         require(record['parents'] == {parent: records[parent]['ref'] for parent in adapter['parent_joins'][slot]}, 'source parents ' + slot)
     for field, path in adapter['joins'].items():
@@ -397,7 +431,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
     effects = adapter.get('effects_by_failure_class', {}).get(payload.get('failure_class'), adapter['effects'])
     require(capture['post_state']['effects'] == effects, 'post-state effects')
     for path, expected in adapter['requirements'].items():
-        require(at(records, path) == expected, 'owner predicate ' + path)
+        require(same_value(at(records, path), expected), 'owner predicate ' + path)
     validate_dependencies(contract, payload, capture)
     name = contract['event_type']
     if name == 'attempt.completed':
@@ -409,7 +443,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
             require(bool(payload.get('safe_point_id')) and bool(payload.get('anchor_ref')), 'restore anchor')
     if name == 'node.unblocked':
         body = records['episode']['body']
-        require(body['chosen_action'] in body['allowed_action_ids'], 'current ordered action')
+        require(string_list_contains(body['chosen_action'], body['allowed_action_ids']), 'current ordered action')
         require(body['resolution'] == payload['resolution'], 'resolution evidence')
         require(body['restore_result'] == 'committed' if payload['resolution'] == 'safe_point_restored'
                 else body['prerequisite_state'] == 'resolved', 'resolution barrier')
@@ -419,7 +453,8 @@ def validate_capture(contract, payload, capture, *, historical=False):
         require(payload['remediation_parent_attempt_id'] == records['parent_attempt']['body']['attempt_id'], 'parent attempt record')
         require(payload['child_attempt_id'] == records['child_attempt']['body']['attempt_id'], 'child attempt record')
         require(payload['remediation_root_id'] == records['root']['body']['remediation_root_id'], 'remediation root record')
-        require(lineage['generation'] <= lineage['ceiling'], 'remediation ceiling')
+        require(type(lineage['generation']) is int and type(lineage['ceiling']) is int
+                and lineage['generation'] <= lineage['ceiling'], 'remediation ceiling')
         require(same_value(lineage['generation'], lineage['remediation_generation']), 'normalized remediation generation')
         require(payload['remediation_generation'] <= lineage['ceiling'], 'joined remediation generation ceiling')
         if name == 'remediation.resolved' and payload['resolution'] == 'fixed':
@@ -432,7 +467,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
         validate_score_domain(operation['ready_nodes'], operation['selected_nodes'])
         validate_score_domain([], scheduler['selected_nodes'])
         validate_score_domain(payload['ready_nodes'], payload['selected_nodes'])
-        require(scheduler['selected_nodes'] == payload['selected_nodes'], 'scheduler source selection')
+        require(same_value(scheduler['selected_nodes'], payload['selected_nodes']), 'scheduler source selection')
         ready = payload['ready_nodes']
         selected = [x['node_id'] for x in payload['selected_nodes']]
         excluded = [x['node_id'] for x in payload['non_selected_nodes']]
@@ -445,11 +480,17 @@ def validate_capture(contract, payload, capture, *, historical=False):
         require(selected == [x['node_id'] for x in ordered[:len(selected)]], 'score ordering')
         by_id = {x['node_id']: x for x in ready}
         for item in payload['selected_nodes']:
-            require(item['score_tuple'] == by_id[item['node_id']] and item['lane'] == by_id[item['node_id']]['scheduler_lane'], 'selected score')
+            require(same_value(item['score_tuple'], by_id[item['node_id']])
+                    and item['lane'] == by_id[item['node_id']]['scheduler_lane'], 'selected score')
+        require(type(scheduler['wakes']) is list
+                and all(type(wake) is dict and valid_timestamp(wake['recorded_at_utc'])
+                        and type(wake['event_id']) is str and bool(wake['event_id'])
+                        for wake in scheduler['wakes']), 'scheduler wake identity/clock types')
         wakes = sorted(scheduler['wakes'], key=lambda x: (x['recorded_at_utc'], x['event_id']))
         require(bool(wakes) and payload['wake_reason'] == wakes[0]['reason'], 'primary wake')
         require(payload.get('coalesced_wake_reasons', []) == [x['reason'] for x in wakes[1:]], 'coalesced wakes')
         require(payload.get('wake_event_refs', []) == [x['event_id'] for x in wakes[1:]], 'wake event joins')
+        require(type(scheduler['recovered']) is bool, 'scheduler recovered boolean')
         if scheduler['recovered']:
             require(payload['wake_reason'] == 'startup_recovered', 'first recovery wake')
         if payload['wake_reason'] == 'watchdog_recheck':
@@ -471,7 +512,7 @@ def validate_dependencies(contract, payload, capture):
         require(dependency['storage_instance_id'] == scope['storage_instance_id'], 'dependency root ' + field)
         require(dependency['sha256'] == digest(dependency['body']), 'dependency hash ' + field)
         require(dependency['deleted_at'] is None, 'deleted dependency ' + field)
-        require(capture['viewer'] in dependency['readers'], 'dependency authorization ' + field)
+        require(string_list_contains(capture['viewer'], dependency['readers']), 'dependency authorization ' + field)
         if field == 'execution_unit_context_ref':
             # Shared dependency instances keep their existing owner validation.
             # The DX whole-document gate owns the sixteen payloads and proof schema.
@@ -491,7 +532,7 @@ def validate_dependencies(contract, payload, capture):
             require(dependency is not None and dependency['project_id'] == payload['project_id']
                     and dependency['storage_instance_id'] == scope['storage_instance_id']
                     and dependency['sha256'] == digest(dependency['body'])
-                    and dependency['deleted_at'] is None and capture['viewer'] in dependency['readers'],
+                    and dependency['deleted_at'] is None and string_list_contains(capture['viewer'], dependency['readers']),
                     'evidence list dependency ' + field)
 
 
@@ -506,10 +547,10 @@ def validate_history(contract, payload, original, retained_source_sha256, disclo
     # Authenticate the immutable original and its then-valid lifecycle first.
     # The recorded viewer is evidence of original disclosure, never a current grant.
     validate_capture(contract, payload, original['capture'], historical=True)
-    require(disclosure['reader_active'], 'reader_withdrawn')
-    require(disclosure['source_available'], 'source_unavailable')
+    require(disclosure['reader_active'] is True, 'reader_withdrawn')
+    require(disclosure['source_available'] is True, 'source_unavailable')
     require(disclosure['event_deleted_at'] is None, 'event_deleted')
-    require(disclosure['viewer'] in disclosure['event_readers'], 'event access')
+    require(string_list_contains(disclosure['viewer'], disclosure['event_readers']), 'event access')
     require(disclosure['project_id'] == payload['project_id'], 'history Project')
     require(disclosure['storage_instance_id'] == original['capture']['scope']['storage_instance_id'],
             'history Storage root')
@@ -638,10 +679,11 @@ def run_numeric_case(contract, baseline, case):
     """Probe the declared fixture numeric domain before hashing or encoding."""
     from pm_executor_event_contracts import identity
     number = json.loads(case['spelling'])
-    payload = {**baseline['payload'], 'event_sequence': number}
+    field = case.get('field', 'event_sequence')
+    payload = {**baseline['payload'], field: number}
     boundary = case['boundary']
     if boundary == 'identity':
-        return identity(contract, payload, 'store-001')
+        return identity(contract, payload, number if field == 'storage_instance_id' else 'store-001')
     if boundary == 'digest':
         return digest(payload)
     if boundary == 'canonical':
@@ -651,17 +693,72 @@ def run_numeric_case(contract, baseline, case):
     raise ValueError('unknown numeric boundary ' + boundary)
 
 
-def main():
+def type_case_specimens(family, shapes, case):
+    """Resolve a named valid fixture, then change exactly one typed observation."""
+    route = case['route']
+    if route == 'capture':
+        if case['seed'] == 'baseline':
+            seed = copy.deepcopy(family['baseline'])
+        else:
+            source = next(row for row in family['cases'] if row['case'] == case['seed'])
+            seed = mutate(family['baseline'], source['changes'])
+    elif route == 'history':
+        source = next(row for row in family['history_cases'] if row['case'] == case['seed'])
+        seed = {
+            'original': mutate(family['baseline'], source['original_changes']),
+            'payload': {**copy.deepcopy(family['baseline']['payload']), **source['event_changes']},
+            'retained_source_sha256': source.get('retained_source_sha256', family['retained_source_sha256']),
+            'disclosure': copy.deepcopy(source['disclosure']),
+        }
+    elif route == 'shape':
+        seed = copy.deepcopy(next(row for row in shapes if row['case'] == case['seed']))
+    else:
+        raise ValueError('unknown type fixture route ' + route)
+    return seed, mutate(seed, case['changes'])
+
+
+def validate_type_case(contract, route, specimen):
+    if route == 'capture':
+        return validate_capture(contract, specimen['payload'], specimen['capture'])
+    if route == 'history':
+        return validate_history(contract, specimen['payload'], specimen['original'],
+                                specimen['retained_source_sha256'], specimen['disclosure'])
+    if route == 'shape':
+        from pm_executor_event_contracts import validate
+        return validate(contract, specimen['payload'], specimen['context'])
+    raise ValueError('unknown type fixture route ' + route)
+
+
+def main(family_name=None):
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
+    if family_name is not None:
+        contracts = [contract for contract in contracts if contract['event_type'] == family_name]
+        if not contracts:
+            raise SystemExit('unknown Executor family ' + family_name)
     failures = check_lane_schemas(contracts)
     if failures:
         print(json.dumps({'status': 'fail', 'schema_reference_failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
         return 1
     fixture_doc = json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text())
     # Deliberately invalid authoring literals are only expanded by their own case.
-    families = expand_fixture_literals(fixture_doc['families'])
+    selected = {contract['event_type'] for contract in contracts}
+    families = expand_fixture_literals({name: family for name, family in fixture_doc['families'].items()
+                                        if name in selected})
     helper_cases = fixture_doc.get('helper_cases', [])
+    for case in fixture_doc.get('canonical_golden_cases', []):
+        try:
+            value = json.loads(case['json'])
+            actual = canonical(value)
+            result = 'accept'
+            if (actual != case.get('canonical') or digest(value) != case.get('sha256')):
+                failures.append(['canonical_golden', case['case'], 'canonical bytes/hash mismatch'])
+        except ValueError:
+            result = 'reject'
+        if result != case['expected']:
+            failures.append(['canonical_golden', case['case'], result])
     ref_fixtures = json.loads((ROOT / 'Plans/executor_event_schema_reference_fixtures.json').read_text())['families']
+    type_fixtures = json.loads((ROOT / 'Plans/executor_event_type_fixtures.json').read_text())['families']
+    shapes = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text()))['cases']
     for case in helper_cases:
         try:
             run_helper_case(case)
@@ -670,10 +767,22 @@ def main():
             result, reason = 'reject', str(error)
         if result != case['expected'] or reason != case.get('reason'):
             failures.append(['helper', case['case'], result, reason])
-    count, traces, score_cases, schema_cases, ref_cases, history_cases, numeric_cases = 0, 0, 0, 0, 0, 0, 0
+    count, traces, score_cases, schema_cases, ref_cases, history_cases, numeric_cases, type_cases = 0, 0, 0, 0, 0, 0, 0, 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
         family = families[contract['event_type']]
+        for case in type_fixtures[contract['event_type']]:
+            type_cases += 1
+            seed, specimen = type_case_specimens(family, [row for row in shapes if row['event_type'] == contract['event_type']], case)
+            validate_type_case(contract, case['route'], seed)
+            require(len(case['changes']) == 1, 'single type defect ' + case['case'])
+            try:
+                validate_type_case(contract, case['route'], specimen)
+                result = 'accept'
+            except (ValueError, jsonschema.ValidationError):
+                result = 'reject'
+            if result != case['expected']:
+                failures.append([contract['event_type'], case['case'], result])
         failures.extend(reference_cases(contract, ref_fixtures[contract['event_type']]))
         ref_cases += len(ref_fixtures[contract['event_type']])
         for case in family.get('numeric_cases', []):
@@ -681,9 +790,12 @@ def main():
             try:
                 actual = run_numeric_case(contract, family['baseline'], case)
                 result = 'accept'
+                if 'expected_value' in case:
+                    observed = list(actual) if type(actual) is tuple else actual
+                    require(observed == case['expected_value'], 'numeric golden bytes/hash')
                 # JSON -0 decodes to integer zero. It must have exactly the same
                 # identity/digest/bytes as 0, never a second spelling downstream.
-                canonical_spelling = str(json.loads(case['spelling']))
+                canonical_spelling = fixture_encoding(json.loads(case['spelling']))
                 control = run_numeric_case(contract, family['baseline'],
                                            {**case, 'spelling': canonical_spelling})
                 require(actual == control, 'numeric spelling canonical result')
@@ -765,9 +877,12 @@ def main():
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'exact_type_cases': type_cases, 'canonical_golden_cases': len(fixture_doc.get('canonical_golden_cases', [])), 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family', help='Check one family in a memory-bounded process; default checks all.')
+    raise SystemExit(main(parser.parse_args().family))

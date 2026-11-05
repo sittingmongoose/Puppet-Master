@@ -12,10 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def identity(contract, payload, storage_instance_id):
     from pm_executor_event_semantics import canonical, require
-    # Identity values are exactly the owner's strings and nonnegative integers.
-    values = [payload[k] for k in contract['identity_fields']]
-    require(all(type(value) is str or (type(value) is int and value >= 0)
-                for value in values), 'identity string/nonnegative integer domain')
+    # Apply each identity field's declared domain before making either hash.
+    schema = json.loads((ROOT / contract['schema_ref']).read_text())
+    for field in contract['identity_fields']:
+        value, domain = payload[field], schema['properties'][field]
+        require((domain['type'] == 'string' and type(value) is str and len(value) >= domain['minLength'])
+                or (domain['type'] == 'integer' and type(value) is int and value >= domain['minimum']),
+                'identity declared field domain ' + field)
+    require(type(storage_instance_id) is str and bool(storage_instance_id), 'identity Storage string domain')
     inner = canonical([payload[k] for k in contract['identity_fields']])
     digest = lambda value: hashlib.sha256(value.encode('utf-8')).hexdigest()
     return ('executor:' + contract['event_type'] + ':v1:' + digest(inner),
@@ -28,9 +32,9 @@ def validate(contract, payload, context):
     validate_canonical_domain(context)
     schema_validate(contract['schema_ref'], payload)
     for field in ('admitted', 'source_refs_valid', 'read_authorized', 'receipt_available', 'predicate_valid'):
-        if not context[field]:
+        if context[field] is not True:
             raise ValueError(field)
-    if context['writer_withdrawn'] or context['deletion_fenced']:
+    if context['writer_withdrawn'] is not False or context['deletion_fenced'] is not False:
         raise ValueError('withdrawal/deletion fence')
     if payload['project_id'] != context['current_project_id']:
         raise ValueError('Project join')
@@ -55,15 +59,15 @@ def validate(contract, payload, context):
         expected = 'verified' if payload['result_outcome'] == 'done' else 'verify_pending'
         if context['source_facts']['node_state'] != expected:
             raise ValueError('node completion source state')
-    if name == 'remediation.resolved' and payload['resolution'] == 'fixed' and not context['source_child_success']:
+    if name == 'remediation.resolved' and payload['resolution'] == 'fixed' and context['source_child_success'] is not True:
         raise ValueError('fixed without child success')
     if name == 'remediation.spawned' and payload['child_attempt_id'] == payload['remediation_parent_attempt_id']:
         raise ValueError('child is parent')
     if name == 'run.node_backoff_started' and datetime.fromisoformat(payload['backoff_until_utc']) < datetime.fromisoformat(payload['ts']):
         raise ValueError('backoff before recorded observation')
-    if name == 'plan.decomposition_degraded' and context['graph_locked']:
+    if name == 'plan.decomposition_degraded' and context['graph_locked'] is not False:
         raise ValueError('graph already locked')
-    if name == 'run.completed' and not context['packaging_passed']:
+    if name == 'run.completed' and context['packaging_passed'] is not True:
         raise ValueError('Document Set packaging')
     if name == 'run.node_backoff_expired' and datetime.fromisoformat(context['now_utc']) < datetime.fromisoformat(context['backoff_until_utc']):
         raise ValueError('backoff not elapsed')
@@ -94,17 +98,23 @@ def validate(contract, payload, context):
                 raise ValueError('score join')
     return True
 
-def main():
-    from pm_executor_event_semantics import expand_fixture_literals, mutate, fixture_encoding
+def main(family_name=None):
+    from pm_executor_event_semantics import expand_fixture_literals, mutate, fixture_encoding, digest
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     existing = {f['event_type'] for f in registry['families']}
     assert len(contracts) == 16 and len({c['event_type'] for c in contracts}) == 16
+    if family_name is not None:
+        contracts = [contract for contract in contracts if contract['event_type'] == family_name]
+        if not contracts:
+            raise SystemExit('unknown Executor family ' + family_name)
     failures = check_lane_schemas(contracts)
     if failures:
         print(json.dumps({'status': 'fail', 'schema_reference_failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
         return 1
-    fixtures = expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text()))['cases']
+    selected = {contract['event_type'] for contract in contracts}
+    fixtures = expand_fixture_literals([case for case in json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text())['cases']
+                                        if case['event_type'] in selected])
     ref_fixtures = json.loads((ROOT / 'Plans/executor_event_schema_reference_fixtures.json').read_text())['families']
     ref_cases = 0
     for c in contracts:
@@ -138,14 +148,17 @@ def main():
         q['event_sequence'] += 1
         assert identity(c, q, 'store-001') != ident
         assert identity(c, p, 'store-002')[1] != ident[1]
-        original_digest = hashlib.sha256(json.dumps(p, sort_keys=True).encode()).hexdigest()
+        original_digest = digest(p)
         stored = {ident: (original_digest, 'original-first-receipt')}
         assert stored[identity(c, p, 'store-001')][1] == 'original-first-receipt'
         q = copy.deepcopy(p); q['ts'] = '2026-11-04T13:00:00Z'
         assert identity(c, q, 'store-001') in stored
-        assert hashlib.sha256(json.dumps(q, sort_keys=True).encode()).hexdigest() != stored[ident][0]
+        assert digest(q) != stored[ident][0]
     print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(contracts), 'fixture_cases': len(fixtures), 'identity_replay_cases': len(contracts)*5, 'schema_reference_cases': ref_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family', help='Check one family in a memory-bounded process; default checks all.')
+    raise SystemExit(main(parser.parse_args().family))
