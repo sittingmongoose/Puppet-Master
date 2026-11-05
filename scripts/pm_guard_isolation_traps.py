@@ -1692,6 +1692,7 @@ def round9_probe(g, trap, memory):
         rows = []
         mutations = {
             'rebind': lambda env: env.update(check=types.FunctionType(env['check'].__code__, env)),
+            'builtin-context': lambda env: env.update(__builtins__=dict(env['__builtins__'])),
             'code': lambda env: setattr(env['check'], '__code__', env['check'].__code__.replace()),
             'defaults': lambda env: setattr(env['check'], '__defaults__', (1,)),
             'kwdefaults': lambda env: setattr(env['check'], '__kwdefaults__', {'floor': 1}),
@@ -1775,12 +1776,17 @@ def round9_probe(g, trap, memory):
         for prefix in ('', 'from __future__ import annotations\n'):
             annotated = prefix + plain.replace('def check(v):', 'def check(v: dict) -> bool:')
             annotated_env = compile_env(annotated)
+            annotated_env['check'].__annotations__['return'] = 'runtime cache edit'
             backend = g.AstGuards('annotated/' + str(bool(prefix)), annotated, annotated_env)
             cut_id = register(backend); original = annotated_env['check']
             cloned = backend.clone(frozenset({cut_id})).check
             assert getattr(cloned, '__annotate__', None) is getattr(original, '__annotate__', None)
             assert cloned.__annotations__ == original.__annotations__
             assert vector(cloned) == [True, True, False]
+            original.__annotations__['return'] = 'later cache edit'
+            try: backend.clone(frozenset())
+            except g.IsolationError: pass
+            else: raise AssertionError('post-construction annotation cache edit accepted')
         return {'changed_instruction_bytes': changed, 'cut_span': sorted(set(spans)), 'vectors': [vector(c) for c in clones], 'annotation_modes': 2}, True
 
     if trap['kind'] == 'round9_source_subset':

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import builtins
 import copy
 import dis
 from dataclasses import asdict, dataclass, field, replace
@@ -1074,10 +1075,10 @@ def _state_token(value, seen=None):
 def _function_state(fn, seen=None):
     seen = (set() if seen is None else seen) | {id(fn)}
     annotate = getattr(fn, "__annotate__", None)
-    return (id(fn.__globals__), tuple(_state_token(v, seen) for v in (
+    return (id(fn.__globals__), id(fn.__builtins__), tuple(_state_token(v, seen) for v in (
         fn.__code__, fn.__defaults__, fn.__kwdefaults__, fn.__dict__, fn.__name__, fn.__qualname__,
         fn.__module__, fn.__doc__, annotate,
-        None if annotate is not None else fn.__annotations__, getattr(fn, "__type_params__", ()))),
+        fn.__annotations__, getattr(fn, "__type_params__", ()))),
         tuple((id(cell), _state_token(cell.cell_contents, seen)) for cell in fn.__closure__ or ()))
 
 
@@ -1089,6 +1090,13 @@ def _copy_function(original, code, namespace):
     annotate = getattr(original, "__annotate__", None)
     if annotate is not None:
         clone.__annotate__ = annotate
+        # Python 3.14's setters cannot install both fields: assigning
+        # __annotations__ clears __annotate__, and the reverse drops the cache.
+        # Only verified pure source evaluators are supported. Materialize the
+        # clone cache, then copy its contents without invoking either setter.
+        annotations = clone.__annotations__
+        annotations.clear()
+        annotations.update(original.__annotations__)
     else:
         clone.__annotations__ = original.__annotations__
     if hasattr(original, "__type_params__"):
@@ -1166,13 +1174,53 @@ class AstGuards:
             if isinstance(original, types.FunctionType):
                 if original.__globals__ is not namespace:
                     raise IsolationError(f"{name}.{function_name}: original function globals are not the supplied namespace")
+                self._verify_builtins(original)
                 self.originals[function_name] = original
         self.bound_functions = {key: value for key, value in namespace.items() if isinstance(value, types.FunctionType)}
+        for key, value in self.bound_functions.items():
+            self._verify_annotations(key, value)
         self.snapshots = {key: _function_state(value) for key, value in self.bound_functions.items()}
         # Call name -> index of its acceptance predicate. Only the predicate
         # argument is cut; the helper, its code and other arguments remain.
         self.call_predicates = {"require": 0} if call_predicates is None else dict(call_predicates)
         self.subset_reasons = self._source_subset()
+
+    def _verify_builtins(self, fn):
+        declared = self.namespace.get("__builtins__", builtins.__dict__)
+        if isinstance(declared, types.ModuleType):
+            declared = vars(declared)
+        if fn.__builtins__ is not declared:
+            raise IsolationError("original builtin context differs from the supplied namespace")
+
+    def _verify_annotations(self, name, fn):
+        """Cloning must not run arbitrary annotation callbacks or drop a cached edit."""
+        annotate = getattr(fn, "__annotate__", None)
+        if annotate is None:
+            return
+        node = self.functions.get(name)
+        if node is None:
+            node = next((self.functions[key] for key, value in self.originals.items() if value is fn), None)
+        if node is None or not isinstance(annotate, types.FunctionType) or annotate.__globals__ is not self.namespace or annotate.__closure__:
+            raise IsolationError("unsupported lazy annotation evaluator: " + name)
+        arguments = [*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs]
+        arguments += [arg for arg in (node.args.vararg, node.args.kwarg) if arg is not None]
+        expressions = [arg.annotation for arg in arguments if arg.annotation is not None]
+        if node.returns is not None:
+            expressions.append(node.returns)
+        for expression in expressions:
+            if isinstance(expression, ast.Constant):
+                continue
+            if isinstance(expression, ast.Name):
+                value = getattr(builtins, expression.id, None)
+                if isinstance(value, type) and self.namespace.get(expression.id, annotate.__builtins__.get(expression.id)) is value:
+                    continue
+            raise IsolationError("lazy annotations require literal or builtin-type source expressions: " + name)
+        reference = compile(self.tree, "<annotation-reference>", "exec", optimize=0,
+                            flags=self.future_flags, dont_inherit=True)
+        candidates = [c for c in reference.co_consts if type(c) is types.CodeType
+                      and c.co_name == "__annotate__" and c.co_firstlineno == node.lineno]
+        if not expressions or not any(_code_fingerprint(annotate.__code__) == _code_fingerprint(c) for c in candidates):
+            raise IsolationError("annotation evaluator is not the verified pure source compilation: " + name)
 
     def _source_subset(self):
         """Refuse observations of code, frames, identities, or opaque callable state.
@@ -1182,7 +1230,7 @@ class AstGuards:
         External predicate helpers remain an explicit adapter trust boundary.
         """
         forbidden = {"__code__", "__defaults__", "__kwdefaults__", "__globals__", "__dict__", "__closure__",
-                     "__builtins__", "__getattribute__", "_getframe", "currentframe", "f_code", "f_lineno",
+                     "__builtins__", "__getattribute__", "__traceback__", "_getframe", "currentframe", "f_code", "f_lineno",
                      "f_locals", "f_globals", "f_back", "tb_frame", "tb_lineno", "gi_frame", "cr_frame"}
         reflective = {"id", "globals", "locals", "vars", "getattr", "setattr", "delattr", "eval", "exec", "compile"}
         reasons, dependencies = {}, {}
@@ -1200,7 +1248,10 @@ class AstGuards:
                 if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
                     if node.id in reflective | {"inspect", "traceback", "__builtins__"}:
                         reasons[name] = "unsupported reflection/identity access: " + node.id
-                    bound = self.namespace.get(node.id)
+                    builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
+                    if isinstance(builtin_namespace, types.ModuleType):
+                        builtin_namespace = vars(builtin_namespace)
+                    bound = self.namespace.get(node.id, builtin_namespace.get(node.id))
                     if isinstance(bound, types.ModuleType) and bound.__name__ in ("inspect", "traceback", "sys", "builtins"):
                         reasons[name] = "unsupported reflective module: " + bound.__name__
                     if node.id in self.functions:
@@ -1215,6 +1266,8 @@ class AstGuards:
                         reasons[name] = "unsupported reflective builtin alias: " + node.id
                     elif callable(bound) and not isinstance(bound, (types.FunctionType, types.BuiltinFunctionType, type)):
                         reasons[name] = "stateful callable requires a faithful adapter: " + node.id
+                    elif isinstance(bound, type) and bound is not Outcome and bound.__module__ != "builtins" and not issubclass(bound, BaseException):
+                        reasons[name] = "callable class source requires an explicit atomic adapter: " + node.id
                     if isinstance(bound, types.FunctionType):
                         parent = parents.get(node)
                         if not ((isinstance(parent, ast.Call) and parent.func is node) or isinstance(parent, ast.Attribute)):
@@ -1246,6 +1299,9 @@ class AstGuards:
         if current.keys() != self.bound_functions.keys():
             raise IsolationError(f"{self.name}: verified function bindings changed before clone")
         for name, original in self.bound_functions.items():
+            if original.__globals__ is self.namespace:
+                self._verify_builtins(original)
+            self._verify_annotations(name, original)
             if self.namespace.get(name) is not original or _function_state(original) != self.snapshots[name]:
                 raise IsolationError(f"{self.name}.{name}: verified original binding/code/function state changed before clone")
         if self._source_subset() != self.subset_reasons:
