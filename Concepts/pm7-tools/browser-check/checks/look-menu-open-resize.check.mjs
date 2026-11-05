@@ -55,7 +55,12 @@ export default async function(t) {
         const reach = written ? await reachableMenuLines(t,f,id) : {ok:false};
         t.log(JSON.stringify({look,wording,motion,width,height,ready,written,state,reach}));
         await t.check(`FO-56 retained note ${label} -> ${width}x${height}`,ready && written && state.retained && state.expanded === 'true' && state.menu && state.pip && reach.ok);
-        if (ready && state.pip) await t.painted('.o55-stage svg g.pst-pip g.pst-head');
+        if (ready && state.pip) {
+          // Selector captures scrollIntoView internally; preserve the tested layout
+          // and SVG scroll state by capturing the head's viewport rectangle.
+          const box = await f.locator('.o55-stage svg g.pst-pip g.pst-head').boundingBox();
+          await t.painted(box, `FO-56 Pip painted ${label} -> ${width}x${height}`);
+        }
         if (width === 1280 && look === 'basic-dark' && wording === 'ELI5') await t.shot(`resize-after-${motion}`, 'Wide-to-short result: retained note and painted Pip required');
         if (!written) { survived = false; break; } // the negative control must not conceal the initial failure by reopening
       }
