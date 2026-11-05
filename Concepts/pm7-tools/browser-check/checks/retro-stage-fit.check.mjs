@@ -302,12 +302,21 @@ const stageNow = (f) => f.evaluate((re) => {
 	if (!st) return null;
 	const rx = new RegExp(re), b = st.bubble, q = (sel) => { const n = st.hudEl && st.hudEl.querySelector(sel); return n ? n.textContent : null; };
 	return {
-		layout: st.layoutName, theme: st.theme, sayAt: st.sayAt || 0, line: (b.querySelector('.pst-bt-on') || {}).textContent || '', on: b.classList.contains('on'), typing: b.classList.contains('typing'),
+		layout: st.layoutName, theme: st.theme, sayAt: st.sayAt || 0, saying: st.saying || '', lineId: (st.spec && st.spec.lineId) || '', preview: !!(st.spec && st.spec.mute), line: (b.querySelector('.pst-bt-on') || {}).textContent || '', on: b.classList.contains('on'), typing: b.classList.contains('typing'),
 		cmd: q('.pst-term-in'), dec: q('.pst-decode'), decoding: st.decoded != null && q('.pst-decode') !== st.decoded,
 		power: st.content.getAnimations().filter((x) => rx.test(x.animationName || '') && x.playState === 'running').map((x) => x.animationName),
 		pop: b.getAnimations().filter((x) => rx.test(x.animationName || '') && x.playState === 'running').map((x) => x.animationName)
 	};
 }, ENTRANCE.source);
+// the pointer rested on the stage, inside the page's frame so the page sees it, at a spot that is stage in every layout
+// (page 100,150: the left pane at 1024, the banner at 740 and 1280x500). Left over the form, a layout put a suggestion chip
+// under the still pointer and Pip previewed it ('Ooh, good one.'), and the next layout took it away: the line changed by
+// the browser's own hover, not by the layout (the no-resize control: parked, the line never changes). Moved off the
+// page from inside the sandbox's frame, the page never saw it leave.
+async function restOnStage(t, f) {
+	const fe = await f.frameElement().catch(() => null), off = (fe && (await fe.boundingBox())) || { x: 0, y: 0 };
+	await t.page.mouse.move(off.x + 100, off.y + 150, { steps: 4 });
+}
 async function noReplay(t, mode) {
 	const reduce = t.args.motion === 'reduce', looks = t.args.looks ? String(t.args.looks).split(',') : ALL_LOOKS;
 	for (const look of looks) {
@@ -315,7 +324,7 @@ async function noReplay(t, mode) {
 		const f = await frameFor(t, mode);
 		await t.emulate({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
 		await lookAndName(t, f, look);
-		await t.page.mouse.move(1900, 1060); /* (the pointer off the page, so no layout puts a choice under it: filmRelayout) */
+		await restOnStage(t, f); /* (no layout moves a choice under the pointer: restOnStage) */
 		await f.waitForTimeout(3000);
 		let was = await stageNow(f), prev = '1024x768';
 		for (const [w, h] of [[740, 768], [1280, 500], [860, 768]]) {
@@ -328,6 +337,8 @@ async function noReplay(t, mode) {
 			if (/^retro/.test(look)) await t.check(`${tag}: the tube is not powered on again`, now.power.length === 0, now.power.join(', '));
 			await t.check(`${tag}: Pip's line whole on its box, not typed again`, now.on && !now.typing && now.line === was.line && !!was.line, JSON.stringify({ was: was.line, now: now.line, on: now.on, typing: now.typing }));
 			await t.check(`${tag}: Pip's line not said again`, now.sayAt === was.sayAt, `said at ${was.sayAt} then ${now.sayAt}`);
+			// (the lead's rule: a layout change does not change what Pip says: the line's text and which line it is)
+			await t.check(`${tag}: Pip says the same line (text and id)`, now.saying === was.saying && now.lineId === was.lineId, JSON.stringify({ was: [was.saying, was.lineId], now: [now.saying, now.lineId] }));
 			await t.check(`${tag}: Pip's box does not pop in again`, now.pop.length === 0, now.pop.join(', '));
 			if (/^retro/.test(look)) await t.check(`${tag}: the command line reads as before`, now.cmd === was.cmd && !!was.cmd, JSON.stringify({ was: was.cmd, now: now.cmd }));
 			if (/^nier/.test(look)) await t.check(`${tag}: NieR's label reads as before, decoded`, now.dec === was.dec && !!was.dec && !now.decoding, JSON.stringify({ was: was.dec, now: now.dec, decoding: now.decoding }));
@@ -513,10 +524,7 @@ async function filmRelayout(t, mode) {
 		await size(1024, 768);
 		await f.waitForTimeout(600);
 		await lookAndName(t, f, look);
-		// the pointer parked outside the page: left on the page, a layout put a suggestion under it, Pip previewed that
-		// choice ('Ooh, good one.', the sign '--preview') and the next layout took it away, a new line said for a real
-		// change, not a replay
-		await t.page.mouse.move(1700, 1000);
+		await restOnStage(t, f); /* (no layout moves a choice under the pointer: the line changes only by hover otherwise) */
 		await f.waitForTimeout(2500);
 		for (let i = 1; i <= reps; i++) {
 			await t.mark(`${look} rep ${i} 1024`);
@@ -529,6 +537,7 @@ async function filmRelayout(t, mode) {
 			await t.check(`${tag}: the layout changed`, now.layout !== was.layout, now.layout);
 			if (/^retro/.test(look)) await t.check(`${tag}: the tube is not powered on again`, now.power.length === 0, now.power.join(', '));
 			await t.check(`${tag}: Pip's line not said again`, now.sayAt === was.sayAt, `said at ${was.sayAt} then ${now.sayAt}`);
+			await t.check(`${tag}: Pip says the same line (text and id)`, now.saying === was.saying && now.lineId === was.lineId, JSON.stringify({ was: [was.saying, was.lineId, was.preview], now: [now.saying, now.lineId, now.preview] }));
 			await t.inFrame(f, () => judge(t, f, tag, { sign: true }));
 			await size(1024, 768);
 			await f.waitForTimeout(2200);
