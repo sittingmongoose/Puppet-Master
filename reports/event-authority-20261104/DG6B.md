@@ -1,118 +1,129 @@
-# DG6B — review round 8, prepared without admission
+# DG6B — sweep part 1, prepared without admission
 
-Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input: `0c92d2e91ed2a34391d16b7796de7883c190a2a0`. Fix commit: **`ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`**. Native execution: **NOT_RUN**.
+Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input: `5cc7c461d08d993c0aa4c0bdeb6ccd4e98131468`. Rebased main: `e42ce235b4711325ced818c777f070c3ee0d7952`. Fix commit: **`9c10e2c4b17cb1263b88825a81b0a305ecfcb8f0`**. Native execution: **NOT_RUN**.
 
-**C8-B1 and C8-B2 are fixed.** All nineteen C12 cells recover PARTIAL → PASS against the cycle-8 independent review: **171 PASS / 38 PARTIAL / 19 ABSENT → 190 PASS / 19 PARTIAL / 19 ABSENT**. Prepared gate: **0/19 → 19/19**. Membership remains ABSENT, retention PARTIAL / `PENDING_RETENTION_DECISION`, disposition UNDISPOSITIONED.
+**B1, B2 and B3 are fixed in part 1. All nineteen family checkers pass. No family is READY: the shared number rule, guard-table tool and subsequent Sol/Astra reviews remain required.** Membership stays ABSENT, retention PARTIAL / PENDING_RETENTION_DECISION, disposition UNDISPOSITIONED.
 
-## Review round 8: findings and responses
+## Sweep part 1: findings and responses
 
-| Finding | Where, why and fix | Verification |
+| Item | Response / exact location | How to verify |
 |---|---|---|
-| **C8-B1 — fixed (`ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`)** | `scripts/pm_dg6b_full_oracles.py:191`: deletion's revision negative also changed its independent caller CAS precondition. The removed/result revision now changes alone; `expected_owner_revision` and its payload/request/frozen/inline copies stay integer. A second complete-path target changes only that precondition's type. | `persona.deleted:coherent_python_equal_bool/revision` and `persona.deleted:coherent_python_equal_bool/expected_owner_revision` flip under separate cuts; each peer stays refused. Every repeated type site has remove-one/retain-one proof. |
-| **C8-B2 — fixed (`ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`)** | `scripts/pm-dg6b-guard-proof.py:419`: intersection merging erased independent predicates. Groups now use exactly equal predicate cuts. `scripts/pm-dg6b-guard-proof.py:82` splits compound runtime clauses, boolean type/value, tuple comparisons, source-reference fields and keyed custody comparisons. Multi-field schema keywords keep their peers; nullable type alternatives are one allowed-domain site, never two duplicate sites. | 1467 guards; 3,398 complete negatives; 585 duplicate sets; **0 unproved**. 266,192 full complement evaluations; 9,032 duplicate-site evaluations across 1527 sites; all nineteen retained-string + authenticity-denial probes refuse. |
+| **Deck 2 — none assigned** | No product answer is extended. Landed DL-045 (`Plans/Decision_Log.md:560`) limits technical definitions to “already specified behavior”; landed DL-400 (`:4390`) requires three batch landings with review. These remain boundaries, not new decisions. | `owner-premises.json`; no Decision Log or registry diff from rebased main. |
+| **B1 — fixed (`9c10e2c4b17cb1263b88825a81b0a305ecfcb8f0`)** | `scripts/pm_dg6b_full_oracles.py:259` and `:369` add separate requested/effective account negatives for every family. Only one EventRecord account changes; retained Storage bytes authenticate that exact envelope. Existing product comparisons remain intact. | Nineteen full CLIs; 38 single-comparison removals flip only their own append/history pair, keep every other corpus negative at its original refusal and make the formerly surviving full suite fail. `account-regressions.json`. |
+| **B2 — fixed (`9c10e2c4b17cb1263b88825a81b0a305ecfcb8f0`)** | `Plans/dg6b_event_contracts.schema.json:1854` / `:7546`; payload/operation enums and selected logical/inline frozen-resolution enums bind 18 existing hook spellings and seven selection sources. The three stored-operation registry copies match. Invalid `tool.before`/`manual` inputs and every dependent byte/digest/size copy are repaired. | Full CLIs for hook.error, hook.invoked and selected; two coherent unknown/retired values plus five wrong types per family. All 18 hook spellings and seven sources have append and exact-byte retained positives. The three original bad-positive CLIs exit 1. |
+| **B3 — fixed (`9c10e2c4b17cb1263b88825a81b0a305ecfcb8f0`)** | `scripts/pm-dg6b-event-contracts.py:15` / `:383` verifies the original target against section 6’s nine protected core IDs independently of `protected_id=false`. Update’s source identity changes coherently with its target. | Four mutation families × nine complete protected-ID negatives; removing only that guard accepts each target while protected=true still refuses. Four original coherent assistant bad-positive CLIs exit 1. Protected selection/export and their retained originals remain positive controls. |
 
-Neither finding is disputed or stopped for Jared. Production checker predicates, physical codec, schemas, fixtures and owner prose are byte-identical to the input. No new number cap or serializer is introduced.
+No item is disputed or stopped for a new Jared choice. No new hook, selection source, reserved-ID policy, command, retention assignment or PlanUnit ID is introduced.
 
-## Guard-removal table and independence
+## Family grades before and after
 
-Reproduce from the fix tree, one family at a time (repeat with every exact family name below):
+Before is Astra 4, which supersedes the round-8 author/Sol 9 claims. P=PASS, p=PARTIAL, A=ABSENT. C4/C9 recover nine cells. C12 remains PARTIAL in all nineteen pending complete shared isolation, even though the concrete B1 missing negatives now exist.
 
-```sh
-python3 scripts/pm-dg6b-event-contracts.py --family persona.deleted
-python3 scripts/pm-dg6b-guard-proof.py --family persona.deleted --output /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix8/recheck-persona-deleted.json
-```
+| Family | Before | After | Complete negative cases | Prepared state |
+|---|---|---|---:|---|
+| `auth.github.authenticated` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 168 | NOT_READY — part 2 |
+| `auth.github.device_code.issued` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 165 | NOT_READY — part 2 |
+| `auth.github.disconnected` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 165 | NOT_READY — part 2 |
+| `auth.github.failed` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 165 | NOT_READY — part 2 |
+| `auth.github.token.polling` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 166 | NOT_READY — part 2 |
+| `plugin.hook.blocked` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 168 | NOT_READY — part 2 |
+| `plugin.hook.error` | 7 P / 4 p / 1 A | 9 P / 2 p / 1 A | 173 | NOT_READY — part 2 |
+| `plugin.hook.invoked` | 7 P / 4 p / 1 A | 9 P / 2 p / 1 A | 173 | NOT_READY — part 2 |
+| `plugin.load_failed` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 166 | NOT_READY — part 2 |
+| `plugin.loaded` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 166 | NOT_READY — part 2 |
+| `plugin.permission.override` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 166 | NOT_READY — part 2 |
+| `plugin.tool.collision` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 166 | NOT_READY — part 2 |
+| `plugin.tool.registered` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 166 | NOT_READY — part 2 |
+| `persona.created` | 8 P / 3 p / 1 A | 9 P / 2 p / 1 A | 224 | NOT_READY — part 2 |
+| `persona.deleted` | 8 P / 3 p / 1 A | 9 P / 2 p / 1 A | 228 | NOT_READY — part 2 |
+| `persona.exported` | 9 P / 2 p / 1 A | 9 P / 2 p / 1 A | 211 | NOT_READY — part 2 |
+| `persona.imported` | 8 P / 3 p / 1 A | 9 P / 2 p / 1 A | 229 | NOT_READY — part 2 |
+| `persona.selected` | 8 P / 3 p / 1 A | 9 P / 2 p / 1 A | 239 | NOT_READY — part 2 |
+| `persona.updated` | 8 P / 3 p / 1 A | 9 P / 2 p / 1 A | 227 | NOT_READY — part 2 |
 
-[DG6B.guard-removal-summary.json](DG6B.guard-removal-summary.json) names every guard, exact runtime clause/schema cut, flipping target, complement selector, logical defect and per-site duplicate proof. The full table records every complement ID, stock refusal, accepted control and exact typed input diff:
+**Totals: 162 PASS / 47 PARTIAL / 19 ABSENT → 171 PASS / 38 PARTIAL / 19 ABSENT. Prepared READY: 0/19 → 0/19.** All self-grade source quotes, line ranges and hashes are refreshed against the rebased source tree.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix8/guard-removal-full.json.gz` — SHA-256 `85f911e800ef4bd6665bf03b76fd581e13a3e80100bf66e42275f0f49dba4272`; decompressed SHA-256 `56936a103e409f05ab51ef9b1f8b152f4aa11bf77da83e616acc7273a9957134`.
+## B1 guard-removal table
 
-Each negative runs the entire append, retry, recovery or retained-history callback. No captured-instance validator, stage bypass, caught-refusal continuation, instance result cache or detached proof is used. Only immutable schema construction/parsing is cached. Raw and instrumented stock refusals agree for every target. Every mutant reruns every designated negative in its family. Its own targets accept; every other target retains its exact stock refusal. A new raw full family checker passes after restoration. Inputs are hash-pinned before and after each family.
+Each row represents two independent predicates, never one duplicate set. For requested_account_ref and effective_account_ref separately, `account_custody/FIELD` and `history_account_custody/FIELD` flip. The other account’s two negatives and every other `family_probes` negative keep their exact stock refusal. The original full CLI corpus also detects either removal. This is a focused replay of Astra’s B1 experiment, not a complete assertion inventory.
 
-A duplicate set represents one input invariant at repeated sites. Removing each one site alone leaves its target rejected; retaining only that site also rejects it; removing all sites accepts it. The table exports the exact site and all target outcomes for both partial cuts. Intersections do not union sets.
+| Family | Requested-account targets flip | Effective-account targets flip | Other negatives staying rejected per cut |
+|---|---:|---:|---:|
+| `auth.github.authenticated` | 2 | 2 | 166 |
+| `auth.github.device_code.issued` | 2 | 2 | 163 |
+| `auth.github.disconnected` | 2 | 2 | 163 |
+| `auth.github.failed` | 2 | 2 | 163 |
+| `auth.github.token.polling` | 2 | 2 | 164 |
+| `plugin.hook.blocked` | 2 | 2 | 166 |
+| `plugin.hook.error` | 2 | 2 | 171 |
+| `plugin.hook.invoked` | 2 | 2 | 171 |
+| `plugin.load_failed` | 2 | 2 | 164 |
+| `plugin.loaded` | 2 | 2 | 164 |
+| `plugin.permission.override` | 2 | 2 | 164 |
+| `plugin.tool.collision` | 2 | 2 | 164 |
+| `plugin.tool.registered` | 2 | 2 | 164 |
+| `persona.created` | 2 | 2 | 222 |
+| `persona.deleted` | 2 | 2 | 226 |
+| `persona.exported` | 2 | 2 | 209 |
+| `persona.imported` | 2 | 2 | 227 |
+| `persona.selected` | 2 | 2 | 237 |
+| `persona.updated` | 2 | 2 | 225 |
 
-History's `retained`, `authentic`, `admitted_when_written`, reader/withdrawal and access/deletion predicates have separate type and value controls. Boolean type removal retains opposite-boolean refusal. Sol's combined `retained="false"` plus `authentic=false` probe still refuses as `historical_provenance` under the retained-type cut in all nineteen families. It is supplementary two-defect evidence, never counted as a single-defect target.
+The pre-sweep `DG6B.guard-removal-summary.json` and earlier tables are historical evidence of their pinned corpus only. The local proof script is byte-identical to the reviewed head; its completeness claims are not carried forward. Whole-lane inventory and per-site duplicate proof remain S1.
 
-Malformed general key syntax, a well-formed key of the wrong scope, a valid foreign key, forbidden auth Project scope and an empty original Server have independent cuts. Conditional patterns retain peer restrictions. Server nonempty cuts retain CR/LF refusal. Replay-only denial stays separate from other unsupported current policies. A source partition negative leaves the independently valid physical partition intact. Persona import source fields each get a one-field negative. These restrictions prevent the earlier merged rows from returning through broader schema or runtime sites.
+## Part 2 items
 
-## Family grades and complete matrix
+1. **S1 — proof machinery / shared tool:** `scripts/pm-dg6b-guard-proof.py:36` (`guard_inventory`, still unused), `:395` (`run_family`), `:419–426` (cut grouping), `:479–508` (reported inventory). Adopt the accepted shared `pm_guard_isolation.py`, expose named guard predicates/tables and reconcile every production/schema assertion with its witness. DG6B is the port’s worked example; no checker restructuring or local proof-engine repair was attempted here.
 
-Before is cycle 8's independent grade. P=PASS, p=PARTIAL, A=ABSENT. Only C12 changes. All after grades describe static preparation, never admission or native certification.
+2. **S2 — number domains and historical recipes:** `scripts/pm-dg6b-event-contracts.py:298`, `:786`, `:260`; `scripts/pm_dg6b_full_oracles.py:50–55`; each SP-670/671/672 identity paragraph. Adopt NUMRULE CV-1100/1101, SP-1100/1101 and the shared helper after acceptance. Cover 2**53 semantic-digest mismatch, JSON number spellings, Storage uint64 boundaries and unforgeable at-write recipe choice. Add no local number cap/serializer; do not cap Storage at 2**53, normalize physical floats or erase signed zero.
 
-| Family | Before | After | Negatives | Guards | Duplicate sets | Matrix evaluations |
-|---|---|---|---:|---:|---:|---:|
-| `auth.github.authenticated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 164 | 73 | 29 | 11,972 |
-| `auth.github.device_code.issued` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 161 | 71 | 29 | 11,431 |
-| `auth.github.disconnected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 161 | 71 | 29 | 11,431 |
-| `auth.github.failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 161 | 71 | 29 | 11,431 |
-| `auth.github.token.polling` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 29 | 11,664 |
-| `plugin.hook.blocked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 164 | 73 | 29 | 11,972 |
-| `plugin.hook.error` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
-| `plugin.hook.invoked` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
-| `plugin.load_failed` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
-| `plugin.loaded` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
-| `plugin.permission.override` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
-| `plugin.tool.collision` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
-| `plugin.tool.registered` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 162 | 72 | 28 | 11,664 |
-| `persona.created` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 211 | 86 | 34 | 18,146 |
-| `persona.deleted` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 215 | 89 | 37 | 19,135 |
-| `persona.exported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 207 | 82 | 31 | 16,974 |
-| `persona.imported` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 216 | 90 | 36 | 19,440 |
-| `persona.selected` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 228 | 97 | 42 | 22,116 |
-| `persona.updated` | 9 P / 2 p / 1 A | 10 P / 1 p / 1 A | 214 | 88 | 35 | 18,832 |
+3. **S3 — formats and retained spellings:** `scripts/pm-dg6b-event-contracts.py:337` / `:260`, EventRecord date_time_string and every family ts. Bind allowed UTC spellings and authenticated at-write format recipe; preserve exact retained `+00:00` and lowercase-z bytes when their original recipe permits them. Keep malformed/forged alternatives refused. Existing narrowing remains explicitly open; historical bytes are not normalized.
 
-## Earlier findings and standing controls
+## Verification and integration
 
-All eleven standing checks pass in their static scope. All Astra classes were rechecked. The following overlapping suites are reported separately; their counts are not added to the guard matrix.
+19 complete family CLIs pass, exercising **3531** complete negatives. The focused B1 replay checks 38 comparison removals and 76 flipping targets, with unchanged complements and 38 detected weakened full suites. B3 covers 36 protected targets. All seven original Astra coherent bad-positive CLIs now exit 1. These counts overlap and are not added as independent coverage.
 
-| Earlier finding/control | Round-8 result |
+| Check | Exit | Result |
+|---|---:|---|
+| `astra4-regressions` | 0 | see output |
+| `shard-generate` | 0 | pass |
+| `index-generate` | 0 | pass |
+| `shard-check` | 0 | pass |
+| `index-validate` | 0 | pass |
+| `projects-refresh` | 0 | pass |
+| `github-integration` | 0 | pass |
+| `primary-command-catalog` | 0 | see output |
+| `storage-profile` | 1 | fail; 41 reported errors |
+| `diff-check` | 0 | see output |
+
+Shard regeneration changes only the lane’s eight canonical owners: automated_testing_system, contracts_v0, github_api_auth_and_flows, personas, plugins_system, storage-plan, storage_value_registry, ui_command_catalog. Conflicted generated snapshots were discarded during the rebase and regenerated once from final canon; no shard/index was hand-merged. The copied ignored currentness edition has 15 byte/hash-verified files. Index validation’s actual status is recorded above; no global governance PASS or seal is claimed. Storage-profile errors are compared with the same checker reading only the pinned-main registry; the ordered error lists match exactly.
+
+Main advanced during checking to `d5ec2f70c0d69c469796eea9b9cfdae30f281f42`; its only delta from the actual rebase pin is the upstream plan-migration snapshot and landing baseline. No owner, schema, fixture, registry or checker changed. Those governance paths are not edited or refreshed by this lane.
+
+Existing source/frame/token native authentication, native CAS/crash/restart execution, admission and pending retention remain separate obligations. No governance baseline, Spec Lock, evidence bundle, frozen validator, registry admission, Decision Log or test-file edit was made.
+
+Only `persona_semantic` changes among the production checker’s 51 functions. Identity, physical encoding, history and timestamp functions are unchanged. Recurring classes 1–9/11/12 remain covered by the full stock suites; B1 adds custody coverage, B2 closes owner-domain contradictions, and B3 closes protected-ID classification. Numeric/format recipe issues and complete independence proof remain S2/S3/S1 rather than being labelled closed.
+
+## Authority, IDs, resources and evidence
+
+No newly authored binding in this sweep. The nineteen existing exact DL-045 preparations, their own semantic/Storage units, consumer names, per-family searches and original premise evidence remain in branch history and DG6B.authority-audit.json at its recorded historical input. Rebase preserves current main, including Persona P-060/UCC wording. Current hook catalog/alias, Persona source enum, protected-ID and DL-045/DL-400 premises are rechecked in owner-premises.json.
+
+**New IDs: zero.** Whole-lane IDs remain GAAAF-077..081, PLUG-131..138, P-120..125, SP-670..672, CV-690..691 and ATS-335..336 (26). The two briefing memory files were absent at their named Nas1 paths; no allocation was needed, and currentness copying/hash verification was performed directly.
+
+Initial Nas1 resources: 11 GB available RAM, 495 GB free disk. All checker starts preserve the 6 GB RAM floor. Checks run serially within this worker; heavy index/proof jobs wait for other heavy checkers. Small peer checks may run concurrently. The initial conservative wait was narrowed after observing 30 MB peer checks; the memory floor was never lowered. No mail, subagent, main push, landing lock, browser or server. The worktree and temporary environment are removed after the lane push.
+
+Retained evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/sweep-p1/`. Reproduction scripts and dependency versions are retained there; recreate the literal worktree at this branch to replay. Raw outputs remain outside the repository; only this report, refreshed self-grade and compact checks summary are committed.
+
+| Evidence path (under sweep-p1) | SHA-256 |
 |---|---|
-| Sol C1 B1/B2/B4; Astra 1 B3/B4 | Six Persona preparations, canonical names, actual scope/home/mirror/protected/CAS/reach boundaries, real lineage and hook pre/post behavior rerun in owner/scope and pattern suites. |
-| Sol C1 B3 | Nineteen individual CURRENT_WRITER disposition substitutions refuse; no admission or current-writer claim added. |
-| Astra 1 B1/B2; standing 1–9 | CV-366 UTF-8/max/malformed keys, source/receipt/envelope joins, encoded Project cases, byte boundaries, independently sized complete values, custody and checkpoint mismatches, failure-exit controls and dormant refs rerun. General runner: 726 probes, 57 required exit-1 processes. Its 42 old diagnostic changes match cycle 8 exactly; no acceptance. |
-| Astra 2 B1/B2; Sol C4 B1 | Exact uncovered conditional refs refuse; old 1189 negatives stay refused. Old synthetic size masks remain separate from actual byte-stage proof. The obsolete mixed-operation-plus-ref heuristic still exits 1 as a diagnostic; complete bounded wrappers and authenticated recovery pass. |
-| Sol C5 B1/B2 | Exact 57 Storage substitutions refuse; matching independently selected originals and nineteen replay-only retained originals pass. Current append/retry still refuse replay-only. |
-| Astra 3 B1/B2/B3/S2 | 274 direct controls; four required malformed-positive process exits; 118 original individual-keyword controls. Exact giant resolution/event/operation physical sizing and corrupt/inaccessible/non-durable references rerun. |
-| Astra 3 S1 | Whole-branch authority audit unchanged; source pins reverified. Canonical sources, premise/application pairs and six historical report pins retained. |
-| Sol C7 B1; C8 B1/B2 | Complete callbacks retained. Independent deletion types, per-predicate cuts and site-by-site duplicate proofs now discharge check 11 for all nineteen. |
-| Pattern/owner scope | 2597 pattern/Persona checks; 58 owner/scope checks; zero failures. |
-| Own invariants / standing types | 1528 invariant probes and 2399 complete standing/type probes; zero failures. 76 separate required exit-1 typed-positive processes. |
-| Astra 10/10a/11/12 | Numeric/history/format and coherent-copy regressions rerun. Existing integer encoding, at-write policy selection and exact retained timestamp bytes stay unchanged; wrong types/forged recipe or Storage claims refuse. Number-domain adoption remains the shared sweep's job. No new lane-local range or serializer. |
-
-Forged identity/digest/frozen joins refuse; Storage metadata remains independently bound; history survives later live changes while forged/withdrawn/deleted originals refuse; types stay exact; every stock schema ref resolves eagerly; complete stored parts stay bounded; retry/recovery validates original custody. Existing number-domain outcomes, including the inherited RFC 8785 integer-domain refusals in `record_contract` and the coherent-number replay, are retained for the shared CV-1100/SP-1100/SP-1101 sweep. They are not changed or claimed as a new lane-local number rule. Existing native owner/frame and generic SP-278 generation/publication authentication prerequisites remain unexecuted.
-
-## Authority, bindings and IDs
-
-The whole-branch authority record is unchanged: [DG6B.authority-audit.json](DG6B.authority-audit.json), SHA-256 `ecbbf476bde5d41437637cfd526549ffbaa29cdb140eceb7bff7196b4faf4038`. Per-family current-canon searches, negative evidence, exact reused definitions, newly authored bindings and DL-045/DL-076 premise/application pairs remain intact. This round adds no owner binding or product decision and does not claim a rebase onto newer main.
-
-| Family | New semantic / Storage owner | Existing behavior citation; exact-family search hits | New consumer |
-|---|---|---|---|
-| `auth.github.authenticated` | `GAAAF-077` / `SP-670` | `Plans/GitHub_API_Auth_and_Flows.md:70`; 8 hits | `consumer.auth_github_authenticated.history@1.0.0` |
-| `auth.github.device_code.issued` | `GAAAF-078` / `SP-670` | `Plans/GitHub_API_Auth_and_Flows.md:67`; 8 hits | `consumer.auth_github_device_code_issued.history@1.0.0` |
-| `auth.github.disconnected` | `GAAAF-079` / `SP-670` | `Plans/GitHub_API_Auth_and_Flows.md:17`; 7 hits | `consumer.auth_github_disconnected.history@1.0.0` |
-| `auth.github.failed` | `GAAAF-080` / `SP-670` | `Plans/GitHub_API_Auth_and_Flows.md:74`; 8 hits | `consumer.auth_github_failed.history@1.0.0` |
-| `auth.github.token.polling` | `GAAAF-081` / `SP-670` | `Plans/GitHub_API_Auth_and_Flows.md:68`; 8 hits | `consumer.auth_github_token_polling.history@1.0.0` |
-| `plugin.hook.blocked` | `PLUG-131` / `SP-671` | `Plans/Plugins_System.md:462`; 8 hits | `consumer.plugin_hook_blocked.history@1.0.0` |
-| `plugin.hook.error` | `PLUG-132` / `SP-671` | `Plans/Plugins_System.md:461`; 4 hits | `consumer.plugin_hook_error.history@1.0.0` |
-| `plugin.hook.invoked` | `PLUG-133` / `SP-671` | `Plans/Plugins_System.md:460`; 5 hits | `consumer.plugin_hook_invoked.history@1.0.0` |
-| `plugin.load_failed` | `PLUG-134` / `SP-671` | `Plans/Plugins_System.md:459`; 7 hits | `consumer.plugin_load_failed.history@1.0.0` |
-| `plugin.loaded` | `PLUG-135` / `SP-671` | `Plans/Plugins_System.md:458`; 5 hits | `consumer.plugin_loaded.history@1.0.0` |
-| `plugin.permission.override` | `PLUG-136` / `SP-671` | `Plans/Plugins_System.md:243`; 9 hits | `consumer.plugin_permission_override.history@1.0.0` |
-| `plugin.tool.collision` | `PLUG-137` / `SP-671` | `Plans/Plugins_System.md:465`; 4 hits | `consumer.plugin_tool_collision.history@1.0.0` |
-| `plugin.tool.registered` | `PLUG-138` / `SP-671` | `Plans/Plugins_System.md:464`; 4 hits | `consumer.plugin_tool_registered.history@1.0.0` |
-| `persona.created` | `P-120` / `SP-672` | `Plans/Personas.md:82`; 11 hits | `consumer.persona_created.history@1.0.0` |
-| `persona.deleted` | `P-121` / `SP-672` | `Plans/Personas.md:82`; 6 hits | `consumer.persona_deleted.history@1.0.0` |
-| `persona.exported` | `P-122` / `SP-672` | `Plans/Personas.md:82`; 6 hits | `consumer.persona_exported.history@1.0.0` |
-| `persona.imported` | `P-123` / `SP-672` | `Plans/Personas.md:82`; 6 hits | `consumer.persona_imported.history@1.0.0` |
-| `persona.selected` | `P-124` / `SP-672` | `Plans/Personas.md:82`; 6 hits | `consumer.persona_selected.history@1.0.0` |
-| `persona.updated` | `P-125` / `SP-672` | `Plans/Personas.md:82`; 6 hits | `consumer.persona_updated.history@1.0.0` |
-
-
-**IDs used on the whole branch:** GAAAF-077..081, PLUG-131..138, P-120..125, SP-670..672, CV-690..691, ATS-335..336 (**26**). **Minted in round 8: zero.**
-
-## Verification, integration and retained evidence
-
-Nineteen family checkers, nineteen full matrices and nineteen restored raw family checkers pass, serially. Disk availability was 92 GB and available RAM 8 GB before worktree creation; every checker enforces the 6 GB floor. Interrupted attempts that stopped below that floor are excluded; only complete reruns are counted. The interruption log is retained in `fix8/resource-interruptions.json`. Fifteen currentness files were copied and hash-verified. No canonical Markdown changed, so no derived regeneration or clock restamping was required; shard verification remains read-only.
-
-Index validation: top-level **fail, 23 errors**, coverage passes and 7,447 PlanUnits remain. Storage profiles: **41 missing-profile errors**. Storage matches the reviewed 41-error baseline. Index retains all 22 reviewed failures and adds one `stale_generated_index_artifact` for `Plans/.plan_index/node_readiness_report.json`; the copied ignored currentness edition differs from round 7. The exact difference and currentness hashes are in `fix8/integration-notes.json`. This is recorded as integration staleness; no readiness artifact or governance lock is regenerated. Preserve newer main text during integration. No governance artifact, baseline, admission/registry row, Decision Log, test file or native implementation changes. No mail, subagent, main push, landing, browser or server was used.
-
-All round-8 reproduction scripts and results live under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix8/`. Earlier round-7 report, self-grade, table and evidence remain under `fix7/`. The report, self-grade and summary table are copied to the DG6B drafts root; the compressed complete table is copied there as well. The worker worktree is removed with a literal path after its branch is pushed.
+| `input-pins.json` | `981b1d5c44d898fb1f53903b43ca3634379ed7da927b08313e76b3e574357b63` |
+| `family-checks.json` | `2dd8731bf9d4dc307ff642c888d74e6d24b2bad403ae14addff5aa76fa9a7b6a` |
+| `account-regressions.json` | `393fef51b0d084e6e026982e67e69407de34a9baab412385039dcdd1c437632b` |
+| `protected-regressions.json` | `2289b260d5172429569c2c8fff70e8a344e32723c8b73e16de856591b65ede94` |
+| `counterexample-cli.json` | `7fb8eb3be79a450be26d5793a5e24e182195cec81bed85024ec8a1d6ef2ee67d` |
+| `owner-premises.json` | `4059454d0db663145f4abde139523c4cbcaa5e3b9cab33e40cf5f1a71cbdb705` |
+| `preservation.json` | `67e85ab20b865c476aa5d32f7ed0b7c2e52e4f72761bacc5ca9395849dc3c03a` |
+| `derived-scope.json` | `f20746fca7cf330b12c985867d066261b14fa0c52e88b3d440ed23a644f03c51` |
+| `verification.json` | `d28ed981f4036e173f497e1789770a49fe2bb583d1e059412f932bdc650596b8` |
+| `storage-profile-baseline.json` | `bd2670420bad9104c197c4bd30395cfd2335c43150c277f7bad52b6e600d0582` |
+| `grade-transition.json` | `eb5ebeafc6064ad7a697d0b618285588c4a0d1e8af67f9cc59ea84407fd2ad80` |
