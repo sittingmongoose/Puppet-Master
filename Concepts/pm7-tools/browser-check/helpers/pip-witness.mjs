@@ -4,10 +4,11 @@
  * 1. End-of-frame witness. A ResizeObserver callback (driven by a 1 px element resized in every rAF) runs after every
  *    rAF callback and layout of the frame, right before paint. There it measures Pip as that frame paints it and
  *    writes one record (fields below): the look Pip is drawn in, what the page declares about the frame (window
- *    closed, a look cover, a product animation on Pip's ancestors), Pip's head and controller boxes in film pixels,
- *    and paint properties (effective opacity of head, controller and strings with CSS and filter opacity on every
- *    ancestor, visibility and display, painted leaf area of the head, how much of the head box survives every
- *    clipping ancestor and the viewport, clip-path and mask on the chain, blur, overlays over the head).
+ *    closed, a look cover, one of the stage's own named effects on Pip's ancestors), whether Pip is missing from an
+ *    open stage, any other animation on Pip's ancestors, Pip's head and controller boxes in film pixels, and paint
+ *    properties (effective opacity of head, controller and strings with CSS and filter opacity on every ancestor,
+ *    visibility and display, painted leaf area of the head, how much of the head box survives every clipping ancestor
+ *    and the viewport, clip-path, mask and filter of each part and every ancestor, blur, brightness, overlays).
  * 2. Frame tag. In the same callback it paints the record's sequence number into a strip of black and white cells at
  *    the frame's top-left corner (sync cells 1,0, then the bits, then their complements), so every film frame names
  *    the page frame it shows. The tag carries its own view-transition-name, so it stays live over a View Transition.
@@ -19,7 +20,7 @@
 
 export const FIELDS = ['seq', 't', 'look', 'cls', 'why', 'cal', 'calPhase', 'label', 'hx', 'hy', 'hw', 'hh', 'cx', 'cy', 'cw', 'ch',
 	'placed', 'offBy', 'rigAnim', 'headVis', 'ctlVis', 'strVis', 'opHead', 'opCtl', 'opStr', 'leafArea', 'clipFrac', 'sig', 'occl',
-	'blur', 'pipTheme', 'cost', 'asleep', 'screen', 'dim', 'occlCtl'];
+	'blur', 'pipTheme', 'cost', 'asleep', 'screen', 'dim', 'occlCtl', 'gone', 'foreign'];
 
 /* Page function (serialised by Playwright: no closure over this module). cfg: { x, y, block, bits, ox, oy } in CSS px
    of this frame's viewport; ox/oy place the frame's viewport in the top window (the sandbox iframe). */
@@ -64,20 +65,45 @@ export function installWitness(cfg) {
 	};
 	const finiteRunning = (a) => { try { if (a.playState !== 'running' && !a.pending) return false; return Number.isFinite(a.effect.getComputedTiming().endTime); } catch (_) { return false; } };
 	const nameOf = (a, n) => `${a.animationName || a.transitionProperty || a.id || 'animation'}@${(n.getAttribute('class') || n.id || n.tagName).split(' ')[0]}`;
+	/* The stage's own effects that change how Pip paints, each by its CSS animation name, on its own element, once and
+	   short: Retro's tube (power on and off, degauss) and paper (feed in and out) on the tube's or sheet's content, and
+	   the look swap on the stage root. Only these excuse a frame from the paint checks; any other finite animation of
+	   paint or geometry on Pip's ancestors (a Web Animation on its SVG, say) leaves the frame judged, and is itself a
+	   structural failure (astra-review-flash-2 F1). */
+	const OWN = { pstOn: 'content', pstOff: 'content', pstDegauss: 'content', pstFeedIn: 'content', pstFeedOut: 'content', pstSwap: 'root' };
+	const ownEffect = (a, n, S) => {
+		const name = a.animationName; if (!name || !Object.prototype.hasOwnProperty.call(OWN, name)) return null;
+		if (OWN[name] === 'content' ? !(S.tube && n === S.content) : n !== S.root) return null;
+		try { const t = a.effect.getTiming(); if (t.iterations !== 1 || !(t.duration <= 1500)) return null; } catch (_) { return null; }
+		return `${name}@${OWN[name]}`;
+	};
+	const MISSING = 'Pip missing from the stage';
+	/* Pip is expected from the product's own state (the window open, its stage on screen), never from whether Pip's
+	   nodes survived: a head that is gone or detached in an open window is a lost Pip, judged where Pip last was
+	   (astra-review-flash-2 F2). */
 	const classify = (host, S, anims) => {
 		const O5 = window.O55, r = doc.getElementById('pm-o55-onboarding');
-		if (!O5 || !O5.S || !O5.S.open || !r || !host || !S || S.dead || !S.gHead || !S.gHead.isConnected || !S.active || doc.hidden) return ['o', 'stage closed'];
-		const hr = host.getBoundingClientRect(); if (hr.width < 40 || hr.height < 40) return ['o', 'no stage'];
+		if (doc.hidden || !O5 || !O5.S || !O5.S.open || !r || !host) return ['o', 'window closed'];
+		const hr = host.getBoundingClientRect(); if (hr.width < 40 || hr.height < 40) return ['o', 'no stage on screen'];
 		if (r.matches('.o55-opening, .o55-closing')) return ['x', 'window morph'];
 		try { if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) return ['x', 'look cover']; } catch (_) { return ['x', 'look cover (unreadable)']; }
 		if (html.hasAttribute('data-o55-vt') || O5.S.vt) return ['x', 'view transition'];
 		if (doc.getElementById('o55np-reboot') || doc.getElementById('o55np-calm')) return ['x', 'NieR plate'];   /* (a selector list costs 1 ms here) */
 		if (window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()) return ['x', 'look cover lift'];
 		if (O5.nierLook && O5.nierLook.busy && O5.nierLook.busy()) return ['x', 'NieR moment'];
-		if (S.gSlice && S.gSlice.getAttribute('display') !== 'none') return ['a', 'NieR slice'];
+		if (!S || S.dead || !S.gPip || !S.gHead || !S.gCtl || !S.gPip.isConnected || !S.gHead.isConnected || !S.gCtl.isConnected || !host.contains(S.gHead) || !host.contains(S.gCtl)) return ['v', MISSING];
+		if (S.famName === 'nier' && S.gSlice && S.gSlice.getAttribute('display') !== 'none') return ['a', 'NieR slice'];
 		/* one document.getAnimations() a frame (Element.getAnimations() walks the document's animations on every call) */
 		const chain = new Set(); for (let n = S.gPip.parentNode; n && n.nodeType === 1; n = n.parentNode) chain.add(n);
-		for (const a of anims) { const n = a.effect && a.effect.target; if (n && chain.has(n) && finiteRunning(a) && kindOf(a)) return ['a', nameOf(a, n)]; }
+		let own = null; const foreign = [];
+		for (const a of anims) {
+			const n = a.effect && a.effect.target;
+			if (!n || !chain.has(n) || !finiteRunning(a) || !kindOf(a)) continue;
+			const e = ownEffect(a, n, S);
+			if (e) own = own || e; else foreign.push(nameOf(a, n));
+		}
+		if (foreign.length) return ['v', '', foreign.join(', ')];
+		if (own) return ['a', own];
 		return ['v', ''];
 	};
 
@@ -121,7 +147,7 @@ export function installWitness(cfg) {
 		   animation's start event arrives a frame after it first paints (Retro's tube power-on, squashed to a line on
 		   purpose, was judged as a lost Pip that way) */
 		const anims = doc.getAnimations();
-		let [cls, why] = classify(host, S, anims);
+		let [cls, why, foreign] = classify(host, S, anims);
 		P.classify += pt() - tp;
 		/* calibration: a steady look only; aborted by anything the page declares, a rebuild or a look change */
 		const C = W.cal;
@@ -137,8 +163,14 @@ export function installWitness(cfg) {
 				if (W.cal === C) { if (!C.first) C.first = seq; rec[F.cal] = C.id; rec[F.calPhase] = C.phase; C.n++; if (C.phase === 2) { cls = 'h'; why = 'calibration'; } }
 			}
 		}
-		rec[F.cls] = cls; rec[F.why] = str(why);
-		if (!S || !S.gHead || !S.gHead.isConnected) return rec;
+		rec[F.cls] = cls; rec[F.why] = str(why); rec[F.foreign] = str(foreign || '');
+		if (why === MISSING) {
+			/* judged where Pip last was, in the look it was in; nothing of it is shown */
+			rec[F.gone] = 1;
+			if (W.last) for (const k of ['look', 'pipTheme', 'screen', 'hx', 'hy', 'hw', 'hh', 'cx', 'cy', 'cw', 'ch']) rec[F[k]] = W.last[k];
+			return rec;
+		}
+		if (cls === 'o') return rec;
 		rec[F.look] = str(S.theme); rec[F.pipTheme] = str(S.pipTheme || S.theme); rec[F.asleep] = S.sleepZ ? 1 : 0;
 		rec[F.screen] = str(window.O55.S && window.O55.S.sess ? window.O55.S.sess.screen : '');
 		const hb = rect(S.gHead), cb = rect(S.gCtl);
@@ -163,22 +195,27 @@ export function installWitness(cfg) {
 		/* paint: the shared chain above Pip's group, then each part's own */
 		P.geom += pt() - tp; tp = pt();
 		let chainOp = 1, chainBlur = 0, chainDim = 1, chainShown = true, clip = [0, 0, innerWidth, innerHeight];
+		/* clip-path, mask and filter of every element from Pip's group up, and of each part (head, controller, strings):
+		   what they do to paint cannot all be measured here (an SVG filter's output, a mask's alpha), so any of them its
+		   look's calibration did not have fails (astra-review-flash-2 F3). Filters by kind (an SVG reference, the CSS
+		   functions by name), since Retro's tube flickers its brightness value */
 		const sig = [];
+		const effects = (n, cs, role) => {
+			const mk = cs.maskImage || cs.webkitMaskImage || 'none', f = cs.filter || 'none', fa = n.getAttribute('filter'), ca = n.getAttribute('clip-path'), ma = n.getAttribute('mask');
+			const fk = f === 'none' ? '' : [...f.matchAll(/([a-z-]+)\(/g)].map((x) => x[1]).join(' ');
+			if ((cs.clipPath && cs.clipPath !== 'none') || mk !== 'none' || fk || fa || ca || ma) sig.push(`${role}:clip=${cs.clipPath}|mask=${mk}|filter=${fk}|attr=${ca ? 'clip-path ' : ''}${ma ? 'mask ' : ''}${fa ? 'filter' : ''}`);
+		};
 		for (let n = S.gPip; n && n.nodeType === 1; n = n.parentNode) {
 			const cs = getComputedStyle(n), fl = filterOf(cs);
 			chainOp *= (+cs.opacity) * fl.op; chainBlur += fl.blur; chainDim *= fl.dim;
 			if (cs.display === 'none' || cs.contentVisibility === 'hidden') chainShown = false;
-			const mk = cs.maskImage || cs.webkitMaskImage || 'none';
-			if ((cs.clipPath && cs.clipPath !== 'none') || mk !== 'none' || n.getAttribute('clip-path') || n.getAttribute('mask')) sig.push(`${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}:${cs.clipPath}|${mk}|${n.getAttribute('clip-path') || ''}|${n.getAttribute('mask') || ''}`);
+			effects(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`);
 			const svgRoot = n.namespaceURI === 'http://www.w3.org/2000/svg' && n.tagName.toLowerCase() === 'svg' && !n.ownerSVGElement;
 			if ((n instanceof HTMLElement || svgRoot) && (cs.overflowX !== 'visible' || cs.overflowY !== 'visible')) clip = inter(clip, rect(n));
 		}
 		const part = (e) => { const cs = getComputedStyle(e), fl = filterOf(cs); return { op: chainOp * (+cs.opacity) * fl.op, shown: chainShown && cs.display !== 'none' && cs.visibility === 'visible', blur: chainBlur + fl.blur, dim: chainDim * fl.dim, cs }; };
 		const ph = part(S.gHead), pc = part(S.gCtl), ps = S.pstrs.map(part);
-		{
-			const cs = ph.cs, mk = cs.maskImage || cs.webkitMaskImage || 'none';
-			if ((cs.clipPath && cs.clipPath !== 'none') || mk !== 'none' || S.gHead.getAttribute('clip-path') || S.gHead.getAttribute('mask')) sig.push(`head:${cs.clipPath}|${mk}|${S.gHead.getAttribute('clip-path') || ''}|${S.gHead.getAttribute('mask') || ''}`);
-		}
+		effects(S.gHead, ph.cs, 'head'); effects(S.gCtl, pc.cs, 'controller'); S.pstrs.forEach((p, i) => effects(p, ps[i].cs, 'string'));
 		rec[F.headVis] = ph.shown ? 1 : 0; rec[F.ctlVis] = pc.shown ? 1 : 0; rec[F.strVis] = ps.every((p) => p.shown) ? 1 : 0;
 		rec[F.opHead] = Math.round(ph.op * 1000); rec[F.opCtl] = Math.round(pc.op * 1000); rec[F.opStr] = Math.round(Math.min(...ps.map((p) => p.op)) * 1000);
 		rec[F.blur] = Math.round(ph.blur * 10); rec[F.dim] = Math.round(ph.dim * 1000);
@@ -212,6 +249,7 @@ export function installWitness(cfg) {
 		rec[F.occl] = area(hb) > 0 ? Math.round(Math.min(1, occ / area(hb)) * 1000) : 0;
 		rec[F.occlCtl] = area(cb) > 0 ? Math.round(Math.min(1, occC / area(cb)) * 1000) : 0;
 		P.overlays += pt() - tp; P.n++;
+		if (hb[2] >= 4 && hb[3] >= 4) W.last = Object.fromEntries(['look', 'pipTheme', 'screen', 'hx', 'hy', 'hw', 'hh', 'cx', 'cy', 'cw', 'ch'].map((k) => [k, rec[F[k]]]));
 		return rec;
 	};
 	const sample = () => {
@@ -278,12 +316,43 @@ export function readWitness(text) {
 
 const median = (a) => { if (!a.length) return NaN; const s = [...a].sort((x, y) => x - y); return s[s.length >> 1]; };
 
+/* The structural paint contract of one frame the page declares visible, against its look's calibration: returns why the
+   frame fails ([] when it holds). Used by evaluateWitness and by the negatives runner, frame by frame. */
+export function paintContract(w) {
+	const { recs, strings, F } = w;
+	const S = (i) => (i >= 0 ? strings[i] : '');
+	const median = (a) => { if (!a.length) return NaN; const t = [...a].sort((x, y) => x - y); return t[t.length >> 1]; };
+	const base = new Map();
+	for (const r of recs) if (r[F.calPhase] === 1 && r[F.cls] === 'v') { const k = S(r[F.look]); if (!base.has(k)) base.set(k, []); base.get(k).push(r); }
+	const B = new Map();
+	for (const [k, a] of base) B.set(k, { leaf: median(a.map((r) => r[F.leafArea])), area: median(a.map((r) => r[F.hw] * r[F.hh])), clip: median(a.map((r) => r[F.clipFrac])), sigs: new Set(a.map((r) => r[F.sig])), n: a.length });
+	const why = (r) => {
+		if (F.gone !== undefined && r[F.gone]) return ['Pip missing from the stage (head or controller gone or detached in an open window)'];
+		const b = B.get(S(r[F.look])), w2 = [];
+		if (F.foreign !== undefined && S(r[F.foreign])) w2.push(`an animation on Pip's ancestors that is not one of the stage's own effects: ${S(r[F.foreign])}`);
+		if (!r[F.headVis]) w2.push('head not shown'); if (!r[F.ctlVis]) w2.push('controller not shown'); if (!r[F.strVis]) w2.push('a string not shown');
+		if (r[F.opHead] < 950) w2.push(`head opacity ${r[F.opHead] / 1000}`); if (r[F.opCtl] < 950) w2.push(`controller opacity ${r[F.opCtl] / 1000}`); if (r[F.opStr] < 950) w2.push(`string opacity ${r[F.opStr] / 1000}`);
+		if (r[F.blur] > 20) w2.push(`blur ${r[F.blur] / 10}px`); if (r[F.dim] < 300) w2.push(`brightness ${r[F.dim] / 1000}`);
+		if (b) {
+			if (r[F.leafArea] < 0.6 * b.leaf) w2.push(`painted leaves ${r[F.leafArea]} of ${b.leaf} px²`);
+			const a = r[F.hw] * r[F.hh]; if (a < 0.4 * b.area || a > 2.5 * b.area) w2.push(`head box ${Math.round(a)} of ${Math.round(b.area)} px²`);
+			if (r[F.clipFrac] < Math.min(900, b.clip - 100)) w2.push(`only ${r[F.clipFrac] / 10} % of the head inside its clips (look: ${b.clip / 10} %)`);
+			if (!b.sigs.has(r[F.sig])) w2.push(`clip, mask or filter on Pip or its ancestors that its look's calibration did not have: "${S(r[F.sig])}" (look: ${[...b.sigs].map(S).join(' ; ') || 'none'})`);
+		}
+		return w2;
+	};
+	return { why, looks: B };
+}
+
 /* Structural judgement of a witness log. Returns [{ name, ok, detail }], one per assertion.
  * - every frame with a rig (any class): nothing on the rig animates; the head is placed and hangs on both strings;
- * - every frame the page declares visible ('v'): head, controller and strings shown (display, visibility), at full
+ * - every frame the page declares visible ('v', paintContract): Pip present in the open stage; no animation on its
+ *   ancestors but the stage's own named effects; head, controller and strings shown (display, visibility), at full
  *   effective opacity (CSS and filter opacity on every ancestor), not blurred or darkened away, with the head's
  *   painted leaves, its box and the part of it inside every clipping ancestor and the viewport no less than in its
- *   look's calibration, and no clip-path or mask on the chain that its look's calibration did not have;
+ *   look's calibration, and no clip-path, mask or filter on any part or ancestor that its look's calibration did not
+ *   have. Not covered: what a filter or mask the calibration had does to alpha, filters on the head's own leaves (the
+ *   looks use them), and layers drawn over Pip by anything but the stage's overlays; the film half judges those;
  * - every look shown in a visible frame has a completed calibration; the witness itself threw nothing. */
 export function evaluateWitness(w, { phase = null } = {}) {
 	const { recs, strings, cals, F } = w, out = [];
@@ -299,32 +368,12 @@ export function evaluateWitness(w, { phase = null } = {}) {
 	out.push({ name: name(`nothing on Pip's rig animates (${rig.length} frames)`), ok: rig.length > 20 && !anim.length, detail: `${anim.length} frames with an animation on the rig; first ${first(anim)}` });
 	const off = rig.filter((r) => !r[F.placed] || r[F.offBy] > 0 || r[F.hw] < 4);
 	out.push({ name: name(`Pip's head is placed and hangs on its strings (${rig.length} frames)`), ok: rig.length > 20 && !off.length, detail: `${off.length} frames off its strings or unplaced; first ${JSON.stringify(off.slice(0, 4).map((r) => ({ seq: r[F.seq], look: S(r[F.look]), offBy: r[F.offBy], placed: r[F.placed], head: [r[F.hx], r[F.hy], r[F.hw], r[F.hh]] })))}` });
-	/* per-look baselines from calibration frames before the hide */
-	const base = new Map();
-	for (const r of recs) if (r[F.calPhase] === 1 && r[F.cls] === 'v') { const k = S(r[F.look]); if (!base.has(k)) base.set(k, []); base.get(k).push(r); }
-	const B = new Map();
-	for (const [k, a] of base) {
-		const sigs = new Map(); for (const r of a) sigs.set(r[F.sig], (sigs.get(r[F.sig]) || 0) + 1);
-		B.set(k, { leaf: median(a.map((r) => r[F.leafArea])), area: median(a.map((r) => r[F.hw] * r[F.hh])), clip: median(a.map((r) => r[F.clipFrac])), sigs: new Set([...sigs.keys()]), n: a.length });
-	}
+	const { why, looks: B } = paintContract(w);
 	const looks = [...new Set(vis.map((r) => S(r[F.look])))];
 	const uncal = looks.filter((k) => !B.has(k));
 	out.push({ name: name(`every look shown has its own calibration (${looks.join(', ') || 'none'})`), ok: looks.length > 0 && !uncal.length, detail: uncal.length ? `no completed calibration for ${uncal.join(', ')}` : 'no visible frames' });
-	const why = (r) => {
-		const b = B.get(S(r[F.look])), w = [];
-		if (!r[F.headVis]) w.push('head not shown'); if (!r[F.ctlVis]) w.push('controller not shown'); if (!r[F.strVis]) w.push('a string not shown');
-		if (r[F.opHead] < 950) w.push(`head opacity ${r[F.opHead] / 1000}`); if (r[F.opCtl] < 950) w.push(`controller opacity ${r[F.opCtl] / 1000}`); if (r[F.opStr] < 950) w.push(`string opacity ${r[F.opStr] / 1000}`);
-		if (r[F.blur] > 20) w.push(`blur ${r[F.blur] / 10}px`); if (r[F.dim] < 300) w.push(`brightness ${r[F.dim] / 1000}`);
-		if (b) {
-			if (r[F.leafArea] < 0.6 * b.leaf) w.push(`painted leaves ${r[F.leafArea]} of ${b.leaf} px²`);
-			const a = r[F.hw] * r[F.hh]; if (a < 0.4 * b.area || a > 2.5 * b.area) w.push(`head box ${Math.round(a)} of ${Math.round(b.area)} px²`);
-			if (r[F.clipFrac] < Math.min(900, b.clip - 100)) w.push(`only ${r[F.clipFrac] / 10} % of the head inside its clips (look: ${b.clip / 10} %)`);
-			if (!b.sigs.has(r[F.sig])) w.push(`clip/mask on the chain: "${S(r[F.sig])}" (look: ${[...b.sigs].map(S).join(' ; ') || 'none'})`);
-		}
-		return w;
-	};
 	const lost = vis.map((r) => [r, why(r)]).filter(([, w]) => w.length);
-	out.push({ name: name(`in every visible frame Pip's head, controller and strings are painted: shown, opaque, unclipped (${vis.length} frames)`), ok: vis.length > 20 && !lost.length, detail: vis.length <= 20 ? `only ${vis.length} visible frames` : `${lost.length} frames; first ${JSON.stringify(lost.slice(0, 4).map(([r, w]) => ({ seq: r[F.seq], look: S(r[F.look]), screen: S(r[F.screen]), why: w })))}` });
+	out.push({ name: name(`in every visible frame Pip's head, controller and strings are painted: present, shown, opaque, unclipped, unmasked, no stray animation above them (${vis.length} frames)`), ok: vis.length > 20 && !lost.length, detail: vis.length <= 20 ? `only ${vis.length} visible frames` : `${lost.length} frames; first ${JSON.stringify(lost.slice(0, 4).map(([r, w]) => ({ seq: r[F.seq], look: S(r[F.look]), screen: S(r[F.screen]), why: w })))}` });
 	const failedCal = cals.filter((c) => !c.ok);
 	out.push({ name: name('calibrations completed'), ok: phase != null || cals.some((c) => c.ok), detail: `${cals.filter((c) => c.ok).length} completed, ${failedCal.length} aborted${failedCal.length ? ': ' + JSON.stringify(failedCal.slice(0, 4)) : ''}` });
 	return out;
