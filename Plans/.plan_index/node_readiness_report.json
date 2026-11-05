@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 19009,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22219,
+    "node_count": 7543,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T13:57:36Z",
+  "generated_at_utc": "2026-11-05T16:36:41Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -41967,10 +41967,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7487,
+  "plan_unit_count": 7543,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2806,
+      "high": 2862,
       "low": 9,
       "medium": 32,
       "standard": 4640
@@ -43330,6 +43330,7 @@
       "false_plancompile_buildability": 1,
       "false_production_wiring_or_missing_reverse_local_action_coverage": 1,
       "false_repair_completion": 1,
+      "false_runtime_proof": 8,
       "false_test_capability": 1,
       "false_usage_reset": 1,
       "false_verification": 1,
@@ -45809,6 +45810,7 @@
       "uicommand_envelope_schema_drift": 1,
       "uicommand_route_payload_fork": 1,
       "uicommand_user_command_conflation": 1,
+      "unadmitted_or_duplicate_executor_effect": 48,
       "unapproved_scope_expansion": 1,
       "unbindable_vote_promise": 2,
       "unbounded_autonomous_browsing": 1,
@@ -46116,12 +46118,12 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7324,
       "retired": 196,
       "superseded": 23
     },
     "unit_type_counts": {
-      "acceptance": 7,
+      "acceptance": 15,
       "acceptance_contract": 7,
       "acceptance_criteria": 6,
       "acceptance_gate": 7,
@@ -46186,7 +46188,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5622,
+      "requirement": 5654,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46205,7 +46207,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 27,
+      "storage_contract": 43,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -46295,7 +46297,7 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "25e1a7941289d3f647a8a0d558b6ffea5d143be8cea1d7595d75fdfeb108a31b",
+        "expected": "135217710534c629acf727d4e0c8255531c7418bf71f0e70059f19520e3dca98",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
@@ -46313,7 +46315,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+        "expected": "1eabe946edff772674f63695a5dfcaa2aa9f3cb4362afab2d974ecd394550097",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46364,6 +46366,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Contracts_V0.md"
       },
       {
@@ -46377,6 +46383,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Decision_Policy.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

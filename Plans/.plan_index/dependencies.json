@@ -6200,12 +6200,60 @@
     "SP-336",
     "GRS-061",
     "GRS-065",
+    "CV-500",
+    "CV-501",
+    "CV-502",
+    "CV-503",
+    "CV-504",
+    "CV-505",
+    "CV-506",
+    "CV-507",
+    "CV-508",
+    "CV-509",
+    "CV-510",
+    "CV-511",
+    "CV-512",
+    "CV-513",
+    "CV-514",
+    "CV-515",
+    "EP-210",
+    "EP-211",
+    "EP-212",
+    "EP-213",
+    "EP-214",
+    "EP-215",
+    "EP-216",
+    "EP-217",
+    "EP-218",
+    "EP-219",
+    "EP-220",
+    "EP-221",
+    "EP-222",
+    "EP-223",
+    "EP-224",
+    "EP-225",
     "SP-265",
     "SP-271",
     "SP-285",
     "SP-300",
     "SP-302",
     "SP-303",
+    "SP-500",
+    "SP-501",
+    "SP-502",
+    "SP-503",
+    "SP-504",
+    "SP-505",
+    "SP-506",
+    "SP-507",
+    "SP-508",
+    "SP-509",
+    "SP-510",
+    "SP-511",
+    "SP-512",
+    "SP-513",
+    "SP-514",
+    "SP-515",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -6242,6 +6290,14 @@
     "SP-347",
     "CV-335",
     "SP-289",
+    "ATS-250",
+    "ATS-251",
+    "ATS-252",
+    "ATS-253",
+    "ATS-254",
+    "ATS-255",
+    "ATS-256",
+    "ATS-257",
     "EP-116",
     "OP-036",
     "RGV-019",
@@ -15592,6 +15648,86 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-250",
+      "to": "EP-210"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-250",
+      "to": "EP-211"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-251",
+      "to": "EP-212"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-251",
+      "to": "EP-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-252",
+      "to": "EP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-252",
+      "to": "EP-215"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-253",
+      "to": "EP-216"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-253",
+      "to": "EP-217"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-254",
+      "to": "EP-218"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-254",
+      "to": "EP-219"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-255",
+      "to": "EP-220"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-255",
+      "to": "EP-221"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-256",
+      "to": "EP-222"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-256",
+      "to": "EP-223"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-257",
+      "to": "EP-224"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-257",
+      "to": "EP-225"
     },
     {
       "edge_type": "depends_on",
@@ -26000,6 +26136,246 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-500",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-500",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-500",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-501",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-501",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-501",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-502",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-502",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-502",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-503",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-503",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-503",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-504",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-504",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-504",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-505",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-505",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-505",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-506",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-506",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-506",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-507",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-507",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-507",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-508",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-508",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-508",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-509",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-509",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-509",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-510",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-510",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-510",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-511",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-511",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-511",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-512",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-512",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-512",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-513",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-513",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-513",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-514",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-514",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-514",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-515",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-515",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-515",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -31647,6 +32023,246 @@
       "edge_type": "depends_on",
       "from": "EP-132",
       "to": "SQR-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-210",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-210",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-210",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-211",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-211",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-211",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-212",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-212",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-212",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-213",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-213",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-213",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-214",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-214",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-214",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-215",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-215",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-215",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-216",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-216",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-216",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-217",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-217",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-217",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-218",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-218",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-218",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-219",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-219",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-219",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-220",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-220",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-220",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-221",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-221",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-221",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-222",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-222",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-222",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-223",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-223",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-223",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-224",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-224",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-224",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-225",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-225",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-225",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -82565,6 +83181,246 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-500",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-500",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-500",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-501",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-501",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-501",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-502",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-502",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-502",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-503",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-503",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-503",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-504",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-504",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-504",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-505",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-505",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-505",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-506",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-506",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-506",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-507",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-507",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-507",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-508",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-508",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-508",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-509",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-509",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-509",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-510",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-510",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-510",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-511",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-511",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-511",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-512",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-512",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-512",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-513",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-513",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-513",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-514",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-514",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-514",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-515",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-515",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-515",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117789,7 +118645,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T13:57:35Z",
+  "generated_at_utc": "2026-11-05T16:36:40Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131902,6 +132758,142 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-250",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-250 — Executor family oracles: attempt.completed, attempt.started",
+        "heading_level": 2,
+        "heading_line": 7239,
+        "line": 7249,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-251",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-251 — Executor family oracles: node.blocked, node.completed",
+        "heading_level": 2,
+        "heading_line": 7282,
+        "line": 7292,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-252",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-252 — Executor family oracles: node.started, node.unblocked",
+        "heading_level": 2,
+        "heading_line": 7325,
+        "line": 7335,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-253",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-253 — Executor family oracles: plan.decomposition_degraded, remediation.resolved",
+        "heading_level": 2,
+        "heading_line": 7368,
+        "line": 7378,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-254",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-254 — Executor family oracles: remediation.spawned, run.completed",
+        "heading_level": 2,
+        "heading_line": 7412,
+        "line": 7422,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-255",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-255 — Executor family oracles: run.graph_integrity_failed, run.node_backoff_expired",
+        "heading_level": 2,
+        "heading_line": 7455,
+        "line": 7465,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-256",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-256 — Executor family oracles: run.node_backoff_started, run.node_ready",
+        "heading_level": 2,
+        "heading_line": 7499,
+        "line": 7509,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-257",
+      "reasoning_tier": "high",
+      "risk_class": "false_runtime_proof",
+      "source_location": {
+        "heading": "ATS-257 — Executor family oracles: run.node_retry_scheduled, scheduler.pass",
+        "heading_level": 2,
+        "heading_line": 7542,
+        "line": 7552,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -144939,6 +145931,278 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-500",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-500 — attempt.completed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24485,
+        "line": 24500,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-501",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-501 — attempt.started prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24539,
+        "line": 24554,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-502",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-502 — node.blocked prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24593,
+        "line": 24608,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-503",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-503 — node.completed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24647,
+        "line": 24662,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-504",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-504 — node.started prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24701,
+        "line": 24716,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-505",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-505 — node.unblocked prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24755,
+        "line": 24770,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-506",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-506 — plan.decomposition_degraded prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24809,
+        "line": 24824,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-507",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-507 — remediation.resolved prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24863,
+        "line": 24878,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-508",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-508 — remediation.spawned prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24917,
+        "line": 24932,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-509",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-509 — run.completed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 24971,
+        "line": 24986,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-510",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-510 — run.graph_integrity_failed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 25025,
+        "line": 25040,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-511",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-511 — run.node_backoff_expired prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 25079,
+        "line": 25094,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-512",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-512 — run.node_backoff_started prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 25133,
+        "line": 25148,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-513",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-513 — run.node_ready prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 25187,
+        "line": 25202,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-514",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-514 — run.node_retry_scheduled prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 25241,
+        "line": 25256,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-515",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "CV-515 — scheduler.pass prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 25295,
+        "line": 25310,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -159130,6 +160394,278 @@
         "heading_level": 3,
         "heading_line": 9036,
         "line": 9038,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-210",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "attempt.completed source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9118,
+        "line": 9175,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-211",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "attempt.started source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9226,
+        "line": 9281,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-212",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "node.blocked source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9332,
+        "line": 9390,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-213",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "node.completed source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9441,
+        "line": 9490,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-214",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "node.started source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9541,
+        "line": 9587,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-215",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "node.unblocked source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9638,
+        "line": 9684,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-216",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "plan.decomposition_degraded source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9735,
+        "line": 9777,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-217",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "remediation.resolved source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9828,
+        "line": 9882,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-218",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "remediation.spawned source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 9933,
+        "line": 9984,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-219",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "run.completed source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 10035,
+        "line": 10077,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-220",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "run.graph_integrity_failed source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 10128,
+        "line": 10169,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-221",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "run.node_backoff_expired source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 10220,
+        "line": 10274,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-222",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "run.node_backoff_started source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 10325,
+        "line": 10381,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-223",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "run.node_ready source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 10432,
+        "line": 10475,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-224",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "run.node_retry_scheduled source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 10526,
+        "line": 10581,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-225",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "scheduler.pass source-read and transition closure (pass two)",
+        "heading_level": 3,
+        "heading_line": 10632,
+        "line": 10681,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -229771,6 +231307,278 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-500",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-500 — attempt.completed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 29590,
+        "line": 29611,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-501",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-501 — attempt.started prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 29650,
+        "line": 29671,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-502",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-502 — node.blocked prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 29710,
+        "line": 29731,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-503",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-503 — node.completed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 29770,
+        "line": 29791,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-504",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-504 — node.started prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 29830,
+        "line": 29851,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-505",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-505 — node.unblocked prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 29890,
+        "line": 29911,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-506",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-506 — plan.decomposition_degraded prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 29950,
+        "line": 29971,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-507",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-507 — remediation.resolved prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30010,
+        "line": 30031,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-508",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-508 — remediation.spawned prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30070,
+        "line": 30091,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-509",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-509 — run.completed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30130,
+        "line": 30151,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-510",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-510 — run.graph_integrity_failed prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30190,
+        "line": 30211,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-511",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-511 — run.node_backoff_expired prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30250,
+        "line": 30271,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-512",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-512 — run.node_backoff_started prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30310,
+        "line": 30331,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-513",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-513 — run.node_ready prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30370,
+        "line": 30391,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-514",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-514 — run.node_retry_scheduled prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30430,
+        "line": 30451,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "event_authority_wave2_DX",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-515",
+      "reasoning_tier": "high",
+      "risk_class": "unadmitted_or_duplicate_executor_effect",
+      "source_location": {
+        "heading": "SP-515 — scheduler.pass prepared Event Authority contract",
+        "heading_level": 2,
+        "heading_line": 30490,
+        "line": 30513,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -245077,10 +246885,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18849,
+    "depends_on_edge_count": 19009,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22059,
-    "node_count": 7487,
+    "edge_count": 22219,
+    "node_count": 7543,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
