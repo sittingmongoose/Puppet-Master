@@ -32,11 +32,13 @@ export default async function(t) {
       for (const [width,height] of [[1280,500],[740,768],[1920,1080]]) {
         await t.viewport(width,height);
         // Wait only for the expected presentation, never trigger a redraw or reopen.
-        const ready = await f.waitForFunction(expected => {
-          const inline=document.querySelector('.o55-lookslot .o55-explainer-w');
-          const body=inline || document.querySelector('.o55-stage .pst-tip-t');
-          return body?.textContent === expected && (O55.tips.onStage() ? !body.closest('.typing') : !!inline);
-        },expected,{timeout:5000}).then(() => true, () => false);
+        const layout = width === 740 ? 'narrow' : height === 500 ? 'short' : 'wide';
+        const ready = await f.waitForFunction(({expected,layout}) => {
+          if (O55.S.root.getAttribute('data-o55-layout') !== layout) return false;
+          const body=document.querySelector(layout === 'wide' ? '.o55-stage .pst-tip-t' : '.o55-lookslot .o55-explainer-w');
+          const r=body?.getBoundingClientRect();
+          return body?.textContent === expected && r.width > 0 && r.height > 0 && getComputedStyle(body).visibility === 'visible' && !body.closest('.typing, .o55-writing');
+        },{expected,layout},{timeout:5000}).then(() => true, () => false);
         const state = await f.evaluate(id => {
           const q=document.querySelector(`.o55-lookslot .o55-tipq[data-arg="${id}"]`);
           const head=document.querySelector('.o55-stage svg g.pst-pip g.pst-head');
@@ -48,7 +50,7 @@ export default async function(t) {
         t.log(JSON.stringify({look,wording,motion,width,height,ready,state,reach}));
         await t.check(`FO-56 retained note ${label} -> ${width}x${height}`,ready && state.retained && state.expanded === 'true' && state.menu && state.pip && reach.ok);
         if (ready && state.pip) await t.painted('.o55-stage svg g.pst-pip g.pst-head');
-        if (width === 1280 && look === 'basic-dark' && wording === 'ELI5') await t.shot(`resize-after-${motion}`, 'Retained note visible and Pip painted after wide-to-short resize');
+        if (width === 1280 && look === 'basic-dark' && wording === 'ELI5') await t.shot(`resize-after-${motion}`, 'Wide-to-short result: retained note and painted Pip required');
         if (!ready) { survived = false; break; } // the negative control must not conceal the initial failure by reopening
       }
       // Fresh navigation recovers a crashing control; no product state is repaired.
