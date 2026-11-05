@@ -23,8 +23,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 
 | Check file | What it asserts |
 |---|---|
-| `chat-sweep`, `chat-sweep-surfaces`, `chat-sweep-project`, `chat-gaze` | Stream F chat sweep: first Activity click, duplicate agent identity, shared sound switch, dock width, Room controls, Retro face, Reduced Motion loops and entry speed. |
-| `activity-paint-calibration` | Opt-in Element Timing diagnostic (`elementTimingCalibration=1` and annotated controlPage), retaining browser/CPU/memory data; the opacity-entry calibration showed missing entries, so this is not the SW01 assertion. |
+| `chat-sweep`, `chat-sweep-surfaces`, `chat-sweep-project`, `chat-gaze` | Stream F chat sweep: first Activity cover paint after a fresh reload (trusted-input/frame-swap clock), duplicate agent identity, shared sound switch, dock width, Room controls, Retro face, Reduced Motion loops and entry speed. |
 | `chat-detail-film` | SW-01 input-clock first-click films and SW-36 already-open selected Detail resize, normal and opaque child surfaces. |
 | `chat-detail-matrix` | Activity Detail keeps 360 px of messages or covers, all ten looks, both motion preferences and chat widths. |
 | `activity-speed-film` | SW-27: three owner-API Activity entries per speed, with stable viewport setup, for short control/fixed 60 fps GPU films. |
@@ -86,3 +85,9 @@ browser-check diff $OUT/base $OUT/tip            # opens nothing; lists CHANGED 
 ```
 
 The concept demo is live: clocks, usage numbers and toasts move between runs. A changed frame whose box sits only on a live widget is expected. Look at the diff image before reporting it.
+
+### Activity first-paint regression
+
+`chat-sweep` SW01 bootstraps Home once, then measures ten fresh reloads at Basic Dark1024×480 on the selected surface. It captures native PNG compositor frames and compares the first painted cover-title glyphs to the trusted click’s performance timestamp (converted to the frame-swap epoch clock). Observer/callback delivery time is never the deadline. The limit remains500ms. A pre-input reference is part of measurement setup; there is no idle/settling delay or product animation change.
+
+Each click retains `activity-first-paint-<n>/before.png`, raw frames, `frames.json` and `paint.json`. A late observation must be read with its previous negative frame; a gap straddling500ms is unresolved, rather than proof of a product miss. `tools/calibrate-activity-paint.mjs <external window2 evidence> <external output.json>` replays the title-pixel predicate on the retained native film clicks. Its documented low-opacity boundary correction is explicit. Element Timing was tested and rejected for this opacity-entry path; its paired calibration and source are retained externally, not shipped as a second assertion.

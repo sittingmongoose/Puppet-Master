@@ -23,9 +23,12 @@ export async function beginActivityFrameClock(page){
    if(!before||!after)throw Error('No pre-input and final compositor frames');
    const model=coverTitleClassifier(decodePng(before.png),decodePng(after.png),stage);
    const samples=ordered.filter(f=>f.wall>=input.wall).map(f=>({wall:f.wall,elapsed:f.wall-input.wall,score:model.score(decodePng(f.png))}));
-   const first=samples.find(f=>f.score>=.2);
+   const index=samples.findIndex(f=>f.score>=.2);
+   const first=samples[index];
    if(!first)throw Error('No painted cover title in compositor frames');
-   return {input,elapsed:first.elapsed,wall:first.wall,titlePixels:model.pixels,samples};
+   const previousMs=index>0?samples[index-1].elapsed:0;
+   const verdict=first.elapsed<=500?'on-time':previousMs>=500?'late':'boundary-unresolved';
+   return {input,elapsed:first.elapsed,previousMs,verdict,wall:first.wall,titlePixels:model.pixels,samples};
   }
  };
 }
