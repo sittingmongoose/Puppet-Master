@@ -601,6 +601,9 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] 
 .o55-opt-menu { display: flex; align-items: center; gap: 4px; }
 .o55-opt-menu > .o55-lookopt { flex: 1; min-width: 0; }
 .o55-lookmenu .o55-tipq { width: 18px; height: 18px; font-size: 10px; flex: none; }
+/* FO-75: the row gap is 4px. Keep the 30px help target in its trailing padding,
+   without letting its transparent hit layer cover the preceding option. */
+#pm-o55-onboarding .o55-lookmenu .o55-tipq::before { left: -4px; right: -8px; }
 .o55-lookmenu .o55-explainer { margin-top: 6px; }
 /* the brand's Pip: 22 px, on the text's line */
 .o55-logo-pip { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; }
