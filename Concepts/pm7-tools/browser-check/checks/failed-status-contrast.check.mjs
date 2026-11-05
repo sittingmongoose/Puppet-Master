@@ -50,9 +50,10 @@ async function scrollRange(el){
 
 export default async function(t){
  const f=await t.app.open();
- // Reduce Motion by default (the kit's rule); --set motion=on measures with motion on too
- if(t.args.motion==='on'){await t.emulate({reducedMotion:'no-preference'});await f.evaluate(()=>O55.studio.looks.setReduced(false));}
- await t.check(`motion ${t.args.motion==='on'?'on':'reduced'} as asked`,await f.evaluate(on=>matchMedia('(prefers-reduced-motion: reduce)').matches!==on,t.args.motion==='on'));
+ // Reduce Motion by default (the kit's rule), set here explicitly; --set motion=on measures with motion on
+ const on=t.args.motion==='on';
+ await t.emulate({reducedMotion:on?'no-preference':'reduce'});await f.evaluate(on=>O55.studio.looks.setReduced(!on),on);
+ await t.check(`motion ${on?'on':'reduced'} as asked`,await f.evaluate(on=>O55.motion.reduced()!==on,on));
  const looks=list(t.args.looks,LOOKS),routes=list(t.args.routes,['fresh','copied']),reasons=list(t.args.reasons,REASONS);
  const sizes=SIZES.filter(([w,h])=>!t.args.widths||String(t.args.widths).split(',').includes(String(w)));
  let lowest={contrast:Infinity};
@@ -60,6 +61,7 @@ export default async function(t){
   await t.viewport(1390,900);
   if(route==='fresh')await freshRoute(t,f);else await copiedRoute(t,f);
   await fail(t,f,code);
+  await t.check(`${route} ${code} motion still ${on?'on':'reduced'}`,await f.evaluate(on=>O55.motion.reduced()!==on,on));
   const row=f.locator('#pm-o55-onboarding [data-key="pv-claude"]'),pill=row.locator('.o55-pill-fail');
   await t.check(`${route} ${code} row shows one failure status`,await pill.count()===1);
   const reason=await f.evaluate(code=>O55.t('ai.installFailure.'+code),code);

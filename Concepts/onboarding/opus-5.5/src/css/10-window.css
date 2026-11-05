@@ -218,9 +218,15 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   /* the accent as words (an eyebrow, a link, a card's arrow) and as the main action's fill under its words: the accent
      itself unless the look's accent is too light for that */
   --o55-ink-accent: var(--o55-accent); --o55-action: var(--o55-accent); }
-#pm-o55-onboarding[data-family="basic"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 88%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 74%, #000); }
+#pm-o55-onboarding[data-family="basic"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 88%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 74%, #000);
+  --o55-ink-fail: color-mix(in srgb, var(--accent-error) 91%, #000); }
+/* FO-68: a failure word on its row read under 4.5:1 here too (measured 2026-11-05 from painted stems: Basic Dark 4.30,
+   Basic Light 4.45, Friendly Light 3.09, Retro Light 4.10, NieR Dark 4.26); each takes its red toward the text by the
+   least that reads 5:1 */
+#pm-o55-onboarding[data-family="basic"][data-mode="dark"] { --o55-ink-fail: color-mix(in srgb, var(--accent-error) 88%, #fff); }
 #pm-o55-onboarding[data-family="friendly"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 66%, #000); --o55-ink-wait: var(--o55-ink-tag);
   --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 76%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 66%, #000);
+  --o55-ink-fail: color-mix(in srgb, var(--accent-error) 75%, #000);
   /* Paper theatre's orange reads 2.8:1 as words on white and under white words: words take the tag's brick, the main
      action a brick a little lighter (5.2:1 under white) */
   --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000); }
@@ -233,7 +239,8 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   --o55-ink-fail: color-mix(in srgb, var(--accent-error) 40%, var(--text-primary)); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 70%, #000); --o55-ink-wait: var(--o55-ink-tag);
   --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 94%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 88%, #000); }
-#pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000); }
+#pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000);
+  --o55-ink-fail: color-mix(in srgb, var(--accent-error) 87%, #000); }
 .o55-check { width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--o55-ring); transition: all 200ms ease; flex: none; }
 /* a card's radio circle keeps the last column whether or not the card has a tag, so every circle in a list lines up
    (Astra m03: an untagged card's circle took the tag's column, a gap short of the tagged one's) */
