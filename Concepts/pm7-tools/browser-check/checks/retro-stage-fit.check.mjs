@@ -491,7 +491,8 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 			}
 			const hb = R(s2.gHead, 'head');
 			const v = pose(s2);
-			if (previousPose && v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) {
+			if (!previousPose) lastPoseChange = tNow;
+			else if (v.some((x,i) => Math.abs(x-previousPose[i]) > .0001)) {
 				out.moving++; out.movingMs += Math.min(50, tNow-lastPoseChange); lastPoseChange=tNow;
 			}
 			previousPose = v;
