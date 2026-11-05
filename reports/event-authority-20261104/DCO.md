@@ -167,3 +167,111 @@ Number-handling, date-time, guard-table and proof-machinery items, left for part
 | NUMRULE adoption | Adopt CV-1100/CV-1101 and SP-1100/SP-1101 from `plans/ea-numrule-20261105` for this lane's numbers: integer payload fields in `Plans/coordination_event_payloads.schema.json` (`:102`, `:106`, `:225`, `:298`, `:322`, `:384`, `:468`, `:550`), the required `heartbeat_age_ms` at `:517`, and the exact boundary constants 299999/300000/300001 in `scripts/pm_coordination_wave2.py:24` and `Plans/coordination_wave2_oracles.json:4` (`heartbeat_expiry_vectors`). No lane-local number cap or serializer was added here. |
 | Date-time gate | The 15 `"format": "date-time"` fields in `Plans/coordination_event_payloads.schema.json` (`:181`, `:253`, `:337`, `:424`, `:486`, `:569`, `:705`, `:764`, `:916`, `:1017`, `:1135`, `:1240`, `:1318`, `:1411`, `:1494`) take their grammar from the shared date-time gate; none was tightened in place, and retained schemas are not edited here. |
 | Guard tables + shared proof tool | Restructure the lane checkers' guard sites into named predicate guard tables and prove them with `scripts/pm_guard_isolation.py` from `plans/ea-guardtool-20261105` (method B): `scripts/pm_coordination_events.py:142` (projection definition census), `:422` (Project reference isolation), `:522` (unknown-definition rejection), `:836` (application-set composition filtering), plus the boundary/vector guards in `scripts/pm_coordination_wave2.py:20-28`. The lane's proof machinery is not rebuilt in part 1. |
+
+## Sweep part 1 (fixture pass): findings and responses
+
+**Fix commit:** `96418dcb51`. **Start:** text-pass head `0a8a2b4298`. **Rebase:** none; the text pass did not abort its rebase, so this round stayed on base `451738fc0b`. `Plans/` and `scripts/` are unchanged from `0a8a2b4298`.
+
+This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+| # | Item | Result | Commit |
+|---|---|---|---|
+| 1a | TestingSession helper pin | **Fixed.** | `96418dcb51` |
+| 1b | GitHub helper count | **Not fixed; the file may not be edited under the brief's rule.** Exact change below. | none |
+| 2 | DL-095/OSI-650 landing order | No text change needed. Facts confirmed; the batch action remains. | none |
+| + | The 91 self-grade pins | **Confirmed.** Numbers below. | none |
+
+### Item 1: the two helper-pin subtests
+
+The earlier report treated both as one ignored file needing authorization. They have different causes and different rules.
+
+**1a. TestingSession, fixed.**
+- **Where:** `tests/test_pm_testing_session_events.py:39`, `:48`. `.gitignore:76` has a `!` rule for this file, so the brief allows the edit.
+- **Why it broke:** the fingerprint of the 40 upstream rows has been stale since 2026-10-10, and the helper never learned the three families DL-300 registered. The module failed two tests, on `origin/main` too.
+- **Fix:** re-froze the pin, and copied the GitHub helper's DL-300 rule, including its `requires_owner_adoption` check.
+- **Negative:** `test_registry_helper_refuses_each_one_defect` (`:58`).
+
+**Stale pin record:**
+
+| | SHA-256 | True at |
+|---|---|---|
+| Old | `b59cc61d0f6569d1389256157d29d80f88516644b70c029809d4543405be52ea` | through `d86090abd9` |
+| New | `d78354d22eef69af1ccfe7762ab49b347049f2fd764d7f07fcc29349f21aecac` | `102a7e99e8`, this head, `origin/main` |
+
+Every registry commit between them was walked (`fixture-pass/pin-history.py`, `pin-diff.txt`). Three moved the 40 rows:
+
+| Commit | Rows changed | What changed |
+|---|---|---|
+| `c0d688db9f` (DL-188, D42) | `workspace.layout_changed`, `terminal.workgroup_moved` | layout edition 1.1.0 to 2.0.0; `source_refs` |
+| `634412b3ac` | `terminal.workgroup_moved` | `source_refs` only |
+| `102a7e99e8` (CV-366) | 11 `goal.*` rows | `application_or_project` scope with exact selectors; app editions `requires_owner_adoption` |
+
+**Properties still holding:** no Testing Session row is among the 40. `gate.validate()` reports no failures, and that includes the shared `preexisting_registry_unchanged`, whose own digest pin is independent of this literal. `python3 -B scripts/pm_coordination_events.py` and `pm_coordination_wave2.py` exit 0. No lane contract relies on the changed rows.
+
+**Census derivation for the helper's return, `Plans/event_family_registry.json` at this head and on `origin/main`:** 46 families = 40 upstream + 2 admitted Browser + 1 admitted coordination (`agent_registered`) + 3 DL-300 (`settings.layer.changed`, `approval.chat_tool_requested`, `approval.chat_tool_resolved`). The helper returns 6, matching the test's `40 + admitted_count` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` 46.
+
+**Guard removal (`fixture-pass/helper-removal.json`):**
+
+| Removed | Flips |
+|---|---|
+| fingerprint pin | `changed_upstream` |
+| `requires_owner_adoption` check | `adopted_proposed` |
+| set equality alone / family count alone | nothing; same invariant at two sites |
+| set equality and family count together | `unknown_family` |
+
+`missing_proposed` refuses at the `live[ident]` lookup as `KeyError`, and at set equality and the count if that lookup is bypassed; no separate removal row was run for it.
+
+**1b. GitHub count, not fixed.**
+- **Where:** `tests/test_pm_coordination_events.py:752-754`. The helper is correct; main fixed it at DL-300, and its module passes 15 of 15.
+- **Why it fails:** the test still expects `browser + coordination` (3), but both helpers now count DL-300's three families (6).
+- **Why it stays:** `.gitignore:50` (`/tests/*`) covers this file with no `!` exception. The brief says to report the change.
+- **Needed change:** `fixture-pass/needed-test_pm_coordination_events.patch` adds `dl300 = 3` and adds it to the three expected counts. Applied in the worktree and reverted, not committed: 50 of 50 tests pass.
+- **Question for the lead (not a DL-045 choice):** may this three-line patch go into `tests/test_pm_coordination_events.py`, or should the file get a `!` rule?
+
+### Item 2: DL-095 and OSI-650
+
+No text change. Confirmed at this head and on `origin/main`: DL-095 is on `main` at `Plans/Decision_Log.md:2188`. `Plans/orchestrator-subagent-integration.md:3969` and `Plans/storage-plan.md:27448` cite the landed entry. `coordination.agent_crashed` is absent from `Plans/event_family_registry.json` and is `prepared_not_admitted` in `Plans/coordination_event_admission.json`. So the answer already precedes OSI-650, and what remains is the batch action: land OSI-650 before that family's admission.
+
+### The 91 self-grade pins
+
+`reports/event-authority-20261104/DCO-self-grade.json`, read at `0a8a2b4298` against owner blobs at its `assessed_tree` `d212ce609f`. **Verify:** `fixture-pass/verify91.py`, row results in `verify91.json`.
+
+| Check | Result |
+|---|---|
+| Pins found | 91, same keys as before the refresh (`327619181d`) |
+| `file_sha256` equals the owner blob's hash at `d212ce609f` | 91 of 91 |
+| Same blob at the lane head | 91 of 91 |
+| `quote` is a byte-exact substring of the cited lines | 91 of 91 |
+| `excerpt_sha256` equals SHA-256 of the quote | 91 of 91 |
+| `quote_check` | `exact` on all 91 |
+| Quote byte-identical to before the refresh, and present in the new blob | 90 of 91 |
+| Rewritten quote | 1: OSI-650, `Plans/orchestrator-subagent-integration.md:3969`; only the DL-095 citation words changed, and the new text is byte-exact at that line |
+| Prior `file_sha256` true at `21e4dede26` | 91 of 91 |
+
+**Two precisions.** Only 85 `file_sha256` values actually changed (84 `Plans/storage-plan.md`, 1 orchestrator): the 6 on `Plans/coordination_event_payloads.schema.json` are unchanged because that file is. And this confirms the end state: the worker's order of operations is not observable, but no value could have passed these checks as a blind restamp, since each quote is independently re-found in the blob the hash names.
+
+### Checks (one at a time)
+
+| Command | Exit | Result |
+|---|---|---|
+| `python3 -B scripts/pm_coordination_events.py` | 0 | top-level `pass`, no failures |
+| `python3 -B scripts/pm_coordination_wave2.py` | 0 | top-level `pass`, no failures |
+| unittest `test_pm_coordination_events.py` | **1** | 50 tests, 2 subtests fail, both `6 != 3` at `:752` (item 1b). Same test before this round: 2 subtests failed, one on the pin and one on the count. |
+| unittest `test_pm_testing_session_events.py` | 0 | 12 tests; before this round 11 tests, 2 failures, also on `origin/main` `6861d332de` |
+| unittest `test_pm_github_project_integration.py` | 0 | 15 tests |
+| `pm-shard-plans.py --generate` / `--check` | 0 / 0 | |
+| `pm-plan-index.py generate` | 0 | only four `generated_at_utc` clock lines change, so nothing derived is committed |
+| `pm-plan-index.py validate` | **1** | top-level `fail`, 24 findings |
+
+### Index findings
+
+All 24 are **new here and not on `origin/main`**; `origin/main` `6861d332de` validates with exit 0, no findings.
+
+- **Where:** 3 x `plan_unit_removed_without_ledger_decision` (DL-337, DL-338, DL-339), and 21 x `plan_unit_removal_ledger_invalid` (legacy ledger records, read only when a removal is detected).
+- **Why:** `pm-plan-index.py` compares against `origin/main`, which gained those three units after this lane's base. This lane removes nothing.
+- **Check:** the same validation with the baseline set in memory to the merge base `451738fc0b` exits 0, no findings.
+- **Fix:** the next rebase onto `origin/main` clears them.
+
+### Grades and other records
+
+Family grades are carried unchanged: 6 of 6 families PASS as prepared, 66 PASS / 6 ABSENT. Membership ABSENT, native NOT_RUN. The self-grade file is unchanged. Part 2 items above are unchanged. No Decision Log entry, registry append, admission, seal, `Spec_Lock`, `.evidence`, `auto_decisions`, `.gitignore` or frozen-validator edit. No pm-mail or subagent.
