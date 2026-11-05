@@ -196,7 +196,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 /* cards */
 .o55-choices { display: grid; gap: 11px; }
 .o55-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 14px; width: 100%; padding: 14px 16px; text-align: left; border-radius: var(--o55-card-r); cursor: pointer;
-  --o55-face-border-color: var(--o55-line); border: 1px solid var(--o55-line); --o55-face-background: var(--o55-card-bg); background: var(--o55-face-background); color: var(--text-primary); font: inherit; --o55-face-transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 200ms ease; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, --o55-hover-y 180ms ease, box-shadow 200ms ease; }
+  --o55-face-border-color: var(--o55-line); border: 1px solid var(--o55-line); --o55-face-background: var(--o55-card-bg); background: var(--o55-face-background); color: var(--text-primary); font: inherit; --o55-face-transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 200ms ease; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, --o55-hover-y 180ms ease, --o55-press-s 180ms ease, box-shadow 200ms ease; }
 .o55-card:hover { --o55-face-border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); border-color: var(--o55-face-border-color); --o55-hover-y: -1px; }
 .o55-card.o55-on { --o55-face-border-color: var(--o55-accent); border-color: var(--o55-face-border-color); --o55-face-background: color-mix(in srgb, var(--o55-accent) 11%, var(--o55-card-bg)); background: var(--o55-face-background); --o55-face-shadow: inset 0 0 0 1px var(--o55-accent); box-shadow: var(--o55-face-shadow); }
 .o55-card[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
@@ -249,7 +249,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 /* look tiles */
 .o55-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .o55-tile { position: relative; display: grid; grid-template-rows: auto auto auto; gap: 3px; padding: 8px 8px 12px; border-radius: var(--o55-card-r); --o55-face-border-color: var(--o55-line); border: 1px solid var(--o55-line); --o55-face-background: var(--o55-card-bg); background: var(--o55-face-background);
-  color: var(--text-primary); cursor: pointer; text-align: left; font: inherit; --o55-face-transition: transform 200ms ease, border-color 200ms ease, box-shadow 220ms ease; transition: transform 200ms ease, --o55-hover-y 200ms ease, border-color 200ms ease, box-shadow 220ms ease; }
+  color: var(--text-primary); cursor: pointer; text-align: left; font: inherit; --o55-face-transition: transform 200ms ease, border-color 200ms ease, box-shadow 220ms ease; transition: transform 200ms ease, --o55-hover-y 200ms ease, --o55-press-s 200ms ease, border-color 200ms ease, box-shadow 220ms ease; }
 .o55-tile:hover { --o55-hover-y: -2px; }
 .o55-tile.o55-on { --o55-face-border-color: var(--o55-accent); border-color: var(--o55-face-border-color); --o55-face-shadow: inset 0 0 0 1px var(--o55-accent), 0 12px 26px -16px color-mix(in srgb, var(--o55-accent) 90%, transparent); box-shadow: var(--o55-face-shadow); }
 .o55-tileart { position: relative; display: block; height: var(--o55-tileart-h, 100px); border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background); margin-bottom: 6px; }
@@ -611,10 +611,16 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] 
 /* FO-49: the native outer material, border and focus ring stay with the button's hit target.
    Hover lift belongs to content inside that boundary. Existing look/press materials remain native. */
 @property --o55-hover-y { syntax: '<length>'; inherits: true; initial-value: 0px; }
-:is(.o55-card, .o55-tile) > * { translate: 0 var(--o55-hover-y); }
-html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; }
+@property --o55-press-s { syntax: '<number>'; inherits: true; initial-value: 1; }
+:is(.o55-card, .o55-tile) > * { translate: 0 var(--o55-hover-y); scale: var(--o55-press-s); }
+/* A press never moves the button that takes the pointer: the page's Friendly `button:active { scale(.97) }`
+   (base pm6-css-global.css) shrank it under a held pointer, so pointer-up near an edge landed on the parent and
+   the click was lost. Friendly keeps its press as a content squeeze inside the stationary face. */
+#pm-o55-onboarding :is(.o55-card, .o55-tile):active { transform: none; }
+#pm-o55-onboarding[data-family="friendly"] :is(.o55-card, .o55-tile):not([aria-disabled="true"]):active { --o55-press-s: 0.97; }
+html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; --o55-press-s: 1 !important; }
 @media (prefers-reduced-motion: reduce) {
-  #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; }
+  #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55-hover-y: 0px !important; --o55-press-s: 1 !important; }
 }
 /* The page's NieR reset removes native outlines; choices still need a keyboard ring. */
 #pm-o55-onboarding#pm-o55-onboarding :is(.o55-card, .o55-tile):focus-visible {
