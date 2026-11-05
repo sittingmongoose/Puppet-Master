@@ -6,7 +6,7 @@ pm7-build relayed this reading with the answer (not Jared's words): 4c B was pm7
 
 This branch makes that change and writes its receipt. It writes no admission record. The records for the three DL-300 families come later, once each family's contract reaches 12 of 12.
 
-**Barred from the seal.** The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The validator still checks exactly the author and lander in its receipt list; the complete exclusion is a procedural obligation.
+**Barred from the seal.** The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The validator still checks exactly the author and lander in its receipt list; the complete exclusion is a procedural obligation.
 
 **Approving entry.** DL-412 is on `plans/ea-cards1-answers-20261104` at `b6332f391a`, not yet on `main`. Its prose section (`### DL-412:`) has SHA-256 `95375f1997a193d58a3d02c82a46892e324ac0dd1cfbbc2b69efc212ae932927`, and the receipt pins that value.
 
@@ -21,7 +21,7 @@ if after["family_count"] != before["family_count"] + 1 or after["sha256"] == bef
 
 So a family registered in a step that added k > 1 families had no truthful record. The three DL-300 families went from 43 to 46 together.
 
-**After** (validator `74897e17...`, fix round 3; fix round 2 was `fb551b06...`; fix round 1 was `e4e988b7...` and round 0 was `bad3e7e8...`):
+**After** (current validator `0cb2bd07...`, fix round 5; round 4 was `48ab44d7...`; round 3 was `74897e17...`; fix round 2 was `fb551b06...`; fix round 1 was `e4e988b7...` and round 0 was `bad3e7e8...`):
 
 - **A record without `registry_step_event_types`** is judged exactly as before:
   - the one-family rule above;
@@ -81,19 +81,21 @@ Exactly one thing: a family registered by a registry step that added several fam
 
 | File | Change |
 |---|---|
-| The seal check (CRLF kept on every line) | Frozen validator `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` → current `48ab44d79d097ec921dceeb7830c267afa1aaaf0ed871e1cf10912cbf3c8f782`. The DL-412 receipt bridge, optional step branch, strict directory loader and recursive fail-closed claim analysis are the complete change. Existing output receipt behavior changes only by the new DL-412 input pin. |
+| The seal check (CRLF kept on every line) | Frozen validator `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` → current `0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd80d6`. The DL-412 receipt bridge, optional step branch, strict directory loader and recursive fail-closed claim analysis are the complete change. Existing output receipt behavior changes only by the new DL-412 input pin. |
 | `INDEPENDENT_EA_VALIDATOR_SPEC.md` | A DL-412 section after the DL-077 section, as DL-077 added one after Step 3's. |
 | `INDIVIDUAL_DISPOSITION_SCHEMA.md` | A note: DL-412 adds no bucket and no row field. A family accepted through a step record is treated exactly like one accepted through a one-family record. |
 | `reports/event-authority-20261104/seal-check-multifamily-step-receipt.json` | The change receipt, detailed below. |
 
-The current receipt has SHA-256 `bcdbc6f6c468aacc98a3a6b66c7b084ad1a3ceeaae86fdef4d0059c50fa5fafd` (fix round 3 was `b1b3e8cb...`) (fix round 2 was `bd04156a...`) (`6c749a74...` in fix round 1; `afef45e2...` at round 0). Fix round 4 refreshes only its `validator_after_sha256` pin and aligns descriptive `record_contract_change`, `changes` and `notes` text. Every other pin, identity field and flag is unchanged. It binds:
+The current receipt has SHA-256 `ee9ce3a023d9cc35111e5cd209ea511f2f572307fff876524c6c6e584f66ed9a` (fix round 4 was `bcdbc6f6...`; fix round 3 was `b1b3e8cb...`) (fix round 2 was `bd04156a...`) (`6c749a74...` in fix round 1; `afef45e2...` at round 0). Fix round 5 refreshes only its `validator_after_sha256` pin and aligns descriptive `prior_receipt.note`, `changes` and `notes` text. Every other pin, identity field and flag is unchanged. It binds:
 - the DL-412 section (`95375f19...`, as pushed at `b6332f391a`);
 - Jared's answer file (`00bb608e...`) and the cards as presented (`578a6774...`);
 - the DL-077 receipt's exact bytes (`prior_receipt.sha256` `dceb7f21...`, checked by the code);
-- validator before `190a86f2...` and after `48ab44d7...`;
+- validator before `190a86f2...` and after `0cb2bd07...`;
 - the record directory and schema;
 - the author, and `seal_applier_forbidden_tasks`, which must equal the sorted author and lander;
 - `seal_authorized`, `admission_authorized` and `contract_depth_complete`, all false.
+
+**New input-pin integrity.** Missing or altered DL-412 byte-chain input, a broken before/after hash link, or altered executable bytes must reject legacy admission and holding through DL-077's unchanged failure predicate. These integrity rejections are the intended effect of the single new input pin, as clarified by Jared for FIX5. They are reported separately from legacy parity with intact byte links. No unrelated DL-412 semantic field may cause such a rejection. The 125-call trace and twelve C4 controls supply the valid byte chain and remain exact.
 
 It also states what the change relaxes and what it does not. `lander_task` is `null` as committed, so multi-family step records fail closed on this receipt until the lander fills it. Legacy-only admission and holding keep their DL-077 judgment (S6 below).
 
@@ -102,14 +104,14 @@ It also states what the change relaxes and what it does not. `lander_task` is `n
 | Pin | Before | After |
 |---|---|---|
 | Step 3 receipt `validator_after_sha256` (`step-03-holding-bucket-receipt.json`) | `bd54afff...` | unchanged. The holding check still reaches it only through the DL-077 receipt's `validator_before_sha256`. |
-| DL-077 receipt `validator_before/after_sha256` (`step-10-post-august-admission-receipt.json`) | `bd54afff...` -> `190a86f2...` | unchanged (file untouched). Its `after` is checked at the original predicate position against the frozen DL-077 validator SHA-256 `190a86f2...`, without reading or judging the DL-412 receipt. |
-| DL-412 receipt `validator_before/after_sha256` (new) | none | `190a86f2...` -> `48ab44d79d097ec921dceeb7830c267afa1aaaf0ed871e1cf10912cbf3c8f782`, checked against the current file |
-| Chain code in the check | `post_august_receipt_state`: DL-077 `after` == current file | `post_august_receipt_state`: DL-077 `after` == frozen DL-077 validator SHA-256 through `post_august_validator_pin()`. No new receipt predicate runs inside the old one. Separately, step records require `multi_family_receipt_state`: DL-412 `before` == DL-077 `after`, prior-byte pin == DL-077 bytes, and DL-412 `after` == current file, with every new authority/identity check intact. |
+| DL-077 receipt `validator_before/after_sha256` (`step-10-post-august-admission-receipt.json`) | `bd54afff...` -> `190a86f2...` | unchanged (file untouched). Its `after` is compared at the original predicate position to the frozen DL-077 hash only after both live-byte links verify; otherwise it is compared to the live hash and fails as before for changed bytes. No full DL-412 semantic predicate runs there. |
+| DL-412 receipt `validator_before/after_sha256` (new) | none | `190a86f2...` -> `0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd80d6`, checked against the current file |
+| Chain code in the check | `post_august_receipt_state`: DL-077 `after` == current file | `post_august_validator_pin()` reads the live validator SHA-256 on every call. Only live == DL-412 `after` and DL-412 `before` == DL-077 `after` permits presenting the frozen DL-077 hash to its original predicate. Any broken/missing/unreadable byte link presents the live hash, preserving its original failure. No full new receipt semantic predicate runs inside the old one. Separately, step records require `multi_family_receipt_state`: DL-412 `before` == DL-077 `after`, prior-byte pin == DL-077 bytes, and DL-412 `after` == current file, with every new authority/identity check intact. |
 | The check's output receipt `input_pins` | holding receipt, DL-077 receipt | plus `multi_family_step_receipt_sha256` |
-| `tests/test_event_authority_holding_bucket.py` fixtures | copy the Step 3 and DL-077 receipts | step fixtures also copy the DL-412 receipt; legacy fixtures need no new receipt to keep their results. External patch, not committed here. |
+| `tests/test_event_authority_holding_bucket.py` fixtures | copy the Step 3 and DL-077 receipts | all fixtures copy the DL-412 receipt to supply the byte chain; only step fixtures require its full semantic validity. External patch, not committed here. |
 
 No script, Spec Lock entry, `.evidence` file, readiness artifact or currentness edition pins the validator's bytes. This was checked by search:
-- the frozen DL-077 hash remains in its receipt and historical reports; the bridge constant and new DL-412 receipt also pin it, without editing any earlier pin;
+- the frozen DL-077 hash remains in its receipt and historical reports; the byte-chain bridge and new DL-412 receipt also pin it, without editing any earlier pin;
 - `Plans/Spec_Lock.json` does not name the directory;
 - the 2026-08-13 currentness edition does not list it.
 
@@ -118,7 +120,7 @@ The reports that cite `190a86f2...` as history keep their text:
 - `step-09-coord-registered-20260925.md`;
 - `LANDING_20260924_EA_VALIDATOR_AMENDMENT.md`.
 
-## Scenario contract: the check before and after
+## Scenario contract: the check before and after (earlier runs historical except S5 updated for FIX5)
 
 Every run uses a scratch tree made by `git archive origin/main` (`5e37ffb616`) of exactly the inputs the check reads:
 - `Plans/.audits/event-authority-2026-08-12`;
@@ -141,7 +143,7 @@ The counterfactual also gives their rows twelve PASS in a scratch depth assessme
 | S4 `origin/main` +DL + receipt (lander filled) | changed | same | same 6; full output identical to S2 except the new input pin |
 | S7 the committed receipt with only the lander filled | changed | same | identical to S4 |
 | S3 `origin/main`, no DL-412, receipt | changed | coordination.agent_registered | Same legacy judgment and six failures as the corresponding old run; DL-412 authority invalid; new input pin null. There is no step record in this scenario. |
-| S5 +DL, no DL-412 receipt | changed | coordination.agent_registered | Same legacy judgment and six failures as the corresponding old run; DL-412 receipt absent; new input pin null. There is no step record in this scenario. |
+| S5 +DL, no DL-412 receipt | changed | none | New input-pin integrity rejection: original DL-077 hash-mismatch message; holding invalid; DL-077 and DL-412 returned receipt pins null. There is no step record in this scenario. |
 | S6 +DL, committed receipt (`lander_task` null) | changed | coordination.agent_registered | Same legacy judgment and six failures as the corresponding old run; DL-412 lander invalid; new input pin null. There is no step record in this scenario. |
 | C1 DL-300 one-family form | unchanged | coordination.agent_registered | 6; the three fail `registry_before_after_not_exactly_one_family` |
 | C2 DL-300 one-family form | changed | same | identical to C1 except the new input pin: the one-family rule is unchanged |
@@ -239,7 +241,7 @@ Positive cases:
   ```
 
   Commit the receipt. If DL-412's prose bytes changed since `b6332f391a`, the writer re-pins them in the same run.
-- **The test patch.** It lands as its own commit in the same landing, after DL-413's `.gitignore` line is on `main`. It supplies the multi-family and compatibility controls; the unchanged 34-method suite retains its two pre-existing failures.
+- **The test patch.** It lands as its own commit in the same landing, after DL-413's `.gitignore` line is on `main`. It supplies the multi-family and compatibility controls; the 34-method trace with its valid DL-412 byte-chain input retains its two pre-existing failures; the unpatched suite without that input fails closed until the same-landing patch supplies it.
 - **Re-pin rule.** Any later change to the validator, DL-412's prose section or the DL-077 receipt bytes requires the DL-412 receipt to be rewritten. A rewritten DL-412 receipt requires every step record to be rewritten.
 - **The DL-300 records, when written later:**
   - Use the step form.
@@ -247,7 +249,7 @@ Positive cases:
   - `5375bfd2a7` (DL-300's landing) only relabeled the registry to `2026-11-04.1` (`443ae71d...`) and added no family. A record naming `2026-10-09.1@43` -> `2026-11-04.1@46` would pair two states that are not one commit's before and after. Which pair is the truthful step is the record writer's to state and the reviewers' to verify.
   - The same step (`102a7e99e8`) also changed eleven existing Goal rows (their application-scope editions). The check does not examine that, before or after this change. The records should say so in their notes.
 - **Reviews.** Sol 6.1 max, then Astra max, before landing and right after, as DL-412 and DL-400 require.
-- **The seal.** It is not applied here. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The receipt's checked list remains exactly the author and lander. The seal applier must enforce the remaining exclusions procedurally; this does not add a validator rule.
+- **The seal.** It is not applied here. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3, CA-SEAL-FIX4, CA-SEAL-FIX5 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The receipt's checked list remains exactly the author and lander. The seal applier must enforce the remaining exclusions procedurally; this does not add a validator rule.
 
 ## Open items
 
@@ -276,7 +278,7 @@ Result: 1,812 A comparisons, 1,808 B comparisons, 4 X2 controls and 24 C cases, 
 
 ## Evidence
 
-`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/`, with its own `SHA256SUMS`. Fix round 3's current evidence is under `fix3/`; its report, amendment, receipt and fixture patch are also copied to the top level. Earlier rounds remain historical under their numbered directories. Fix round 1's original run evidence remains at the top level. The reviewed round's evidence is unchanged under `round0/`, with its own manifest (`round0/SHA256SUMS`, SHA-256 `4f3b0988...`, the one the review verified). The top level holds:
+`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/`, with its own `SHA256SUMS`. Fix round 5's current evidence is under `fix5/`; round 3's historical evidence is under `fix3/`; its report, amendment, receipt and fixture patch are also copied to the top level. Earlier rounds remain historical under their numbered directories. Fix round 1's original run evidence remains at the top level. The reviewed round's evidence is unchanged under `round0/`, with its own manifest (`round0/SHA256SUMS`, SHA-256 `4f3b0988...`, the one the review verified). The top level holds:
 - the validator diffs from `5e37ffb616` and from the reviewed head;
 - the scripts:
   - from round 0: the change applier, receipt writer, scenario harness, comparison, test-tree builder and mutation check, updated where fix round 1 needed it;
@@ -310,12 +312,173 @@ Round-3 validator `74897e17da4d330e835e0d196acd8c2af6761f9fe209cec1b7689d88b7d8a
 
 Current evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix3/results/fix3-summary.json`, SHA-256 `5ecc849eb160a2ac06a6d63843b361803fed2e2c614fd3531432bb7f97f3483c`; guard matrix `fix3/results/guard-matrix.json`, SHA-256 `40c079be9feead3c2735e08ffe58537409024f8de1281c59103691643d04cdfd`. The fixture patch remains a separate commit in the same landing after DL-413. Family grades N/A → N/A; no new ids/bindings, admission or seal.
 
-## Review round 4: CA-SEAL-FIX4
+## Historical review round 4: CA-SEAL-FIX4
 
 C4-01 preserves exact decimal/exponent numeric tokens for foreign claim discovery, including `.0`, `e0`, fractional and overflow forms. Numeric registry SHA fields remain noncanonical; matching own files retain ordinary parsed numeric equality.
+
+Historical FIX4 behavior below is superseded by FIX5 for missing or broken byte-chain inputs only; its intact-chain compatibility and numeric fixes remain.
 
 C4-02 removes the complete DL-412 receipt predicate from the old DL-077 comparison. The old predicate runs in its original order with identical messages and returned DL-077 receipt hash, observing the frozen old validator hash. Full DL-412 receipt/authority/prior-byte/current-validator integrity is checked separately for step records and adds only their own errors. With no step field anywhere, all legacy outcomes, diagnostic ordering and pins are identical except the single added output input-pin field, including missing/invalid new receipts and notes-only edits to DL-077. The twelve differences in earlier rounds were outside approved scope.
 
 C4-03 updates the current-pin table above. The validator is `48ab44d79d097ec921dceeb7830c267afa1aaaf0ed871e1cf10912cbf3c8f782`; the new receipt is `bcdbc6f6c468aacc98a3a6b66c7b084ad1a3ceeaae86fdef4d0059c50fa5fafd`. Only the new receipt's current-validator pin is refreshed; its other pins, identities and false flags are unchanged. Descriptive receipt/spec text matches the implementation. CA-SEAL-FIX4 is procedurally excluded from applying the seal in both documents.
 
 The round-4 section in `CA-SEAL.md` contains the complete evidence: **17,480 paired legacy comparisons, zero differences**, including the 125 paired calls and 108 full CLI pairs; **74 fixture methods pass**; **43 guard variants × 86 negatives = 3,698 cells** pass. Summary `fix4/results/fix4-summary.json` SHA-256 `3a01ce4e242e9cd5b1196b50a29334f3bacb24b547c1328c2a6adcc414dbb091`; guard matrix SHA-256 `ed93bc767e4335c9a1dd8ecac492b73a351c6a1572f4b1975a150492596d33be`; fixture patch SHA-256 `2d8a52894f1dc4724dbecf5ad477a4fd131f5eea5c0ee53cdc6bdc55d80268f7`. Historical round counts and superseded expectations above are retained as history. The test patch remains a separate commit in the same landing after DL-413; no family is graded or admitted and no seal is applied.
+
+## Review round 5: findings and responses (CA-SEAL-FIX5)
+
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-cycle5.md`, NOT_READY at `66280444b913235ab0a242c3884f403cc14cbfdd`. **C5-01 is fixed in `4fa959c17fb979b2b8bab34da40eb27b52293187`.** No finding is disputed or stopped for Jared. This report is the verification and handoff companion, not a landing or seal.
+
+**Where:** `Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py:238` (`post_august_validator_pin`); spec's DL-412 note at line 96; the new receipt's byte-chain description. **Cause:** the observer returned a historical constant without hashing the executing file, allowing changed bytes on legacy-only runs. **Fix:** hash the live executable on every observer call; require live SHA-256 == DL-412 `validator_after_sha256` and DL-412 `validator_before_sha256` == DL-077 `validator_after_sha256`. Only when both links match, present the frozen DL-077 after-hash to its original predicate. On a broken/missing/unreadable/non-object byte-chain input, present the live hash. The original predicate then emits its original error and null returned receipt pin. Its full AST is unchanged from the reviewed head; all other original functions are unchanged. Full DL-412 semantic/authority/identity/prior-byte/lander checks remain separate for step records. No unrelated receipt field is consulted by the bridge.
+
+**Jared's FIX5 clarification:** use the exact guard and report integrity rejections separately. Missing or altered DL-412 input, a broken before/after hash or changed executable must fail closed as the intended effect of the **single new input pin**. Every intact-byte-chain parity pair, the 125-call trace and all twelve C4 controls must remain exact. The new byte-pin failures are not an additional legacy behavior change. The change record, spec and receipt now state that boundary.
+
+### Full differential and the twelve C4 controls
+
+All **17,480** pairs were rerun, including **125/125 exact** admission/holding calls and **12/12 exact** C4 controls, also equal to cycle 5's recorded original values. **17,457 pairs are exact; 23 are the intended new-pin integrity rejections below; unexpected differences: 0.** All intact-byte-chain legacy pairs are exact. Issue text, list order, admitted sets, stdout, exit status and old returned pins are compared. Only temporary roots, CLI generation time and the one added `multi_family_step_receipt_sha256` field are normalized/omitted; coexistence projections select the no-field results while step behavior is separately checked. Both original 34-method traces retain the same two pre-existing failures and no errors. The twelve controls are a subset of the 125.
+
+| Comparison group | Paired calls | Exact | Intended integrity rejections |
+|---|---:|---:|---:|
+| `astra2_existing_records_helper` | 1,732 | 1,732 | 0 |
+| `astra2_existing_records_admission` | 1,732 | 1,732 | 0 |
+| `astra2_existing_records_with_steps` | 1,732 | 1,732 | 0 |
+| `raw_existing_records_with_and_without_steps` | 472 | 472 | 0 |
+| `original_125_paired_admission_holding_calls` | 125 | 125 | 0 |
+| `legacy_only_full_cli_pairs` | 108 | 85 | 23 |
+| `sol_original_legacy_mutations` | 112 | 112 | 0 |
+| `sol_extended_existing_records` | 5,880 | 5,880 | 0 |
+| `astra_original_existing_records` | 3,936 | 3,936 | 0 |
+| `astra_original_fixture_helpers` | 283 | 283 | 0 |
+| `cycle3_raw_legacy` | 1,112 | 1,112 | 0 |
+| `numeric_legacy_with_steps` | 256 | 256 | 0 |
+| **Total** | **17,480** | **17,457** | **23** |
+
+### Each intended receipt-fault rejection
+
+The 108 paired CLI cases execute 216 real validators. Exactly these **23** controls now reject. Each changes only the named new receipt input or byte-link value; all records, old receipts, authority and executable bytes otherwise remain at the valid baseline. For every row, the complete new output equals the actual original DL-077 validator's equivalent altered-executable output, after the same allowed normalization. Both old admission and holding error messages, the empty admitted set and the null DL-077 pin match. No other receipt-fault control changes a legacy result: the remaining 85 CLI pairs are exact, including unrelated authority/identity/lander/prior-byte faults, notes-only and repinned old notes.
+
+| Receipt-fault control | Only cause | Exact admission message | Exact holding message |
+|---|---|---|---|
+| `new-receipt-missing` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-receipt-unreadable` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_before_sha256:None` | DL-412 validator_before_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_before_sha256:False` | DL-412 validator_before_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_before_sha256:{}` | DL-412 validator_before_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_before_sha256:[]` | DL-412 validator_before_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_before_sha256:0` | DL-412 validator_before_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_before_sha256:'wrong'` | DL-412 validator_before_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_after_sha256:None` | DL-412 validator_after_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_after_sha256:False` | DL-412 validator_after_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_after_sha256:{}` | DL-412 validator_after_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_after_sha256:[]` | DL-412 validator_after_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_after_sha256:0` | DL-412 validator_after_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new:validator_after_sha256:'wrong'` | DL-412 validator_after_sha256 fails its byte-link equality | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'null'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'false'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'true'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'0'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'1.0'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'1e0'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'"false"'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'[]'` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+| `new-root:b'{"nested":[[[[[[[[[[[[[[[[[[[['` | DL-412 byte-chain input missing/unreadable/non-object | `post-August amendment receipt invalid: post-August amendment receipt identity, authority or hash mismatch` | `holding authority/receipt invalid: post-August amendment receipt identity, authority or hash mismatch` |
+
+### Executable-byte controls, tests and earlier-review probes
+
+The original byte-only comment and appended-CRLF controls were retained through the **actual CLI**, plus a one-byte shebang-comment change and additional appended bytes. Each begins with a fully valid DL-412 receipt; no receipt or admission-record pin is refreshed after changing the executable. The old and new validators each run baseline plus all four controls (10 actual CLIs): baseline admits coordination and validates holding; every byte mutation admits no post-August family, fails holding and returns a null DL-077 receipt pin, with the exact messages above and identical failures. The original receipt probe's actual-executable assertion is restored on `post_august_receipt_state()` and passes. A forged new before/after pin is tested independently with otherwise valid bytes; missing, unreadable, scalar/container and wrong-type inputs also reject. Restore/re-mutate controls prove the observer is live rather than cached. Tests additionally show unrelated new semantic faults preserve legacy judgments.
+
+| Verification | Exit / result |
+|---|---|
+| Final external fixture patch / full test file | Dry-run and apply exit 0; full file equals supplied file. **79 methods pass**, exit 0, including five new C5 methods. The test file remains external because DL-413's allowance is not on this branch. |
+| Isolated live byte-pin type/representation sweep | Exit 0; **24** single-field controls cover missing, uppercase, whitespace/LF, string booleans/numbers, exact booleans/numbers, null, arrays and nested objects; every restore reproduces its valid legacy baseline exactly. |
+| New C5 test sensitivity against reviewed constant validator | Exit 1; **31 failure entries** across the five-method run. The unrelated-semantic control still passes. Scratch receipt current pin alone is refreshed for this sensitivity run. |
+| Original Sol scenarios, adversarial, legacy, sensitivity, writer and numeric CLIs | Rerun, recorder exits 0. All 26 original claimant negatives reject every member; X1/X2, S1–S7/C1–C5 and writer byte equality checked. S5 now has the intended missing-input rejection. C4 accepts exactly the three complete synthetic members; C5 rejects them when one is 11/12. |
+| Sol extended sweep | **5,880** legacy comparisons exact; **880 + 296 = 1,176** malformed/foreign claimants reject every member. Original exit 1 retained solely for five superseded pair-only positive expectations (different/reversed/missing endpoint); no legacy difference or negative escape. |
+| Original receipt probe / final classified probe | The original actual-byte assertion passes. Original aggregate exits 1 because it wrongly requires every unrelated semantic fault to break DL-077. The final probe changes only that aggregate expectation: the ten before/after-field faults reject DL-077, the other 64 do not; all 74 reject the full new predicate, and all four additional byte/prior checks pass; writer byte equality holds. Final exit 0. |
+| Astra original, Astra-2, cycle-3, cycle-4 and cycle-5 probes | Replayed. Original numeric matrices, all ten parser scenarios, true 43→46 positive plus 111 negatives, 122 representation scenarios, 1,112 raw and 256 coexistence pairs, 58-case own recorder, nine float CLIs, notes/repinned-notes CLIs and 17 cycle-5 numeric CLIs complete. Ordinary and negative-zero metadata controls keep the valid step; malformed numeric SHA/foreign claims reject every member. |
+| Check 11 | **46 variants × 99 negatives = 4,554 cells**; every expected flip matches, every other negative retains its own exact baseline rejection reason. Every baseline negative is corroborated through main. Named duplicate guards are paired as below. |
+| Shards | Exit 0: **99 sources / 3,092 shards**, pass. |
+| PlanUnit index | Exit 1, top-level **fail**: 21 pre-existing ledger-shape errors and missing DL-302 relative to newly fetched origin/main (22 total). Every named file, the index JSONL and checker are byte-identical to the reviewed head; 7,421 PlanUnits / 29,932 acceptance units remain. These unrelated findings are reported, not repaired. All 15 ignored currentness files match the share. |
+| Scope / line endings | Five fix-round paths only; only `post_august_validator_pin` changes AST from the reviewed head. All **2,001** validator lines retain CRLF; whitespace check passes. Protected files, all old receipts/records, registry, generated shards/index and governance artifacts are unchanged. |
+
+No owner `Plans/*.md` source changed, so no derived regeneration or governance refresh applies. No run-gates, governance audit, migration snapshot or landing check is claimed. Full-repository index findings do not become a family grade. The unpatched 34-method suite without the new byte input still fails closed; the same-landing patch supplies it. Synthetic PASS rows are fixtures only.
+
+### Check 11: whole lane, including live executable integrity
+
+Every case starts valid and changes one semantic defect. Observing assessment/receipt/record pins are refreshed except in the deliberate live-byte negatives, where unchanged receipt bytes are the premise. The historical DL-077 after-pin negative refreshes the new receipt's observing before-pin and old record pins, so it is not masked by a second byte-link defect. Each new executable negative uses its own scratch module file; production bytes are untouched. Removing the whole byte bridge also removes its fail-closed parser/object-access observations together.
+
+**Named duplicate pairs:** `receipt-validator_before_sha256` and `bridge-before-hash` each remove both the bridge before-link and its full step-receipt duplicate. `receipt-validator_after_sha256` and `bridge-live-hash` each remove the live-byte equality and its full step-receipt duplicate. `bridge-all-links` removes the byte bridge plus both step byte-link duplicates. Existing root/state/canonical duplicates remain paired as in earlier rounds. The separate `step-receipt-application` variant still leaves byte-link faults rejected by the byte bridge, while its 18 unrelated authority/receipt negatives flip. The machine matrix lists every retained negative and its baseline-reason intersection; the final column below denotes the complement of each listed flip set.
+
+| Guard weakened in scratch | Negatives that start to pass | Other negatives retaining their own baseline rejection |
+|---|---|---:|
+| `foreign` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `deep-uninspectable-claim`, `duplicate-foreign`, `duplicate-member`, `foreign-Known37`, `foreign-malformed`, `foreign-newline`, `foreign-numeric-claimant`, `foreign-numeric-rejected`, `foreign-ordinary`, `foreign-rejected`, `foreign-upper`, `mention-exact-number-.0`, `mention-exact-number-.0e-0`, `mention-exact-number-.5`, `mention-exact-number-E+0`, `mention-exact-number-e0`, `mention-exact-number-e9999`, `mention-key-registry_after`, `mention-key-registry_before`, `mention-nested-registry_after`, `mention-nested-registry_before`, `mention-numeric-registry_after`, `mention-numeric-registry_before`, `mention-quoted-number-.0`, `mention-quoted-number-.0e-0`, `mention-quoted-number-.5`, `mention-quoted-number-E+0`, `mention-quoted-number-e0`, `mention-quoted-number-e9999`, `mention-space-registry_after`, `mention-space-registry_before`, `mention-unicode-registry_after`, `mention-unicode-registry_before`, `mention-upper-registry_after`, `mention-upper-registry_before`, `mention-value-registry_after`, `mention-value-registry_before`, `nested-noncanonical-side`, `non-json-constant`, `non-json-file`, `outer-array`, `unreadable-json`, `unreadable-utf8` | 50 of 99 |
+| `missing` | `missing-member` | 98 of 99 |
+| `states` | `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 94 of 99 |
+| `same-description` | `same-list-and-states`, `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 93 of 99 |
+| `count` | `count-padded`, `count-short` | 97 of 99 |
+| `different-hashes` | `equal-hashes` | 98 of 99 |
+| `sorted-unique` | `shape-duplicate`, `shape-unsorted` | 97 of 99 |
+| `all-or-none` | `member-incomplete` | 98 of 99 |
+| `step-pin` | `step-receipt-pin` | 98 of 99 |
+| `decision-DL412` | `decision-DL412` | 98 of 99 |
+| `receipt-schema_id` | `receipt-schema_id` | 98 of 99 |
+| `receipt-authority_ref` | `receipt-authority_ref` | 98 of 99 |
+| `receipt-authority_section_sha256` | `receipt-authority_section_sha256` | 98 of 99 |
+| `receipt-validator_before_sha256` | `legacy-byte-before`, `receipt-validator_before_sha256` | 97 of 99 |
+| `receipt-validator_after_sha256` | `legacy-byte-after`, `live-byte-appended-bytes`, `live-byte-comment`, `live-byte-crlf`, `live-byte-one-byte`, `receipt-validator_after_sha256` | 93 of 99 |
+| `receipt-record_dir` | `receipt-record_dir` | 98 of 99 |
+| `receipt-record_schema_id` | `receipt-record_schema_id` | 98 of 99 |
+| `receipt-author_task` | `receipt-author_task` | 98 of 99 |
+| `receipt-seal_authorized` | `receipt-seal_authorized` | 98 of 99 |
+| `receipt-admission_authorized` | `receipt-admission_authorized` | 98 of 99 |
+| `receipt-contract_depth_complete` | `receipt-contract_depth_complete` | 98 of 99 |
+| `receipt-prior-path` | `receipt-prior-path` | 98 of 99 |
+| `receipt-prior-sha256` | `receipt-prior-sha256` | 98 of 99 |
+| `receipt-lander-and-list` | `receipt-forbidden`, `receipt-lander-''`, `receipt-lander-None` | 96 of 99 |
+| `authority-tokens` | `authority-token-0`, `authority-token-1`, `authority-token-2`, `authority-token-3` | 95 of 99 |
+| `duplicates` | `duplicate-foreign`, `duplicate-member` | 97 of 99 |
+| `constants` | `non-json-constant` | 98 of 99 |
+| `root-shape` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `outer-array` | 92 of 99 |
+| `canonical-scan` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace` | 93 of 99 |
+| `uncertainty` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `duplicate-foreign`, `duplicate-member`, `foreign-malformed`, `foreign-newline`, `foreign-numeric-claimant`, `foreign-numeric-rejected`, `foreign-upper`, `nested-noncanonical-side`, `non-json-constant`, `outer-array`, `unreadable-json`, `unreadable-utf8` | 81 of 99 |
+| `recursive-claims` | `deep-uninspectable-claim`, `foreign-Known37`, `foreign-ordinary`, `foreign-rejected`, `mention-exact-number-.0`, `mention-exact-number-.0e-0`, `mention-exact-number-.5`, `mention-exact-number-E+0`, `mention-exact-number-e0`, `mention-exact-number-e9999`, `mention-key-registry_after`, `mention-key-registry_before`, `mention-nested-registry_after`, `mention-nested-registry_before`, `mention-numeric-registry_after`, `mention-numeric-registry_before`, `mention-quoted-number-.0`, `mention-quoted-number-.0e-0`, `mention-quoted-number-.5`, `mention-quoted-number-E+0`, `mention-quoted-number-e0`, `mention-quoted-number-e9999`, `mention-space-registry_after`, `mention-space-registry_before`, `mention-unicode-registry_after`, `mention-unicode-registry_before`, `mention-upper-registry_after`, `mention-upper-registry_before`, `mention-value-registry_after`, `mention-value-registry_before`, `non-json-file` | 68 of 99 |
+| `all-files` | `non-json-file` | 98 of 99 |
+| `canonical-members-paired` | `canonical-member`, `canonical-number` | 97 of 99 |
+| `claim-object-keys` | `mention-key-registry_after`, `mention-key-registry_before` | 97 of 99 |
+| `claim-list-values` | `deep-uninspectable-claim`, `mention-nested-registry_after`, `mention-nested-registry_before` | 96 of 99 |
+| `claim-case` | `mention-upper-registry_after`, `mention-upper-registry_before` | 97 of 99 |
+| `claim-whitespace` | `mention-space-registry_after`, `mention-space-registry_before` | 97 of 99 |
+| `claim-unicode-decimal` | `mention-unicode-registry_after`, `mention-unicode-registry_before` | 97 of 99 |
+| `deep-claim` | `deep-uninspectable-claim` | 98 of 99 |
+| `nested-canonical` | `nested-noncanonical-side` | 98 of 99 |
+| `exact-number-tokens` | `mention-exact-number-.0`, `mention-exact-number-.0e-0`, `mention-exact-number-.5`, `mention-exact-number-E+0`, `mention-exact-number-e0`, `mention-exact-number-e9999` | 93 of 99 |
+| `step-receipt-application` | `authority-token-0`, `authority-token-1`, `authority-token-2`, `authority-token-3`, `receipt-admission_authorized`, `receipt-author_task`, `receipt-authority_ref`, `receipt-authority_section_sha256`, `receipt-contract_depth_complete`, `receipt-forbidden`, `receipt-lander-''`, `receipt-lander-None`, `receipt-prior-path`, `receipt-prior-sha256`, `receipt-record_dir`, `receipt-record_schema_id`, `receipt-schema_id`, `receipt-seal_authorized` | 81 of 99 |
+| `legacy-frozen-validator-pin` | `legacy-frozen-validator-pin` | 98 of 99 |
+| `bridge-live-hash` | `legacy-byte-after`, `live-byte-appended-bytes`, `live-byte-comment`, `live-byte-crlf`, `live-byte-one-byte`, `receipt-validator_after_sha256` | 93 of 99 |
+| `bridge-before-hash` | `legacy-byte-before`, `receipt-validator_before_sha256` | 97 of 99 |
+| `bridge-all-links` | `legacy-byte-after`, `legacy-byte-before`, `legacy-byte-receipt-array`, `legacy-byte-receipt-boolean`, `legacy-byte-receipt-missing`, `legacy-byte-receipt-null`, `legacy-byte-receipt-number`, `legacy-byte-receipt-string`, `legacy-byte-receipt-unreadable`, `live-byte-appended-bytes`, `live-byte-comment`, `live-byte-crlf`, `live-byte-one-byte`, `receipt-validator_after_sha256`, `receipt-validator_before_sha256` | 84 of 99 |
+
+### Astra recurring-defect sweep and standing checks
+
+| Item | Current evidence |
+|---|---|
+| 1. Forged/contradictory identities or hashes | Own validator bytes are recomputed live; missing/forged before/after pins and byte changes reject with the old predicate. Complete member/state/count, row/assessment/decision and new receipt mutations remain covered by the full lane matrix and replays. Historical registry truth remains the unchanged history-review obligation. |
+| 2. Storage metadata | N/A: no runtime Storage metadata or payload contract changes. |
+| 3. Historical/live-state crossover | All intact-byte-chain no-field pairs are exact; only the explicitly authorized input-pin faults reject, and each equals the original altered-bytes result. |
+| 4. Multiple field interpretations | Exact SHA equality against a live hash rejects wrong types, containers, casing/whitespace and altered strings; the earlier strict members/recursive numeric claim rules are unchanged and rerun. |
+| 5. Unresolved schema references | No schema or `$ref` is added or changed. |
+| 6. Partial size limits | N/A: no stored event body or size policy changes. |
+| 7. Custody on every path | Legacy admission and holding both reach the live two-link observer. Steps additionally require the unchanged full semantic receipt predicate. Main, module and actual CLI paths are covered. |
+| 8. Masked negatives | Complete 4,554-cell matrix; named byte-link duplicates removed together; all other rejection reasons retained. |
+| 9. Unsupported grades | N/A → N/A. No family, seal or runtime behavior is graded. |
+| 10. Alternate numeric forms | Original integer/decimal/exponent/negative-zero/overflow/quoted-member and foreign-claim probes rerun; numeric SHA fields remain noncanonical for steps. New byte-pin numeric values fail equality without coercion. |
+| 11. Confused types | Nulls, boolean/string booleans, numbers/string numbers, arrays, objects and malformed/deep receipt roots covered. New semantic fields are never interpreted by the byte bridge. |
+
+Standing checks 1–4, 6–7 and 10 concern runtime family contracts outside this task. Check 5 retains full-match/trailing-LF negatives; check 8 asserts real admitted sets, fresh CLI outputs, failure messages and old pins rather than relying on exit 1; check 9 adds no references; check 11 is proved for the whole lane above.
+
+### Pins, evidence and handoff
+
+Validator SHA-256: `0cb2bd07a500d4314c678c0ee0cd1eae267accfb5a02e3f686f5210f92dd80d6`. Pending new receipt SHA-256: `ee9ce3a023d9cc35111e5cd209ea511f2f572307fff876524c6c6e584f66ed9a`. Fixture patch SHA-256: `a3de006aff67f53067a0a63ea00d5b4b08cedc743a755a4130f303cb86d5ec81`. Only the new receipt's `validator_after_sha256` pin is refreshed; every other pin, authority/source/card reference, identity, null lander, checked author-only pending list and false flag is preserved. Descriptive receipt/spec text is aligned. CA-SEAL-FIX5 is explicitly procedurally excluded in **both** documents and the receipt note; the checked author/lander predicate is unchanged.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix5/`. Summary `results/fix5-summary.json`, SHA-256 `cca4d108363e554afa78a4d0e0ae159b22321a6e843444bed9e087e5798d79ae`; full guard matrix `results/guard-matrix.json`, SHA-256 `7a608297446ef60ef031ec0b49b6e041f9cf6314c67815accec5b7818f3bfbc3`; integrity controls `results/integrity-rejections.json`, SHA-256 `fd40d98bdac9cc061339872a6ba4a042cdfa94ba3abd8c07db0fd3c843f7d8d2`. Replay sources, exact traces, full CLI receipts, original nonzero/superseded expectations and final logs are retained with a manifest. One guard preparation run was stopped to pair the newly duplicated byte guards before the final full run; its partial output is not a verification count. Initial new-test setup assertions were corrected before the successful 79-method run; production code did not change. Raw scratch trees and the requested worktree are removed after the result is pushed and evidence copied.
+
+**Family grades before → after:** N/A → N/A; no self-grade JSON applies. **Ids used:** none minted; DL-412 is cited authority and DL-998/DL-999 remain fixture-only. **New bindings:** none. **Open integration work:** DL-412/DL-413 dependencies, actual lander and matching receipt list, the fixture patch as its own commit in the same landing, ordered Sol/Astra pre/post reviews and landing checks. No admission, registry append, seal, main push, pm-mail or subagent occurred.
