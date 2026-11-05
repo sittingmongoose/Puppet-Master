@@ -1,0 +1,39 @@
+{
+  "audit_id": "audit-20260619-002-prd-planning-wizard-head-semantic-fidelity",
+  "closes": {
+    "claim_status": "lineage_reciprocity_gap",
+    "plan_unit_id": "PNC-014",
+    "source_artifact": "planunit_source_claims.jsonl",
+    "source_row": 31
+  },
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a))"
+  },
+  "evidence_hashes_at_observation": {
+    "Plans/Plan_To_Node_Compilation.md#unit=PNC-014": "46c60cc1a52579a60cdd18e9c0b97815171f36684f284e9a6339a798728082b8",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0002": "96eaa7daad0edc875ca2a24fbbcb680360cf0326843e2e165ab14ae2bf3a2422",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0101": "3c2ba8a649f2f71a18557f96e090e3a0b35d81f37c6cf46978bb5b70ef701108",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0102": "cf6f327b348c4e8018bf9cd0631d2813a8403cb42a0f87adeda89733d188c426",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0103": "628ee734e89830a0822cbdef15546d9355a6374dd8fab072428ae3716cedfd1c",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0104": "232735c6e0f9c0959fa38c1e2719a1d5846a3221bdeafdc9124c8c62146af6b1",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0105": "b8908773d2ac992d6f8027411c1ac2b6d9f401b27defea614619d0f2e6daecb2",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0106": "ddcfb9f63807d5184ead783e518a8234679faf1a1ebbb05d5cec9cbbab9ed518",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0107": "2f9be2f7b1702360b5d0c79d0acfb72e15f8bad368612c9fd587087f81df2c7c",
+    "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/records/design_atoms.jsonl#jsonl=atom_id=atom-0109": "fe132e11425efe0d66ff5d4e7f6f801da2c7a13f92211f90b449ac7f54994b9f"
+  },
+  "matrix": {
+    "appended_line": 17,
+    "appended_row_sha256": "8bd89b6a8262b8cc8c96f4ce2319b967e059afa1bf200f77788e91ee592f8fad",
+    "original_rows": 16,
+    "original_sha256": "2cb0c73401d5e186de12aa02b9232cc8078b64c897e73b5013fb23d42fae7f66",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+  "pass_id": "audit-20260619-002-prd-planning-wizard-head-semantic-fidelity-supplemental-20261105",
+  "registry_closure_id": "closure-audit-20260619-002-prd-planning-wizard-head-semantic-fidelity-repair-006",
+  "registry_closure_reaudit": "closure-reaudit-20261104 rerun batch B10, registry line 234: worker, Sol and Astra agree supported",
+  "reviews": "pending: Sol 6.1 max, then Astra max, blind (stream C review rule)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}
