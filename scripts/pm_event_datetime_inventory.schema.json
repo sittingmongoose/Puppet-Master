@@ -203,7 +203,10 @@
               "reviewed_role",
               "singleton_probes_complete",
               "sibling_dependencies",
-              "value_constraint_paths"
+              "value_constraint_paths",
+              "role_authority",
+              "timestamp_only_nodes",
+              "automatic_credit"
             ],
             "properties": {
               "battery_sha256": {
@@ -393,6 +396,97 @@
                     }
                   }
                 }
+              },
+              "role_authority": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "field",
+                    "endpoints",
+                    "unproven"
+                  ],
+                  "properties": {
+                    "field": {
+                      "enum": [
+                        "observed_at_utc",
+                        "persisted_at_utc"
+                      ]
+                    },
+                    "endpoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "path",
+                          "pointer"
+                        ],
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "pointer": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "unproven": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "path",
+                          "pointer",
+                          "keyword",
+                          "scope"
+                        ],
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "pointer": {
+                            "type": "string"
+                          },
+                          "keyword": {
+                            "type": "string"
+                          },
+                          "scope": {
+                            "enum": [
+                              "map",
+                              "value"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "timestamp_only_nodes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "pointer"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "pointer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "automatic_credit": {
+                "type": "boolean"
               }
             }
           }

@@ -538,9 +538,10 @@ def source_owner_evidence(row, document, root=ROOT, cache=None):
             raise ValueError("non-named declaration is not a wildcard value map")
         from pm_event_datetime_value_probe import wildcard_probe, reviewed_role
         evidence, citations = wildcard_probe(row, document, root, cache)
-        role, _ = reviewed_role(row, evidence, citations, root, cache)
+        role, role_errors = reviewed_role(row, evidence, citations, root, cache)
         classification = (role.get("classification", "wildcard_non_timestamp_role") if role is not None else
-                          "wildcard_review_required" if not evidence["singleton_probes_complete"] else
+                          "wildcard_review_required" if (not evidence["singleton_probes_complete"] or
+                                                         "wildcard_role_review_required" in role_errors) else
                           "wildcard_non_timestamp" if evidence["all_refused"] else
                           "other_owner_observation")
     # Shared ref targets can occur in both fields; keep deterministic evidence.
@@ -641,10 +642,10 @@ def validate_inventory(inventory, root=ROOT):
                 if not set(declarations(node)).intersection(node.get("properties", {})):
                     from pm_event_datetime_value_probe import wildcard_probe, reviewed_role
                     value_evidence, value_sources = wildcard_probe(row, document, root, documents)
-                    role, role_error = reviewed_role(row, value_evidence, value_sources, root, documents)
+                    role, role_errors = reviewed_role(row, value_evidence, value_sources, root, documents)
                     if row.get("value_evidence") != {**value_evidence, "reviewed_role": role}:
                         fail("wildcard_value_evidence_changed")
-                    if role_error:
+                    for role_error in role_errors:
                         fail(role_error)
                 elif "value_evidence" in row:
                     fail("unexpected_wildcard_value_evidence")

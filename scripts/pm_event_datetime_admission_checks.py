@@ -295,6 +295,7 @@ def regression_checks(root):
         checks["datetime_custom_resolver_refused"] = False
     checks.update(wildcard_battery_checks(root, inventory))
     checks.update(wildcard_context_checks(root, inventory))
+    checks.update(wildcard_authority_checks(root, inventory))
     return checks
 
 
@@ -306,9 +307,9 @@ def wildcard_battery_checks(root, inventory):
     maps = [r for r in inventory["nodes"] if r["classification"] in (
         "wildcard_non_timestamp", "wildcard_non_timestamp_role")]
     checks["datetime_battery_21_name_maps"] = (len(maps) == 21 and
-        sum(r["classification"] == "wildcard_non_timestamp" for r in maps) == 7 and
-        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 14 and
-        all(r["value_evidence"]["all_refused"] and r["value_evidence"]["singleton_probes_complete"]
+        sum(r["classification"] == "wildcard_non_timestamp" for r in maps) == 3 and
+        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 18 and
+        all(r["value_evidence"]["automatic_credit"]
             if r["classification"] == "wildcard_non_timestamp" else
             r["value_evidence"]["reviewed_role"] is not None for r in maps))
     original = next(r for r in maps if r["path"] == "Plans/section15_browser_program_contracts.schema.json"
@@ -508,4 +509,199 @@ def wildcard_context_checks(root, inventory):
             checks["datetime_value_role_path_" + route] = (not errors if route.startswith("value_") else
                 any(e["error"] == "wildcard_role_evidence_changed" for e in errors))
             (scratch / ROLES).write_bytes((root / ROLES).read_bytes())
+    return checks
+
+
+def wildcard_authority_checks(root, inventory):
+    """B7: role authority travels only through positive conjunctive paths.
+
+    Every record has a freshly computed fingerprint, so each refusal comes from
+    the path rule, not a stale pin. The controls keep legitimate routes passing.
+    """
+    import pm_event_datetime_inventory as inv
+    from pm_event_datetime_value_probe import BATTERY, ROLES, wildcard_probe
+    checks = {}
+    review = "wildcard_role_review_required"
+    original = next(r for r in inventory["nodes"] if r["path"] ==
+        "Plans/section15_browser_program_contracts.schema.json" and
+        r["pointer"].endswith("/result_schema_dependencies"))
+    node_pointer = original["pointer"]
+    value_pointer = node_pointer + "/additionalProperties"
+    stamp = {"type": "string", "pattern":
+        r"^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?(?:Z)$"}
+    # SafeRef refuses every timestamp, as in the reviewed attack. Generic accepts
+    # them, so a citation of it reaches the checks on timestamp-accepting values.
+    safe = {"type": "string", "minLength": 1, "pattern": "^[a-z]+$", "description": "Named reference values."}
+    generic = {"type": "string", "minLength": 1, "description": "Generic reference string."}
+    anchored = {"$dynamicAnchor": "generic_anchor", **generic}
+    definitions = {"SafeRef": safe, "Generic": generic, "Anchored": anchored}
+    ref = {"$ref": "#/$defs/SafeRef"}
+    good = {"$ref": "#/$defs/Generic"}
+    basic = {"type": "object", "propertyNames": {"type": "string"}}
+    safe_pointer, generic_pointer = "/$defs/SafeRef", "/$defs/Generic"
+    draft7 = "http://json-schema.org/draft-07/schema#"
+
+    with tempfile.TemporaryDirectory(prefix="pm-datetime-authority-") as temp:
+        scratch = Path(temp)
+        for path in (inv.INVENTORY_SCHEMA, BATTERY, ROLES):
+            file = scratch / path
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_bytes((root / path).read_bytes())
+        source = scratch / original["path"]
+        source.parent.mkdir(parents=True, exist_ok=True)
+        subset = {**inventory, "nodes": [copy.deepcopy(original)]}
+
+        def run(node, cited, classification=None):
+            document = inv._source_document(root, original, {})
+            inv.at(document, node_pointer).clear()
+            inv.at(document, node_pointer).update(copy.deepcopy(node))
+            document["$defs"].update(copy.deepcopy(definitions))
+            source.write_text(json.dumps(document))
+            (scratch / ROLES).write_text("[]")
+            # Parse the written bytes: pointers need unshared objects, as in any source.
+            document = json.loads(source.read_text())
+            evidence, _ = wildcard_probe(original, document, scratch, {})
+            if cited is not None:
+                record = {"node": list(inv.node_key(original)),
+                          "value_schema_sha256": evidence["value_schema_sha256"],
+                          "role": "scratch_role", "reason": "Scratch role review.",
+                          "citation": {"path": original["path"], "pointer": cited,
+                                       "value": inv.at(document, cited)}}
+                if classification:
+                    record["classification"] = classification
+                (scratch / ROLES).write_text(json.dumps([record]))
+            projected = inv.source_inventory_projection(subset, scratch)
+            errors = {e["error"] for e in inv.validate_inventory(projected, scratch)}
+            return projected["nodes"][0], errors
+
+        refused = {
+            # The two reviewed B7 variants.
+            "irrelevant_if": ({**basic, "additionalProperties": {
+                "allOf": [stamp, {"if": ref, "then": {}, "else": {}}]}}, safe_pointer),
+            "vacuous_not": ({**basic, "additionalProperties": {
+                "allOf": [stamp, {"not": {"allOf": [ref, False]}}]}}, safe_pointer),
+            # Each non-positive keyword as the only route to the citation.
+            "then": ({**basic, "additionalProperties": {"if": {"type": "string"}, "then": ref, "else": {}}}, safe_pointer),
+            "else": ({**basic, "additionalProperties": {"if": {"type": "integer"}, "then": {}, "else": ref}}, safe_pointer),
+            "not": ({**basic, "additionalProperties": {"not": ref}}, safe_pointer),
+            "dependentSchemas": ({**basic, "additionalProperties": {"dependentSchemas": {"x": ref}}}, safe_pointer),
+            "contains": ({**basic, "additionalProperties": {"contains": ref}}, safe_pointer),
+            "prefixItems": ({**basic, "additionalProperties": {"prefixItems": [ref]}}, safe_pointer),
+            "items": ({**basic, "additionalProperties": {"items": ref}}, safe_pointer),
+            "propertyNames": ({**basic, "additionalProperties": {"propertyNames": ref}}, safe_pointer),
+            "patternProperties": ({**basic, "additionalProperties": {"patternProperties": {"^x$": ref}}}, safe_pointer),
+            "nested_additionalProperties": ({**basic, "additionalProperties": {"additionalProperties": ref}}, safe_pointer),
+            "unevaluatedProperties": ({**basic, "additionalProperties": {"unevaluatedProperties": ref}}, safe_pointer),
+            "unevaluatedItems": ({**basic, "additionalProperties": {"unevaluatedItems": ref}}, safe_pointer),
+            "unknown_keyword": ({**basic, "additionalProperties": {"x-role": ref}}, safe_pointer),
+            # The same keywords at object scope.
+            "map_if": ({**basic, "if": {"additionalProperties": ref}, "then": {}, "else": {}}, safe_pointer),
+            "map_then": ({**basic, "if": {"required": ["x"]}, "then": {"additionalProperties": ref}}, safe_pointer),
+            "map_dependentSchemas": ({**basic, "dependentSchemas": {"x": {"additionalProperties": ref}}}, safe_pointer),
+            "map_dependentRequired": ({**basic, "dependentRequired": {"x": ["y"]},
+                                       "additionalProperties": good}, generic_pointer),
+            "map_unevaluatedProperties": ({**basic, "unevaluatedProperties": good}, generic_pointer),
+            # Unions count only when every branch carries the same citation.
+            "partial_anyOf": ({**basic, "additionalProperties": {"anyOf": [good, {"type": "integer"}]}}, generic_pointer),
+            "partial_oneOf": ({**basic, "additionalProperties": {"oneOf": [good, {"type": "integer"}]}}, generic_pointer),
+            "map_partial_anyOf": ({**basic, "anyOf": [{"additionalProperties": good}, {"additionalProperties": stamp}]},
+                                  generic_pointer),
+            # A positive path does not excuse an unaccounted timestamp narrowing.
+            "conjunct_timestamp": ({**basic, "additionalProperties": {"allOf": [stamp, good]}}, generic_pointer),
+            "ref_sibling_timestamp": ({**basic, "additionalProperties": {**good, **stamp}}, generic_pointer),
+            "conjunct_condition": ({**basic, "additionalProperties": {"allOf": [
+                good, {"if": {"minLength": 99}, "then": {}, "else": {}}]}}, generic_pointer),
+            "conjunct_unknown": ({**basic, "additionalProperties": {"allOf": [good, {"x-note": 1}]}}, generic_pointer),
+            "map_condition_with_value": ({**basic, "additionalProperties": good, "if": {"required": ["x"]},
+                                          "then": {"additionalProperties": stamp}}, generic_pointer),
+            # The whole value cited directly still cannot be timestamp-only.
+            "direct_timestamp": ({**basic, "additionalProperties": stamp}, value_pointer),
+            "whole_union_timestamp_branch": ({**basic, "additionalProperties": {"anyOf": [stamp, {"const": ""}]}}, value_pointer),
+            "whole_value_condition": ({**basic, "additionalProperties": {
+                "if": {"minLength": 20}, "then": stamp, "else": {}}}, value_pointer),
+            "implicit_with_conjunct_value": ({**basic, "allOf": [{"additionalProperties": stamp}]}, node_pointer),
+            # A dialect's unimplemented or ignored keywords are not paths.
+            "draft7_ref_sibling": ({**basic, "additionalProperties": {
+                "$schema": draft7, "$id": "urn:pm:authority:draft7", "definitions": {
+                    "g": generic, "s": stamp,
+                    "shape": {"$ref": "#/definitions/s", "allOf": [{"$ref": "#/definitions/g"}]}},
+                "allOf": [{"$ref": "#/definitions/shape"}]}},
+                value_pointer + "/definitions/g"),
+            "draft7_dynamicRef": ({**basic, "additionalProperties": {
+                "$schema": draft7, "$id": "urn:pm:authority:draft7dyn", "definitions": {"g": {**generic, "$id": "#g"}},
+                "$dynamicRef": "#g"}}, value_pointer + "/definitions/g"),
+            "recursiveRef": ({**basic, "additionalProperties": {"$recursiveRef": "#/$defs/Generic", "type": "string"}}, value_pointer),
+        }
+        for name, (node, cited) in refused.items():
+            row, errors = run(node, cited)
+            checks["datetime_role_authority_refuses_" + name] = (
+                review in errors and row["classification"] == "wildcard_review_required" and
+                row["value_evidence"]["reviewed_role"] is None and
+                "wildcard_role_schema_changed" not in errors and
+                "wildcard_value_evidence_changed" not in errors)
+        accepted = {
+            "direct": ({**basic, "additionalProperties": copy.deepcopy(generic)}, value_pointer),
+            "ref": ({**basic, "additionalProperties": good}, generic_pointer),
+            "dynamicRef": ({**basic, "additionalProperties": {"$dynamicRef": "#generic_anchor"}}, "/$defs/Anchored"),
+            "allOf": ({**basic, "additionalProperties": {"allOf": [good, {"maxLength": 99}]}}, generic_pointer),
+            "ref_sibling_bound": ({**basic, "additionalProperties": {**good, "maxLength": 99}}, generic_pointer),
+            "anyOf_every_branch": ({**basic, "additionalProperties": {"anyOf": [
+                good, {"allOf": [good, {"maxLength": 9}]}]}}, generic_pointer),
+            "oneOf_every_branch": ({**basic, "additionalProperties": {"oneOf": [
+                {"allOf": [good, {"maxLength": 5}]}, {"allOf": [good, {"minLength": 6}]}]}}, generic_pointer),
+            "whole_union": ({**basic, "additionalProperties": {"oneOf": [good, {"type": "integer"}]}}, value_pointer),
+            "map_allOf": ({**basic, "allOf": [{"additionalProperties": good}]}, generic_pointer),
+            "map_anyOf_every_branch": ({**basic, "anyOf": [{"additionalProperties": good},
+                                                           {"additionalProperties": good}]}, generic_pointer),
+            "implicit_true": ({**basic}, node_pointer),
+        }
+        for name, (node, cited) in accepted.items():
+            row, errors = run(node, cited)
+            checks["datetime_role_authority_accepts_" + name] = (
+                not errors and row["classification"] == "wildcard_non_timestamp_role")
+        # Member keywords inside a cited definition are not routes, and they do
+        # not decide a string value's acceptance. This is the setting_value shape.
+        row, errors = run({**basic, "additionalProperties": {"oneOf": [
+            {"type": "string"}, {"type": "array", "items": {"$ref": "#/$defs/Generic"}}]}}, value_pointer)
+        checks["datetime_role_authority_member_keywords_in_cited_definition"] = not errors
+        # A value refusing every timestamp has no trigger, so a cited definition
+        # may contain conditions. The citation itself must still be positive.
+        permission = {"type": "object", "allOf": [{"if": {"required": ["a"]}, "then": {"required": ["b"]}}]}
+        row, errors = run({**basic, "minProperties": 1, "additionalProperties": permission}, value_pointer)
+        checks["datetime_role_authority_refused_value_keeps_review"] = not errors
+        # The correct classification stays available for the B7 value language:
+        # with no false record, the row is simply a timestamp row.
+        node, _ = refused["irrelevant_if"]
+        row, errors = run(node, None)
+        checks["datetime_role_authority_b7_corrected_without_record"] = (
+            not errors and row["classification"] == "other_owner_observation")
+        row, errors = run(node, value_pointer + "/allOf/0", "other_owner_observation")
+        checks["datetime_role_authority_b7_timestamp_review"] = (
+            not errors and row["classification"] == "other_owner_observation")
+        # No automatic non-timestamp credit outside the allowlist. A refused,
+        # keyword-clean value keeps it, and an accepting value stays a timestamp row.
+        for name, value in (("not", {"type": "integer", "not": {"const": 1}}),
+                            ("if", {"type": "integer", "if": {"minimum": 1}, "then": {}}),
+                            ("object_members", {"type": "object", "properties": {"a": {}}}),
+                            ("array_items", {"type": "array", "items": {}}),
+                            ("unknown", {"type": "integer", "x-note": 1}),
+                            ("recursiveRef", {"type": "integer", "$recursiveRef": "#/$defs/Generic"})):
+            row, errors = run({**basic, "additionalProperties": value}, None)
+            checks["datetime_automatic_credit_withheld_" + name] = (
+                review in errors and row["classification"] == "wildcard_review_required" and
+                not row["value_evidence"]["automatic_credit"])
+        for name, value in (("clean_string", {"type": "string", "pattern": "^x$"}),
+                            ("clean_enum", {"enum": ["a", "b"]}),
+                            ("clean_ref_union", {"anyOf": [{"$ref": "#/$defs/SafeRef"}, {"type": "null"}]})):
+            row, errors = run({**basic, "additionalProperties": value}, None)
+            checks["datetime_automatic_credit_kept_" + name] = (
+                not errors and row["classification"] == "wildcard_non_timestamp")
+        # Discovery stays broad while authority is narrow.
+        row, _ = run(refused["irrelevant_if"][0], None)
+        evidence = row["value_evidence"]
+        checks["datetime_role_authority_discovery_separate"] = (
+            any(p["path"][-1]["pointer"] == safe_pointer for p in evidence["value_constraint_paths"]) and
+            all({"path": original["path"], "pointer": safe_pointer} not in a["endpoints"]
+                for a in evidence["role_authority"]) and
+            all(any(u["keyword"] == "if" for u in a["unproven"]) for a in evidence["role_authority"]))
     return checks
