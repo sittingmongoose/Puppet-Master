@@ -125,7 +125,7 @@ def protocol_errors(context, original_operation):
     if context['publication_state'] != 'current' or shared.cursor_errors(context['cursor'], context['frontier']):
         errors.append('unavailable publication/cursor')
     family = original_operation['schema_id'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('_', '.', 1)
-    errors += shared.append_result_errors(original_operation, context['append_resolution'], context['append_original'], family)
+    errors += shared.append_result_errors(original_operation, context.get('append_resolution'), context.get('append_original'), family)
     return errors
 
 

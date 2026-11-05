@@ -219,9 +219,9 @@ def rejection_mutants(m, function):
         elif isinstance(node, ast.AugAssign) and isinstance(node.value, ast.Call) and ast.unparse(node.value).startswith('list(Draft202012Validator'):
             replacement = ast.Pass()
             label = 'nested payload schema validation'
-        elif isinstance(node, ast.Return) and function == 'protocol_errors' and isinstance(node.value, ast.List) and node.value.elts:
-            replacement = ast.Return(value=ast.List(elts=[], ctx=ast.Load()))
-            label = ast.unparse(node.value)
+        elif isinstance(node, ast.If) and function == 'protocol_errors' and 'protocol_shape' in ast.unparse(node.test):
+            replacement = ast.Pass()
+            label = ast.unparse(node.body[0].value)
         elif isinstance(node, ast.If) and function == 'writer_policy_errors':
             replacement = ast.Pass()
             label = 'replay-only rejection (duplicates unsupported-policy rejection)'

@@ -113,7 +113,7 @@ def protocol_errors(context, original):
         found.append('changed caller semantic body')
     if context['publication_state'] != 'current':
         found.append('withdrawn History')
-    found += shared.append_result_errors(original, context['append_resolution'], context['append_original'], 'concern.created')
+    found += shared.append_result_errors(original, context.get('append_resolution'), context.get('append_original'), 'concern.created')
     return found
 
 

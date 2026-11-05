@@ -193,7 +193,7 @@ def protocol_errors(context, original):
     if not retry_digest_matches(context['retry_command'], context['retry_payload'], original['request_digest']):
         found.append('idempotency_conflict')
     family = original['schema_id'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('_', '.', 1)
-    found += append_result_errors(original, context['append_resolution'], context['append_original'], family)
+    found += append_result_errors(original, context.get('append_resolution'), context.get('append_original'), family)
     return found
 
 

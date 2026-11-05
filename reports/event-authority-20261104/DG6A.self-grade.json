@@ -60,7 +60,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
@@ -87,7 +87,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
@@ -114,7 +114,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
@@ -148,7 +148,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
@@ -175,7 +175,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
@@ -209,7 +209,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
@@ -229,7 +229,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
@@ -270,7 +270,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
@@ -290,7 +290,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
@@ -324,7 +324,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
@@ -351,13 +351,13 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
+          "finding": "SP-660/CV-680/F3-700/ATS-330 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -438,9 +438,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
-        "scripts/pm-dg6a-final-regression-check.py"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "scripts/pm-dg6a-domain-check.py",
+        "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
     },
     {
       "event_type": "alert.dismissed",
@@ -481,7 +483,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
@@ -508,7 +510,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
@@ -535,7 +537,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
@@ -569,7 +571,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
@@ -596,7 +598,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
@@ -630,7 +632,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
@@ -650,7 +652,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
@@ -691,7 +693,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
@@ -711,7 +713,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
@@ -745,7 +747,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
@@ -772,13 +774,13 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
+          "finding": "SP-661/CV-681/F3-701/ATS-331 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -859,9 +861,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
-        "scripts/pm-dg6a-final-regression-check.py"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "scripts/pm-dg6a-domain-check.py",
+        "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
     },
     {
       "event_type": "alert.rule_muted",
@@ -902,7 +906,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
@@ -929,7 +933,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
@@ -956,7 +960,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
@@ -990,7 +994,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
@@ -1017,7 +1021,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
@@ -1051,7 +1055,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
@@ -1071,7 +1075,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
@@ -1112,7 +1116,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
@@ -1132,7 +1136,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
@@ -1166,7 +1170,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
@@ -1193,13 +1197,13 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
+          "finding": "SP-662/CV-682/F3-702/ATS-332 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1280,9 +1284,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
-        "scripts/pm-dg6a-final-regression-check.py"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "scripts/pm-dg6a-domain-check.py",
+        "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
     },
     {
       "event_type": "alert.snoozed",
@@ -1323,7 +1329,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
@@ -1350,7 +1356,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
@@ -1377,7 +1383,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
@@ -1411,7 +1417,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
@@ -1438,7 +1444,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
@@ -1472,7 +1478,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
@@ -1492,7 +1498,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
@@ -1533,7 +1539,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
@@ -1553,7 +1559,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
@@ -1587,7 +1593,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
@@ -1614,13 +1620,13 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
+          "finding": "SP-663/CV-683/F3-703/ATS-333 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1701,9 +1707,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
-        "scripts/pm-dg6a-final-regression-check.py"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "scripts/pm-dg6a-domain-check.py",
+        "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
     },
     {
       "event_type": "bundle.annotation_state_changed",
@@ -3576,7 +3584,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
@@ -3603,7 +3611,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
@@ -3630,7 +3638,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
@@ -3664,7 +3672,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
@@ -3691,7 +3699,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
@@ -3732,7 +3740,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
@@ -3752,7 +3760,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
@@ -3784,8 +3792,8 @@
             {
               "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
               "unit": "append_cases",
-              "line_start": 26620,
-              "line_end": 26620,
+              "line_start": 26941,
+              "line_end": 26941,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
@@ -3793,7 +3801,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
@@ -3813,7 +3821,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
@@ -3847,7 +3855,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
@@ -3874,13 +3882,13 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
+          "finding": "OP-002/OP-004/UCC-147/SP-666/CV-686/ATS-334 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3920,8 +3928,8 @@
             {
               "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
               "unit": "append_cases",
-              "line_start": 26620,
-              "line_end": 26620,
+              "line_start": 26941,
+              "line_end": 26941,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -3961,9 +3969,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm-concern-created-contracts-check.py",
-        "scripts/pm-dg6a-final-regression-check.py"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "scripts/pm-dg6a-domain-check.py",
+        "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged.",
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply.",
       "separate_proposal": {
         "question": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
         "review_recommendation_unapplied": "Keep the already specified canonical creators. Worker, User and External Resource input is nomination until accepted by an authorized owner. Record creator separately from accountable owner. Do not re-ask whether the listed runtime creators may create.",
@@ -6284,7 +6294,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
@@ -6311,7 +6321,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
@@ -6338,7 +6348,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
@@ -6372,7 +6382,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
@@ -6399,7 +6409,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
@@ -6433,7 +6443,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
@@ -6453,7 +6463,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
@@ -6485,8 +6495,8 @@
             {
               "path": "Plans/panel_event_contracts/panel_redocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15567,
-              "line_end": 15567,
+              "line_start": 15882,
+              "line_end": 15882,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
@@ -6494,7 +6504,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
@@ -6514,7 +6524,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
@@ -6548,7 +6558,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
@@ -6575,13 +6585,13 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
+          "finding": "SP-664/CV-684/F3-704/ATS-334 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6621,8 +6631,8 @@
             {
               "path": "Plans/panel_event_contracts/panel_redocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15567,
-              "line_end": 15567,
+              "line_start": 15882,
+              "line_end": 15882,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -6662,9 +6672,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py",
-        "scripts/pm-dg6a-final-regression-check.py"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "scripts/pm-dg6a-domain-check.py",
+        "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
     },
     {
       "event_type": "panel.undocked",
@@ -6705,7 +6717,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "ABSENT"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "owner_doc": {
@@ -6732,7 +6744,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "producer": {
@@ -6759,7 +6771,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "closed_payload_schema": {
@@ -6793,7 +6805,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "scope_identity": {
@@ -6820,7 +6832,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "replay_idempotency": {
@@ -6854,7 +6866,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "retention": {
@@ -6874,7 +6886,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PARTIAL"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "redaction_custody": {
@@ -6906,8 +6918,8 @@
             {
               "path": "Plans/panel_event_contracts/panel_undocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15563,
-              "line_end": 15563,
+              "line_start": 15878,
+              "line_end": 15878,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             }
           ],
@@ -6915,7 +6927,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "transitions": {
@@ -6935,7 +6947,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "consumers_checkpoints": {
@@ -6969,7 +6981,7 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "compatibility_withdrawal": {
@@ -6996,13 +7008,13 @@
             "source": "DG6A-sol/REVIEW-cycle7.md@adda7279f8067637b109125f9524b0952f88f96b",
             "status": "PASS"
           },
-          "change": "unchanged",
+          "change": "carried",
           "change_reason": "Cycle 7 agrees with this cell; existing owner boundary and current citations retained."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Serial family, whole source guard-removal, exact numeric/type/format field-domain and full CLI regression oracles; admission ABSENT, retention PARTIAL, native NOT_RUN.",
+          "finding": "SP-665/CV-685/F3-705/ATS-334 bind positive/negative contract oracles; numeric, format, type, custody, state and guard-removal suites pass. Admission ABSENT, retention PARTIAL; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -7042,8 +7054,8 @@
             {
               "path": "Plans/panel_event_contracts/panel_undocked.fixtures.json",
               "unit": "append_cases",
-              "line_start": 15563,
-              "line_end": 15563,
+              "line_start": 15878,
+              "line_end": 15878,
               "quote": "\"name\": \"foreign_original_append_result_ref\""
             },
             {
@@ -7083,9 +7095,11 @@
       ],
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py",
-        "scripts/pm-dg6a-final-regression-check.py"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "scripts/pm-dg6a-domain-check.py",
+        "scripts/pm-dg6a-guard-check.py"
       ],
-      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged."
+      "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN. Round 6 fixes B1/B2/B3/P1/S1; exact family guard and CLI evidence is in drafts/DG6A/fix6. Admission/retention/native boundaries are unchanged. Round 7 fixes cycle-7 B1/B2/P1; final per-family domain/guard/CLI evidence is in drafts/DG6A/fix7; all twelve Astra items apply."
     }
   ],
   "reviewed_head": "adda7279f8067637b109125f9524b0952f88f96b",
