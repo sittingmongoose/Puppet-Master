@@ -745,13 +745,15 @@ class ClosedWorldGuardTests(unittest.TestCase):
     def test_pinned_helpers_count_admitted_coordination_rows_and_nothing_else(self):
         browser = sum(1 for row in CHECK.load("Plans/browser_event_admission.json")["rows"] if row["admission_status"] == CHECK.ADMITTED)
         coordination = sum(1 for row in LEDGER["rows"] if row["admission_status"] == CHECK.ADMITTED)
+        # Both helpers count the three families DL-300 registered: settings.layer.changed and the chat-tool approval pair.
+        dl300 = 3
         changed = copy.deepcopy(self.first["rows"][0]["registry_row"])
         changed["source_refs"] = changed["source_refs"][:-1]
         for gate, case in self.helpers():
             with self.subTest(helper=type(case).__name__):
-                self.assertEqual(self.helper_count(gate, case, REGISTRY, LEDGER), browser + coordination)
-                self.assertEqual(self.helper_count(gate, case, PREP_REGISTRY, PREP_LEDGER), browser)
-                self.assertEqual(self.helper_count(gate, case, self.first_registry, self.first), browser + 1)
+                self.assertEqual(self.helper_count(gate, case, REGISTRY, LEDGER), browser + coordination + dl300)
+                self.assertEqual(self.helper_count(gate, case, PREP_REGISTRY, PREP_LEDGER), browser + dl300)
+                self.assertEqual(self.helper_count(gate, case, self.first_registry, self.first), browser + 1 + dl300)
                 for registry, ledger in ((self.first_registry, PREP_LEDGER), (PREP_REGISTRY, self.first), (with_row(PREP_REGISTRY, changed), self.first)):
                     with self.assertRaises(AssertionError):
                         self.helper_count(gate, case, registry, ledger)
