@@ -474,7 +474,8 @@
           "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
           "selector": "I004"
         }
-      ]
+      ],
+      "scope": "Wrapper with mixed child dispositions: its structural behavior does not establish structural-only behavior of its children, and wrapper coverage is never credited as child coverage. Its independently inventoried children keep their own rows (Sol cycle 7 / Astra 4 note)."
     },
     {
       "function": "recount_anchor",
@@ -4457,7 +4458,8 @@
           "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643",
           "selector": "I069"
         }
-      ]
+      ],
+      "scope": "Wrapper with mixed child dispositions: its structural behavior does not establish structural-only behavior of its children, and wrapper coverage is never credited as child coverage. Its independently inventoried children keep their own rows (Sol cycle 7 / Astra 4 note)."
     },
     {
       "function": "recount_outcomes",
@@ -4541,20 +4543,22 @@
       "expression": "outcome == 'registered'",
       "kind": "branch",
       "site_id": "syntax:6955422baa812999fbfa4576fca2df2dd5239283925d2e77c88781f2d82e0dba",
-      "outcome": "structural",
-      "reason": "Routing cut interrupts the passing parent with {'type': 'ValueError', 'error': 'unknown recount outcome: artifacts.capture_provenance.inspected'}; no acceptance is claimed.",
+      "outcome": "killed by",
       "cut": {
-        "function": "recount_outcomes",
-        "expression": "outcome == 'registered'",
-        "replacement": "False"
+        "label": "registered_dispatch",
+        "description": "broaden only the registered-route equality to admit 'PASS' (Sol cycle 7)"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json",
-          "sha256": "552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce",
-          "selector": "outcome_registered"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle7-c2f15531/adversarial-cut-registered_dispatch.json",
+          "sha256": "156b0cf42e3d959291ebd84277f323a656f8c9ffd9d2c36cb81fbd6faf0c686b",
+          "selector": "registered_dispatch"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_outcome_unknown_outcome"
+      ],
+      "review": "Sol cycle 7 classification note; Astra 4 note; lead record fix"
     },
     {
       "function": "recount_outcomes",
@@ -4563,20 +4567,22 @@
       "expression": "outcome == 'registered'",
       "kind": "comparison",
       "site_id": "syntax:a66e37a8c5824711fd395cb80bde57098ffdeb46eb7f56d444a99d34065533a2",
-      "outcome": "structural",
-      "reason": "Routing cut interrupts the passing parent with {'type': 'ValueError', 'error': 'unknown recount outcome: artifacts.capture_provenance.inspected'}; no acceptance is claimed.",
+      "outcome": "killed by",
       "cut": {
-        "function": "recount_outcomes",
-        "expression": "outcome == 'registered'",
-        "replacement": "False"
+        "label": "registered_dispatch",
+        "description": "broaden only the registered-route equality to admit 'PASS' (Sol cycle 7)"
       },
       "evidence": [
         {
-          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json",
-          "sha256": "552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce",
-          "selector": "outcome_registered"
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle7-c2f15531/adversarial-cut-registered_dispatch.json",
+          "sha256": "156b0cf42e3d959291ebd84277f323a656f8c9ffd9d2c36cb81fbd6faf0c686b",
+          "selector": "registered_dispatch"
         }
-      ]
+      ],
+      "killed_by": [
+        "negative_outcome_unknown_outcome"
+      ],
+      "review": "Sol cycle 7 classification note; Astra 4 note; lead record fix"
     },
     {
       "function": "recount_outcomes",
@@ -9098,12 +9104,63 @@
     "semantic_expansions": 41,
     "sites": 327,
     "outcomes": {
-      "killed by": 195,
-      "structural": 59,
+      "killed by": 197,
+      "structural": 57,
       "implied": 20,
       "same-predicate duplicate": 3,
       "frozen-input only": 50
     },
     "unclassified": 0
+  },
+  "outside_walker_sites": [
+    {
+      "function": "recount_validation",
+      "line": 1074,
+      "expression": "state[\"complete\"] = not issues",
+      "kind": "assigned unary truth test",
+      "outcome": "killed by",
+      "killed_by": [
+        "negative_aggregate_input_issue",
+        "negative_aggregate_receipt_issue"
+      ],
+      "cut": {
+        "expression": "not issues",
+        "replacement": "True"
+      },
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-4/completion-cut-corpus.json",
+          "sha256": "54c7a48299c8eaeb63965373946812748579b9f4b7b47971eccaa838282f5985",
+          "selector": "158 pass / 2 fail under the one-site cut"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-4/completion-witness.json",
+          "sha256": "b446af6d697a340068cc4a4f77c93dddcc55c823e70d40801a542104c9e047b3",
+          "selector": "completion witness"
+        }
+      ],
+      "review": "Astra 4 CA2-A4-B01: a reachable predicate the coverage walker does not enumerate; it already has effective negatives"
+    }
+  ],
+  "walker_limits": {
+    "status": "The regenerated site list is complete only over the walker's supported forms. It is not a proof of a complete predicate universe.",
+    "unsupported_forms": [
+      "assigned unary or walrus truth tests",
+      "truth-only assertions",
+      "bare comprehension filters",
+      "literal or guarded match dispatch",
+      "arbitrary helper predicates",
+      "exception dispatch",
+      "comparisons whose first line is unchanged in a changed multiline node (first-line filter)",
+      "semantic expansion identities bound to argument positions rather than to the required values"
+    ],
+    "evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/astra-4/inventory-probes.json",
+        "sha256": "6fd9e0895899a04bdb41166e2b4c9466ba51573b6be49a2577b0d70f43eb0ade",
+        "selector": "Astra 4 inventory probes"
+      }
+    ],
+    "disposition": "Lead classification under pm7-build's 04:45Z rule: incomplete-inventory proof machinery is a sweep item closed by the shared guard-isolation tool. It does not block CA-SEAL2 because no reachable guard without an effective negative and no approval bypass was found (Astra 4). Guards with no negative and product guards that accept bad input still block."
   }
 }

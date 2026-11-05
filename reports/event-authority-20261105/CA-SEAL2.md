@@ -622,3 +622,24 @@ Sol cycle 7 (`reviews/CA-SEAL2-sol/REVIEW-cycle7.md`) found two reachable checks
 - **C7-B01, anchor-path equality (`V:850`, coverage sites 18 and 19).** New negative `negative_wrong_fourth_anchor_path`: from the passing fourth-receipt parent, only the fourth anchor entry's path changes, to `reports/review-foreign-receipt.json`. Its digest stays correct for the fourth receipt, the third anchor stays intact and every semantic field is unchanged. The intact validator refuses with `fourth amendment identity, authority, byte link or anchor mismatch`. With only the path equality relaxed, this negative alone fails, and the other 159 result records are identical.
 - **C7-B02, excluded-route tag (`V:1010`, coverage sites 190 and 191).** New negative `negative_exclusion_unknown_outcome_tag`: from the passing exact-member exclusion, only `outcome` changes, to `review_unknown_exclusion`. The intact validator refuses with `unknown recount outcome`. With only the dispatch broadened to accept that tag, this negative alone fails, and the other 159 records are identical.
 - Coverage table: the four rows move from structural to killed. The totals are now 195 killed, 59 structural, 20 implied, 3 duplicate and 50 frozen-input only, with 0 unclassified. The corpus passes 160/160, including the coverage test. Cut runner and results: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix7/`.
+
+## Astra round 4: findings and responses (lead, 2026-11-05)
+
+Astra 4 (`reviews/CA-SEAL2-sol/REVIEW-astra-4.md`) found one blocking item, CA2-A4-B01: the coverage walker misses reachable predicate forms. Its example is the completion gate `state["complete"] = not issues` at `V:1074`; it also shows truth-only assertions and comparisons whose first line is unchanged. Astra confirmed the following:
+- all 132 survivor rows hold;
+- the corpus passes 160/160;
+- the completion gate already has two effective negatives (158 pass / 2 fail under its one-site cut);
+- no final-approval bypass exists;
+- approval semantics, historical custody, the staged landing order and scope all pass.
+
+Astra noted that its blocking verdict followed the lead's review instruction, and that the general brief sends inventory-machinery defects to the shared-tool sweep.
+
+**Lead classification (not Jared's; pm7-build informed):** under pm7-build's binding 04:45Z rule, an incomplete inventory is proof machinery and a sweep item closed by the shared guard-isolation tool. Only a guard with no effective negative, a fixture defect, or a product guard that accepts bad input blocks. None of those was found. The lead's Astra 4 brief stated the criterion too broadly ("missing from the rules and reachable"); the binding rule governs.
+
+Records updated, with no change to tests or the validator:
+- the coverage table records the completion gate under `outside_walker_sites`, with its two killing negatives and Astra's evidence;
+- `walker_limits` lists every unsupported form and narrows the completeness claim to the walker's supported forms;
+- sites 183 and 184 are killed by `negative_outcome_unknown_outcome` (Sol cycle 7 note);
+- wrapper sites 20 and 179 carry the mixed-child scope note.
+
+The totals are now 197 killed, 57 structural, 20 implied, 3 duplicate and 50 frozen-input only, with 0 unclassified. Completing the walker is carried as a shared-tool sweep item for CA-SEAL2.

@@ -6,8 +6,8 @@ Tested code commit `90c0eacee18e0862e067f0f54b9e79a11ea331f8`. Validator remains
 
 | Site outcome | Rows |
 |---|---:|
-| **killed by** | 195 |
-| **structural** | 59 |
+| **killed by** | 197 |
+| **structural** | 57 |
 | **implied** | 20 |
 | **same-predicate duplicate** | 3 |
 | **frozen-input only** | 50 |
@@ -24,3 +24,9 @@ Corpus **158/158**; 17 new negatives plus the inventory test; all 140 prior comp
 Full machine-readable rows, named failing tests, cuts, same-field survivor reasons and path/SHA-256 evidence are in `CA-SEAL2-coverage.json`. This is regression coverage, not a seal or admission.
 
 Round 7 (lead fix for Sol cycle 7): sites 18 and 19 (`recount_anchor`, `v.get('path') == path`) and sites 190 and 191 (`recount_outcomes`, `outcome == 'excluded'`) move from structural to killed by `negative_wrong_fourth_anchor_path` and `negative_exclusion_unknown_outcome_tag`. Each narrow cut fails only its own negative, and the other 159 records stay identical (`drafts/CA-SEAL2/fix7/`).
+
+Astra round 4 (record update by the lead):
+- Sites 183 and 184 (`recount_outcomes`, `outcome == 'registered'`) are killed by `negative_outcome_unknown_outcome`, per Sol cycle 7.
+- Wrapper sites 20 and 179 carry a mixed-child scope note.
+- `outside_walker_sites` records the completion gate `state["complete"] = not issues` (`V:1074`), which Astra 4 showed the walker does not enumerate. It is killed by `negative_aggregate_input_issue` and `negative_aggregate_receipt_issue`.
+- `walker_limits` lists the predicate forms the walker does not enumerate. **The regenerated site list is complete only over the walker's supported forms, not over every possible predicate.** Under pm7-build's 04:45Z rule, completing that inventory is shared guard-tool sweep work.
