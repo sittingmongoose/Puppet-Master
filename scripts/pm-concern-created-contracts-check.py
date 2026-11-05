@@ -158,6 +158,11 @@ def main():
     original = fixture['settled_operation']
     assert not operation_errors(original, op_schema, payload_schema)
     count = 1 + isolated_count
+    # First-validator probes are standalone payloads. They carry no frozen
+    # command/record copies or request commitment that a mutation could stale.
+    for case in fixture['payload_cases']:
+        assert (not payload_errors(case['value'], payload_schema)) == case['valid'], case['name']
+        count += 1
     count += shared.producer_cases(fixture, 'concern.created', original['payload'])
     for schema in (payload_schema, op_schema, cp_schema, record_schema):
         count += shared.pattern_leaf_cases(schema)

@@ -27050,5 +27050,41 @@
         "unsettled operation carries append-result reference"
       ]
     }
+  ],
+  "payload_cases": [
+    {
+      "name": "standalone_valid_payload",
+      "value": {
+        "schema_id": "pm.concern_event.concern_created.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture",
+        "concern_id": "concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c",
+        "concern_revision": 1,
+        "concern_record_ref": "pmref:concern_record:fixture/concern_7c735547c9fe60b9d51a6b7a05c329b53f99af7f8590d3088df245b9de37388c/r1",
+        "actor_ref": "pmref:runtime:fixture",
+        "created_by_ref": "pmref:runtime:fixture",
+        "currentness_basis_ref": "pmref:currentness:fixture",
+        "source_refs": [
+          "pmref:source_event:fixture"
+        ],
+        "evidence_refs": [
+          "pmref:evidence:fixture"
+        ],
+        "state": "active",
+        "category": "weak_integration",
+        "severity": "warning",
+        "owner_kind": "User",
+        "owner_ref": "pmref:owner:fixture",
+        "scope_ref": "pmref:scope:fixture",
+        "run_ref": "pmref:run:fixture",
+        "origin": "orchestrator",
+        "handler_target": "handlers::concern::create",
+        "command_id": "cmd.concern.create",
+        "correlation_id": "fixture-correlation",
+        "idempotency_key": "fixture-create",
+        "ts": "2026-11-04T18:00:00Z"
+      },
+      "valid": true
+    }
   ]
 }

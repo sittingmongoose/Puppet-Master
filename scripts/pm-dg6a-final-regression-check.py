@@ -63,6 +63,11 @@ def checkpoint(fixture, kind):
     return fixture['checkpoint_cases'][0]['value'] if kind == 'alert' else fixture['checkpoint']
 
 
+def standalone_payload(fixture, kind):
+    case = next(case for case in fixture['payload_cases'] if case['valid'])
+    return case['payload' if kind == 'alert' else 'value']
+
+
 def resize_checkpoint(value, size, packed):
     for _ in range(4):
         ref = value['index_read_token']['checkpoint_ref']
@@ -71,7 +76,7 @@ def resize_checkpoint(value, size, packed):
     assert len(packed(value)) == size
 
 
-def run_suite(output, selected=None):
+def run_suite(output, selected=None, payload_format_only=False):
     panel = module('dg6a_final_panel', 'pm-panel-event-contracts-check.py')
     concern = module('dg6a_final_concern', 'pm-concern-created-contracts-check.py')
     shared = panel.shared
@@ -129,19 +134,14 @@ def run_suite(output, selected=None):
             def fixture_case(check, name, change, expected=1):
                 cli(event, check, name, script, path, change, expected)
 
-            # B1/B2 first-validator counterexamples use actual family CLIs. Each
-            # mutation changes one leaf of a positive fixture, preserving all other
-            # observations. Domain guard isolation is separately proved by field.
-            if kind=='concern':
-                payload_location=('settled_operation','payload')
-            else:
-                index=next(i for i,c in enumerate(fixture['payload_cases']) if c['valid'])
-                payload_location=('payload_cases',index,'payload' if kind=='alert' else 'value')
+            # First-validator counterexamples use genuine standalone payloads
+            # for all three kinds. Never mutate the concern operation's payload
+            # while leaving its command, record and request commitment stale.
             def positive_payload(v):
-                for key in payload_location:v=v[key]
-                return v
+                return standalone_payload(v, kind)
             base_payload=positive_payload(fixture)
             for field,number in base_payload.items():
+                if payload_format_only:continue
                 if type(number) is not int:continue
                 for spelling in (str(number)+'.0',str(number)+'e0','-0','-0.0','01',str(2**53),str(2**53+1)):
                     def numeric(v,field=field):positive_payload(v)[field]='DG6A_RAW_NUMBER'
@@ -152,6 +152,8 @@ def run_suite(output, selected=None):
                     for malformed in domain_checks.BAD_DATES:
                         def timestamp(v,field=field,malformed=malformed):positive_payload(v)[field]=malformed
                         fixture_case('B2',field+'='+repr(malformed),timestamp)
+            if payload_format_only:
+                continue
 
             def foreign_append(v):
                 original = v['operation_cases'][2]['value'] if kind=='alert' else v['settled_operation']
@@ -316,18 +318,21 @@ def run_suite(output, selected=None):
                 args=('--audit-grade-only',))
 
     for fid in ('shared_alert_state', 'shared_alert_rule_state'):
+        if payload_format_only:
+            continue
         if selected and not selected.startswith('alert.'):
             continue
         cli('alerts', 'A1', 'missing shared-state profile ' + fid, 'pm-alert-event-contracts-check.py',
             'Plans/storage_value_registry.json', lambda v, fid=fid: v['storage_profile']['family_profiles'].pop(fid))
-    if selected in (None, 'concern.created'):
+    if not payload_format_only and selected in (None, 'concern.created'):
         cli('concern.created', 'A1', 'missing original concern record profile', 'pm-concern-created-contracts-check.py',
             'Plans/storage_value_registry.json', lambda v: v['storage_profile']['family_profiles'].pop('concern_record'))
-    cli('all', 'A5', 'unmodified grade/citation/hold audit', Path(__file__).name, expected=0, args=('--audit-grade-only',))
+    if not payload_format_only:
+        cli('all', 'A5', 'unmodified grade/citation/hold audit', Path(__file__).name, expected=0, args=('--audit-grade-only',))
     def wrong_annotation(v):
         row = next(r for r in v['families'] if r['event_type'] == 'bundle.annotation_state_changed')
         row['disposition_evidence'][0]['unit'] = 'CV-049'
-    if selected is None:
+    if not payload_format_only and selected is None:
         cli('bundle.annotation_state_changed', 'A5', 'wrong annotation unit CV-049', Path(__file__).name,
             GRADE, wrong_annotation, args=('--audit-grade-only',))
     for path, digest in restored.items():
@@ -346,6 +351,8 @@ def main():
     parser.add_argument('--output', help='Evidence output outside the repository')
     parser.add_argument('--family')
     parser.add_argument('--audit-grade-only', action='store_true')
+    parser.add_argument('--payload-format-only', action='store_true',
+                        help='Run baseline and standalone timestamp CLI probes only; number-rule sweep is separate')
     parser.add_argument('--failure-exit-probe', type=int)
     args = parser.parse_args()
     if args.failure_exit_probe is not None:
@@ -355,7 +362,7 @@ def main():
     if args.audit_grade_only:
         audit_grade()
         return 0
-    return run_suite(args.output, args.family)
+    return run_suite(args.output, args.family, args.payload_format_only)
 
 
 if __name__ == '__main__':
