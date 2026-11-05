@@ -137,7 +137,7 @@ def _bound_validator(base):
 
     def evolve(self, **changes):
         schema = changes.setdefault("schema", self.schema)
-        selected = validators.validator_for(schema, default=base)
+        selected = _dialect_validator(schema, default=base)
         for field in fields(type(self)):
             if field.init and field.alias not in changes:
                 changes[field.alias] = getattr(self, field.name)
@@ -146,7 +146,11 @@ def _bound_validator(base):
     bound.evolve = evolve
 
     def iter_errors(self, instance, _schema=None):
-        schema = self.schema if _schema is None else _schema
+        from pm_event_datetime_inventory import DatetimeAdmissionError
+        if _schema is not None and _schema is not self.schema:
+            raise DatetimeAdmissionError("datetime_schema_override_unsupported")
+        schema = self.schema
+        self.storage_selection.verify_resources()
         self.storage_selection.admit(schema)
         yield from _eventrecord_storage_properties(self, None, instance, schema)
         yield from extended.iter_errors(self, instance, _schema)
@@ -155,41 +159,81 @@ def _bound_validator(base):
         # descend executes keywords itself; it does not call iter_errors.
         # Admission must precede *every* fragment, including required-only or
         # patternProperties schemas and dialect changes during reference use.
+        from pm_event_datetime_inventory import DatetimeAdmissionError
+        resolver = kwargs.get("resolver")
+        if resolver is not None and resolver._base_uri.rstrip("#") not in self.storage_selection.uri_pins:
+            raise DatetimeAdmissionError("datetime_resource_not_preloaded")
         self.storage_selection.admit(schema)
         yield from _eventrecord_storage_properties(self, None, instance, schema)
         yield from extended.descend(self, instance, schema, *args, **kwargs)
 
+    def validate_reference(self, ref, instance):
+        from urllib.parse import urljoin, urldefrag
+        from pm_event_datetime_inventory import DatetimeAdmissionError
+        base_uri = self._resolver._base_uri
+        uri = urldefrag(base_uri if ref.startswith("#") else urljoin(base_uri, ref))[0]
+        if uri not in self.storage_selection.uri_pins:
+            raise DatetimeAdmissionError("datetime_resource_not_preloaded: " + uri)
+        yield from extended._validate_reference(self, ref, instance)
+
+    bound._validate_reference = validate_reference
     bound.iter_errors = iter_errors
     bound.descend = descend
     return bound
 
 
-def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
-    """Enforce date-time and classified CV-253 resource/field boundaries.
+def _dialect_validator(schema, *, default=None):
+    """Select only the supported declared dialects, including at the root."""
+    from jsonschema import (Draft202012Validator, Draft201909Validator,
+                            Draft7Validator, Draft6Validator)
+    from pm_event_datetime_inventory import DatetimeAdmissionError
+    supported = {base.META_SCHEMA["$id"].rstrip("#"): base for base in
+                 (Draft202012Validator, Draft201909Validator, Draft7Validator, Draft6Validator)}
+    if isinstance(schema, dict) and "$schema" in schema:
+        uri = schema["$schema"]
+        if not isinstance(uri, str) or uri.rstrip("#") not in supported:
+            raise DatetimeAdmissionError("datetime_dialect_unsupported")
+        return supported[uri.rstrip("#")]
+    return default or Draft202012Validator
 
-    Pass authentic frozen resources in registry for retained validation. Both
-    the supplied resources and their pinned hashes remain unchanged.
+
+def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
+    """Enforce date-time over a closed, preloaded, content-pinned graph.
+
+    Neutral outer wrappers are admitted at construction. Supply every current
+    or authentic frozen dependency in registry; retrieval is never permitted.
     """
-    from jsonschema import Draft202012Validator
+    from referencing import Registry, Resource
+    from referencing.jsonschema import specification_with
     from pm_event_datetime_inventory import DatetimeAdmissionError, StorageSelection
     if any(kwargs.get(key) is not None for key in ("resolver", "_resolver")):
         raise DatetimeAdmissionError("datetime_custom_resolver_unsupported")
+    base = _dialect_validator(schema)
+    registry = kwargs.pop("registry", None)
+    if registry is None:
+        registry = Registry()
+    if type(registry) is not Registry or registry._retrieve is not Registry()._retrieve:
+        raise DatetimeAdmissionError("datetime_on_demand_retrieval_unsupported")
     selection = StorageSelection()
     selection.install(schema)
-    registry = kwargs.get("registry")
-    if registry is not None:
-        for resource in registry.values():
-            selection.install(resource.contents)
-        # referencing returns fragments only after retrieving the complete
-        # resource. Bind it at that boundary, before any fragment is evaluated.
-        from attrs import evolve
-        retrieve = registry._retrieve
+    # Crawl only supplied bytes. This discovers embedded $ids/anchors without
+    # retrieving anything and pins all aliases as well as canonical URIs.
+    for resource in registry.values():
+        _dialect_validator(resource.contents, default=base)
+        selection.install(resource.contents)
+    root_uri = (base.ID_OF(schema) if isinstance(schema, dict) else None) or ""
+    root_resource = Resource.from_contents(schema, default_specification=specification_with(base.META_SCHEMA["$id"]))
+    selection.pin(root_uri, schema)
+    registry = registry.with_resource(root_uri, root_resource).crawl()
+    for uri, resource in registry.items():
+        _dialect_validator(resource.contents, default=base)
+        selection.pin(uri, resource.contents)
 
-        def admitted_retrieve(uri):
-            resource = retrieve(uri)
-            selection.install(resource.contents)
-            return resource
+    def refuse_retrieve(uri):
+        raise DatetimeAdmissionError("datetime_resource_not_preloaded: " + uri)
 
-        kwargs["registry"] = evolve(registry, retrieve=admitted_retrieve)
-    return _bound_validator(Draft202012Validator)(
-        schema, format_checker=format_checker(profile=profile), storage_selection=selection, **kwargs)
+    from attrs import evolve
+    registry = evolve(registry, retrieve=refuse_retrieve)
+    return _bound_validator(base)(
+        schema, registry=registry, format_checker=format_checker(profile=profile),
+        storage_selection=selection, **kwargs)

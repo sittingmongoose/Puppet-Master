@@ -40,6 +40,12 @@ def regression_checks(root):
         "pattern": ("new.json", json.dumps({"patternProperties": {"^observed_at_utc$": {"type": "string"}}}).encode()),
         "wildcard": ("new.json", b'{"patternProperties": {".*": {"type": "string"}}}'),
         "wildcard_string": ("new.json", json.dumps({"schema_json": json.dumps({"patternProperties": {".*": {"type": "string"}}})}).encode()),
+        "wildcard_yaml_fence": ("new.md", b'```yaml\npatternProperties: {".*": {type: string}}\n```\n'),
+        "wildcard_yaml_file": ("new.yaml", b'patternProperties: {".*": {type: string}}\n'),
+        "wildcard_html": ("new.md", b'<script type="application/schema+json">\n{"patternProperties":{".*":{}}}\n</script>\n'),
+        "wildcard_malformed_string": ("new.json", json.dumps({"schema_json": '{"patternProperties":{".*":{}}'}).encode()),
+        "wildcard_malformed": ("new.txt", b'{"patternProperties":{".*":{}}'),
+        "propertynames_yaml": ("new.yaml", b'propertyNames: {pattern: ".*"}\n'),
         "escaped": ("new.json", raw.replace('observed_at_utc', r'\u006fbserved_at_utc').encode()),
         "containers": ("new.md", ('> - > ```json\n>   > ' + raw + '\n>   > ```\n').encode()),
     }
@@ -66,6 +72,26 @@ def regression_checks(root):
         finally:
             link.unlink()
             target.unlink()
+    with tempfile.TemporaryDirectory(prefix="pm-datetime-exclusions-") as temp:
+        scratch = Path(temp)
+        (scratch / "Plans").mkdir()
+        (scratch / "scripts").mkdir()
+        file = scratch / "Plans/copy.json"
+        for name, value, referenced in (
+            ("schema", schema, False),
+            ("referenced_fragment", {"properties": {"observed_at_utc": {}}}, True),
+            ("referenced_neutral", {}, True),
+        ):
+            file.write_text(json.dumps(value))
+            if referenced:
+                (scratch / "Plans/ref.json").write_text(json.dumps({"$schema": schema["$schema"], "$ref": "copy.json"}))
+            exclusion = {"path": "Plans/copy.json", "origin": "json", "sha256": inv.hashlib.sha256(json.dumps(value).encode()).hexdigest(),
+                         "reason": "Claimed instance data", "citation": "Plans/copy.json#json"}
+            (scratch / inv.EXCLUSIONS).write_text(json.dumps([exclusion]))
+            _, errors = inv.scan(scratch)
+            checks["datetime_exclusion_rejects_" + name] = any(
+                "loadable_schema_exclusion_forbidden" in e.get("detail", "") for e in errors)
+            (scratch / "Plans/ref.json").unlink(missing_ok=True)
     # Admission refuses every declaration form, even when an empty instance
     # would keep that keyword from examining the field's value.
     declarations = {
@@ -95,7 +121,7 @@ def regression_checks(root):
             try:
                 datetime_validator(candidate, **kwargs).is_valid(instance)
             except inv.DatetimeAdmissionError as error:
-                checks[f"datetime_admission_{name}_{route}"] = error.reason == "datetime_schema_unclassified"
+                checks[f"datetime_admission_{name}_{route}"] = error.reason == ("datetime_on_demand_retrieval_unsupported" if route == "lazy" else "datetime_schema_unclassified")
             else:
                 checks[f"datetime_admission_{name}_{route}"] = False
     inventory = json.loads((root / inv.INVENTORY).read_text())
@@ -113,24 +139,95 @@ def regression_checks(root):
             mutated["nodes"][0].update(role_evidence={"schema_identity": "WRONG"},
                                         owner_profile="invented-profile", classification="EventRecord")
         checks["datetime_inventory_rejects_" + name] = bool(inv.validate_inventory(mutated, root))
-    # Current and frozen internal objects must behave identically for an eager
-    # registry and a trusted offline on-demand retrieval callback.
+    # Closed-graph controls, with both current and frozen Storage targets.
     envelope = json.loads((root / "Plans/event_record.schema.json").read_text())
     corpus = json.loads((root / "Plans/event_number_recipe_corpus.json").read_text())
     entries = [entry for entry in corpus["inventory_datetime_resources"].values()
                if entry["path"] == "Plans/event_record.schema.json"]
     for index, entry in enumerate(entries):
-        for mode in ("eager", "lazy"):
-            resource = Resource.from_contents(envelope, default_specification=DRAFT202012)
-            bank = {envelope["$id"]: resource}
-            registry = (Registry().with_resources(bank.items()) if mode == "eager" else
-                        Registry(retrieve=lambda uri: bank[uri]))
-            validator = datetime_validator({"$ref": envelope["$id"] + "#" + entry["pointer"]}, registry=registry)
-            good = validator.is_valid(entry["baseline"])
-            bad = all(not validator.is_valid(dict(entry["baseline"], **{field: "2026-01-01T00:00:00+00:00"}))
-                      for field in inv.FIELDS if field in entry["baseline"])
-            checks[f"datetime_retrieval_{mode}_{index}"] = good and bad
+        uri = envelope["$id"]
+        ref = {"$ref": uri + "#" + entry["pointer"]}
+        bank = {uri: Resource.from_contents(envelope)}
+        registry = Registry().with_resources(bank.items())
+        validator = datetime_validator(ref, registry=registry)
+        good = entry["baseline"]
+        bad = dict(good, persisted_at_utc="2026-01-01T00:00:00+00:00")
+        checks[f"datetime_retrieval_eager_{index}"] = validator.is_valid(good) and not validator.is_valid(bad)
+        calls = []
+        def retrieve(uri):
+            calls.append(uri)
+            return bank[uri]
+        try:
+            datetime_validator(ref, registry=Registry(retrieve=retrieve))
+        except inv.DatetimeAdmissionError as error:
+            checks[f"datetime_retrieval_lazy_{index}"] = (
+                error.reason == "datetime_on_demand_retrieval_unsupported" and not calls)
+        else:
+            checks[f"datetime_retrieval_lazy_{index}"] = False
+        changed = copy.deepcopy(envelope)
+        if entry["pointer"]:
+            parent, field = entry["pointer"].rsplit("/", 1)
+            inv.at(changed, parent)[field] = {}
+        else:
+            changed = {"$schema": envelope["$schema"], "$id": uri}
+        try:
+            datetime_validator(ref, registry=Registry().with_resource(uri, Resource.from_contents(changed)))
+        except inv.DatetimeAdmissionError as error:
+            checks[f"datetime_fresh_resource_replacement_{index}"] = error.reason.startswith("datetime_resource_fingerprint_unclassified")
+        else:
+            checks[f"datetime_fresh_resource_replacement_{index}"] = False
+        # Also replace the selected object inside an already admitted complete
+        # resource. An empty replacement must not erase its classified target.
+        mutable = copy.deepcopy(envelope)
+        validator = datetime_validator(ref, registry=Registry().with_resource(uri, Resource.from_contents(mutable)))
+        if entry["pointer"]:
+            parent, field = entry["pointer"].rsplit("/", 1)
+            inv.at(mutable, parent)[field] = {}
+        else:
+            mutable.clear()
+        try:
+            validator.is_valid(bad)
+        except inv.DatetimeAdmissionError as error:
+            checks[f"datetime_target_disappearance_{index}"] = error.reason == "datetime_schema_changed_after_admission"
+        else:
+            checks[f"datetime_target_disappearance_{index}"] = False
+        dialects = (
+            ("202012", "https://json-schema.org/draft/2020-12/schema", "$dynamicRef", "$dynamicAnchor"),
+            ("201909", "https://json-schema.org/draft/2019-09/schema", "$recursiveRef", "$recursiveAnchor"),
+            ("draft7", "http://json-schema.org/draft-07/schema#", "$ref", None),
+            ("draft6", "http://json-schema.org/draft-06/schema#", "$ref", None),
+        )
+        for name, dialect, keyword, anchor in dialects:
+            wrapper = {"$schema": dialect, "$id": "urn:pm:datetime:" + name,
+                       "anyOf": [ref, {"type": "array", "items": {keyword: "#"}}]}
+            if anchor:
+                wrapper[anchor] = True if keyword == "$recursiveRef" else "tree"
+            if keyword == "$dynamicRef":
+                wrapper["anyOf"][1]["items"][keyword] = "#tree"
+            registry = Registry().with_resources([*bank.items(), (wrapper["$id"], Resource.from_contents(wrapper))])
+            direct = datetime_validator(wrapper, registry=registry)
+            referenced = datetime_validator({"$ref": wrapper["$id"]}, registry=registry)
+            outcomes = [(v.is_valid([good]), v.is_valid([bad]), v.is_valid([{"not": "event"}]))
+                        for v in (direct, referenced)]
+            checks[f"datetime_dialect_equivalence_{name}_{index}"] = outcomes == [(True, False, False)] * 2
+    for name, candidate, kwargs, reason in (
+        ("unsupported_dialect", {"$schema": "http://json-schema.org/draft-04/schema#"}, {}, "datetime_dialect_unsupported"),
+        ("missing_resource", {"anyOf": [{"type": "null"}, {"$ref": "urn:pm:missing"}]}, {},
+         "datetime_resource_not_preloaded"),
+    ):
+        try:
+            datetime_validator(candidate, **kwargs).is_valid({})
+        except inv.DatetimeAdmissionError as error:
+            checks["datetime_" + name + "_refused"] = error.reason.startswith(reason)
+        else:
+            checks["datetime_" + name + "_refused"] = False
     validator = datetime_validator(envelope)
+    try:
+        list(validator.iter_errors({}, _schema={}))
+    except inv.DatetimeAdmissionError as error:
+        checks["datetime_schema_override_refused"] = error.reason == "datetime_schema_override_unsupported"
+    else:
+        checks["datetime_schema_override_refused"] = False
     envelope["title"] = "changed after admission"
     try:
         validator.is_valid({})

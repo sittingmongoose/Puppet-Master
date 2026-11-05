@@ -253,6 +253,61 @@ def _files(plans):
     yield from visit(plans, set())
 
 
+def _exclusion_schema_paths(root, files):
+    """An exclusion cannot hide a schema root or a referenced resource.
+
+    Read references independently of timestamp candidate detection: even a
+    timestamp-free schema can make another file a loadable resource.
+    """
+    from urllib.parse import urljoin, urldefrag, urlsplit, unquote
+    import posixpath
+    loadable, identities, references = set(), {}, []
+    for file in files:
+        path = file.relative_to(root).as_posix()
+        data = file.read_bytes()
+        if not any(token in data for token in (b"$schema", b"$id", b"$ref", b"$dynamicRef",
+                                               b"$recursiveRef", b"\\u", b"\x00")):
+            continue
+        text = decode_text(data)
+        try:
+            documents = decoded_documents(text)
+        except ValueError:
+            if file.suffix.lower() not in (".md", ".mdx"):
+                continue
+            documents = []
+            for _, body in _markdown_blocks(text):
+                try:
+                    documents.extend(decoded_documents(body))
+                except ValueError:
+                    continue
+        for _, document in documents:
+            if isinstance(document, dict) and ("$schema" in document or "$id" in document):
+                loadable.add(path)
+            def visit(value, base):
+                if isinstance(value, dict):
+                    if isinstance(value.get("$id"), str):
+                        base = urljoin(base, value["$id"])
+                        identities.setdefault(urldefrag(base)[0], set()).add(path)
+                    for key in ("$ref", "$dynamicRef", "$recursiveRef"):
+                        if isinstance(value.get(key), str):
+                            references.append((path, urldefrag(urljoin(base, value[key]))[0]))
+                            references.append((path, urldefrag(urljoin(
+                                "https://pm-inventory.invalid/" + path, value[key]))[0]))
+                    for child in value.values():
+                        visit(child, base)
+                elif isinstance(value, list):
+                    for child in value:
+                        visit(child, base)
+            visit(document, "https://pm-inventory.invalid/" + path)
+    for source, uri in references:
+        loadable.update(p for p in identities.get(uri, ()) if p != source)
+        parsed = urlsplit(uri)
+        target = posixpath.normpath(unquote(parsed.path)).lstrip("/")
+        if target.startswith("Plans/") and target != source:
+            loadable.add(target)
+    return loadable
+
+
 def scan(root=ROOT):
     """Bounded universe: all Plans files; JSON/JSONL in UTF-8/16/32,
     Markdown/MDX CommonMark fences, indented code, HTML and inline code,
@@ -263,15 +318,24 @@ def scan(root=ROOT):
     root = Path(root)
     rows, errors, used = [], [], set()
     try:
+        files = list(_files(root / "Plans"))
         exclusions = json.loads((root / EXCLUSIONS).read_text())
         excluded = {(r["path"], r["origin"]): r for r in exclusions}
         if len(excluded) != len(exclusions):
             raise ValueError("duplicate scan exclusion")
+        schema_paths = _exclusion_schema_paths(root, files)
         for r in exclusions:
             if not all(isinstance(r.get(k), str) and r[k].strip() for k in
                        ("path", "origin", "sha256", "reason", "citation")):
                 raise ValueError("invalid scan exclusion")
-    except (OSError, ValueError, KeyError, TypeError) as error:
+            if r["path"] in schema_paths:
+                raise ValueError("loadable_schema_exclusion_forbidden: " + r["path"])
+            if not re.search(r"data|lineage|non-JSON code|example", r["reason"], re.I):
+                raise ValueError("exclusion_non_runtime_purpose_missing: " + r["path"])
+            citations = [part.strip().split("#", 1)[0] for part in r["citation"].split(";")]
+            if not citations or any(not (root / citation).is_file() for citation in citations):
+                raise ValueError("exclusion_purpose_citation_unreadable: " + r["path"])
+    except (OSError, ValueError, KeyError, TypeError, RecursionError, ImportError) as error:
         return [], [{"error": "scan_exclusions_invalid", "detail": str(error)}]
 
     def unsupported(path, origin, body, reason):
@@ -310,6 +374,9 @@ def scan(root=ROOT):
                     try:
                         decoded = json.loads(obj, object_pairs_hook=_unique_object)
                     except ValueError:
+                        if obj.lstrip().startswith(("{", "[", '"')):
+                            unsupported(path, origin + ":string:" + pointer, obj,
+                                        "unreadable_schema_string_container")
                         return
                     if isinstance(decoded, (dict, list, str)):
                         inspect(decoded, path, origin + ":string:" + pointer)
@@ -328,7 +395,7 @@ def scan(root=ROOT):
         try:
             documents = decoded_documents(body)
         except ValueError:
-            if mentions_field(body):
+            if schema_candidate(body):
                 unsupported(path, origin, body, "unreadable_mentioning_container")
             return
         before = len(rows)
@@ -338,7 +405,7 @@ def scan(root=ROOT):
             unsupported(path, origin, body, "unclassified_mentioning_container")
 
     try:
-        for file in _files(root / "Plans"):
+        for file in files:
             path = file.relative_to(root).as_posix()
             try:
                 data = file.read_bytes()
@@ -359,13 +426,14 @@ def scan(root=ROOT):
                     if file.suffix.lower() in (".md", ".mdx"):
                         for origin, body in _markdown_blocks(text):
                             container(path, origin, body)
-                    elif mentions_field(text):
+                    elif schema_candidate(text):
                         unsupported(path, "file", text, "unreadable_mentioning_container")
                 else:
                     for origin, value in documents:
                         before = len(rows)
                         inspect(value, path, origin)
-                        if len(rows) == before and (path, origin) not in used and mentions_field(json.dumps(value)):
+                        if (len(rows) == before and (path, origin) not in used and path not in schema_paths
+                                and mentions_field(json.dumps(value))):
                             unsupported(path, origin, json.dumps(value), "unclassified_mentioning_container")
             except (ValueError, OSError, RecursionError, ImportError) as error:
                 errors.append({"path": path, "error": "scan_read_failed", "detail": str(error)})
@@ -384,7 +452,7 @@ def _source_document(root, row, cache):
             cache[path] = dict(decoded_documents(text))
         except ValueError:
             cache[path] = {origin: json.loads(body, object_pairs_hook=_unique_object)
-                           for origin, body in _markdown_blocks(text) if mentions_field(body)}
+                           for origin, body in _markdown_blocks(text) if schema_candidate(body)}
     origin, *strings = row["origin"].split(":string:")
     value = cache[path][origin]
     for pointer in strings:
@@ -554,6 +622,30 @@ class StorageSelection:
         self.selections = resource_selections()
         self.nodes = {}
         self.visited = {}
+        self.resources = {}
+        self.uri_pins = {}
+        inventory = json.loads((ROOT / INVENTORY).read_text())
+        self.known_uris = {}
+        for row in inventory["nodes"]:
+            if row["resource_id"] and row["classification"] != "source_lineage_schema_patch":
+                self.known_uris.setdefault(row["resource_id"].rstrip("#"), set()).add(row["resource_sha256"])
+
+    def pin(self, uri, schema):
+        fingerprint = digest(schema)
+        uri = uri.rstrip("#")
+        if uri in self.known_uris and fingerprint not in self.known_uris[uri]:
+            raise DatetimeAdmissionError("datetime_resource_fingerprint_unclassified: " + uri)
+        if uri in self.uri_pins and fingerprint != self.uri_pins[uri]:
+            raise DatetimeAdmissionError("datetime_resource_uri_conflict: " + uri)
+        self.uri_pins[uri] = fingerprint
+        self.resources[id(schema)] = (schema, fingerprint)
+
+    def verify_resources(self):
+        # Check complete resources, including a classified target replaced by
+        # a fresh empty object which no longer declares either field.
+        for schema, fingerprint in self.resources.values():
+            if digest(schema) != fingerprint:
+                raise DatetimeAdmissionError("datetime_schema_changed_after_admission")
 
     def install(self, schema, *, resource_root=True):
         if not isinstance(schema, dict):
@@ -561,6 +653,9 @@ class StorageSelection:
         # A dictionary previously seen inside a wrapper may later be loaded
         # as its own complete (possibly anonymous) resource.
         if resource_root or "$id" in schema or "$schema" in schema:
+            self.resources[id(schema)] = (schema, digest(schema))
+            if "$id" in schema:
+                self.pin(schema["$id"], schema)
             for pointer, row in self.selections.get(digest(schema), {}).items():
                 node = at(schema, pointer)
                 self.nodes[id(node)] = (node, row)

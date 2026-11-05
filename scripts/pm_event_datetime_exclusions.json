@@ -903,25 +903,11 @@
     "citation": "Plans/git_adapter_command_contract_fixtures.json#json"
   },
   {
-    "path": "Plans/goal_execution_binding_custody.schema.json",
-    "origin": "json",
-    "sha256": "f7648f750048cfdc62bb19e0c2f6cbea0109aa8260b7f27f2079f85c43d0db18",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/goal_execution_binding_custody.schema.json#json"
-  },
-  {
     "path": "Plans/goal_scheduled_history_contract_fixtures.json",
     "origin": "json",
     "sha256": "58c1cc1c8182e4b34bd0fa9796b61b62d72b9b5bc27c3db3ceb0d54ef2e2a322",
     "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
     "citation": "Plans/goal_scheduled_history_contract_fixtures.json#json"
-  },
-  {
-    "path": "Plans/goal_workflow_cancel_contracts/schemas/late-assignment.schema.json",
-    "origin": "json",
-    "sha256": "69711499c6520b4a7b5785ec789954eaa1b453f0c7ee81c0ac83f705d880841e",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/goal_workflow_cancel_contracts/schemas/late-assignment.schema.json#json"
   },
   {
     "path": "Plans/home_layout_full_value_contract_fixtures.json",
@@ -1127,10 +1113,31 @@
     "citation": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/fresh-profile-methods.json#json"
   },
   {
-    "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_execution_binding_custody.schema.json",
-    "origin": "json",
-    "sha256": "f7648f750048cfdc62bb19e0c2f6cbea0109aa8260b7f27f2079f85c43d0db18",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/goal_execution_binding_custody.schema.json#json"
+    "path": "Plans/_shards/storage_value_registry/128-lines-25401-25600.md",
+    "origin": "code:11",
+    "sha256": "53a5b80b61da119e1ec2c46c7babe9fadd7dd42632ae9d1f9c1eb67c3d47cd12",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/128-lines-25401-25600.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/165-lines-32801-33000.md",
+    "origin": "code:11",
+    "sha256": "557a757014c09cb7e42ae5829d90f9a2d44b4cb80067cae3d0c4b5c9b511a813",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/165-lines-32801-33000.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/170-lines-33801-34000.md",
+    "origin": "code:11",
+    "sha256": "36c8e344a664bf9fd89374e0da3e5f9fde90574653860663468c83a86641cd8e",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/170-lines-33801-34000.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/230-lines-45801-46000.md",
+    "origin": "code:11",
+    "sha256": "1207ea0846dab2c5372f552be998b324bdd50b8eaad3b4cd1f0ecb6232efd7b2",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/230-lines-45801-46000.md#code:11; Plans/storage_value_registry.json"
   }
 ]
