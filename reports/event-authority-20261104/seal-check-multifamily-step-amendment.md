@@ -64,7 +64,7 @@ if after["family_count"] != before["family_count"] + 1 or after["sha256"] == bef
 
 So a family registered in a step that added k > 1 families had no truthful record. The three DL-300 families went from 43 to 46 together.
 
-**After** (current validator `743ca664...`, fix round 7; round 5 was `0cb2bd07...`; round 4 was `48ab44d7...`; round 3 was `74897e17...`; fix round 2 was `fb551b06...`; fix round 1 was `e4e988b7...` and round 0 was `bad3e7e8...`):
+**After** (current validator `319f6bff...`, fix round 8; fix round 7 was `743ca664...`; round 6 changed no validator byte; round 5 was `0cb2bd07...`; round 4 was `48ab44d7...`; round 3 was `74897e17...`; fix round 2 was `fb551b06...`; fix round 1 was `e4e988b7...` and round 0 was `bad3e7e8...`):
 
 - **A record without `registry_step_event_types`** is judged exactly as before:
   - the one-family rule above;
