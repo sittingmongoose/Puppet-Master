@@ -125,8 +125,15 @@ SNAKE_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 NAMESPACE_RE = re.compile(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*")
 BACKTICK_RE = re.compile(r"`([^`]+)`")
 DEFS_ROOT_KEY = "command_payload_definitions"
-# Last resort for YAML the scanner cannot read at all: the plain root key at column zero.
-DEFS_FALLBACK_RE = re.compile(r"^command_payload_definitions[ \t]*:", re.M)
+YAML_ESCAPE_RE = re.compile(r"\\(?:x([0-9A-Fa-f]{2})|u([0-9A-Fa-f]{4})|U([0-9A-Fa-f]{8}))")
+YAML_ESCAPED_BREAK_RE = re.compile(r"\\\r?\n[ \t]*")
+
+
+def _decoded_for_key_search(block: str) -> str:
+    """The fence text with YAML's hex and unicode escapes and escaped line breaks decoded, so an
+    escaped spelling of the root key can be found in YAML that cannot be parsed."""
+    text = YAML_ESCAPED_BREAK_RE.sub("", block)
+    return YAML_ESCAPE_RE.sub(lambda m: chr(int(next(g for g in m.groups() if g), 16)), text)
 JSON_DEF_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-/]+\.json)#/\$defs/([A-Za-z0-9_]+)$")
 DOC_UNIT_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-]+\.md)#([A-Z][A-Z0-9]*-\d+)$")
 LOCAL_REF_RE = re.compile(r"^local:([A-Za-z][A-Za-z0-9_]*)$")
@@ -315,9 +322,14 @@ def is_definitions_block(block: str) -> bool:
     column zero. A detected block then gets the C14 shape and format checks."""
     try:
         nodes = list(yaml.compose_all(block, Loader=yaml.SafeLoader))
-    except Exception:  # noqa: BLE001 - malformed YAML: fall back to tokens
-        found, scanner_failed = _root_key_by_tokens(block)
-        return found or (scanner_failed and DEFS_FALLBACK_RE.search(block) is not None)
+    except Exception:  # noqa: BLE001 - malformed YAML: fail closed (Sol r6)
+        # YAML that cannot be composed is a definitions block when the scanner reads a top-level
+        # root key before its error, or when the key text appears anywhere in the fence, escapes
+        # decoded. The reader and scanner may stop before yielding any key (an unterminated or
+        # badly escaped flow value, a NUL or other forbidden character), so text presence alone
+        # suffices: a malformed fence that mentions the key gets C14 instead of a silent pass.
+        found, _scanner_failed = _root_key_by_tokens(block)
+        return found or DEFS_ROOT_KEY in _decoded_for_key_search(block)
     for node in nodes:
         if isinstance(node, yaml.MappingNode):
             for key, _value in node.value:
@@ -2423,7 +2435,14 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         def _(fx: Fixture, text=text) -> None:
             fx.doc_suffix["Plans/Containers_Registry_and_Unraid.md"] = "\n\n```yaml\n" + text + "\n```\n"
 
-    for label, text in [("double-quoted key", '"command_payload_definitions": false'),
+    for label, text in [("flow mapping with an unterminated value", '{command_payload_definitions: "unterminated}'),
+                        ("flow mapping with a bad escape", '{command_payload_definitions: "bad\\qescape"}'),
+                        ("quoted flow key with a bad escape", '{"command_payload_definitions": "bad\\qescape"}'),
+                        ("flow mapping with a bad tag", "{command_payload_definitions: !<bad%xx> false}"),
+                        ("NUL in a quoted value", '"command_payload_definitions": "bad\x00value"'),
+                        ("U+0001 in a quoted value", '"command_payload_definitions": "bad\x01value"'),
+                        ("escaped key with a NUL value", '"command\\x5fpayload_definitions": "bad\x00value"'),
+                        ("double-quoted key", '"command_payload_definitions": false'),
                         ("escaped key", '"command\\x5fpayload_definitions": false'),
                         ("space before the colon", "command_payload_definitions : false"),
                         ("explicit multi-line key", "? command_payload_definitions\n: false"),
