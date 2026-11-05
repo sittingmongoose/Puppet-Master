@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-05T03:59:39Z",
+  "generated_at_utc": "2026-11-05T05:39:10Z",
   "index_path": "Plans/_shards/decision_policy/00-index.md",
-  "index_sha256": "5b67ebd791f910127877278fdf7c0a57644d069e18b4c1c6dca77e0a83062976",
+  "index_sha256": "9bc1e4da6c63eddc1b23e219c6d5ded71a90962e6052c75324a91adbd43ae06f",
   "manifest_path": "Plans/_shards/decision_policy/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/decision_policy/001-preamble.md",
-      "sha256": "8602fcc60704e1669ce4d943839b524e03e968bed64f0d326a66ce5985b37356",
+      "sha256": "94a1de7ba8befd2cae142614ae4656ee13dc5adfa34885fec8a6038ad498df64",
       "shard_id": "001",
       "source_line_end": 15,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/decision_policy/002-0.-scope.md",
-      "sha256": "f83292366f60d6324e85328a0bd2b0d1203e9b4bc5e1b7a568c79b53e5b9c0ba",
+      "sha256": "6b0cf832c796390eade1c84ca741f907c71382e1141c5d393b2d865e064ac564",
       "shard_id": "002",
       "source_line_end": 22,
       "source_line_start": 17,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Precedence (non-negotiable)",
       "path": "Plans/_shards/decision_policy/003-1.-precedence-non-negotiable.md",
-      "sha256": "c19376cc1f74204f867ce4f737e0dde2c9333faeb1db0075a5b8dc6d9f501a4d",
+      "sha256": "3f9f8f0fdfc84f74e8eaf6ddd906dcf978749a934eb64b1139282a83f449bee1",
       "shard_id": "003",
       "source_line_end": 36,
       "source_line_start": 24,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Deterministic defaults (must be autonomous)",
       "path": "Plans/_shards/decision_policy/004-2.-deterministic-defaults-must-be-autonomous.md",
-      "sha256": "8947e8edf2b2cd767fcee7a3ab48f8687b8b6b66ee4e0015a86b16b26666462d",
+      "sha256": "84a5c448df844706e013e2bc3c60fe1bb8cf3beccad92d1159743eafa3f82841",
       "shard_id": "004",
       "source_line_end": 158,
       "source_line_start": 37,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Tie-break rules (ordering)",
       "path": "Plans/_shards/decision_policy/005-3.-tie-break-rules-ordering.md",
-      "sha256": "cf4663e33dd5846d0fe451f823e62b7d9d954c4576b318c8dea32e877d3629c1",
+      "sha256": "45f03b1199d3e82d595eaf703189d2bf0c621058ad44a0dee032b8a827d72e69",
       "shard_id": "005",
       "source_line_end": 194,
       "source_line_start": 160,
@@ -53,7 +53,7 @@
     {
       "heading": "4. \"No human in the loop\" rule",
       "path": "Plans/_shards/decision_policy/006-4.-no-human-in-the-loop-rule.md",
-      "sha256": "91069e63bb50f6a3f5cdb997db75333699397e78470360c08f74b3e81231a5fe",
+      "sha256": "9680777fdba0b3b6b80fc8904d0e0e8682f3c2e935ecc0a74d2cf106f70da297",
       "shard_id": "006",
       "source_line_end": 204,
       "source_line_start": 196,
@@ -62,7 +62,7 @@
     {
       "heading": "5. SpecLock Update Protocol (autonomous; no human readers)",
       "path": "Plans/_shards/decision_policy/007-5.-speclock-update-protocol-autonomous-no-human-readers.md",
-      "sha256": "8de2ae62866fb169123d29c701c6ad5c2b0e00369bc8a336dc33fa55aa320f63",
+      "sha256": "2e13099b39af464026378fc7bd0b5d76e031e7c3da687af58c00465a05be948d",
       "shard_id": "007",
       "source_line_end": 257,
       "source_line_start": 205,
@@ -71,97 +71,97 @@
     {
       "heading": "6. Ambiguity vs. Missing User Intent",
       "path": "Plans/_shards/decision_policy/008-6.-ambiguity-vs.-missing-user-intent.md",
-      "sha256": "9a7b5e092f3b3e449c24d81b584151eb5ce50aaf4f3a5fb349f7ea738a9b0657",
+      "sha256": "abf9311dcda389cf39cfc024d786c4de62245fc2fe9c670c2737cf938246843b",
       "shard_id": "008",
-      "source_line_end": 351,
+      "source_line_end": 653,
       "source_line_start": 258,
       "split_rule": "heading-##"
     },
     {
       "heading": "Runtime Decision Rules Addendum (2026-03-08)",
       "path": "Plans/_shards/decision_policy/009-runtime-decision-rules-addendum-2026-03-08.md",
-      "sha256": "6d775a09076602b389acfc7273afbf358f2a02139ba94cb9086edee03193b4fb",
+      "sha256": "c452e5351ef939604725ad9aca492896e6e26846172b185b69b6ec491ac2a91f",
       "shard_id": "009",
-      "source_line_end": 414,
-      "source_line_start": 353,
+      "source_line_end": 716,
+      "source_line_start": 655,
       "split_rule": "heading-##"
     },
     {
       "heading": "Runtime Recovery Deterministic Defaults Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/decision_policy/010-runtime-recovery-deterministic-defaults-canonical-alignment-2026.md",
-      "sha256": "12f3760ef77b9ffd3a5fee73738a1008b276f2b6be920d45901c5d5ad83b5fde",
+      "sha256": "7851370d03307b83ec9ab9446cc815dab92af3972b2f5bff03a412d5436fe324",
       "shard_id": "010",
-      "source_line_end": 435,
-      "source_line_start": 415,
+      "source_line_end": 737,
+      "source_line_start": 717,
       "split_rule": "heading-##"
     },
     {
       "heading": "Canonical Runtime Recovery Matrix Completion",
       "path": "Plans/_shards/decision_policy/011-canonical-runtime-recovery-matrix-completion.md",
-      "sha256": "4953ef1bab5ed5629e5fa6728f7d56e0c3277af2d69ee48baf35de1a14cec4fa",
+      "sha256": "caf669df3797b135db18ec9402dd0b1a62efdb7073548371fbcca11b18bffa72",
       "shard_id": "011",
-      "source_line_end": 458,
-      "source_line_start": 436,
+      "source_line_end": 760,
+      "source_line_start": 738,
       "split_rule": "heading-##"
     },
     {
       "heading": "Source Control, GitHub Actions, and Docker Manager Blocked-State Addendum (2026-03-12)",
       "path": "Plans/_shards/decision_policy/012-source-control-github-actions-and-docker-manager-blocked-state-a.md",
-      "sha256": "953c023833e1266b87f6914e0aa794dcf7a575975f21d33c70b0d3aacc7fc382",
+      "sha256": "548653f721c2bb43e1849168d0b0048f9e5492c0cf6213d56b3d01a2fb6d2d3d",
       "shard_id": "012",
-      "source_line_end": 476,
-      "source_line_start": 460,
+      "source_line_end": 778,
+      "source_line_start": 762,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/decision_policy/013-owner-consumer-map.md",
-      "sha256": "f5768152d6e2ccc20b488bada60daeb520f34c4731bc8bfec88bf809cc5f3453",
+      "sha256": "90c3f7e97d99e00ecdba3205cd7797e090a98f621eb572e130cc12b7849e2395",
       "shard_id": "013",
-      "source_line_end": 482,
-      "source_line_start": 478,
+      "source_line_end": 784,
+      "source_line_start": 780,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/decision_policy/014-planunits.md",
-      "sha256": "6af2bf4a80c0904d9b78ce934293f1fcce15dab3b2e2d551ac52012435f7b48c",
+      "sha256": "4d1c3e3548364e22bd2ce1f202a984ffcf050e51561113efe2782eead1c02f10",
       "shard_id": "014",
-      "source_line_end": 3317,
-      "source_line_start": 484,
+      "source_line_end": 3620,
+      "source_line_start": 786,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/decision_policy/015-migration-coverage.md",
-      "sha256": "49581da5f81814b78c912d58aa2591455219444b64c7c53e083bf08a579f8972",
+      "sha256": "f8936f6d40d914ba8c9fbb6ce01816d7a14eb5c579bd231df6e226580fe07fd7",
       "shard_id": "015",
-      "source_line_end": 3329,
-      "source_line_start": 3319,
+      "source_line_end": 3632,
+      "source_line_start": 3622,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/decision_policy/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "fdb84aa27d95e8a4c7050adffcfbf68a6bf3eeb0aa8666da64c77a349a1de2a5",
+      "sha256": "cdd50d8142256804c7fa94349e418b21afb70810788c6dd6737e27aa845f3b99",
       "shard_id": "016",
-      "source_line_end": 3451,
-      "source_line_start": 3331,
+      "source_line_end": 3754,
+      "source_line_start": 3634,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/decision_policy/017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "da0ef9f9ab16669ddd496043508f7ec64dd5e6c49147a25c789c3f9e1bde1c1d",
+      "sha256": "0b432f3d38c4cc2c2b33b6ec18eea4496f121b5931f2422f6e573e685381ed3d",
       "shard_id": "017",
-      "source_line_end": 3459,
-      "source_line_start": 3453,
+      "source_line_end": 3762,
+      "source_line_start": 3756,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3459,
+    "line_count": 3762,
     "path": "Plans/Decision_Policy.md",
-    "sha256": "4fc6bb43b48d4e1ed4adb85852353988adf67bc11e56dd8849471ac113eb0d95"
+    "sha256": "79c1701509e6333d3470add092021dbf424a6992e9cae2ce874abfc7a555a58a"
   }
 }

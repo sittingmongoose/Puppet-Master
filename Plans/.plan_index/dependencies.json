@@ -5698,6 +5698,7 @@
     "CWF-091",
     "CWF-092",
     "DP-064",
+    "DP-066",
     "MA-026",
     "OSI-274",
     "OSI-331",
@@ -29451,6 +29452,11 @@
     {
       "edge_type": "depends_on",
       "from": "DL-330",
+      "to": "DP-066"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-330",
       "to": "PWIZ-038"
     },
     {
@@ -29831,6 +29837,21 @@
     {
       "edge_type": "depends_on",
       "from": "DP-064",
+      "to": "DP-034"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-066",
+      "to": "DP-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-066",
+      "to": "DP-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DP-066",
       "to": "DP-034"
     },
     {
@@ -117274,7 +117295,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T04:08:25Z",
+  "generated_at_utc": "2026-11-05T05:40:03Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -152459,8 +152480,8 @@
       "source_location": {
         "heading": "DL-331 - Retire The Exact Token \"Playwright optional\" With A Ledger Correction",
         "heading_level": 3,
-        "heading_line": 21216,
-        "line": 21218,
+        "heading_line": 21235,
+        "line": 21237,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152476,8 +152497,8 @@
       "source_location": {
         "heading": "DL-332 - UF-019 Distinguishes Gemini Direct From Antigravity CLI",
         "heading_level": 3,
-        "heading_line": 21268,
-        "line": 21270,
+        "heading_line": 21287,
+        "line": 21289,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -152493,8 +152514,8 @@
       "source_location": {
         "heading": "DP-001 - Decision Policy Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 3258,
-        "line": 3260,
+        "heading_line": 3561,
+        "line": 3563,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152510,8 +152531,8 @@
       "source_location": {
         "heading": "DP-002 - Canonical Name And Policy Scope Signals",
         "heading_level": 3,
-        "heading_line": 486,
-        "line": 488,
+        "heading_line": 788,
+        "line": 790,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152527,8 +152548,8 @@
       "source_location": {
         "heading": "DP-003 - Ambiguity Scope And Decision Policy Contract",
         "heading_level": 3,
-        "heading_line": 528,
-        "line": 530,
+        "heading_line": 830,
+        "line": 832,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152544,8 +152565,8 @@
       "source_location": {
         "heading": "DP-004 - Precedence Stack And Spec Lock Priority",
         "heading_level": 3,
-        "heading_line": 571,
-        "line": 573,
+        "heading_line": 873,
+        "line": 875,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152561,8 +152582,8 @@
       "source_location": {
         "heading": "DP-005 - Safe Autonomous Default Ordering",
         "heading_level": 3,
-        "heading_line": 616,
-        "line": 618,
+        "heading_line": 918,
+        "line": 920,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152578,8 +152599,8 @@
       "source_location": {
         "heading": "DP-006 - Stable Identity And Attribution Defaults",
         "heading_level": 3,
-        "heading_line": 661,
-        "line": 663,
+        "heading_line": 963,
+        "line": 965,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152595,8 +152616,8 @@
       "source_location": {
         "heading": "DP-007 - Provider Policy Stale-Table Retirement",
         "heading_level": 3,
-        "heading_line": 707,
-        "line": 709,
+        "heading_line": 1009,
+        "line": 1011,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152612,8 +152633,8 @@
       "source_location": {
         "heading": "DP-008 - Operational Identity And Execution Role Separation",
         "heading_level": 3,
-        "heading_line": 750,
-        "line": 752,
+        "heading_line": 1052,
+        "line": 1054,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152629,8 +152650,8 @@
       "source_location": {
         "heading": "DP-009 - HITL Recovery Defaults And Projection Trust Copy",
         "heading_level": 3,
-        "heading_line": 796,
-        "line": 798,
+        "heading_line": 1098,
+        "line": 1100,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152646,8 +152667,8 @@
       "source_location": {
         "heading": "DP-010 - Page-Owned Orchestrator Scope And Permission Identity",
         "heading_level": 3,
-        "heading_line": 844,
-        "line": 846,
+        "heading_line": 1146,
+        "line": 1148,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152663,8 +152684,8 @@
       "source_location": {
         "heading": "DP-011 - Degraded-Trust Concern Escalation Bridge",
         "heading_level": 3,
-        "heading_line": 892,
-        "line": 894,
+        "heading_line": 1194,
+        "line": 1196,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152680,8 +152701,8 @@
       "source_location": {
         "heading": "DP-012 - Subagent Runtime Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 935,
-        "line": 937,
+        "heading_line": 1237,
+        "line": 1239,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152697,8 +152718,8 @@
       "source_location": {
         "heading": "DP-013 - Blocked Approval Identity And Compatibility Fields",
         "heading_level": 3,
-        "heading_line": 980,
-        "line": 982,
+        "heading_line": 1282,
+        "line": 1284,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152714,8 +152735,8 @@
       "source_location": {
         "heading": "DP-014 - Runtime Blocked Reasons And Concern Lifecycle",
         "heading_level": 3,
-        "heading_line": 1028,
-        "line": 1030,
+        "heading_line": 1330,
+        "line": 1332,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152731,8 +152752,8 @@
       "source_location": {
         "heading": "DP-015 - HITL Interview Approval Scope And Automation Defaults",
         "heading_level": 3,
-        "heading_line": 1075,
-        "line": 1077,
+        "heading_line": 1377,
+        "line": 1379,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152748,8 +152769,8 @@
       "source_location": {
         "heading": "DP-016 - Actor Account Traceability And Degraded Projection Gating",
         "heading_level": 3,
-        "heading_line": 1124,
-        "line": 1126,
+        "heading_line": 1426,
+        "line": 1428,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152765,8 +152786,8 @@
       "source_location": {
         "heading": "DP-017 - Worker Runtime Identity And Durable Projection Browsing",
         "heading_level": 3,
-        "heading_line": 1170,
-        "line": 1172,
+        "heading_line": 1472,
+        "line": 1474,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152782,8 +152803,8 @@
       "source_location": {
         "heading": "DP-018 - Route Primitive Ownership And Research-Incomplete Seams",
         "heading_level": 3,
-        "heading_line": 1215,
-        "line": 1217,
+        "heading_line": 1517,
+        "line": 1519,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152799,8 +152820,8 @@
       "source_location": {
         "heading": "DP-019 - Blocked Projection Persistence And Owner-Schema Completion",
         "heading_level": 3,
-        "heading_line": 1265,
-        "line": 1267,
+        "heading_line": 1567,
+        "line": 1569,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152816,8 +152837,8 @@
       "source_location": {
         "heading": "DP-020 - Runtime Artifact Lineage And Blocked Episode Targetability",
         "heading_level": 3,
-        "heading_line": 1315,
-        "line": 1317,
+        "heading_line": 1617,
+        "line": 1619,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152833,8 +152854,8 @@
       "source_location": {
         "heading": "DP-021 - Usage Route Open Object Ownership Cleanup",
         "heading_level": 3,
-        "heading_line": 1364,
-        "line": 1366,
+        "heading_line": 1666,
+        "line": 1668,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152850,8 +152871,8 @@
       "source_location": {
         "heading": "DP-022 - Tier Compatibility Cleanup Lifecycle And Large-Run Policy",
         "heading_level": 3,
-        "heading_line": 1412,
-        "line": 1414,
+        "heading_line": 1714,
+        "line": 1716,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152867,8 +152888,8 @@
       "source_location": {
         "heading": "DP-023 - OpenCode Identity And Redaction Defaults",
         "heading_level": 3,
-        "heading_line": 1461,
-        "line": 1463,
+        "heading_line": 1763,
+        "line": 1765,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152884,8 +152905,8 @@
       "source_location": {
         "heading": "DP-024 - Tie-Break Ordering Defaults",
         "heading_level": 3,
-        "heading_line": 1507,
-        "line": 1509,
+        "heading_line": 1809,
+        "line": 1811,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152901,8 +152922,8 @@
       "source_location": {
         "heading": "DP-025 - Autonomous Decision Logging Contract",
         "heading_level": 3,
-        "heading_line": 1548,
-        "line": 1550,
+        "heading_line": 1850,
+        "line": 1852,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152918,8 +152939,8 @@
       "source_location": {
         "heading": "DP-026 - No Human In Loop Runtime Rule",
         "heading_level": 3,
-        "heading_line": 1595,
-        "line": 1597,
+        "heading_line": 1897,
+        "line": 1899,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152935,8 +152956,8 @@
       "source_location": {
         "heading": "DP-027 - Spec Lock Protocol Boundary",
         "heading_level": 3,
-        "heading_line": 1637,
-        "line": 1639,
+        "heading_line": 1939,
+        "line": 1941,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152952,8 +152973,8 @@
       "source_location": {
         "heading": "DP-028 - Spec Lock Deterministic Update Steps",
         "heading_level": 3,
-        "heading_line": 1683,
-        "line": 1685,
+        "heading_line": 1985,
+        "line": 1987,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152969,8 +152990,8 @@
       "source_location": {
         "heading": "DP-029 - Spec Lock Prohibited Behaviors",
         "heading_level": 3,
-        "heading_line": 1727,
-        "line": 1729,
+        "heading_line": 2029,
+        "line": 2031,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -152986,8 +153007,8 @@
       "source_location": {
         "heading": "DP-030 - No Secrets In Persistent Storage",
         "heading_level": 3,
-        "heading_line": 1772,
-        "line": 1774,
+        "heading_line": 2074,
+        "line": 2076,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153003,8 +153024,8 @@
       "source_location": {
         "heading": "DP-031 - Ambiguity Deterministic Resolution",
         "heading_level": 3,
-        "heading_line": 1823,
-        "line": 1825,
+        "heading_line": 2125,
+        "line": 2127,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153020,8 +153041,8 @@
       "source_location": {
         "heading": "DP-032 - Missing User Intent Clarification Boundary",
         "heading_level": 3,
-        "heading_line": 1868,
-        "line": 1870,
+        "heading_line": 2170,
+        "line": 2172,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153037,8 +153058,8 @@
       "source_location": {
         "heading": "DP-033 - Pre-Execution Clarification And Start-Run Block",
         "heading_level": 3,
-        "heading_line": 1911,
-        "line": 1913,
+        "heading_line": 2213,
+        "line": 2215,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153054,8 +153075,8 @@
       "source_location": {
         "heading": "DP-034 - Requirements Quality Report Boundary Severity Persistence",
         "heading_level": 3,
-        "heading_line": 1962,
-        "line": 1964,
+        "heading_line": 2264,
+        "line": 2266,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153071,8 +153092,8 @@
       "source_location": {
         "heading": "DP-035 - Runtime Fallback Prohibition Defaults",
         "heading_level": 3,
-        "heading_line": 2012,
-        "line": 2014,
+        "heading_line": 2315,
+        "line": 2317,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153088,8 +153109,8 @@
       "source_location": {
         "heading": "DP-036 - Deterministic Blocked Approval Identity Addendum",
         "heading_level": 3,
-        "heading_line": 2058,
-        "line": 2060,
+        "heading_line": 2361,
+        "line": 2363,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153105,8 +153126,8 @@
       "source_location": {
         "heading": "DP-037 - Workflow Overlay Identity Preservation",
         "heading_level": 3,
-        "heading_line": 2108,
-        "line": 2110,
+        "heading_line": 2411,
+        "line": 2413,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153122,8 +153143,8 @@
       "source_location": {
         "heading": "DP-038 - Projection-Sensitive Mutation Guard",
         "heading_level": 3,
-        "heading_line": 2155,
-        "line": 2157,
+        "heading_line": 2458,
+        "line": 2460,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153139,8 +153160,8 @@
       "source_location": {
         "heading": "DP-039 - Auth Action Lifecycle Provider Pressure And Config Ownership",
         "heading_level": 3,
-        "heading_line": 2204,
-        "line": 2206,
+        "heading_line": 2507,
+        "line": 2509,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153156,8 +153177,8 @@
       "source_location": {
         "heading": "DP-040 - Question Routing Approval UX And Runtime Display Defaults",
         "heading_level": 3,
-        "heading_line": 2256,
-        "line": 2258,
+        "heading_line": 2559,
+        "line": 2561,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153173,8 +153194,8 @@
       "source_location": {
         "heading": "DP-041 - Debug Context And Reopen Blocking",
         "heading_level": 3,
-        "heading_line": 2307,
-        "line": 2309,
+        "heading_line": 2610,
+        "line": 2612,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153190,8 +153211,8 @@
       "source_location": {
         "heading": "DP-042 - Provider Auth Surface And Storage Lock Owner Boundaries",
         "heading_level": 3,
-        "heading_line": 2354,
-        "line": 2356,
+        "heading_line": 2657,
+        "line": 2659,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153207,8 +153228,8 @@
       "source_location": {
         "heading": "DP-043 - Runtime Scheduler Event Canonical Defaults",
         "heading_level": 3,
-        "heading_line": 2406,
-        "line": 2408,
+        "heading_line": 2709,
+        "line": 2711,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153224,8 +153245,8 @@
       "source_location": {
         "heading": "DP-044 - Retry And Remediation Ceiling Defaults",
         "heading_level": 3,
-        "heading_line": 2452,
-        "line": 2454,
+        "heading_line": 2755,
+        "line": 2757,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153241,8 +153262,8 @@
       "source_location": {
         "heading": "DP-045 - Blocked Outcome Preservation And Attempt Snapshots",
         "heading_level": 3,
-        "heading_line": 2495,
-        "line": 2497,
+        "heading_line": 2798,
+        "line": 2800,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153258,8 +153279,8 @@
       "source_location": {
         "heading": "DP-046 - Graph Degradation And Integrity Defaults",
         "heading_level": 3,
-        "heading_line": 2537,
-        "line": 2539,
+        "heading_line": 2840,
+        "line": 2842,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153275,8 +153296,8 @@
       "source_location": {
         "heading": "DP-047 - Mutation-Sensitive Git Snapshot Failure Criticality",
         "heading_level": 3,
-        "heading_line": 2577,
-        "line": 2579,
+        "heading_line": 2880,
+        "line": 2882,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153292,8 +153313,8 @@
       "source_location": {
         "heading": "DP-048 - Provider Response Guard Determinism",
         "heading_level": 3,
-        "heading_line": 2621,
-        "line": 2623,
+        "heading_line": 2924,
+        "line": 2926,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153309,8 +153330,8 @@
       "source_location": {
         "heading": "DP-049 - Additional Blocked Reason Matrix Rows",
         "heading_level": 3,
-        "heading_line": 2663,
-        "line": 2665,
+        "heading_line": 2966,
+        "line": 2968,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153326,8 +153347,8 @@
       "source_location": {
         "heading": "DP-050 - Timeout Outcome Provider-Transient Normalization",
         "heading_level": 3,
-        "heading_line": 2710,
-        "line": 2712,
+        "heading_line": 3013,
+        "line": 3015,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153343,8 +153364,8 @@
       "source_location": {
         "heading": "DP-051 - Safe-Point Restore Field Override",
         "heading_level": 3,
-        "heading_line": 2753,
-        "line": 2755,
+        "heading_line": 3056,
+        "line": 3058,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153360,8 +153381,8 @@
       "source_location": {
         "heading": "DP-052 - Worktree Blocked Posture Defaults",
         "heading_level": 3,
-        "heading_line": 2795,
-        "line": 2797,
+        "heading_line": 3098,
+        "line": 3100,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153377,8 +153398,8 @@
       "source_location": {
         "heading": "DP-053 - Source Control Recovery CTA Effects",
         "heading_level": 3,
-        "heading_line": 2833,
-        "line": 2835,
+        "heading_line": 3136,
+        "line": 3138,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153394,8 +153415,8 @@
       "source_location": {
         "heading": "DP-054 - GitHub Actions Auth-Expired Blocked Default",
         "heading_level": 3,
-        "heading_line": 2870,
-        "line": 2872,
+        "heading_line": 3173,
+        "line": 3175,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153411,8 +153432,8 @@
       "source_location": {
         "heading": "DP-055 - GitHub Actions Recovery CTA Effect",
         "heading_level": 3,
-        "heading_line": 2910,
-        "line": 2912,
+        "heading_line": 3213,
+        "line": 3215,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153428,8 +153449,8 @@
       "source_location": {
         "heading": "DP-056 - Docker And Kubernetes Blocked Posture Defaults",
         "heading_level": 3,
-        "heading_line": 2948,
-        "line": 2950,
+        "heading_line": 3251,
+        "line": 3253,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153445,8 +153466,8 @@
       "source_location": {
         "heading": "DP-057 - Docker Manager Kubernetes CTA Effect",
         "heading_level": 3,
-        "heading_line": 2993,
-        "line": 2995,
+        "heading_line": 3296,
+        "line": 3298,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153462,8 +153483,8 @@
       "source_location": {
         "heading": "DP-058 - Target-Bound Approval Identity Fields",
         "heading_level": 3,
-        "heading_line": 3032,
-        "line": 3034,
+        "heading_line": 3335,
+        "line": 3337,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153479,8 +153500,8 @@
       "source_location": {
         "heading": "DP-059 - Approval Preflight Ordering And Revalidation",
         "heading_level": 3,
-        "heading_line": 3079,
-        "line": 3081,
+        "heading_line": 3382,
+        "line": 3384,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153496,8 +153517,8 @@
       "source_location": {
         "heading": "DP-060 - Domain-Sensitive Approval Scope Separation",
         "heading_level": 3,
-        "heading_line": 3123,
-        "line": 3125,
+        "heading_line": 3426,
+        "line": 3428,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153513,8 +153534,8 @@
       "source_location": {
         "heading": "DP-061 - Research-Safe Planning Tool Boundary",
         "heading_level": 3,
-        "heading_line": 3167,
-        "line": 3169,
+        "heading_line": 3470,
+        "line": 3472,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153530,8 +153551,8 @@
       "source_location": {
         "heading": "DP-062 - Durable Approval Scope Reuse Context",
         "heading_level": 3,
-        "heading_line": 3210,
-        "line": 3212,
+        "heading_line": 3513,
+        "line": 3515,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153547,8 +153568,8 @@
       "source_location": {
         "heading": "DP-063 - DRY Clarification And Mutation Gate Policy",
         "heading_level": 3,
-        "heading_line": 3335,
-        "line": 3337,
+        "heading_line": 3638,
+        "line": 3640,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -153564,8 +153585,25 @@
       "source_location": {
         "heading": "DP-064 - Planning Wizard Clarification-Round Limits",
         "heading_level": 3,
-        "heading_line": 3392,
-        "line": 3394,
+        "heading_line": 3695,
+        "line": 3697,
+        "path": "Plans/Decision_Policy.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "requirements_quality",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Policy.md",
+      "plan_unit_id": "DP-066",
+      "reasoning_tier": "high",
+      "risk_class": "requirements_completion_gate_drift",
+      "source_location": {
+        "heading": "DP-066 - Requirements Completion Contract And Requirements-Quality Auditor Loop",
+        "heading_level": 4,
+        "heading_line": 451,
+        "line": 453,
         "path": "Plans/Decision_Policy.md"
       },
       "status": "accepted",
@@ -243542,10 +243580,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18759,
+    "depends_on_edge_count": 18763,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21968,
-    "node_count": 7427,
+    "edge_count": 21972,
+    "node_count": 7428,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3209,
     "unresolved_reference_count": 0

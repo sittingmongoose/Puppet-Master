@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19639-L21309
+Source lines: L19639-L21328
 
-Source SHA256: `11fa04ed8991a9f3f0672980ab55071d97f4484e493639a309d8c1266d727e57`
+Source SHA256: `5b6ff792d7530bfbc28403a38c7b8200ee39a0d0d311624772fabb0de7bec7d1`
 
 ---
 
@@ -1543,14 +1543,31 @@ canonical_text: >-
   section 12 is not applied by this record: moving that loop definition showed it needs the Requirements Completion
   Contract (retired section 14) and the report shaping rules (sections 14.1-14.2), which Decision Policy does not
   hold, so the answer said to stop and return that question to Jared rather than invent a home for them.
+
+  Amended 2026-11-05 (coordinator resolution under Jared's answer to closure question 2; pm7-build, pm-mail
+  1105045522-d98a): the stop above is resolved without returning to Jared, because the move carries out the
+  recommendation his answer ("approve all") approved, that Decision Policy also keeps the requirements-quality check
+  because its blocking rules are already there. The Requirements Completion Contract C-1 to C-5 (retired section 14),
+  the report rules (sections 14.1-14.2), the requirements-quality steps of the section 12 Auditor loop and the part of
+  section 15 that the section 6.4 blocking rule relies on (its opening and the section 15.1 escalation trigger) move
+  into section 6.4 as a new unit, Plans/Decision_Policy.md#DP-066. The criteria and report steps keep their wording
+  except the retired vocabulary and references: the Planning Wizard replaces the Chain Wizard/Interview phase
+  (GRS-028), post-repair replaces post-Pass-2 (the 2026-06-18 retirement of fixed passes), and the retired document's
+  section references point inside DP-066, to Plans/Planning_Wizard.md#PWIZ-038 or to section 6.5. One pronoun names
+  the Auditor loop because the sentence it pointed back to did not move, and one added sentence says where the rest
+  of section 15 went. DP-066 lists every changed word and its reason. Section 6.4's pointer to the retired section 12 is replaced by DP-066, DP-034 no longer names the
+  retired document as a surface or owner hint, and the retired document's Owner / Consumer Map says where each item
+  went. Section 12's generic Auditor invariant loop, which other live documents still cite, is not part of this
+  answer.
 gui_related: false
 gui_classification_reason: Records an owner-routing decision; the GUI behavior it moves is defined by PWIZ-038.
 split_recommended: false
-depends_on: [PWIZ-038, DP-064]
+depends_on: [PWIZ-038, DP-064, DP-066]
 unblocks: []
 acceptance_criteria:
   - "No live Plans unit or routing table names Plans/chain-wizard-flexibility.md as the owner of wizard_status, the wizard blocked states and transitions, or the clarification-round limits."
   - "PWIZ-038 and DP-064 carry the migrated semantics, and the retired document's Owner / Consumer Map names both."
+  - "Amended 2026-11-05: section 6.4 and DP-034 no longer point to retired Plans/chain-wizard-flexibility.md for the requirements-quality loop; DP-066 holds the Requirements Completion Contract, the report rules, the loop's requirements-quality steps and the escalation trigger."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: owner_routing_to_retired_document
@@ -1572,12 +1589,14 @@ node_compile_hint:
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the closure questions; question 2 (closure rows B06 106, 112, 117, 118, 119, 125) is this entry"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/source-records.md (the closure records and the fix each asked for)"
+  - "pm-mail 1105045522-d98a (coordinator pm7-build, 2026-11-05): resolution A, move the Requirements Completion Contract and the report steps into a new Decision_Policy section 6.4 unit as a coordinator resolution under this record, without the retired vocabulary"
 preserved_exact_tokens:
   - "DL-330"
   - "wizard_status"
   - "clarification-round limits"
   - "PWIZ-038"
   - "DP-064"
+  - "DP-066"
 owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/Decision_Policy.md

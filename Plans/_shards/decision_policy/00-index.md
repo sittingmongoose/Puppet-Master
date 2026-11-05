@@ -1,27 +1,27 @@
 # Shard Index: Plans/Decision_Policy.md
 
-Generated: 2026-11-05T03:59:39Z
+Generated: 2026-11-05T05:39:10Z
 
-Source SHA256: `4fc6bb43b48d4e1ed4adb85852353988adf67bc11e56dd8849471ac113eb0d95`
+Source SHA256: `79c1701509e6333d3470add092021dbf424a6992e9cae2ce874abfc7a555a58a`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L15 `8602fcc60704e1669ce4d943839b524e03e968bed64f0d326a66ce5985b37356`
-- [002 - 0. Scope](002-0.-scope.md) L17-L22 `f83292366f60d6324e85328a0bd2b0d1203e9b4bc5e1b7a568c79b53e5b9c0ba`
-- [003 - 1. Precedence (non-negotiable)](003-1.-precedence-non-negotiable.md) L24-L36 `c19376cc1f74204f867ce4f737e0dde2c9333faeb1db0075a5b8dc6d9f501a4d`
-- [004 - 2. Deterministic defaults (must be autonomous)](004-2.-deterministic-defaults-must-be-autonomous.md) L37-L158 `8947e8edf2b2cd767fcee7a3ab48f8687b8b6b66ee4e0015a86b16b26666462d`
-- [005 - 3. Tie-break rules (ordering)](005-3.-tie-break-rules-ordering.md) L160-L194 `cf4663e33dd5846d0fe451f823e62b7d9d954c4576b318c8dea32e877d3629c1`
-- [006 - 4. "No human in the loop" rule](006-4.-no-human-in-the-loop-rule.md) L196-L204 `91069e63bb50f6a3f5cdb997db75333699397e78470360c08f74b3e81231a5fe`
-- [007 - 5. SpecLock Update Protocol (autonomous; no human readers)](007-5.-speclock-update-protocol-autonomous-no-human-readers.md) L205-L257 `8de2ae62866fb169123d29c701c6ad5c2b0e00369bc8a336dc33fa55aa320f63`
-- [008 - 6. Ambiguity vs. Missing User Intent](008-6.-ambiguity-vs.-missing-user-intent.md) L258-L351 `9a7b5e092f3b3e449c24d81b584151eb5ce50aaf4f3a5fb349f7ea738a9b0657`
-- [009 - Runtime Decision Rules Addendum (2026-03-08)](009-runtime-decision-rules-addendum-2026-03-08.md) L353-L414 `6d775a09076602b389acfc7273afbf358f2a02139ba94cb9086edee03193b4fb`
-- [010 - Runtime Recovery Deterministic Defaults Canonical Alignment (2026-03-09)](010-runtime-recovery-deterministic-defaults-canonical-alignment-2026.md) L415-L435 `12f3760ef77b9ffd3a5fee73738a1008b276f2b6be920d45901c5d5ad83b5fde`
-- [011 - Canonical Runtime Recovery Matrix Completion](011-canonical-runtime-recovery-matrix-completion.md) L436-L458 `4953ef1bab5ed5629e5fa6728f7d56e0c3277af2d69ee48baf35de1a14cec4fa`
-- [012 - Source Control, GitHub Actions, and Docker Manager Blocked-State Addendum (2026-03-12)](012-source-control-github-actions-and-docker-manager-blocked-state-a.md) L460-L476 `953c023833e1266b87f6914e0aa794dcf7a575975f21d33c70b0d3aacc7fc382`
-- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L478-L482 `f5768152d6e2ccc20b488bada60daeb520f34c4731bc8bfec88bf809cc5f3453`
-- [014 - PlanUnits](014-planunits.md) L484-L3317 `6af2bf4a80c0904d9b78ce934293f1fcce15dab3b2e2d551ac52012435f7b48c`
-- [015 - Migration Coverage](015-migration-coverage.md) L3319-L3329 `49581da5f81814b78c912d58aa2591455219444b64c7c53e083bf08a579f8972`
-- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3331-L3451 `fdb84aa27d95e8a4c7050adffcfbf68a6bf3eeb0aa8666da64c77a349a1de2a5`
-- [017 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L3453-L3459 `da0ef9f9ab16669ddd496043508f7ec64dd5e6c49147a25c789c3f9e1bde1c1d`
+- [001 - Preamble](001-preamble.md) L1-L15 `94a1de7ba8befd2cae142614ae4656ee13dc5adfa34885fec8a6038ad498df64`
+- [002 - 0. Scope](002-0.-scope.md) L17-L22 `6b0cf832c796390eade1c84ca741f907c71382e1141c5d393b2d865e064ac564`
+- [003 - 1. Precedence (non-negotiable)](003-1.-precedence-non-negotiable.md) L24-L36 `3f9f8f0fdfc84f74e8eaf6ddd906dcf978749a934eb64b1139282a83f449bee1`
+- [004 - 2. Deterministic defaults (must be autonomous)](004-2.-deterministic-defaults-must-be-autonomous.md) L37-L158 `84a5c448df844706e013e2bc3c60fe1bb8cf3beccad92d1159743eafa3f82841`
+- [005 - 3. Tie-break rules (ordering)](005-3.-tie-break-rules-ordering.md) L160-L194 `45f03b1199d3e82d595eaf703189d2bf0c621058ad44a0dee032b8a827d72e69`
+- [006 - 4. "No human in the loop" rule](006-4.-no-human-in-the-loop-rule.md) L196-L204 `9680777fdba0b3b6b80fc8904d0e0e8682f3c2e935ecc0a74d2cf106f70da297`
+- [007 - 5. SpecLock Update Protocol (autonomous; no human readers)](007-5.-speclock-update-protocol-autonomous-no-human-readers.md) L205-L257 `2e13099b39af464026378fc7bd0b5d76e031e7c3da687af58c00465a05be948d`
+- [008 - 6. Ambiguity vs. Missing User Intent](008-6.-ambiguity-vs.-missing-user-intent.md) L258-L653 `abf9311dcda389cf39cfc024d786c4de62245fc2fe9c670c2737cf938246843b`
+- [009 - Runtime Decision Rules Addendum (2026-03-08)](009-runtime-decision-rules-addendum-2026-03-08.md) L655-L716 `c452e5351ef939604725ad9aca492896e6e26846172b185b69b6ec491ac2a91f`
+- [010 - Runtime Recovery Deterministic Defaults Canonical Alignment (2026-03-09)](010-runtime-recovery-deterministic-defaults-canonical-alignment-2026.md) L717-L737 `7851370d03307b83ec9ab9446cc815dab92af3972b2f5bff03a412d5436fe324`
+- [011 - Canonical Runtime Recovery Matrix Completion](011-canonical-runtime-recovery-matrix-completion.md) L738-L760 `caf669df3797b135db18ec9402dd0b1a62efdb7073548371fbcca11b18bffa72`
+- [012 - Source Control, GitHub Actions, and Docker Manager Blocked-State Addendum (2026-03-12)](012-source-control-github-actions-and-docker-manager-blocked-state-a.md) L762-L778 `548653f721c2bb43e1849168d0b0048f9e5492c0cf6213d56b3d01a2fb6d2d3d`
+- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L780-L784 `90c3f7e97d99e00ecdba3205cd7797e090a98f621eb572e130cc12b7849e2395`
+- [014 - PlanUnits](014-planunits.md) L786-L3620 `4d1c3e3548364e22bd2ce1f202a984ffcf050e51561113efe2782eead1c02f10`
+- [015 - Migration Coverage](015-migration-coverage.md) L3622-L3632 `f8936f6d40d914ba8c9fbb6ce01816d7a14eb5c579bd231df6e226580fe07fd7`
+- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3634-L3754 `cdd50d8142256804c7fa94349e418b21afb70810788c6dd6737e27aa845f3b99`
+- [017 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L3756-L3762 `0b432f3d38c4cc2c2b33b6ec18eea4496f121b5931f2422f6e573e685381ed3d`
