@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18755,
+    "depends_on_edge_count": 18757,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21964,
-    "node_count": 7425,
+    "edge_count": 21966,
+    "node_count": 7426,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3209,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T04:00:36Z",
+  "generated_at_utc": "2026-11-05T04:06:08Z",
   "gui_related_units": {
     "count": 3793,
     "units": [
@@ -41747,12 +41747,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7425,
+  "plan_unit_count": 7426,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
       "high": 2746,
       "low": 9,
-      "medium": 30,
+      "medium": 31,
       "standard": 4640
     },
     "risk_class_counts": {
@@ -44736,6 +44736,7 @@
       "retired_goal_structure_reintroduced": 1,
       "retired_provider_first_choreography_reactivated": 1,
       "retired_scheduled_goal_state_reintroduced": 1,
+      "retired_token_revived_or_ledger_unrecorded": 1,
       "retrieval": 2,
       "retrieval_budget": 1,
       "retrieval_scope": 1,
@@ -45888,7 +45889,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7207,
+      "accepted": 7208,
       "retired": 195,
       "superseded": 23
     },
@@ -45921,7 +45922,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 176,
+      "decision": 177,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

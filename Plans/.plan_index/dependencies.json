@@ -3289,6 +3289,7 @@
     "APR-008",
     "APR-011",
     "F3-417",
+    "DL-331",
     "BS-013",
     "C-007",
     "C-021",
@@ -29450,6 +29451,16 @@
       "edge_type": "depends_on",
       "from": "DL-330",
       "to": "PWIZ-038"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-331",
+      "to": "ATS-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-331",
+      "to": "T-159"
     },
     {
       "edge_type": "depends_on",
@@ -117252,7 +117263,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-05T04:00:35Z",
+  "generated_at_utc": "2026-11-05T04:06:07Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -152422,6 +152433,23 @@
         "heading_level": 3,
         "heading_line": 21155,
         "line": 21157,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "closure_owner_answers_20261105",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-331",
+      "reasoning_tier": "medium",
+      "risk_class": "retired_token_revived_or_ledger_unrecorded",
+      "source_location": {
+        "heading": "DL-331 - Retire The Exact Token \"Playwright optional\" With A Ledger Correction",
+        "heading_level": 3,
+        "heading_line": 21216,
+        "line": 21218,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -243486,10 +243514,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18755,
+    "depends_on_edge_count": 18757,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21964,
-    "node_count": 7425,
+    "edge_count": 21966,
+    "node_count": 7426,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3209,
     "unresolved_reference_count": 0

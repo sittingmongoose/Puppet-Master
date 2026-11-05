@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19639-L21213
+Source lines: L19639-L21265
 
-Source SHA256: `40e3bc68ccc64e7ebfa750606e40dd0c763e79a38fd38a315beb37629d3c87fc`
+Source SHA256: `9cec4eac30ba570ee643805a3ad5242a4618f3a9a74a2d17282c81c538150398`
 
 ---
 
@@ -1582,4 +1582,56 @@ owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/Decision_Policy.md
   - Plans/DRY_Rules.md
+```
+
+
+### DL-331 - Retire The Exact Token "Playwright optional" With A Ledger Correction
+
+```yaml
+plan_unit_id: DL-331
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-331 records Jared's answer of 2026-11-05 ("approve all") to closure question 3: the exact-token requirement
+  "Playwright optional" of ledger pldg-20260617-001-plans-to-code-handoff atom-0031 is retired by an append-only
+  ledger correction (corr-0012, event evt-0019), and the words are not restored to ATS-004, RAP-029 or T-159. The
+  2026-08-13 browser terminology decision (Plans/Automated_Testing_System.md#ATS-035, Plans/Tools.md#T-159) removed
+  Playwright as any Puppet Master path on purpose: Puppet Master has no Playwright runtime, facade, compatibility
+  layer or fallback, and a user Project's own Playwright suite runs only as a generic external Project
+  command/process that is not a fallback for BrowserRuntimeService. atom-0031's other exact tokens and its rule that
+  native Puppet Master web testing is not defaulted to Playwright stay in force; the atom record is unchanged.
+gui_related: false
+gui_classification_reason: Records the retirement of a ledger exact-token requirement; no GUI contract changes.
+split_recommended: false
+depends_on: [ATS-035, T-159]
+unblocks: []
+acceptance_criteria:
+  - "Ledger pldg-20260617-001-plans-to-code-handoff records corr-0012 and evt-0019 linking atom-0031, and its validator passes."
+  - "ATS-004, RAP-029 and T-159 do not reintroduce an optional or fallback Puppet Master Playwright path."
+validation_surfaces:
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retired_token_revived_or_ledger_unrecorded
+reasoning_tier: medium
+context_scope: closure_owner_answers_20261105
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/corrections.jsonl
+  - Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/events.jsonl
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the closure questions; question 3 (closure row B03 66) is this entry"
+  - "Plans/ledgers/v2/pldg-20260617-001-plans-to-code-handoff/records/corrections.jsonl#corr-0012"
+preserved_exact_tokens:
+  - "DL-331"
+  - "Playwright optional"
+  - "atom-0031"
+  - "corr-0012"
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/Tools.md
 ```

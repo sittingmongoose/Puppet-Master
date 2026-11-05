@@ -3,13 +3,13 @@
   "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 18,
+    "events": 19,
     "design_atoms": 64,
     "decisions": 28,
     "open_questions": 0,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "corrections": 11,
+    "corrections": 12,
     "compile_queue_items": 1,
     "ready_for_plan_compile_atoms": 0,
     "candidate_atoms": 0,
@@ -49,11 +49,11 @@
       "summary": "Node readiness intentionally remains runtime_disabled; no PlanCompile runtime, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, dispatched GoalRuns, or production build tasks were created."
     }
   ],
-  "updated_at_utc": "2026-06-18T13:39:57Z",
+  "updated_at_utc": "2026-11-05T03:30:34Z",
   "warnings": [
     "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and later explicit enablement."
   ],
-  "last_event_id": "evt-0018",
+  "last_event_id": "evt-0019",
   "latest_audit_ref": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
   "latest_audit_status": "pass_certified"
 }
