@@ -4266,6 +4266,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-terminal_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/terminal_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-terminal_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/terminal_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-terminal_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/terminal_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-terminal_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/terminal_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-terminal_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/terminal_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-terminal_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/terminal_publications",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "attempt.started": [
@@ -9926,6 +10078,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-counter_increments-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/counter_increments",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-counter_increments-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/counter_increments",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-counter_increments-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/counter_increments",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-counter_increments-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/counter_increments",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-counter_increments-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/counter_increments",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-counter_increments-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/counter_increments",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "node.blocked": [
@@ -13723,6 +14027,158 @@
           {
             "path": "context/envelope/storage_instance_id",
             "value": ""
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-blocked_episodes-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/blocked_episodes",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-blocked_episodes-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/blocked_episodes",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-blocked_episodes-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/blocked_episodes",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-blocked_episodes-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/blocked_episodes",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-blocked_episodes-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/blocked_episodes",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-blocked_episodes-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/blocked_episodes",
+            "value": {
+              "count": 1
+            }
           }
         ],
         "expected": "reject"
@@ -17526,6 +17982,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_terminal_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_terminal_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_terminal_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_terminal_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_terminal_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_terminal_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_terminal_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_terminal_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_terminal_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_terminal_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_terminal_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_terminal_publications",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "node.started": [
@@ -20861,6 +21469,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_start_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_start_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_start_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_start_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_start_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_start_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_start_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_start_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_start_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_start_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-node_start_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/node_start_publications",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "node.unblocked": [
@@ -23263,6 +24023,158 @@
           {
             "path": "context/envelope/storage_instance_id",
             "value": ""
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-episode_resolutions-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/episode_resolutions",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-episode_resolutions-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/episode_resolutions",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-episode_resolutions-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/episode_resolutions",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-episode_resolutions-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/episode_resolutions",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-episode_resolutions-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/episode_resolutions",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-episode_resolutions-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/episode_resolutions",
+            "value": {
+              "count": 1
+            }
           }
         ],
         "expected": "reject"
@@ -26248,6 +27160,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-degradation_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/degradation_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-degradation_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/degradation_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-degradation_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/degradation_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-degradation_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/degradation_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-degradation_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/degradation_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-degradation_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/degradation_publications",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "remediation.resolved": [
@@ -28765,6 +29829,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-remediation_resolutions-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/remediation_resolutions",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-remediation_resolutions-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/remediation_resolutions",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-remediation_resolutions-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/remediation_resolutions",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-remediation_resolutions-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/remediation_resolutions",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-remediation_resolutions-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/remediation_resolutions",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-remediation_resolutions-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/remediation_resolutions",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "remediation.spawned": [
@@ -31167,6 +32383,158 @@
           {
             "path": "context/envelope/storage_instance_id",
             "value": ""
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-lineage_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/lineage_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-lineage_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/lineage_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-lineage_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/lineage_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-lineage_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/lineage_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-lineage_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/lineage_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-lineage_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/lineage_publications",
+            "value": {
+              "count": 1
+            }
           }
         ],
         "expected": "reject"
@@ -34617,6 +35985,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-run_terminal_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/run_terminal_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-run_terminal_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/run_terminal_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-run_terminal_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/run_terminal_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-run_terminal_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/run_terminal_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-run_terminal_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/run_terminal_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-run_terminal_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/run_terminal_publications",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "run.graph_integrity_failed": [
@@ -37487,6 +39007,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-integrity_failure_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/integrity_failure_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-integrity_failure_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/integrity_failure_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-integrity_failure_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/integrity_failure_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-integrity_failure_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/integrity_failure_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-integrity_failure_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/integrity_failure_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-integrity_failure_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/integrity_failure_publications",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "run.node_backoff_expired": [
@@ -39889,6 +41561,158 @@
           {
             "path": "context/envelope/storage_instance_id",
             "value": ""
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-wake_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/wake_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-wake_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/wake_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-wake_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/wake_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-wake_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/wake_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-wake_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/wake_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-wake_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/wake_publications",
+            "value": {
+              "count": 1
+            }
           }
         ],
         "expected": "reject"
@@ -42297,6 +44121,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-timer_creations-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/timer_creations",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-timer_creations-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/timer_creations",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-timer_creations-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/timer_creations",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-timer_creations-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/timer_creations",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-timer_creations-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/timer_creations",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-timer_creations-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/timer_creations",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "run.node_ready": [
@@ -44699,6 +46675,158 @@
           {
             "path": "context/envelope/storage_instance_id",
             "value": ""
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-ready_entries-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/ready_entries",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-ready_entries-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/ready_entries",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-ready_entries-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/ready_entries",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-ready_entries-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/ready_entries",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-ready_entries-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/ready_entries",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-ready_entries-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/ready_entries",
+            "value": {
+              "count": 1
+            }
           }
         ],
         "expected": "reject"
@@ -47572,6 +49700,158 @@
           }
         ],
         "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-successor_admissions-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/successor_admissions",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-successor_admissions-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/successor_admissions",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-successor_admissions-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/successor_admissions",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-successor_admissions-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/successor_admissions",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-successor_admissions-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/successor_admissions",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-successor_admissions-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/successor_admissions",
+            "value": {
+              "count": 1
+            }
+          }
+        ],
+        "expected": "reject"
       }
     ],
     "scheduler.pass": [
@@ -50439,6 +52719,158 @@
           {
             "path": "context/envelope/storage_instance_id",
             "value": ""
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": false
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": 0.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": "0"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": [
+              0
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-worker_dispatches-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/worker_dispatches",
+            "value": {
+              "count": 0
+            }
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-pass_publications-boolean",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/pass_publications",
+            "value": true
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-pass_publications-float",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/pass_publications",
+            "value": 1.0
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-pass_publications-string",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/pass_publications",
+            "value": "1"
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-pass_publications-null",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/pass_publications",
+            "value": null
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-pass_publications-array",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/pass_publications",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "expected": "reject"
+      },
+      {
+        "case": "F17-effect-pass_publications-object",
+        "route": "capture",
+        "seed": "baseline",
+        "changes": [
+          {
+            "path": "capture/post_state/effects/pass_publications",
+            "value": {
+              "count": 1
+            }
           }
         ],
         "expected": "reject"

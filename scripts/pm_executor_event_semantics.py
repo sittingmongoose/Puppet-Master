@@ -502,7 +502,10 @@ def validate_capture(contract, payload, capture, *, historical=False):
                     'account interpretation requires original snapshots')
     if 'node' in records:
         node, run = records['node']['body'], records['run']['body']
-        require(node['workgraph_id'] == run['workgraph_id']
+        require(all(type(body['workgraph_id']) is str and bool(body['workgraph_id'])
+                    and type(body['workgraph_revision']) is int and body['workgraph_revision'] >= 1
+                    for body in (node, run))
+                and node['workgraph_id'] == run['workgraph_id']
                 and node['workgraph_revision'] == run['workgraph_revision'], 'installed graph join')
         require(node['source_request_id'] == records['operation']['body']['source_request_id'], 'materialization request join')
     transition = capture['transition']
@@ -521,7 +524,11 @@ def validate_capture(contract, payload, capture, *, historical=False):
     require(same_value(capture['post_state']['revision'], transition['revision'] + 1), 'post-state CAS')
     require(same_value(capture['post_state']['event_sequence'], payload['event_sequence']), 'post-state sequence')
     effects = adapter.get('effects_by_failure_class', {}).get(payload.get('failure_class'), adapter['effects'])
-    require(capture['post_state']['effects'] == effects, 'post-state effects')
+    observed_effects = capture['post_state']['effects']
+    require(type(observed_effects) is dict and set(observed_effects) == set(effects)
+            and all(type(value) is int and value >= 0 for value in observed_effects.values())
+            and all(type(value) is int and value >= 0 for value in effects.values())
+            and observed_effects == effects, 'post-state effects')
     for path, expected in adapter['requirements'].items():
         require(same_value(at(records, path), expected), 'owner predicate ' + path)
     validate_dependencies(contract, payload, capture)
