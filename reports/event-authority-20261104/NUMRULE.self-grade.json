@@ -76,7 +76,7 @@
     "negatives": 6545,
     "labelled_negatives": 6545,
     "passed": 13391,
-    "owner_integration_checks": 287,
+    "owner_integration_checks": 299,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
@@ -1498,8 +1498,8 @@
     "Integration/governance work belongs to the lead, outside this drafting task",
     "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8."
   ],
-  "reviewed_head": "07cd715a3fb433094e55ea54a653beeb0bd9f35c",
-  "review_round": 13,
+  "reviewed_head": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+  "review_round": 14,
   "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
   "grade_changes": {
     "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
@@ -1513,9 +1513,10 @@
     "CV-1101.round8": "Astra B1/B2/B3 BLOCKED -> stated-universe discovery, inventory integrity, and finite eager/lazy current/frozen routes PASS; complete lane/native integration NOT_RUN.",
     "CV-1101.round9": "B1a/B1b/B2 finite controls PASS; B3 stopped under the no-owner-prose/missing-quote instruction. Overall NOT_READY; no family grades or new IDs.",
     "CV-1101.round10": "Round-9 B3 blocked -> source-bound field/value evidence and coherent mutation controls PASS in the stated finite scope; native/lane integration NOT_RUN.",
-    "CV-1101.round11": "Cycle-10 B4 BLOCKED -> 4/4 equivalent-pattern negatives and 4/4 corrected positives PASS; source-bound pinned roles and 35 battery controls PASS. Native/lane integration remains NOT_RUN."
+    "CV-1101.round11": "Cycle-10 B4 BLOCKED -> 4/4 equivalent-pattern negatives and 4/4 corrected positives PASS; source-bound pinned roles and 35 battery controls PASS. Native/lane integration remains NOT_RUN.",
+    "CV-1101.round14": "Cycle-13 pre-check LANDING_READY_WITH_NOTES -> N1 (non-deciding citation) and N2 ($dynamicRef rebinding) fixed in the stated finite scope; ten role rows moved to explicit owner-schema review. Native/lane integration remains NOT_RUN."
   },
-  "implementation_commit": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
+  "implementation_commit": "a5ae4fc90b6da25efd00350e120291975268a401",
   "round1_validation": {
     "index_status": "pass",
     "plan_units": 7426,
@@ -1563,7 +1564,9 @@
     "B7_round13": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
     "B1_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
     "B2_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
-    "B3_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65"
+    "B3_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "N1_round14": "a5ae4fc90b6da25efd00350e120291975268a401",
+    "N2_round14": "a5ae4fc90b6da25efd00350e120291975268a401"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -3062,5 +3065,287 @@
     "family_grading": "N/A",
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1",
     "scope": "Number scope only. No date-time code, owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
+  },
+  "round14_validation": {
+    "round": 14,
+    "review": "cycle-13 Opus pre-check (reviews/NUMRULE-sol/REVIEW-cycle13-opus.md)",
+    "source_base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+    "implementation_commit": "a5ae4fc90b6da25efd00350e120291975268a401",
+    "N1": "fixed; a non-timestamp role citation must, on its own, refuse every battery timestamp and all 16 fixed control strings",
+    "N2": "fixed; $dynamicRef is not a positive path, so it routes to explicit review and earns no automatic credit",
+    "rows_moved_to_explicit_timestamp_review": [
+      [
+        "Plans/section15_browser_program_contracts.schema.json",
+        "json",
+        "/$defs/browser_program_result_validation/properties/result_schema_resources"
+      ],
+      [
+        "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+        "json",
+        "/$defs/common_node/properties/payload"
+      ],
+      [
+        "Plans/settings_system_contracts.schema.json",
+        "json",
+        "/$defs/setting_value/oneOf/5"
+      ],
+      [
+        "Plans/settings_system_contracts.schema.json",
+        "json",
+        "/$defs/values_by_setting_id"
+      ],
+      [
+        "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/TargetRefs"
+      ],
+      [
+        "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/SafeParameters"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/TargetRefs"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/SafeParameters"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/TargetRefs"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/SafeParameters"
+      ]
+    ],
+    "rows_kept_as_non_timestamp_roles": [
+      [
+        "Plans/shared_runtime_contracts.schema.json",
+        "json",
+        "/$defs/permission_snapshot_record/properties/resolved_permissions"
+      ],
+      [
+        "Plans/storage_value_registry.json",
+        "json",
+        "/families/62/value_schema/properties/resolved_permissions"
+      ],
+      [
+        "Plans/storage_value_registry.json",
+        "json",
+        "/families/84/value_schema/properties/tabs"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+        "json",
+        "/$defs/permission_snapshot_record/properties/resolved_permissions"
+      ],
+      [
+        "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+        "json",
+        "/properties/resolved_permissions"
+      ],
+      [
+        "Plans/home_workspace_layout_v2.schema.json",
+        "json",
+        "/properties/tabs"
+      ],
+      [
+        "Plans/project_system_contracts.schema.json",
+        "json",
+        "/$defs/project_creation_recovery_context/properties/settled_effects"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+        "json",
+        "/properties/resolved_permissions"
+      ]
+    ],
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 89,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 8,
+      "unclassified_nodes": 0
+    },
+    "selftest": {
+      "cases": 13391,
+      "case_passes": 13391,
+      "checks": 299,
+      "failed_checks": []
+    },
+    "added_or_moved_selftest_checks": [
+      "datetime_automatic_credit_withheld_dynamicRef",
+      "datetime_role_authority_accepts_object_record",
+      "datetime_role_authority_refuses_dynamicRef",
+      "datetime_role_authority_refuses_undecided_accepts_one_control",
+      "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
+      "datetime_role_authority_refuses_undecided_doc_only_conjunct",
+      "datetime_role_authority_refuses_undecided_doc_only_conjunct_bare_stamp",
+      "datetime_role_authority_refuses_undecided_generic_ref",
+      "datetime_role_authority_refuses_undecided_generic_whole_union",
+      "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
+      "datetime_role_authority_refuses_undecided_implicit_true",
+      "datetime_role_authority_refuses_undecided_member_only_conjunct",
+      "datetime_role_authority_refuses_undecided_setting_value_shape",
+      "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+    ],
+    "precheck_replay": {
+      "attacks": 51,
+      "refused": 47,
+      "accepted_as_role": [
+        "control_deciding/direct_ref",
+        "control_deciding/allOf_ref",
+        "control_deciding/every_branch_union"
+      ],
+      "passed_without_record": [
+        "control/no_record_ts_accepting"
+      ],
+      "coherent_full_gates": {
+        "vacuous_doc_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "ec317b0871aa73fcea6e95a6ba1c546f67e19b80b785c8e9ee9c7ce962115e9f"
+        },
+        "vacuous_member_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "d217e2431258a28aa4dddb511c44c5b2097799a5060f6a3c79111412e55984df"
+        },
+        "vacuous_dependentSchemas": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "5735570925de099fcefaf87d0c84c141e49360bb90e32fb2cfa868eae4da44c6"
+        },
+        "vacuous_whole_value": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "74ed381192811442e60cffd425775df6aae005ab141e3ed543505927405c537f"
+        },
+        "irrelevant_if": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "3fe01cf95d870a867ae8735df0044150985ab62abef68ffc59f961387890edfb"
+        },
+        "vacuous_not": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "7bde8b697d7540f0cdefc3a54e6befc7bb7b807b02fbab1da71858a52d3a5d73"
+        },
+        "n2_dynamicRef": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "585ba6125e46245b2b38641751f7bcb42e5dc2f8e81d205a7d55770f97bc77be"
+        }
+      },
+      "literal_cycle12_bypass": {
+        "exit": 1,
+        "failure_kinds": {
+          "inventory_schema": 84
+        }
+      }
+    },
+    "targeted_probes": 53,
+    "original_probes_same_outcome": 48,
+    "adjacent_refused": 14,
+    "cycle12_coherent_full_gates": [
+      {
+        "variant": "irrelevant_if",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      },
+      {
+        "variant": "vacuous_not",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      }
+    ],
+    "earlier_full_gates": [
+      {
+        "name": "sibling-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ]
+      },
+      {
+        "name": "foreign-key-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_evidence_changed",
+          "wildcard_role_review_required"
+        ]
+      }
+    ],
+    "original_literal_gates": [
+      {
+        "name": "original-sibling-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-foreign-key-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-coherent-bypass-full-gate",
+        "exit": 1
+      }
+    ],
+    "mutation_controls": {
+      "unmutated": [],
+      "n1_deciding_check_removed": [
+        "datetime_role_authority_refuses_undecided_accepts_one_control",
+        "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
+        "datetime_role_authority_refuses_undecided_doc_only_conjunct",
+        "datetime_role_authority_refuses_undecided_generic_ref",
+        "datetime_role_authority_refuses_undecided_generic_whole_union",
+        "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
+        "datetime_role_authority_refuses_undecided_implicit_true",
+        "datetime_role_authority_refuses_undecided_member_only_conjunct",
+        "datetime_role_authority_refuses_undecided_setting_value_shape",
+        "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+      ],
+      "implicit_exclusion_removed": [
+        "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node"
+      ],
+      "dynamicRef_back_in_allowlist": [
+        "datetime_automatic_credit_withheld_dynamicRef",
+        "datetime_role_authority_refuses_dynamicRef"
+      ]
+    },
+    "not_rerun": "cycle-10 replay suite (not in the FIX14 rerun list); its last run is fix13/cycle10-replay",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix14",
+    "scope": "Date-time helper fix only: probe, admission checks, inventory schema (one evidence field), role records (classification and reason of ten), inventory evidence and its derived pin. No owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence, .gitignore or number-scope file change."
   }
 }

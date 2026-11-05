@@ -1,13 +1,87 @@
 {
-  "round": 13,
-  "source_base": "07cd715a3fb433094e55ea54a653beeb0bd9f35c",
-  "implementation_commit": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
-  "B7": "fixed; role authority is an allowlist of positive conjunctive paths, separate from discovery",
-  "rows_moved_to_explicit_review": [
+  "round": 14,
+  "review": "cycle-13 Opus pre-check (reviews/NUMRULE-sol/REVIEW-cycle13-opus.md)",
+  "source_base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+  "implementation_commit": "a5ae4fc90b6da25efd00350e120291975268a401",
+  "N1": "fixed; a non-timestamp role citation must, on its own, refuse every battery timestamp and all 16 fixed control strings",
+  "N2": "fixed; $dynamicRef is not a positive path, so it routes to explicit review and earns no automatic credit",
+  "rows_moved_to_explicit_timestamp_review": [
+    [
+      "Plans/section15_browser_program_contracts.schema.json",
+      "json",
+      "/$defs/browser_program_result_validation/properties/result_schema_resources"
+    ],
+    [
+      "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+      "json",
+      "/$defs/common_node/properties/payload"
+    ],
+    [
+      "Plans/settings_system_contracts.schema.json",
+      "json",
+      "/$defs/setting_value/oneOf/5"
+    ],
+    [
+      "Plans/settings_system_contracts.schema.json",
+      "json",
+      "/$defs/values_by_setting_id"
+    ],
+    [
+      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    [
+      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    [
+      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    [
+      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ]
+  ],
+  "rows_kept_as_non_timestamp_roles": [
+    [
+      "Plans/shared_runtime_contracts.schema.json",
+      "json",
+      "/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    [
+      "Plans/storage_value_registry.json",
+      "json",
+      "/families/62/value_schema/properties/resolved_permissions"
+    ],
     [
       "Plans/storage_value_registry.json",
       "json",
       "/families/84/value_schema/properties/tabs"
+    ],
+    [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+      "json",
+      "/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    [
+      "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "json",
+      "/properties/resolved_permissions"
     ],
     [
       "Plans/home_workspace_layout_v2.schema.json",
@@ -20,59 +94,115 @@
       "/$defs/project_creation_recovery_context/properties/settled_effects"
     ],
     [
-      "Plans/settings_system_contracts.schema.json",
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
       "json",
-      "/$defs/values_by_setting_id"
+      "/properties/resolved_permissions"
     ]
-  ],
-  "rows_recited_without_class_change": [
-    {
-      "node": [
-        "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
-      ],
-      "from": "/$defs/SafeRef",
-      "to": "/$defs/SafeParameters/additionalProperties",
-      "role_from": "SafeRef",
-      "role_to": "safe_parameter_value"
-    },
-    {
-      "node": [
-        "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
-      ],
-      "from": "/$defs/SafeRef",
-      "to": "/$defs/SafeParameters/additionalProperties",
-      "role_from": "SafeRef",
-      "role_to": "safe_parameter_value"
-    },
-    {
-      "node": [
-        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
-      ],
-      "from": "/$defs/SafeRef",
-      "to": "/$defs/SafeParameters/additionalProperties",
-      "role_from": "SafeRef",
-      "role_to": "safe_parameter_value"
-    }
   ],
   "inventory": {
     "status": "pass",
     "nodes": 233,
     "storage_nodes": 133,
-    "other_owner_nodes": 79,
+    "other_owner_nodes": 89,
     "wildcard_non_timestamp_nodes": 3,
-    "wildcard_non_timestamp_role_nodes": 18,
+    "wildcard_non_timestamp_role_nodes": 8,
     "unclassified_nodes": 0
   },
   "selftest": {
-    "cases": 13372,
-    "case_passes": 13372,
-    "checks": 287,
+    "cases": 13391,
+    "case_passes": 13391,
+    "checks": 299,
     "failed_checks": []
+  },
+  "added_or_moved_selftest_checks": [
+    "datetime_automatic_credit_withheld_dynamicRef",
+    "datetime_role_authority_accepts_object_record",
+    "datetime_role_authority_refuses_dynamicRef",
+    "datetime_role_authority_refuses_undecided_accepts_one_control",
+    "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
+    "datetime_role_authority_refuses_undecided_doc_only_conjunct",
+    "datetime_role_authority_refuses_undecided_doc_only_conjunct_bare_stamp",
+    "datetime_role_authority_refuses_undecided_generic_ref",
+    "datetime_role_authority_refuses_undecided_generic_whole_union",
+    "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
+    "datetime_role_authority_refuses_undecided_implicit_true",
+    "datetime_role_authority_refuses_undecided_member_only_conjunct",
+    "datetime_role_authority_refuses_undecided_setting_value_shape",
+    "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+  ],
+  "precheck_replay": {
+    "attacks": 51,
+    "refused": 47,
+    "accepted_as_role": [
+      "control_deciding/direct_ref",
+      "control_deciding/allOf_ref",
+      "control_deciding/every_branch_union"
+    ],
+    "passed_without_record": [
+      "control/no_record_ts_accepting"
+    ],
+    "coherent_full_gates": {
+      "vacuous_doc_only": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "pin": "ec317b0871aa73fcea6e95a6ba1c546f67e19b80b785c8e9ee9c7ce962115e9f"
+      },
+      "vacuous_member_only": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "pin": "d217e2431258a28aa4dddb511c44c5b2097799a5060f6a3c79111412e55984df"
+      },
+      "vacuous_dependentSchemas": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "pin": "5735570925de099fcefaf87d0c84c141e49360bb90e32fb2cfa868eae4da44c6"
+      },
+      "vacuous_whole_value": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "pin": "74ed381192811442e60cffd425775df6aae005ab141e3ed543505927405c537f"
+      },
+      "irrelevant_if": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "pin": "3fe01cf95d870a867ae8735df0044150985ab62abef68ffc59f961387890edfb"
+      },
+      "vacuous_not": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "pin": "7bde8b697d7540f0cdefc3a54e6befc7bb7b807b02fbab1da71858a52d3a5d73"
+      },
+      "n2_dynamicRef": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "pin": "585ba6125e46245b2b38641751f7bcb42e5dc2f8e81d205a7d55770f97bc77be"
+      }
+    },
+    "literal_cycle12_bypass": {
+      "exit": 1,
+      "failure_kinds": {
+        "inventory_schema": 84
+      }
+    }
   },
   "targeted_probes": 53,
   "original_probes_same_outcome": 48,
   "adjacent_refused": 14,
-  "coherent_full_gates": [
+  "cycle12_coherent_full_gates": [
     {
       "variant": "irrelevant_if",
       "exit": 1,
@@ -121,64 +251,47 @@
       "exit": 1
     }
   ],
-  "earlier_controls": {
-    "runtime_valid_preloaded": 133,
-    "runtime_on_demand_refused": 133,
-    "gate_injections_refused": 25,
-    "extended_pairs": 23,
-    "evidence_attacks": 27,
-    "name_maps": 21,
-    "full_wildcard_failures": 4,
-    "graph_controls": 23
+  "mutation_controls": {
+    "unmutated": [],
+    "n1_deciding_check_removed": [
+      "datetime_role_authority_refuses_undecided_accepts_one_control",
+      "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
+      "datetime_role_authority_refuses_undecided_doc_only_conjunct",
+      "datetime_role_authority_refuses_undecided_generic_ref",
+      "datetime_role_authority_refuses_undecided_generic_whole_union",
+      "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
+      "datetime_role_authority_refuses_undecided_implicit_true",
+      "datetime_role_authority_refuses_undecided_member_only_conjunct",
+      "datetime_role_authority_refuses_undecided_setting_value_shape",
+      "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+    ],
+    "implicit_exclusion_removed": [
+      "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node"
+    ],
+    "dynamicRef_back_in_allowlist": [
+      "datetime_automatic_credit_withheld_dynamicRef",
+      "datetime_role_authority_refuses_dynamicRef"
+    ]
   },
   "preservation": {
-    "owner_prose": {
-      "checked": 3774,
-      "changed": []
-    },
-    "pinned_product_schemas": {
-      "checked": 517,
-      "changed": []
-    },
-    "generated_shards_and_index": {
-      "checked": 3299,
-      "changed": []
-    },
-    "number_implementation_corpus_registry": {
-      "checked": 6,
-      "changed": []
-    },
-    "date_time_runtime_and_battery": {
-      "checked": 2,
-      "changed": []
-    },
-    "governance_and_registry": {
-      "checked": 35,
-      "changed": []
-    },
-    "source_base": "07cd715a3fb433094e55ea54a653beeb0bd9f35c",
-    "head": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
-    "changed_paths": [
+    "changed": [
       "Plans/event_datetime_inventory.json",
       "scripts/pm_event_datetime_admission_checks.py",
       "scripts/pm_event_datetime_exclusions.json",
-      "scripts/pm_event_datetime_inventory.py",
       "scripts/pm_event_datetime_inventory.schema.json",
       "scripts/pm_event_datetime_roles.json",
       "scripts/pm_event_datetime_value_probe.py"
     ],
-    "row_moves": "pass",
-    "outside_scope": [],
-    "exclusion_changes": [
-      "Plans/event_datetime_inventory.json"
-    ],
-    "status": "pass"
+    "number_scope_changed": [],
+    "plans_changed_besides_inventory": [],
+    "outside_allowed": []
   },
+  "not_rerun": "cycle-10 replay suite (not in the FIX14 rerun list); its last run is fix13/cycle10-replay",
   "native_authority": "NOT_RUN",
   "guard_isolation": "SWEEP_PENDING",
   "family_grading": "N/A",
-  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13",
-  "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change.",
+  "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix14",
+  "scope": "Date-time helper fix only: probe, admission checks, inventory schema (one evidence field), role records (classification and reason of ten), inventory evidence and its derived pin. No owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence, .gitignore or number-scope file change.",
   "number_scope_round1": {
     "round": "number scope 1",
     "source_base": "55e4d716149f743ccc9e2aa3a3edc4d09f7d4248",
