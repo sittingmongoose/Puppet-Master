@@ -1,369 +1,76 @@
 {
-  "checks": "reports/event-authority-20261104/GUARDTOOL.checks.json",
+  "method": "B: guard tables",
+  "overall": "PARTIAL",
+  "base": "e8c4658f1ce2b733aa78d5b33dab0a1324d6362c",
   "criteria": [
     {
-      "basis": "Seven proof implementations pinned and inspected; remaining twelve lane interfaces inspected statically.",
-      "criterion": "survey",
-      "grade": "PASS"
+      "criterion": "guard_table_api",
+      "grade": "PASS",
+      "basis": "Unique named rows; predicates return None or their exact refusal code; only active table issuance can refuse."
     },
     {
-      "basis": "Four dialects, all keyword specimens under positive/negative/nested-not contexts. 768 cells: 139 with atomic cuts, 530 fail closed, 99 zero-predicate. Unknown vocabulary remains unclassified even in unused declarations.",
-      "criterion": "schema_inventory",
-      "grade": "PARTIAL"
+      "criterion": "python_cut_isolation",
+      "grade": "PASS",
+      "basis": "A cut swaps one table entry. Python source, code objects, functions, defaults, globals, closures and model state are never rewritten or cloned."
     },
     {
-      "basis": "Constants always have zero own atoms. Complete-path discovery includes preceding exits; 144 peer-preserving cuts in 72 of 945 cells; 873 cells unclassified. All 48 C6-B1 review attempts have zero broad credited cuts.",
-      "criterion": "predicate_cuts",
-      "grade": "PARTIAL"
+      "criterion": "runtime_no_hidden_guards",
+      "grade": "PASS",
+      "basis": "Strict runtime results, issuance identity, swallowed-refusal detection, handled-exception tracing and source-closure tracing demonstrated."
     },
     {
-      "basis": "82 live AST classes x five positions: 47 bounded support / 363 fail closed. One shared composition function covers every refusal; unknown prefix paths and opaque zero-read expressions cannot register. Seven generated preceding-exit contexts are coverage-gated.",
-      "criterion": "code_sites",
-      "grade": "PARTIAL"
+      "criterion": "static_no_hidden_guards",
+      "grade": "PARTIAL",
+      "basis": "Conservative import-closure census fails closed; exact non-guard declarations and each predicate body still require review."
     },
     {
-      "basis": "Controls, own flips, unchanged unrelated refusals, explicit masking codes, crashes and restoration exercised.",
-      "criterion": "runner_and_masking",
-      "grade": "PASS"
+      "criterion": "guard_negative_matrix",
+      "grade": "PASS",
+      "basis": "Every guard/negative and guard/control pair is independently executed in fresh state; diagonal/off-diagonal failures withhold all credit."
     },
     {
-      "basis": "Declared same-field/predicate identity plus individual cuts, joint cut and member restoration.",
-      "criterion": "duplicates",
-      "grade": "PASS"
+      "criterion": "per_guard_and_duplicates",
+      "grade": "PASS",
+      "basis": "Own flip, exact peer tags/codes and complete restoration; duplicate single-cut and each-remaining-site/joint proofs."
     },
     {
-      "basis": "Stable JSON matrix and explicit predicate_count/cut metadata; all exercised adapter trust decisions are enumerated.",
-      "criterion": "output",
-      "grade": "PASS"
+      "criterion": "state_reset",
+      "grade": "PARTIAL",
+      "basis": "Reachable repository mutable-state reuse fails, with no state copies; external/native services and store reset remain reviewer obligations."
     },
     {
-      "basis": "Finite API thresholds, fresh configured callback-boundary samples and RSS recheck on resume verified with injected readers; sampled guard only.",
-      "criterion": "resources",
-      "grade": "PASS"
+      "criterion": "schema_inventory_and_cuts",
+      "grade": "PARTIAL",
+      "basis": "Reviewed implementation unchanged except SchemaGuard metadata rename. 768-cell audit unchanged: 139 supported, 530 fail closed, 99 zero-predicate."
     },
     {
-      "basis": "201/201: all 148 old records unchanged, 48 exact C6-B1 cell/mode traps, minimal single/aggregate witness, zero-atom/unknown-path regressions and two semantic/coverage gates. Sol cycle-5 435, cycle-6 5145 + 515, independent final audit 4010 assertions PASS.",
       "criterion": "corpus",
-      "grade": "PASS"
+      "grade": "PASS",
+      "basis": "71/71 Method B expected observations caught, including original code/set/default observations and retained schema regressions."
     },
     {
-      "basis": "All 19 lane migration instructions retained; capability narrowed to actual allow-list, with every demonstrated trust-boundary decision named.",
-      "criterion": "adoption_guide",
-      "grade": "PASS"
+      "criterion": "dg6b_example",
+      "grade": "PARTIAL",
+      "basis": "7/7 flags in normal and optimized examples; 21/21 on original fixture phases. Unported complete original FAIL with zero credit."
     },
     {
-      "basis": "Current ATS-003/004 cited; no new PlanUnit or product contract needed.",
-      "criterion": "owner_scope",
-      "grade": "PASS"
+      "criterion": "adoption",
+      "grade": "NOT_RUN",
+      "basis": "Guide names all 19 lane interfaces; no complete lane adoption, independent clearance, admission or family grade."
+    },
+    {
+      "criterion": "resources_and_scope",
+      "grade": "PASS",
+      "basis": "Serial checks; 1 GiB address-space cap for tool/replay checks; 1536 MiB RSS and 6 GiB available-memory gates; protected paths unchanged."
     }
   ],
-  "evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
-    "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
-  },
-  "families": [],
-  "family_rubric": "not applicable: this lane prepares a repository tool, not event families",
+  "checks": "reports/event-authority-20261104/GUARDTOOL.checks.json",
+  "family_grades": "NOT_APPLICABLE",
   "ids_used": [],
-  "limitations": [
-    "Only allow-listed single-predicate cuts receive automatic credit. Unsupported grammar remains unclassified/unproved.",
-    "No general chain normalizer or regex/format clause splitter. Pattern-bearing lanes cannot claim complete adoption from this tool alone.",
-    "Callback invocation, root-to-input occurrences, dynamic subjects, helper/source closure, refusal translation and alias/duplicate declarations require independent reviewer judgment.",
-    "Round-3 real exercise was bounded retained history: 21 selected guards, all three suites FAIL. It was not rerun at round-6 head; no current family grade or admission.",
-    "28 inherited plan-index findings under current origin/main remain; all named inputs match the pinned base. Shards pass. No owner/derived/governance changes.",
-    "Memory is sampled at fresh callback boundaries and resume, not hard allocation/child-process containment.",
-    "Two-deep/else paths, shared multi-statement controlling bodies, and controllers combined with nonconstant own tests remain unclassified; the cross-product exercises these boundaries without claiming support.",
-    "Exact simple preceding exits are inventoried. Complex exits and multiple changing controllers require an atomic adapter; rejecting-prefix tests stay fixed and owned by their original sites."
-  ],
-  "review_round_1": {
-    "after": {
-      "code_sites": "PASS",
-      "predicate_cuts": "PARTIAL",
-      "schema_inventory": "PARTIAL"
-    },
-    "family_grade_changes": "not applicable; no families prepared or admitted",
-    "implementation_commit": "b004369868dafd173faf751695d0da7eca38352e",
-    "reviewed_grades": {
-      "code_sites": "FAIL",
-      "predicate_cuts": "PARTIAL",
-      "schema_inventory": "PARTIAL"
-    }
-  },
-  "review_round_2": {
-    "after": {
-      "code_sites": "PASS for bounded grammar and unsupported inventory",
-      "predicate_cuts": "PARTIAL",
-      "schema_inventory": "PARTIAL"
-    },
-    "base_sha": "305952a2be640f4e3faa8638a738678dd6c593c7",
-    "before": {
-      "code_sites": "PASS claimed; F2 remained blocking in cycle 2",
-      "predicate_cuts": "PARTIAL",
-      "schema_inventory": "PARTIAL; F5 remained blocking in cycle 2"
-    },
-    "family_grade_changes": "not applicable; no families prepared or admitted",
-    "findings": {
-      "F2": "fixed: assigned refusal Call inventory; unsupported candidates stay unproved",
-      "F5": "fixed by conservative refusal: mixed-dialect assertions unclassified/unproved; original callback semantics preserved"
-    },
-    "implementation_commit": "5181b37ea868f71d188f460a38e243377810e563",
-    "selected_runtime_guards_proved": 21,
-    "traps": {
-      "caught": 86,
-      "total": 86
-    }
-  },
-  "self_assessment": "PARTIAL overall. 201/201 traps and all 945 generated cells pass the bounded invariant; zero broad cuts in the 48 exact C6-B1 attempts. Unsupported paths stay unclassified. No complete lane adoption or family grade.",
-  "subject": "shared check-11 guard-isolation tool",
-  "review_round_3": {
-    "base_sha": "16bd9ccb0c52e557ef58b2b78b937308f1f28a03",
-    "implementation_commit": "9769ca85108aed8faf82fe9530fda5cd9cd43147",
-    "findings": {
-      "A-B1": "fixed; conservative refusal where no sound atomic cut exists",
-      "A-B2": "fixed; conservative refusal where no sound atomic cut exists",
-      "A-B3": "fixed; conservative refusal where no sound atomic cut exists",
-      "A-B4": "fixed; conservative refusal where no sound atomic cut exists",
-      "A-B5": "fixed; conservative refusal where no sound atomic cut exists",
-      "resource_finite": "fixed; conservative refusal where no sound atomic cut exists",
-      "resource_fresh": "fixed; conservative refusal where no sound atomic cut exists",
-      "resource_resume": "fixed; conservative refusal where no sound atomic cut exists"
-    },
-    "before": {
-      "code_sites": "PASS claimed, contradicted by Astra A-B2/A-B3",
-      "schema_inventory": "PARTIAL with false PASS cases",
-      "predicate_cuts": "PARTIAL with aggregate cuts"
-    },
-    "after": {
-      "code_sites": "PARTIAL",
-      "schema_inventory": "PARTIAL",
-      "predicate_cuts": "PARTIAL"
-    },
-    "traps": {
-      "old": 86,
-      "new": 38,
-      "caught": 124,
-      "total": 124
-    },
-    "schema_audit": {
-      "cut_cells": 139,
-      "fail_closed_cells": 530,
-      "zero_predicate_cells": 99
-    },
-    "python_audit": {
-      "supported": 12,
-      "fail_closed": 16
-    },
-    "real": [
-      {
-        "family": "plugin.loaded",
-        "status": "FAIL",
-        "inventory": 12007,
-        "rows": 403,
-        "evaluations": 3642,
-        "selected_proved": 7,
-        "unproved": 1155,
-        "unproved_schema": 425,
-        "unclassified_code": 730,
-        "unclassified_schema": 29,
-        "old_unproved": 649
-      },
-      {
-        "family": "plugin.hook.invoked",
-        "status": "FAIL",
-        "inventory": 12013,
-        "rows": 410,
-        "evaluations": 3705,
-        "selected_proved": 7,
-        "unproved": 1161,
-        "unproved_schema": 431,
-        "unclassified_code": 730,
-        "unclassified_schema": 28,
-        "old_unproved": 655
-      },
-      {
-        "family": "auth.github.authenticated",
-        "status": "FAIL",
-        "inventory": 12031,
-        "rows": 427,
-        "evaluations": 3858,
-        "selected_proved": 7,
-        "unproved": 1177,
-        "unproved_schema": 447,
-        "unclassified_code": 730,
-        "unclassified_schema": 27,
-        "old_unproved": 671
-      }
-    ],
-    "family_grade_changes": "not applicable; no admissions or family grade changes",
-    "core_commit": "f62a23b9207b5be9e472c2070482007ce5f459e5",
-    "closure_commit": "309359ebe9"
-  },
-  "review_round_4": {
-    "before": "PARTIAL",
-    "after": "PARTIAL",
-    "base": "68fd9b0b043831ef84b1b125d6f7d59b254dbb2d",
-    "core_fix_commit": "c34dddebc5b33465fa8b94c1ab5146137d51dc23",
-    "implementation_commit": "6998371fbe90d3f9ec32e98fdaccb7423966a615",
-    "C4-B1": "fixed; structured operands have no aggregate cut",
-    "C4-B2": "fixed; unsupported control ancestors block registration",
-    "traps": {
-      "old": 124,
-      "new": 17,
-      "caught": 141
-    },
-    "census": {
-      "classes": 82,
-      "positions": 5,
-      "supported": 47,
-      "fail_closed": 363,
-      "gate": "PASS; new-class injection FAIL exit 1"
-    },
-    "sol_cycle4": {
-      "fresh_constructs_completed": 29,
-      "counterexamples_completed": 10,
-      "false_pass_count": 0,
-      "assertions": 123
-    },
-    "dg6b_rerun": false,
-    "families": [],
-    "ids_used": [],
-    "evidence": {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix4/verification-manifest.json",
-      "sha256": "3782fcc215df39d665ef241dd0dab69345805d9ba1345f2cbe7fe71cfd0beffd"
-    }
-  },
-  "review_round_5": {
-    "base": "26bae8267d5e7f9fa2d92e448ff6056756528766",
-    "implementation_commit": "cfafa4f4ed471081bbf11f547903e94f95ea9a35",
-    "C5-B1": "fixed; every refusal kind uses shared controller/own-test composition and generic target-based cut execution",
-    "traps": {
-      "old": 141,
-      "new": 7,
-      "caught": 148,
-      "total": 148
-    },
-    "cross_product": {
-      "control_contexts": 14,
-      "controlling_forms": 3,
-      "credited_cuts": 48,
-      "credited_with_per_atom_cuts": 24,
-      "generated": 630,
-      "refusal_forms": 15,
-      "refusal_kinds": 6,
-      "status": "PASS",
-      "unclassified": 606
-    },
-    "census": {
-      "status": "PASS",
-      "node_classes": 82,
-      "cells": 410,
-      "totals": {
-        "fail_closed": 363,
-        "supported": 47
-      },
-      "errors": []
-    },
-    "gates": {
-      "original_census_injections": 3,
-      "uncovered_kind_or_context_injections": 2,
-      "aggregate_assert_cut_injection": "self-test FAIL; generated cross-product catches"
-    },
-    "cycle5": {
-      "counterexamples": 10,
-      "old_attempts": 20,
-      "adversarial": 29,
-      "supported_cells": 47,
-      "false_passes": 0,
-      "new_sources": 4,
-      "new_attempts": 8,
-      "reviewer_assertions": 435
-    },
-    "final_fix_assertions": 1551,
-    "plan_index": {
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "inherited_failures": 28,
-      "all_named_inputs_unchanged": true
-    },
-    "protected_scope_unchanged": true,
-    "dg6b_rerun": false,
-    "ids_used": [],
-    "evidence": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix5/verification-manifest.json",
-      "sha256": "ecb823a8cbbb73fcc30ce0a49cbf5fb01ec21a064acb006d99130c391e291f0b"
-    },
-    "before": "PARTIAL",
-    "after": "PARTIAL",
-    "families": []
-  },
-  "review_round_6": {
-    "base_sha": "830dd79b2dbfe85630cae1861e3f7e39c50b75a4",
-    "core_fix_commit": "ff7fb58db46861b403abce778960b91301d2a83c",
-    "implementation_commit": "ec841e41cf272c43c829d6a8996a101b735dec4b",
-    "C6_B1": "fixed; constants have zero own atoms, exact preceding-exit conditions or unclassified",
-    "traps": 201,
-    "old_traps": 148,
-    "new_traps": 53,
-    "caught": 201,
-    "cross_product": {
-      "control_contexts": 21,
-      "controlling_forms": 3,
-      "credited_cuts": 144,
-      "credited_with_per_atom_cuts": 72,
-      "generated": 945,
-      "lexical_contexts": 14,
-      "preceding_exit_contexts": [
-        "early-success-return",
-        "early-raise",
-        "elif-chain",
-        "early-continue",
-        "early-break",
-        "except-return",
-        "two-preceding-exits"
-      ],
-      "refusal_forms": 15,
-      "refusal_kinds": 6,
-      "status": "PASS",
-      "unclassified": 873
-    },
-    "census": {
-      "status": "PASS",
-      "node_classes": 82,
-      "cells": 410,
-      "totals": {
-        "fail_closed": 363,
-        "supported": 47
-      },
-      "errors": []
-    },
-    "sol_cycle5": {
-      "status": "PASS",
-      "assertions": 435
-    },
-    "sol_cycle6": {
-      "status": "PASS",
-      "assertions": 5145,
-      "blocker_assertions": 515,
-      "early_success_attempts": 48,
-      "broad_cuts": 0,
-      "broad_proved_rows": 0
-    },
-    "final_audit_assertions": 4010,
-    "plan_index": {
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "inherited_failures": 28,
-      "exact_match_prior_fix5": true
-    },
-    "shards_exit": 0,
-    "protected_scope_unchanged": true,
-    "dg6b_rerun": false,
-    "ids_used": [],
-    "evidence": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix6/verification-manifest.json",
-      "sha256": "e2188a82208af05e831c8b65038549c8790cf93f0db44cd6deeb8abfccc9c33e"
-    },
-    "before": "PARTIAL with C6-B1 blocking",
-    "after": "PARTIAL; C6-B1 fixed in bounded grammar",
-    "families": []
-  }
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B",
+  "open_soundness_boundary": [
+    "Independent review of predicate honesty, non-guard reasons, complete paths and duplicate semantic equivalence.",
+    "Full DG6B/lane adoption requires porting remaining inline refusals and shared state; zero complete-path credit.",
+    "86 index findings inherited from unchanged owner/ledger/index inputs at the pinned base."
+  ]
 }

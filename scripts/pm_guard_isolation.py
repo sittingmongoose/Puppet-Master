@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """Serial, complete-path guard isolation (check 11).
 
-Adapters return a Suite; see GUARDTOOL-ADOPTION.md. No source file is patched,
-no refusal is swallowed, and no schema is flattened. Inventory precedes cases.
-The callback must consume State's schemas/modules at EVERY validation site.
+Method B: original Python functions, fresh factories, table-entry swaps only.
+See GUARDTOOL-ADOPTION.md. Schema occurrence cuts remain separately supported.
+No Python source/bytecode rewriting, recompilation or function/state cloning.
 """
 from __future__ import annotations
 
 import argparse
 import ast
-import builtins
 import copy
-import dis
+import inspect
+import importlib.machinery
 from dataclasses import asdict, dataclass, field, replace
 import hashlib
 import importlib.util
@@ -24,6 +24,7 @@ import struct
 import sys
 import time
 import types
+import weakref
 from typing import Any, Callable
 from urllib.parse import unquote, urldefrag, urljoin
 
@@ -119,7 +120,7 @@ class Invariant:
 
 
 @dataclass(frozen=True)
-class Guard:
+class SchemaGuard:
     id: str
     kind: str
     location: str
@@ -219,161 +220,6 @@ SCHEMA_CUTS = {**{k: "delete-one-assertion" for k in ATOMIC_SCHEMA},
 UNSUPPORTED_SCHEMA = {"pattern", "format", "patternProperties", "unevaluatedItems", "unevaluatedProperties"}
 
 
-# This is a REVIEWED classification, not the census. The census below discovers
-# its rows from the running interpreter, then checks this policy in BOTH
-# directions. Never fill missing live classes/positions with a default: a new
-# Python node must break the gate until somebody classifies it explicitly.
-PYTHON_AST_BASES = (ast.stmt, ast.expr, ast.boolop, ast.cmpop, ast.unaryop,
-                    ast.excepthandler, ast.pattern)
-PYTHON_AST_POSITIONS = ("controlling_context", "condition", "comparison_operand",
-                        "refusal_value", "accumulator_write")
-PYTHON_CLASSIFIED_NODES = """
-AnnAssign Assert Assign AsyncFor AsyncFunctionDef AsyncWith AugAssign Break
-ClassDef Continue Delete Expr For FunctionDef Global If Import ImportFrom Match
-Nonlocal Pass Raise Return Try TryStar TypeAlias While With
-Attribute Await BinOp BoolOp Call Compare Constant Dict DictComp FormattedValue
-GeneratorExp IfExp Interpolation JoinedStr Lambda List ListComp Name NamedExpr
-Set SetComp Slice Starred Subscript TemplateStr Tuple UnaryOp Yield YieldFrom
-And Or Eq NotEq Lt LtE Gt GtE Is IsNot In NotIn Invert Not UAdd USub
-ExceptHandler MatchValue MatchSingleton MatchSequence MatchMapping MatchClass
-MatchStar MatchAs MatchOr
-""".split()
-PYTHON_AST_RULES = {
-    "closed": ("fail_closed", "", "No verified per-predicate cut in this position; explicit atomic adapter required."),
-    "function": ("supported", "delegate-to-refusal-leaves", "Plain top-level function only; nested, decorated and async contexts refuse."),
-    "if": ("supported", "replace-one-controlling-Boolean-leaf", "One direct single-refusal if-body; compose every controller with own test; else/nested paths refuse."),
-    "statement": ("supported", "delegate-to-refusal-leaves", "Standalone expression wrapper only; its calls/writes are independently inventoried."),
-    "atom": ("supported", "replace-one-Boolean-leaf", "Transparent scalar read or one scalar comparison; runtime grammar and subject binding required."),
-    "boolean": ("supported", "replace-one-Boolean-leaf", "Split and/or/not recursively, retaining polarity, peers and short-circuit order."),
-    "operand": ("supported", "preserve-operand-cut-enclosing-comparison-only", "Scalar literal/access or allow-listed scalar view; never a display, comprehension, chain or opaque expression."),
-    "return": ("supported", "replace-one-Boolean-leaf", "Direct Boolean expression or literal falsy return under one supported if; returned locals refuse."),
-    "refusal": ("supported", "cut-one-input-atom-of-complete-path", "Fixed scalar payload has zero atoms; compose lexical tests and preceding exits or refuse registration."),
-    "append": ("supported", "cut-one-input-atom-of-complete-path", "Fixed scalar append has zero atoms; only a verified complete-path input atom can be cut."),
-    "initialize": ("supported", "preserve-empty-list-initialization", "Only fresh empty-list initialization to local names; contributes no refusal predicate."),
-}
-PYTHON_AST_POLICY = {name: {p: "closed" for p in PYTHON_AST_POSITIONS}
-                     for name in PYTHON_CLASSIFIED_NODES}
-for _position, _rule, _names in (
-    ("controlling_context", "function", "FunctionDef"),
-    ("controlling_context", "if", "If"),
-    ("controlling_context", "statement", "Expr"),
-    ("condition", "atom", "Compare Name Attribute Subscript Constant Call"),
-    ("condition", "boolean", "BoolOp UnaryOp And Or Not"),
-    ("condition", "atom", "Eq NotEq Lt LtE Gt GtE Is IsNot In NotIn"),
-    ("comparison_operand", "operand", "Name Attribute Subscript Constant Call UnaryOp UAdd USub"),
-    ("refusal_value", "return", "Return Compare BoolOp UnaryOp And Or Not"),
-    ("refusal_value", "refusal", "Raise Assert Constant Call"),
-    ("accumulator_write", "append", "Expr Call"),
-    ("accumulator_write", "initialize", "Assign AnnAssign"),
-):
-    for _name in _names.split():
-        PYTHON_AST_POLICY[_name][_position] = _rule
-
-
-PYTHON_REFUSAL_KINDS = {
-    "raise": ("Raise", "refusal_value"),
-    "return": ("Return", "refusal_value"),
-    "assert": ("Assert", "refusal_value"),
-    "accumulator_write": ("Call", "accumulator_write"),
-    "refusal_helper": ("Call", "refusal_value"),
-    "predicate_helper": ("Call", "refusal_value"),
-}
-PYTHON_PRECEDING_EXIT_CONTEXTS = (
-    "early-success-return", "early-raise", "elif-chain", "early-continue",
-    "early-break", "except-return", "two-preceding-exits",
-)
-
-
-def python_construct_census():
-    """Generate the complete node × position table from THIS Python's ast.
-
-    The seven ASDL sum bases are abstract; their exported subclasses are the
-    concrete constructors, including zero-field operators and patterns. Do not
-    infer completeness from a hand-written sample program or node-name list.
-    """
-    live = {cls.__name__: cls for cls in vars(ast).values()
-            if isinstance(cls, type) and cls not in PYTHON_AST_BASES
-            and issubclass(cls, PYTHON_AST_BASES)}
-    errors, rows = [], []
-    for name in sorted(set(PYTHON_AST_POLICY) - set(live)):
-        errors.append("classified node does not exist in running ast: " + name)
-    for name, cls in sorted(live.items()):
-        policy = PYTHON_AST_POLICY.get(name, {})
-        for extra in sorted(set(policy) - set(PYTHON_AST_POSITIONS)):
-            errors.append(name + ": unknown position " + extra)
-        cells = {}
-        for position in PYTHON_AST_POSITIONS:
-            rule = policy.get(position)
-            if rule not in PYTHON_AST_RULES:
-                errors.append(name + ": unclassified " + position)
-                continue
-            status, cut, constraint = PYTHON_AST_RULES[rule]
-            cells[position] = {"disposition": status, "rule": rule, "cut": cut, "constraint": constraint}
-        rows.append({"node": name, "base": next(b.__name__ for b in PYTHON_AST_BASES if issubclass(cls, b)),
-                     "positions": cells})
-    totals = {s: sum(c["disposition"] == s for row in rows for c in row["positions"].values())
-              for s in ("supported", "fail_closed")}
-    return {"status": "FAIL" if errors else "PASS", "python": sys.version,
-            "implementation": sys.implementation.name, "positions": list(PYTHON_AST_POSITIONS),
-            "node_classes": len(live), "cells": len(live) * len(PYTHON_AST_POSITIONS),
-            "totals": totals, "errors": errors, "rows": rows,
-            "refusal_kinds": {k: list(v) for k, v in PYTHON_REFUSAL_KINDS.items()},
-            "preceding_exit_contexts": list(PYTHON_PRECEDING_EXIT_CONTEXTS)}
-
-
-def python_node_supported(node, position):
-    """Exact-class lookup shared by discovery and the generated census gate."""
-    name = type(node).__name__
-    if getattr(ast, name, None) is not type(node):
-        return False
-    rule = PYTHON_AST_POLICY.get(name, {}).get(position, "closed")
-    return PYTHON_AST_RULES[rule][0] == "supported"
-
-
-def python_atom_reason(expression):
-    """Only transparent, side-effect-free Boolean atoms get automatic cuts.
-
-    Names/accesses and one comparison are adapter-bound input predicates. Calls
-    outside the tiny read-only view grammar and compound/dataflow expressions
-    need a separately inventoried atomic seam. Chains are deliberately refused:
-    rewriting them as `and` would evaluate shared operands twice.
-    """
-    def value(node):
-        if not python_node_supported(node, "comparison_operand"):
-            return False
-        if isinstance(node, (ast.Name, ast.Constant)):
-            return True
-        if isinstance(node, ast.Attribute):
-            return value(node.value)
-        if isinstance(node, ast.Subscript):
-            return value(node.value) and value(node.slice)
-        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
-            return python_node_supported(node.op, "comparison_operand") and value(node.operand)
-        if isinstance(node, ast.Call) and not node.keywords:
-            if isinstance(node.func, ast.Name) and node.func.id in ("len", "type"):
-                return len(node.args) == 1 and value(node.args[0])
-            if isinstance(node.func, ast.Attribute) and node.func.attr == "get":
-                return (1 <= len(node.args) <= 2 and value(node.func.value) and
-                        isinstance(node.args[0], ast.Constant) and all(value(x) for x in node.args))
-            if isinstance(node.func, ast.Attribute) and node.func.attr == "encode":
-                return value(node.func.value) and all(isinstance(x, ast.Constant) for x in node.args)
-        return False
-    if not python_node_supported(expression, "condition"):
-        return "node fails closed in condition position: " + type(expression).__name__
-    if isinstance(expression, ast.Compare):
-        if len(expression.ops) != 1:
-            return "chained comparison carries multiple predicates; evaluation-order-preserving adapter required"
-        if (python_node_supported(expression.ops[0], "condition") and
-                value(expression.left) and value(expression.comparators[0])):
-            return ""
-        return "comparison operand is structured or outside scalar read grammar; component-preserving atomic adapter required"
-    elif isinstance(expression, (ast.Name, ast.Attribute, ast.Subscript, ast.Constant)) and value(expression):
-        return ""
-    elif isinstance(expression, ast.Call) and value(expression):
-        return ""
-    return "expression outside atomic Boolean allow-list (conditional expression, opaque call or dataflow); atomic adapter required"
-
-
 def children(node: dict):
     for key in MAPS:
         for name, child in node.get(key, {}).items():
@@ -409,7 +255,7 @@ class SchemaCatalog:
         if not self.documents or not self.roots:
             raise IsolationError("schema catalog requires documents and complete consumed roots")
         self.formats = format_checker or FormatChecker()
-        self.guards: dict[str, Guard] = {}
+        self.guards: dict[str, SchemaGuard] = {}
         self.nodes: dict[tuple, Any] = {}
         self.edges: dict[tuple, list[tuple]] = {}
         self.possible_edges: dict[tuple, list[tuple]] = {}
@@ -573,7 +419,7 @@ class SchemaCatalog:
                            dialect in (validators.Draft3Validator, validators.Draft4Validator, validators.Draft6Validator, validators.Draft7Validator)
                            else dialect.__name__ + ": keyword is not evaluated: " + effective_keyword)
                     self.ineffective[(doc, path, keyword)] = why
-                self.guards[gid] = Guard(gid, kind, doc + "#" + suffix,
+                self.guards[gid] = SchemaGuard(gid, kind, doc + "#" + suffix,
                     Invariant(subject, predicate), doc, path, keyword, member,
                     classification or context, why or evidence, polarity, dialect=dialect.__name__)
             if type(node) is bool:
@@ -809,7 +655,7 @@ class SchemaCatalog:
             reason = (self.unsupported_entries.get(entry) or
                       ("mixed-dialect evaluation needs an explicit context-bound adapter; declared resource dialect is not the calling evaluation context"
                       if entry in self.mixed_entries else "recursive/dynamic occurrence inventory needs an explicit adapter seam"))
-            result[gid] = Guard(gid, "unsupported_context", entry,
+            result[gid] = SchemaGuard(gid, "unsupported_context", entry,
                 Invariant(entry, "context-bound mixed-dialect evaluation" if entry in self.mixed_entries else "context-bound recursive/dynamic evaluation"),
                 classification="unclassified", evidence=reason)
         self.guards = result
@@ -1010,1072 +856,6 @@ class SchemaView:
         return validator
 
 
-@dataclass(frozen=True)
-class CodeSite:
-    guard: Guard
-    function: str
-    line: int
-    column: int
-    action: str                    # raise | return | predicate | assert | call
-    clause: tuple[int | str, ...] | None = None
-    fingerprint: str = ""
-    target: dict = field(default_factory=dict)
-
-
-def _constant_fingerprint(value):
-    """Exact type/physical value, including nested NaN payloads. Never repr()."""
-    kind = type(value)
-    if kind is types.CodeType:
-        return ("code", _code_fingerprint(value))
-    if kind in (tuple, frozenset):
-        items = [_constant_fingerprint(item) for item in value]
-        return (kind.__name__, tuple(sorted(items) if kind is frozenset else items))
-    if kind is slice:
-        return ("slice", tuple(_constant_fingerprint(v) for v in (value.start, value.stop, value.step)))
-    if kind is float:
-        return ("float", struct.pack(">d", value))
-    if kind is complex:
-        return ("complex", struct.pack(">dd", value.real, value.imag))
-    if kind in (type(None), bool, int, str, bytes) or value is Ellipsis:
-        return (kind.__name__, value if value is not Ellipsis else "ellipsis")
-    raise IsolationError("unsupported code constant type: " + kind.__name__)
-
-
-def _code_fingerprint(code):
-    """Executable source identity; positional differences require the subset below."""
-    return (code.co_name, code.co_code, tuple(_constant_fingerprint(c) for c in code.co_consts), code.co_names,
-            code.co_varnames, code.co_freevars, code.co_cellvars, code.co_argcount,
-            code.co_posonlyargcount, code.co_kwonlyargcount, code.co_flags, code.co_exceptiontable,
-            code.co_stacksize, code.co_nlocals)
-
-
-def _state_token(value, seen=None):
-    """Immutable snapshot of supported state, with object identity and container contents."""
-    seen = set() if seen is None else seen
-    kind = type(value)
-    if id(value) in seen:
-        return ("cycle", id(value))
-    seen = seen | {id(value)}
-    if kind in (dict, list, tuple, set, frozenset):
-        items = (tuple((_state_token(k, seen), _state_token(v, seen)) for k, v in value.items())
-                 if kind is dict else tuple(_state_token(v, seen) for v in value))
-        return (kind.__name__, id(value), frozenset(items) if kind in (set, frozenset) else items)
-    if kind is types.FunctionType:
-        return ("function", id(value), _function_state(value, seen))
-    if kind is types.CodeType:
-        return ("code", id(value), _code_fingerprint(value), value.co_filename, value.co_firstlineno,
-                value.co_qualname, value.co_linetable)
-    if kind is type and (value.__module__ == "builtins" or issubclass(value, BaseException)):
-        return ("type", id(value))
-    if kind in (type(None), bool, int, float, complex, str, bytes, slice) or value is Ellipsis:
-        return ("value", id(value), _constant_fingerprint(value))
-    # Opaque values in defaults/attributes cannot be certified by an id alone.
-    raise IsolationError("unsupported function state type: " + kind.__name__)
-
-
-def _function_state(fn, seen=None):
-    seen = (set() if seen is None else seen) | {id(fn)}
-    annotate = getattr(fn, "__annotate__", None)
-    return (id(fn.__globals__), id(fn.__builtins__), tuple(_state_token(v, seen) for v in (
-        fn.__code__, fn.__defaults__, fn.__kwdefaults__, fn.__dict__, fn.__name__, fn.__qualname__,
-        fn.__module__, fn.__doc__, annotate,
-        fn.__annotations__, getattr(fn, "__type_params__", ()))),
-        tuple((id(cell), _state_token(cell.cell_contents, seen)) for cell in fn.__closure__ or ()))
-
-
-def _copy_function(original, code, namespace, state, clone):
-    """Install the one-memo state graph in an already memoized function shell."""
-    clone.__defaults__ = state["defaults"]
-    clone.__kwdefaults__ = state["kwdefaults"]
-    clone.__dict__ = state["attributes"]
-    for cell, value in zip(clone.__closure__ or (), state["closure"]):
-        cell.cell_contents = value
-    clone.__qualname__, clone.__module__, clone.__doc__ = original.__qualname__, original.__module__, original.__doc__
-    annotate = getattr(original, "__annotate__", None)
-    if annotate is not None:
-        clone.__annotate__ = annotate
-        # Python 3.14's setters cannot install both fields: assigning
-        # __annotations__ clears __annotate__, and the reverse drops the cache.
-        # Only verified pure source evaluators are supported. Materialize the
-        # clone cache, then copy its contents without invoking either setter.
-        annotations = clone.__annotations__
-        annotations.clear()
-        annotations.update(state["annotations"])
-    else:
-        clone.__annotations__ = state["annotations"]
-    if hasattr(original, "__type_params__"):
-        clone.__type_params__ = state["type_params"]
-    return clone
-
-
-# Positive checker interface. Adding a name here is a reviewed adapter change,
-# never a declaration supplied by an untrusted checker (including call_predicates).
-CHECKER_TYPES = (type(None), bool, int, float, complex, str, bytes, list, tuple, dict, set, frozenset)
-CHECKER_BUILTINS = {name: getattr(builtins, name) for name in (
-    "isinstance", "type", "len", "int", "str", "bool", "bytes", "set", "frozenset", "tuple", "list", "dict", "all", "any")}
-CHECKER_RE = {name: getattr(re, name) for name in ("fullmatch", "match", "compile")}
-CHECKER_EXCEPTIONS = {name: getattr(builtins, name) for name in (
-    "ValueError", "AssertionError", "TypeError", "RuntimeError", "KeyError", "Exception")}
-CHECKER_METHODS = {
-    str: frozenset(("startswith", "endswith", "encode", "split", "rsplit", "strip", "lstrip", "rstrip", "lower", "upper", "replace", "join", "isdigit", "isdecimal", "isascii", "count", "find")),
-    bytes: frozenset(("startswith", "endswith", "decode", "split", "rsplit", "strip", "lstrip", "rstrip", "lower", "upper", "replace", "join", "count", "find")),
-    dict: frozenset(("get", "keys", "items", "values", "copy", "setdefault", "update", "pop", "clear")),
-    list: frozenset(("append", "extend", "insert", "pop", "remove", "clear", "copy", "count", "index", "reverse")),
-    set: frozenset(("add", "update", "discard", "remove", "pop", "clear", "copy", "union", "intersection", "difference", "issubset", "issuperset", "isdisjoint")),
-    tuple: frozenset(("count", "index")),
-}
-
-
-def _plain_checker_state(value, functions=(), seen=None):
-    """Certify exact builtin graphs before deepcopy can invoke any user hooks."""
-    seen = set() if seen is None else seen
-    if id(value) in seen:
-        return
-    seen.add(id(value))
-    kind = type(value)
-    if kind in (dict, list, tuple, set, frozenset):
-        for item in (list(value.keys()) + list(value.values()) if kind is dict else value):
-            _plain_checker_state(item, functions, seen)
-    elif kind is slice:
-        for item in (value.start, value.stop, value.step):
-            _plain_checker_state(item, functions, seen)
-    elif kind in (type(None), bool, int, float, complex, str, bytes) or value is Ellipsis:
-        return
-    elif value is object or any(value is fn for fn in functions) or any(value is cls for cls in CHECKER_TYPES):
-        return
-    else:
-        raise IsolationError("checker interface requires exact builtin state; unsupported " + kind.__name__)
-
-
-def _future_flags(tree):
-    """Compiler flags for the source's own `from __future__ import ...` lines."""
-    import __future__
-    flags = 0
-    for node in tree.body:
-        if isinstance(node, ast.ImportFrom) and node.module == "__future__":
-            for alias in node.names:
-                feature = getattr(__future__, alias.name, None)
-                flags |= getattr(feature, "compiler_flag", 0)
-    return flags
-
-
-def _reference_code(tree, function_name):
-    """The optimize=0 compilation of the supplied source, never inheriting this module's flags."""
-    code = compile(tree, "<guard-isolation-reference>", "exec", optimize=0, dont_inherit=True)
-    return next(const for const in code.co_consts
-                if isinstance(const, types.CodeType) and const.co_name == function_name)
-
-
-def _require_matching_original(module_name, function_name, tree, original):
-    """Reviews C7-B1 and C8-B1: a cut clone may differ from its original only by the cut.
-
-    Clones compile the source at optimize=0 with the source's own future flags,
-    so every directly bound original must be exactly that compilation (whatever
-    its optimization sensitivity). Anything else fails closed. An absent
-    original is refused by clone() before any baseline or cut runs (C8-B2).
-    """
-    if original is None:
-        return
-    if not isinstance(original, types.FunctionType) or (
-            _code_fingerprint(original.__code__) != _code_fingerprint(_reference_code(tree, function_name))):
-        raise IsolationError(f"{module_name}.{function_name}: the original is not the optimize=0 compilation of its "
-                             "supplied source; cut clones would not match it")
-
-
-class AstGuards:
-    """Exact refusal sites in top-level Python functions, compiled in memory.
-
-    A compound rejection MUST register each BoolOp leaf separately. Context
-    selectors must be classified with evidence. Opaque helper calls need an
-    adapter's explicit per-predicate inventory; this is not a semantic theorem
-    prover. No whole-function replacement or catch-and-continue fallback exists.
-    """
-    def __init__(self, name: str, source: str, namespace: dict, *, call_predicates=None):
-        census = python_construct_census()
-        if census["errors"]:
-            raise IsolationError("Python construct census gate: " + "; ".join(census["errors"]))
-        self.name, self.source, self.namespace = name, source, namespace
-        self.tree = ast.parse(source)
-        self.sites: dict[str, CodeSite] = {}
-        self.functions = {n.name: n for n in self.tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
-        self.source_hash = hashlib.sha256(source.encode()).hexdigest()
-        # Review C7-B1: an optimized process or original would let a clone drop
-        # assertions that the declared cut never touched.
-        if sys.flags.optimize:
-            raise IsolationError(f"guard isolation must run without -O/-OO (sys.flags.optimize={sys.flags.optimize})")
-        if "__getattr__" in namespace:
-            # Review C8-B2: a dynamic module export can supply a baseline the
-            # source does not describe; it cannot be verified against the cut.
-            raise IsolationError(f"{name}: a module-level __getattr__ export is unsupported; bind each checked function directly")
-        self.future_flags = _future_flags(self.tree)
-        self.tree_snapshot = ast.dump(self.tree, include_attributes=True)
-        self.originals, self.snapshots = {}, {}
-        for function_name, node in self.functions.items():
-            if not node.decorator_list:
-                _require_matching_original(name, function_name, self.tree, namespace.get(function_name))
-            original = namespace.get(function_name)
-            if isinstance(original, types.FunctionType):
-                if original.__globals__ is not namespace:
-                    raise IsolationError(f"{name}.{function_name}: original function globals are not the supplied namespace")
-                self._verify_builtins(original)
-                self.originals[function_name] = original
-        self.bound_functions = {key: value for key, value in namespace.items() if isinstance(value, types.FunctionType)}
-        for key, value in self.bound_functions.items():
-            self._verify_annotations(key, value)
-        self.snapshots = {key: _function_state(value) for key, value in self.bound_functions.items()}
-        # Call name -> index of its acceptance predicate. Only the predicate
-        # argument is cut; the helper, its code and other arguments remain.
-        self.call_predicates = {"require": 0} if call_predicates is None else dict(call_predicates)
-        self.subset_reasons = self._source_subset()
-        self.global_snapshot = self._reachable_globals_state()
-
-    def _reachable_globals_state(self):
-        """Do not let original execution change the context of later clones."""
-        builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
-        if isinstance(builtin_namespace, types.ModuleType):
-            builtin_namespace = vars(builtin_namespace)
-        result = {}
-        for key in self.read_globals:
-            origin = self.namespace if key in self.namespace else builtin_namespace
-            if key not in origin:
-                result[key] = ("absent",)
-                continue
-            value = origin[key]
-            if isinstance(value, (types.FunctionType, types.ModuleType)) or value is Outcome:
-                token = ("service", id(value))
-            else:
-                try:
-                    token = _state_token(value)
-                except IsolationError:
-                    # Opaque state already makes its function unclassified.
-                    token = ("opaque", id(value), type(value))
-            result[key] = (origin is self.namespace, token)
-        return result
-
-    def _verify_builtins(self, fn):
-        declared = self.namespace.get("__builtins__", builtins.__dict__)
-        if isinstance(declared, types.ModuleType):
-            declared = vars(declared)
-        if fn.__builtins__ is not declared:
-            raise IsolationError("original builtin context differs from the supplied namespace")
-
-    def _verify_annotations(self, name, fn):
-        """Cloning must not run arbitrary annotation callbacks or drop a cached edit."""
-        annotate = getattr(fn, "__annotate__", None)
-        if annotate is None:
-            return
-        node = self.functions.get(name)
-        if node is None:
-            node = next((self.functions[key] for key, value in self.originals.items() if value is fn), None)
-        if node is None or not isinstance(annotate, types.FunctionType) or annotate.__globals__ is not self.namespace or annotate.__closure__:
-            raise IsolationError("unsupported lazy annotation evaluator: " + name)
-        arguments = [*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs]
-        arguments += [arg for arg in (node.args.vararg, node.args.kwarg) if arg is not None]
-        expressions = [arg.annotation for arg in arguments if arg.annotation is not None]
-        if node.returns is not None:
-            expressions.append(node.returns)
-        for expression in expressions:
-            if isinstance(expression, ast.Constant):
-                continue
-            if isinstance(expression, ast.Name):
-                value = getattr(builtins, expression.id, None)
-                if isinstance(value, type) and self.namespace.get(expression.id, annotate.__builtins__.get(expression.id)) is value:
-                    continue
-            raise IsolationError("lazy annotations require literal or builtin-type source expressions: " + name)
-        reference = compile(self.tree, "<annotation-reference>", "exec", optimize=0,
-                            flags=self.future_flags, dont_inherit=True)
-        candidates = [c for c in reference.co_consts if type(c) is types.CodeType
-                      and c.co_name == "__annotate__" and c.co_firstlineno == node.lineno]
-        if not expressions or not any(_code_fingerprint(annotate.__code__) == _code_fingerprint(c) for c in candidates):
-            raise IsolationError("annotation evaluator is not the verified pure source compilation: " + name)
-
-    def _source_subset(self):
-        """Positive call/attribute/value interface, closed over direct lane calls.
-
-        All dynamic callees and function-object values are outside this grammar.
-        Attribute names alone never authorize a receiver: it must be builtin
-        data, the verified re module, or the two named Outcome constructors.
-        """
-        reasons, dependencies = {}, {}
-        builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
-        if isinstance(builtin_namespace, types.ModuleType):
-            builtin_namespace = vars(builtin_namespace)
-        allowed_values = (*CHECKER_TYPES, *CHECKER_BUILTINS.values(), *CHECKER_EXCEPTIONS.values(), Outcome, re)
-        # re's public bindings are checked against import-time identities too.
-        canonical_re = CHECKER_RE
-        self.read_globals = set()
-        for name, fn in self.functions.items():
-            reasons[name] = "decorated function requires a reviewed adapter seam" if fn.decorator_list else ""
-            if isinstance(fn, ast.AsyncFunctionDef):
-                reasons[name] = "checker allow-list: async functions require a reviewed adapter seam"
-            dependencies[name] = set()
-            parents = {child: parent for parent in ast.walk(fn) for child in ast.iter_child_nodes(parent)}
-            arguments = [*fn.args.posonlyargs, *fn.args.args, *fn.args.kwonlyargs]
-            local_names = {a.arg for a in arguments}
-            local_names.update(a.arg for a in (fn.args.vararg, fn.args.kwarg) if a)
-            local_names.update(n.id for n in ast.walk(fn) if isinstance(n, ast.Name) and isinstance(n.ctx, (ast.Store, ast.Del)))
-            def bound(key):
-                return None if key in local_names else self.namespace.get(key, builtin_namespace.get(key))
-            def deny(message):
-                if not reasons[name]:
-                    reasons[name] = "checker allow-list: " + message
-            def lane(key):
-                value = bound(key)
-                return next((n for n, original in self.originals.items() if original is value), None)
-            def type_name(node):
-                return isinstance(node, ast.Name) and any(bound(node.id) is cls for cls in CHECKER_TYPES)
-            def re_call(node, methods):
-                if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Attribute):
-                    return False
-                attr = node.func
-                if not (isinstance(attr.value, ast.Name) and bound(attr.value.id) is re and attr.attr in methods):
-                    return False
-                if vars(re).get(attr.attr) is not canonical_re[attr.attr]:
-                    return False
-                return bool(node.args and isinstance(node.args[0], ast.Constant) and type(node.args[0].value) in (str, bytes)
-                            and not node.keywords and all(not isinstance(a, ast.Starred) for a in node.args))
-            def data_receiver(node):
-                # These expressions can produce only builtin data in this
-                # interface. Function/module/type values are never receivers.
-                if isinstance(node, ast.Name):
-                    if node.id in local_names:
-                        return True
-                    value = bound(node.id)
-                    try:
-                        _plain_checker_state(value)
-                        return not any(value is cls for cls in CHECKER_TYPES)
-                    except IsolationError:
-                        return False
-                if isinstance(node, (ast.Constant, ast.Subscript, ast.List, ast.Tuple, ast.Dict, ast.Set,
-                                     ast.ListComp, ast.SetComp, ast.DictComp, ast.BinOp, ast.IfExp)):
-                    return True
-                if isinstance(node, ast.Call):
-                    if isinstance(node.func, ast.Name):
-                        return node.func.id in CHECKER_BUILTINS and bound(node.func.id) is CHECKER_BUILTINS[node.func.id] and node.func.id != "type"
-                    return isinstance(node.func, ast.Attribute) and node.func.attr in set().union(*CHECKER_METHODS.values()) and data_receiver(node.func.value)
-                return False
-            for node in ast.walk(fn):
-                parent = parents.get(node)
-                if isinstance(node, (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)) and node is not fn:
-                    deny("local imports, nested functions, classes and lambdas require a reviewed adapter seam")
-                if isinstance(node, (ast.Global, ast.Nonlocal)):
-                    deny("global/nonlocal rebinding requires a reviewed adapter seam")
-                if isinstance(node, ast.Call):
-                    if any(isinstance(a, ast.Starred) for a in node.args) or any(k.arg is None for k in node.keywords):
-                        deny("dynamic argument expansion requires a reviewed adapter seam")
-                    callee = node.func
-                    if isinstance(callee, ast.Name):
-                        peer = lane(callee.id)
-                        if peer is not None:
-                            dependencies[name].add(peer)
-                        elif callee.id in CHECKER_BUILTINS and bound(callee.id) is CHECKER_BUILTINS[callee.id]:
-                            if callee.id == "type":
-                                if not (len(node.args) == 1 and not node.keywords and isinstance(parent, ast.Compare)
-                                        and len(parent.ops) == 1 and isinstance(parent.ops[0], (ast.Is, ast.IsNot))
-                                        and any(type_name(n) for n in (parent.left, *parent.comparators))):
-                                    deny("type() is allowed only in an identity comparison with a listed type")
-                            if callee.id == "isinstance":
-                                types_arg = node.args[1] if len(node.args) == 2 else None
-                                if not (type_name(types_arg) or isinstance(types_arg, ast.Tuple) and all(type_name(n) for n in types_arg.elts)):
-                                    deny("isinstance requires literal listed types")
-                            if callee.id in ("all", "any") and not (len(node.args) == 1 and isinstance(node.args[0], (ast.GeneratorExp, ast.ListComp, ast.SetComp))):
-                                deny("all/any require a supported comprehension")
-                        elif any(bound(callee.id) is exc for exc in CHECKER_EXCEPTIONS.values()) and isinstance(parent, ast.Raise):
-                            pass
-                        else:
-                            deny("call outside the finite interface: " + callee.id)
-                    elif not isinstance(callee, ast.Attribute):
-                        deny("indirect call requires a reviewed adapter seam")
-                if isinstance(node, ast.Attribute):
-                    if not (isinstance(parent, ast.Call) and parent.func is node):
-                        deny("attribute values are outside the finite interface: " + node.attr)
-                    elif re_call(parent, canonical_re):
-                        pass
-                    elif node.attr == "fullmatch" and re_call(node.value, {"compile"}):
-                        pass
-                    elif isinstance(node.value, ast.Name) and bound(node.value.id) is Outcome and node.attr in ("accept", "refuse"):
-                        pass
-                    elif node.attr in set().union(*CHECKER_METHODS.values()) and data_receiver(node.value):
-                        pass
-                    else:
-                        deny("attribute/call receiver outside the finite interface: " + node.attr)
-                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id not in local_names:
-                    value = bound(node.id)
-                    self.read_globals.add(node.id)
-                    peer = lane(node.id)
-                    if peer is not None:
-                        dependencies[name].add(peer)
-                    if isinstance(value, (types.FunctionType, types.BuiltinFunctionType)):
-                        if not (isinstance(parent, ast.Call) and parent.func is node):
-                            deny("function objects cannot be used as values: " + node.id)
-                    elif not any(value is v for v in allowed_values):
-                        try:
-                            _plain_checker_state(value)
-                        except IsolationError as exc:
-                            deny(node.id + ": " + str(exc))
-                    if value is re or value is Outcome:
-                        if not (isinstance(parent, ast.Attribute) and parent.value is node):
-                            deny("module/class values require a reviewed adapter seam: " + node.id)
-                if isinstance(node, ast.Compare):
-                    operands = [node.left, *node.comparators]
-                    for i, op in enumerate(node.ops):
-                        if isinstance(op, (ast.Is, ast.IsNot)) and not any(
-                                isinstance(x, ast.Constant) and (x.value is None or type(x.value) is bool)
-                                for x in operands[i:i + 2]):
-                            if not (len(node.ops) == 1 and any(type_name(x) for x in operands)
-                                    and any(isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id == "type" for x in operands)):
-                                deny("identity comparison requires a singleton or type() is a listed type")
-            # Defaults, attributes and cell contents are part of the same data
-            # graph, even when source does not directly inspect their container.
-            original = self.originals.get(name)
-            if original is not None:
-                try:
-                    for value in (original.__defaults__, original.__kwdefaults__, original.__dict__,
-                                  *(c.cell_contents for c in original.__closure__ or ())):
-                        _plain_checker_state(value)
-                except IsolationError as exc:
-                    deny(str(exc))
-        changed = True
-        while changed:
-            changed = False
-            for name, peers in dependencies.items():
-                if not reasons[name] and any(reasons[p] for p in peers):
-                    reasons[name] = "unsupported sibling dependency: " + next(p for p in sorted(peers) if reasons[p])
-                    changed = True
-        return reasons
-
-    def _verify_live(self):
-        if ast.dump(self.tree, include_attributes=True) != self.tree_snapshot:
-            raise IsolationError("verified source AST changed before clone")
-        for name in self.functions:
-            original = self.originals.get(name)
-            if original is None:
-                raise IsolationError(f"{self.name}.{name}: source function absent from the verified namespace")
-        current = {key: value for key, value in self.namespace.items() if isinstance(value, types.FunctionType)}
-        if current.keys() != self.bound_functions.keys():
-            raise IsolationError(f"{self.name}: verified function bindings changed before clone")
-        for name, original in self.bound_functions.items():
-            if original.__globals__ is self.namespace:
-                self._verify_builtins(original)
-            self._verify_annotations(name, original)
-            if self.namespace.get(name) is not original or _function_state(original) != self.snapshots[name]:
-                raise IsolationError(f"{self.name}.{name}: verified original binding/code/function state changed before clone")
-        if self._source_subset() != self.subset_reasons:
-            raise IsolationError(f"{self.name}: supported source binding context changed before clone")
-        if self._reachable_globals_state() != self.global_snapshot:
-            raise IsolationError(f"{self.name}: verified reachable global state changed before clone")
-
-    @staticmethod
-    def _leaves(test, path=()):
-        if isinstance(test, ast.BoolOp) and python_node_supported(test.op, "condition"):
-            for i, child in enumerate(test.values):
-                yield from AstGuards._leaves(child, path + (i,))
-        elif isinstance(test, ast.UnaryOp) and isinstance(test.op, ast.Not) and python_node_supported(test.op, "condition"):
-            yield from AstGuards._leaves(test.operand, path + ("not",))
-        else:
-            yield path, test
-
-    def _calls(self, node):
-        call = node.value if isinstance(node, ast.Expr) else node
-        refusal = (isinstance(call, ast.Call) and
-            ((isinstance(call.func, ast.Attribute) and call.func.attr in ("append", "extend", "insert", "clear", "pop", "remove", "update", "setdefault", "__setitem__", "__iadd__")) or
-             (isinstance(call.func, ast.Name) and call.func.id in ("refuse", "reject", "fail"))))
-        predicate = isinstance(node, ast.Call) and ast.unparse(node.func) in self.call_predicates
-        return refusal, predicate
-
-    def _preceding_exits(self, node, fn, parents):
-        """Account for fallthrough in EVERY enclosing statement block.
-
-        Simple terminal if branches and assertions have exact fallthrough
-        conditions. Refusing exits are retained unchanged: changing one would
-        substitute a different refusal for the target, not weaken the target.
-        Only a lone successful return has a verified suffix-enabling cut.
-        Complex/opaque exits poison the suffix before it can be registered.
-        """
-        controls, reason = [], ""
-
-        def contains_exit(statement):
-            for part in ast.walk(statement):
-                refusal, predicate = self._calls(part)
-                if isinstance(part, (ast.Return, ast.Raise, ast.Assert, ast.Continue, ast.Break,
-                                     ast.Yield, ast.YieldFrom, ast.Await)) or predicate:
-                    return True
-                if isinstance(part, ast.Call):
-                    fixed_append = (refusal and isinstance(part.func, ast.Attribute) and part.func.attr == "append"
-                        and not part.keywords and len(part.args) == 1 and isinstance(part.args[0], ast.Constant))
-                    if not fixed_append and (refusal or python_atom_reason(part)):
-                        return True
-            return False
-
-        def terminal(statement):
-            if isinstance(statement, ast.Return):
-                return "success" if isinstance(statement.value, ast.Constant) and statement.value.value is True else "refusal"
-            if isinstance(statement, ast.Raise):
-                return "refusal"
-            refusal, _ = self._calls(statement)
-            if refusal and isinstance(statement, ast.Expr) and isinstance(statement.value.func, ast.Name):
-                return "refusal"
-            return ""
-
-        child, owner = node, parents.get(node)
-        while owner is not None:
-            for _, block in ast.iter_fields(owner):
-                if not isinstance(block, list) or child not in block or not isinstance(child, ast.stmt):
-                    continue
-                for previous in block[:block.index(child)]:
-                    if not isinstance(previous, ast.stmt) or not contains_exit(previous):
-                        continue
-                    if (isinstance(previous, ast.If) and not previous.orelse and len(previous.body) == 1
-                            and terminal(previous.body[0])):
-                        role = "preceding_exit" if terminal(previous.body[0]) == "success" else "retained_exit"
-                        controls.append((previous.test, previous, "test", False, role))
-                    elif isinstance(previous, ast.Assert):
-                        controls.append((previous.test, previous, "test", True, "retained_exit"))
-                    elif isinstance(previous, ast.Expr) and self._calls(previous.value)[1]:
-                        call = previous.value
-                        index = self.call_predicates[ast.unparse(call.func)]
-                        if (0 <= index < len(call.args) and not call.keywords and
-                                all(isinstance(arg, ast.Constant) for i, arg in enumerate(call.args) if i != index)):
-                            # Keep the helper's acceptance condition unchanged.
-                            controls.append((call.args[index], call, "args", True, "retained_exit"))
-                        else:
-                            reason = "preceding predicate helper has no exact fallthrough condition"
-                    else:
-                        reason = "preceding exit in " + type(previous).__name__ + " has no verified exact fallthrough/cut; atomic adapter required"
-            if owner is fn:
-                break
-            child, owner = owner, parents.get(owner)
-        return controls, reason
-
-    def _compose_refusal(self, node, fn, parents):
-        """One rejection formula for EVERY refusal kind, before registration.
-
-        Rejection is the complete path condition AND failure of the site's own
-        acceptance test. Constants ALWAYS contribute zero input atoms. Unknown
-        fallthrough poisons the entire site, regardless of suite-level FAIL.
-        """
-        refusal_call, checkcall = self._calls(node)
-        controls, reason = [], ""
-        child, owner = node, parents.get(node)
-        while owner is not None and owner is not fn:
-            if isinstance(owner, PYTHON_AST_BASES):
-                if not python_node_supported(owner, "controlling_context"):
-                    reason = "unsupported controlling context " + type(owner).__name__ + "; atomic adapter required"
-                if hasattr(owner, "test"):
-                    in_body = child in getattr(owner, "body", ())
-                    controls.append((owner.test, owner, "test", in_body, "control"))
-                    if not isinstance(owner, ast.If) or not in_body or len(controls) > 1:
-                        reason = reason or "else/nested control path has no verified per-predicate cut; atomic adapter required"
-                    if isinstance(owner, ast.If) and len(owner.body) != 1:
-                        reason = reason or "shared controlling body needs a refusal-local atomic adapter"
-            child, owner = owner, parents.get(owner)
-        controls.reverse()
-        preceding, path_reason = self._preceding_exits(node, fn, parents)
-        controls = preceding + controls
-        reason = reason or path_reason
-        if sum(role != "retained_exit" for *_, role in controls) > 1:
-            reason = reason or "multiple path controllers need a verified composition-preserving adapter"
-        if not python_node_supported(fn, "controlling_context"):
-            reason = "unsupported function context"
-        if isinstance(fn, ast.AsyncFunctionDef):
-            reason = "async guard requires an explicit atomic adapter"
-
-        # These cases describe ONLY the site's own test/payload. They never
-        # choose between the site's test and its enclosing controllers.
-        arg_index = None
-        if checkcall:
-            kind, action = "predicate_helper", "checkcall"
-            arg_index = self.call_predicates[ast.unparse(node.func)]
-            if arg_index < 0 or arg_index >= len(node.args):
-                raise IsolationError("guard call uses keyword/missing predicate: supply an explicit adapter boundary")
-            own, own_field = node.args[arg_index], "args"
-            if node.keywords or any(not isinstance(arg, ast.Constant) for i, arg in enumerate(node.args) if i != arg_index):
-                reason = "predicate helper has additional nonliteral refusal arguments; atomic adapter required"
-        elif isinstance(node, ast.Return):
-            kind, action = "return", "return" if controls else "predicate"
-            own, own_field = node.value if node.value is not None else ast.Constant(None), "value"
-            if node.value is not None and not python_node_supported(node.value, "refusal_value"):
-                reason = "return value fails closed in refusal-value position; atomic adapter required"
-            if isinstance(node.value, (ast.Name, ast.Attribute, ast.Subscript)):
-                reason = "returned name/access may carry accumulated or compound predicates; dataflow adapter required"
-            if any(role != "retained_exit" for *_, role in controls) and node.value is not None and not isinstance(node.value, ast.Constant):
-                reason = "conditional return value may carry additional predicates; atomic adapter required"
-        elif isinstance(node, ast.Assert):
-            kind, action, own, own_field = "assert", "assert", node.test, "test"
-            if node.msg is not None and not isinstance(node.msg, ast.Constant):
-                reason = "assert refusal message is not a fixed scalar value; atomic adapter required"
-        else:
-            own, own_field = ast.Constant(False), None
-            if isinstance(node, ast.Raise):
-                kind, action = "raise", "raise"
-                if (not isinstance(node.exc, ast.Call) or node.exc.keywords or
-                        not isinstance(node.exc.func, (ast.Name, ast.Attribute)) or
-                        not all(isinstance(arg, ast.Constant) and python_node_supported(arg, "refusal_value") for arg in node.exc.args)):
-                    reason = "refusal payload is not a fixed scalar constructor; atomic adapter required"
-                if node.cause is not None:
-                    reason = "translated/chained raise needs an atomic adapter preserving exception origin"
-            else:
-                call = node.value
-                kind = "accumulator_write" if isinstance(call.func, ast.Attribute) else "refusal_helper"
-                action = "call"
-                if isinstance(call.func, ast.Attribute):
-                    if (call.func.attr != "append" or not python_node_supported(call, "accumulator_write")
-                            or call.keywords or len(call.args) != 1 or not isinstance(call.args[0], ast.Constant)):
-                        reason = "list/container mutation is not one fixed scalar append; atomic adapter required"
-                elif call.keywords or not all(isinstance(arg, ast.Constant) for arg in call.args):
-                    reason = "refusal helper payload is not fixed scalar values; atomic adapter required"
-        if kind not in PYTHON_REFUSAL_KINDS:
-            reason = "refusal kind has no reviewed composition contract"
-        if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) and not python_node_supported(node, "refusal_value"):
-            reason = "statement fails closed in refusal-value position; atomic adapter required"
-
-        own_component = (own, node, own_field, False, "own")
-        components = [*controls, own_component]
-        parameters = {arg.arg for arg in (*fn.args.posonlyargs, *fn.args.args, *fn.args.kwonlyargs)}
-        def reads_input(atom):
-            return any(isinstance(read, ast.Name) and isinstance(read.ctx, ast.Load) and read.id in parameters
-                       for read in ast.walk(atom))
-        composition = [{"role": role, "expression": ast.unparse(expr),
-                        "line": getattr(root, "lineno", node.lineno),
-                        "rejects_when": polarity,
-                        "input_atoms": sum(reads_input(atom) for _, atom in self._leaves(expr))}
-                       for expr, root, _, polarity, role in components]
-        # We have not verified cuts across a nonconstant own test AND a
-        # controller. Expose both sets, but fail closed as one obligation set.
-        if any(role != "retained_exit" for *_, role in controls) and not isinstance(own, ast.Constant):
-            reason = reason or "controller plus nonconstant own test needs a composition-preserving atomic adapter"
-        if controls and isinstance(own, ast.Constant) and bool(own.value):
-            reason = reason or "constant accepting value under control is not a refusal predicate"
-        atoms = []
-        for expr, root, field_name, polarity, role in components:
-            if role == "retained_exit":
-                # Its original site owns these atoms. No cut of this refusal
-                # may redirect execution into a preceding rejecting exit.
-                reason = reason or next((python_atom_reason(atom) for _, atom in self._leaves(expr) if python_atom_reason(atom)), "")
-                continue
-            for clause, atom in self._leaves(expr):
-                atom_reason = python_atom_reason(atom)
-                reason = reason or atom_reason
-                if not reads_input(atom):
-                    # Absence of an explicit parameter read is not evidence
-                    # that an opaque call/dataflow expression is constant.
-                    # Validate its grammar first, then count known constants 0.
-                    continue
-                atoms.append((clause, atom, {"line": root.lineno, "column": root.col_offset, "node": type(root).__name__,
-                    "field": field_name, "argument": arg_index if role == "own" else None,
-                    "accepting": not polarity, "path": list(clause)}))
-        if not atoms:
-            reason = reason or "controlling formula has no independently cuttable input atom"
-        # Keep an explicit own-value obligation when ancestry is unsupported;
-        # it cannot replace the controlling tests or receive a cut.
-        if reason and controls and isinstance(own, ast.Constant):
-            atoms.append(((), own, {}))
-        if not atoms:
-            atoms = [((), own, {})]
-        return kind, action, atoms, reason, composition
-
-    def candidates(self):
-        result = []
-        parents = {child: parent for parent in ast.walk(self.tree) for child in ast.iter_child_nodes(parent)}
-        for name, fn in self.functions.items():
-            def walk(node):
-                if node is not fn and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
-                    return
-                refusal_call, checkcall = self._calls(node)
-                if isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or (refusal_call and isinstance(node, ast.Expr)) or checkcall:
-                    kind, action, atoms, reason, composition = self._compose_refusal(node, fn, parents)
-                    terminal_success = (isinstance(node, ast.Return) and isinstance(node.value, ast.Constant)
-                        and node.value.value is True and parents.get(node) is fn and node is fn.body[-1])
-                    if terminal_success:
-                        # Explicitly reviewable acceptance disposition; never a
-                        # registered cut, even when its path reads input atoms.
-                        action, atoms, reason = "predicate", [((), node.value, {})], ""
-                    for clause, expression, target in atoms:
-                        identity = digest([name, ast.dump(node, include_attributes=False), clause,
-                                           ast.dump(expression, include_attributes=False)])[:16]
-                        result.append({"function": name, "line": node.lineno,
-                            "column": node.col_offset, "action": "unsupported" if reason else action,
-                            "clause": clause or None,
-                            "expression": ast.unparse(expression), "fingerprint": identity,
-                            "id": f"code:{self.name}:{name}:{identity}",
-                            "reason": reason, "predicate_count": 0 if terminal_success else None if reason else 1,
-                            "cut": "replace-one-Boolean-leaf" if not reason and target.get("field") else "",
-                            "refusal_kind": kind, "composition": composition, "cut_target": target if not reason else {}})
-                for child in ast.iter_child_nodes(node):
-                    walk(child)
-            walk(fn)
-        inventoried = {(r["line"], r["column"]) for r in result}
-        # Every call and mutation is either a covered refusal/predicate, a
-        # narrowly allow-listed read-only view, or an explicit unsupported seam.
-        covered = {(r["line"], r["column"]) for r in result}
-        def covered_expression(node):
-            owner = node
-            while owner in parents:
-                owner = parents[owner]
-                if isinstance(owner, (ast.Raise, ast.Return, ast.Assert)) or self._calls(owner)[1]:
-                    return (owner.lineno, owner.col_offset) in covered
-                if isinstance(owner, ast.If):
-                    return node in ast.walk(owner.test) and not python_atom_reason(node)
-            return False
-        for node in ast.walk(self.tree):
-            refusal_call, checkcall = self._calls(node)
-            if refusal_call and isinstance(node, ast.Call) and isinstance(parents.get(node), ast.Expr):
-                continue                    # standalone expression already has one site
-            mutation = isinstance(node, (ast.AugAssign, ast.Delete, ast.NamedExpr, ast.Global, ast.Nonlocal))
-            if isinstance(node, (ast.Assign, ast.AnnAssign)):
-                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-                fresh_empty_list = (python_node_supported(node, "accumulator_write") and all(isinstance(x, ast.Name) for x in targets) and isinstance(node.value, ast.List) and not node.value.elts)
-                # A consumed call already has its own unsupported seam; don't
-                # duplicate that obligation at its assignment parent.
-                consumed_call = isinstance(node.value, ast.Call)
-                mutation = not fresh_empty_list and not consumed_call
-            opaque_call = (isinstance(node, ast.Call) and not covered_expression(node) and bool(python_atom_reason(node)))
-            # New/unsupported statement constructors cannot be invisible just
-            # because no hand-written isinstance list mentioned them. Specific
-            # refusal/write statements have the stricter handlers above.
-            unsupported_flow = ((isinstance(node, ast.stmt) and not python_node_supported(node, "controlling_context")
-                and not isinstance(node, (ast.Raise, ast.Return, ast.Assert, ast.Assign, ast.AnnAssign))) or
-                isinstance(node, (ast.Yield, ast.YieldFrom, ast.Await)))
-            if not (isinstance(node, (ast.Raise, ast.Return, ast.Assert)) or refusal_call or checkcall or mutation or opaque_call or unsupported_flow) or (node.lineno, node.col_offset) in inventoried:
-                continue
-            owner, ancestry = node, []
-            while owner in parents:
-                owner = parents[owner]
-                if isinstance(owner, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
-                    ancestry.append(owner.name)
-            name = ".".join(reversed(ancestry)) or "<module>"
-            identity = digest([name, ast.dump(node, include_attributes=False)])[:16]
-            result.append({"function": name, "line": node.lineno, "column": node.col_offset,
-                "action": "unsupported", "clause": None, "expression": ast.unparse(node),
-                "reason": "call, mutation, dataflow or unsupported control/nested/class/module context requires an explicit atomic adapter seam",
-                "fingerprint": identity, "id": f"code:{self.name}:{name}:{identity}", "predicate_count": None, "cut": ""})
-        for name, fn in self.functions.items():
-            if fn.body and not isinstance(fn.body[-1], (ast.Return, ast.Raise)):
-                identity = digest([name, "implicit-falsy-return"])[:16]
-                result.append({"function": name, "line": fn.end_lineno, "column": fn.col_offset,
-                    "action": "unsupported", "clause": None, "expression": "<implicit return None>",
-                    "reason": "fallthrough returns a falsy value; adapter must declare whether this is an accepting helper or refusal",
-                    "fingerprint": identity, "id": f"code:{self.name}:{name}:{identity}", "predicate_count": None, "cut": ""})
-        # Identical text at two sites still has two identities (stable occurrence suffix).
-        counts = {}
-        for row in result:
-            gid = row["id"]; counts[gid] = counts.get(gid, 0) + 1
-            row["id"] += ":" + str(counts[gid])
-        for candidate in result:
-            reason = self.subset_reasons.get(candidate["function"], "")
-            if reason:
-                candidate.update(action="unsupported", predicate_count=None, cut="", reason=reason)
-        return result
-
-    def register(self, candidate: dict, code: str, invariant: Invariant, *, evidence="") -> str:
-        self._verify_live()
-        actual = next((c for c in self.candidates() if c["id"] == candidate["id"]), None)
-        if actual != candidate:
-            raise IsolationError("stale/substituted AST candidate")
-        if candidate["action"] == "unsupported" or candidate.get("predicate_count") != 1 or not candidate.get("cut"):
-            raise IsolationError("unsupported construct requires an explicit atomic adapter seam: " + candidate.get("reason", "no per-predicate cut"))
-        if self.functions[candidate["function"]].decorator_list:
-            raise IsolationError("decorated guard needs an explicit adapter seam preserving the wrapper; cannot drop decorators")
-        gid = candidate["id"]
-        if gid in self.sites:
-            raise IsolationError(f"duplicate code registration {gid}")
-        if not code or not invariant.subject or not invariant.predicate:
-            raise IsolationError("code site needs exact refusal code and field/predicate invariant")
-        g = Guard(gid, "code", f"{self.name}:{candidate['function']}:{candidate['line']}:{candidate['clause']}",
-                  invariant, evidence=evidence or "registered exact AST refusal predicate", refusal_code=code,
-                  predicate_count=1, cut=candidate["cut"])
-        self.sites[gid] = CodeSite(g, candidate["function"], candidate["line"], candidate["column"], candidate["action"],
-                                   candidate["clause"], candidate["fingerprint"], copy.deepcopy(candidate["cut_target"]))
-        return gid
-
-    def clone(self, cuts: frozenset[str]):
-        self._verify_live()
-        module = types.ModuleType(self.name)
-        namespace = module.__dict__
-        namespace.update(self.namespace)
-        selected = [self.sites[g] for g in cuts if g in self.sites]
-        codes = {}
-        for name in sorted({s.function for s in selected}):
-            if self.subset_reasons[name]:
-                raise IsolationError(self.subset_reasons[name])
-            tree = copy.deepcopy(self.tree)
-            sites = [s for s in selected if s.function == name]
-            hit, atoms = set(), []
-            class Cut(ast.NodeTransformer):
-                def generic_visit(self, node):
-                    # Discovery supplies one explicit target for every kind.
-                    # Execution never re-discovers a different controlling test.
-                    for site in sites:
-                        target = site.target
-                        if (type(node).__name__, getattr(node, "lineno", None), getattr(node, "col_offset", None)) != (target["node"], target["line"], target["column"]):
-                            continue
-                        field_name = target["field"]
-                        if field_name is None:
-                            hit.add(site.guard.id)
-                            return ast.copy_location(ast.Pass(), node)
-                        expression = getattr(node, field_name)
-                        if target["argument"] is not None:
-                            index = target["argument"]
-                            expression[index] = self.atom(expression[index], target["path"], target["accepting"])
-                        else:
-                            setattr(node, field_name, self.atom(expression, target["path"], target["accepting"]))
-                        hit.add(site.guard.id)
-                    return super().generic_visit(node)
-
-                def atom(self, expression, path, accepting):
-                    if not path:
-                        atoms.append((expression, accepting))
-                        return ast.copy_location(ast.Constant(accepting), expression) if expression is not None else ast.Constant(accepting)
-                    step, *rest = path
-                    if step == "not" and isinstance(expression, ast.UnaryOp) and isinstance(expression.op, ast.Not):
-                        expression.operand = self.atom(expression.operand, rest, not accepting)
-                    elif isinstance(step, int) and isinstance(expression, ast.BoolOp):
-                        expression.values[step] = self.atom(expression.values[step], rest, accepting)
-                    else:
-                        raise IsolationError("compound AST shape changed")
-                    return expression
-            tree = Cut().visit(tree)
-            if hit != {s.guard.id for s in sites}:
-                raise IsolationError(f"AST cuts did not match exactly: {name}")
-            original = self.originals[name].__code__
-            # Compile the WHOLE module with positions intact. Never execute it:
-            # defaults, decorators and annotations are runtime original state.
-            compiled = compile(ast.fix_missing_locations(tree), original.co_filename, "exec", optimize=0,
-                               flags=self.future_flags, dont_inherit=True)
-            proposed = next(c for c in compiled.co_consts if type(c) is types.CodeType and c.co_name == name)
-            proposed = proposed.replace(co_filename=original.co_filename, co_name=original.co_name,
-                                        co_qualname=original.co_qualname, co_firstlineno=original.co_firstlineno)
-            pool = {}
-            def remember(value):
-                pool.setdefault(_constant_fingerprint(value), value)
-                if type(value) in (tuple, frozenset):
-                    for child in value:
-                        remember(child)
-            for value in original.co_consts:
-                remember(value)
-            def reuse(value):
-                key = _constant_fingerprint(value)
-                if key in pool:
-                    return pool[key]
-                if type(value) is tuple:
-                    return tuple(reuse(v) for v in value)
-                if type(value) is frozenset:
-                    return frozenset(reuse(v) for v in value)
-                return value
-            proposed = proposed.replace(co_consts=tuple(reuse(v) for v in proposed.co_consts))
-            codes[name] = self._local_cut(name, original, proposed, atoms)
-        # Allocate shells before copying so all function aliases share the same
-        # memo entry, too. The selected cut changes only the shell's code.
-        memo, shells, states = {}, {}, {}
-        def retain_identity(value):
-            # FIX9's identity ports apply equally to cut and uncut functions.
-            # Seed their ENTIRE reachable data graph, so a copied global that
-            # aliases a default/cell/attribute value reaches that same object.
-            if id(value) in memo:
-                return
-            memo[id(value)] = value
-            if type(value) in (dict, list, tuple, set, frozenset):
-                for item in (list(value.keys()) + list(value.values()) if type(value) is dict else value):
-                    retain_identity(item)
-            elif type(value) is slice:
-                for item in (value.start, value.stop, value.step):
-                    retain_identity(item)
-        for fn in self.bound_functions.values():
-            if fn.__globals__ is not self.namespace:
-                continue
-            for value in (fn.__defaults__, fn.__kwdefaults__, fn.__annotations__,
-                          getattr(fn, "__type_params__", ()), *fn.__dict__.values(),
-                          *(c.cell_contents for c in fn.__closure__ or ())):
-                _plain_checker_state(value)
-                retain_identity(value)
-        codes_by_function = {id(self.originals[name]): code for name, code in codes.items()}
-        for name, fn in self.bound_functions.items():
-            if fn.__globals__ is not self.namespace:
-                continue
-            if id(fn) not in memo:
-                memo[id(fn)] = types.FunctionType(codes_by_function.get(id(fn), fn.__code__), namespace, fn.__name__, None, fn.__closure__)
-            shells[name] = memo[id(fn)]
-            states[name] = {"defaults": fn.__defaults__, "kwdefaults": fn.__kwdefaults__,
-                            "attributes": fn.__dict__, "annotations": fn.__annotations__,
-                            "type_params": getattr(fn, "__type_params__", ()),
-                            "closure": tuple(c.cell_contents for c in fn.__closure__ or ())}
-        # Static service bindings are not data and never go through deepcopy.
-        services = (object, *CHECKER_TYPES, *CHECKER_BUILTINS.values(), *CHECKER_EXCEPTIONS.values(), Outcome, re,
-                    *self.bound_functions.values())
-        globals_read = {}
-        builtin_namespace = self.namespace.get("__builtins__", builtins.__dict__)
-        if isinstance(builtin_namespace, types.ModuleType):
-            builtin_namespace = vars(builtin_namespace)
-        for name in self.read_globals:
-            if name in self.namespace or name in builtin_namespace:
-                # ModuleType inserts metadata names even when the original
-                # resolved them through builtins. Preserve the actual lookup.
-                value = self.namespace[name] if name in self.namespace else builtin_namespace[name]
-                if any(value is service for service in services):
-                    memo.setdefault(id(value), value)
-                else:
-                    _plain_checker_state(value)
-                globals_read[name] = value
-            else:
-                namespace.pop(name, None)
-        graph = {"globals": globals_read, "functions": states}
-        _plain_checker_state(graph, services)
-        try:
-            copied = copy.deepcopy(graph, memo)
-        except Exception as exc:
-            raise IsolationError("reachable checker state cannot be copied faithfully: " + type(exc).__name__) from exc
-        namespace.update(copied["globals"])
-        for name, clone in shells.items():
-            fn = self.bound_functions[name]
-            namespace[name] = _copy_function(fn, codes.get(name, fn.__code__), namespace, copied["functions"][name], clone)
-        return module
-
-    def _local_cut(self, name, original, proposed, atoms):
-        """Keep the original layout instead of accepting compiler-wide folding.
-
-        The compiled proposal supplies a checked source transformation. Its
-        optimizer can relocate peers or delete a whole branch; neither is used
-        as permission to rewrite peers. Emit the Boolean replacement in the
-        original atom's straight-line instruction span, padded with NOPs. All
-        branch targets, exception ranges, line entries and constant indices
-        outside that span stay byte-for-byte identical to the original.
-        """
-        if sys.implementation.name != "cpython":
-            raise IsolationError("local code cuts require CPython wordcode")
-        for attr in ("co_argcount", "co_posonlyargcount", "co_kwonlyargcount", "co_flags",
-                     "co_varnames", "co_freevars", "co_cellvars"):
-            if getattr(original, attr) != getattr(proposed, attr):
-                raise IsolationError("compiled cut changes function layout: " + attr)
-        reference = _reference_code(self.tree, name)
-        instructions = list(dis.get_instructions(reference, adaptive=False))
-        data, constants, allowed = bytearray(original.co_code), list(original.co_consts), set()
-        targets = {i.argval for i in instructions if i.opcode in dis.hasjump}
-        for atom, accepting in atoms:
-            start_pos = (atom.lineno, atom.col_offset)
-            end_pos = (atom.end_lineno, atom.end_col_offset)
-            members = []
-            for instruction in instructions:
-                pos = instruction.positions
-                if pos.lineno is None or pos.end_lineno is None:
-                    continue
-                if start_pos <= (pos.lineno, pos.col_offset) and (pos.end_lineno, pos.end_col_offset) <= end_pos:
-                    if instruction.opcode in dis.hasjump or instruction.opname in (
-                            "RETURN_VALUE", "RETURN_CONST", "NOT_TAKEN", "POP_TOP", "COPY", "SWAP"):
-                        continue
-                    members.append(instruction)
-            if not members:
-                raise IsolationError("cut atom has no isolated instruction span")
-            # CPython widens the comparison's position to its enclosing `not`.
-            # Its operands still locate it uniquely; retain the enclosing NOT.
-            if isinstance(atom, ast.Compare) and not any(i.opname in ("COMPARE_OP", "IS_OP", "CONTAINS_OP") for i in members):
-                next_index = instructions.index(members[-1]) + 1
-                if next_index < len(instructions) and instructions[next_index].opname in ("COMPARE_OP", "IS_OP", "CONTAINS_OP"):
-                    members.append(instructions[next_index])
-            start = members[0].offset
-            last_index = instructions.index(members[-1])
-            end = instructions[last_index + 1].offset if last_index + 1 < len(instructions) else len(data)
-            inside = [i for i in instructions if start <= i.offset < end]
-            if inside != members or any(start < offset < end for offset in targets):
-                raise IsolationError("cut atom is not a straight-line isolated span")
-            # A scalar expression consumes no outside stack and leaves one
-            # value. This rejects fused instructions sharing peer operands.
-            depth = 0
-            for instruction in inside:
-                depth += dis.stack_effect(instruction.opcode, instruction.arg)
-                if depth < 0:
-                    raise IsolationError("cut atom consumes a peer stack value")
-            if depth != 1:
-                raise IsolationError("cut atom does not produce exactly one value")
-            index = next((i for i, v in enumerate(constants) if v is accepting), len(constants))
-            if index == len(constants):
-                constants.append(accepting)
-            argument, prefix = index, []
-            while argument > 255:
-                argument >>= 8
-                prefix.insert(0, argument & 255)
-            replacement = bytearray()
-            for value in prefix:
-                replacement.extend((dis.opmap["EXTENDED_ARG"], value))
-            replacement.extend((dis.opmap["LOAD_CONST"], index & 255))
-            if len(replacement) > end - start or allowed.intersection(range(start, end)):
-                raise IsolationError("cut spans overlap or cannot hold a Boolean replacement")
-            replacement.extend(bytes((dis.opmap["NOP"], 0)) * ((end - start - len(replacement)) // 2))
-            data[start:end] = replacement
-            allowed.update(range(start, end))
-        result = original.replace(co_code=bytes(data), co_consts=tuple(constants))
-        if any(a != b and i not in allowed for i, (a, b) in enumerate(zip(original.co_code, result.co_code))):
-            raise IsolationError("cut changed an instruction outside the declared atoms")
-        if len(result.co_code) != len(original.co_code) or any(
-                getattr(result, attr) != getattr(original, attr) for attr in dir(original)
-                if attr.startswith("co_") and attr not in ("co_code", "co_consts", "co_lnotab") and not callable(getattr(original, attr))):
-            raise IsolationError("cut changed a code field outside the declared atoms")
-        if any(a is not b for a, b in zip(original.co_consts, result.co_consts)):
-            raise IsolationError("cut changed an original constant identity")
-        return result
-
-
-@dataclass
-class State:
-    schema: SchemaView | None
-    modules: dict[str, types.ModuleType]
-    cuts: frozenset[str]
-
-
-@dataclass
-class Suite:
-    name: str
-    runner: Callable[[Any, State], Outcome]
-    controls: list[Control]
-    negatives: list[Negative]
-    schema: SchemaCatalog | None = None
-    modules: list[AstGuards] = field(default_factory=list)
-    duplicates: list[Duplicate] = field(default_factory=list)
-    classifications: list[Classification] = field(default_factory=list)
-    # Required per-candidate dispositions prevent an incomplete code inventory.
-    code_dispositions: dict[str, Classification] = field(default_factory=dict)
-
-    def guards(self):
-        result = dict(self.schema.guards) if self.schema else {}
-        for module in self.modules:
-            for gid, site in module.sites.items():
-                if gid in result:
-                    raise IsolationError(f"duplicate guard id {gid}")
-                result[gid] = site.guard
-        for item in self.classifications:
-            if item.guard not in result or not item.evidence.strip() or item.kind not in ("selector", "unreachable", "redundant", "format_sweep"):
-                raise IsolationError(f"invalid guard classification {item}")
-            if result[item.guard].classification == "unclassified":
-                # An assertion with no sound cut is not a selector merely
-                # because a caller supplied that label. Preserve the obligation;
-                # context-bound adapter/engine work must expose its predicates.
-                result[item.guard] = replace(result[item.guard], evidence=result[item.guard].evidence + "; adapter declaration (still unproved): " + item.kind + ": " + item.evidence)
-            else:
-                result[item.guard] = replace(result[item.guard], classification=item.kind, evidence=item.evidence)
-        return result
-
-    def state(self, cuts=frozenset()):
-        modules = {m.name: m.clone(cuts) for m in self.modules}
-        originals = {id(m.namespace): modules[m.name] for m in self.modules}
-        for module in modules.values():
-            for name, value in list(vars(module).items()):
-                if isinstance(value, types.FunctionType) and id(value.__globals__) in originals:
-                    namespace = originals[id(value.__globals__)]
-                    if hasattr(namespace, value.__name__):
-                        setattr(module, name, getattr(namespace, value.__name__))
-                elif isinstance(value, types.ModuleType) and id(vars(value)) in originals:
-                    setattr(module, name, originals[id(vars(value))])
-        return State(self.schema.mutated(cuts) if self.schema else None, modules, cuts)
-
-    def original_state(self):
-        modules = {}
-        for backend in self.modules:
-            backend._verify_live()
-            module = types.ModuleType(backend.name)
-            module.__dict__.update(backend.namespace)
-            modules[backend.name] = module
-        return State(self.schema.mutated(frozenset()) if self.schema else None, modules, frozenset())
-
-
 class MemoryGate:
     """Sample between SERIAL callbacks; this is a guard, not an allocation sandbox.
 
@@ -2155,357 +935,902 @@ def typed_changes(left, right, path=()):
     return [] if digest(left) == digest(right) else [pointer(path)]
 
 
-def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None) -> dict:
-    """Run every row against EVERY negative; no dependency pruning or result cache."""
+@dataclass(frozen=True)
+class Guard:
+    """One declared input invariant. None passes; the exact code refuses."""
+    name: str
+    invariant: Invariant
+    refusal_code: str
+    predicate: Callable[[Any, Any], str | None]
+
+    def __post_init__(self):
+        if not self.name.strip() or not self.refusal_code.strip() or not callable(self.predicate):
+            raise IsolationError('guard needs a unique name, refusal code and predicate')
+
+    @property
+    def id(self):
+        return self.name
+
+
+class GuardRefusal(Exception):
+    """A tag alone is insufficient: the runner verifies table-issued identity."""
+    def __init__(self, guard, code):
+        self.guard, self.code = guard, code
+        super().__init__(code)
+
+
+def _always_pass(value, context):
+    return None
+
+
+class GuardTable:
+    def __init__(self, guards):
+        rows = tuple(guards)
+        if any(type(g) is not Guard for g in rows) or len({g.name for g in rows}) != len(rows):
+            raise IsolationError('duplicate guard name or invalid Guard row')
+        self._original = {g.name: g for g in rows}
+        self._entries = dict(self._original)
+        self._issued = []
+        self._errors = []
+        self._calls = []
+        self._root = self._context = None
+        self._bound = False
+        self._in_predicate = False
+        self._schema = None
+
+    @property
+    def guards(self):
+        return types.MappingProxyType(self._original)
+
+    def _bind(self, value, context, cuts):
+        if self._bound or not set(cuts) <= self._original.keys():
+            raise IsolationError('table reused or unknown guard cut')
+        self._root, self._context, self._bound = value, context, True
+        # The sole Python cut operation. All function/code/state objects remain original.
+        self._entries = {name: replace(row, predicate=_always_pass) if name in cuts else row
+                         for name, row in self._original.items()}
+        if self._schema:
+            self._schema.bind(cuts)
+
+    def _test(self, row, value, context):
+        if self._in_predicate:
+            self._errors.append('nested guard evaluation')
+            raise IsolationError('guard predicates cannot invoke guards')
+        self._in_predicate = True
+        before = digest([value, context])
+        try:
+            result = row.predicate(value, context)
+            if result is not None and (type(result) is not str or result != row.refusal_code):
+                raise IsolationError('predicate must return None or its exact refusal code: ' + row.name)
+            if digest([value, context]) != before:
+                raise IsolationError('guard predicate mutated input/context: ' + row.name)
+            return result
+        except BaseException as exc:
+            self._errors.append(type(exc).__name__ + ': ' + str(exc))
+            raise
+        finally:
+            self._in_predicate = False
+
+    def require(self, name, value, context=None):
+        if not self._bound or value is not self._root or context is not self._context:
+            self._errors.append('require must use the complete bound value and context')
+            raise IsolationError(self._errors[-1])
+        if name not in self._entries:
+            self._errors.append('guard missing from table: ' + str(name))
+            raise IsolationError(self._errors[-1])
+        self._calls.append(name)
+        row = self._entries[name]
+        code = self._test(row, value, context)
+        if code is not None:
+            self._refuse(name, code)
+
+    def _refuse(self, name, code):
+        refusal = GuardRefusal(name, code)
+        self._issued.append(refusal)
+        raise refusal
+
+    def validate(self, entry, value, context=None):
+        """Invoke a complete original/cut schema; only the engine issues tags."""
+        if not self._schema or not self._bound or value is not self._root or context is not self._context:
+            self._errors.append('schema validation needs the bound complete input')
+            raise IsolationError(self._errors[-1])
+        self._schema.validate(self, entry, value, context)
+
+    def _restore(self):
+        self._entries = dict(self._original)
+        self._bound = False
+        self._root = self._context = None
+        self._issued.clear()
+        self._errors.clear()
+        self._calls.clear()
+
+
+@dataclass
+class Case:
+    table: GuardTable
+    check: Callable[[Any], bool]
+    context: Any = None
+
+
+@dataclass(frozen=True)
+class NonGuard:
+    """One exact static site, with a reviewer-checkable plumbing reason."""
+    path: str
+    function: str
+    kind: str
+    source: str
+    reason: str
+
+
+@dataclass
+class Suite:
+    name: str
+    factory: Callable[..., Case]       # factory(value) or a fixed-family factory()
+    controls: list[Control]
+    negatives: list[Negative]
+    checker_modules: tuple[str | Path, ...]
+    repository_root: str | Path
+    duplicates: list[Duplicate] = field(default_factory=list)
+    non_guards: list[NonGuard] = field(default_factory=list)
+
+
+def _function_key(fn):
+    fn = fn.__func__ if inspect.ismethod(fn) else fn
+    if not inspect.isfunction(fn) or fn.__code__.co_name == '<lambda>':
+        raise IsolationError('checker and Python predicates must be source-backed Python functions')
+    return (str(Path(fn.__code__.co_filename).resolve()), fn.__code__.co_firstlineno,
+            fn.__qualname__.replace('.<locals>.', '.'))
+
+
+def _predicate_functions(table):
+    return [row.predicate for row in table.guards.values() if not isinstance(row.predicate, _SchemaPredicate)]
+
+
+def _relative(path, root):
+    return str(Path(path).resolve().relative_to(root))
+
+
+def static_scan(suite, table):
+    """Conservative census only. Nothing here authorizes a Python cut."""
+    root = Path(suite.repository_root).resolve()
+    trusted = Path(__file__).resolve()
+    pending = [(root / p).resolve() for p in suite.checker_modules]
+    if not pending:
+        raise IsolationError('checker_modules must name the complete source closure')
+    predicate_keys = {_function_key(fn) for fn in _predicate_functions(table)}
+    located_predicates = set()
+    files, sites, imports, errors = {}, [], [], []
+    allowed = {}
+    for declaration in suite.non_guards:
+        path = (root / declaration.path).resolve()
+        key = (str(path), declaration.function, declaration.kind, declaration.source)
+        if key in allowed or not declaration.reason.strip() or not path.is_relative_to(root):
+            raise IsolationError('invalid or duplicate non-guard declaration')
+        allowed[key] = [declaration, 0]
+
+    def resolve_module(name, source, level=0):
+        bases = [root, source.parent, root / 'scripts']
+        if level:
+            base = source.parent
+            for _ in range(level - 1):
+                base = base.parent
+            bases = [base]
+        parts = name.split('.') if name else []
+        found = []
+        for base in bases:
+            target = base.joinpath(*parts)
+            candidates = [target.with_suffix('.py'), target / '__init__.py'] if parts else [target / '__init__.py']
+            for candidate in candidates:
+                if candidate.is_file() and candidate.resolve().is_relative_to(root):
+                    found.append(candidate.resolve())
+                    # Package initialization is executed too.
+                    for parent in candidate.parents:
+                        if parent == base or not parent.is_relative_to(base):
+                            break
+                        init = parent / '__init__.py'
+                        if init.is_file():
+                            found.append(init.resolve())
+        return set(found)
+
+    while pending:
+        path = pending.pop()
+        if path == trusted or path in files:
+            continue
+        if not path.is_relative_to(root) or not path.is_file():
+            errors.append({'kind': 'unscannable_module', 'path': str(path)})
+            continue
+        source = path.read_text()
+        tree = ast.parse(source, filename=str(path))
+        files[path] = {'path': _relative(path, root), 'sha256': hashlib.sha256(source.encode()).hexdigest()}
+        parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+        owners = {}
+        def collect(node, owner=''):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                owner = owner + '.' + node.name if owner else node.name
+            owners[node] = owner
+            for child in ast.iter_child_nodes(node):
+                collect(child, owner)
+        collect(tree)
+        exempt = set()
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                first = min([node.lineno] + [d.lineno for d in node.decorator_list])
+                key = (str(path), first, owners[node])
+                if key in predicate_keys:
+                    located_predicates.add(key)
+                    # Only the predicate body; defaults/decorators are not predicates.
+                    def predicate_body(part):
+                        if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
+                            errors.append({'kind': 'nested_predicate_code', 'path': _relative(path, root), 'line': part.lineno})
+                            return
+                        exempt.add(part)
+                        for child in ast.iter_child_nodes(part):
+                            predicate_body(child)
+                    for statement in node.body:
+                        predicate_body(statement)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.stmt) and type(node).__name__ not in {
+                'AnnAssign', 'Assert', 'Assign', 'AsyncFor', 'AsyncFunctionDef', 'AsyncWith', 'AugAssign', 'Break',
+                'ClassDef', 'Continue', 'Delete', 'Expr', 'For', 'FunctionDef', 'Global', 'If', 'Import', 'ImportFrom',
+                'Match', 'Nonlocal', 'Pass', 'Raise', 'Return', 'Try', 'TryStar', 'TypeAlias', 'While', 'With'}:
+                errors.append({'kind': 'unknown_statement', 'node': type(node).__name__, 'path': _relative(path, root), 'line': node.lineno})
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                names = [(alias.name, 0) for alias in node.names] if isinstance(node, ast.Import) else [(node.module or '', node.level)]
+                if isinstance(node, ast.ImportFrom):
+                    if any(a.name == '*' for a in node.names):
+                        errors.append({'kind': 'star_import', 'path': _relative(path, root), 'line': node.lineno})
+                    names += [(((node.module + '.') if node.module else '') + a.name, node.level) for a in node.names if a.name != '*']
+                for name, level in names:
+                    resolved = resolve_module(name, path, level)
+                    pending.extend(resolved)
+                    imports.append({'from': _relative(path, root), 'module': name, 'repository_files': sorted(_relative(p, root) for p in resolved),
+                                    'external': not bool(resolved)})
+                    if level and not resolved and name == (node.module or ''):
+                        errors.append({'kind': 'unresolved_relative_import', 'path': _relative(path, root), 'module': name})
+            kind = None
+            if isinstance(node, ast.Call):
+                name = ast.unparse(node.func)
+                if name.split('.')[-1] in ('eval', 'exec', 'compile', '__import__', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile'):
+                    errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
+                if node not in exempt:
+                    leaf = name.split('.')[-1]
+                    if leaf in ('append', 'extend', 'insert', 'update', 'add', 'setdefault', 'clear', 'pop', 'remove', 'discard', 'write', 'write_text', 'write_bytes'):
+                        kind = 'mutation_or_error_write'
+                    elif leaf in ('require', 'refuse', 'reject', 'deny', 'fail', 'abort', 'exit', '_exit', 'throw'):
+                        # Exact table calls are checked for actual table identity at runtime.
+                        if not (isinstance(node.func, ast.Attribute) and node.func.attr in ('require', 'validate') and
+                                isinstance(node.func.value, ast.Name) and node.func.value.id == 'table'):
+                            kind = 'refusal_helper'
+                    elif not (name in ('len', 'isinstance', 'type', 'str', 'int', 'bool', 'bytes', 'dict', 'list', 'tuple', 'set', 'frozenset', 'range', 'enumerate', 'zip')
+                              or name in ('g.Guard', 'g.GuardTable', 'g.Invariant', 'g.Case', 'g.Suite', 'g.Control', 'g.Negative', 'g.NonGuard', 'g.Duplicate')
+                              or name in ('table.require', 'table.validate')):
+                        kind = 'call_review'
+            if node in exempt:
+                continue
+            if isinstance(node, ast.Raise):
+                kind = 'raise'
+            elif isinstance(node, ast.Assert):
+                kind = 'assert'
+            elif isinstance(node, ast.Return) and not (isinstance(node.value, ast.Constant) and node.value.value is True):
+                kind = 'return'
+            elif isinstance(node, (ast.Yield, ast.YieldFrom)):
+                kind = 'yield'
+            elif isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign, ast.Delete, ast.NamedExpr)):
+                targets = node.targets if isinstance(node, (ast.Assign, ast.Delete)) else [node.target]
+                if isinstance(node, (ast.AugAssign, ast.Delete)) or any(isinstance(x, (ast.Attribute, ast.Subscript)) for target in targets for x in ast.walk(target)):
+                    kind = 'mutation_or_error_write'
+                elif any(isinstance(x, ast.Name) and re.search(r'error|refus|reject|fail', x.id, re.I) for target in targets for x in ast.walk(target)):
+                    kind = 'mutation_or_error_write'
+            if kind:
+                text = ast.unparse(node)
+                key = (str(path), owners[node], kind, text)
+                declaration = allowed.get(key)
+                if declaration:
+                    declaration[1] += 1
+                sites.append({'id': _relative(path, root) + ':' + str(node.lineno) + ':' + str(node.col_offset) + ':' + kind,
+                              'path': _relative(path, root), 'function': owners[node], 'line': node.lineno,
+                              'kind': kind, 'source': text, 'non_guard': bool(declaration),
+                              'reason': declaration[0].reason if declaration else ''})
+        # A function's implicit None return is also a possible rejecting return.
+        for node in ast.walk(tree):
+            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            first = min([node.lineno] + [d.lineno for d in node.decorator_list])
+            if (str(path), first, owners[node]) in predicate_keys:
+                continue
+            if not node.body or not isinstance(node.body[-1], (ast.Return, ast.Raise)):
+                text, kind = '<implicit None return>', 'implicit_return'
+                declaration = allowed.get((str(path), owners[node], kind, text))
+                if declaration:
+                    declaration[1] += 1
+                sites.append({'id': _relative(path, root) + ':' + str(node.end_lineno) + ':implicit_return',
+                              'path': _relative(path, root), 'function': owners[node], 'line': node.end_lineno,
+                              'kind': kind, 'source': text, 'non_guard': bool(declaration),
+                              'reason': declaration[0].reason if declaration else ''})
+    for key, (declaration, matches) in allowed.items():
+        if matches != 1:
+            errors.append({'kind': 'non_guard_not_exactly_one_site', 'declaration': asdict(declaration), 'matches': matches})
+    for path, line, function in predicate_keys:
+        if Path(path) not in files:
+            errors.append({'kind': 'predicate_outside_scanned_closure', 'path': path, 'line': line})
+        elif (path, line, function) not in located_predicates:
+            errors.append({'kind': 'predicate_source_not_found', 'path': path, 'line': line, 'function': function})
+    return {'status': 'FAIL' if errors or any(not s['non_guard'] for s in sites) else 'PASS',
+            'files': sorted(files.values(), key=lambda f: f['path']), 'imports': imports,
+            'sites': sites, 'errors': errors, 'predicate_functions': sorted([list(k) for k in predicate_keys]),
+            'review': 'Every non-guard reason and each predicate body versus its declared field/predicate needs review.'}
+
+
+def _state_objects(case, root):
+    """Keep references, not copies. Reused mutable state fails before execution."""
+    result, seen = [], set()
+    def visit(obj):
+        if id(obj) in seen:
+            return
+        seen.add(id(obj))
+        if isinstance(obj, types.ModuleType):
+            source = getattr(obj, '__file__', None)
+            if source and Path(source).resolve().is_relative_to(root) and Path(source).resolve() != Path(__file__).resolve():
+                for name, value in vars(obj).items():
+                    if not name.startswith('__'):
+                        visit(value)
+        elif type(obj) in (dict, list, set, bytearray):
+            result.append(obj)
+            values = list(obj.keys()) + list(obj.values()) if type(obj) is dict else list(obj)
+            for value in values:
+                visit(value)
+        elif type(obj) in (tuple, frozenset):
+            for value in obj:
+                visit(value)
+        elif inspect.ismethod(obj):
+            visit(obj.__self__)
+            visit(obj.__func__)
+        elif inspect.isfunction(obj):
+            if not Path(obj.__code__.co_filename).resolve().is_relative_to(root):
+                return                 # external library state is a declared review boundary
+            for cell in obj.__closure__ or ():
+                try:
+                    visit(cell.cell_contents)
+                except ValueError:
+                    pass
+            visit(obj.__defaults__)
+            visit(obj.__kwdefaults__)
+            visit(obj.__dict__)
+            # Ignore empty function attribute dictionaries: source functions may
+            # be shared, but stateful attributes may not be shared across cases.
+            if not obj.__dict__ and result and result[-1] is obj.__dict__:
+                result.pop()
+            for name in obj.__code__.co_names:
+                if name in obj.__globals__:
+                    value = obj.__globals__[name]
+                    if not isinstance(value, type):
+                        visit(value)
+        elif isinstance(obj, GuardTable):
+            return
+        elif isinstance(obj, _SchemaPredicate):
+            return
+        elif hasattr(obj, '__dict__') and not isinstance(obj, (types.ModuleType, type)):
+            result.append(obj)
+            visit(vars(obj))
+        elif not isinstance(obj, (type, types.CodeType, types.BuiltinFunctionType, types.BuiltinMethodType,
+                                  types.MethodDescriptorType, re.Pattern)) and type(obj) not in (type(None), bool, int, float, complex, str, bytes):
+            # Opaque/slotted state cannot quietly escape the freshness check.
+            result.append(obj)
+            for cls in type(obj).__mro__:
+                slots = cls.__dict__.get('__slots__', ())
+                for name in (slots,) if isinstance(slots, str) else slots:
+                    if name not in ('__dict__', '__weakref__'):
+                        try:
+                            visit(object.__getattribute__(obj, name))
+                        except AttributeError:
+                            pass
+    result.extend([case, case.table])
+    visit(case.context)
+    visit(case.check)
+    for predicate in _predicate_functions(case.table):
+        visit(predicate)
+    if case.table._schema:
+        for selector in case.table._schema.selectors.values():
+            visit(selector)
+    return result
+
+
+def _guard_metadata(table):
+    rows = []
+    for guard in table.guards.values():
+        predicate = guard.predicate
+        source = {'engine_schema': predicate.guard.id,
+                  'catalog_sha256': predicate.binding.catalog.fingerprint,
+                  'selector': _function_key(predicate.binding.selectors[predicate.guard.entry_uri])} if isinstance(predicate, _SchemaPredicate) else {
+            'file': _function_key(predicate)[0], 'line': _function_key(predicate)[1], 'function': predicate.__qualname__}
+        rows.append({'id': guard.name, 'kind': 'schema' if isinstance(predicate, _SchemaPredicate) else 'code',
+                     'invariant': asdict(guard.invariant), 'refusal_code': guard.refusal_code,
+                     'predicate': source, 'predicate_count': 1, 'cut': 'schema-occurrence' if isinstance(predicate, _SchemaPredicate) else 'table-entry-always-pass'})
+    return rows
+
+
+class _SchemaPredicate:
+    def __init__(self, binding, guard):
+        self.binding, self.guard = binding, guard
+
+    def __call__(self, value, context):
+        # Preserve applicators and selectors; weaken only the OTHER supported
+        # assertions. Unknown forms never reach PASS or grant any cut credit.
+        view = self.binding.catalog.mutated(frozenset(self.binding.active - {self.guard.id}))
+        selected = self.binding.selectors[self.guard.entry_uri](value, context)
+        return None if view.validator(self.guard.entry_uri).is_valid(selected) else self.guard.refusal_code or self.guard.id
+
+
+class _SchemaBinding:
+    def __init__(self, catalog, selectors):
+        self.catalog, self.selectors = catalog, selectors
+        if set(selectors) != set(catalog.roots):
+            raise IsolationError('schema selectors must bind every complete consumed root exactly once')
+        self.active = {g.id for g in catalog.guards.values() if g.classification == 'guard'}
+        self.view = None
+        self.consumed = set()
+
+    def bind(self, cuts):
+        self.view = self.catalog.mutated(frozenset(set(cuts) & self.active))
+
+    def validate(self, table, entry, value, context):
+        if entry not in self.selectors:
+            table._errors.append('undeclared schema input occurrence: ' + entry)
+            raise IsolationError(table._errors[-1])
+        self.consumed.add(entry)
+        before = digest([value, context])
+        selected = self.selectors[entry](value, context)
+        if digest([value, context]) != before:
+            table._errors.append('schema selector mutated the frozen input/context')
+            raise IsolationError(table._errors[-1])
+        if self.view.validator(entry).is_valid(selected):
+            return
+        candidates = []
+        for name, guard in table._entries.items():
+            if isinstance(guard.predicate, _SchemaPredicate) and guard.predicate.guard.entry_uri == entry:
+                if table._test(guard, value, context) is not None:
+                    candidates.append(name)
+        if not candidates:
+            table._errors.append('schema refusal cannot be attributed to an enabled atomic guard')
+            raise IsolationError(table._errors[-1])
+        table._refuse(candidates[0], table.guards[candidates[0]].refusal_code)
+
+
+def schema_table(catalog, selectors, guards=()):
+    """Keep the reviewed SchemaCatalog inventory/cuts; expose tagged predicates.
+
+    selectors maps each distinct schema consumer root to (complete_value,
+    context) -> actual schema input. Use a fresh catalog in every Case factory.
+    """
+    binding = _SchemaBinding(catalog, selectors)
+    rows = [Guard(g.id, g.invariant, g.refusal_code or g.id, _SchemaPredicate(binding, g))
+            for g in catalog.guards.values() if g.classification == 'guard']
+    table = GuardTable([*guards, *rows])
+    table._schema = binding
+    return table
+def _fixture_copy(value, memo=None):
+    """Rebuild typed fixture data without user hooks or order-changing set copies.
+
+    Alias relationships in dict/list graphs are preserved. Code, functions,
+    opaque objects and sets are not fixture data; build state in the factory.
+    """
+    memo = {} if memo is None else memo
+    if type(value) in (type(None), bool, int, float, str, bytes):
+        return value
+    if id(value) in memo:
+        return memo[id(value)]
+    if type(value) is dict:
+        result = {}
+        memo[id(value)] = result
+        result.update((_fixture_copy(k, memo), _fixture_copy(v, memo)) for k, v in value.items())
+        return result
+    if type(value) is list:
+        result = []
+        memo[id(value)] = result
+        result.extend(_fixture_copy(v, memo) for v in value)
+        return result
+    if type(value) is tuple:
+        result = tuple(_fixture_copy(v, memo) for v in value)
+        memo[id(value)] = result
+        return result
+    if type(value) is bytearray:
+        result = bytearray(value)
+        memo[id(value)] = result
+        return result
+    raise IsolationError('unsupported fixture data (construct checker state in the factory): ' + type(value).__name__)
+
+
+def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
+    """Serial, fresh factory for EVERY case, predicate, cut and restoration."""
     gate = memory or MemoryGate()
-    report = {"version": 1, "suite": suite.name, "status": "FAIL", "inventory": [], "controls": [],
-              "negatives": [], "rows": [], "duplicates": [], "unproved_guards": [],
-              "masked_negatives": [], "failures": [], "evaluations": 0,
-              "trust_decisions": [], "classifications_require_review": []}
+    report = {'version': 2, 'method': 'B: guard tables', 'suite': suite.name, 'status': 'FAIL',
+              'tool_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              'inventory': [], 'controls': [], 'negatives': [], 'rows': [], 'duplicates': [],
+              'guard_negative_matrix': [], 'unproved_guards': [], 'masked_negatives': [],
+              'failures': [], 'evaluations': 0, 'factories': 0, 'static': {}, 'runtime': [],
+              'trust_decisions': ['Review predicate bodies against their one-field/one-predicate declarations.',
+                                  'Review complete boundary coverage, factory reset and every non-guard reason.',
+                                  'Finite matrices do not prove arbitrary predicate semantics or duplicate equivalence.']}
     def fail(kind, **facts):
-        report["failures"].append({"kind": kind, **facts})
+        report['failures'].append({'kind': kind, **facts})
+    retained = {}             # weak references where possible; strong for builtin mutable state
+    signature = None
+    checker_signature = None
+    scanned_paths, predicate_keys, non_guard_lines = set(), set(), set()
+    engine = Path(__file__).resolve()
+    root = Path(suite.repository_root).resolve()
+    def fresh(value):
+        nonlocal signature, checker_signature
+        gate.check()
+        before = digest(value)
+        factory_signature = inspect.signature(suite.factory)
+        try:
+            factory_signature.bind(value)
+            with_input = True
+        except TypeError:
+            factory_signature.bind()
+            with_input = False
+        case = suite.factory(value) if with_input else suite.factory()
+        if digest(value) != before:
+            raise IsolationError('factory mutated the frozen fixture; derive state without repairing input')
+        report['factories'] += 1
+        if type(case) is not Case or type(case.table) is not GuardTable or not callable(case.check):
+            raise IsolationError('factory must return a fresh Case(table, check, context)')
+        check_key = _function_key(case.check)
+        if checker_signature is None:
+            checker_signature = check_key
+        elif checker_signature != check_key:
+            raise IsolationError('checker source changed between cases')
+        meta = _guard_metadata(case.table)
+        if signature is None:
+            signature = meta
+        elif meta != signature:
+            raise IsolationError('guard table declaration changed between cases')
+        objects = _state_objects(case, root)
+        for obj in objects:
+            prior = retained.get(id(obj))
+            if prior is not None and (prior() is obj if isinstance(prior, weakref.ReferenceType) else prior is obj):
+                raise IsolationError('state_shared_across_cases: ' + type(obj).__name__)
+        for obj in objects:
+            try:
+                retained[id(obj)] = weakref.ref(obj)
+            except TypeError:
+                retained[id(obj)] = obj
+        gate.check()
+        return case
+
+    def observe(case, value, cuts=frozenset(), predicate=None):
+        gate.check()
+        report['evaluations'] += 1
+        table = case.table
+        table._bind(value, case.context, cuts)
+        events, plumbing_exceptions = [], set()
+        path_cache = {}
+        engine_name = str(engine)
+        def trace(frame, event, arg):
+            filename = frame.f_code.co_filename
+            if filename == engine_name:
+                return None
+            if filename not in path_cache:
+                resolved = Path(filename).resolve()
+                path_cache[filename] = resolved if resolved != engine and resolved.is_relative_to(root) else None
+            path = path_cache[filename]
+            if path is None:
+                return None
+            if event == 'call' and path not in scanned_paths:
+                events.append({'kind': 'unscanned_repository_code', 'path': str(path), 'function': frame.f_code.co_name})
+            if event == 'exception':
+                _, exc, _ = arg
+                if not any(exc is issued for issued in table._issued):
+                    location = (str(path), frame.f_lineno)
+                    if location in non_guard_lines:
+                        plumbing_exceptions.add(id(exc))
+                    elif id(exc) not in plumbing_exceptions:
+                        events.append({'kind': 'untracked_exception', 'path': str(path), 'line': frame.f_lineno,
+                                       'type': type(exc).__name__, 'message': str(exc)})
+            return trace
+        previous = sys.gettrace()
+        try:
+            if previous is not None:
+                raise IsolationError('runtime requires an exclusive trace hook')
+            sys.settrace(trace)
+            if predicate is not None:
+                row = table.guards[predicate]
+                result = table._test(row, value, case.context)
+                got = {'passes': result is None, 'code': result or ''}
+            else:
+                result = case.check(value)
+                if result is not True:
+                    fail('untracked_rejecting_return', result_type=type(result).__name__, result=repr(result)[:200])
+                    got = {'accepted': False, 'error': 'untracked rejecting return'}
+                elif table._issued:
+                    fail('swallowed_table_refusal', guards=[x.guard for x in table._issued])
+                    got = {'accepted': False, 'error': 'swallowed table refusal'}
+                else:
+                    got = {'accepted': True}
+        except BaseException as exc:
+            if predicate is None and any(exc is issued for issued in table._issued) and len(table._issued) == 1:
+                got = {'accepted': False, 'guard': exc.guard, 'code': exc.code}
+            else:
+                fail('untracked_refusal', type=type(exc).__name__, error=str(exc))
+                got = {'accepted': False, 'error': type(exc).__name__ + ': ' + str(exc)}
+        finally:
+            sys.settrace(previous)
+            if events:
+                report['runtime'].extend(events)
+                fail('runtime_untracked_site', events=events)
+            if table._errors:
+                fail('table_protocol_error', errors=table._errors[:])
+            if table._schema and predicate is None:
+                report.setdefault('schema_consumption', []).append({'evaluation': report['evaluations'],
+                    'cuts': sorted(cuts), 'roots': sorted(table._schema.consumed)})
+            table._restore()
+            gate.check()
+        return got
+
+    def evaluate(value, cuts=frozenset(), predicate=None):
+        # Only fixture data is copied. Checker functions, defaults, globals,
+        # closure cells, code objects and state are never cloned by this tool.
+        data = _fixture_copy(value)
+        return observe(fresh(data), data, frozenset(cuts), predicate)
+
     try:
-        guards = suite.guards()
+        if type(suite) is not Suite:
+            raise IsolationError('expected Method B Suite')
+        if not suite.controls:
+            raise IsolationError('at least one complete-path valid control is required')
+        initial = fresh(_fixture_copy(suite.controls[0].value))
+        guards = dict(initial.table.guards)
+        report['inventory'] = signature
+        report['static'] = static_scan(suite, initial.table)
+        scanned_paths = {(root / f['path']).resolve() for f in report['static']['files']}
+        if Path(checker_signature[0]) not in scanned_paths:
+            fail('checker_outside_scanned_closure', source=list(checker_signature))
+        non_guard_lines = {(str((root / s['path']).resolve()), s['line']) for s in report['static']['sites']
+                           if s['non_guard'] and s['kind'] in ('raise', 'assert', 'refusal_helper')}
+        if report['static']['status'] != 'PASS':
+            fail('hidden_static_sites', sites=[s['id'] for s in report['static']['sites'] if not s['non_guard']],
+                 errors=report['static']['errors'])
+        if initial.table._schema:
+            catalog = initial.table._schema.catalog
+            report['schema_inventory'] = [asdict(g) for g in catalog.guards.values()]
+            report['schema_bindings'] = catalog.bindings
+            for guard in catalog.guards.values():
+                if guard.classification in ('unclassified', 'format_sweep'):
+                    fail('unclassified_schema_assertion', guard=guard.id, reason=guard.evidence)
+                    report['unproved_guards'].append(guard.id)
         controls = {c.id: c for c in suite.controls}
         negatives = {n.id: n for n in suite.negatives}
-        duplicate = {d.id: d for d in suite.duplicates}
-        if len(controls) != len(suite.controls) or len(negatives) != len(suite.negatives) or len(duplicate) != len(suite.duplicates):
-            raise IsolationError("case/control/duplicate IDs must be unique; never collapse repeated names")
-        if not controls:
-            raise IsolationError("at least one complete-path valid control is required")
-        for c in controls.values():
-            if c.boundary not in ("append", "retry", "retained_history", "synthetic"):
-                raise IsolationError(f"unknown complete-path boundary {c.boundary}")
-        report["inventory"] = [asdict(g) for g in sorted(guards.values(), key=lambda g: g.id)]
-        # These are obligations of EVERY adopting reviewer, including PASS
-        # reports. Outcome observations cannot establish any of these claims.
-        report["trust_decisions"].extend([
-            {"kind": "complete_path_callback", "runner": getattr(suite.runner, "__qualname__", type(suite.runner).__name__),
-             "review": "callback executes the product boundary; constructing a validator or manufacturing outcomes is insufficient"},
-            {"kind": "refusal_translation", "codes": sorted({n.code for n in negatives.values()}),
-             "review": "only product refusals are translated; assertions and internal crashes must propagate"}])
-        if suite.schema:
-            report["trust_decisions"].append({"kind": "consumer_input_occurrences", "roots": list(suite.schema.roots),
-                "review": "each root is bound to a distinct consumer/input occurrence; reusing one root for two inputs broadens a cut; construction alone does not prove validator invocation"})
-            report["trust_decisions"].extend({"kind": "schema_invariant_binding", **b} for b in suite.schema.bindings)
-        report["trust_decisions"].extend({"kind": "schema_classification", **asdict(item)} for item in suite.classifications)
-        report["trust_decisions"].extend({"kind": "duplicate_equivalence", **asdict(d),
-            "review": "same field AND predicate; single-specimen per-site results cannot establish equality"} for d in suite.duplicates)
-        for module in suite.modules:
-            report["trust_decisions"].append({"kind": "code_module_closure", "module": module.name, "source_sha256": module.source_hash,
-                "predicate_helpers": module.call_predicates,
-                "dynamic_subject_contexts": [{"line": n.lineno, "expression": ast.unparse(n)} for n in ast.walk(module.tree)
-                    if isinstance(n, (ast.For, ast.While, ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp))],
-                "review": "all helper/module sources are included, read-only views have standard semantics, and cloned code is actually invoked"})
-            report["trust_decisions"].extend({"kind": "code_predicate_binding", "guard": s.guard.id,
-                "invariant": asdict(s.guard.invariant), "evidence": s.guard.evidence,
-                "review": "one input subject/predicate per occurrence; loop/dynamic subjects and structured comparisons need separate bindings"} for s in module.sites.values())
-            for candidate in module.candidates():
-                gid = candidate["id"]
-                if gid not in module.sites:
-                    disposition = suite.code_dispositions.get(gid)
-                    if disposition is None or disposition.guard != gid or not disposition.evidence.strip() or disposition.kind not in ("selector", "unreachable", "redundant"):
-                        fail("uninventoried_code_site", site=candidate)
-                        report["inventory"].append({**candidate, "kind": "code_candidate", "classification": "unclassified",
-                            "evidence": candidate.get("reason", "unregistered guard candidate needs an atomic registration or evidenced disposition")})
-                        report["unproved_guards"].append(gid)
-                    else:
-                        report["inventory"].append({**candidate, "classification": disposition.kind, "evidence": disposition.evidence})
-                        report["trust_decisions"].append({"kind": "code_disposition", **asdict(disposition)})
-        for d in duplicate.values():
-            if d.id in guards or len(d.sites) < 2 or len(set(d.sites)) != len(d.sites) or not d.evidence.strip():
-                raise IsolationError(f"invalid duplicate declaration {d.id}")
-            for gid in d.sites:
-                if gid not in guards or guards[gid].classification != "guard" or guards[gid].invariant != d.invariant:
-                    raise IsolationError(f"duplicate {d.id} merges distinct field/predicate invariants at {gid}")
-        for n in negatives.values():
-            if n.control not in controls or n.target not in guards.keys() | duplicate.keys() or not n.code or not n.defect.strip():
-                raise IsolationError(f"incomplete negative declaration {n.id}")
-            if n.target in guards and guards[n.target].classification != "guard":
-                raise IsolationError(f"negative targets a non-guard {n.id}")
-            targets = duplicate[n.target].sites if n.target in duplicate else (n.target,)
-            if any(guards[t].refusal_code and guards[t].refusal_code != n.code for t in targets):
-                raise IsolationError(f"negative {n.id} does not name its guard's registered refusal code")
-        original_schema = digest(suite.schema.documents) if suite.schema else None
-        original_inputs = digest([[c.id, c.value] for c in controls.values()] + [[n.id, n.value] for n in negatives.values()])
-        undeclared_entries = set()
-        def evaluate(value, state):
-            gate.check()
-            report["evaluations"] += 1
-            try:
-                outcome = suite.runner(copy.deepcopy(value), state)
-                if not isinstance(outcome, Outcome):
-                    raise IsolationError("runner must return Outcome (never truthiness, exit 0, or None)")
-                return asdict(outcome)
-            except Exception as exc:
-                # A crash is NOT a successful refusal or a masking code.
-                return {"accepted": False, "error": type(exc).__name__ + ": " + str(exc)}
-            finally:
-                if state.schema:
-                    for entry in state.schema.undeclared_entries - undeclared_entries:
-                        fail("consumed_entry_not_declared", entry=entry, cuts=sorted(state.cuts),
-                             reason="add the actually consumed entry to SchemaCatalog.roots before proof")
-                    undeclared_entries.update(state.schema.undeclared_entries)
-                gate.check()
-        original = suite.original_state() if suite.modules else None
-        baseline = suite.state()
-        baseline_outcomes = {}
-        report["original_baseline_controls"] = []
-        def compare_original(case, got):
-            if original is None:
-                return
-            actual = evaluate(case.value, original)
-            same = actual == got
-            report["original_baseline_controls"].append({"case": case.id, "original": actual,
-                                                        "uncut": got, "identical": same})
-        for c in controls.values():
-            got = evaluate(c.value, baseline)
-            compare_original(c, got)
-            report["controls"].append({"id": c.id, "boundary": c.boundary, "outcome": got, "input_sha256": digest(c.value)})
-            if got != asdict(Outcome.accept()):
-                fail("control_refused", control=c.id, actual=got)
-        for n in negatives.values():
-            got = evaluate(n.value, baseline)
-            compare_original(n, got)
-            baseline_outcomes[n.id] = got
-            report["negatives"].append({"id": n.id, "target": n.target, "code": n.code,
-                "control": n.control, "defect": n.defect, "boundary": controls[n.control].boundary,
-                "changed_paths": typed_changes(controls[n.control].value, n.value), "input_sha256": digest(n.value), "outcome": got})
-            if got != asdict(Outcome.refuse(n.code)):
-                fail("wrong_baseline_refusal", negative=n.id, expected=n.code, actual=got)
-        comparisons = report["original_baseline_controls"]
-        report["original_baseline_equality"] = {
-            "expected": len(controls) + len(negatives) if original is not None else 0,
-            "checked": len(comparisons), "identical": all(c["identical"] for c in comparisons)}
-        if not report["original_baseline_equality"]["identical"]:
-            raise IsolationError("original and uncut baseline differ on fixtures: " +
-                                 ", ".join(c["case"] for c in comparisons if not c["identical"]))
-        if suite.schema:
-            for entry in suite.schema.roots:
-                if entry not in baseline.schema.consumed_entries:
-                    fail("declared_root_not_consumed", entry=entry)
-        proved = set()
-        def matrix(label, cuts, own):
-            state = suite.state(frozenset(cuts))
-            row = {"id": label, "cuts": sorted(cuts), "own": sorted(own), "flips": [], "complete": False,
-                   "stays": {"universe": "negatives", "except": []}, "masked": [], "unrelated_changes": [],
-                   "controls_accept": True, "restored": True}
-            report["rows"].append(row)
-            for c in controls.values():
-                got = evaluate(c.value, state)
-                if got != asdict(Outcome.accept()):
-                    row["controls_accept"] = False
-                    fail("cut_breaks_control", row=label, control=c.id, actual=got)
-            for n in negatives.values():
-                got = evaluate(n.value, state)
-                if got == asdict(Outcome.accept()):
-                    row["flips"].append(n.id)
-                elif n.id in own:
-                    item = {"negative": n.id, "target": n.target, "actual": got}
-                    row["masked"].append(item)
-                if n.id not in own and got != baseline_outcomes[n.id]:
-                    row["unrelated_changes"].append({"negative": n.id, "before": baseline_outcomes[n.id], "after": got})
-            row["stays"]["except"] = row["flips"][:]
-            # A FRESH uncut state proves restoration without trusting the mutant.
-            restored = suite.state()
-            for nid in sorted(own):
-                got = evaluate(negatives[nid].value, restored)
-                if got != asdict(Outcome.refuse(negatives[nid].code)):
-                    row["restored"] = False
-                    fail("restoration_failed", row=label, negative=nid, actual=got)
-            for c in controls.values():
-                if evaluate(c.value, restored) != asdict(Outcome.accept()):
-                    row["restored"] = False
-                    fail("restored_control_refused", row=label, control=c.id)
-            row["proved"] = (bool(own) and set(row["flips"]) == set(own) and not row["masked"]
-                             and not row["unrelated_changes"] and row["controls_accept"] and row["restored"])
-            row["complete"] = True
+        duplicates = {d.id: d for d in suite.duplicates}
+        if not controls or len(controls) != len(suite.controls) or len(negatives) != len(suite.negatives) or len(duplicates) != len(suite.duplicates):
+            raise IsolationError('controls, negatives and duplicates require unique IDs and a valid control')
+        if set(controls) & set(negatives) or set(guards) & set(duplicates):
+            raise IsolationError('case IDs and target IDs must be unambiguous')
+        for control in controls.values():
+            if control.boundary not in ('append', 'retry', 'retained_history', 'synthetic'):
+                raise IsolationError('unknown boundary ' + control.boundary)
+        membership = {}
+        for duplicate in duplicates.values():
+            if len(duplicate.sites) < 2 or len(set(duplicate.sites)) != len(duplicate.sites) or not duplicate.evidence.strip():
+                raise IsolationError('duplicate declared without proof evidence: ' + duplicate.id)
+            for name in duplicate.sites:
+                if name not in guards or guards[name].invariant != duplicate.invariant or name in membership:
+                    raise IsolationError('duplicate merges different fields/predicates or overlapping sets: ' + duplicate.id)
+                membership[name] = duplicate.id
+            if len({guards[name].refusal_code for name in duplicate.sites}) != 1:
+                raise IsolationError('duplicate sites must refuse the same defect code')
+        for negative in negatives.values():
+            if negative.control not in controls or negative.target not in guards.keys() | duplicates.keys() or not negative.defect.strip():
+                raise IsolationError('negative has a missing table guard/control/defect: ' + negative.id)
+            targets = duplicates[negative.target].sites if negative.target in duplicates else (negative.target,)
+            if any(guards[t].refusal_code != negative.code for t in targets):
+                raise IsolationError('negative code differs from its table guard: ' + negative.id)
+            if negative.target in membership:
+                raise IsolationError('duplicate negatives must target their declared set')
+        def expected(negative, got, cuts=frozenset()):
+            names = set(duplicates[negative.target].sites) if negative.target in duplicates else {negative.target}
+            return got.get('accepted') is False and got.get('guard') in names - set(cuts) and got.get('code') == negative.code and 'error' not in got
+        baseline = {}
+        for control in controls.values():
+            got = evaluate(control.value)
+            baseline[control.id] = got
+            report['controls'].append({'id': control.id, 'boundary': control.boundary, 'outcome': got, 'sha256': digest(control.value)})
+            if got != {'accepted': True}:
+                fail('control_refused', case=control.id, actual=got)
+        for negative in negatives.values():
+            got = evaluate(negative.value)
+            baseline[negative.id] = got
+            report['negatives'].append({**{k: v for k, v in asdict(negative).items() if k != 'value'},
+                'outcome': got, 'changed_paths': typed_changes(controls[negative.control].value, negative.value), 'sha256': digest(negative.value)})
+            if not expected(negative, got):
+                fail('wrong_baseline_guard', negative=negative.id, expected=negative.target, actual=got)
+        if initial.table._schema:
+            consumed = {entry for row in report.get('schema_consumption', []) for entry in row['roots']}
+            missing = set(initial.table._schema.catalog.roots) - consumed
+            if missing:
+                fail('declared_schema_root_not_consumed', roots=sorted(missing))
+        # Baselines still execute when the static scan fails, to demonstrate both
+        # defenses. No guard receives credit after any safety/inventory failure.
+        if report['failures']:
+            report['unproved_guards'].extend(guards)
+            return report
+        for negative in negatives.values():
+            own = set(duplicates[negative.target].sites) if negative.target in duplicates else {negative.target}
+            for name in guards:
+                got = evaluate(negative.value, predicate=name)
+                cell = {'guard': name, 'negative': negative.id, **got, 'own': name in own}
+                report['guard_negative_matrix'].append(cell)
+                if got.get('passes') is not (name not in own):
+                    fail('matrix_diagonal_pass' if name in own else 'matrix_off_diagonal_failure', guard=name, negative=negative.id, actual=got)
+        # Guards must pass every control individually as well as the full path.
+        for control in controls.values():
+            for name in guards:
+                got = evaluate(control.value, predicate=name)
+                if got.get('passes') is not True:
+                    fail('predicate_refuses_control', guard=name, control=control.id, actual=got)
+        if report['failures']:
+            report['unproved_guards'].extend(guards)
+            return report
+
+        def vector(label, cuts, own, retained_duplicate=None):
+            row = {'id': label, 'cuts': sorted(cuts), 'own': sorted(own), 'flips': [], 'stays': [],
+                   'masked': [], 'unrelated_changes': [], 'results': [], 'restoration': [], 'proved': False}
+            report['rows'].append(row)
+            before = len(report['failures'])
+            good = bool(own) or retained_duplicate is not None
+            for control in controls.values():
+                got = evaluate(control.value, cuts)
+                row['results'].append({'case': control.id, 'outcome': got})
+                if got != baseline[control.id]:
+                    good = False
+                    fail('cut_breaks_control', row=label, control=control.id, actual=got)
+            for negative in negatives.values():
+                got = evaluate(negative.value, cuts)
+                row['results'].append({'case': negative.id, 'outcome': got})
+                if got == {'accepted': True}:
+                    row['flips'].append(negative.id)
+                else:
+                    row['stays'].append(negative.id)
+                if negative.id in own:
+                    okay = got == {'accepted': True}
+                    if not okay:
+                        item = {'negative': negative.id, 'actual': got}
+                        row['masked'].append(item)
+                        report['masked_negatives'].append(item)
+                        fail('masked_negative', row=label, **item)
+                else:
+                    # A duplicate's tag can move to its remaining site, while
+                    # preserving the exact defect code. All other tags are exact.
+                    okay = (expected(negative, got, cuts) if negative.target in duplicates else got == baseline[negative.id])
+                    if not okay:
+                        row['unrelated_changes'].append({'negative': negative.id, 'before': baseline[negative.id], 'after': got})
+                        fail('unrelated_result_changed', row=label, negative=negative.id, actual=got)
+                good = good and okay
+            for case in [*controls.values(), *negatives.values()]:
+                got = evaluate(case.value)
+                row['restoration'].append({'case': case.id, 'outcome': got})
+                if got != baseline[case.id]:
+                    good = False
+                    fail('restoration_failed', row=label, case=case.id, actual=got)
+            row['complete'] = True
+            row['proved'] = good and len(report['failures']) == before
             if progress:
                 progress(report)
             return row
-        for gid, guard in sorted(guards.items()):
-            if guard.classification != "guard":
-                if guard.classification == "unclassified":
-                    fail("unclassified_assertion", guard=gid)
-                    report["unproved_guards"].append(gid)
-                continue
-            own = {n.id for n in negatives.values() if n.target == gid}
-            row = matrix(gid, (gid,), own)
-            if row["proved"]:
-                proved.add(gid)
-            elif own:
-                report["masked_negatives"].extend(row["masked"])
-                fail("guard_isolation_failed", guard=gid)
-        for d in duplicate.values():
-            own = {n.id for n in negatives.values() if n.target == d.id}
-            proof = {"id": d.id, "sites": list(d.sites), "invariant": asdict(d.invariant),
-                     "evidence": d.evidence, "per_site": [], "proved": False}
-            # Removing EACH site alone must keep exactly the SAME defect code.
-            for gid in d.sites:
-                row = next(r for r in report["rows"] if r["id"] == gid)
-                results = []
-                state = suite.state(frozenset((gid,)))
-                for nid in sorted(own):
-                    got = evaluate(negatives[nid].value, state)
-                    results.append({"negative": nid, "outcome": got,
-                                    "same_defect": got == asdict(Outcome.refuse(negatives[nid].code))})
-                remaining_state = suite.state(frozenset(set(d.sites) - {gid}))
-                remaining = []
-                for nid in sorted(own):
-                    got = evaluate(negatives[nid].value, remaining_state)
-                    remaining.append({"negative": nid, "outcome": got,
-                                      "same_defect": got == asdict(Outcome.refuse(negatives[nid].code))})
-                proof["per_site"].append({"site": gid, "results": results,
-                    "site_restored_others_cut": remaining,
-                    "unrelated_unchanged": not row["unrelated_changes"] and row["controls_accept"] and row["restored"]})
-            all_row = matrix(d.id, d.sites, own)
-            proof["proved"] = all_row["proved"] and all(
-                s["unrelated_unchanged"] and all(r["same_defect"] for r in s["results"] + s["site_restored_others_cut"]) for s in proof["per_site"])
-            if proof["proved"]:
-                proved.update(d.sites)
+        proved = set()
+        single_rows = {}
+        for name in guards:
+            own = {n.id for n in negatives.values() if n.target == name}
+            row = vector(name, {name}, own, membership.get(name))
+            single_rows[name] = row
+            if row['proved'] and own:
+                proved.add(name)
+        for duplicate in duplicates.values():
+            own = {n.id for n in negatives.values() if n.target == duplicate.id}
+            proof = {**asdict(duplicate), 'per_site': [], 'proved': False}
+            for name in duplicate.sites:
+                # Prove each site really enforces the invariant, not just a
+                # weaker third row hidden by stronger peers.
+                others = set(duplicate.sites) - {name}
+                remaining = vector(duplicate.id + ':only:' + name, others, set(), duplicate.id)
+                proof['per_site'].append({'site': name, 'single_cut': single_rows[name]['id'], 'only_this_site': remaining['id'],
+                                          'proved': single_rows[name]['proved'] and remaining['proved']})
+            joint = vector(duplicate.id, set(duplicate.sites), own)
+            proof['joint_cut'] = joint['id']
+            proof['proved'] = bool(own) and joint['proved'] and all(s['proved'] for s in proof['per_site'])
+            if proof['proved']:
+                proved.update(duplicate.sites)
             else:
-                report["masked_negatives"].extend(all_row["masked"])
-                fail("duplicate_unproved", duplicate=d.id)
-            report["duplicates"].append(proof)
-        for gid, guard in sorted(guards.items()):
-            if guard.classification == "guard" and gid not in proved:
-                report["unproved_guards"].append(gid)
-        if report["unproved_guards"]:
-            fail("unproved_guards", count=len(report["unproved_guards"]))
-        if undeclared_entries:
-            # A validator request is real consumption even when only a mutant
-            # reaches it. Resolve and expose its obligations; never leave these
-            # sites described as unreachable. No undeclared cut receives credit.
-            expanded = SchemaCatalog(suite.schema.documents,
-                roots=tuple(suite.schema.roots) + tuple(sorted(undeclared_entries)), format_checker=suite.schema.formats)
-            newly_consumed = [g for g in expanded.guards.values() if g.entry_uri in undeclared_entries]
-            locations = {(g.document, g.path, g.keyword, g.member) for g in newly_consumed}
-            report["inventory"] = [g for g in report["inventory"] if not (g.get("classification") == "unreachable" and
-                (g.get("document"), tuple(g.get("path", ())), g.get("keyword"), g.get("member")) in locations)]
-            for guard in newly_consumed:
-                if guard.classification in ("guard", "unclassified", "format_sweep"):
-                    guard = replace(guard, classification="unclassified", evidence="actually consumed undeclared entry; occurrence and witnesses unproved")
-                    report["unproved_guards"].append(guard.id)
-                report["inventory"].append(asdict(guard))
-        if suite.schema and digest(suite.schema.documents) != original_schema:
-            fail("source_schema_changed")
-        if digest([[c.id, c.value] for c in controls.values()] + [[n.id, n.value] for n in negatives.values()]) != original_inputs:
-            fail("source_cases_changed")
-        report["schema_sha256"] = original_schema
-        report["code_sha256"] = {m.name: m.source_hash for m in suite.modules}
-        report["classifications_require_review"] = [item.guard for item in suite.classifications if item.kind in ("redundant", "format_sweep")]
-        report["format_sweep"] = [g.id for g in guards.values() if g.classification == "format_sweep"]
-        report["classifications_require_review"].extend(report["format_sweep"])
-        report["status"] = "FAIL" if report["failures"] else "PARTIAL" if report["classifications_require_review"] else "PASS"
-    except Exception as exc:
-        fail("infrastructure_or_declaration", error=type(exc).__name__ + ": " + str(exc))
+                fail('duplicate_unproved', duplicate=duplicate.id)
+            report['duplicates'].append(proof)
+        report['unproved_guards'].extend(sorted(set(guards) - proved))
+        if report['unproved_guards']:
+            fail('unproved_guards', guards=report['unproved_guards'])
+        if not report['failures']:
+            report['status'] = 'PASS'
+    except BaseException as exc:
+        fail('state_shared_across_cases' if 'state_shared_across_cases' in str(exc) else 'infrastructure_or_declaration', error=type(exc).__name__ + ': ' + str(exc))
+    finally:
+        # Per-guard credit cannot survive a failing safety check or bad matrix.
+        if report['failures']:
+            for row in report['rows']:
+                row['proved'] = False
+            for duplicate in report['duplicates']:
+                duplicate['proved'] = False
+        report['unproved_guards'] = sorted(set(report['unproved_guards']) | {g['id'] for g in report['inventory']
+            if not any(r['id'] == g['id'] and r.get('proved') for r in report['rows']) and
+               not any(g['id'] in d['sites'] and d['proved'] for d in report['duplicates'])})
     return report
 
 
 def markdown(report):
-    lines = [f"# Guard isolation: {report['suite']}", "", f"**{report['status']}**; {report['evaluations']} serial evaluations; "
-             f"{len(report['unproved_guards'])} unproved guards; {len(report['masked_negatives'])} masked negatives.", "",
-             "The JSON `negatives` array is the stable case universe. `stays` is its exact complement of `except`; "
-             "every member was executed and its original refusal compared. No complement is inferred from dependencies.", "",
-             "| Guard / set | Flipping negatives | Staying rejected | Result |", "|---|---|---:|---|"]
-    for row in report["rows"]:
-        flips = ", ".join(row["flips"]) or "none"
-        lines.append(f"| `{row['id'].replace('|', '&#124;')}` | {flips.replace('|', '&#124;')} | "
-                     f"{len(report['negatives']) - len(row['flips'])} | {'proved' if row.get('proved') else 'see JSON'} |")
-    if report["duplicates"]:
-        lines += ["", "Duplicate sets include the field/predicate declaration, each single-site result, and the all-sites cut in JSON."]
-    if report["failures"]:
-        lines += ["", "Failures: " + ", ".join(sorted({f['kind'] for f in report['failures']})) + "."]
-    return "\n".join(lines) + "\n"
+    lines = ['# Guard isolation: ' + report['suite'], '', '**' + report['status'] + '** — Method B: guard tables.', '',
+             f"{report['evaluations']} serial evaluations; {report['factories']} fresh factories; {len(report['unproved_guards'])} unproved guards.", '',
+             'Static scan: **' + report.get('static', {}).get('status', 'NOT_RUN') + '**. Runtime untracked sites: ' + str(len(report['runtime'])) + '.', '',
+             '| Guard / duplicate set | Flips | Stays refused | Proof |', '|---|---|---|---|']
+    for row in report['rows']:
+        lines.append('| `' + row['id'].replace('|', '&#124;') + '` | ' + ', '.join(row['flips']) + ' | ' + ', '.join(row['stays']) + ' | ' + ('proved' if row['proved'] else 'unproved') + ' |')
+    lines += ['', f"Guard-negative matrix: {len(report['guard_negative_matrix'])} individually executed cells.",
+              'Full outcomes, exact guard tags, duplicate per-site proofs, static sites/reasons and source SHA-256 hashes are in JSON.']
+    if report['failures']:
+        lines += ['', 'Failures: ' + ', '.join(sorted({f['kind'] for f in report['failures']})) + '.']
+    return '\n'.join(lines) + '\n'
+
+
+def self_test(memory=None):
+    from pm_guard_isolation_traps import exercise
+    return exercise(sys.modules[__name__], memory or MemoryGate())
+
+
+def self_test_markdown(report):
+    lines = ['# Method B self-test', '', f"**{report['status']}**: {report['caught']}/{len(report['traps'])} expected observations caught.", '',
+             '| Trap | Expected reason | Caught |', '|---|---|---|']
+    for trap in report['traps']:
+        lines.append(f"| {trap['id']} | {trap['expected']} | {trap['caught']} |")
+    return '\n'.join(lines) + '\n'
 
 
 def main(argv=None):
+    sys.modules.setdefault('pm_guard_isolation', sys.modules[__name__])
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--adapter", help="Python file:factory returning Suite (trusted repository code)")
-    parser.add_argument("--self-test", action="store_true")
-    parser.add_argument("--json", type=Path, help="JSON output; stdout if omitted")
-    parser.add_argument("--markdown", type=Path)
-    parser.add_argument("--max-rss", type=int, default=2048, metavar="MIB")
-    parser.add_argument("--pause-when-low", type=int, default=0, metavar="GIB")
-    parser.add_argument("--resume-at", type=int)
-    parser.add_argument("--pause-poll", type=float, default=120)
-    parser.add_argument("--low-timeout", type=float, default=2700)
+    parser.add_argument('--adapter', help='Python file:factory returning Method B Suite')
+    parser.add_argument('--self-test', action='store_true')
+    parser.add_argument('--json', type=Path)
+    parser.add_argument('--markdown', type=Path)
+    parser.add_argument('--max-rss', type=int, default=2048)
+    parser.add_argument('--pause-when-low', type=int, default=0)
+    parser.add_argument('--resume-at', type=int)
+    parser.add_argument('--pause-poll', type=float, default=30)
+    parser.add_argument('--low-timeout', type=float, default=2700)
     args = parser.parse_args(argv)
-    memory = MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, args.pause_poll, args.low_timeout)
     if args.self_test == bool(args.adapter):
-        parser.error("choose exactly one of --self-test or --adapter")
+        parser.error('choose exactly one of --self-test or --adapter')
     try:
+        memory = MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, args.pause_poll, args.low_timeout)
         memory.check()
         if args.self_test:
             report = self_test(memory)
         else:
-            path, sep, factory = args.adapter.rpartition(":")
+            sys.modules.setdefault('pm_guard_isolation', sys.modules[__name__])
+            path, sep, factory = args.adapter.rpartition(':')
             if not sep:
-                parser.error("--adapter requires file:factory")
-            # Importing this script by its CLI name and canonical name shares dataclasses.
-            sys.modules.setdefault("pm_guard_isolation", sys.modules[__name__])
-            spec = importlib.util.spec_from_file_location("_guard_isolation_adapter", path)
+                raise IsolationError('--adapter requires file:factory')
+            spec = importlib.util.spec_from_file_location('_guard_isolation_adapter', path)
             module = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = module
             spec.loader.exec_module(module)
-            suite = getattr(module, factory)()
-            if not isinstance(suite, Suite):
-                raise IsolationError("adapter must return Suite")
-            report = run(suite, memory=memory)
-    except Exception as exc:
-        report = {"version": 1, "suite": "setup", "status": "FAIL", "evaluations": 0,
-                  "controls": [], "negatives": [], "inventory": [], "rows": [], "duplicates": [],
-                  "unproved_guards": [], "masked_negatives": [],
-                  "failures": [{"kind": "infrastructure_or_declaration", "error": type(exc).__name__ + ": " + str(exc)}]}
-    body = json.dumps(report, indent=2, sort_keys=True) + "\n"
+            report = run(getattr(module, factory)(), memory=memory)
+    except BaseException as exc:
+        report = {'version': 2, 'status': 'FAIL', 'failures': [{'kind': 'setup', 'error': type(exc).__name__ + ': ' + str(exc)}]}
+    body = json.dumps(report, indent=2, sort_keys=True) + '\n'
     if args.json:
         args.json.write_text(body)
     else:
-        print(body, end="")
+        print(body, end='')
     if args.markdown:
-        args.markdown.write_text(markdown(report) if "suite" in report else self_test_markdown(report))
-    return 0 if report["status"] == "PASS" else 1
+        args.markdown.write_text(markdown(report) if 'suite' in report else self_test_markdown(report) if 'traps' in report else '# FAIL\n' + body)
+    return 0 if report['status'] == 'PASS' else 1
 
 
-# The small trap harness is below the engine so adapters import only one module.
-def self_test(memory=None):
-    from pm_guard_isolation_traps import exercise, composition_coverage
-    census = python_construct_census()
-    if census["errors"]:
-        return {"version": 1, "status": "FAIL", "caught": 0, "traps": [], "python_census": census}
-    coverage = composition_coverage(sys.modules[__name__], census)
-    if coverage["errors"]:
-        return {"version": 1, "status": "FAIL", "caught": 0, "traps": [],
-                "python_census": census, "python_composition": coverage}
-    report = exercise(sys.modules[__name__], memory or MemoryGate())
-    report["python_census"] = census
-    report["python_composition"] = coverage
-    cross = next((t["report"] for t in report["traps"] if t["id"] == "C5-composition-cross-product" and "report" in t),
-                 {"status": "FAIL", "errors": ["cross-product check did not complete"]})
-    report["composition_cross_product"] = {k: v for k, v in cross.items() if k != "cells"}
-    return report
-
-
-def self_test_markdown(report):
-    lines = ["# Guard-isolation self-test", "", f"**{report['status']}**: {report['caught']}/{len(report['traps'])} traps caught.", "",
-             "| Trap | Expected observation | Result |", "|---|---|---|"]
-    for row in report["traps"]:
-        lines.append(f"| {row['id']} | {row['expected']} | {'caught' if row['caught'] else 'FAILED'} |")
-    if report.get("python_census"):
-        census = report["python_census"]
-        lines += ["", f"Python construct census gate: **{census['status']}**, {census['node_classes']} classes × {len(census['positions'])} positions."]
-        lines += ["- " + error for error in census["errors"]]
-    if report.get("python_composition"):
-        coverage = report["python_composition"]
-        lines += ["", "Refusal/context coverage gate: **" + coverage["status"] + "**."]
-        lines += ["- " + error for error in coverage["errors"]]
-    if "generated" in report.get("composition_cross_product", {}):
-        cross = report["composition_cross_product"]
-        lines += ["", f"Composition cross-product: **{cross['generated']} cells**, "
-                  f"{cross['credited_with_per_atom_cuts']} with verified per-atom cuts, "
-                  f"{cross['unclassified']} unclassified."]
-    return "\n".join(lines) + "\n"
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     raise SystemExit(main())

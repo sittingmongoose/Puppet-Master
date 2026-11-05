@@ -1,5 +1,7 @@
 # GUARDTOOL — shared check-11 machinery
 
+Current implementation: **Method B: guard tables**, at the end of this report. Earlier Python rewrite/clone claims below are historical lineage.
+
 Branch: `plans/ea-guardtool-20261105`. Base: `f9c5de6561dff0a53a48e530f2a5c6804a7e941d` (`origin/main`, fetched before branching). Implementation and synthetic verification only; no lane branch is edited or admitted.
 
 ## 1. Survey of lane proof implementations
@@ -601,3 +603,76 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUA
 Preflight: **125 GB disk available / 14 GiB RAM available**. Heavy checks ran one at a time with a **1 GiB address-space limit**, **1,536 MiB RSS gate** and fresh **6 GiB available-memory checks**. The final self-test's peak checker RSS was **77,132 KiB**; its real command-boundary available memory was **16,167,723,008 / 17,228,996,608 bytes**. Low-memory messages belong to synthetic memory-gate tests. A fresh subprocess avoids the harness's inherited RSS high-water mark. No subagents, pm-mail, browser or server was used. Scratch runs and uncited logs are deleted; the worktree is removed after the final branch push, with the cleanup receipt retained externally.
 
 **Round-10 verification manifest:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/fix10/verification-manifest.json`, SHA-256 `ed2c664eff37256ffeb51b2b2618b913e7626d4c93c7628977ff6a8dc77c0388`. The manifest excludes this report and the later cleanup receipt to avoid circular hashes and permit the final post-push cleanup record.
+
+## Method B: guard tables
+
+**Implementation base:** `e8c4658f1ce2b733aa78d5b33dab0a1324d6362c`. **Branch:** `plans/ea-guardtool-20261105`. This section supersedes the earlier Python proof/census/clone claims. It implements GUARDTOOL-B and pm7-build's B + C choice. Historical round reports above are retained as lineage. No previous Astra NOT_READY is downgraded by the lead's old sweep-item wording.
+
+### API in five lines
+
+```python
+Guard(name, Invariant(field_path, predicate_words), refusal_code, predicate)
+table = GuardTable(guards); table.require(name, complete_value, context)
+factory(value) -> Case(table, original_check, context)  # factory() also supported
+Suite(name, factory, controls, negatives, checker_modules, repository_root, duplicates=[], non_guards=[])
+report = run(suite); markdown(report)
+```
+
+**Python cuts are table swaps.** A cut replaces exactly one `Guard` entry's predicate with always-pass. The original checker, predicate functions, code objects, constants, defaults, globals, closures and model state are never rewritten, recompiled or cloned. Every predicate/control/negative/cut/restoration gets a fresh factory invocation. Fixture data is reconstructed separately without copy hooks or order-changing set copies; dictionary/list aliases and typed scalar bytes are preserved. Mutable state reuse, including repository module/default/closure state, fails. Factories may derive per-input state but cannot repair the frozen fixture.
+
+**The predicate matrix is mandatory.** Every negative is tested against every declared guard in isolation. It must fail its named guard and pass every other guard. Each predicate also sees every control. A failure in another column reports a two-defect fixture or undeclared overlap. A declared duplicate only qualifies after all site-by-site checks pass. Each original complete negative must have its own table-issued guard tag/code, its own single-guard cut must accept, every peer must keep its exact tag/code, and a fresh restoration reruns the whole case set.
+
+**Duplicate credit is site-specific.** All members must declare the same field, predicate and code, with nonempty evidence and a witness. Each single cut still refuses; each member alone still refuses; the joint cut accepts; controls and peers are preserved throughout. A weaker impostor, empty evidence, different invariants or overlapping groups fail. The tool never unions removal sets by code, enclosing expression or site.
+
+**Runtime has no refusal translator.** Only an exception object issued by the active table can be a product refusal. Matching strings/attributes, ordinary exceptions, `False`/`None`/zero/Outcome returns, swallowed table refusals and unknown guard names fail. Predicate exceptions/invalid results and mutation of input/context fail even if caught by the checker. The trace also records handled exceptions and calls into unscanned repository source. Canonical path caching preserves this check through the evidence share's symlink alias; the caught-exception regression exposed and closed an initial raw-prefix shortcut.
+
+**Static scanning grants no cut credit.** It scans the declared checker modules and their repository import closure, including dormant helpers and package initialization. Raises, assertions, non-success or implicit returns, yields, mutation/error-list writes, refusal helpers and uncertain calls outside the exact registered predicate bodies are obligations. Each needs one exact non-guard declaration and a reviewer-checkable pure-computation/plumbing reason. Dynamic code/imports, star imports, unknown statements, nested predicate code, missing predicate source and stale/ambiguous declarations fail closed. Qualified function identities prevent a same-line or comprehension binding from exempting another function. Any safety, inventory, matrix or proof failure withholds all row credit.
+
+### Earlier failure classes and the rewritten corpus
+
+**71/71 expected observations caught.** This is a rewritten Method B corpus, not a claim that all 305 retired rewrite/clone traps were replayed. Each negative trap asserts its own required failure kind, not merely a failing suite. Positive controls include independent same-code rows, genuine duplicates, original set/code/default observations, per-input state factories, and full schema/member/reference proofs.
+
+| Earlier class | Method B evidence |
+|---|---|
+| Merged predicates / two-defect negatives | `duplicate-distinct-invariants`, `predicate-checks-two-fields`, `two-defect-negative`: declaration refusal or the exact off-diagonal cell fails. |
+| Masked/stale-copy negatives | `masked-stale-copy`: the copy guard fails the x witness's off-diagonal cell. No removal row receives credit. |
+| Inline raises, returns, asserts and accumulated errors | Twelve static variants include dormant branches, append/extend/augmented/slice/item writes, plus runtime-only refusal controls. |
+| Exceptions credited as product refusals | `exception-counted-as-refusal`, `predicate-exception`, forged tags, exit zero and swallowed table refusals fail through their named runtime checks. |
+| Duplicate without equivalence proof | Empty evidence and distinct invariant declarations fail; weaker impostor fails its diagonal; a genuine duplicate retains its upper-bound peer. |
+| Shared state / missing table guards / no witnesses | Shared context/list/default/imported state, missing entry, missing witness and factory fixture-repair regressions fail closed. |
+| Tuple/chained/local/conditional returns, while and suffix assertions (A3, C4–C6) | Seven source-shape regressions now remain static obligations. There is no code-cut path to credit them. |
+| Optimization, constants, defaults, function metadata, reflection and clone alias/copy fidelity (C7–C11) | No Python compilation/copy transformation exists. Original set, code and runtime-default observation controls pass; the DG6B example also passes under `-O`. |
+| Schema findings from A1/A4/A5 and rounds 3–4 | Required members, bounds, typed membership, legacy contains, conditional branches and reference occurrences are tested. Unsupported pattern/negated/unknown/dormant-ref forms remain fail-closed. |
+
+### Schema preservation
+
+The reviewed `SchemaCatalog`, `SchemaView`, inventory constants and per-keyword/per-predicate mutation implementation are retained. An independent text comparison verifies the whole schema method is identical to the base except for renaming its internal metadata class to `SchemaGuard`. The original vocabulary audit function is replayed unchanged: **768 cells = 139 with individual cuts, 530 fail-closed, 99 with zero effective predicates**. No schema finding is waived.
+
+`schema_table(catalog, selectors, guards=())` exposes these predicates in the same table/report. Each complete schema consumer has a distinct root/input binding; selectors are source-backed and reviewed. `table.validate` invokes the complete original/cut validator and the engine issues its guard tag. Unattributable rejection or an unconsumed declared baseline root fails. The direct schema matrix preserves routing while weakening other supported assertions. Previously unsupported contexts remain unclassified and cannot receive proof credit.
+
+### DG6B worked example and its precise limit
+
+`scripts/pm_guard_isolation_dg6b_example.py` ports the seven retained-history flag invariants from the real `history_contract` at `ff6d98d8740eff0df68a44f5d4eca0894c4fdf41`. Its checked-in runnable example explicitly uses a **synthetic extracted-phase boundary**. `history_case(adapter_check, record_check, storage_check)` retains the wiring for the original complete path.
+
+| Exercise | Result |
+|---|---|
+| Checked-in example, ordinary Python | **PASS: 7/7 guards; 49 predicate/negative cells; 176 evaluations** |
+| Same example under `python -O` | **PASS: 7/7**, using the original functions with that compilation mode |
+| Original retained fixtures: `plugin.loaded`, `plugin.hook.invoked`, `auth.github.authenticated` | Each original complete control accepts. Each extracted flag phase proves **7/7**, totaling **21/21 guards and 147 matrix cells**. |
+| Unported original complete retained path | **FAIL; zero credited rows.** The static scan exposes **1,132 sites requiring porting or plumbing classification** and factory freshness detects shared mutable state. |
+
+The full original DG6B adapter cannot be made sound merely by wrapping its ValueErrors or retaining its old code mutant. Its remaining product refusals must become table predicates, pure helper/plumbing sites need review, and mutable state/caches need per-case initialization. Those lane changes belong in its sweep round. No complete lane adoption, family twelve-criterion grade or admission is certified here.
+
+### Validation, scope and evidence
+
+Serial verification: **71/71 traps**, normal/optimized worked examples, the three real fixture exercises, the **768-cell schema replay**, and **1,638 deterministic evidence assertions** pass. The **1 MiB RSS** and missing-adapter controls return their expected exit 1. Shard verification and whitespace checks pass. Index validation exits 1 with parsed top-level `status=fail`: **86 inherited findings** (21 invalid removal-ledger records and 65 unit-removal comparisons against newer origin/main). Its inheritance record verifies 32 named inputs and index/checker files unchanged from the pinned base. No index regeneration or unrelated repair is made.
+
+Resource preflight passed at **120 GB disk / 15 GiB available RAM**. Fresh tool/test subprocesses use a **1 GiB address-space cap**, **1,536 MiB RSS gate**, and fresh **6 GiB available-memory checks**. A command-scoped small Git pack window allows read-only pinned-source extraction within that cap; no repository Git settings or history are changed. Limits are sampled, not an allocation sandbox. Freshness uses weak references where possible and retains otherwise non-weak-referenceable mutable state, so large lanes still need complete family/boundary partitions that fit the RSS cap.
+
+**Evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/`. `self-test.json`/`.md`, `commands.json`, `result-audit.json`, `schema-vocabulary.json`, `dg6b-summary.json`, complete matrices, reproducible drivers, index inheritance and the final verification manifest are copied there with SHA-256 fingerprints. The report and guide are copied alongside them. Temporary extracted runtime source trees are removed; the worktree is removed after the prescribed branch push.
+
+**Open soundness boundary:** predicates must honestly implement their single invariant; non-guard reasons, complete-path/consumer bindings, duplicate semantic equality and external/native service resets require independent review. A finite matrix cannot prove those declarations. Unsupported forms fail rather than earning automatic credit. This implementation has no independent review waiver.
+
+**Scope:** only tool scripts, the worked example, trap data, adoption guide and report companions change. No owner Markdown, registry, Decision Log, Spec Lock, generated shard/index/evidence, `.gitignore`, admission, PlanUnit IDs, main push, pm-mail or subagents.
+
+**Method B verification manifest:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B/verification-manifest.json`, SHA-256 `ea6e2021604afc510b5e1e6fe4750a9361f33156b0f7e56f34eb7c2ec372a853`. The manifest excludes this report and post-push completion/cleanup receipts to avoid circular hashes.
