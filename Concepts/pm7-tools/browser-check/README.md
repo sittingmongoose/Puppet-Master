@@ -65,6 +65,8 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 
 The R6 checks keep the original fields test assertions through `helpers/onboarding-fields.mjs`; only the helper API, page default and sandbox navigation are adapted to this kit. They do not add a native provider or migration contract.
 
+SW-41: the shared rows 20/21 Back walk retries only when an open sheet or look menu is observed closing. Ordinary screens must navigate on the first press. `--set selftest=ignoreback-text` swallows Back at `where` and refreshes unrelated title text; both rows must fail naming `where` (`ignoreback` is the no-refresh control). The connected-server walk picks a different project on `c-ready` and captures `connect.openProject`; `--set selftest=keepproject --set rich='connected existing'` retains that pending pick after Back and must fail naming `c-ready`. The `NO_PICK` comments document the renderer audit; completed pairing is exempt only while its code input is absent and trust is confirmed.
+
 FO-61: `back-after-change --grep FO-61` repeats the Later Edit route (`--set repeat=30`). It stretches the first revision recheck with the public concept clock, then restores normal speed; `--set clock=1` uses natural timing. The snapshots wait for that revision's completed recheck and matching footer, and compare the actual commit state too. `--set selftest=earlyreview` restores the old premature snapshot and must fail the default slow-first case.
 
 ## Helpers for lane checks
