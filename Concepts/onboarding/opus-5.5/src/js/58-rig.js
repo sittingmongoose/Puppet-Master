@@ -202,8 +202,9 @@
         + '<span class="pst-tip-h"></span><span class="pst-tip-t" aria-hidden="true"></span><span class="pst-tip-sr o55-sr"></span>';
       if (w.fam !== 'nier') this.tipBox = div('pst-tip', this.overlay, tipHtml);
       else { const nt = this.hudEl.querySelector('.pst-ntip'); nt.innerHTML = tipHtml; }
-      if (this.tipData) this.showTip(true);
       this.buildPip();
+      // A retained note uses the pose that setLayout() just cleared.
+      if (this.tipData) this.showTip(true);
       // re-create the props that were on stage, in the new material
       const keep = [...this.props.values()];
       this.props.clear();
