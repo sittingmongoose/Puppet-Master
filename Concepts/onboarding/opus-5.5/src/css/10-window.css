@@ -632,22 +632,22 @@ html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55
 
 /* FO-73: button hit bounds never move. Press displacement and squeeze belong to
    content; the native face keeps its material and shadow compression. */
-#pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px; --o55-button-y: 0px; --o55-button-s: 1; }
-#pm-o55-onboarding[data-family="friendly"] button:not(.o55-card, .o55-tile):active { --o55-button-s: .97; }
-#pm-o55-onboarding button.o55-btn:active { --o55-button-y: 1px; --o55-button-s: .985; }
-#pm-o55-onboarding[data-family="friendly"] button.o55-btn:active { --o55-button-x: 2px; --o55-button-y: 3px; --o55-button-s: 1; }
-#pm-o55-onboarding[data-family="retro"] button.o55-btn:active { --o55-button-x: 3px; --o55-button-y: 3px; --o55-button-s: 1; }
-html[data-o55-nier="on"] #pm-o55-onboarding button.o55-btn:active { --o55-button-x: 1px; --o55-button-y: 1px; --o55-button-s: 1; }
-#pm-o55-onboarding[data-family="glass"] button.o55-btn:not([aria-disabled="true"]):hover:not(:active) { --o55-button-y: -1px; }
-#pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { translate: var(--o55-button-x) var(--o55-button-y); scale: var(--o55-button-s); transition: translate 140ms ease, scale 140ms ease; }
+#pm-o55-onboarding :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) { --o55-button-x: 0px; --o55-button-y: 0px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="friendly"] :is(button:not(.o55-card, .o55-tile), a[href].o55-btn):active { --o55-button-s: .97; }
+#pm-o55-onboarding :is(button, a[href]).o55-btn:active { --o55-button-y: 1px; --o55-button-s: .985; }
+#pm-o55-onboarding[data-family="friendly"] :is(button, a[href]).o55-btn:active { --o55-button-x: 2px; --o55-button-y: 3px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="retro"] :is(button, a[href]).o55-btn:active { --o55-button-x: 3px; --o55-button-y: 3px; --o55-button-s: 1; }
+html[data-o55-nier="on"] #pm-o55-onboarding :is(button, a[href]).o55-btn:active { --o55-button-x: 1px; --o55-button-y: 1px; --o55-button-s: 1; }
+#pm-o55-onboarding[data-family="glass"] :is(button, a[href]).o55-btn:not([aria-disabled="true"]):hover:not(:active) { --o55-button-y: -1px; }
+#pm-o55-onboarding :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) > * { translate: var(--o55-button-x) var(--o55-button-y); scale: var(--o55-button-s); transition: translate 140ms ease, scale 140ms ease; }
 #pm-o55-onboarding :is(.o55-link, .o55-suggestchip, .o55-railjump) > span,
 #pm-o55-onboarding .o55-lookmodes button > span { display: inline-block; }
-#pm-o55-onboarding#pm-o55-onboarding button:not(.o55-card, .o55-tile) { transform: none !important; }
-html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
-html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { transition: none !important; }
+#pm-o55-onboarding#pm-o55-onboarding :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) { transform: none !important; }
+html[data-motion="reduced"] #pm-o55-onboarding :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
+html[data-motion="reduced"] #pm-o55-onboarding :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) > * { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  #pm-o55-onboarding button:not(.o55-card, .o55-tile) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
-  #pm-o55-onboarding button:not(.o55-card, .o55-tile) > * { transition: none !important; }
+  #pm-o55-onboarding :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) { --o55-button-x: 0px !important; --o55-button-y: 0px !important; --o55-button-s: 1 !important; }
+  #pm-o55-onboarding :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) > * { transition: none !important; }
 }
 
 /* The shared switcher magnifies this inner face with independent scale/translate.
@@ -661,6 +661,10 @@ html[data-motion="reduced"] #pm-o55-onboarding button:not(.o55-card, .o55-tile) 
 
 /* Keep the native look's timing when feedback moves off the target: Retro cuts
    states; Glass releases with its original spring curve and presses in 90 ms. */
-#pm-o55-onboarding[data-family="retro"] button:not(.o55-card, .o55-tile) > * { transition: none !important; }
-#pm-o55-onboarding[data-family="glass"] button.o55-btn > * { transition: translate 380ms cubic-bezier(.3, 1.3, .5, 1), scale 380ms cubic-bezier(.3, 1.3, .5, 1); }
-#pm-o55-onboarding[data-family="glass"] button.o55-btn:active > * { transition-duration: 90ms; }
+#pm-o55-onboarding[data-family="retro"] :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) > * { transition: none !important; }
+#pm-o55-onboarding[data-family="glass"] :is(button, a[href]).o55-btn > * { transition: translate 380ms cubic-bezier(.3, 1.3, .5, 1), scale 380ms cubic-bezier(.3, 1.3, .5, 1); }
+#pm-o55-onboarding[data-family="glass"] :is(button, a[href]).o55-btn:active > * { transition-duration: 90ms; }
+
+/* In-tile help has its visible mark as its target: invisible padding must not
+   steal the surrounding painted choice, including its rounded corners. */
+#pm-o55-onboarding .o55-opt-tile > .o55-tile + .o55-tipq::before { inset: 0; }

@@ -291,7 +291,7 @@
           + `<span class="o55-rowmeta" data-key="selfown">${U.esc(T('server.confirm.selfOwn', { words: own }))}</span>`
           + `<span class="o55-rowmeta" data-key="selfgot">${U.esc(w ? T('server.confirm.selfGot', { name, words: w }) : T('server.ready.wordsMissing'))}</span></span></div>`;
         out += `<p class="o55-hint" data-key="selfhint">${U.esc(T('server.confirm.selfHint', { name }))}</p>`;
-        out += `<div class="o55-checkline" data-key="selfmatch"><button type="button" role="checkbox" aria-checked="${sv.selfConfirmed ? 'true' : 'false'}" class="o55-check${sv.selfConfirmed ? ' is-on' : ''}" data-o55-do="selfMatch" data-pm-hover-exempt="true">${sv.selfConfirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.confirm.matchWords'))}</span>${O55.tips.q('selfMatch')}</div>${O55.tips.explainer('selfMatch')}`;
+        out += `<div class="o55-checkline" data-key="selfmatch"><button type="button" role="checkbox" aria-checked="${sv.selfConfirmed ? 'true' : 'false'}" class="o55-check${sv.selfConfirmed ? ' is-on' : ''}" data-o55-do="selfMatch" data-pm-hover-exempt="true"><span class="o55-checkface" aria-hidden="true">${sv.selfConfirmed ? C.small('check', 13) : ''}</span></button><span>${U.esc(T('server.confirm.matchWords'))}</span>${O55.tips.q('selfMatch')}</div>${O55.tips.explainer('selfMatch')}`;
       }
       return out;
     },
@@ -480,7 +480,7 @@
             + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('server.ready.approve'), do: 'approve', arg: c.id, cls: 'o55-small', disabled: !canApprove, reason: c.confirmed ? T('chrome.working') : T('server.ready.tickWords'), reasonFor: c.confirmed ? null : `[data-key="match-${U.slug(c.id)}"]`, tip: 'group:approve', note: false }, 'o55-primary')}${O55.ui.btn({ label: T('server.ready.deny'), do: 'deny', arg: c.id, cls: 'o55-small', tip: 'group:deny', note: false }, 'o55-secondary')}</span></div>`
             + O55.tips.explainer('group:approve') + O55.tips.explainer('group:deny');
           card += `<p class="o55-hint" data-key="candhint-${U.esc(U.slug(c.id))}">${U.esc(T('server.ready.waitingHint', { name: c.name }))}</p>`;
-          card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-arg="${U.esc(c.id)}" data-pm-hover-exempt="true">${c.confirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.ready.confirmWords'))}</span>${O55.tips.q('group:match')}</div>${O55.tips.explainer('group:match')}`;
+          card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-arg="${U.esc(c.id)}" data-pm-hover-exempt="true"><span class="o55-checkface" aria-hidden="true">${c.confirmed ? C.small('check', 13) : ''}</span></button><span>${U.esc(T('server.ready.confirmWords'))}</span>${O55.tips.q('group:match')}</div>${O55.tips.explainer('group:match')}`;
           if (running) card += F.phases(S, 'approve:' + c.id, ['approve'], { approve: T('chrome.working') });
           if (sv.approveErr) card += C.note(pendingCopy(sv.approveErr, 'approve'), 'warn', 'phone');
         } else if (c.state === 'waiting') {
