@@ -115,14 +115,14 @@ export default async function (t) {
         selection.active.length === 1 && selection.active[0] === id, JSON.stringify(selection), {hard:true});
       await t.page.mouse.move(5, h - 5);
       if (t.args.fitProbe) {
-        for (let width=Number(t.args.fitFrom || 480); width<=Number(t.args.fitTo || 800); width+=2) {
+        for (let width=Number(t.args.fitFrom || 480); width<=Number(t.args.fitTo || 800); width+=Number(t.args.fitStep || 2)) {
           await f.evaluate(width=>PMW.chatCol.setWidth(width),width);
-          await f.waitForTimeout(180);
+          await f.waitForTimeout(Number(t.args.fitWait || 180));
           const fit=await f.evaluate(()=>{
             const wrap=document.querySelector('#pmRoot .pm56-activity-wrap, #pmRoot .activity-wrap'),bar=wrap?.querySelector('.pm56-activity-bar, .activity-bar');
             if(!bar)return null;
             const cs=getComputedStyle(wrap),bs=getComputedStyle(bar);
-            return {chat:PMW.chatCol.widthPx(),wrap:wrap.clientWidth,available:wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),bar:bar.clientWidth,scroll:bar.scrollWidth,classes:wrap.className,padding:bs.padding,children:[...bar.children].map(e=>e.getBoundingClientRect().width)};
+            return {chat:PMW.chatCol.widthPx(),wrap:wrap.clientWidth,available:wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),bar:bar.clientWidth,scroll:bar.scrollWidth,classes:wrap.className,cache:window.__abMeasure,font:bs.font,fonts:document.fonts.status,padding:bs.padding,children:[...bar.children].map(e=>e.getBoundingClientRect().width)};
           });
           t.log(JSON.stringify({fit}));
           if(fit && fit.scroll>fit.bar+1) await t.shot(`fit-${width}`,'Actual activity strip overflow at fitted width');

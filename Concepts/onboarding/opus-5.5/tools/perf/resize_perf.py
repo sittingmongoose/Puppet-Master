@@ -12,6 +12,11 @@ import json, os, sys, time, subprocess, statistics, hashlib
 from cdp import Browser
 
 args = sys.argv[1:]
+if not args or '--help' in args:
+    print('Usage: resize_perf.py PAGE [--reference CONTROL] [--metrics JSON] [--themes friendly-dark,...] [--port 9347]')
+    print('Without --reference: standalone measurements only, no timing certification. The 200ms drag p95 cap and tracking checks always apply.')
+    print('With --reference: interleaved control/page/page/control timing certification per gesture, plus the same hard 200ms cap.')
+    sys.exit(0)
 page_file = os.path.abspath(args[0])
 opt = lambda k, d=None: args[args.index('--' + k) + 1] if '--' + k in args else d
 THEMES = opt('themes', 'friendly-dark').split(',')
@@ -212,7 +217,7 @@ def paired_main():
 
 
 def main():
-    if '--single-measurement' not in args:
+    if '--reference' in args and '--single-measurement' not in args:
         return paired_main()
     metrics = {}
     if os.name == 'nt':
@@ -305,6 +310,8 @@ def main():
                 else:
                     if lag95 > 2:
                         failures.append(f"{theme} {surf}: pointer-to-edge lag p95 {lag95:.1f}px > 2px (1:1 canon)")
+                if gap95 > 200.0:
+                    failures.append(f'{theme} {surf}: drag frame gap p95 {gap95:.1f}ms > absolute 200ms ceiling')
                 metrics[theme+' '+surf] = {'floor':floor,'gap95':gap95,'lag95':lag95,'range':rng,'movesPerFrame':mpf}
         wide_both_check(b, url, fam0, mode0, failures)
     finally:
