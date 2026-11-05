@@ -22,6 +22,7 @@ browser-check run $K/checks --set sandbox=1                    # every check in 
 Parallel runs are safe: each gets its own browser and run folder. Give each its own copy of the build (a rebuild during a run mixes builds) and its own `--out`. The page loads as `file://`, so `--host` can't open it: to use another machine, ssh there with a checkout of the branch (`~/.local/bin/browser-check`). Motion claims need the VM, Windows or Nas1, because the Mac records about 36 fps and refuses pixel checks while recording.
 
 | Check file | What it asserts |
+| `choice-width-press` | Bounded first-choice native eight-point holds: Friendly/Glass Light, 860/1024/1280/1390x1080, Where/Look/NAS. Main guard supplies ten looks x three paths at1920 and narrow/short Glass cases. |
 | `choice-help-press` | FO-49: Glass Look first tile corner and visible help ownership at740x1000/1280x500, native held presses and rest crops. |
 | `button-anchor-face` | FO-73: actual generated Caddyfile Download anchor, all ten looks and three motion paths, native held edges and stationary bounds. |
 | `button-checkbox-producers` | FO-73: consent, Server self and guest producers in both states, all looks and motion paths, twelve native holds and painted inner cues. |
