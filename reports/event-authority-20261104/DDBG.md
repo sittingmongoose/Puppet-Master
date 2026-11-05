@@ -1,3 +1,105 @@
+# DDBG — sweep part 1
+
+Branch: `plans/ea-w2-debug-20261104`. Implementation commit: `c19ffddf8ff2e23b85bcf9c42ad48af8e651265d`. Rebased onto `origin/main` `e42ce235b4711325ced818c777f070c3ee0d7952` from lane head `dd186623ab2cc2809ea5992fd2fcaac362eb1d60`. Rebase conflicts involved generated files only; they were restored rather than hand-merged and the final five owner directories and PlanUnit index were regenerated. Machine: Nas1. Initial available RAM 15 GB and root disk 503 GB; checks ran serially under the existing local heavy-check lock, checking the 6 GB floor before each step. Fifteen ignored currentness-edition files were copied and their source/destination SHA-256s verified.
+
+Both held families are now **prepared without admission**. All nine remain absent from the unchanged family registry. This is **part 1, not READY**: NUMRULE, shared guard-table proof and final Sol/Astra review remain part 2. Native execution is NOT_RUN. No admission, Decision Log entry, registry append, main push, landing lock, governance reseal, pm-mail or subagent occurred. No new PlanUnit ID was minted.
+
+## Sweep part 1: findings and responses
+
+| Item / blocker | Response and implementation commit | Exact location and verification |
+|---|---|---|
+| Deck 2 3.b / DL-428, prior CV-578 lifecycle conflict | **Fixed** (`c19ffddf8ff2e23b85bcf9c42ad48af8e651265d`). Failed is terminal for exactly six reasons; Cleanup failed stays separate. History opening never restarts work, and new work uses linked investigation lineage. | `Plans/Contracts_V0.md:2631`; `Plans/assistant-chat-design.md:1179`; `scripts/pm_debug_investigation_transitions.py:24`. Run the DDBG checker: all six Failed positives, other-reason negatives, stale before-state/phase, terminal in-place restart, reason and original verification/cleanup cases execute. |
+| Deck 2 3.c / DL-429, prior B4 source/domain/transition hold | **Fixed** (`c19ffddf8ff2e23b85bcf9c42ad48af8e651265d`). Complete approved meanings and fourteen-row table are retained verbatim in MiscPlan. CV-574 maps original manifest/MiscPlan fields to event before/after values and reason. It reuses N2-133's exact five scopes, six statuses and five cleanup results; all eight legal pairs and all approved transitions are bounded. | `Plans/Contracts_V0.md:2052`; `Plans/MiscPlan.md:1329`; `scripts/pm_debug_investigation_transitions.py:69`. The fixture executes 37 positive probe cases and 100 negatives, including scope variants, all source alternatives, never-needed proof, actual removal, detach residue, handoff approval/acceptance/uncertainty, retry count/attempt/ceiling and target safety. |
+| Fixture stale-copy defects found during this sweep | **Fixed** (`c19ffddf8ff2e23b85bcf9c42ad48af8e651265d`). Previous-state negatives now use an edge with another lawful before pair; the stale cleanup-result case uses inspection's two lawful cleanup-pending pairs. The retry-count negative updates its dependent attempt number, and the original retry-count join negative keeps after-count coherent. The ceiling is tested at initiation, before an attempt/body is allocated. | `Plans/debug_investigation_event_fixtures.json:1424`; `scripts/pm_debug_investigation_transitions.py:60`; `scripts/pm-debug-investigation-events.py:226`. Every negative base must pass the same complete candidate gate before its defect is applied. Four retry-request oracles include both permitted retries, unauthorized initiation and exhausted retries. |
+| Eager schema references / history separation | **Fixed** (`c19ffddf8ff2e23b85bcf9c42ad48af8e651265d`). Every definition is checked and every reference resolved, including unvisited branches. Historical original verification bypasses current writer/live-state predicates but checks original identity/body, Storage metadata, original admission and original recipe; withdrawn/forged history refuses. | `scripts/pm_debug_investigation_transitions.py:208`; `scripts/pm-debug-investigation-events.py:108`. The standing runner injects an unresolved unvisited reference; its required result is explicit FAIL/nonzero. Historical positives include retained reader-only replay policy after live state changes. |
+| Current retention prerequisite for the two completed families | **Bound to existing canon** (`c19ffddf8ff2e23b85bcf9c42ad48af8e651265d`), with no new retention choice. The exact G02 names already select RP-OPERATIONAL-2555D@1.0.0 in current main; both contracts bind the original investigation terminal-transition anchor, unchanged 2,555-day TTL, per-Project operational bucket, fail-closed overflow and hold/ref/recovery/backup protections. | CV-574/CV-578 and SP-570; current `Plans/storage-plan.md:17594`. Separate native retention oracles require original-clock continuity, protected cleanup and no unexpired/protected eviction. |
+| Existing review blockers | Latest Sol cycle 3 and Astra 3 report no blocker in the seven already-prepared families. Their two genuine holds are closed above. Prior B1-B3 stay fixed. | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DDBG-sol/REVIEW-cycle3.md` and `REVIEW-astra-3.md`; no additional product choice is stopped. |
+
+DL-428's approved option says: “Add Failed as the ending state for exactly those six reasons and save the specific reason.” The six unchanged machine reasons are `investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.target_unreachable` and `investigation.adapter_unavailable`.
+
+DL-429's approved option says: “Keep the six probe labels and a separate cleanup result. Save each actual change in either value once, with its reason and before/after values.” The owner table also retains whole-lane never-needed proof, no cleaned restart, two retries after the initial attempt, accepted responsibility before another handoff, no retry-ceiling reset, automatic cleanup on replacement, approved durable-fix promotion, target exclusion, recovery snapshots, exact setting restoration and secret scrubbing. Fifteen named technical transition cases split the card's combined retry success/failure row; they add no transition. Initial Planned / Not needed and unchanged observations save no change entry.
+
+The seven existing owner PlanUnits, seven payload definitions and seven complete fixture objects were compared with `dd186623ab` and are unchanged. SP-570's existing seven adoptions preserve their content. Only shared validation coverage needed for the new work is added. Their earlier lane-local retention markers are deliberately preserved under the task's scope; current G02 assignment means this is follow-up integration, not an unanswered Jared choice. The distinct application edition/count bucket and No-project availability remain outside these preserved Project writer drafts; no Project is fabricated.
+
+## Family grades before and after
+
+P=PASS; p=PARTIAL; A=ABSENT; C=CONFLICT. These are authored-contract self-grades, not admission or native proof. Current quotation and file-hash evidence is in `DDBG.self-grade.json`.
+
+| Family suffix | Before (Astra 3) | After sweep part 1 |
+|---|---|---|
+| context_item_added | 10P / 1p retention / 1A membership | Unchanged |
+| context_item_state_changed | 10P / 1p retention / 1A membership | Unchanged |
+| exported | 10P / 1p retention / 1A membership | Unchanged |
+| imported | 10P / 1p retention / 1A membership | Unchanged |
+| started | 10P / 1p retention / 1A membership | Unchanged |
+| target_bound | 10P / 1p retention / 1A membership | Unchanged |
+| verification_recorded | 10P / 1p retention / 1A membership | Unchanged |
+| instrumentation_state_changed | 8P / 3p / 1A; held | 11P / 1A membership; prepared |
+| state_changed | 2C / 2p / 8A; held | 11P / 1A membership; prepared |
+
+Total: **78P / 12p / 16A / 2C → 92P / 7p / 9A / 0C**. The seven remaining PARTIAL cells are their unchanged lane retention bindings. Part-2 proof/tool adoption is still required before the lane can be READY; no overall all-PASS claim is made.
+
+## Newly authored technical bindings and premise checks
+
+- **CV-578 independently authors** `owner.debug.investigation.state_changed@1.0.0`, `reader.debug.investigation.state_changed@1.0.0`, `consumer.debug.investigation.state_changed.context@1.0.0` and `.artifacts@1.0.0`, exact Project/investigation/original-operation identity, SP-286/CV-339 full-value v2 first receipt, SP-278 generic source/CAS with nine-field durable-token definition and transient family checkpoint `none_required`, custody, replay and withdrawal. No sibling admission is reused.
+- **CV-574 preserves its named producer/readers** and newly binds the source fields, previous values, closed original detail schema, exact N2-133 scope enum and DL-429 transition predicates. It independently retains its own SP-286/CV-339/SP-278 adoptions and operating consumers. Original detail/evidence remains in existing instrumentation-lineage custody; no new persistent projection, checkpoint or storage-value family is introduced.
+- **Search scope:** exact-name searches on all tracked live `origin/main` Plans, excluding shards/index/audits/evidence/migration/ledgers. Five current matches for each family; no existing exact named versioned handler/reader found. Reuse existing minima, Chat lifecycle, MiscPlan cleanup, N2-133 scopes, manifest custody, G02 retention and generic Storage prerequisites first. `binding-search.json` pins base, scope, paths and hashes of both archived outputs.
+- **Current premises:** DL-045 still lists both exact families and permits bounded technical bindings; DL-428 resolves the current Chat lifecycle omission; DL-429 explicitly closes the current cleanup/source question and chooses no new lifetime. N2-133 still supplies exactly five scopes. Current G02 lists both exact families; the older DL-075 runtime-artifact retention answer is not repurposed. No premise failed and no new owner question is stopped.
+
+## Verification and practical limits
+
+Final whole-checker regression: **PASS, 187 probes, 0 failures**. All nine families have current-writer reader-only-policy negatives, encoded Project partitions, unchanged caller-semantic digest versus Storage-assigned metadata probes, SP-337 body requirements and transient-checkpoint assertions. The two new families additionally cover 15 lifecycle positives and all new transition/source/proof/refusal cases above. Unknown/missing fields and wrong versions fail. Wrong boolean forms (`"false"`, `"0"`, null, arrays, objects) are rejected for new detail/source inputs; no new formatted timestamp field or anchored identifier regex is introduced.
+
+| Final command | Exit | Parsed result |
+|---|---:|---|
+| `index-generate` | 0 | pass |
+| `shard-check` | 0 | pass |
+| `index-validate` | 0 | pass |
+| `static-check` | 0 | PASS |
+| `standing-checks` | 0 | PASS |
+| `diff-check` | 0 | clean |
+
+Generated changes are confined to the five edited owners (`contracts_v0`, `storage-plan`, `automated_testing_system`, `assistant-chat-design`, `miscplan`) and `.plan_index`; no unrelated owner shard changes. Index generation's normal clock metadata is regenerated. No test file, ignore rule, event-family registry, Spec Lock, auto-decision, governance evidence or frozen validator changes. The required memory files named in the shared brief do not exist at their Nas1 paths; the on-disk project rules, lane allocation, currentness requirement and full briefs were followed directly.
+
+Static source/detail/proof values are explicit projections, never evidence of actual authenticated reads or an executed cleanup. Each new family has authored native first-receipt/crash, body/detail externalization, original source/proof/digest verification, complete obligation continuity, target exclusion, exact cleanup/detach, historical read, source-generation/CAS, permission/deletion, retention and withdrawal/rebuild obligations. Native execution remains NOT_RUN. The aggregate landing/governance checks and unrelated shared-runtime materialization checker are outside this branch-preparation task and were not rerun.
+
+## Check 11 fixture status and Part 2 items
+
+| Surface | Part-1 result | Remaining proof |
+|---|---|---|
+| Each negative starting candidate | Complete candidate-gate validation before mutation; source/attempt copies repaired above | Shared tool must prove each individual predicate and schema clause; passing the base alone is not that proof. |
+| Retry ceiling | Dedicated typed initiation request, with no hypothetical after-state or allocated attempt | Adopt shared guard table and prove the exact authorization/count predicates. |
+| Schema/edge and source-join defenses | Actual negative inputs and expected refusal paths execute through the whole checker | Inventory per-field/conditional duplicates precisely; no unrelated guard set or whole-keyword cut is claimed. |
+
+1. **NUMRULE — part 2.** Adopt CV-1100/1101, SP-1100/1101 and the shared helper after it passes. Exact locations: `scripts/pm-debug-investigation-events.py` `semantic_digest` and `identity` (`json.dumps` currently supplies bounded static vectors, not native RFC 8785 proof); exported/imported count fields; and new detail retry/attempt inputs and body sizing in `scripts/pm_debug_investigation_transitions.py`. Add the shared alternative-spelling/range and original write-time recipe/history cases. No local number serializer or extra numeric cap was invented; the two-retry/three-attempt limits come directly from DL-429.
+2. **Guard tables/shared isolation — part 2.** Restructure `candidate_refusal`, `refusal`, `retained_refusal`, `lifecycle_refusal`, `instrumentation_refusal`, `cleanup_retry_refusal`, reference resolution and each applicable schema assertion into named predicate tables and run the approved shared tool. Prove the whole lane, site by site, including real duplicates and every nonduplicate negative. No local guard-proof script or table refactor was added in part 1.
+3. **Seven unchanged retention adoptions — integration follow-up.** Reconcile their explicit PENDING_RETENTION_DECISION text with the already-landed G02 assignment when that scope is assigned; no new retention choice is requested. The existing application/No-project edition also retains its separately documented owner scope reconciliation; this two-decision task neither admits it nor changes the seven preserved contracts.
+4. **Final review — part 2.** Sol and Astra review once after the two shared tools are adopted. This report does not reuse the earlier seven-family review as approval of the new two-family work.
+
+## Evidence paths and SHA-256
+
+All final artifacts below are retained under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/`.
+
+| Absolute path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/binding-search.json` | `c31f1dd5bf21b9276bc608968248d41ff6c8ff4c80f2dfc9168505151bf8c947` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/debug.investigation.state_changed.current-search.txt` | `ac061e67b7196ac0bdb040757c0153a9a9e2a9ec1a9601b36c268777ef0c3ad1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/debug.investigation.instrumentation_state_changed.current-search.txt` | `c65eaa3bc1bd455bad6fc19d92e0f71de1f8d66e741a81d969cba518ca1634a9` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/currentness-sha256.json` | `b0c90c8787154ebc708d8022ff8d13f99a5885e437d65b1037961f77768cfa37` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/shard-generate.json` | `d7cfdf85905b1af45d5817cf77df09f8ece650942ade45163f90dd6f61b3ad68` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/index-generate.json` | `c2d45748c19cec7011e4911c872920861c377af644b9dfd33b3e52aa11d08a1f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/shard-check.json` | `a715ce384c99d89a8b5576fb6a07f92786372746197d08d9bad57c619fec35c1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/index-validate.json` | `a082d4eabbbf34faa07d44c9b330914647e123a9175a4db8e31b8e67651dfd56` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/static-check.json` | `54491411571cf5695eae450f4bed6907da1f83f5c00945c4336c3a30e7c7ef61` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/standing-checks.json` | `744e61b8ebaa464b319d44f30abdd67036edd1dff82d5d601b4d48d7ff09fd60` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/pipeline-exits.json` | `cc9dd40cd68376664f6b5398f3924201221f8c7f0dcb1fbd435bba689d221390` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/diff-check.json` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/sweep-p1/scope-audit.json` | `cf241006848dcc64440dd764629e6f21142f41a95bcb111ab60d1dd9863b0810` |
+
+## Historical lane report through dd186623ab
+
+The following is preserved pre-sweep lineage; its holds, questions, grades and old line numbers are superseded by the sweep section above.
+
 # DDBG — independent investigation event contracts
 
 Branch: `plans/ea-w2-debug-20261104`. Base: `be4766513f` (fetched origin/main). Initial VM memory check: available 16 GiB. Round 2 preflight: available 18 GiB, root disk 119 GB free. Current implementation: `d77cc98f8f7ae9594efd876bc7e02f733319a085`. Round 3 preflight: available 14 GiB, root disk 109 GB free. Native execution: NOT_RUN. No admission record, event-registry append, Decision Log edit, governance reseal, main push, landing lock, mailbox message or subagent.
