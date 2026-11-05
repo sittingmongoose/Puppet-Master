@@ -26,14 +26,19 @@ from __future__ import annotations
 
 import argparse
 import copy
+import datetime
 import importlib.util
 import json
+import math
 import re
+import subprocess
 import sys
+import tempfile
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
+from urllib.parse import urlparse
 
 import yaml
 
@@ -131,6 +136,7 @@ SUBJECT_TOKEN_RE = re.compile(r"(cmd\.[a-z0-9_.]*[a-z0-9_])((?:/[a-z0-9_]+)*)")
 CONTINUATION_RE = re.compile(r"^(?:\s*,\s*(?:and\s+)?|\s+and\s+)([a-z][a-z0-9_]*)\b")
 
 CODE_NAMES = {
+    "C00": "C00_internal_error",
     "C01": "C01_overlay_codes",
     "C02": "C02_expected_set",
     "C03": "C03_placement",
@@ -814,13 +820,23 @@ def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any]) -> bool:
 
 CONSTRAINT_NUMBER_KEYS = ("minimum", "maximum")
 CONSTRAINT_COUNT_KEYS = ("min_length", "max_length", "min_items", "max_items")
+# Which side each bound constrains: a local value may move a "high" bound only down and a "low"
+# bound only up (DESIGN 4.3 narrowing); any other move widens the inherited constraint.
+BOUND_DIRECTIONS = {
+    "minimum": "low", "min_length": "low", "min_items": "low",
+    "maximum": "high", "max_length": "high", "max_items": "high",
+}
 
 
 def constraint_value_ok(key: str, value: Any) -> bool:
-    """A constraint value is well-formed enough to apply: numeric bounds are numbers, lengths
-    and counts are non-negative integers, booleans are booleans, and a pattern compiles."""
+    """A constraint value is well-formed enough to apply: numeric bounds are finite numbers,
+    lengths and counts are non-negative integers, booleans are booleans, and a pattern compiles."""
     if key in CONSTRAINT_NUMBER_KEYS:
-        return isinstance(value, (int, float)) and not isinstance(value, bool)
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            return False
+        # An int is always finite (and may exceed float range, which math.isfinite cannot take);
+        # a float bound must be finite: NaN and infinity are never usable bounds.
+        return not isinstance(value, float) or math.isfinite(value)
     if key in CONSTRAINT_COUNT_KEYS:
         return isinstance(value, int) and not isinstance(value, bool) and value >= 0
     if key == "unique_items":
@@ -830,23 +846,96 @@ def constraint_value_ok(key: str, value: Any) -> bool:
             return False
         try:
             re.compile(value)
-        except re.error:
+        except Exception:  # noqa: BLE001 - re.error, OverflowError, RecursionError, MemoryError, ...
             return False
         return True
     return True
 
 
+RFC3339_UTC_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?Z")
+
+
+def rfc3339_utc_ok(value: str) -> bool:
+    """DESIGN 4.2: a timestamp is RFC 3339 UTC, ending in Z."""
+    match = RFC3339_UTC_RE.fullmatch(value)
+    if match is None:
+        return False
+    year, month, day, hour, minute, second = (int(g) for g in match.groups())
+    try:
+        datetime.date(year, month, day)
+    except ValueError:
+        return False
+    return hour <= 23 and minute <= 59 and second <= 60  # second 60: the RFC 3339 leap second
+
+
+def absolute_url_ok(value: str) -> bool:
+    """DESIGN 4.2: a url is absolute — it carries a scheme and a host; normalization is UCC-082's."""
+    try:
+        parsed = urlparse(value)
+    except ValueError:
+        return False
+    return bool(parsed.scheme) and bool(parsed.hostname)
+
+
+def normalized_absolute_path_ok(value: str) -> bool:
+    """DESIGN 4.2: a path is absolute and normalized — no ``..``, no ``.`` and no empty segments;
+    FileSafe owns whatever further normalization means."""
+    if not value.startswith("/"):
+        return False
+    return all(segment not in ("", ".", "..") for segment in value.split("/")[1:])
+
+
+def merged_constraints(spec: dict[str, Any], inherited: dict[str, Any] | None) -> dict[str, Any]:
+    """Inherited and local constraints applied conjunctively (DESIGN 4.3: a local constraint may
+    narrow an inherited common-field constraint but never widen or replace it): the effective
+    maximum is the smaller bound, the effective minimum the larger one, and the same for lengths
+    and counts; every applicable pattern must match; uniqueness demanded by either binds.
+    Malformed values are dropped here (C05 reports them), so no invalid bound is ever applied."""
+    base: dict[str, Any] = inherited.get("constraints") if isinstance(inherited, dict) and isinstance(inherited.get("constraints"), dict) else {}
+    local: dict[str, Any] = spec.get("constraints") if isinstance(spec.get("constraints"), dict) else {}
+    merged: dict[str, Any] = {}
+    for key in set(base) | set(local):
+        inh, loc = base.get(key), local.get(key)
+        if key in BOUND_DIRECTIONS:
+            valid = [v for v in (inh, loc) if constraint_value_ok(key, v)]
+            if valid:
+                merged[key] = min(valid) if BOUND_DIRECTIONS[key] == "high" else max(valid)
+        elif key == "unique_items":
+            merged[key] = inh is True or loc is True
+        elif key == "pattern":
+            patterns = [p for p in (inh, loc) if isinstance(p, str)]
+            if patterns:
+                merged[key] = patterns if len(patterns) > 1 else patterns[0]
+        else:
+            merged[key] = loc if loc is not None else inh
+    return merged
+
+
+def constraint_widening(spec: dict[str, Any], inherited: dict[str, Any]) -> list[str]:
+    """Local bounds looser than the inherited ones: DESIGN 4.3 permits narrowing a common
+    optional field's constraints only, so a wider bound is itself a finding."""
+    local: dict[str, Any] = spec.get("constraints") if isinstance(spec.get("constraints"), dict) else {}
+    base: dict[str, Any] = inherited.get("constraints") if isinstance(inherited.get("constraints"), dict) else {}
+    widened = []
+    for key, direction in sorted(BOUND_DIRECTIONS.items()):
+        if key not in local or key not in base:
+            continue
+        loc, inh = local[key], base[key]
+        if not (constraint_value_ok(key, loc) and constraint_value_ok(key, inh)):
+            continue  # invalid values are already C05 findings
+        if (direction == "high" and loc > inh) or (direction == "low" and loc < inh):
+            widened.append(f"{key}={loc!r} loosens inherited {key}={inh!r}")
+    return widened
+
+
 def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | None = None) -> bool:
     """A literal default is valid against its spec, recursively: list item specs, required
-    object children, primitive semantics of DESIGN 4.2, and applicable constraints, merged
-    with the constraints a common optional field inherits from UCC-230. Malformed constraint
-    values are skipped here (C05 reports them), so this never compares against invalid bounds."""
+    object children, primitive semantics of DESIGN 4.2, and applicable constraints, applied
+    conjunctively with the constraints a common optional field inherits from UCC-230. Malformed
+    constraint values are skipped here (C05 reports them), so this never compares against
+    invalid bounds."""
     kind = spec.get("type")
-    constraints: dict[str, Any] = {}
-    if isinstance(inherited, dict) and isinstance(inherited.get("constraints"), dict):
-        constraints.update(inherited["constraints"])
-    if isinstance(spec.get("constraints"), dict):
-        constraints.update(spec["constraints"])
+    constraints = merged_constraints(spec, inherited)
 
     def bound(key: str) -> Any | None:
         candidate = constraints.get(key)
@@ -876,12 +965,13 @@ def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | Non
         if max_length is not None and len(value) > max_length:
             return False
         pattern = constraints.get("pattern")
-        if isinstance(pattern, str):
+        patterns = pattern if isinstance(pattern, list) else [pattern] if isinstance(pattern, str) else []
+        for one in patterns:
             try:
-                if re.fullmatch(pattern, value) is None:
+                if re.fullmatch(one, value) is None:
                     return False
-            except re.error:
-                pass  # malformed pattern: C05 reports it; never raise here
+            except Exception:  # noqa: BLE001 - malformed pattern: C05 reports it; never raise here
+                pass
         if kind == "id":
             # DESIGN 4.2: string, 1..256 characters, no whitespace.
             if not value or len(value) > 256 or re.search(r"\s", value):
@@ -892,6 +982,15 @@ def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | Non
                 return False
         elif kind == "sha256":
             if re.fullmatch(r"[0-9a-f]{64}", value) is None:
+                return False
+        elif kind == "timestamp":
+            if not rfc3339_utc_ok(value):
+                return False
+        elif kind == "url":
+            if not absolute_url_ok(value):
+                return False
+        elif kind == "path":
+            if not normalized_absolute_path_ok(value):
                 return False
         return True
     if kind == "list":
@@ -970,6 +1069,12 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
             for key in sorted(set(constraints) & set(CONSTRAINT_KEYS)):
                 if not constraint_value_ok(key, constraints[key]):
                     rep.add("C05", "constraint_value_invalid", field=name, detail=f"{key}={constraints[key]!r}", **where)
+            # Bound sanity: an inverted range (lower bound above the upper one) is unusable.
+            for low_key, high_key in (("minimum", "maximum"), ("min_length", "max_length"), ("min_items", "max_items")):
+                low, high = constraints.get(low_key), constraints.get(high_key)
+                if constraint_value_ok(low_key, low) and constraint_value_ok(high_key, high) and low > high:
+                    rep.add("C05", "constraint_value_invalid", field=name,
+                            detail=f"{low_key}={low!r} above {high_key}={high!r}", **where)
     if not item:
         for key in CONDITIONAL_KEYS:
             if key not in spec:
@@ -991,6 +1096,13 @@ def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], re
         check_type_spec(ctx, spec, where, name, results, item=False, siblings=siblings)
         if not isinstance(spec, dict):
             continue
+        # A restated common optional field keeps the constraints UCC-230 gives it and may only
+        # narrow them (DESIGN 4.3): a local bound looser than the inherited one is itself a finding.
+        inherited = ctx.common_optional.get(str(raw_name)) if inherited_common and not prefix else None
+        if isinstance(inherited, dict):
+            widened = constraint_widening(spec, inherited)
+            if widened:
+                rep.add("C05", "constraint_widens_inherited", field=name, detail="; ".join(widened), **where)
         # C06 defaults
         if not isinstance(spec.get("required"), bool):
             rep.add("C06", "required_missing_or_not_boolean", field=name, **where)
@@ -1001,8 +1113,6 @@ def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], re
             if spec.get("required") is True and default != "none":
                 rep.add("C06", "required_field_has_literal_default", field=name, detail=repr(default), **where)
             elif default != "none" and spec.get("type") in TYPE_VOCABULARY:
-                # A restated common optional field keeps the constraints UCC-230 gives it.
-                inherited = ctx.common_optional.get(str(raw_name)) if inherited_common and not prefix else None
                 if not literal_ok(spec, default, inherited):
                     rep.add("C06", "literal_default_type_mismatch", field=name, detail=repr(default), **where)
         # C11 provenance
@@ -1193,11 +1303,15 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
             else:
                 # DESIGN 4.4 reserves local_projection for route/open or view state without an
                 # owner result, and CV-333 fixes the response kind by the actual owner contract,
-                # never chosen to evade durable dispatch: a catalogued domain_action, or a command
-                # whose owner_request names an owner operation, cannot be a local-only projection.
+                # never chosen to evade durable dispatch: a domain_action — whether its kind is
+                # stated by the definition itself or by a catalog kind cell (most catalogued
+                # commands have none) — or a command whose owner_request names an owner operation
+                # cannot be a local-only projection.
                 catalogued = {k for k, _ in ctx.catalog_kinds.get(cmd, set())}
                 owner_request = definition.get("owner_request")
                 reasons = []
+                if kind == "domain_action":
+                    reasons.append(f"definition command_kind {kind}")
                 if catalogued == {"domain_action"}:
                     reasons.append(f"catalog command_kind {sorted(catalogued)[0]}")
                 if owner_request is not None and owner_request != "none":
@@ -1287,37 +1401,63 @@ def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
                 rep.add("C14", "definitions_not_list", **base)
                 continue
             for definition in definitions:
-                check_definition(ctx, block, owner_unit, definition, results, defined)
+                try:
+                    check_definition(ctx, block, owner_unit, definition, results, defined)
+                except ParseError:
+                    raise
+                except Exception as exc:  # noqa: BLE001 - a deterministic finding, never a traceback
+                    cmd = definition.get("command_id") if isinstance(definition, dict) else None
+                    rep.add("C00", "internal_error", doc, command_id=str(cmd) if cmd else "", unit=owner_unit,
+                            detail=internal_detail("check_definition", exc))
                 if isinstance(definition, dict) and isinstance(definition.get("command_id"), str) and unit is not None:
                     if definition["command_id"] not in tokens:
                         rep.add("C03", "command_not_in_owner_unit_preserved_exact_tokens", command_id=definition["command_id"], **base)
     return defined
 
 
+def internal_detail(check: str, exc: BaseException) -> str:
+    """A deterministic one-line description of an unexpected exception inside a check."""
+    return f"{check}: {type(exc).__name__}: {' '.join(str(exc).split())}"
+
+
 def run_check(corpus: Corpus) -> dict[str, Any]:
     report = Report()
     ctx = load_context(corpus, report)
-    check_map(ctx)
-    compute_expected(ctx)
-    defined = check_blocks(ctx)
+    for phase in (check_map, compute_expected):
+        try:
+            phase(ctx)
+        except ParseError:
+            raise
+        except Exception as exc:  # noqa: BLE001 - a deterministic finding, never a traceback
+            report.add("C00", "internal_error", CATALOG, detail=internal_detail(phase.__name__, exc))
+    defined: dict[str, list[tuple[str, str]]] = {}
+    try:
+        defined = check_blocks(ctx)
+    except ParseError:
+        raise
+    except Exception as exc:  # noqa: BLE001 - a deterministic finding, never a traceback
+        report.add("C00", "internal_error", "", detail=internal_detail("check_blocks", exc))
 
     # C02 coverage.
     missing_by_unit: dict[str, int] = defaultdict(int)
-    for cmd in sorted(ctx.expected):
-        places = defined.get(cmd, [])
-        target = route_for(ctx, cmd)
-        doc = ctx.owner_units.get(target or "", "")
-        if not places:
-            if cmd in ctx.contested:
-                continue
-            missing_by_unit[target or "unrouted"] += 1
-            report.add("C02", "missing_definition", doc or CATALOG, command_id=cmd, unit=target or "")
-        elif len(places) > 1:
-            report.add("C02", "duplicate_definition", CATALOG, command_id=cmd,
-                       detail="; ".join(f"{p}#{u}" for p, u in sorted(places)))
-    for cmd in sorted(defined):
-        if cmd not in ctx.expected and cmd not in ctx.non_def and cmd not in ctx.excluded:
-            report.add("C02", "unexpected_definition", defined[cmd][0][0], command_id=cmd, unit=defined[cmd][0][1])
+    try:
+        for cmd in sorted(ctx.expected):
+            places = defined.get(cmd, [])
+            target = route_for(ctx, cmd)
+            doc = ctx.owner_units.get(target or "", "")
+            if not places:
+                if cmd in ctx.contested:
+                    continue
+                missing_by_unit[target or "unrouted"] += 1
+                report.add("C02", "missing_definition", doc or CATALOG, command_id=cmd, unit=target or "")
+            elif len(places) > 1:
+                report.add("C02", "duplicate_definition", CATALOG, command_id=cmd,
+                           detail="; ".join(f"{p}#{u}" for p, u in sorted(places)))
+        for cmd in sorted(defined):
+            if cmd not in ctx.expected and cmd not in ctx.non_def and cmd not in ctx.excluded:
+                report.add("C02", "unexpected_definition", defined[cmd][0][0], command_id=cmd, unit=defined[cmd][0][1])
+    except Exception as exc:  # noqa: BLE001 - a deterministic finding, never a traceback
+        report.add("C00", "internal_error", CATALOG, detail=internal_detail("coverage", exc))
 
     findings = sorted(report.findings, key=Finding.sort_key)
     errors = [f.as_dict() for f in findings if f.code not in WARNING_CODES]
@@ -1693,13 +1833,23 @@ def _defs(fx: Fixture, cmd: str) -> dict[str, Any]:
     return fx.definitions[cmd]
 
 
-def build_cases() -> list[tuple[str, Callable[[Fixture], None], int, set[str], set[str]]]:
-    """(name, mutation, expected exit, expected error codes, expected warning codes)."""
+def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[str], set[str]]],
+                           list[tuple[str, Callable[[Fixture], None], int, set[str], set[str]]]]:
+    """(in-memory cases, CLI cases); each (name, mutation, expected exit, expected error codes,
+    expected warning codes). CLI cases run this script as a subprocess against a temporary Plans
+    directory and additionally require valid JSON on stdout and an empty stderr."""
     cases: list[tuple[str, Callable[[Fixture], None], int, set[str], set[str]]] = []
+    cli_cases: list[tuple[str, Callable[[Fixture], None], int, set[str], set[str]]] = []
 
     def case(name: str, exit_code: int, errors: set[str], warnings: set[str] | None = None):
         def register(fn: Callable[[Fixture], None]) -> Callable[[Fixture], None]:
             cases.append((name, fn, exit_code, errors, warnings or set()))
+            return fn
+        return register
+
+    def cli_case(name: str, exit_code: int, errors: set[str], warnings: set[str] | None = None):
+        def register(fn: Callable[[Fixture], None]) -> Callable[[Fixture], None]:
+            cli_cases.append((name, fn, exit_code, errors, warnings or set()))
             return fn
         return register
 
@@ -2019,12 +2169,125 @@ def build_cases() -> list[tuple[str, Callable[[Fixture], None], int, set[str], s
     def _(fx: Fixture) -> None:
         fx.map_unit_present = False
 
-    return cases
+    # Round-2 fixes: C10 without a catalog kind cell, conjunctive inherited constraints,
+    # exception-free pattern handling, primitive defaults and bound sanity.
+
+    @case("fail C10: domain_action definition without a catalog kind cell declares local_projection", 1, {"C10"})
+    def _(fx: Fixture) -> None:
+        assert ("cmd.runtime.approve", "domain_action") not in fx.catalog_kinds
+        d = _defs(fx, "cmd.runtime.approve")
+        d["response_kind"] = "local_projection"
+        d["result"]["owner_result"] = "none"
+
+    @case("fail C05/C06: local max_length cannot replace the inherited idempotency_key maximum 256", 1, {"C05", "C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["idempotency_key"] = {
+            "type": "string", "required": False, "default": "x" * 300,
+            "constraints": {"max_length": 512}, "provenance": "canon", "source": "fixture"}
+
+    @case("pass: local constraint narrows the inherited idempotency_key maximum", 0, set())
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["idempotency_key"] = {
+            "type": "string", "required": False, "default": "x" * 128,
+            "constraints": {"max_length": 200}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C05: inverted numeric range (minimum above maximum)", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["retry_count"] = {
+            "type": "integer", "required": False, "default": "none",
+            "constraints": {"minimum": 5, "maximum": 3}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C05: inverted length range (min_length above max_length)", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["slug"] = {
+            "type": "string", "required": False, "default": "none",
+            "constraints": {"min_length": 10, "max_length": 4}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C05: inverted item-count range (min_items above max_items)", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["extra_refs"] = {
+            "type": "list", "item": {"type": "ref"}, "required": False, "default": "none",
+            "constraints": {"min_items": 5, "max_items": 2}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C05: NaN numeric bound", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["retry_count"] = {
+            "type": "integer", "required": False, "default": "none",
+            "constraints": {"minimum": float("nan")}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C05: infinite numeric bound", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["retry_count"] = {
+            "type": "integer", "required": False, "default": "none",
+            "constraints": {"maximum": float("inf")}, "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: timestamp default is not RFC 3339 UTC", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["opened_at"] = {
+            "type": "timestamp", "required": False, "default": "not a timestamp", "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: timestamp default is not UTC (no trailing Z)", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["opened_at"] = {
+            "type": "timestamp", "required": False, "default": "2026-11-04T12:34:56+01:00",
+            "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: url default is not an absolute URL", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["docs_link"] = {
+            "type": "url", "required": False, "default": "relative/path", "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: path default is not an absolute path", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["manifest_path"] = {
+            "type": "path", "required": False, "default": "relative/path", "provenance": "canon", "source": "fixture"}
+
+    @case("fail C06: path default contains a dot-dot segment", 1, {"C06"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["manifest_path"] = {
+            "type": "path", "required": False, "default": "/data/../etc/passwd", "provenance": "canon", "source": "fixture"}
+
+    @case("pass: valid timestamp, url and path literal defaults", 0, set())
+    def _(fx: Fixture) -> None:
+        args = _defs(fx, "cmd.docker.image.tag")["args"]
+        args["opened_at"] = {"type": "timestamp", "required": False, "default": "2026-11-04T12:34:56Z",
+                             "provenance": "canon", "source": "fixture"}
+        args["docs_link"] = {"type": "url", "required": False, "default": "https://example.com/docs",
+                             "provenance": "canon", "source": "fixture"}
+        args["manifest_path"] = {"type": "path", "required": False, "default": "/tmp/manifest.yaml",
+                                 "provenance": "canon", "source": "fixture"}
+
+    @cli_case("cli fail C05: pattern repetition count beyond compile limits (default none)", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["slug"] = {
+            "type": "string", "required": False, "default": "none",
+            "constraints": {"pattern": "a{4294967296}"}, "provenance": "canon", "source": "fixture"}
+
+    @cli_case("cli fail C05: pattern repetition count beyond compile limits (literal default)", 1, {"C05"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["slug"] = {
+            "type": "string", "required": False, "default": "aaa",
+            "constraints": {"pattern": "a{4294967296}"}, "provenance": "canon", "source": "fixture"}
+
+    return cases, cli_cases
+
+
+def run_cli_check(plans_files: dict[str, str]) -> tuple[int, str, str]:
+    """Run this script as the CLI on an isolated temporary Plans directory (--plans-root --json)."""
+    with tempfile.TemporaryDirectory(prefix="pm-command-payload-defs-") as tmp:
+        root = Path(tmp)
+        for rel, text in plans_files.items():
+            dest = root / rel[len("Plans/"):]
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_text(text, encoding="utf-8")
+        proc = subprocess.run([sys.executable, str(Path(__file__).resolve()), "--plans-root", str(root), "--json"],
+                              capture_output=True, text=True, check=False)
+        return proc.returncode, proc.stdout, proc.stderr
 
 
 def self_test() -> int:
     failures = 0
-    cases = build_cases()
+    cases, cli_cases = build_cases()
     for name, mutate, exit_expected, errors_expected, warnings_expected in cases:
         fx = Fixture()
         mutate(fx)
@@ -2047,7 +2310,28 @@ def self_test() -> int:
             if result is not None:
                 for row in result["errors"] + result["warnings"]:
                     print("     ", json.dumps(row, sort_keys=True))
-    print(f"self-test: {len(cases) - failures}/{len(cases)} cases passed")
+    for name, mutate, exit_expected, errors_expected, warnings_expected in cli_cases:
+        fx = Fixture()
+        mutate(fx)
+        exit_code, stdout, stderr = run_cli_check(fx.files())
+        ok = exit_code == exit_expected and stderr == ""
+        result: dict[str, Any] | None = None
+        try:
+            result = json.loads(stdout)
+        except json.JSONDecodeError:
+            ok = False
+        if ok and exit_code in (0, 1):
+            errors = {row["code"][:3] for row in result["errors"]}
+            warnings = {row["code"][:3] for row in result["warnings"]}
+            ok = result.get("status") == ("fail" if exit_expected == 1 else "pass") and errors == errors_expected and warnings == warnings_expected
+        status = "ok" if ok else "FAIL"
+        print(f"{status} {name}")
+        if not ok:
+            failures += 1
+            print(f"     expected exit={exit_expected} errors={sorted(errors_expected)} warnings={sorted(warnings_expected)}; "
+                  f"got exit={exit_code} stderr={stderr!r} stdout={stdout[:500]!r}")
+    total = len(cases) + len(cli_cases)
+    print(f"self-test: {total - failures}/{total} cases passed")
     return 0 if failures == 0 else 1
 
 
@@ -2072,6 +2356,13 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps({"check": "command-payload-defs", "status": "error", "error": str(exc)}, indent=2, sort_keys=True))
         else:
             print(f"command-payload-defs: error: {exc}", file=sys.stderr)
+        return 2
+    except Exception as exc:  # noqa: BLE001 - the machine-readable report must always print
+        if args.json:
+            print(json.dumps({"check": "command-payload-defs", "status": "error",
+                              "error": f"{type(exc).__name__}: {exc}"}, indent=2, sort_keys=True))
+        else:
+            print(f"command-payload-defs: error: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 2
     print(json.dumps(result, indent=2, sort_keys=True) if args.json else render_text(result))
     return 1 if result["status"] == "fail" else 0
