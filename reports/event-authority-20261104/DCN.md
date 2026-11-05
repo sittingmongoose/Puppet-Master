@@ -18,14 +18,14 @@ Base `origin/main`: `16acf7594a3fe8559af89491b895f440b314b99e`. Branch: `plans/e
 | `memory.gist_state_changed` | Prepared, no admission; **6 PASS / 5 PARTIAL / membership ABSENT** | `AMS-130` / `CV-785` / `SP-765` |
 | `browser.session.navigated` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-405; Plans/storage-plan.md:1309 |
 | `browser.session.resized` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-405; Plans/storage-plan.md:1309 |
-| `memory.gist.verification_requested` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3179 |
-| `memory.gist.verified` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3179 |
-| `memory.gist.verification_failed` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3179 |
-| `memory.gist.updated` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3179 |
-| `memory.gist.pinned` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3179 |
-| `memory.gist.unpinned` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3179 |
-| `memory.gist.discarded` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3179 |
-| `dashboard.widget_added` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-180; Plans/UI_Command_Catalog.md:16973 |
+| `memory.gist.verification_requested` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3180 |
+| `memory.gist.verified` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3180 |
+| `memory.gist.verification_failed` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3180 |
+| `memory.gist.updated` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3180 |
+| `memory.gist.pinned` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3180 |
+| `memory.gist.unpinned` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3180 |
+| `memory.gist.discarded` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-407; Plans/assistant-memory-subsystem.md:3180 |
+| `dashboard.widget_added` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-180; Plans/UI_Command_Catalog.md:16975 |
 | `coordination.debug_mirror_exported` | `RECLASSIFY_TO_EXCLUDED` in row file, census and worker union input | DL-270; Plans/storage-plan.md:553 |
 
 Four exclusions hold independently; the seven memory exclusions remain conditional pending the complete surviving contract and mandatory sweep. Exclusions preserve every legacy bucket, category and cohort pin and claim no denominator removal. `individual-disposition/LEDGER_WRITE_RULE.md` reserves the canonical union merge for the parent. This worker updates the 11 exact `rows/ROW_*.json` files and census lines and supplies `individual-disposition/deepen/DCN/LEDGER.jsonl`; the canonical union stays byte-identical to the base. The application JSON records all original/final row hashes and the census hashes. Widget/mirror exclusions overlap DS’s unlanded records: reconcile by exact name and current citation, never double-count them.

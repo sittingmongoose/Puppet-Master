@@ -82,8 +82,8 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -102,15 +102,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24501,
-              "line_end": 24501,
+              "line_start": 24517,
+              "line_end": 24517,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24517,
-              "line_end": 24517,
+              "line_start": 24533,
+              "line_end": 24533,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -129,15 +129,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-244",
-              "line_start": 13392,
-              "line_end": 13392,
+              "line_start": 13393,
+              "line_end": 13393,
               "quote": "both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -156,15 +156,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24487,
-              "line_end": 24487,
+              "line_start": 24503,
+              "line_end": 24503,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24517,
-              "line_end": 24517,
+              "line_start": 24533,
+              "line_end": 24533,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -183,15 +183,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24480,
-              "line_end": 24480,
+              "line_start": 24496,
+              "line_end": 24496,
               "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24517,
-              "line_end": 24517,
+              "line_start": 24533,
+              "line_end": 24533,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
@@ -217,16 +217,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-760",
-              "line_start": 29502,
-              "line_end": 29502,
-              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on"
+              "line_start": 29611,
+              "line_end": 29611,
+              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-760",
-              "line_start": 29503,
-              "line_end": 29503,
-              "quote": "  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name;"
+              "line_start": 29612,
+              "line_end": 29612,
+              "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
           "prior": {
@@ -244,15 +244,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-760",
-              "line_start": 29509,
-              "line_end": 29509,
+              "line_start": 29620,
+              "line_end": 29620,
               "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24517,
-              "line_end": 24517,
+              "line_start": 24533,
+              "line_end": 24533,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -271,15 +271,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-244",
-              "line_start": 13376,
-              "line_end": 13376,
+              "line_start": 13377,
+              "line_end": 13377,
               "quote": "then records its creation. revision_before=0, revision_after=1; previous class, takeover and lifecycle plus before_record_ref"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -298,15 +298,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-760",
-              "line_start": 29531,
-              "line_end": 29531,
+              "line_start": 29642,
+              "line_end": 29642,
               "quote": "not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-760",
-              "line_start": 29542,
-              "line_end": 29542,
+              "line_start": 29653,
+              "line_end": 29653,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -325,15 +325,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24509,
-              "line_end": 24509,
+              "line_start": 24525,
+              "line_end": 24525,
               "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24517,
-              "line_end": 24517,
+              "line_start": 24533,
+              "line_end": 24533,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -352,15 +352,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7242,
-              "line_end": 7242,
+              "line_start": 7248,
+              "line_end": 7248,
               "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -445,15 +445,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-245",
-              "line_start": 13480,
-              "line_end": 13480,
+              "line_start": 13481,
+              "line_end": 13481,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.state_changed@1.0.0, prepared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -472,15 +472,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24595,
-              "line_end": 24595,
+              "line_start": 24611,
+              "line_end": 24611,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24611,
-              "line_end": 24611,
+              "line_start": 24627,
+              "line_end": 24627,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -499,15 +499,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-245",
-              "line_start": 13502,
-              "line_end": 13502,
+              "line_start": 13504,
+              "line_end": 13504,
               "quote": "both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -526,15 +526,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24581,
-              "line_end": 24581,
+              "line_start": 24597,
+              "line_end": 24597,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24611,
-              "line_end": 24611,
+              "line_start": 24627,
+              "line_end": 24627,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -553,15 +553,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24574,
-              "line_end": 24574,
+              "line_start": 24590,
+              "line_end": 24590,
               "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24611,
-              "line_end": 24611,
+              "line_start": 24627,
+              "line_end": 24627,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
@@ -587,16 +587,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29608,
-              "line_end": 29608,
-              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on"
+              "line_start": 29719,
+              "line_end": 29719,
+              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29609,
-              "line_end": 29609,
-              "quote": "  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name;"
+              "line_start": 29720,
+              "line_end": 29720,
+              "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
           "prior": {
@@ -614,15 +614,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29615,
-              "line_end": 29615,
+              "line_start": 29728,
+              "line_end": 29728,
               "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24611,
-              "line_end": 24611,
+              "line_start": 24627,
+              "line_end": 24627,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -641,15 +641,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-245",
-              "line_start": 13505,
-              "line_end": 13505,
+              "line_start": 13507,
+              "line_end": 13507,
               "quote": "before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -668,15 +668,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29637,
-              "line_end": 29637,
+              "line_start": 29750,
+              "line_end": 29750,
               "quote": "not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29648,
-              "line_end": 29648,
+              "line_start": 29761,
+              "line_end": 29761,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -695,15 +695,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24603,
-              "line_end": 24603,
+              "line_start": 24619,
+              "line_end": 24619,
               "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24611,
-              "line_end": 24611,
+              "line_start": 24627,
+              "line_end": 24627,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -722,15 +722,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7242,
-              "line_end": 7242,
+              "line_start": 7248,
+              "line_end": 7248,
               "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -815,15 +815,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-246",
-              "line_start": 13590,
-              "line_end": 13590,
+              "line_start": 13592,
+              "line_end": 13592,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.closed@1.0.0, prepared without"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -842,15 +842,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24689,
-              "line_end": 24689,
+              "line_start": 24705,
+              "line_end": 24705,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24705,
-              "line_end": 24705,
+              "line_start": 24721,
+              "line_end": 24721,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -869,15 +869,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-246",
-              "line_start": 13590,
-              "line_end": 13590,
+              "line_start": 13592,
+              "line_end": 13592,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.closed@1.0.0, prepared without"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -896,15 +896,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24675,
-              "line_end": 24675,
+              "line_start": 24691,
+              "line_end": 24691,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24705,
-              "line_end": 24705,
+              "line_start": 24721,
+              "line_end": 24721,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -923,15 +923,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24668,
-              "line_end": 24668,
+              "line_start": 24684,
+              "line_end": 24684,
               "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24705,
-              "line_end": 24705,
+              "line_start": 24721,
+              "line_end": 24721,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
@@ -957,16 +957,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 29714,
-              "line_end": 29714,
-              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on"
+              "line_start": 29827,
+              "line_end": 29827,
+              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 29715,
-              "line_end": 29715,
-              "quote": "  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name;"
+              "line_start": 29828,
+              "line_end": 29828,
+              "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
           "prior": {
@@ -984,15 +984,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 29721,
-              "line_end": 29721,
+              "line_start": 29836,
+              "line_end": 29836,
               "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24705,
-              "line_end": 24705,
+              "line_start": 24721,
+              "line_end": 24721,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1011,15 +1011,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-246",
-              "line_start": 13613,
-              "line_end": 13613,
+              "line_start": 13616,
+              "line_end": 13616,
               "quote": "before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1038,15 +1038,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29858,
+              "line_end": 29858,
               "quote": "not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 29754,
-              "line_end": 29754,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -1065,15 +1065,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24697,
-              "line_end": 24697,
+              "line_start": 24713,
+              "line_end": 24713,
               "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24705,
-              "line_end": 24705,
+              "line_start": 24721,
+              "line_end": 24721,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1092,15 +1092,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7242,
-              "line_end": 7242,
+              "line_start": 7248,
+              "line_end": 7248,
               "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1185,15 +1185,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-247",
-              "line_start": 13698,
-              "line_end": 13698,
+              "line_start": 13701,
+              "line_end": 13701,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.promoted@1.0.0, prepared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1212,15 +1212,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24783,
-              "line_end": 24783,
+              "line_start": 24799,
+              "line_end": 24799,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24799,
-              "line_end": 24799,
+              "line_start": 24815,
+              "line_end": 24815,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1239,15 +1239,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-247",
-              "line_start": 13719,
-              "line_end": 13719,
+              "line_start": 13723,
+              "line_end": 13723,
               "quote": "both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1266,15 +1266,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24769,
-              "line_end": 24769,
+              "line_start": 24785,
+              "line_end": 24785,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24799,
-              "line_end": 24799,
+              "line_start": 24815,
+              "line_end": 24815,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1293,15 +1293,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24762,
-              "line_end": 24762,
+              "line_start": 24778,
+              "line_end": 24778,
               "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24799,
-              "line_end": 24799,
+              "line_start": 24815,
+              "line_end": 24815,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
@@ -1327,16 +1327,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 29820,
-              "line_end": 29820,
-              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on"
+              "line_start": 29935,
+              "line_end": 29935,
+              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 29821,
-              "line_end": 29821,
-              "quote": "  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name;"
+              "line_start": 29936,
+              "line_end": 29936,
+              "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
           "prior": {
@@ -1354,15 +1354,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 29827,
-              "line_end": 29827,
+              "line_start": 29944,
+              "line_end": 29944,
               "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24799,
-              "line_end": 24799,
+              "line_start": 24815,
+              "line_end": 24815,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1381,15 +1381,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-247",
-              "line_start": 13722,
-              "line_end": 13722,
+              "line_start": 13726,
+              "line_end": 13726,
               "quote": "before/after values remain with the existing source owner. revision_after=revision_before+1 over u64. The source"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1408,15 +1408,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 29849,
-              "line_end": 29849,
+              "line_start": 29966,
+              "line_end": 29966,
               "quote": "not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 29860,
-              "line_end": 29860,
+              "line_start": 29977,
+              "line_end": 29977,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -1435,15 +1435,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24791,
-              "line_end": 24791,
+              "line_start": 24807,
+              "line_end": 24807,
               "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24799,
-              "line_end": 24799,
+              "line_start": 24815,
+              "line_end": 24815,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1462,15 +1462,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7242,
-              "line_end": 7242,
+              "line_start": 7248,
+              "line_end": 7248,
               "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1555,15 +1555,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-248",
-              "line_start": 13807,
-              "line_end": 13807,
+              "line_start": 13811,
+              "line_end": 13811,
               "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.session.takeover_state_changed@1.0.0,"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1582,15 +1582,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24877,
-              "line_end": 24877,
+              "line_start": 24893,
+              "line_end": 24893,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24893,
-              "line_end": 24893,
+              "line_start": 24909,
+              "line_end": 24909,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1609,15 +1609,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-248",
-              "line_start": 13830,
-              "line_end": 13830,
+              "line_start": 13835,
+              "line_end": 13835,
               "quote": "root is closed; identifiers require exact full-match in addition to length bounds, including trailing-LF rejection."
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1636,15 +1636,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24864,
-              "line_end": 24864,
+              "line_start": 24880,
+              "line_end": 24880,
               "quote": "idempotency is exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24893,
-              "line_end": 24893,
+              "line_start": 24909,
+              "line_end": 24909,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1663,15 +1663,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24856,
-              "line_end": 24856,
+              "line_start": 24872,
+              "line_end": 24872,
               "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24893,
-              "line_end": 24893,
+              "line_start": 24909,
+              "line_end": 24909,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
@@ -1697,16 +1697,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 29926,
-              "line_end": 29926,
-              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on"
+              "line_start": 30043,
+              "line_end": 30043,
+              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 29927,
-              "line_end": 29927,
-              "quote": "  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name;"
+              "line_start": 30044,
+              "line_end": 30044,
+              "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
           "prior": {
@@ -1724,15 +1724,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 29933,
-              "line_end": 29933,
+              "line_start": 30052,
+              "line_end": 30052,
               "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24893,
-              "line_end": 24893,
+              "line_start": 24909,
+              "line_end": 24909,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1751,15 +1751,15 @@
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
               "unit": "SMPFS-248",
-              "line_start": 13833,
-              "line_end": 13833,
+              "line_start": 13838,
+              "line_end": 13838,
               "quote": "with the existing source owner. revision_after=revision_before+1 over u64. The source must authenticate the exact"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1778,15 +1778,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 29955,
-              "line_end": 29955,
+              "line_start": 30074,
+              "line_end": 30074,
               "quote": "transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 29967,
-              "line_end": 29967,
+              "line_start": 30086,
+              "line_end": 30086,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -1805,15 +1805,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24885,
-              "line_end": 24885,
+              "line_start": 24901,
+              "line_end": 24901,
               "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 24893,
-              "line_end": 24893,
+              "line_start": 24909,
+              "line_end": 24909,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1832,15 +1832,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7242,
-              "line_end": 7242,
+              "line_start": 7248,
+              "line_end": 7248,
               "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1932,8 +1932,8 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             }
           ],
@@ -1952,29 +1952,29 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24971,
-              "line_end": 24971,
+              "line_start": 24987,
+              "line_end": 24987,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24987,
-              "line_end": 24987,
+              "line_start": 25003,
+              "line_end": 25003,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3246,
-              "line_end": 3246,
+              "line_start": 3247,
+              "line_end": 3247,
               "quote": "  validate every resolved record against all required MemoryGist fields in section 3.1, including kind, claims,"
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3251,
-              "line_end": 3251,
+              "line_start": 3252,
+              "line_end": 3252,
               "quote": "  Each before and after claim includes claim_id, text, created_at and all three AMS-044 support facts:"
             },
             {
@@ -2000,22 +2000,22 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3186,
-              "line_end": 3186,
+              "line_start": 3187,
+              "line_end": 3187,
               "quote": "both schema_version=1.0.0. The selected root is closed; identifiers require exact full-match in addition to length"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3190,
-              "line_end": 3190,
+              "line_start": 3191,
+              "line_end": 3191,
               "quote": "  section 3.1 and section 3.3 retain the complete ordered evidence list."
             }
           ],
@@ -2034,15 +2034,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24957,
-              "line_end": 24957,
+              "line_start": 24973,
+              "line_end": 24973,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24987,
-              "line_end": 24987,
+              "line_start": 25003,
+              "line_end": 25003,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -2061,15 +2061,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24950,
-              "line_end": 24950,
+              "line_start": 24966,
+              "line_end": 24966,
               "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24987,
-              "line_end": 24987,
+              "line_start": 25003,
+              "line_end": 25003,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
@@ -2095,16 +2095,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30040,
-              "line_end": 30040,
-              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on"
+              "line_start": 30159,
+              "line_end": 30159,
+              "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30041,
-              "line_end": 30041,
-              "quote": "  (Case L-3, Card 1 retention assignments: G03 exactly memory.gist_state_changed;"
+              "line_start": 30160,
+              "line_end": 30160,
+              "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G03 exactly memory.gist_state_changed);"
             }
           ],
           "prior": {
@@ -2122,22 +2122,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30047,
-              "line_end": 30047,
+              "line_start": 30168,
+              "line_end": 30168,
               "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24987,
-              "line_end": 24987,
+              "line_start": 25003,
+              "line_end": 25003,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3197,
-              "line_end": 3197,
+              "line_start": 3198,
+              "line_end": 3198,
               "quote": "  Storage/server/scope/thread payload store; recompute BLAKE3, byte count and canonical bytes and require durable"
             }
           ],
@@ -2156,29 +2156,29 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3203,
-              "line_end": 3203,
+              "line_start": 3204,
+              "line_end": 3204,
               "quote": "  revision_after=revision_before+1 over u64. The source"
-            },
-            {
-              "path": "Plans/assistant-memory-subsystem.md",
-              "unit": "AMS-130",
-              "line_start": 3245,
-              "line_end": 3245,
-              "quote": "  DL-407 coverage requires complete immutable MemoryGist before/after facts. Before computing any delta,"
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
               "line_start": 3246,
               "line_end": 3246,
+              "quote": "  DL-407 coverage requires complete immutable MemoryGist before/after facts. Before computing any delta,"
+            },
+            {
+              "path": "Plans/assistant-memory-subsystem.md",
+              "unit": "AMS-130",
+              "line_start": 3247,
+              "line_end": 3247,
               "quote": "  validate every resolved record against all required MemoryGist fields in section 3.1, including kind, claims,"
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3251,
-              "line_end": 3251,
+              "line_start": 3252,
+              "line_end": 3252,
               "quote": "  Each before and after claim includes claim_id, text, created_at and all three AMS-044 support facts:"
             },
             {
@@ -2204,15 +2204,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30069,
-              "line_end": 30069,
+              "line_start": 30190,
+              "line_end": 30190,
               "quote": "transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30081,
-              "line_end": 30081,
+              "line_start": 30202,
+              "line_end": 30202,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -2231,15 +2231,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24979,
-              "line_end": 24979,
+              "line_start": 24995,
+              "line_end": 24995,
               "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 24987,
-              "line_end": 24987,
+              "line_start": 25003,
+              "line_end": 25003,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -2258,22 +2258,22 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7242,
-              "line_end": 7242,
+              "line_start": 7248,
+              "line_end": 7248,
               "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7251,
-              "line_end": 7251,
+              "line_start": 7257,
+              "line_end": 7257,
               "quote": "  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join."
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3251,
-              "line_end": 3251,
+              "line_start": 3252,
+              "line_end": 3252,
               "quote": "  Each before and after claim includes claim_id, text, created_at and all three AMS-044 support facts:"
             },
             {
@@ -2286,8 +2286,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-130",
-              "line_start": 3193,
-              "line_end": 3193,
+              "line_start": 3194,
+              "line_end": 3194,
               "quote": "  by the payload schema: id (lowercase BLAKE3), size_bytes (exact integer byte count), and media_type exactly"
             }
           ],
@@ -22049,5 +22049,6 @@
       "sha256": "542768e181d52244e9e6a7e895b32b32a854860c31800fcb4934f5a593753c4c"
     },
     "B3_companion_commit": "7b7bdd78a8"
-  }
+  },
+  "rebase_lineage_ref": "reports/event-authority-20261104/DCN-rebase-lineage.json"
 }
