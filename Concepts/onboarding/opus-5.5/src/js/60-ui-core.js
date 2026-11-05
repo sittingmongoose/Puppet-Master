@@ -34,6 +34,7 @@
   O55.session = { fresh: freshSession };
 
   /* ---------------------------------------------------------------- DOM */
+  const closeTitle = () => T('chrome.closeHint') + (O55.tips && O55.tips.of('close', 'chrome') ? '\n' + O55.tips.of('close', 'chrome').text : '');
   function build() {
     if (S.root) return S.root;
     const root = document.createElement('div');
@@ -44,12 +45,18 @@
       + `<header class="o55-head"><div class="o55-brand" aria-hidden="true">${logo()}<span>${U.esc(T('chrome.brand'))}</span></div>`
       + `<nav class="o55-rail" aria-label="${U.esc(T('chrome.progressLabel'))}"></nav>`
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-talkslot"></span><span class="o55-soundslot"></span>`
-      + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint') + (O55.tips && O55.tips.of('close', 'chrome') ? '\n' + O55.tips.of('close', 'chrome').text : ''))}">`
+      + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(closeTitle())}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
       + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
     S.root = root;
+    // The header menu shares the window's clip. Recompute its room when either
+    // the window or header controls resize (including wording and look changes).
+    const lookRoom = new ResizeObserver(sizeLookMenu);
+    lookRoom.observe(root.querySelector('.o55-win'));
+    lookRoom.observe(root.querySelector('.o55-head'));
+    lookRoom.observe(root.querySelector('.o55-lookslot'));
     root.addEventListener('click', onClick);
     root.addEventListener('input', onInput);
     root.addEventListener('change', onInput);
@@ -777,6 +784,18 @@
   }
 
   /* the look menu beside the sound button (O55.lookMenu): open until a click lands outside it or Escape */
+  function sizeLookMenu() {
+    const slot = S.root && S.root.querySelector('.o55-lookslot');
+    if (!slot) return;
+    const win = S.root.querySelector('.o55-win');
+    // Layout coordinates keep the bound correct during skin transforms and zoom.
+    let slotTop = 0;
+    for (let el = slot; el && el !== win; el = el.offsetParent) slotTop += el.offsetTop;
+    const head = S.root.querySelector('.o55-head');
+    const top = Math.max(slotTop + slot.offsetHeight, head.offsetTop + head.offsetHeight) + 8;
+    slot.style.setProperty('--o55-look-top', (top - slotTop) + 'px');
+    slot.style.setProperty('--o55-look-room', Math.max(0, win.clientHeight - top - 8) + 'px');
+  }
   function renderLook() {
     const slot = S.root && S.root.querySelector('.o55-lookslot'); if (!slot || !O55.lookMenu) return;
     const html = O55.lookMenu.button('o55-iconbtn', 'data-o55-do', S.lookOpen) + (S.lookOpen ? O55.lookMenu.panel('data-o55-do') : '');
@@ -784,6 +803,9 @@
     /* redrawing keeps focus where it was (the option just chosen), so keys still reach the window */
     const a = document.activeElement, had = a && slot.contains(a) ? (a.getAttribute('data-arg') || 'btn') : null;
     slot.innerHTML = html;
+    sizeLookMenu();
+    /* Menu notes live in the header, outside the pane's writer scope. */
+    if (O55.tips) O55.tips.write(slot);
     if (had) { const el = had === 'btn' ? slot.querySelector('.o55-lookbtn') : slot.querySelector(`[data-arg="${had}"]`); if (el) el.focus({ preventScroll: true }); }
   }
   /* Plain English or Expert changed (here, in the tour or in Settings): the window's tips and help sections are drawn
@@ -794,6 +816,8 @@
     try { refresh(); } finally { S.talkSwitch = false; }
   });
   function renderSound() {
+    const close = S.root.querySelector('.o55-close');
+    if (close) close.title = closeTitle();
     renderLook();
     const slot = S.root.querySelector('.o55-soundslot');
     /* (the header's buttons have no room for a ?: their tips are their hover tags, Muse m3) */
