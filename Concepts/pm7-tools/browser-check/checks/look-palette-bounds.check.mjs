@@ -19,7 +19,13 @@ export const tests = Object.fromEntries(['onboarding','tour','settings'].map(rou
         const b = f.locator(`[data-o55-do="${action}"][data-arg="${arg}"]`);
         await b.focus(); await b.press('Enter');
       }
-    } else if (route === 'settings') await f.evaluate(n => PSX.setLook(n),look);
+    } else if (route === 'settings') {
+      for (const [setting,value] of [['theme',family === 'nier' ? 'NieR' : family[0].toUpperCase()+family.slice(1)],['theme-mode',mode === 'light' ? 'Light' : 'Dark']]) {
+        const b = f.locator(`select[data-setting="general.visual.${setting}"]`).locator('..').locator('.pm51-dd-trigger');
+        await b.scrollIntoViewIfNeeded(); await b.click();
+        await f.getByRole('option',{name:value,exact:true}).click();
+      }
+    }
     else await t.app.look(look);
     await f.waitForFunction(() => !window.PM_LOOK_COVERED?.() && !window.PM_THEME_TRANSITION?.busy());
     for (const [w,h] of SIZES) {
