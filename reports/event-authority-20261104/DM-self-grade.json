@@ -1,14 +1,14 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-DM-FIX8-SELF-20261105",
+  "assessment_id": "EA-DM-SWEEP-P1-SELF-20261105",
   "assessment_kind": "branch_local_self_grade",
   "assessed_tree": {
     "branch": "plans/ea-w2-small-owners-20261104",
-    "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
-    "input_head": "93f27d505890f4e8ee623ff796855a5f2e6585b6",
-    "reviewed_head": "93f27d505890f4e8ee623ff796855a5f2e6585b6",
-    "canonical_head": "e8dda799efde63628c8c902f313a608aae0e64be",
-    "method": "Round 8 B1 current retry validates incoming pm.event.v0/2.0.0 before semantic resolution; 16 single-field negatives preserve authentic originals and digest. B2 foreign context pairs are integration regressions only; family/schema fences and their isolated witnesses remain. Eight complete family checkers and four selected narrow guard cuts per family run serially. S1 shared numbers/history recipes and S2 shared guard isolation remain sweep items. Static only; native NOT_RUN."
+    "base": "e42ce235b4711325ced818c777f070c3ee0d7952",
+    "input_head": "7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
+    "reviewed_head": "7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
+    "canonical_head": "aa535b3d56e47630ce983128db32599331e63f00",
+    "method": "Sweep part 1: canonical top-level incoming retry closure before original resolution; 24 one-defect extra-field negatives and serial complete-family suites. No digest, numeric, historical recipe or private proof-engine change. PASS cells describe repaired lane-local coverage only. Entire lane remains NOT_READY until shared NUMRULE and guard-table adoption pass in part 2. Static only; native NOT_RUN."
   },
   "rubric": {
     "criteria": [
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -78,11 +78,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -99,11 +99,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -128,11 +128,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -157,11 +157,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -186,11 +186,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -207,11 +207,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -236,11 +236,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -257,11 +257,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -287,18 +287,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -315,16 +315,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (6771 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Formatters_System.md",
@@ -337,10 +337,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/Formatters_System.md",
@@ -372,7 +372,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -380,7 +380,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -388,7 +388,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -404,7 +404,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -412,7 +412,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -421,28 +421,47 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=format.applied python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=format.applied python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     },
     {
       "event_type": "git.clone.completed",
@@ -472,11 +491,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -493,11 +512,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -514,11 +533,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -543,11 +562,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -572,11 +591,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -601,11 +620,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -622,11 +641,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -651,11 +670,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -672,11 +691,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -702,18 +721,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -730,16 +749,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (6798 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Source_Control_System.md",
@@ -752,10 +771,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/Source_Control_System.md",
@@ -787,7 +806,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -795,7 +814,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -803,7 +822,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -819,7 +838,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -827,7 +846,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -836,28 +855,47 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=git.clone.completed python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=git.clone.completed python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     },
     {
       "event_type": "lsp.server.lifecycle_changed",
@@ -887,11 +925,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -908,11 +946,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -929,11 +967,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -958,11 +996,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -987,11 +1025,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1016,11 +1054,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1037,11 +1075,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1066,11 +1104,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1087,11 +1125,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1117,18 +1155,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1145,16 +1183,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (6825 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/LSPSupport.md",
@@ -1167,10 +1205,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/LSPSupport.md",
@@ -1202,7 +1240,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -1210,7 +1248,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -1218,7 +1256,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -1234,7 +1272,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -1242,7 +1280,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -1251,28 +1289,47 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=lsp.server.lifecycle_changed python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=lsp.server.lifecycle_changed python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     },
     {
       "event_type": "model.catalog_refreshed",
@@ -1302,11 +1359,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1323,11 +1380,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1344,11 +1401,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1373,11 +1430,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1410,11 +1467,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1439,11 +1496,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1460,11 +1517,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1489,11 +1546,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1510,11 +1567,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1540,18 +1597,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1568,16 +1625,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (6987 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Models_System.md",
@@ -1590,10 +1647,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/Models_System.md",
@@ -1633,7 +1690,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -1641,7 +1698,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -1649,7 +1706,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -1665,7 +1722,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -1673,7 +1730,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -1682,28 +1739,47 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=model.catalog_refreshed python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=model.catalog_refreshed python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     },
     {
       "event_type": "project.added",
@@ -1733,11 +1809,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1754,11 +1830,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1775,11 +1851,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1804,11 +1880,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1833,11 +1909,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1862,11 +1938,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1883,11 +1959,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1912,11 +1988,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1933,11 +2009,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1963,18 +2039,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1991,16 +2067,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (6725 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -2013,10 +2089,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/Project_System.md",
@@ -2048,7 +2124,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -2056,7 +2132,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -2064,7 +2140,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -2080,7 +2156,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -2088,7 +2164,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -2097,28 +2173,47 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=project.added python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=project.added python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.project.added@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.project.added@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     },
     {
       "event_type": "project.created",
@@ -2148,11 +2243,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2169,11 +2264,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -2190,11 +2285,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2219,11 +2314,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2248,11 +2343,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2277,11 +2372,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2298,11 +2393,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2327,11 +2422,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2348,11 +2443,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2378,18 +2473,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2406,16 +2501,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (6729 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -2428,10 +2523,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/Project_System.md",
@@ -2463,7 +2558,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -2471,7 +2566,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -2479,7 +2574,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -2495,7 +2590,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -2503,7 +2598,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -2512,28 +2607,47 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission.",
-        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
+        "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=project.created python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=project.created python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.project.created@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.project.created@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     },
     {
       "event_type": "settings.theme.updated",
@@ -2554,26 +2668,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2595,26 +2709,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2636,26 +2750,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2677,26 +2791,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2718,26 +2832,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2759,26 +2873,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2800,26 +2914,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2841,26 +2955,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2882,26 +2996,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2923,26 +3037,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -2964,26 +3078,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             },
             {
               "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.theme.updated.json",
@@ -3013,26 +3127,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3049,14 +3163,13 @@
       },
       "remaining_gaps": [],
       "static_checks_seen": [
-        "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py",
-        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate"
+        "python3 -B scripts/pm-settings-layering-check.py",
+        "python3 -B -m unittest discover -s tests -p test_pm_touch_closure_source.py -k DryGuardConsumerTests",
+        "python3 -B scripts/pm-small-owner-events.py (40 Settings retirement cases repeated by each family)"
       ],
-      "notes": "DL-408 exclusion application preserved byte-for-byte. No current writer, admission, alias or byte rewriting; dedicated DRY history remains read-only.",
+      "notes": "Historical DL-408 application pins are preserved at 7ef0eb9aad; current rebase verification confirms both retired rows, ledgers/census, current owner text and unchanged registry. No alias, byte rewrite or DRY guard enablement.",
       "successor": "settings.layer.changed",
-      "decision_ref": "DL-408 (pinned decision-branch dependency)",
+      "decision_ref": "Plans/Decision_Log.md#DL-408 (landed on current rebase base)",
       "application_record": "reports/event-authority-20261104/DM-settings-exclusions-application.json"
     },
     {
@@ -3078,26 +3191,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3119,26 +3232,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3160,26 +3273,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3201,26 +3314,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3242,26 +3355,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3283,26 +3396,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3324,26 +3437,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3365,26 +3478,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3406,26 +3519,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3447,26 +3560,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3488,26 +3601,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             },
             {
               "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.updated.json",
@@ -3537,26 +3650,26 @@
             {
               "path": "Plans/Settings_System.md",
               "unit": "SSYS section 3.6",
-              "line_start": 2346,
-              "line_end": 2346,
+              "line_start": 2351,
+              "line_end": 2351,
               "quote": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its",
-              "file_sha256": "8fe7dbe6538b6b9e8d478e26fc3f71a3945faf5b5c7a23b7d8aae0cd75004b3b"
+              "file_sha256": "a08d95572dc467131c21940c75d389d0367e26ccc67dc0069c876f8ef87f4f5b"
             },
             {
               "path": "Plans/UI_Command_Catalog.md",
               "unit": "UCC theme command rows",
-              "line_start": 8556,
-              "line_end": 8556,
+              "line_start": 8557,
+              "line_end": 8557,
               "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
-              "file_sha256": "9d88d0b175548814e3f42236482ec9f3db7d4cfe63799779a70339ac33461351"
+              "file_sha256": "e9610bda0927f5f319a92fc529811cf2b6e522785d6809aa1a2e9c029ce765c7"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-348",
-              "line_start": 28942,
-              "line_end": 28942,
+              "line_start": 29053,
+              "line_end": 29053,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-              "file_sha256": "31f89e17c83477a532d0f53034bbdbe0e6781118123723c8f2a0bacf5c789ef2"
+              "file_sha256": "9ac06c94ae55d7b2850277e250b6af3aa578b30a466a641484d25e551a46e41d"
             }
           ],
           "prior": {
@@ -3573,14 +3686,13 @@
       },
       "remaining_gaps": [],
       "static_checks_seen": [
-        "python3 -B scripts/pm-small-owner-events.py",
-        "python3 -B scripts/pm-small-owner-guard-audit.py",
-        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate"
+        "python3 -B scripts/pm-settings-layering-check.py",
+        "python3 -B -m unittest discover -s tests -p test_pm_touch_closure_source.py -k DryGuardConsumerTests",
+        "python3 -B scripts/pm-small-owner-events.py (40 Settings retirement cases repeated by each family)"
       ],
-      "notes": "DL-408 exclusion application preserved byte-for-byte. No current writer, admission, alias or byte rewriting; dedicated DRY history remains read-only.",
+      "notes": "Historical DL-408 application pins are preserved at 7ef0eb9aad; current rebase verification confirms both retired rows, ledgers/census, current owner text and unchanged registry. No alias, byte rewrite or DRY guard enablement.",
       "successor": "settings.layer.changed",
-      "decision_ref": "DL-408 (pinned decision-branch dependency)",
+      "decision_ref": "Plans/Decision_Log.md#DL-408 (landed on current rebase base)",
       "application_record": "reports/event-authority-20261104/DM-settings-exclusions-application.json"
     },
     {
@@ -3611,11 +3723,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3632,11 +3744,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -3653,11 +3765,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3682,11 +3794,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3719,11 +3831,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3748,11 +3860,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PASS",
@@ -3769,11 +3881,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3798,11 +3910,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -3819,11 +3931,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3849,18 +3961,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3877,16 +3989,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (7196 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3899,10 +4011,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3939,18 +4051,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 558,
+              "line_end": 558,
               "quote": "if incoming.get('event_type') != row['event_type']:",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 556,
-              "line_end": 556,
+              "line_start": 561,
+              "line_end": 561,
               "quote": "if incoming.get('payload_schema_id') != expected_schema:",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -3958,7 +4070,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -3966,7 +4078,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -3974,7 +4086,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -3990,7 +4102,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -3998,7 +4110,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -4007,27 +4119,46 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
-        "Exact membership intentionally ABSENT pending later independent review and admission."
+        "Exact membership intentionally ABSENT pending later independent review and admission.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=subagent.context_rehydrated python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=subagent.context_rehydrated python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     },
     {
       "event_type": "subagent.context_shrunk",
@@ -4057,11 +4188,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4078,11 +4209,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -4099,11 +4230,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4128,11 +4259,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4165,11 +4296,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4194,11 +4325,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "retention": {
           "status": "PASS",
@@ -4215,11 +4346,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4244,11 +4375,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -4265,11 +4396,11 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4295,18 +4426,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 601,
-              "line_end": 601,
+              "line_start": 606,
+              "line_end": 606,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4323,16 +4454,16 @@
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Reviewed status carried; normative owner content and Settings exclusions unchanged."
+          "change_reason": "Re-adjudicated against current own-family prose and serial family execution after rebase; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Round 8 B1 incoming envelope identity/version refuse before resolution: two independent single-field fixtures against an unchanged authentic original, unchanged semantic digest, zero effects and no returned result. B2 authentic foreign-context pair is labelled integration-only; separate family/schema witnesses retained. Complete serial family checker PASS (7221 assertions); four narrow cuts flip only their own negatives and make the complete checker fail. Ordinary retry, Storage-metadata exclusion, retained large integers and historical/replay-only reads pass. S1 shared number/history recipes and S2 broader proof machinery are open cross-lane sweep items; no full-isolation or native clearance claimed.",
+          "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -4345,10 +4476,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 821,
-              "line_end": 821,
+              "line_start": 826,
+              "line_end": 826,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -4385,18 +4516,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 558,
+              "line_end": 558,
               "quote": "if incoming.get('event_type') != row['event_type']:",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "current_retry",
-              "line_start": 556,
-              "line_end": 556,
+              "line_start": 561,
+              "line_end": 561,
               "quote": "if incoming.get('payload_schema_id') != expected_schema:",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -4404,7 +4535,7 @@
               "line_start": 39,
               "line_end": 39,
               "quote": "def integer_type(checker, instance):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -4412,7 +4543,7 @@
               "line_start": 95,
               "line_end": 95,
               "quote": "def canonical_json_numbers(value, *, retained=False):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -4420,7 +4551,7 @@
               "line_start": 334,
               "line_end": 334,
               "quote": "def retained_producer_digest(event):",
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -4436,7 +4567,7 @@
               "quote": "def utc_datetime(value):",
               "line_start": 23,
               "line_end": 23,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
@@ -4444,7 +4575,7 @@
               "quote": "def exact_value(value, expected):",
               "line_start": 61,
               "line_end": 61,
-              "file_sha256": "0555ba760e43c28ac216278044e7e54bc2e3966c253b84b34e85bea4cc7217eb"
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             },
             {
               "path": "scripts/pm-small-owner-guard-audit.py",
@@ -4453,27 +4584,46 @@
               "line_start": 459,
               "line_end": 459,
               "file_sha256": "f68422aa5b0cfcfb8574ffd96aba1235eb5d9325fe6a29e1e1c6df048b4c4914"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "current_retry",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "if incoming.keys() - envelope['properties'].keys():",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
+            },
+            {
+              "path": "scripts/pm-small-owner-events.py",
+              "unit": "main",
+              "line_start": 1064,
+              "line_end": 1064,
+              "quote": "for case in row['retry_extra_field_cases']:",
+              "file_sha256": "1c39522270312e8d6ca8a9a6e4aa5bc75a17d5bf8ecab10e35b0e1e3efe9569f"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md@93f27d505890f4e8ee623ff796855a5f2e6585b6",
+            "source": "REVIEW-astra-4.md@7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
             "status": "PARTIAL"
           },
           "change": "improved",
-          "change_reason": "Round-8 B1 single-field envelope negatives and B2 classification fixed; complete family checker and selected narrow guard cuts pass. S1/S2 remain exempt sweep items."
+          "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
         }
       },
       "remaining_gaps": [
-        "Exact membership intentionally ABSENT pending later independent review and admission."
+        "Exact membership intentionally ABSENT pending later independent review and admission.",
+        "Part 2 NUMRULE adoption remains open.",
+        "Part 2 shared guard-table/isolation adoption remains open."
       ],
       "static_checks_seen": [
         "PM_DM_FAMILY=subagent.context_shrunk python3 -B scripts/pm-small-owner-events.py",
-        "PM_DM_FAMILY=subagent.context_shrunk python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json> \"^retry\\.(envelope_identity|envelope_version|family|schema)$\"",
+        "python3 -B /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py",
         "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-        "python3 -B scripts/pm-plan-index.py validate (see N1 qualification)"
+        "python3 -B scripts/pm-plan-index.py validate"
       ],
-      "notes": "Prepared without admission. B1/B2 fixed; shared number/history-recipe and guard-isolation adoption remain sweep S1/S2. Six retention cells remain pending RT. Native NOT_RUN.",
-      "newly_authored_operating_reader": "reader.context.shrunk@1.0.0"
+      "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+      "newly_authored_operating_reader": "reader.context.shrunk@1.0.0",
+      "readiness": "NOT_READY_PENDING_PART_2"
     }
   ],
   "native_execution": "NOT_RUN",
@@ -4483,27 +4633,38 @@
     "PARTIAL": 6,
     "NOT_APPLICABLE": 18
   },
-  "review_round": 8,
-  "prior_review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/REVIEW-astra-3.md",
+  "review_round": "sweep-p1",
+  "prior_review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/REVIEW-astra-4.md",
   "settings_decision": "DL-408 / 2d A applied; both names retired as superseded by settings.layer.changed, J248 RECLASSIFY_TO_EXCLUDED, no denominator removal; DRY guard disabled.",
-  "fix_worker": "DM-fix8",
+  "fix_worker": "DM-sweep-p1",
   "decision_integration_dependency": {
-    "branch": "origin/plans/ea-cards1-answers-20261104",
-    "head": "b6332f391a7870bad5f01a29a7e9d080050dac27",
-    "unit": "DL-408"
+    "unit": "DL-408",
+    "status": "LANDED_ON_REBASE_BASE",
+    "main_at_rebase": "e42ce235b4711325ced818c777f070c3ee0d7952",
+    "decision_commit": "b6332f391a7870bad5f01a29a7e9d080050dac27"
   },
   "sweep_items": [
     {
       "id": "S1",
-      "status": "OPEN_CROSS_LANE_SWEEP",
-      "location": "scripts/pm-small-owner-events.py:80-120,276-342,496-565; eight payload numeric domains; CV-620..627/SP-600..607",
-      "fix": "Adopt owner-qualified CV-1100/SP-1100/SP-1101 and authenticated historical recipe selection through NUMRULE. No lane-local cap or serializer added; preserve full-u64 metadata, physical float bytes and signed zero."
+      "aliases": [
+        "SW-NUMRULE-DM",
+        "Astra-4 S1"
+      ],
+      "status": "PART_2_OPEN",
+      "location": "scripts/pm-small-owner-events.py:80-120,276-342,496-570; eight payload numeric schemas; CV-620..627; SP-600..607",
+      "fix": "Adopt CV-1100/SP-1100/SP-1101 and the shared number helper with authenticated original recipe selection. Preserve full Storage uint64, original physical float bytes/types and signed zero. No lane-local number helper, cap or serializer added."
     },
     {
       "id": "S2",
-      "status": "OPEN_CROSS_LANE_SWEEP",
-      "location": "scripts/pm-small-owner-guard-audit.py; prior broad guard table and DM proof claims",
-      "fix": "Adopt scripts/pm_guard_isolation.py from plans/ea-guardtool-20261105. Whole-validator, whole-keyword and compound/removal inventory machinery is not complete per-predicate proof. B2 fixture exception is repaired separately."
+      "aliases": [
+        "SW-GUARDTOOL-DM",
+        "Astra-4 S2",
+        "Sol C8C-B1 machinery"
+      ],
+      "status": "PART_2_OPEN",
+      "location": "scripts/pm-small-owner-guard-audit.py:76-85,111-112,139-144,289-314,355-369; historical DM guard summaries; new current_retry closure predicate",
+      "fix": "Adopt scripts/pm_guard_isolation.py after it passes, restructure the checker into named guard tables, and prove the full invariant inventory including the new closure guard. Current private whole-validator/keyword/compound cuts are not complete predicate isolation. No private proof engine rebuilt in part 1."
     }
-  ]
+  ],
+  "readiness": "NOT_READY_PENDING_PART_2"
 }
