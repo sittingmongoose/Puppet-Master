@@ -145,30 +145,35 @@ def archive_candidate(before, job):
     return after
 
 
-def archive_validate(before, after, job):
-    guard('memory_flags', memory_flags(before['memories']) and memory_flags(after['memories']))
+def archive_checks(before, after, job):
+    yield 'memory_flags', memory_flags(before['memories']) and memory_flags(after['memories'])
     source = before['memories']; result = after['memories']; selected = set(before['selected_ids'])
-    guard('originals_preserved', set(source) <= set(result))
+    yield 'originals_preserved', set(source) <= set(result)
     # Each check owns a distinct defect; absent originals are checked above, not misreported as lost refs.
     common = set(source) & set(result)
-    guard('evidence_preserved', all(source[k]['evidence_refs'] == result[k]['evidence_refs'] for k in common))
-    guard('versions_preserved', all(source[k]['version_ref'] == result[k]['version_ref'] for k in common))
+    yield 'evidence_preserved', all(POLICY.same(source[k]['evidence_refs'], result[k]['evidence_refs']) for k in common)
+    yield 'versions_preserved', all(POLICY.same(source[k]['version_ref'], result[k]['version_ref']) for k in common)
     # Together with evidence/versions above this compares each selected original in full except archived.
     # Keep those independently tested fields out of this predicate, avoiding an unnamed duplicate guard.
-    guard('selected_fields_preserved', all(
-        {field: value for field, value in source[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')}
-        == {field: value for field, value in result[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')}
-        for k in common & selected if source[k]['pinned'] is not True))
-    guard('pins_preserved', all(source[k] == result[k] for k in common if source[k]['pinned'] is True))
-    guard('selected_archived', all(result[k]['archived'] for k in common & selected if source[k]['pinned'] is not True))
-    guard('unselected_preserved', all(source[k] == result[k] for k in common - selected if source[k]['pinned'] is not True))
-    guard('no_extra_memories', set(result) <= set(source))
+    yield 'selected_fields_preserved', all(POLICY.same(
+        {field: value for field, value in source[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')},
+        {field: value for field, value in result[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')})
+        for k in common & selected if source[k]['pinned'] is not True)
+    yield 'pins_preserved', all(POLICY.same(source[k], result[k]) for k in common if source[k]['pinned'] is True)
+    yield 'selected_archived', all(result[k]['archived'] for k in common & selected if source[k]['pinned'] is not True)
+    yield 'unselected_preserved', all(POLICY.same(source[k], result[k]) for k in common - selected if source[k]['pinned'] is not True)
+    yield 'no_extra_memories', set(result) <= set(source)
     if job == 'monthly_summary':
         expected = {'original_ids': before['selected_ids'],
                     'evidence_refs': sorted({r for k in selected for r in source[k]['evidence_refs']})}
-        guard('summary_provenance', after.get('summary') == expected)
+        yield 'summary_provenance', POLICY.same(after.get('summary'), expected)
     else:
-        guard('no_prune_summary', after.get('summary') == before.get('summary'))
+        yield 'no_prune_summary', POLICY.same(after.get('summary'), before.get('summary'))
+
+
+def archive_validate(before, after, job):
+    for name, valid in archive_checks(before, after, job):
+        guard(name, valid)
     return True
 
 

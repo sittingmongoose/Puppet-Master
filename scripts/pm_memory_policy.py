@@ -4,18 +4,43 @@
 No serializer, score normalization, number cap or maintenance admission is defined here.
 """
 from copy import deepcopy
-from datetime import datetime, timedelta
+from datetime import datetime
 from decimal import Decimal
+from fractions import Fraction
+import json
 import math
+import re
 
 CUTOFFS = {'monthly_summary': (90, Decimal('0.10'), 'DL-446'),
            'prune_archive': (180, Decimal('0.05'), 'DL-447')}
 
 
+def same(left, right):
+    """Preservation compares primitive types before values, recursively; no coercion."""
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        return left.keys() == right.keys() and all(same(left[k], right[k]) for k in left)
+    if isinstance(left, (list, tuple)):
+        return len(left) == len(right) and all(same(a, b) for a, b in zip(left, right))
+    return left == right
+
+
 def instant(core, value):
+    """Exact rational seconds for policy ordering only; retain the original spelling.
+
+    datetime parses only the whole-second calendar/zone. Decimal construction and
+    Fraction conversion retain every fractional digit without context rounding or
+    an integer-string conversion limit. No timestamp precision cap is introduced.
+    """
     core.require(type(value) is str and core.enforced_formats().conforms(value, 'date-time'),
                  'selection_timestamp')
-    return datetime.fromisoformat(value.replace('t', 'T').replace('z', '+00:00').replace('Z', '+00:00'))
+    fraction, zone = re.fullmatch(r'(?:\.([0-9]+))?([Zz]|[+-][0-9]{2}:[0-9]{2})', value[19:]).groups()
+    whole = datetime.fromisoformat(value[:19].replace('t', 'T') + ('+00:00' if zone in ('Z', 'z') else zone))
+    offset = whole.utcoffset()
+    seconds = (whole.toordinal() * 86400 + whole.hour * 3600 + whole.minute * 60 + whole.second
+               - offset.days * 86400 - offset.seconds)
+    return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)
 
 
 def selection_checks(core, snapshot, job):
@@ -36,7 +61,7 @@ def selection_checks(core, snapshot, job):
     starts = [max(instant(core, m['created_at'] if m.get('updated_at') is None else m['updated_at']),
                   instant(core, m['created_at'] if m.get('last_access_at') is None else m['last_access_at']))
               for m in selected]
-    yield 'selection_age', all(captured - start >= timedelta(days=days) for start in starts)
+    yield 'selection_age', all(captured - start >= days * 86400 for start in starts)
     values = [m['usefulness_score'] for m in selected]
     valid = all(type(v) in (int, float, Decimal) and
                 (v.is_finite() if type(v) is Decimal else math.isfinite(v) if type(v) is float else True)
@@ -51,10 +76,15 @@ def dedup_candidate(core, before):
     Selection always uses the oldest original then stable note ID.
     """
     memories = before['memories']; ids = before['eligible_ids']
-    core.require(len(ids) >= 2 and len(ids) == len(set(ids)) and all(k in memories for k in ids),
-                 'dedup_eligible_group')
+    core.require(len(ids) >= 2, 'dedup_eligible_group')
+    core.require(len(ids) == len(set(ids)), 'dedup_eligible_group')
+    core.require(all(k in memories for k in ids), 'dedup_eligible_group')
+    # Work on resolved originals after validating the complete requested group.
+    # The caller's eligible_ids remain untouched; existence is owned by the guard above.
+    ids = [key for key in ids if key in memories]
     group = [memories[k] for k in ids]
-    core.require(all(type(m['pinned']) is bool and type(m['archived']) is bool for m in group), 'dedup_flags')
+    core.require(all(type(m['pinned']) is bool and type(m['archived']) is bool
+                     for m in memories.values()), 'dedup_flags')
     # A pin cannot enter this group, even if its hash matches. No pin is scored or changed.
     core.require(all(not m['pinned'] and not m['archived'] for m in group
                      if type(m['pinned']) is bool and type(m['archived']) is bool), 'dedup_protected')
@@ -78,25 +108,39 @@ def dedup_candidate(core, before):
 def dedup_checks(core, before, after):
     """Independent postconditions; a malformed outcome can violate more than one."""
     source, result = before['memories'], after['memories']
+    core.require(all(type(m['pinned']) is bool and type(m['archived']) is bool
+                     for m in source.values()), 'dedup_flags')
+    # Output flags compare to these exact Booleans through same(), or `is` for
+    # the selected archived flag. This enforces their types without coercion.
     ids = before['eligible_ids']; common = set(source) & set(result)
     record = after['merge_records'][-1]; survivor = record['survivor_id']
     oldest = min(ids, key=lambda key: (instant(core, source[key]['created_at']), key))
     yield 'dedup_survivor', survivor == oldest
     yield 'dedup_originals', set(result) == set(source)
-    yield 'dedup_lineage', (after['merge_records'][:-1] == before['merge_records']
-                            and record['original_ids'] == sorted(ids)
-                            and record['original_evidence_refs'] == {k: source[k]['evidence_refs'] for k in sorted(ids)})
-    yield 'dedup_evidence', all(result[k]['evidence_refs'] ==
+    yield 'dedup_lineage', (same(after['merge_records'][:-1], before['merge_records'])
+                            and same(record['original_ids'], sorted(ids))
+                            and same(record['original_evidence_refs'], {k: source[k]['evidence_refs'] for k in sorted(ids)}))
+    yield 'dedup_evidence', all(same(result[k]['evidence_refs'],
                                 (sorted({r for i in ids for r in source[i]['evidence_refs']})
-                                 if k == survivor else source[k]['evidence_refs']) for k in common)
-    yield 'dedup_versions', all(result[k]['versions'] == source[k]['versions'] for k in common)
+                                 if k == survivor else source[k]['evidence_refs'])) for k in common)
+    yield 'dedup_versions', all(same(result[k]['versions'], source[k]['versions']) for k in common)
     yield 'dedup_disposition', all(result[k]['archived'] is (k != survivor) for k in set(ids) & common)
     yield 'dedup_links', all(result[k].get('survivor_id') == survivor for k in set(ids) & common - {survivor})
-    yield 'dedup_original_fields', all(
-        {f: v for f, v in result[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')}
-        == {f: v for f, v in source[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')}
+    yield 'dedup_original_fields', all(same(
+        {f: v for f, v in result[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')},
+        {f: v for f, v in source[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')})
         for k in set(ids) & common)
-    yield 'dedup_unselected', all(result[k] == source[k] for k in common - set(ids))
+    yield 'dedup_unselected', all(same(result[k], source[k]) for k in common - set(ids))
+
+
+def typed_edits(value, edits):
+    """Fixture-only literals preserve deliberate float/Boolean type errors."""
+    for edit in edits:
+        parent = value
+        for key in edit['path'][:-1]:
+            parent = parent[key]
+        parent[edit['path'][-1]] = json.loads(edit['json'])
+    return value
 
 
 def dedup_validate(core, before, after):
@@ -116,7 +160,8 @@ def run(core, families, archive=None):
         for case in fixtures['cases']:
             if case['job'] != job:
                 continue
-            before = deepcopy(case['before']); frozen = deepcopy(before)
+            before = typed_edits(deepcopy(case['before']), case.get('before_edits', []))
+            frozen = deepcopy(before)
             if job == 'dedup_sweep':
                 if case.get('candidate_refusal'):
                     try:
@@ -127,7 +172,8 @@ def run(core, families, archive=None):
                         raise AssertionError((case['name'], 'accepted invalid merge'))
                     errors = [case['candidate_refusal']]
                 else:
-                    after = case.get('after', dedup_candidate(core, before))
+                    after = typed_edits(deepcopy(case.get('after', dedup_candidate(core, before))),
+                                        case.get('after_edits', []))
                     errors = [name for name, valid in dedup_checks(core, before, after) if not valid]
                     try:
                         dedup_validate(core, before, after)
@@ -136,7 +182,7 @@ def run(core, families, archive=None):
                     else:
                         assert 'refusal' not in case, case['name']
                     if not errors:
-                        assert after == case['expected'], case['name']
+                        assert same(after, case['expected']), case['name']
             else:
                 assert archive is not None
                 errors = []
@@ -151,12 +197,14 @@ def run(core, families, archive=None):
                     errors.append(str(error))
                 try:
                     after = archive.archive_candidate(before, job)
+                    after = typed_edits(deepcopy(case.get('after', after)), case.get('after_edits', []))
+                    errors += [name for name, valid in archive.archive_checks(before, after, job) if not valid]
                     archive.archive_validate(before, after, job)
                 except core.Refusal as error:
                     assert str(error) == case.get('refusal'), (case['name'], str(error))
                 else:
-                    assert 'refusal' not in case and after == case['expected'], case['name']
-            assert before == frozen, (case['name'], 'mutated caller input')
+                    assert 'refusal' not in case and same(after, case['expected']), case['name']
+            assert same(before, frozen), (case['name'], 'mutated caller input')
             assert errors == ([case['refusal']] if 'refusal' in case else []), (case['name'], errors)
             counts['negatives' if errors else 'positives'] += 1
             if errors:
