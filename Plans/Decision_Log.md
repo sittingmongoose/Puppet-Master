@@ -28889,3 +28889,76 @@ preserved_exact_tokens:
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
+
+### DL-333 - Typed Command Definitions Live In Owner Docs For UCC-049..UCC-105
+
+```yaml
+plan_unit_id: DL-333
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-333 records Jared's answer of 2026-11-05 ("approve all") to closure question Q5, raised by closure row B16 607
+  against the UCC-049..UCC-105 strict schema overlay in Plans/UI_Command_Catalog.md. Each active command that the
+  overlay's command_id rule resolves gets one typed payload definition in the owner doc for its area, in the shared
+  pm.command_payload_definitions.v1 format that UCC-230 fixes. A definition gives the command's args with types,
+  required flags and defaults, its typed owner result carried by the CV-333 UICommandResponse, and error and
+  disabled-reason codes narrowed from the overlay's closed sets. The overlay keeps its common fields and closed code
+  sets and points each row range at those owner-doc definitions instead of "this catalog"; catalog command rows still
+  hold no data shapes. UCC-230 routes every command to one of the owner units CRAU-115, CRAU-116, W-095, ACD-637,
+  ACD-638, ACD-639, SMPFS-328, SMPFS-329, CS-125, AMS-141, RAP-129, F3-716, F3-717, EP-236, GRS-218, PRDB-024,
+  PWIZ-109, PNC-037 and SSYS-076, which the owner-doc packets add. Agents write the definitions, fanned out by owner
+  doc, with mechanical ones allowed on a cheaper model; scripts/pm-command-payload-defs-check.py verifies coverage,
+  placement, types, defaults, required identity, envelope, narrowings, results, provenance and command kinds. Jared's
+  only words in this decision are "approve all". The ten questions the Q5 design left open were settled by the
+  coordinator (pm7-build, 2026-11-05) as technical calls under that answer, not as owner answers; they are listed in
+  coordinator_resolutions. A command whose resolution is not yet applied stays in UCC-230's contested list and gets
+  no definition until it is.
+coordinator_resolutions:
+  - "Resolution 1 (PRD Builder, Planning Wizard and Plan Compile ids): the catalog ids stay canonical for the 28 commands; the field lists of Plans/prd_planning_runtime_contracts.json ui_command_contracts move under the catalog ids and that file's own ids are recorded as aliases; topic.open and annotation.resolve take their fields from the catalog rows; cmd.plan_compile.open_build takes the PlanCompileRun identity the catalog names, not goal_run_id."
+  - "Resolution 2: cmd.docker.image.push is a primary command with its own DockerImagePushV3Request; the UCC-051 compatibility-alias note goes."
+  - "Resolution 3 (Docker build): the flow stays as Plans/Containers_Registry_and_Unraid.md already requires it: infer the target, prompt instead of guessing when ambiguous, expose build and bake preview commands, persist the selected target and resolve build_run to it. cmd.docker.build.select_target, cmd.docker.build.run, cmd.docker.bake.preview and cmd.docker.bake.run stay current; cmd.docker.build.image, cmd.docker.build.compose and cmd.docker.build.bake get catalog rows as the build modes; each of the seven is registered by a unit and has a production wiring row."
+  - "Resolution 4: cmd.chat.worktree.bind_existing is retired as a non-alias; its production wiring row is dropped and the Contracts_V0 alias note is corrected."
+  - "Resolution 5: cmd.git.worktree.request_prune is its own command, the non-mutating approval-request phase of the two-phase prune flow (GI-041); the UCC-054 alias note changes."
+  - "Resolution 6: owner disabled states outside the overlay's closed set (the GitHub_Integration worktree states and the prd_planning_runtime_contracts.json codes) map to closed disabled-reason codes through UCC-230 owner_state_code_map; the owner word stays display detail and the closed set is not expanded."
+  - "Resolution 7: cmd.runtime.open_queue_analysis, cmd.runtime.open_remediation_lineage and cmd.runtime.open_safe_point_history are exempt from the blocked identity blocked_sequence and allowed_action_id; they keep run_id."
+  - "Resolution 8: cmd.chat.new is exempt from thread_id; it runs before a thread exists and carries draft identity."
+  - "Resolution 9a: typing /teach opens the Teach popup, as DL-127 already decided; UCC-102 and CS-053 no longer treat /teach as a Teacher launch. The Teacher keeps the help icon and CS-053's intent-classified natural-language route. This is not a new owner decision."
+  - "Resolution 9b: History (UCC-100), Vision bridge (UCC-101) and Teach guided GUI (UCC-102) get minted command ids, catalog rows, unit tokens, owner definitions and production wiring rows from the actions those units already list. An action too vague to define without inventing behaviour is reported to the coordinator instead of being minted."
+  - "Resolution 10: the catalog's existing payload columns stay as history with a one-line pointer to the owner definition."
+gui_related: false
+gui_classification_reason: Records where command payload shapes live; no GUI behavior changes.
+split_recommended: false
+depends_on: [CV-333, UCC-098, UCC-109, DL-127]
+unblocks: []
+acceptance_criteria:
+  - "No UI_Command_Catalog command row gains a payload field; the overlay names the owner-doc definition unit for every row range."
+  - "Every active UCC-049..UCC-105 command has exactly one definition, in the owner doc UCC-230 names, or is listed as contested until its resolution is applied."
+  - "python3 scripts/pm-command-payload-defs-check.py exits 0."
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_payload_shape_drift
+reasoning_tier: high
+context_scope: command_payload_definition_home
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/UI_Command_Catalog.md
+  - scripts/pm-command-payload-defs-check.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to the stream C owner questions; Q5 is this entry"
+  - "pm-mail 1105034552-f6f4 (pm7-build, 2026-11-05): coordinator resolutions 1-10 under that answer"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/drafts/for-jared-rows.md (B16 row 607)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/DESIGN.md and inventory.jsonl"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"
+preserved_exact_tokens:
+  - "DL-333"
+  - "pm.command_payload_definitions.v1"
+  - "approve all"
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
