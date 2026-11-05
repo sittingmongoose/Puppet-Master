@@ -789,16 +789,18 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # Re-pinned 2026-11-04 for DS15 SP-640..656: 14 independent event checkpoints plus
 # subject-owned preview UI add 15 materialized later-feature values. The skipped
 # family is withdrawn to DT; no retention policy is added or inferred.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 359
+# DS15 round 7 SP-657/658 adds the two independently owned install checkpoints;
+# both are materialized later-feature values; retention remains undecided.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 361
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 335,
+    "materialized": 337,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 61,
-    "later_gui_or_feature_projection": 288,
+    "later_gui_or_feature_projection": 290,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

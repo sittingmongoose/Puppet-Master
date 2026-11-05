@@ -214,13 +214,13 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # coordination_event_records and coordination_read_model_projections are materialized in place
         # as SP-320 keyed value compositions, so 272 materialized and 21 deferred become 274 and 19.
         # SP-322 adds one Release-owned schedule family after this SP-320 pin.
-        # DS15 SP-640..656: current census plus fourteen checkpoints and preview UI.
-        self.assertEqual(len(self.registry["families"]), 359)
+        # DS15 SP-640..658: sixteen independent checkpoints and preview UI.
+        self.assertEqual(len(self.registry["families"]), 361)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 335,
+                    "materialized": 337,
                     "deferred_not_build_blocking": 23,
                     "compatibility_alias": 1,
                 }
@@ -367,9 +367,11 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         report = json.loads(proc.stdout)
-        self.assertEqual(report["families"], 14)
-        self.assertGreaterEqual(report["semantic_oracles"], 594)
-        self.assertGreaterEqual(report["value_oracles"], 33)
+        self.assertEqual(report["families"], 16)
+        self.assertGreaterEqual(report["semantic_oracles"], 11776)
+        self.assertGreaterEqual(report["value_oracles"], 49)
+        self.assertGreaterEqual(report["guard_proof_oracles"], 247)
+        self.assertGreaterEqual(report["numeric_oracles"], 3488)
         self.assertEqual(report["native_execution"], "NOT_RUN")
 
     def test_materializer_check_is_current(self) -> None:

@@ -27334,5 +27334,3521 @@
     "token": "1.000",
     "valid": false,
     "schema_ref": "Plans/ds15_dev_session_record_v2.schema.json"
+  },
+  {
+    "id": "catalog.install.started/atom/1",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "1",
+    "parent": 1,
+    "valid": true
+  },
+  {
+    "id": "catalog.install.started/atom/1.0",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "1.0",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/1e0",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "1e0",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/0",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "0",
+    "parent": 0,
+    "valid": true
+  },
+  {
+    "id": "catalog.install.started/atom/-0",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "-0",
+    "parent": 0,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/01",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "01",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/00",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "00",
+    "parent": 0,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/-01",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "-01",
+    "parent": -1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/2.0",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "2.0",
+    "parent": 2,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/0.0",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "0.0",
+    "parent": 0,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/1.5",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "1.5",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/1e309",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "1e309",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/NaN",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "NaN",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/Infinity",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "Infinity",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/18446744073709551616",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "18446744073709551616",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/atom/-9223372036854775809",
+    "event_type": "catalog.install.started",
+    "target": "atom",
+    "token": "-9223372036854775809",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/producer_sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51",
+    "valid": true,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/producer_sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/producer_sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51e0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/envelope_boundary/envelope/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.000",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/producer_sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51",
+    "valid": true,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/producer_sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/producer_sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51e0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/evaluate/event_schema/envelope/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.000",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/producer_sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/producer_sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/producer_sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/digest/envelope/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/producer_sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/producer_sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/producer_sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/commitment/original/event/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/segment_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/segment_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/segment_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/segment_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/byte_offset/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/byte_offset/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/byte_offset/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/byte_offset/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/durable_end_offset/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/durable_end_offset/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/durable_end_offset/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/durable_end_offset/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/manifest_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/manifest_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/manifest_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/receipt/manifest_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/segment_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/segment_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/segment_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/segment_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/byte_offset/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/byte_offset/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/byte_offset/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/byte_offset/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/durable_end_offset/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/durable_end_offset/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/durable_end_offset/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/durable_end_offset/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/manifest_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/manifest_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/manifest_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/custody/first_append_receipt/manifest_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/segment_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/segment_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/segment_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/segment_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/byte_offset/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/byte_offset/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/byte_offset/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/byte_offset/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/manifest_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/manifest_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/manifest_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/recover/issued_result/first_append_receipt/manifest_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/through_sequence_id/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/through_sequence_id/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/through_sequence_id/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/checkpoint/through_sequence_id/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/admitted_sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2",
+    "valid": true,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/admitted_sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2.0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/admitted_sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2e0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/admitted_sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2.000",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/withdrawal_frontier/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3",
+    "valid": true,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/withdrawal_frontier/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3.0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/withdrawal_frontier/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3e0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/withdraw_writer/withdrawal_frontier/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3.000",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/first_sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/first_sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/first_sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/first_sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/last_sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/last_sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/last_sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/last_sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/0/sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/0/sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/0/sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/0/sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/1/sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/1/sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/1/sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/1/sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/2/sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/2/sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/2/sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_source/rows/2/sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/0/sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/0/sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/0/sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/0/sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/1/sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/1/sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/1/sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/1/sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/2/sequence/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/2/sequence/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/2/sequence/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/index_rows/2/sequence/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_low/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_low/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_low/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_low/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_high/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_high/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_high/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/scan_high/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_high/integer",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_high/decimal",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_high/exponent",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/evaluate/checkpoint/selected_high/integral-float",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.started/caller-sequence-spelling/-0",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "operation": "envelope_boundary",
+    "path": "envelope/sequence_id",
+    "token": "-0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.started/caller-sequence-spelling/01",
+    "event_type": "catalog.install.started",
+    "target": "evaluate",
+    "operation": "envelope_boundary",
+    "path": "envelope/sequence_id",
+    "token": "01",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/1",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "1",
+    "parent": 1,
+    "valid": true
+  },
+  {
+    "id": "catalog.install.completed/atom/1.0",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "1.0",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/1e0",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "1e0",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/0",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "0",
+    "parent": 0,
+    "valid": true
+  },
+  {
+    "id": "catalog.install.completed/atom/-0",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "-0",
+    "parent": 0,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/01",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "01",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/00",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "00",
+    "parent": 0,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/-01",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "-01",
+    "parent": -1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/2.0",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "2.0",
+    "parent": 2,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/0.0",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "0.0",
+    "parent": 0,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/1.5",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "1.5",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/1e309",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "1e309",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/NaN",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "NaN",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/Infinity",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "Infinity",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/18446744073709551616",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "18446744073709551616",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/atom/-9223372036854775809",
+    "event_type": "catalog.install.completed",
+    "target": "atom",
+    "token": "-9223372036854775809",
+    "parent": 1,
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/sequence_id",
+    "token": "2.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/producer_sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51",
+    "valid": true,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/producer_sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/producer_sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51e0",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.000",
+    "valid": false,
+    "operation": "envelope_boundary"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/producer_sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51",
+    "valid": true,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/producer_sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/producer_sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51e0",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/event_schema/envelope/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.000",
+    "valid": false,
+    "operation": "event_schema"
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/producer_sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/producer_sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/producer_sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/digest/envelope/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "digest",
+    "path": "envelope/producer_sequence_id",
+    "token": "51.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/sequence_id",
+    "token": "2.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/producer_sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51",
+    "valid": true
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/producer_sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51.0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/producer_sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51e0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/commitment/original/event/producer_sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "commitment",
+    "path": "original/event/producer_sequence_id",
+    "token": "51.000",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/segment_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/segment_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/segment_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/segment_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/byte_offset/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/byte_offset/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/byte_offset/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/byte_offset/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/byte_offset",
+    "token": "1024.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/durable_end_offset/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/durable_end_offset/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/durable_end_offset/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/durable_end_offset/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/durable_end_offset",
+    "token": "4096.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/manifest_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/manifest_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/manifest_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/receipt/manifest_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "receipt/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/segment_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/segment_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/segment_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/segment_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/byte_offset/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/byte_offset/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/byte_offset/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/byte_offset/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/byte_offset",
+    "token": "1024.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/durable_end_offset/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/durable_end_offset/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/durable_end_offset/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/durable_end_offset/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/durable_end_offset",
+    "token": "4096.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/manifest_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/manifest_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/manifest_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/custody/first_append_receipt/manifest_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "custody/first_append_receipt/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/sequence_id",
+    "token": "2.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/segment_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/segment_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/segment_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/segment_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/byte_offset/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/byte_offset/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/byte_offset/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/byte_offset/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/byte_offset",
+    "token": "1024.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/durable_end_offset/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/durable_end_offset",
+    "token": "4096.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/manifest_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/manifest_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/manifest_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/recover/issued_result/first_append_receipt/manifest_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "issued_result/first_append_receipt/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "recover"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/frontier_revision/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/frontier_revision",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/selected_segment_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/manifest_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/index_read_token/source_selection/recovery_epoch/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/index_read_token/source_selection/recovery_epoch",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/through_sequence_id/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/through_sequence_id/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/through_sequence_id/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/checkpoint/through_sequence_id/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "checkpoint/through_sequence_id",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/admitted_sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2",
+    "valid": true,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/admitted_sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2.0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/admitted_sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2e0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/admitted_sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "admitted_sequence",
+    "token": "2.000",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/withdrawal_frontier/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3",
+    "valid": true,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/withdrawal_frontier/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3.0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/withdrawal_frontier/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3e0",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/withdraw_writer/withdrawal_frontier/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "withdrawal_frontier",
+    "token": "3.000",
+    "valid": false,
+    "operation": "withdraw_writer",
+    "parent_case": "drain-admitted"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/frontier_revision/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/frontier_revision",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/selected_segment_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/selected_segment_generation",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/manifest_generation/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/manifest_generation",
+    "token": "11.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/index_read_token/source_selection/recovery_epoch/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/index_read_token/source_selection/recovery_epoch",
+    "token": "0.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/first_sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/first_sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/first_sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/first_sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/first_sequence",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/last_sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/last_sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/last_sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/last_sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/last_sequence",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/0/sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/0/sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/0/sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/0/sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/0/sequence",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/1/sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/1/sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/1/sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/1/sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/1/sequence",
+    "token": "2.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/2/sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/2/sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/2/sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_source/rows/2/sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_source/rows/2/sequence",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/0/sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/0/sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/0/sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/0/sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/0/sequence",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/1/sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/1/sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/1/sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/1/sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/1/sequence",
+    "token": "2.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/2/sequence/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/2/sequence/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/2/sequence/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/index_rows/2/sequence/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "index_rows/2/sequence",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_low/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_low/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_low/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_low/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_low",
+    "token": "1.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_high/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_high/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_high/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/scan_high/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "scan_high",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_high/integer",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3",
+    "valid": true,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_high/decimal",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3.0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_high/exponent",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3e0",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/evaluate/checkpoint/selected_high/integral-float",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "path": "selected_high",
+    "token": "3.000",
+    "valid": false,
+    "operation": "checkpoint"
+  },
+  {
+    "id": "catalog.install.completed/caller-sequence-spelling/-0",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "operation": "envelope_boundary",
+    "path": "envelope/sequence_id",
+    "token": "-0",
+    "valid": false
+  },
+  {
+    "id": "catalog.install.completed/caller-sequence-spelling/01",
+    "event_type": "catalog.install.completed",
+    "target": "evaluate",
+    "operation": "envelope_boundary",
+    "path": "envelope/sequence_id",
+    "token": "01",
+    "valid": false
   }
 ]
