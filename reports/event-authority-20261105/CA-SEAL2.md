@@ -1,6 +1,6 @@
 # CA-SEAL2 — fourth recorded seal-check input change
 
-**ROUND 4 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX4 (Codex), stream E, VM, 2026-11-05, from Astra-2-reviewed head `8e9194ee64caeee10b2f610a2e0a5a0e832528ef`. The eleven B01/B02/B03 negatives are in `6273e45359b1714e46a0d6edf5f0312c3e932a12`; coherent main-seam issue observations are in `a86735007b823cc3f8fb32a7c27b85790b2b5383`. The validator remains frozen. This file remains both the change record and branch report; earlier sections preserve rounds 1–3. The final documentation head, push and literal-path cleanup are recorded in external `fix4/DELIVERY.json`. Coordinated landing and independent re-review remain required.
+**ROUND 5 FIXES IMPLEMENTED; RE-REVIEW PENDING.** Worker CA-SEAL2-FIX5 (Codex), stream E, VM, 2026-11-05, from cycle-5-reviewed head `213087612a73068a126e17d3dfbbea941d943bf2`. B01/B02 tests are in `661e2ce1397c8537d9c687e74b7f2855e8f53f74`; B03 classifications and rerun records are in `38d74abd7f451edec049e42d1f23669c2fd71488`. Validator bytes remain frozen. Corpus 140/140; 182 removal variants, zero unclassified. This file remains the change record and branch report; earlier sections are historical, with round-4 classification claims explicitly superseded below. Final push/export/cleanup are recorded in external `fix5/DELIVERY.json`. Independent re-review and coordinated landing remain required.
 
 ## Design in five lines
 
@@ -133,7 +133,7 @@ Exact **new fourth-receipt** entry template:
 
 The existing DL-412 entry/template remains separately required exactly as CA-SEAL specifies; there is no new DL-077 entry. Later changes to the new receipt require its authorized byte anchor to follow the final bytes.
 
-**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), CA-SEAL2-FIX3 (Codex), CA-SEAL2-FIX4 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
+**Seal-applier exclusion:** the author, actual lander, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`), CA-SEAL, CA-SEAL-FIX1 through FIX8, CA-SEAL2 (Codex), CA-SEAL2-FIX1 (Codex), CA-SEAL2-FIX2 (Codex), CA-SEAL2-FIX3 (Codex), CA-SEAL2-FIX4 (Codex), CA-SEAL2-FIX5 (Codex), and every other fix worker are barred. The checked new receipt list contains author and actual lander; broader exclusions stay procedural.
 
 **CA2-A02 — lead adjudication (07:35Z):** separation follows CA-SEAL's approved B′ model (pm7-build 01:27Z). The receipt records the author and actual lander. Both, the stream lead and every fix worker are barred from **applying the seal**. The lander is not required to differ from the author. The lead explicitly adjudicated Astra's stronger lander-separation criterion as beyond the approved model; this is the lead's adjudication, not a new Jared answer. In practice the actual lander is the stream lead's landing step, and a separate assignee applies the seal. No frozen-code or receipt change is made for A02.
 
@@ -398,6 +398,8 @@ All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
 
 ## Review round 4: findings and responses
 
+**Historical round-4 record.** Cycle 5 disproved the span-order implication and four card implications, and disputed sixteen implication labels under the then-stated earlier-guard definition. The all-settled and zero-unclassified claims below were authored claims, not a valid settlement of those 21 rows. Round 5 adds the five missing negatives and applies the lead's corrected definition to the remaining sixteen. Use the round-5 table and totals for current status.
+
 Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-astra-2.md`, including the full 182-variant table, both result summaries, eleven independent witnesses and their replay scripts. All 225 retained Astra 2 evidence files match the published SHA-256 manifest. The final corpus is 134/134, including 107 recorded negative refusals. All 110 original result records/refusal strings remain identical. All 597 original source hashes and byte counts verify. No frozen validator byte, receipt, owner document or governance record changes in this round.
 
 `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`; `V` retains the validator path defined above. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix4/`. Each finding is fixed in `6273e45359b1714e46a0d6edf5f0312c3e932a12`; none is disputed or stopped. Each of its eleven narrow cuts accepts exactly its own new negative, while all 133 peer records, including 106 other negative refusal strings, remain identical. `E/survivor-summary.json` asserts those exact comparisons.
@@ -468,3 +470,77 @@ All filenames below resolve under the full `E` prefix above. The compact committ
 | `scope.json` | `24dd0bb1b80f637877f2f9731558544723c6af64d23d5f3f36bceca77c03cf9e` |
 | `frozen-pins.json` | `b8f45e9fa4c6aa315db9b9f12ba141bf6968af64d722756e4f1beaacb5f8c131` |
 | `review-evidence-audit.json` | `542485bdaa06ca7f33eb03b493cb84f5683c1465a6eb2052e5c992f2fb9f5e61` |
+
+
+## Review round 5: findings and responses
+
+Review read in full: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/REVIEW-cycle5.md`, its five named JSON evidence files, and the FIX5 brief including the lead's 10:25Z ruling. **B01, B02 and B03 fixed; none disputed or stopped.** `H` is `reports/event-authority-20261105/CA-SEAL2-checks.py`; `S` is `reports/event-authority-20261105/CA-SEAL2-survivors.md`; `V` is the frozen validator path above. `E` is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/`. Scope is tests and records only.
+
+| Finding | Where / cause | Fix / commit / verification |
+|---|---|---|
+| **CA2-C5-B01** | `V:1037`; former `span_order` table row. The old proof treated every reversed span as empty, overlooking Python's negative slice endpoints. | Fixed in `661e2ce1397c8537d9c687e74b7f2855e8f53f74`, `H:376`. Add the exact two-line passing evidence parent (whole-file SHA `1eb1f83ac06e9ba6e71eb1adb3766c2d38164a892403ed2394cac2b8a69af4e9`) and change only `line_end: 1 -> -1`. The order-only cut accepts this negative, with integer types, lower/upper bounds, digest and exact-token checks enabled. All 139 peer records, including 111 peer refusal strings, remain identical. `E/supplemental-summary.json: span_order` and `E/survivor-summary.json: mandatory_isolation` assert this. Reclassified negative added in `38d74abd7f451edec049e42d1f23669c2fd71488`. |
+| **CA2-C5-B02** | `V:1043,1047,1050`; rows I094/I096/I097/I099. Terminal cards-unresolved checks a different obligation and cannot imply these four diagnostic predicates. | Fixed in `661e2ce1397c8537d9c687e74b7f2855e8f53f74`, `H:328`. Four separate negatives require their own card-row-key, lexical-path, pin-key, or event-name refusal. Each first verifies the same valid card gets its exact unresolved-card diagnostic; the terminal rule stays enabled. The Plans path is a symlink to identical reports bytes. Missing-name bytes retain a synchronized observational SHA. Each own narrow cut changes only its own negative to cards-unresolved; all 139 peers remain byte-identical as result records. Reclassified all four as negative added in `38d74abd7f451edec049e42d1f23669c2fd71488`. Replay I094/I096/I097/I099 in `E/removal.py`; inspect `E/adversarial.json: cards.matrix` and `mandatory_isolation`. |
+| **CA2-C5-B03** | `S:7,29`; twelve field-type rows, I006, I012, I021 and I026. FIX4's stipulated word "earlier" conflicted with the intended logical implication classification. | Fixed in `38d74abd7f451edec049e42d1f23669c2fd71488`. Record **pm7-build's 2026-11-05 10:25Z proof-classification ruling**: same field, same defect, logical implication plus single-site/two-site witness, regardless of evaluation order. This is not a product/governance decision or Jared quotation. Each of the sixteen rows states its implication and evidence. Fresh `E/adversarial.json` repeats 60 one-field wrong-type cases, plus 60 I012 aggregate-scan probes; each guard-only cut still refuses and the corresponding same-field value cut(s) accept. The review's `cycle5/survivor-proofs.json` supplies I006/I021/I026 single/two-site witnesses. Recheck the other five former implied rows as B01/B02 negatives. The corrected 84-row inventory and full rerun now substantiate zero unclassified. |
+
+### Corrected survivor inventory and removal rerun
+
+The original Astra inventory has exactly 84 required rows: its 82 passing variants and two structural crashes. `S` retains each exactly once. Every implied row now meets the lead's same-field definition; no unresolved-card or event-span predicate is used as an unrelated implication.
+
+| Outcome | Rows |
+|---|---:|
+| **Negative added** | 28 |
+| **Same-predicate duplicate** | 5 |
+| **Implied** | 16 |
+| **Frozen-input only** | 22 |
+| **Structural** | 13 |
+
+**Full rerun: 182 variants; 126 fail tests; 56 outcome-classified (54 corpus-passing, two structural crashes); 0 unclassified.** Crashes are never counted as accepted inputs or successful refusals. The original Astra removal script runs from a copied local scratch directory; all 38 published, 24 field and 112 inventory cuts remain unchanged. Eight unchanged supplementary cuts bring the count to 182. Configuration names the tested code head and 140-test corpus. Immutable Git blobs at explicit revisions are cached; file-backed bytes, maps, source hashes and lengths remain live. Historical published expected sets are descriptive because added controls can add failures. No validator file is rewritten: cuts compile functions in memory.
+
+All five new narrow variants fail only their own test; all 139 peer records/refusal strings remain identical. All eleven preceding Astra-2 narrow controls also retain exact one-test isolation against the new 140-test baseline. Every one of the 28 negative-added rows now fails a test under its cut. The 54 passing variants and two crashes map to their named table outcomes. `E/survivor-summary.json` asserts the complete inventory, all sixteen mandatory narrow comparisons, 60 field-type probes, 60 aggregate probes, and the span parent's exact one-field difference. Fresh restoration reproduces all 140 baseline result records; every original 134-record result/refusal is unchanged.
+
+The five duplicates retain their site-by-site same-predicate evidence. Fresh `adversarial.json: duplicate_anchor_digest` additionally isolates just SHA equality at each fourth-anchor caller: either single cut refuses, both accept, all shape/type/cardinality/path/grammar peers enabled. Frozen-only classifications retain the production receipt/list byte pins and revision; test trust-pin overrides create no production choice. Structural classifications retain the reviewer's concrete inputs and exception evidence.
+
+### Round-5 checks, resources and limits
+
+| Check | Exit / result |
+|---|---|
+| **Corpus / restoration / custody** | 0; 140/140, 112 recorded refusals; 597/597 real source hashes and lengths; all 134 prior records unchanged; exact restoration. |
+| **Removal / supplementary replay** | 0/0 for drivers; 182 variants accounted for, 126 test failures, 54 passing, two structural crashes; zero unclassified. |
+| **Adversarial replay / finite inventory audit** | 0/0; 60 field-type and 60 aggregate-type witnesses, four-card diagnostic cross-matrix, span counterexample, caller-specific anchor SHA proof, frozen pins; all sixteen mandatory one-test flips preserve 139 peers. |
+| **Shard check** | 0; top-level pass. No owner/generated artifact changed; no regeneration. |
+| **Index validation** | 1; top-level fail, 30 full failure records, identical to a fresh run on reviewed head 213087612a under the same origin/main. The historical round-4 count was 24; six additional retention failures name newer upstream units DL-330/331/332, DP-064/066 and PWIZ-038. Zero introduced by this round; `E/index-comparison.json` compares the complete arrays. |
+| **Currentness edition** | Fifteen ignored input files copied without metadata operations and SHA-compared; not regenerated or re-stamped. |
+| **Scope / protected bytes** | No change under Plans, scripts, tests or .gitignore relative to the reviewed head; only H, S, this report and the compact fix5 result bundle differ. Validator SHA remains `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`; receipts and all governance artifacts remain unchanged. |
+| **Whitespace / delivery** | Diff whitespace checked before commits; only the named branch is pushed. Report and survivor table overwrite their drafts-root copies. `E/DELIVERY.json` records head, export equality, push and literal-path worktree cleanup. |
+
+Initial disk/RAM: 102 GB available / 18 GB available; removal samples ranged from 15 to 22 GB available RAM. Resources are checked before each variant; all checkers run one at a time. No mailbox, subagent, browser, server, main push, admission, seal, registry/Decision Log/Spec Lock/evidence/auto-decision change or new canonical ID occurs. Raw replay output stays external; temporary fixtures, scratch replay files and the requested worktree are removed after retained-evidence export and branch push.
+
+The first auxiliary comparison driver exited 1 because it assumed round 4's historical 24 index failures were still the current baseline. The fresh reviewed-head run proves the current 30-record failure array is pre-existing under the fetched origin/main; its log is retained. No validator failure or fix is inferred from that stale comparison assumption.
+
+The applicable recurring defect classes remain covered by strict parsing, same-field type/value reasoning, exact paths/name tokens, coherent observational digests, separate historical snapshots and recomputed source custody. No runtime Storage metadata, payload externalization, schema-reference/format contract, number cap or serializer is added. Shared-tool adoption and number-domain sweep work stay separate.
+
+**Family grades before -> after: N/A -> N/A; IDs used: none.** DL-451 is referenced; DL-998 is disposable fixture-only. CA-SEAL2-FIX5 joins the procedural seal-applier exclusion. The three review cells are self-assessed repaired pending independent re-review. **Stopped row: none.** Coordinated landing, actual landers/final anchors, real per-name outcomes/depth, unchanged August prerequisites, before/after reviews and S1 remain integration work.
+
+### Retained evidence — round 5
+
+Full evidence paths and SHA-256 follow. `E/README.md` gives scratch replay adaptations and commands; `E/SHA256SUMS` inventories the retained package. The compact committed bundle is `reports/event-authority-20261105/CA-SEAL2-fix5-results.json`.
+
+| Evidence path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/baseline.json` | `cb1efc064c3a1897996c12606315f82c562a55d6df8f44296021c530ab530730` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/restored.json` | `cb1efc064c3a1897996c12606315f82c562a55d6df8f44296021c530ab530730` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/removal-summary.json` | `9b29747eca7edf2022d2ec1f3c27c001097ec3d5d994a5ef7a28d3b0fdda8415` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/supplemental-summary.json` | `268aa723d0fdd0b86d185c7beea40266ef96db1ad23560fde0d1bab4fdbc3a1c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/adversarial.json` | `d005b808e10462b27446d525bc02b631ed523ad03bd4c04bd08ed1056023a8e0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/survivor-summary.json` | `61e89cdb0b393b114d92b6692215c470351c8703746b68494b2107edbd30b969` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/shard-check.json` | `d88b6d64d2c3bbfb29393c893950a0750de443783549fb7cbb624230301e2be3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/index-validate.json` | `620b4c8e5284ebd2bc97ac91b701563a8d6c6b6ec3a2622a723886217a90777e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/index-reviewed-base.json` | `69f4ce27b0d4dfd961f8951314983a7ed2b8175d6be2702f1b1faad77302ce96` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/index-comparison.json` | `0de05e2a573782d9d942396def5bb86067b1bdd8ccf76135ba2bd220fb4bb592` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/currentness-copy.json` | `0cf6e08da275a8acdef6b16ffc85512cccc0f999ea0f55d9efcb360534520002` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/adversarial.json` | `bea189387b0d91b165edb6cea39b6257cc6637567fe6cb7259d016666b42b557` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/survivor-proofs.json` | `e08049c7cb1451a1916008010e11dffd20f04275831f96973faec2a023cdeb1b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/audit-summary.json` | `86c65b985ac451cf6cbe0837cf28df621c6665f2e65143bf7c34cf0b982e2599` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/removal-summary.json` | `10334f23932ee492c0f8c0f367a94cd3b26b66baef1d93c7674de214ef4ea6b3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/supplemental-summary.json` | `e02f7909f14287872a32295c8a3b3f3f622c53daa3cfd8b0d52f37c94de1e59e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-SEAL2-FIX5.md` | `9159b06efd0e94a8a8682601018165ab97c1669061668f0ca13a3402717b2d7e` |
