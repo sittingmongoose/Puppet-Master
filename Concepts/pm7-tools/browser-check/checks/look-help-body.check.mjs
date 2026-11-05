@@ -49,7 +49,12 @@ export default async function(t) {
               await checkTip(id,text,'Follow your computer',shot);
             }
             if(w===1280 && h===900 && !t.args.headerOnly) {
-              for(const id of ['pickMode:light','pickMode:dark','lookMode:light','lookMode:dark']) await checkTip(id,OLD,'Light or dark');
+              for(const id of ['pickMode:light','pickMode:dark','lookMode:light','lookMode:dark']) {
+                const expected = wording === 'ELI5' ? OLD : id.startsWith('pickMode')
+                  ? 'Selects Light or Dark for the look. The initial default is Basic Dark.'
+                  : `Selects ${id.endsWith('light') ? 'Light' : 'Dark'}. Every look supports Light and Dark; the initial default is Basic Dark.`;
+                await checkTip(id,expected,'Light or dark');
+              }
             }
           }
           await click('pickMode','auto');
