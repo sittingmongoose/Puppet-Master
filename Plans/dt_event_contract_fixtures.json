@@ -103779,21 +103779,9 @@
         {
           "case": "policy_denied_emits",
           "before": {
+            "denial_origin": "policy",
             "policy_decision": "deny",
-            "dispatch_state": "not_dispatched",
-            "denial_reason_code": "policy_denied",
-            "blocked_reason_code": "permission_denied",
-            "failure_class": null,
-            "allowed_action_ids": [
-              "open_details",
-              "abort_run"
-            ],
-            "headless_denied": false,
-            "permission_snapshot_id": "permission-snapshot-1",
-            "executed_at_all": false,
-            "blocked_sequence": 1,
-            "approval_scope_key": "fixture-id",
-            "denial_origin": "policy"
+            "dispatch_state": "not_dispatched"
           },
           "expected": "emit",
           "append_count": 1
@@ -103801,21 +103789,9 @@
         {
           "case": "user_denied_emits",
           "before": {
+            "denial_origin": "user",
             "policy_decision": "deny",
-            "dispatch_state": "not_dispatched",
-            "denial_reason_code": "policy_denied",
-            "blocked_reason_code": "permission_denied",
-            "failure_class": null,
-            "allowed_action_ids": [
-              "open_details",
-              "abort_run"
-            ],
-            "headless_denied": false,
-            "permission_snapshot_id": "permission-snapshot-1",
-            "executed_at_all": false,
-            "blocked_sequence": 1,
-            "approval_scope_key": "fixture-id",
-            "denial_origin": "user"
+            "dispatch_state": "not_dispatched"
           },
           "expected": "emit",
           "append_count": 1
@@ -103823,21 +103799,9 @@
         {
           "case": "allow_is_not_denial",
           "before": {
+            "denial_origin": "policy",
             "policy_decision": "allow",
-            "dispatch_state": "not_dispatched",
-            "denial_reason_code": "policy_denied",
-            "blocked_reason_code": "permission_denied",
-            "failure_class": null,
-            "allowed_action_ids": [
-              "open_details",
-              "abort_run"
-            ],
-            "headless_denied": false,
-            "permission_snapshot_id": "permission-snapshot-1",
-            "executed_at_all": false,
-            "blocked_sequence": 1,
-            "approval_scope_key": "fixture-id",
-            "denial_origin": "policy"
+            "dispatch_state": "not_dispatched"
           },
           "expected": "no_emission",
           "append_count": 0
@@ -103845,21 +103809,9 @@
         {
           "case": "schema_refusal_is_not_policy_denial",
           "before": {
+            "denial_origin": "schema",
             "policy_decision": "deny",
-            "dispatch_state": "not_dispatched",
-            "denial_reason_code": "policy_denied",
-            "blocked_reason_code": "permission_denied",
-            "failure_class": null,
-            "allowed_action_ids": [
-              "open_details",
-              "abort_run"
-            ],
-            "headless_denied": false,
-            "permission_snapshot_id": "permission-snapshot-1",
-            "executed_at_all": false,
-            "blocked_sequence": 1,
-            "approval_scope_key": "fixture-id",
-            "denial_origin": "schema"
+            "dispatch_state": "not_dispatched"
           },
           "expected": "no_emission",
           "append_count": 0
@@ -103867,45 +103819,21 @@
         {
           "case": "already_dispatched_cannot_deny",
           "before": {
+            "denial_origin": "policy",
             "policy_decision": "deny",
-            "dispatch_state": "started",
-            "denial_reason_code": "policy_denied",
-            "blocked_reason_code": "permission_denied",
-            "failure_class": null,
-            "allowed_action_ids": [
-              "open_details",
-              "abort_run"
-            ],
-            "headless_denied": false,
-            "permission_snapshot_id": "permission-snapshot-1",
-            "executed_at_all": false,
-            "blocked_sequence": 1,
-            "approval_scope_key": "fixture-id",
-            "denial_origin": "policy"
+            "dispatch_state": "started"
           },
           "expected": "no_emission",
           "append_count": 0
         },
         {
-          "case": "filesafe_owner_conflict_fences_only_this_facet",
+          "case": "filesafe_block_saves_only_dedicated_refusal",
           "before": {
+            "denial_origin": "filesafe",
             "policy_decision": "deny",
-            "dispatch_state": "not_dispatched",
-            "denial_reason_code": "policy_denied",
-            "blocked_reason_code": "permission_denied",
-            "failure_class": null,
-            "allowed_action_ids": [
-              "open_details",
-              "abort_run"
-            ],
-            "headless_denied": false,
-            "permission_snapshot_id": "permission-snapshot-1",
-            "executed_at_all": false,
-            "blocked_sequence": 1,
-            "approval_scope_key": "fixture-id",
-            "denial_origin": "filesafe"
+            "dispatch_state": "not_dispatched"
           },
-          "expected": "owner_conflict_stopped",
+          "expected": "no_emission",
           "append_count": 0
         }
       ],

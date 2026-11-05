@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-05T15:29:49Z",
+  "generated_at_utc": "2026-11-05T15:35:13Z",
   "gui_related_units": {
     "count": 3813,
     "units": [
@@ -46280,7 +46280,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "355d56e6a39c58233dce9163878719bb65ac86092284d4f343c92c41027f162f",
+        "expected": "df97abc604408271968966bfc32b5867ef9d653df1f8b6dc028475a8212eae85",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46316,7 +46316,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "08e80902bc5f168611bee6e4396a6f97ddcd242716e52ad8384a1c919e1a22c4",
+        "expected": "5a69acba26423c375c21c9b785e6c310c979816246ba534b6fbad2950537095b",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46387,6 +46387,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileSafe.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/FinalGUISpec.md"
       },
       {
@@ -46424,6 +46428,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Settings_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Tools.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

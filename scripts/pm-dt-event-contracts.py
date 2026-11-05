@@ -379,9 +379,7 @@ def gate_score_join(payload, before, outcome):
 
 
 def denial_emission(before):
-    # FileSafe is fenced pending the competing-owner decision, not resolved here.
-    if before['denial_origin'] == 'filesafe':
-        return 'owner_conflict_stopped'
+    # DL-430: FileSafe saves its dedicated refusal only, never tool.denied.
     if before['denial_origin'] not in ['policy', 'user'] or before['policy_decision'] != 'deny' or before['dispatch_state'] != 'not_dispatched':
         return 'no_emission'
     return 'emit'

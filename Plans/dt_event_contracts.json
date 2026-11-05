@@ -247,7 +247,7 @@
         "source_ref",
         "source_sha256"
       ],
-      "transition": "Only first-load single→None, per_phase→Phase and per_task→Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again.",
+      "transition": "Only first-load single\u2192None, per_phase\u2192Phase and per_task\u2192Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again.",
       "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "role": "Settings migration recovery and inspection",
       "scope_policy": "application_or_project",
@@ -628,7 +628,7 @@
         "tool_use_id",
         "attempt_id"
       ],
-      "transition": "Only the already specified policy/user-denial path is prepared, before any dispatch; never executes or contributes to executed-call rollups. FileSafe emission is stopped for Jared because Tools forbids it and FileSafe requests alignment. Schema refusal alone is not this prepared policy/user-denial path.",
+      "transition": "Only the already specified policy/user-denial path is prepared, before any dispatch; never executes or contributes to executed-call rollups. DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied. The tool view shows the FileSafe reason and ordered allowed recovery actions; the block is distinct from execution failure and is never retried automatically. Schema refusal alone is not this prepared policy/user-denial path.",
       "retention_policy_ref": "RP-RUNTIME-365D",
       "role": "policy audit, blocked runtime recovery and inspection",
       "scope_policy": "application_or_project",
@@ -679,17 +679,10 @@
         {
           "from": "policy_evaluated",
           "to": "denied",
-          "predicate": "original policy/user denial before dispatch with exact frozen blocked episode, mapped actions and permission snapshot; FileSafe facet stopped",
+          "predicate": "original policy/user denial before dispatch with exact frozen blocked episode, mapped actions and permission snapshot; FileSafe blocks save only dedicated FileSafe refusals and never tool.denied (DL-430)",
           "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
           "duplicate": "original full value/receipt; no transition or repeated external effect",
           "invalid": "refuse with no append/dependent publication"
-        }
-      ],
-      "stopped_facets": [
-        {
-          "facet": "FileSafe emission",
-          "question": "Should FileSafe blocks emit tool.denied, reconciling Tools.md:1496 (do not emit tool.denied for FileSafe blocks) with FileSafe.md:2839-2846 (Align tool.denied emission with filesafe_blocked)?",
-          "status": "STOPPED_FOR_JARED"
         }
       ],
       "retention_binding": {
@@ -705,7 +698,10 @@
         "anchor": "actual run completion",
         "ttl_seconds": 31536000,
         "holds": "all existing legal/recovery/recent-run/live-ref/backup/rollback/maintenance holds"
-      }
+      },
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-430"
+      ]
     },
     {
       "event_type": "tool.execution_completed",
