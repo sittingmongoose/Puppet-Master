@@ -108,6 +108,13 @@ export default async function (t) {
             await settled(f, 'online-service');
             await t.check(`${name}: return to same service`, await click(t, f, '.o55-primary'), '', { hard: true });
             await settled(f, 'online-signin');
+            for (const look of ['basic-light','basic-dark','friendly-light','friendly-dark','retro-light','retro-dark','glass-light','glass-dark','nier-light','nier-dark']) {
+            const [family, appearance] = look.split('-');
+            await f.locator('.o55-lookbtn').click();
+            await f.locator(`.o55-lookslot [data-o55-do="lookFamily"][data-arg="${family}"]`).click();
+            await f.locator(`.o55-lookslot [data-o55-do="lookMode"][data-arg="${appearance}"]`).click();
+            await f.locator('.o55-lookbtn').click();
+            await settled(f, 'online-signin');
             for (let mode = 0; mode < 2; mode++) {
                 const known = await f.evaluate((L) => {
                     const l = document.querySelector(L), d = window.O55.S.sess.drafts.main;
@@ -115,8 +122,13 @@ export default async function (t) {
                 }, LAYER);
                 const r = await f.evaluate(READ, LAYER);
                 await t.check(`${name}: known account re-entry (${r.talk}) describes the card`, known.card && !known.field && known.method === 'token' && !dangles(r.lead) && !/paste|agree/i.test(r.lead), JSON.stringify({known, lead:r.lead}));
+                const expected = "You're signed in already. Use it?";
+                const bubble = f.locator('.pst-bt').first();
+                await f.waitForFunction(text => document.querySelector('.pst-bt')?.textContent === text, expected, {timeout:5000}).catch(() => {});
+                await t.equal(`${name} ${look} ${r.talk}: FO-77 known account bubble`, await bubble.textContent(), expected);
                 await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
                 await settled(f, 'online-signin');
+            }
             }
 
 		});

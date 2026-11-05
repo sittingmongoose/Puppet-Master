@@ -164,6 +164,7 @@
   }
   /* The introduction and body share the known-account decision (F32-1). */
   const knownSigninAccount = (S) => { const si = SI(S); return si.kind === 'forge' && si.state === 'idle' && !si.another ? accountFor(S, si.service) : null; };
+  O55.official.knownSigninAccount = knownSigninAccount;
   def('online-signin', {
     seed: (S) => seedOnline(S, false),
     /* (a sign-in still waiting when the person goes Back is given up: a later Sign in starts a new attempt the old wait can
